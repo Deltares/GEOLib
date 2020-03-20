@@ -35,6 +35,8 @@ instructions for getting the most out of Geolib.
 
    user/intro
    user/install
+   user/soils
+   user/geometry
 
 
 The API Documentation / Guide
