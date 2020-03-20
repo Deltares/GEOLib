@@ -22,7 +22,6 @@ class Model(object):
         self.inputfn = inputfn
         pass
 
-
     def initialize(self, config_file: str = None) -> str:
         """BMI. Create input file for model and return filename."""
         pass

@@ -1,6 +1,7 @@
 from geolib import __version__
 
 from .context import geolib
+import pytest
 
 
 def test_version():
