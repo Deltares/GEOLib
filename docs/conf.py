@@ -13,8 +13,8 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath(".."))
-import geolib
+sys.path.insert(0, os.path.abspath(".."))  # isort:skip
+import geolib  # isort:skip
 
 # -- Project information -----------------------------------------------------
 
@@ -37,6 +37,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
+    "rst2pdf.pdfbuilder",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -59,9 +60,9 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = "alabaster"
 
+html_theme = "alabaster"
+html_style = "custom.css"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
@@ -81,32 +82,28 @@ add_module_names = True
 todo_include_todos = True
 
 html_theme_options = {
-    "logo_name" : False,
-    "logo" : "geolib.png",
-
+    "logo_name": False,
+    "logo": "geolib.png",
     "show_powered_by": False,
     "show_related": False,
     "note_bg": "#FFF59C",
-
-    "extra_nav_links" : {
+    "extra_nav_links": {
         "Source code @ Bitbucket": "https://bitbucket.org/DeltaresGEO/geolib/src",
-        "Jira Issue Tracker": "https://github.com/psf/requests/issues",
-        "Project documentation @ Wiki": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home"
+        "Jira Issue Tracker": "https://bitbucket.org/DeltaresGEO/geolib/issues?status=new&status=open",
+        "Project documentation @ Wiki": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home",
     },
-
-    "show_related" : False,
-    "show_relbars" : True,
-    # Custom sidebar templates, maps document names to template names.
-
-
+    "show_related": False,
+    "show_relbars": True,
 }
-html_sidebars : {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',
-        'searchbox.html',
-        'donate.html',
+
+# Custom sidebar templates, maps document names to template names.
+html_sidebars: {
+    "**": [
+        "about.html",
+        "navigation.html",
+        "relations.html",
+        "searchbox.html",
+        "donate.html",
     ]
 }
 

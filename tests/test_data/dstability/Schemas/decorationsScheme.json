@@ -1,0 +1,104 @@
+{
+  "definitions": {
+    "PersistableBerm": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Points": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        },
+        "AddedLayerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "PersistableExcavation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Points": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        }
+      }
+    },
+    "PersistablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "Excavations": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableExcavation"
+      }
+    },
+    "Berms": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableBerm"
+      }
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

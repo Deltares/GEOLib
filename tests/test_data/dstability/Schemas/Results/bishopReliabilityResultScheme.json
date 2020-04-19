@@ -1,0 +1,194 @@
+{
+  "definitions": {
+    "PersistableCircle": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Center": {
+          "$ref": "#/definitions/PersistablePoint"
+        },
+        "Radius": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableSoilContribution": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SoilId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Property": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Alpha": {
+          "type": "number"
+        },
+        "Value": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableStageContribution": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "StageId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Property": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Alpha": {
+          "type": "number"
+        },
+        "Value": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableStateLinePointContribution": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "StateLinePointId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Property": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Alpha": {
+          "type": "number"
+        },
+        "Value": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableStatePointContribution": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "StatePointId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Property": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Alpha": {
+          "type": "number"
+        },
+        "Value": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Circle": {
+      "$ref": "#/definitions/PersistableCircle"
+    },
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "FailureProbability": {
+      "type": "number"
+    },
+    "ReliabilityIndex": {
+      "type": "number"
+    },
+    "Converged": {
+      "type": "boolean"
+    },
+    "SoilContributions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableSoilContribution"
+      }
+    },
+    "StatePointContributions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableStatePointContribution"
+      }
+    },
+    "StateLinePointContributions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableStateLinePointContribution"
+      }
+    },
+    "StageContributions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableStageContribution"
+      }
+    }
+  }
+}

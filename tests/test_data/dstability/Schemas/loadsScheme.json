@@ -1,0 +1,251 @@
+{
+  "definitions": {
+    "PersistableConsolidation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "LayerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Degree": {
+          "type": "number",
+		  "minimum": 0,
+		  "maximum": 100
+        }
+      }
+    },
+    "PersistableEarthquake": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "IsEnabled": {
+          "type": "boolean"
+        },
+        "HorizontalFactor": {
+          "type": "number"
+        },
+        "VerticalFactor": {
+          "type": "number"
+        },
+        "FreeWaterFactor": {
+          "type": "number"
+        },
+        "Consolidations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistableConsolidation"
+          }
+        }
+      }
+    },
+    "PersistableLayerLoad": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "LayerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Consolidations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistableConsolidation"
+          }
+        }
+      }
+    },
+    "PersistableLineLoad": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Location": {
+          "$ref": "#/definitions/PersistablePoint"
+        },
+        "Magnitude": {
+          "type": "number",
+		  "minimum": 0
+        },
+        "Spread": {
+          "type": "number",
+		  "minimum": 0,
+		  "exclusiveMaximum": 90
+        },
+        "Angle": {
+          "type": "number",
+		  "minimum": -360,
+		  "maximum": 360
+        },
+        "Consolidations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistableConsolidation"
+          }
+        }
+      }
+    },
+    "PersistablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableTree": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Force": {
+          "type": "number"
+        },
+        "RootZoneWidth": {
+          "type": "number",
+		  "minimum": 0
+        },
+        "Spread": {
+          "type": "number",
+		  "minimum": 0,
+		  "exclusiveMaximum": 90
+        },
+        "Location": {
+          "$ref": "#/definitions/PersistablePoint"
+        }
+      }
+    },
+    "PersistableUniformLoad": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Start": {
+          "type": "number"
+        },
+        "End": {
+          "type": "number"
+        },
+        "Magnitude": {
+          "type": "number",
+		  "minimum": 0
+        },
+        "Spread": {
+          "type": "number",
+		  "minimum": 0,
+		  "exclusiveMaximum": 90
+        },
+        "Consolidations": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistableConsolidation"
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "LayerLoads": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableLayerLoad"
+      }
+    },
+    "UniformLoads": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableUniformLoad"
+      }
+    },
+    "LineLoads": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableLineLoad"
+      }
+    },
+    "Trees": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableTree"
+      }
+    },
+    "Earthquake": {
+      "$ref": "#/definitions/PersistableEarthquake"
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

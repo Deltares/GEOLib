@@ -1,0 +1,128 @@
+{
+  "definitions": {
+    "PersistableSoil": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "IsProbabilistic": {
+          "type": "boolean"
+        },
+        "VolumetricWeightAbovePhreaticLevel": {
+          "type": "number"
+        },
+        "VolumetricWeightBelowPhreaticLevel": {
+          "type": "number"
+        },
+        "ShearStrengthModelTypeAbovePhreaticLevel": {
+          "type": "string",
+          "enum": [
+            "CPhi",
+            "Su",
+            "None"
+          ]
+        },
+        "ShearStrengthModelTypeBelowPhreaticLevel": {
+          "type": "string",
+          "enum": [
+            "CPhi",
+            "Su",
+            "None"
+          ]
+        },
+        "Cohesion": {
+          "type": "number"
+        },
+        "CohesionStochasticParameter": {
+          "$ref": "#/definitions/PersistableStochasticParameter"
+        },
+        "FrictionAngle": {
+          "type": "number"
+        },
+        "FrictionAngleStochasticParameter": {
+          "$ref": "#/definitions/PersistableStochasticParameter"
+        },
+        "CohesionAndFrictionAngleCorrelated": {
+          "type": "boolean"
+        },
+        "Dilatancy": {
+          "type": "number"
+        },
+        "DilatancyStochasticParameter": {
+          "$ref": "#/definitions/PersistableStochasticParameter"
+        },
+        "ShearStrengthRatio": {
+          "type": "number"
+        },
+        "ShearStrengthRatioStochasticParameter": {
+          "$ref": "#/definitions/PersistableStochasticParameter"
+        },
+        "StrengthIncreaseExponent": {
+          "type": "number"
+        },
+        "StrengthIncreaseExponentStochasticParameter": {
+          "$ref": "#/definitions/PersistableStochasticParameter"
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PersistableStochasticParameter": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "IsProbabilistic": {
+          "type": "boolean"
+        },
+        "Mean": {
+          "type": "number",
+		  "exclusiveMinimum": 0
+        },
+        "StandardDeviation": {
+          "type": "number",
+		  "minimum": 0
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Soils": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableSoil"
+      }
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

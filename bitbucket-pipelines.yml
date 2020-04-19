@@ -3,7 +3,10 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: python:3.7.3
+image: python:3.7.7
+
+clone:
+  lfs: true
 
 pipelines:
   default:
@@ -12,5 +15,21 @@ pipelines:
           - pip
         script: # Modify the commands below to build your repository.
           - pip install -r requirements.txt
-          - coverage run -m pytest
-          - coverage html
+          - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
+
+  branches:
+    master:
+      - step:
+          caches:
+            - pip
+          script: # Modify the commands below to build your repository.
+            - pip install -r requirements.txt
+            - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
+            - cd docs && make html
+            - apt-get update && apt-get --yes install zip
+            - cd build/html && zip -r docs.zip *
+            - pipe: atlassian/bitbucket-upload-file:0.1.3
+              variables:
+                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                FILENAME: 'docs.zip'

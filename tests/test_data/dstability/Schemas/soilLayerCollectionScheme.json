@@ -1,0 +1,48 @@
+{
+  "definitions": {
+    "PersistableSoilLayer": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "LayerId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "SoilId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "SoilLayers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableSoilLayer"
+      }
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

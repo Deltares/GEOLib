@@ -1,0 +1,65 @@
+{
+  "definitions": {
+    "PersistableBondStress": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Sigma": {
+          "type": "number"
+        },
+        "Tau": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableNailPropertiesForSoil": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SoilId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "CompressionRatio": {
+          "type": "number"
+        },
+        "RheologicalCoefficient": {
+          "type": "number"
+        },
+        "BondStresses": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistableBondStress"
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "NailPropertiesForSoils": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableNailPropertiesForSoil"
+      }
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

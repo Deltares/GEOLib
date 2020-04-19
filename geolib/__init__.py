@@ -1,5 +1,5 @@
 """
-GEOLIB Library
+GEOLib Library
 """
 
 __version__ = "0.1.0"
@@ -9,5 +9,6 @@ import logging
 from logging import NullHandler
 
 from . import utils
+from .models import *
 
 logging.getLogger(__name__).addHandler(NullHandler())

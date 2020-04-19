@@ -3,40 +3,50 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to geolib's documentation!
+Welcome to GEOLib's documentation!
 ==================================
 
-Geolib is a Python package to generate input, execute and parse output for several D-Serie numerical models.
+GEOLib is a Python package to generate input, execute and parse output for several D-Serie numerical models.
 Release v\ |version|.
 
 -------------------
 
-**Behold, the power of Geolib**::
+**Behold, the power of GEOLib**::
 
     >>> import geolib as gl
-    >>> m = gl.DSettlement(fn="data/test.sli")
-    DSettlement 2D Model with XX options
-    >>> m.update_metadata(project="test")
+    >>> m = gl.D-SettlementInput.parse("data/test.sli")
+    D-Settlement 2D Model with XX options
+    >>> m.set_metadata(project="test")
     >>> m.execute()
-    Succesfully executed model in 3 seconds
-    >>> r.parse_result()
-    {"settlements": [1.25, 2.55], "verticals": [1.0, 2.0], ..}
+    Succesfully executed Model in 3 seconds
+    >>> m.output.to_dict()
+    {"verticals": [{"id": 1, "x": 50., "settlements": [[0.0, 0.0, ..]], ..}..}
+
+
+The Tutorials
+-------------
+
+This part of the documentation, which is all prose, gives some examples
+of using GEOLib.
+
+.. toctree::
+   :maxdepth: 3
+
+   community/tutorial.rst
 
 
 The User Guide
 --------------
 
 This part of the documentation, which is mostly prose, begins with some
-background information about Geolib, then focuses on step-by-step
-instructions for getting the most out of Geolib.
+background information about GEOLib, then focuses on step-by-step
+instructions for getting the most out of GEOLib.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    user/intro
    user/install
-   user/soils
-   user/geometry
 
 
 The API Documentation / Guide
@@ -46,21 +56,23 @@ If you are looking for information on a specific function, class, or method,
 this part of the documentation is for you.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
-   api
+   dev/api
 
 
 The Contributor Guide
 ---------------------
 
 If you want to contribute to the project, this part of the documentation is for
-you.
+you. It includes in depth guide how to go about extending GEOLib.
 
 .. toctree::
    :maxdepth: 3
 
+   dev/extend
    dev/todo
+
 
 There are no more guides. You are now guideless.
 Good luck.

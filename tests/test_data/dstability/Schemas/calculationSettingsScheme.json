@@ -1,0 +1,490 @@
+{
+  "definitions": {
+    "Nullable<PersistablePoint>": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableBishopBruteForceSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SearchGrid": {
+          "$ref": "#/definitions/PersistableSearchGrid"
+        },
+        "TangentLines": {
+          "$ref": "#/definitions/PersistableTangentLines"
+        },
+        "GridEnhancements": {
+          "$ref": "#/definitions/PersistableGridEnhancements"
+        },
+        "SlipPlaneConstraints": {
+          "$ref": "#/definitions/PersistableSlipPlaneConstraints"
+        }
+      }
+    },
+    "PersistableBishopSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Circle": {
+          "$ref": "#/definitions/PersistableCircle"
+        }
+      }
+    },
+    "PersistableCircle": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Center": {
+          "$ref": "#/definitions/PersistablePoint"
+        },
+        "Radius": {
+          "type": "number",
+		  "minimum": 0
+        }
+      }
+    },
+    "PersistableGeneticSlipPlaneConstraints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "IsEnabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "MinimumAngleBetweenSlices": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0,
+		  "maximum": 180
+        },
+        "MinimumThrustLinePercentageInsideSlices": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0,
+		  "maximum": 100
+        }
+      }
+    },
+    "PersistableGridEnhancements": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "ExtrapolateSearchSpace": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "PersistablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableSearchArea": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "TopLeft": {
+          "$ref": "#/definitions/Nullable<PersistablePoint>"
+        },
+        "Width": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        },
+        "Height": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        }
+      }
+    },
+    "PersistableSearchGrid": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "BottomLeft": {
+          "$ref": "#/definitions/Nullable<PersistablePoint>"
+        },
+        "Space": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0.01,
+		  "maximum": 100
+        },
+        "NumberOfPointsInX": {
+          "type": [
+            "integer",
+            "null"
+          ],
+		  "minimum": 1,
+		  "maximum": 100
+        },
+        "NumberOfPointsInZ": {
+          "type": [
+            "integer",
+            "null"
+          ],
+		  "minimum": 1,
+		  "maximum": 100
+        }
+      }
+    },
+    "PersistableSlipPlaneConstraints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "IsSizeConstraintsEnabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "MinimumSlipPlaneDepth": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        },
+        "MinimumSlipPlaneLength": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        },
+        "IsZoneAConstraintsEnabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "XLeftZoneA": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "WidthZoneA": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        },
+        "IsZoneBConstraintsEnabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "XLeftZoneB": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "WidthZoneB": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        }
+      }
+    },
+    "PersistableSpencerGeneticSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SlipPlaneA": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        },
+        "SlipPlaneB": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        },
+        "SlipPlaneConstraints": {
+          "$ref": "#/definitions/PersistableGeneticSlipPlaneConstraints"
+        },
+        "OptionsType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "Default",
+            "Thorough"
+          ]
+        }
+      }
+    },
+    "PersistableSpencerSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SlipPlane": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        }
+      }
+    },
+    "PersistableTangentArea": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "TopZ": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "Height": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        }
+      }
+    },
+    "PersistableTangentLines": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "BottomTangentLineZ": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "Space": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0.01,
+		  "maximum": 100
+        },
+        "NumberOfTangentLines": {
+          "type": [
+            "integer",
+            "null"
+          ],
+		  "minimum": 1,
+		  "maximum": 100,
+        }
+      }
+    },
+    "PersistableTwoCirclesOnTangentLine": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "FirstCircleCenter": {
+          "$ref": "#/definitions/Nullable<PersistablePoint>"
+        },
+        "FirstCircleRadius": {
+          "type": [
+            "number",
+            "null"
+          ],
+		  "minimum": 0
+        },
+        "SecondCircleCenter": {
+          "$ref": "#/definitions/Nullable<PersistablePoint>"
+        }
+      }
+    },
+    "PersistableUpliftVanParticleSwarmSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SearchAreaA": {
+          "$ref": "#/definitions/PersistableSearchArea"
+        },
+        "SearchAreaB": {
+          "$ref": "#/definitions/PersistableSearchArea"
+        },
+        "TangentArea": {
+          "$ref": "#/definitions/PersistableTangentArea"
+        },
+        "SlipPlaneConstraints": {
+          "$ref": "#/definitions/PersistableSlipPlaneConstraints"
+        },
+        "OptionsType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "Default",
+            "Thorough"
+          ]
+        }
+      }
+    },
+    "PersistableUpliftVanSettings": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "SlipPlane": {
+          "$ref": "#/definitions/PersistableTwoCirclesOnTangentLine"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "AnalysisType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Bishop",
+        "BishopBruteForce",
+        "UpliftVan",
+        "UpliftVanParticleSwarm",
+        "Spencer",
+        "SpencerGenetic"
+      ]
+    },
+    "CalculationType": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "Deterministic",
+        "Mean",
+        "Design",
+        "Probabilistic"
+      ]
+    },
+    "ModelFactorMean": {
+      "type": "number",
+	  "exclusiveMinimum": 0
+    },
+    "ModelFactorStandardDeviation": {
+      "type": "number",
+	  "minimum": 0
+    },
+    "Bishop": {
+      "$ref": "#/definitions/PersistableBishopSettings"
+    },
+    "BishopBruteForce": {
+      "$ref": "#/definitions/PersistableBishopBruteForceSettings"
+    },
+    "UpliftVan": {
+      "$ref": "#/definitions/PersistableUpliftVanSettings"
+    },
+    "UpliftVanParticleSwarm": {
+      "$ref": "#/definitions/PersistableUpliftVanParticleSwarmSettings"
+    },
+    "Spencer": {
+      "$ref": "#/definitions/PersistableSpencerSettings"
+    },
+    "SpencerGenetic": {
+      "$ref": "#/definitions/PersistableSpencerGeneticSettings"
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

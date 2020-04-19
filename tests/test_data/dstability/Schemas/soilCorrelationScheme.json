@@ -1,0 +1,42 @@
+{
+  "definitions": {
+    "PersistableSoilCorrelation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "CorrelatedSoilIds": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "SoilCorrelations": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableSoilCorrelation"
+      }
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "definitions": {
+    "PersistableHeadLine": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "Id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Points": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        }
+      }
+    },
+    "PersistablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableReferenceLine": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "TopHeadLineId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "BottomHeadLineId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Label": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Notes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Points": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistablePoint"
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "UnitWeightWater": {
+      "type": [
+        "number",
+        "null"
+      ],
+	  "minimum": 0
+    },
+    "PhreaticLineId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "HeadLines": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableHeadLine"
+      }
+    },
+    "ReferenceLines": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "$ref": "#/definitions/PersistableReferenceLine"
+      }
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

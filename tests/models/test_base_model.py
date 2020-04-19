@@ -1,34 +1,51 @@
+import os
+
 import pytest
 
-from geolib.models import models
+from geolib.models.base_model import BaseModel
 
 
-class TestPosition:
-
-    @pytest.mark.unittest
-    def test_verify_default_parameters(self):
-        position = models.Position('dummy')
-        assert position is not None
-        assert position.lon == 0.0
-        assert position.lat == 0.0
-
-
-class TestModel:
+class TestBaseModel:
+    @pytest.fixture
+    def default_base_model(self):
+        return BaseModel()
 
     @pytest.mark.unittest
-    def test_instantiate_model_without_inputfn_doesnot_raise(self):
+    @pytest.mark.skip(reason="no way of currently testing this")
+    def test_Model_initialize_createsfile_when_no_config_file_given(
+        self, default_base_model
+    ):
+        # 1. Set initial test data.
+        config_filename = None
+
+        # 2. Define test action.
         try:
-            model = models.Model(inputfn=None)
+            inputfile_filename = default_base_model.initialize(
+                config_file=config_filename
+            )
+        # 3. Verify final expectations.
         except Exception as e_info:
-            pytest.fail('Exception thrown but not expected {}', str(e_info))
-        assert model is not None
+            pytest.fail("Exception thrown but not expected {}".format(e_info))
+        assert inputfile_filename, "No filename was generated"
+        assert os.path.exists(
+            inputfile_filename
+        ), "" + "No file was created at {}".format(inputfile_filename)
 
     @pytest.mark.unittest
-    def test_Model_parse_creates_new_instance(self):
-        model = None
-        try:
-            model = models.Model.parse(None)
-        except Exception as e_info:
-            pytest.fail('Exception thrown but not expected {}', str(e_info))
-        assert model is not None
+    @pytest.mark.skip(reason="no way of currently testing this")
+    def test_Model_execute_timeout_after_giventime(self, default_base_model):
+        # 1. Set initial test data.
+        timeout = 2
+        expected_error = "The execution timed out, a log can be seen in ..."
 
+        # 2. Define test action.
+        with pytest.raises(TimeoutError) as e_info:
+            default_base_model.execute(timeout)
+
+        # 3. Verify final expectations.
+        error_message = str(e_info.value)
+        assert error_message == expected_error, (
+            ""
+            + "Expected exception message {},".format(expected_error)
+            + "retrieved {}".format(error_message)
+        )

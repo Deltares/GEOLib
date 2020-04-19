@@ -1,0 +1,170 @@
+{
+  "definitions": {
+    "PersistableDitchCharacteristics": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "DitchEmbankmentSide": {
+          "type": "number"
+        },
+        "DitchBottomEmbankmentSide": {
+          "type": "number"
+        },
+        "DitchBottomLandSide": {
+          "type": "number"
+        },
+        "DitchLandSide": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableEmbankmentCharacteristics": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "EmbankmentToeWaterSide": {
+          "type": "number"
+        },
+        "EmbankmentTopWaterSide": {
+          "type": "number"
+        },
+        "EmbankmentTopLandSide": {
+          "type": "number"
+        },
+        "ShoulderBaseLandSide": {
+          "type": "number"
+        },
+        "EmbankmentToeLandSide": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "X": {
+          "type": "number"
+        },
+        "Z": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "EmbankmentCharacteristics": {
+      "$ref": "#/definitions/PersistableEmbankmentCharacteristics"
+    },
+    "DitchCharacteristics": {
+      "$ref": "#/definitions/PersistableDitchCharacteristics"
+    },
+    "IsDitchPresent": {
+      "type": "boolean"
+    },
+    "EmbankmentSoilScenario": {
+      "type": "string",
+      "enum": [
+        "ClayEmbankmentOnClay",
+        "SandEmbankmentOnClay",
+        "ClayEmbankmentOnSand",
+        "SandEmbankmentOnSand"
+      ]
+    },
+    "NormativeWaterLevel": {
+      "type": "number"
+    },
+    "MeanWaterLevel": {
+      "type": "number"
+    },
+    "WaterLevelHinterland": {
+      "type": "number"
+    },
+    "InitialLevelEmbankmentTopWaterSide": {
+      "type": "number"
+    },
+    "InitialLevelEmbankmentTopLandSide": {
+      "type": "number"
+    },
+    "UseDefaultOffsets": {
+      "type": "boolean"
+    },
+    "OffsetEmbankmentTopWaterSide": {
+      "type": "number"
+    },
+    "OffsetEmbankmentTopLandSide": {
+      "type": "number"
+    },
+    "OffsetShoulderBaseLandSide": {
+      "type": "number"
+    },
+    "OffsetEmbankmentToeLandSide": {
+      "type": "number"
+    },
+    "IsDrainageConstructionPresent": {
+      "type": "boolean"
+    },
+    "DrainageConstruction": {
+      "$ref": "#/definitions/PersistablePoint"
+    },
+    "AquiferLayerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "AquiferInsideAquitardLayerId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "AdjustForUplift": {
+      "type": "boolean"
+    },
+    "IsAquiferLayerInsideAquitard": {
+      "type": "boolean"
+    },
+    "PleistoceneLeakageLengthOutwards": {
+      "type": "number"
+    },
+    "AquiferLayerInsideAquitardLeakageLengthOutwards": {
+      "type": "number"
+    },
+    "PleistoceneLeakageLengthInwards": {
+      "type": "number"
+    },
+    "AquiferLayerInsideAquitardLeakageLengthInwards": {
+      "type": "number"
+    },
+    "AquitardHeadWaterSide": {
+      "type": "number"
+    },
+    "AquitardHeadLandSide": {
+      "type": "number"
+    },
+    "IntrusionLength": {
+      "type": "number"
+    },
+    "ContentVersion": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}
