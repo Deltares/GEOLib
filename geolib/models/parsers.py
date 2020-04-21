@@ -35,7 +35,11 @@ class BaseParserProvider(abc.ABC):
         raise NotImplementedError("Should be implemented in concrete class.")
 
     def parse(self, filename: FilePath):
-        if filename.suffix in self.input_parser.suffix_list:
+        if filename.suffix == "" and filename.name in self.input_parser.suffix_list:
+            return self.input_parser.parse(filename)
+        elif filename.suffix == "" and filename.name in self.output_parser.suffix_list:
+            return self.output_parser.parse(filename)
+        elif filename.suffix in self.input_parser.suffix_list:
             return self.input_parser.parse(filename)
         elif filename.suffix in self.output_parser.suffix_list:
             return self.output_parser.parse(filename)

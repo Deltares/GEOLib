@@ -1,8 +1,9 @@
 import pytest
 from pathlib import Path
-
 from geolib.models import BaseModel
 from geolib.models.dstability.dstability_model import DStabilityModel
+from geolib.models.dstability.internal import DStabilityOutputStructure
+
 
 from tests.utils import TestUtils
 
@@ -20,3 +21,9 @@ class TestDstabilityModel:
         dstability_model.parse(test_filepath)
         assert dstability_model.is_valid
         dstability_model.serialize(Path("test"))
+
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1/results")
+        )
+        dstability_model.parse(test_filepath)
+        assert isinstance(dstability_model.datastructure, DStabilityOutputStructure)

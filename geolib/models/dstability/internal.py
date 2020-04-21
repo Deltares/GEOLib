@@ -4,7 +4,7 @@ from datetime import date, datetime
 from enum import Enum
 from typing import List, Optional
 
-from pydantic import BaseModel as DataModel
+from pydantic import BaseModel as DataClass
 from pydantic import validator
 
 from geolib import __version__ as version
@@ -13,7 +13,7 @@ from geolib.models.base_model import BaseModelStructure
 from .dstability_validator import DStabilityValidator
 
 BaseModelStructure.Config.arbitrary_types_allowed = True
-DataModel.Config.arbitrary_types_allowed = True
+DataClass.Config.arbitrary_types_allowed = True
 
 
 class DStabilitySubStructure(BaseModelStructure):
@@ -28,19 +28,19 @@ class DStabilitySubStructure(BaseModelStructure):
 
 
 # waternet schema
-class PersistablePoint(DataModel):
+class PersistablePoint(DataClass):
     X: Optional[float]
     Z: Optional[float]
 
 
-class PersistableHeadLine(DataModel):
+class PersistableHeadLine(DataClass):
     Id: Optional[str]
     Label: Optional[str]
     Notes: Optional[str]
     Points: Optional[List[Optional[PersistablePoint]]]
 
 
-class PersistableReferenceLine(DataModel):
+class PersistableReferenceLine(DataClass):
     BottomHeadLineId: Optional[str]
     Id: Optional[str]
     Label: Optional[str]
@@ -67,14 +67,14 @@ class Waternet(DStabilitySubStructure):
 # waternet creator
 
 
-class PersistableDitchCharacteristics(DataModel):
+class PersistableDitchCharacteristics(DataClass):
     DitchBottomEmbankmentSide: Optional[float]
     DitchBottomLandSide: Optional[float]
     DitchEmbankmentSide: Optional[float]
     DitchLandSide: Optional[float]
 
 
-class PersistableEmbankmentCharacteristics(DataModel):
+class PersistableEmbankmentCharacteristics(DataClass):
     EmbankmentToeLandSide: Optional[float]
     EmbankmentToeWaterSide: Optional[float]
     EmbankmentTopLandSide: Optional[float]
@@ -130,7 +130,7 @@ class WaternetCreatorSettings(DStabilitySubStructure):
 # stateschema.json
 
 
-class PersistableStochasticParameter(DataModel):
+class PersistableStochasticParameter(DataClass):
     IsProbabilistic: Optional[bool]
     Mean: Optional[float]
     StandardDeviation: Optional[float]
@@ -142,7 +142,7 @@ class StateType(Enum):
     YIELD_STRESS = "YieldStress"
 
 
-class PersistableStress(DataModel):
+class PersistableStress(DataClass):
     Ocr: Optional[float]
     Pop: Optional[float]
     PopStochasticParameter: Optional[PersistableStochasticParameter]
@@ -150,7 +150,7 @@ class PersistableStress(DataModel):
     YieldStress: Optional[float]
 
 
-class PersistableStateLinePoint(DataModel):
+class PersistableStateLinePoint(DataClass):
     Above: Optional[PersistableStress]
     Below: Optional[PersistableStress]
     Id: Optional[str]
@@ -160,12 +160,12 @@ class PersistableStateLinePoint(DataModel):
     X: Optional[float]
 
 
-class PersistableStateLine(DataModel):
+class PersistableStateLine(DataClass):
     Points: Optional[List[Optional[PersistablePoint]]]
     Values: Optional[List[Optional[PersistableStateLinePoint]]]
 
 
-class PersistableStatePoint(DataModel):
+class PersistableStatePoint(DataClass):
     Id: Optional[str]
     IsProbabilistic: Optional[bool]
     Label: Optional[str]
@@ -194,7 +194,7 @@ class State(DStabilitySubStructure):
 # statecorrelation
 
 
-class PersistableStateCorrelation(DataModel):
+class PersistableStateCorrelation(DataClass):
     CorrelatedStateIds: Optional[List[Optional[str]]]
     IsFullyCorrelated: Optional[bool]
 
@@ -257,18 +257,18 @@ class PersistableShadingType(Enum):
     NONE = "None"
 
 
-class PersistableSoilVisualization(DataModel):
+class PersistableSoilVisualization(DataClass):
     Color: Optional[str]
     PersistableShadingType: Optional[PersistableShadingType]
     SoilId: Optional[str]
 
 
-class SoilVisualisation(DataModel):
+class SoilVisualisation(DataClass):
     ContentVersion: Optional[str]
     SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]]
 
 
-class PersistableSoilLayer(DataModel):
+class PersistableSoilLayer(DataClass):
     LayerId: Optional[str]
     SoilId: Optional[str]
 
@@ -286,10 +286,10 @@ class SoilLayerCollection(DStabilitySubStructure):
 
     ContentVersion: Optional[str]
     Id: Optional[str]
-    SoilLayers: Optional[List[Optional[PersistableSoilLayer]]]
+    SoilLayers: Optional[List[Optional[PersistableSoilLayer]]] = []
 
 
-class PersistableSoilCorrelation(DataModel):
+class PersistableSoilCorrelation(DataClass):
     CorrelatedSoilIds: Optional[List[Optional[str]]]
 
 
@@ -310,7 +310,7 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
     SU = "Su"
 
 
-class PersistableSoil(DataModel):
+class PersistableSoil(DataClass):
     Code: Optional[str]
     Cohesion: Optional[float]
     CohesionAndFrictionAngleCorrelated: Optional[bool]
@@ -332,9 +332,7 @@ class PersistableSoil(DataModel):
     ShearStrengthRatioAndShearStrengthExponentCorrelated: Optional[bool]
     ShearStrengthRatioStochasticParameter: Optional[PersistableStochasticParameter]
     StrengthIncreaseExponent: Optional[float]
-    StrengthIncreaseExponentStochasticParameter: Optional[
-        PersistableStochasticParameter
-    ]
+    StrengthIncreaseExponentStochasticParameter: Optional[PersistableStochasticParameter]
     VolumetricWeightAbovePhreaticLevel: Optional[float]
     VolumetricWeightBelowPhreaticLevel: Optional[float]
 
@@ -353,13 +351,13 @@ class SoilCollection(DStabilitySubStructure):
 # Reinforcements
 
 
-class PersistableForbiddenLine(DataModel):
+class PersistableForbiddenLine(DataClass):
     End: Optional[PersistablePoint]
     Label: Optional[str]
     Start: Optional[PersistablePoint]
 
 
-class PersistableGeotextile(DataModel):
+class PersistableGeotextile(DataClass):
     End: Optional[PersistablePoint]
     Label: Optional[str]
     ReductionArea: Optional[float]
@@ -367,12 +365,12 @@ class PersistableGeotextile(DataModel):
     TensileStrength: Optional[float]
 
 
-class PersistableStressAtDistance(DataModel):
+class PersistableStressAtDistance(DataClass):
     Distance: Optional[float]
     Stress: Optional[float]
 
 
-class PersistableNail(DataModel):
+class PersistableNail(DataClass):
     BendingStiffness: Optional[float]
     CriticalAngle: Optional[float]
     Diameter: Optional[float]
@@ -421,12 +419,12 @@ class ProjectInfo(DStabilitySubStructure):
         return datetime.strptime(datestring, "%d-%M-%Y").date()
 
 
-class PersistableBondStress(DataModel):
+class PersistableBondStress(DataClass):
     Sigma: Optional[float]
     Tau: Optional[float]
 
 
-class PersistableNailPropertiesForSoil(DataModel):
+class PersistableNailPropertiesForSoil(DataClass):
     BondStresses: Optional[List[Optional[PersistableBondStress]]]
     CompressionRatio: Optional[float]
     RheologicalCoefficient: Optional[float]
@@ -444,12 +442,12 @@ class NailProperties(DStabilitySubStructure):
         return "nailpropertiesforsoils"
 
 
-class PersistableConsolidation(DataModel):
+class PersistableConsolidation(DataClass):
     Degree: Optional[float]
     LayerId: Optional[str]
 
 
-class PersistableEarthquake(DataModel):
+class PersistableEarthquake(DataClass):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]]
     FreeWaterFactor: Optional[float]
     HorizontalFactor: Optional[float]
@@ -457,12 +455,12 @@ class PersistableEarthquake(DataModel):
     VerticalFactor: Optional[float]
 
 
-class PersistableLayerLoad(DataModel):
+class PersistableLayerLoad(DataClass):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]]
     LayerId: Optional[str]
 
 
-class PersistableLineLoad(DataModel):
+class PersistableLineLoad(DataClass):
     Angle: Optional[float]
     Consolidations: Optional[List[Optional[PersistableConsolidation]]]
     Label: Optional[str]
@@ -471,7 +469,7 @@ class PersistableLineLoad(DataModel):
     Spread: Optional[float]
 
 
-class PersistableTree(DataModel):
+class PersistableTree(DataClass):
     Force: Optional[float]
     Label: Optional[str]
     Location: Optional[PersistablePoint]
@@ -479,7 +477,7 @@ class PersistableTree(DataModel):
     Spread: Optional[float]
 
 
-class PersistableUniformLoad(DataModel):
+class PersistableUniformLoad(DataClass):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]]
     End: Optional[float]
     Label: Optional[str]
@@ -500,7 +498,7 @@ class Loads(DStabilitySubStructure):
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]]
 
 
-class PersistableLayer(DataModel):
+class PersistableLayer(DataClass):
     Id: Optional[str]
     Label: Optional[str]
     Notes: Optional[str]
@@ -519,13 +517,13 @@ class Geometry(DStabilitySubStructure):
     Layers: Optional[List[Optional[PersistableLayer]]]
 
 
-class PersistableBerm(DataModel):
+class PersistableBerm(DataClass):
     AddedLayerId: Optional[str]
     Label: Optional[str]
     Points: Optional[List[Optional[PersistablePoint]]]
 
 
-class PersistableExcavation(DataModel):
+class PersistableExcavation(DataClass):
     Label: Optional[str]
     Points: Optional[List[Optional[PersistablePoint]]]
 
@@ -551,32 +549,32 @@ class AnalysisType(Enum):
     UPLIFT_VAN_PARTICLE_SWARM = "UpliftVanParticleSwarm"
 
 
-class PersistableCircle(DataModel):
+class PersistableCircle(DataClass):
     Center: Optional[PersistablePoint]
     Radius: Optional[float]
 
 
-class PersistableBishopSettings(DataModel):
+class PersistableBishopSettings(DataClass):
     Circle: Optional[PersistableCircle]
 
 
-class PersistableGridEnhancements(DataModel):
+class PersistableGridEnhancements(DataClass):
     ExtrapolateSearchSpace: Optional[bool]
 
 
-class NullablePersistablePoint(DataModel):
+class NullablePersistablePoint(DataClass):
     X: Optional[float]
     Z: Optional[float]
 
 
-class PersistableSearchGrid(DataModel):
+class PersistableSearchGrid(DataClass):
     BottomLeft: Optional[NullablePersistablePoint]
     NumberOfPointsInX: Optional[int]
     NumberOfPointsInZ: Optional[int]
     Space: Optional[float]
 
 
-class PersistableSlipPlaneConstraints(DataModel):
+class PersistableSlipPlaneConstraints(DataClass):
     IsSizeConstraintsEnabled: Optional[bool]
     IsZoneAConstraintsEnabled: Optional[bool]
     IsZoneBConstraintsEnabled: Optional[bool]
@@ -588,13 +586,13 @@ class PersistableSlipPlaneConstraints(DataModel):
     XLeftZoneB: Optional[float]
 
 
-class PersistableTangentLines(DataModel):
+class PersistableTangentLines(DataClass):
     BottomTangentLineZ: Optional[float]
     NumberOfTangentLines: Optional[int]
     Space: Optional[float]
 
 
-class PersistableBishopBruteForceSettings(DataModel):
+class PersistableBishopBruteForceSettings(DataClass):
     GridEnhancements: Optional[PersistableGridEnhancements]
     SearchGrid: Optional[PersistableSearchGrid]
     SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints]
@@ -608,7 +606,7 @@ class CalculationType(Enum):
     PROBABILISTIC = "Probabilistic"
 
 
-class PersistableSpencerSettings(DataModel):
+class PersistableSpencerSettings(DataClass):
     SlipPlane: Optional[List[Optional[PersistablePoint]]]
 
 
@@ -617,41 +615,41 @@ class OptionsType(Enum):
     THOROUGH = "Thorough"
 
 
-class PersistableGeneticSlipPlaneConstraints(DataModel):
+class PersistableGeneticSlipPlaneConstraints(DataClass):
     IsEnabled: Optional[bool]
     MinimumAngleBetweenSlices: Optional[float]
     MinimumThrustLinePercentageInsideSlices: Optional[float]
 
 
-class PersistableSpencerGeneticSettings(DataModel):
+class PersistableSpencerGeneticSettings(DataClass):
     OptionsType: Optional[OptionsType]
     SlipPlaneA: Optional[List[Optional[PersistablePoint]]]
     SlipPlaneB: Optional[List[Optional[PersistablePoint]]]
     SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints]
 
 
-class PersistableTwoCirclesOnTangentLine(DataModel):
+class PersistableTwoCirclesOnTangentLine(DataClass):
     FirstCircleCenter: Optional[NullablePersistablePoint]
     FirstCircleRadius: Optional[float]
     SecondCircleCenter: Optional[NullablePersistablePoint]
 
 
-class PersistableUpliftVanSettings(DataModel):
+class PersistableUpliftVanSettings(DataClass):
     SlipPlane: Optional[PersistableTwoCirclesOnTangentLine]
 
 
-class PersistableSearchArea(DataModel):
+class PersistableSearchArea(DataClass):
     Height: Optional[float]
     TopLeft: Optional[NullablePersistablePoint]
     Width: Optional[float]
 
 
-class PersistableTangentArea(DataModel):
+class PersistableTangentArea(DataClass):
     Height: Optional[float]
     TopZ: Optional[float]
 
 
-class PersistableUpliftVanParticleSwarmSettings(DataModel):
+class PersistableUpliftVanParticleSwarmSettings(DataClass):
     OptionsType: Optional[OptionsType]
     SearchAreaA: Optional[PersistableSearchArea]
     SearchAreaB: Optional[PersistableSearchArea]
@@ -711,3 +709,281 @@ class DStabilityInputStructure(BaseModelStructure):
 
     def validator(self):
         return DStabilityValidator(self)
+
+
+########
+# OUTPUT
+########
+
+
+class PersistableSlice(DataClass):
+    ArcLength: Optional[float] = None
+    BottomAngle: Optional[float] = None
+    BottomLeft: Optional[PersistablePoint] = None
+    BottomRight: Optional[PersistablePoint] = None
+    CohesionInput: Optional[float] = None
+    CohesionOutput: Optional[float] = None
+    DegreeOfConsolidationLoadPorePressure: Optional[float] = None
+    DegreeOfConsolidationPorePressure: Optional[float] = None
+    DilatancyInput: Optional[float] = None
+    DilatancyOutput: Optional[float] = None
+    EffectiveStress: Optional[float] = None
+    HorizontalPorePressure: Optional[float] = None
+    HorizontalSoilQuakeStress: Optional[float] = None
+    HydrostaticPorePressure: Optional[float] = None
+    Label: Optional[str] = None
+    LoadStress: Optional[float] = None
+    MInput: Optional[float] = None
+    NormalStress: Optional[float] = None
+    Ocr: Optional[float] = None
+    PhiInput: Optional[float] = None
+    PhiOutput: Optional[float] = None
+    PiezometricPorePressure: Optional[float] = None
+    Pop: Optional[float] = None
+    ShearStress: Optional[float] = None
+    SInput: Optional[float] = None
+    SuOutput: Optional[float] = None
+    SurfacePorePressure: Optional[float] = None
+    TopAngle: Optional[float] = None
+    TopLeft: Optional[PersistablePoint] = None
+    TopRight: Optional[PersistablePoint] = None
+    TotalPorePressure: Optional[float] = None
+    TotalStress: Optional[float] = None
+    UpliftFactor: Optional[float] = None
+    VerticalPorePressure: Optional[float] = None
+    VerticalSoilQuakeStress: Optional[float] = None
+    WaterQuakeStress: Optional[float] = None
+    Weight: Optional[float] = None
+    Width: Optional[float] = None
+    YieldStress: Optional[float] = None
+
+
+class BishopBruteForceResult(DStabilitySubStructure):
+    Circle: Optional[PersistableCircle] = None
+    FactorOfSafety: Optional[float] = None
+    Id: Optional[str] = None
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Slices: Optional[List[Optional[PersistableSlice]]] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "bishopbruteforce"
+
+
+class PersistableSoilContribution(DataClass):
+    Alpha: Optional[float] = None
+    Property: Optional[str] = None
+    SoilId: Optional[str] = None
+    Value: Optional[float] = None
+
+
+class PersistableStageContribution(DataClass):
+    Alpha: Optional[float] = None
+    Property: Optional[str] = None
+    StageId: Optional[str] = None
+    Value: Optional[float] = None
+
+
+class PersistableStateLinePointContribution(DataClass):
+    Alpha: Optional[float] = None
+    Property: Optional[str] = None
+    StateLinePointId: Optional[str] = None
+    Value: Optional[float] = None
+
+
+class PersistableStatePointContribution(DataClass):
+    Alpha: Optional[float] = None
+    Property: Optional[str] = None
+    StatePointId: Optional[str] = None
+    Value: Optional[float] = None
+
+
+class BishopReliabilityResult(DStabilitySubStructure):
+    Circle: Optional[PersistableCircle] = None
+    Converged: Optional[bool] = None
+    FailureProbability: Optional[float] = None
+    Id: Optional[str] = None
+    ReliabilityIndex: Optional[float] = None
+    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
+    StageContributions: Optional[List[Optional[PersistableStageContribution]]] = None
+    StateLinePointContributions: Optional[
+        List[Optional[PersistableStateLinePointContribution]]
+    ] = None
+    StatePointContributions: Optional[
+        List[Optional[PersistableStatePointContribution]]
+    ] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "bishopreliability"
+
+
+class BishopResult(DStabilitySubStructure):
+    Circle: Optional[PersistableCircle] = None
+    FactorOfSafety: Optional[float] = None
+    Id: Optional[str] = None
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Slices: Optional[List[Optional[PersistableSlice]]] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "bishop"
+
+
+class PersistableSpencerSlice(BaseModelStructure):
+    ArcLength: Optional[float] = None
+    BottomAngle: Optional[float] = None
+    BottomLeft: Optional[PersistablePoint] = None
+    BottomRight: Optional[PersistablePoint] = None
+    CohesionInput: Optional[float] = None
+    CohesionOutput: Optional[float] = None
+    DegreeOfConsolidationLoadPorePressure: Optional[float] = None
+    DegreeOfConsolidationPorePressure: Optional[float] = None
+    DilatancyInput: Optional[float] = None
+    DilatancyOutput: Optional[float] = None
+    EffectiveStress: Optional[float] = None
+    HorizontalPorePressure: Optional[float] = None
+    HorizontalSoilQuakeStress: Optional[float] = None
+    HydrostaticPorePressure: Optional[float] = None
+    Label: Optional[str] = None
+    LeftForce: Optional[float] = None
+    LeftForceAngle: Optional[float] = None
+    LeftForceY: Optional[float] = None
+    LoadStress: Optional[float] = None
+    MInput: Optional[float] = None
+    NormalStress: Optional[float] = None
+    Ocr: Optional[float] = None
+    PhiInput: Optional[float] = None
+    PhiOutput: Optional[float] = None
+    PiezometricPorePressure: Optional[float] = None
+    Pop: Optional[float] = None
+    RightForce: Optional[float] = None
+    RightForceAngle: Optional[float] = None
+    RightForceY: Optional[float] = None
+    ShearStress: Optional[float] = None
+    SInput: Optional[float] = None
+    SuOutput: Optional[float] = None
+    SurfacePorePressure: Optional[float] = None
+    TopAngle: Optional[float] = None
+    TopLeft: Optional[PersistablePoint] = None
+    TopRight: Optional[PersistablePoint] = None
+    TotalPorePressure: Optional[float] = None
+    TotalStress: Optional[float] = None
+    UpliftFactor: Optional[float] = None
+    VerticalPorePressure: Optional[float] = None
+    VerticalSoilQuakeStress: Optional[float] = None
+    WaterQuakeStress: Optional[float] = None
+    Weight: Optional[float] = None
+    Width: Optional[float] = None
+    YieldStress: Optional[float] = None
+
+
+class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
+    FactorOfSafety: Optional[float] = None
+    Id: Optional[str] = None
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
+    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "spencergeneticalgorithm"
+
+
+class SpencerReliabilityResult(DStabilitySubStructure):
+    Converged: Optional[bool] = None
+    FailureProbability: Optional[float] = None
+    Id: Optional[str] = None
+    ReliabilityIndex: Optional[float] = None
+    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
+    StageContributions: Optional[List[Optional[PersistableStageContribution]]] = None
+    StateLinePointContributions: Optional[
+        List[Optional[PersistableStateLinePointContribution]]
+    ] = None
+    StatePointContributions: Optional[
+        List[Optional[PersistableStatePointContribution]]
+    ] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "spencerreliability"
+
+
+class SpencerResult(DStabilitySubStructure):
+    FactorOfSafety: Optional[float] = None
+    Id: Optional[str] = None
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
+    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "spencer"
+
+
+class UpliftVanParticleSwarmResult(DStabilitySubStructure):
+    FactorOfSafety: Optional[float] = None
+    Id: Optional[str] = None
+    LeftCenter: Optional[PersistablePoint] = None
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    RightCenter: Optional[PersistablePoint] = None
+    Slices: Optional[List[Optional[PersistableSlice]]] = None
+    TangentLine: Optional[float] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "upliftvanparticleswarm"
+
+
+class UpliftVanReliabilityResult(DStabilitySubStructure):
+    Converged: Optional[bool] = None
+    FailureProbability: Optional[float] = None
+    Id: Optional[str] = None
+    LeftCenter: Optional[PersistablePoint] = None
+    ReliabilityIndex: Optional[float] = None
+    RightCenter: Optional[PersistablePoint] = None
+    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
+    StageContributions: Optional[List[Optional[PersistableStageContribution]]] = None
+    StateLinePointContributions: Optional[
+        List[Optional[PersistableStateLinePointContribution]]
+    ] = None
+    StatePointContributions: Optional[
+        List[Optional[PersistableStatePointContribution]]
+    ] = None
+    TangentLine: Optional[float] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "upliftvanreliability"
+
+
+class UpliftVanResult(DStabilitySubStructure):
+    FactorOfSafety: Optional[float] = None
+    Id: Optional[str] = None
+    LeftCenter: Optional[PersistablePoint] = None
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    RightCenter: Optional[PersistablePoint] = None
+    Slices: Optional[List[Optional[PersistableSlice]]] = None
+    TangentLine: Optional[float] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "upliftvan"
+
+
+class DStabilityOutputStructure(BaseModelStructure):
+    """Output structure class for DStability.
+
+    It's parsed from the "results" subfolder.
+    """
+
+    UpliftVanResults: List[UpliftVanResult]
+    UpliftVanParticleSwarmResults: List[UpliftVanParticleSwarmResult]
+    UpliftVanReliabilityResults: List[UpliftVanReliabilityResult]
+    SpencerGeneticAlgorithmResults: List[SpencerGeneticAlgorithmResult]
+    SpencerReliabilityResults: List[SpencerReliabilityResult]
+    SpencerResults: List[SpencerResult]
+    BishopBruteForceResults: List[BishopBruteForceResult]
+    BishopReliabilityResults: List[BishopReliabilityResult]
+    BishopResults: List[BishopResult]

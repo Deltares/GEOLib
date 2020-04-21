@@ -1,36 +1,34 @@
-import inspect
-import json
-import logging
-import os
-import sys
-from enum import Enum
-from typing import List, Type, _GenericAlias
-from typing import get_type_hints
+from os import scandir
+from typing import List, _GenericAlias
+from typing import get_type_hints, Type
 
-from pydantic import FilePath, DirectoryPath, BaseModel
+from pydantic import DirectoryPath
 
-from geolib.models.dseries_parser import DSerieParser
 from geolib.models.parsers import BaseParser, BaseParserProvider
 
-from .internal import *
+from .internal import (
+    BaseModelStructure,
+    DStabilityInputStructure,
+    DStabilityOutputStructure,
+)
 
 
-class DStabilityInputParser(BaseParser):
-    """DStability parser of input files."""
-
+class DStabilityParser(BaseParser):
     @property
-    def suffix_list(self) -> List[str]:
-        return ["", ".json"]
+    def structure(self):
+        raise NotImplementedError("Implemented in child class.")
 
-    def parse(self, filepath: DirectoryPath) -> DStabilityInputStructure:
+    def parse(self, filepath: DirectoryPath) -> BaseModelStructure:
         ds = {}
 
         # Find required .json files via type hints
-        for field, fieldtype in get_type_hints(DStabilityInputStructure).items():
+        for field, fieldtype in get_type_hints(self.structure).items():
+
             # On List types, parse a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
-                ds[field] = self.parse_folder(element_type, filepath)
+                ds[field] = self.__parse_folder(element_type, filepath)
+
             # Otherwise its a single .json in the root folder
             else:
                 fn = filepath / (fieldtype.structure_name() + ".json")
@@ -38,13 +36,15 @@ class DStabilityInputParser(BaseParser):
                     raise Exception(f"Couldn't find required file at {fn}")
                 ds[field] = fieldtype.parse_file(fn)
 
-        return DStabilityInputStructure(**ds)
+        return self.structure(**ds)
 
-    def parse_folder(self, fieldtype, filepath):
+    def __parse_folder(self, fieldtype, filepath: DirectoryPath) -> List:
         out = []
 
         folder = filepath / fieldtype.structure_group()
-        files = os.scandir(folder)
+        files = scandir(folder)
+        # We need to sort to make sure that files such as x.json, x_1.json,
+        # x_2.json etc. are stored sequentally, scandir produces arbitrary order.
         sorted_files = sorted(map(lambda x: x.path, files))
 
         for file in sorted_files:
@@ -57,28 +57,46 @@ class DStabilityInputParser(BaseParser):
         return out
 
 
-class DStabilityOutputParser(BaseParser):
+class DStabilityInputParser(DStabilityParser):
     """DStability parser of input files."""
 
     @property
     def suffix_list(self) -> List[str]:
         return ["", ".json"]
 
+    @property
+    def structure(self) -> Type[DStabilityInputStructure]:
+        return DStabilityInputStructure
+
+
+class DStabilityOutputParser(DStabilityParser):
+    """DStability parser of input files."""
+
+    @property
+    def suffix_list(self) -> List[str]:
+        return ["results", ".json"]
+
+    @property
+    def structure(self) -> Type[DStabilityOutputStructure]:
+        return DStabilityOutputStructure
+
 
 class DStabilityParserProvider(BaseParserProvider):
 
-    __input_parser = None
-    __output_parser = None
+    _input_parser = None
+    _output_parser = None
 
     @property
     def input_parser(self) -> DStabilityInputParser:
-        if not self.__input_parser:
-            self.__input_parser = DStabilityInputParser()
-        return self.__input_parser
+        if not self._input_parser:
+            self._input_parser = DStabilityInputParser()
+        return self._input_parser
 
     @property
-    def output_parser(self):
-        raise NotImplementedError()
+    def output_parser(self) -> DStabilityOutputParser:
+        if not self._output_parser:
+            self._output_parser = DStabilityOutputParser()
+        return self._output_parser
 
     @property
     def parser_name(self) -> str:
