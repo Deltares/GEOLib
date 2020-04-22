@@ -62,7 +62,14 @@ D-Settlement={{ version.d__settlement }}
 {{ calculation_options }}
 [END OF CALCULATION OPTIONS]
 [RESIDUAL TIMES]
+{% if residual_times is mapping -%}
+{{ residual_times.time_steps | length }} : Number of items
+{% for time_step in residual_times.time_steps -%}
+    {{ time_step }}
+{% endfor -%}
+{% else -%}
 {{ residual_times }}
+{%- endif -%}
 [END OF RESIDUAL TIMES]
 [FILTER BAND WIDTH]
 {{ filter_band_width }}

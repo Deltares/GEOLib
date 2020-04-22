@@ -1,11 +1,17 @@
-from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel as DataClass
+from pydantic.types import conint
 
 from geolib.models.base_model import BaseModelStructure
-from geolib.models.dseries_parser import DSeriesStructure, DSeriesKeyValueSubStructure, DSeriesNameKeyValueSubStructure, DSeriesListSubStructure, DSeriesNoParseSubStructure
+from geolib.models.dseries_parser import (
+    DSeriesStructure,
+    DSeriesKeyValueSubStructure,
+    DSeriesNameKeyValueSubStructure,
+    DSeriesListSubStructure,
+    DSeriesNoParseSubStructure,
+)
 from geolib.geometry.one import Point
 
 DataClass.Config.arbitrary_types_allowed = True
@@ -18,6 +24,7 @@ class DSeriePoint(DataClass):
         Here co-ordinate system is the same as in the the d-settlement UI.
         So axis z of the geolib needs to be modified to y axis, which represents the depth.
     """
+
     X: float
     Y: float
     Z: float
@@ -25,6 +32,7 @@ class DSeriePoint(DataClass):
     @classmethod
     def from_point(cls, p: Point):
         return cls(X=p.x, Y=p.z, Z=p.y)
+
 
 class Soil(DSeriesNoParseSubStructure):
     name: str
@@ -38,6 +46,10 @@ class Version(DSeriesKeyValueSubStructure):
     soil: int = 1005
     geometry: int = 1000
     d__settlement: int = 1007
+
+
+class ResidualTimes(DSeriesNoParseSubStructure):
+    time_steps: List[conint(ge=0)]
 
 
 class Verticals(DSeriesNoParseSubStructure):
@@ -58,7 +70,7 @@ class DSettlementStructure(DSeriesStructure):
     water_loads: str
     other_loads: str
     calculation_options: str
-    residual_times: str
+    residual_times: Union[ResidualTimes, str]
     filter_band_width: str
     pore_pressure_meters: str
     non__uniform_loads_pore_pressures: str

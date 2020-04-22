@@ -1,8 +1,9 @@
 from datetime import timedelta
-from typing import List, Optional
+from typing import List, Optional, Type
 
 from pydantic import BaseModel as DataClass
 from pydantic import FilePath
+from pydantic.types import confloat
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, MetaData
@@ -10,7 +11,7 @@ from geolib.soils import Soil
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
-from .internal import DSettlementStructure, DSeriePoint, Verticals
+from .internal import DSettlementStructure, DSeriePoint, Verticals, ResidualTimes
 from .loads import OtherLoad
 from .serializer import DSettlementInputSerializer
 
@@ -31,11 +32,11 @@ class DSettlementModel(BaseModel):
     by external loading.
 
     This model can read, modify and create
-    \*.sli files, read \*.sld and \*.err files.
+    *.sli files, read *.sld and *.err files.
     """
 
     @property
-    def parser_provider_type(self) -> DSettlementParserProvider:
+    def parser_provider_type(self) -> Type[DSettlementParserProvider]:
         return DSettlementParserProvider
 
     def serialize(self, filename: str):
@@ -126,8 +127,22 @@ class DSettlementModel(BaseModel):
         Edit the head lines for each layer with `create layer`.
         """
 
-    def set_calculation_times(self, time: List[timedelta]):
-        """(Re)set calculation time(s)."""
+    def set_calculation_times(self, time_steps: List[timedelta]):
+        """(Re)set calculation time(s).
+
+        Sets a list of calculation times, sorted from low to high with a minimum of 0.
+
+        Args:
+            time_steps: List of time steps, type: float >= 0
+
+        Returns:
+
+        """
+        time_steps.sort()
+        residual_times = ResidualTimes(
+            time_steps=[timestep.days for timestep in time_steps]
+        )
+        self.datastructure.residual_times = residual_times
 
     def set_verticals(self, locations: List[Point]) -> None:
         """
@@ -142,4 +157,3 @@ class DSettlementModel(BaseModel):
             pointlist.append(DSeriePoint.from_point(point))
         verticals = Verticals(locations=pointlist)
         self.datastructure.verticals = verticals
-
