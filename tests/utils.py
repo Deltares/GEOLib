@@ -11,7 +11,6 @@ class TestUtils:
 
     _name_external = "external_test_data"
     _name_local = "test_data"
-    _name_output = "test_output"
 
     @staticmethod
     def install_package(package: str):
@@ -22,16 +21,6 @@ class TestUtils:
             package {str} -- Name of the PIP package.
         """
         pipmain(["install", package])
-
-    @staticmethod
-    def get_output_test_data_dir(dir_name: str):
-        directory = \
-            TestUtils.get_test_data_dir(
-                dir_name,
-                TestUtils._name_output)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        return directory
 
     @staticmethod
     def get_local_test_data_dir(dir_name: str):
