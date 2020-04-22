@@ -11,7 +11,7 @@ class TestBaseModel:
         return BaseModel()
 
     @pytest.mark.unittest
-    @pytest.mark.skip(reason="no way of currently testing this")
+    # @pytest.mark.skip(reason="no way of currently testing this")
     def test_Model_initialize_createsfile_when_no_config_file_given(
         self, default_base_model
     ):
@@ -32,7 +32,7 @@ class TestBaseModel:
         ), "" + "No file was created at {}".format(inputfile_filename)
 
     @pytest.mark.unittest
-    @pytest.mark.skip(reason="no way of currently testing this")
+    # @pytest.mark.skip(reason="no way of currently testing this")
     def test_Model_execute_timeout_after_giventime(self, default_base_model):
         # 1. Set initial test data.
         timeout = 2
