@@ -10,7 +10,7 @@ from geolib.soils import Soil
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
-from .internal import DSettlementStructure
+from .internal import DSettlementStructure, DSeriePoint, Verticals
 from .loads import OtherLoad
 from .serializer import DSettlementInputSerializer
 
@@ -128,3 +128,18 @@ class DSettlementModel(BaseModel):
 
     def set_calculation_times(self, time: List[timedelta]):
         """(Re)set calculation time(s)."""
+
+    def set_verticals(self, locations: List[Point]) -> None:
+        """
+            Set calculation verticals in geometry.
+            X and Y coordinates should be defined for each vertical.
+
+            .. todo::
+                Add check that checks that the verticals are not outside of the geometry boundaries. [GEOLIB-12]
+        """
+        pointlist = []
+        for point in locations:
+            pointlist.append(DSeriePoint.from_point(point))
+        verticals = Verticals(locations=pointlist)
+        self.datastructure.verticals = verticals
+

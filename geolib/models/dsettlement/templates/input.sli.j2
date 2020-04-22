@@ -36,7 +36,15 @@ D-Settlement={{ version.d__settlement }}
 {{ model }}
 [END OF MODEL]
 [VERTICALS]
+{% if verticals is mapping -%}
+{{ verticals.total_mesh }} = total Mesh
+{{ verticals.locations|length }} = number of items
+{% for location in locations %}
+{{ location.x}}        {{location.z}} = X, Z
+{% endfor %}
+{% else -%}
 {{ verticals }}
+{%- endif -%}
 [END OF VERTICALS]
 [WATER]
 {{ water }}
