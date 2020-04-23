@@ -5,7 +5,7 @@ import pytest
 
 from geolib.models import BaseModel
 from geolib.models.dstability.dstability_parserprovider import (
-    DStabilityInputParser,
+    DStabilityParser,
     DStabilityParserProvider,
 )
 from tests.utils import TestUtils
@@ -15,7 +15,7 @@ class TestDStabilityInputParser:
     @pytest.mark.integrationtest
     def test_dstability_parse_directory(self):
         # 1. Set up test model
-        input_parser = DStabilityInputParser()
+        input_parser = DStabilityParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
 
         # 2. Verify initial expectations

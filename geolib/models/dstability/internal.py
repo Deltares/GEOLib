@@ -1,5 +1,5 @@
 import inspect
-import sys
+import sys, re
 from datetime import date, datetime
 from enum import Enum
 from typing import List, Optional
@@ -7,10 +7,20 @@ from typing import List, Optional
 from pydantic import BaseModel as DataClass
 from pydantic import validator
 
+from geolib.models import BaseModel
 from geolib import __version__ as version
 from geolib.models.base_model import BaseModelStructure
+from geolib.soils import Soil
 
 from .dstability_validator import DStabilityValidator
+
+_CAMEL_TO_SNAKE_PATTERN = re.compile(r'(?<!^)(?=[A-Z])')
+def camel_to_snake(name: str) -> str:  # TODO move to utils
+  name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+  return _CAMEL_TO_SNAKE_PATTERN.sub('_', name).lower()
+
+def snake_to_camel(name: str) -> str:  # TODO move to utils
+    return ''.join(word.title() for word in name.split('_'))
 
 BaseModelStructure.Config.arbitrary_types_allowed = True
 DataClass.Config.arbitrary_types_allowed = True
@@ -336,6 +346,36 @@ class PersistableSoil(DataClass):
     VolumetricWeightAbovePhreaticLevel: Optional[float]
     VolumetricWeightBelowPhreaticLevel: Optional[float]
 
+    @classmethod
+    def from_soil(cls, soil: Soil) -> "PersistableSoil":
+        """
+        Convert Soil to PersistableSoil.
+
+        Args:
+            soil (Soil): the given soil
+
+        Returns:
+            PersistableSoil: Converted soil
+        """
+        # convert snake_case members to CamelCase
+        return cls(
+            **{snake_to_camel(k): v for k, v in dict(soil).items()}            
+        )
+
+    def to_soil(self) -> Soil:
+        """
+        Convert PersistableSoil to Soil
+
+        Returns:
+            Soil: Converted PersistableSoil
+        """
+        # convert CamelCase members to snake_case
+        return Soil(
+            **{
+                camel_to_snake(k) : v for k, v in dict(self).items()
+            }
+        )
+
 
 class SoilCollection(DStabilitySubStructure):
     """soils.json"""
@@ -344,8 +384,65 @@ class SoilCollection(DStabilitySubStructure):
     def structure_name(cls) -> str:
         return "soils"
 
+    def has_soilcode(self, code: str) -> bool:
+        """
+        Checks if the soilcode is available in the current soil list.
+
+        Args:
+            code (str): code of the soil
+
+        Returns:
+            bool: True if found, False if not
+        """
+        return code in {s.Code for s in self.Soils}
+
+    def add_soil(self, soil: Soil) -> None:
+        """
+        Add a new soil to the model.
+
+        Args:
+            soil (Soil): a new soil
+
+        Returns:
+            None
+        """
+        ps = PersistableSoil.from_soil(soil)
+        self.Soils.append(ps)
+
+    def get_soil(self, id: int) -> Soil:
+        """
+        Get soil by the given id.
+
+        Args:
+            id (int): id of the soil
+
+        Returns:
+            Soil: or None if not available
+        """
+        for s in self.Soils:
+            if s.Id == id:
+                return s.to_soil()
+        raise ValueError(f"Soil id {id} not found in the SoilCollection")
+
+    def edit_soil(self, soil: Soil) -> None:
+        """
+        Update a soil.
+
+        Args:
+            soil (Soil): soil class with the new properties
+
+        Returns:
+            bool: True for succes, False otherwise
+        """
+        for ps in self.Soils:
+            if ps.Code == soil.code:
+                ps.from_soil(soil)
+                return True
+
+        return False
+
     ContentVersion: Optional[str]
-    Soils: Optional[List[Optional[PersistableSoil]]]
+    Soils: List[Optional[PersistableSoil]] = []
 
 
 # Reinforcements
@@ -674,43 +771,6 @@ class CalculationSettings(DStabilitySubStructure):
     UpliftVanParticleSwarm: Optional[PersistableUpliftVanParticleSwarmSettings]
 
 
-class DStabilityInputStructure(BaseModelStructure):
-    """Highest level DStability class that should be parsed to and serialized from.
-
-    The List[] items (one for each stage in the model) will be stored in a subfolder 
-    to multiple json files. Where the first (0) instance
-    has no suffix, but the second one has (1 => _1) etc."""
-
-    waternets: List[Waternet] = [Waternet()]  # waternets/waternet_x.json
-    waternetcreatorsettings: List[WaternetCreatorSettings] = [
-        WaternetCreatorSettings()
-    ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
-    states: List[State] = [State()]  # states/states_x.json
-    statecorrelations: List[StateCorrelation] = [
-        StateCorrelation()
-    ]  # statecorrelations/statecorrelations_x.json
-    stages: List[Stage] = [Stage()]  # stages/stage_x.json
-    soillayers: List[SoilLayerCollection] = [
-        SoilLayerCollection()
-    ]  # soillayers/soillayers_x.json
-    soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
-    soils: SoilCollection = SoilCollection()  # soils.json
-    reinforcements: List[Reinforcements] = [
-        Reinforcements()
-    ]  # reinforcements/reinforcements_x.json
-    projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
-    nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
-    loads: List[Loads] = [Loads()]  # loads/loads_x.json
-    decorations: List[Decorations] = [Decorations()]  # decorations/decorations_x.json
-    calculationsettings: List[CalculationSettings] = [
-        CalculationSettings()
-    ]  # calculationsettings/calculationsettings_x.json
-    geometries: List[Geometry] = [Geometry()]  # geometries/geometry_x.json
-
-    def validator(self):
-        return DStabilityValidator(self)
-
-
 ########
 # OUTPUT
 ########
@@ -767,7 +827,7 @@ class BishopBruteForceResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "bishopbruteforce"
+        return "results/bishopbruteforce"
 
 
 class PersistableSoilContribution(DataClass):
@@ -815,7 +875,7 @@ class BishopReliabilityResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "bishopreliability"
+        return "results/bishopreliability"
 
 
 class BishopResult(DStabilitySubStructure):
@@ -827,7 +887,7 @@ class BishopResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "bishop"
+        return "results/bishop"
 
 
 class PersistableSpencerSlice(BaseModelStructure):
@@ -887,7 +947,7 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "spencergeneticalgorithm"
+        return "results/spencergeneticalgorithm"
 
 
 class SpencerReliabilityResult(DStabilitySubStructure):
@@ -907,7 +967,7 @@ class SpencerReliabilityResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "spencerreliability"
+        return "results/spencerreliability"
 
 
 class SpencerResult(DStabilitySubStructure):
@@ -919,7 +979,7 @@ class SpencerResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "spencer"
+        return "results/spencer"
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
@@ -933,7 +993,7 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "upliftvanparticleswarm"
+        return "results/upliftvanparticleswarm"
 
 
 class UpliftVanReliabilityResult(DStabilitySubStructure):
@@ -955,7 +1015,7 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "upliftvanreliability"
+        return "results/upliftvanreliability"
 
 
 class UpliftVanResult(DStabilitySubStructure):
@@ -969,21 +1029,61 @@ class UpliftVanResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "upliftvan"
+        return "results/upliftvan"
 
 
-class DStabilityOutputStructure(BaseModelStructure):
-    """Output structure class for DStability.
+###########################
+# INPUT AND OUTPUT COMBINED
+###########################
 
-    It's parsed from the "results" subfolder.
+
+class DStabilityStructure(BaseModelStructure):
+    """Highest level DStability class that should be parsed to and serialized from.
+
+    The List[] items (one for each stage in the model) will be stored in a subfolder
+    to multiple json files. Where the first (0) instance
+    has no suffix, but the second one has (1 => _1) etc.
+    
+    also parses the outputs which are part of the json files
     """
 
-    UpliftVanResults: List[UpliftVanResult]
-    UpliftVanParticleSwarmResults: List[UpliftVanParticleSwarmResult]
-    UpliftVanReliabilityResults: List[UpliftVanReliabilityResult]
-    SpencerGeneticAlgorithmResults: List[SpencerGeneticAlgorithmResult]
-    SpencerReliabilityResults: List[SpencerReliabilityResult]
-    SpencerResults: List[SpencerResult]
-    BishopBruteForceResults: List[BishopBruteForceResult]
-    BishopReliabilityResults: List[BishopReliabilityResult]
-    BishopResults: List[BishopResult]
+    # input part
+    waternets: List[Waternet] = [Waternet()]  # waternets/waternet_x.json
+    waternetcreatorsettings: List[WaternetCreatorSettings] = [
+        WaternetCreatorSettings()
+    ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
+    states: List[State] = [State()]  # states/states_x.json
+    statecorrelations: List[StateCorrelation] = [
+        StateCorrelation()
+    ]  # statecorrelations/statecorrelations_x.json
+    stages: List[Stage] = [Stage()]  # stages/stage_x.json
+    soillayers: List[SoilLayerCollection] = [
+        SoilLayerCollection()
+    ]  # soillayers/soillayers_x.json
+    soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
+    soils: SoilCollection = SoilCollection()  # soils.json
+    reinforcements: List[Reinforcements] = [
+        Reinforcements()
+    ]  # reinforcements/reinforcements_x.json
+    projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
+    nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
+    loads: List[Loads] = [Loads()]  # loads/loads_x.json
+    decorations: List[Decorations] = [Decorations()]  # decorations/decorations_x.json
+    calculationsettings: List[CalculationSettings] = [
+        CalculationSettings()
+    ]  # calculationsettings/calculationsettings_x.json
+    geometries: List[Geometry] = [Geometry()]  # geometries/geometry_x.json
+
+    # Output parts
+    uplift_van_results: List[UpliftVanResult] = []
+    uplift_van_particle_swarm_results: List[UpliftVanParticleSwarmResult] = []
+    uplift_van_reliability_results: List[UpliftVanReliabilityResult] = []
+    spencer_genetic_algorithm_results: List[SpencerGeneticAlgorithmResult] = []
+    spencer_reliability_results: List[SpencerReliabilityResult] = []
+    spencer_results: List[SpencerResult] = []
+    bishop_bruteforce_results: List[BishopBruteForceResult] = []
+    bishop_reliability_results: List[BishopReliabilityResult] = []
+    bishop_results: List[BishopResult] = []
+
+    def validator(self):
+        return DStabilityValidator(self)

@@ -6,17 +6,17 @@ from pydantic import DirectoryPath
 
 from geolib.models.parsers import BaseParser, BaseParserProvider
 
-from .internal import (
-    BaseModelStructure,
-    DStabilityInputStructure,
-    DStabilityOutputStructure,
-)
+from .internal import BaseModelStructure, DStabilityStructure
 
 
 class DStabilityParser(BaseParser):
     @property
-    def structure(self):
-        raise NotImplementedError("Implemented in child class.")
+    def suffix_list(self) -> List[str]:
+        return ["", ".json"]
+
+    @property
+    def structure(self) -> Type[DStabilityStructure]:
+        return DStabilityStructure
 
     def parse(self, filepath: DirectoryPath) -> BaseModelStructure:
         ds = {}
@@ -57,45 +57,21 @@ class DStabilityParser(BaseParser):
         return out
 
 
-class DStabilityInputParser(DStabilityParser):
-    """DStability parser of input files."""
-
-    @property
-    def suffix_list(self) -> List[str]:
-        return ["", ".json"]
-
-    @property
-    def structure(self) -> Type[DStabilityInputStructure]:
-        return DStabilityInputStructure
-
-
-class DStabilityOutputParser(DStabilityParser):
-    """DStability parser of input files."""
-
-    @property
-    def suffix_list(self) -> List[str]:
-        return ["results", ".json"]
-
-    @property
-    def structure(self) -> Type[DStabilityOutputStructure]:
-        return DStabilityOutputStructure
-
-
 class DStabilityParserProvider(BaseParserProvider):
 
     _input_parser = None
     _output_parser = None
 
     @property
-    def input_parser(self) -> DStabilityInputParser:
+    def input_parser(self) -> DStabilityParser:
         if not self._input_parser:
-            self._input_parser = DStabilityInputParser()
+            self._input_parser = DStabilityParser()
         return self._input_parser
 
     @property
-    def output_parser(self) -> DStabilityOutputParser:
+    def output_parser(self) -> DStabilityParser:
         if not self._output_parser:
-            self._output_parser = DStabilityOutputParser()
+            self._output_parser = DStabilityParser()
         return self._output_parser
 
     @property

@@ -4,7 +4,6 @@ from typing import List, Optional
 from pydantic import BaseModel
 from pydantic.color import Color
 
-
 class PersistableStochasticParameter(BaseModel):
     """
     Stochastic parameters class
@@ -235,6 +234,7 @@ class ConstitutiveModels(BaseModel):
 class Soil(BaseModel):
     """Soil Material class."""
 
+    
     id: Optional[str] = None
     name: Optional[str] = None
     code: Optional[str] = None
@@ -250,29 +250,28 @@ class Soil(BaseModel):
     drainage_type: Optional[Enum] = None
     constitutive_model: Optional[ConstitutiveModels] = None
 
-    # #todo sort parameters below
-    # cohesion: Optional[float] = None
-    # cohesion_and_friction_angle_correlated: Optional[bool] = None
-    # cohesion_stochastic_parameter: Optional[PersistableStochasticParameter] = None
-    # dilatancy: Optional[float] = None
-    # dilatancy_stochastic_parameter: Optional[PersistableStochasticParameter] = None
-    # friction_angle: Optional[float] = None
-    # friction_angle_stochastic_parameter: Optional[PersistableStochasticParameter] = None
-    # is_probabilistic: Optional[bool] = None
-    # shear_strength_model_type_above_phreatic_level: Optional[
-    #     ShearStrengthModelTypePhreaticLevel
-    # ] = None
-    # shear_strength_model_type_below_phreatic_level: Optional[
-    #     ShearStrengthModelTypePhreaticLevel
-    # ] = None
-    # shear_strength_ratio: Optional[float] = None
-    # shear_strength_ratio_and_shear_strength_exponent_correlated: Optional[bool] = None
-    # shear_strength_ratio_stochastic_parameter: Optional[
-    #     PersistableStochasticParameter
-    # ] = None
-    # strength_increase_exponent: Optional[float] = None
-    # strength_increase_exponent_stochastic_parameter: Optional[
-    #     PersistableStochasticParameter
-    # ] = None
-    # volumetric_weight_above_phreatic_level: Optional[float] = None
-    # volumetric_weight_below_phreatic_level: Optional[float] = None
+    cohesion: Optional[float] = None
+    cohesion_and_friction_angle_correlated: Optional[bool] = None
+    cohesion_stochastic_parameter: Optional[PersistableStochasticParameter] = None
+    dilatancy: Optional[float] = None
+    dilatancy_stochastic_parameter: Optional[PersistableStochasticParameter] = None
+    friction_angle: Optional[float] = None
+    friction_angle_stochastic_parameter: Optional[PersistableStochasticParameter] = None
+    is_probabilistic: Optional[bool] = None
+    shear_strength_model_type_above_phreatic_level: Optional[
+        ShearStrengthModelTypePhreaticLevel
+    ] = None
+    shear_strength_model_type_below_phreatic_level: Optional[
+        ShearStrengthModelTypePhreaticLevel
+    ] = None
+    shear_strength_ratio: Optional[float] = None
+    shear_strength_ratio_and_shear_strength_exponent_correlated: Optional[bool] = None
+    shear_strength_ratio_stochastic_parameter: Optional[
+        PersistableStochasticParameter
+    ] = None
+    strength_increase_exponent: Optional[float] = None
+    strength_increase_exponent_stochastic_parameter: Optional[
+        PersistableStochasticParameter
+    ] = None
+    volumetric_weight_above_phreatic_level: Optional[float] = None
+    volumetric_weight_below_phreatic_level: Optional[float] = None

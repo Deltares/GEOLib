@@ -5,13 +5,13 @@ from typing import _GenericAlias, get_type_hints, List
 from os import makedirs
 
 from geolib.models.serializers import BaseSerializer
-from .internal import DStabilityInputStructure
+from .internal import DStabilityStructure
 
 
 class DStabilityInputSerializer(BaseSerializer):
     """Test"""
 
-    ds: DStabilityInputStructure
+    ds: DStabilityStructure
 
     def write(self, filepath: DirectoryPath):
 
