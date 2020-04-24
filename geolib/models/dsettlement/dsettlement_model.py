@@ -74,7 +74,7 @@ class DSettlementModel(BaseModel):
         head_line_bottom: int,
     ):
         """Create layer based on point ids. These should ordered in the x direction.
-        
+
         .. todo::
             Determine how a 1D geometry would fit in here.
         """
@@ -113,7 +113,7 @@ class DSettlementModel(BaseModel):
         sequence_id: Optional[int],
     ):
         """Create non uniform load.
-        
+
         Sequence of loading is based on order of creation, but can 
         be overridden with sequence_id.
         """

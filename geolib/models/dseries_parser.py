@@ -2,11 +2,10 @@ import logging
 from abc import abstractmethod
 from typing import List, get_type_hints, _GenericAlias
 
-from pydantic import BaseModel as DataModel
 from pydantic import FilePath
 
-from geolib.models.base_model import BaseModelStructure
-from geolib.models.parsers import BaseParser, BaseParserProvider
+from .parsers import BaseParser
+from geolib.models.base_model_structure import BaseModelStructure
 
 
 class DSeriesStructure(BaseModelStructure):
@@ -71,6 +70,7 @@ class DSeriesListSubStructure(DSeriesStructure):
         parsed_structure = DSerieParser.parse_list_group(data)
         return cls(**parsed_structure)
 
+
 class DSeriesNoParseSubStructure(DSeriesStructure):
 
     @staticmethod
@@ -122,7 +122,7 @@ class DSerieParser(BaseParser):
     def suffix_list(self) -> List[str]:
         raise NotImplementedError("Implement in derived classes.")
 
-    def parse(self, filename: FilePath):
+    def parse(self, filename: FilePath) -> DSeriesStructure:
         logging.warning(f"Parsing {filename}")
 
         with open(filename) as io:

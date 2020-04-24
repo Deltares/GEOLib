@@ -4,7 +4,7 @@ from typing import List, Optional, Union
 from pydantic import BaseModel as DataClass
 from pydantic.types import conint
 
-from geolib.models.base_model import BaseModelStructure
+from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSeriesStructure,
     DSeriesKeyValueSubStructure,

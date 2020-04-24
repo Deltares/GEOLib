@@ -9,7 +9,7 @@ from pydantic import validator
 
 from geolib.models import BaseModel
 from geolib import __version__ as version
-from geolib.models.base_model import BaseModelStructure
+from geolib.models.base_model_structure import BaseModelStructure
 from geolib.soils import Soil
 
 from .dstability_validator import DStabilityValidator

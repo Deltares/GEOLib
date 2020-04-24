@@ -4,7 +4,6 @@
 This module contains the primary objects that power GEOLib.
 """
 import abc
-import asyncio
 import os
 import logging
 from types import CoroutineType
@@ -15,17 +14,7 @@ from pydantic import FilePath, HttpUrl
 
 from .meta import MetaData
 from .parsers import BaseParserProvider
-from .validators import BaseValidator
-
-
-class BaseModelStructure(DataClass, abc.ABC):
-    @property
-    def is_valid(self):
-        return self.validator().is_valid
-
-    def validator(self):
-        """Set the Validator class."""
-        return BaseValidator(self)
+from .base_model_structure import BaseModelStructure
 
 
 class BaseModel(DataClass, abc.ABC):
@@ -54,9 +43,10 @@ class BaseModel(DataClass, abc.ABC):
         """
         raise NotImplementedError("Implement in concrete classes.")
 
-    def parse(self, filename: FilePath):
+    def parse(self, filename: FilePath) -> BaseModelStructure:
         """Parse input or outputfile to Model, depending on extension."""
         self.datastructure = self.parser_provider_type().parse(filename)
+        return self.datastructure
 
     @property
     def is_valid(self) -> bool:
@@ -79,7 +69,7 @@ class BaseModel(DataClass, abc.ABC):
     @property
     def output(self):
         """Access internal dict-like datastructure of the output.
-        
+
         Requires a succesful execute. Throws an error with error codes
         and explanation from the error file if not.
         """
@@ -94,7 +84,7 @@ class BaseModelList(DataClass):
         self, timeout: int = 10, nprocesses: Optional[int] = os.cpu_count()
     ) -> CoroutineType:
         """Execute all models in this class in parallel.
-        
+
         We split the list to separate folders and call a batch processes on each folder.
         """
 

@@ -1,8 +1,8 @@
-from os import scandir
+from os import scandir, path
 from typing import List, _GenericAlias
 from typing import get_type_hints, Type
 
-from pydantic import DirectoryPath
+from pydantic import DirectoryPath, FilePath
 
 from geolib.models.parsers import BaseParser, BaseParserProvider
 
@@ -12,11 +12,14 @@ from .internal import BaseModelStructure, DStabilityStructure
 class DStabilityParser(BaseParser):
     @property
     def suffix_list(self) -> List[str]:
-        return ["", ".json"]
+        return [".json"]
 
     @property
     def structure(self) -> Type[DStabilityStructure]:
         return DStabilityStructure
+
+    def can_parse(self, filename: FilePath) -> bool:
+        return super().can_parse(filename) or path.isdir(filename)
 
     def parse(self, filepath: DirectoryPath) -> BaseModelStructure:
         ds = {}
