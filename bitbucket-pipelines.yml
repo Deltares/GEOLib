@@ -11,20 +11,63 @@ clone:
 pipelines:
   default:
     - step:
+        name: Install requirements.
         caches:
           - pip
         script: # Modify the commands below to build your repository.
           - pip install -r requirements.txt
-          - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
+    - parallel:
+      - step: # Run unittest
+          name: Run unittest and codecoverage.
+          caches:
+            - pip
+          script: 
+            - pip install -r requirements.txt
+            - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
+      - step: # Run integrationtest
+          name: Run integrationtest.
+          caches:
+            - pip
+          script: 
+            - pip install -r requirements.txt
+            - pytest -v -m "integrationtest and not workinprogress"
+      - step: # Run systemtest
+          name: Run systemtest.
+          caches:
+            - pip
+          script: 
+            - pip install -r requirements.txt
+            - pytest -v -m "systemtest and not workinprogress"
+      # - step: # Run acceptancetest
+      #     name: Run acceptancetest.
+      #     caches:
+      #       - pip
+      #     script: 
+      #       - pip install -r requirements.txt
+      #       - pytest -v -m "acceptancetest and not workinprogress"
 
   branches:
     master:
-      - step:
+      - step: # Install packages.
+          name: Install packages.
           caches:
             - pip
-          script: # Modify the commands below to build your repository.
+          script:
+            - pip install -r requirements.txt
+      - step: # Run tests with code coverage for unittest
+          name: Run tests and code coverage.
+          caches:
+            - pip
+          script: 
             - pip install -r requirements.txt
             - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
+            - pytest -v -m "not unittest and not workinprogress"
+      - step: # create documentation
+          name: Create documentation.
+          caches:
+            - pip
+          script:
+            - pip install -r requirements.txt
             - cd docs && make html
             - apt-get update && apt-get --yes install zip
             - cd build/html && zip -r docs.zip *
