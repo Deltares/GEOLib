@@ -10,8 +10,9 @@ Usage::
 """
 
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Type
 
+from pathlib import Path
 from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath
 
@@ -57,9 +58,16 @@ class DStabilityModel(BaseModel):
     *.stix files
     """
 
+    input_fn: Optional[DirectoryPath]
+    output_fn: Optional[DirectoryPath]
+
     @property
-    def parser_provider_type(self) -> DStabilityParserProvider:
+    def parser_provider_type(self) -> Type[DStabilityParserProvider]:
         return DStabilityParserProvider
+
+    @property
+    def console_path(self) -> Path:
+        return Path("DStabilityConsole/D-GEO Suite Stability GEOLIB Console.exe")
 
     @property
     def soils(self) -> SoilCollection:
@@ -149,11 +157,7 @@ class DStabilityModel(BaseModel):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
 
     def add_layer(
-        self,
-        points: List[int],
-        material: Soil,
-        state_point=Optional[Point],
-        stage=None,
+        self, points: List[int], material: Soil, state_point=Optional[Point], stage=None,
     ) -> int:
         """Create layer with Soil in model. 
 

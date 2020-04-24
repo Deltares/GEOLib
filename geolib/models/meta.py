@@ -11,13 +11,13 @@ such as an compute endpoint.
 
 """
 from datetime import datetime
-
-from pydantic import BaseSettings, HttpUrl
+from geolib import __version__ as version
+from pydantic import BaseSettings, AnyHttpUrl, DirectoryPath
 
 
 class MetaData(BaseSettings):
     """Holds all metadata found in the header of model files.
-    
+
     Could be specified by default or in advance to make
     model generation easier.
 
@@ -26,13 +26,14 @@ class MetaData(BaseSettings):
     as '_env_file' parameter.
     """
 
-    company: str
-    analyst: str
+    company: str = ""
+    analyst: str = ""
     startdate: datetime = datetime.now()
-    project: str
-    remarks: str
+    project: str = ""
+    remarks: str = f"Created by GEOLib {version}"
 
-    endpoint: HttpUrl  # For remote execution
+    endpoint: AnyHttpUrl = "http://localhost:8080/geolib"  # For remote execution
+    console_folder: DirectoryPath = ""
 
     class Config:
         env_file = "geolib.env"

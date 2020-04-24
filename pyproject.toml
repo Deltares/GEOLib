@@ -22,10 +22,14 @@ pytest = "^5.4.1"
 python-dotenv = "^0.12.0"
 rst2pdf = "^0.96"
 pytest-cov = "^2.8.1"
+teamcity_messages = "^1.27"
 
 [tool.poetry.dev-dependencies]
 teamcity-messages = "^1.27"
 
+[tool.black]
+line-length = 90
+target-version = ['py37']
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
@@ -47,6 +51,3 @@ force_grid_wrap=0
 use_parentheses=true
 line_length=90
 
-[tool.black]
-line-length = 90
-target-version = ['py37']

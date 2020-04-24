@@ -3,12 +3,22 @@ import os
 import pytest
 
 from geolib.models.base_model import BaseModel
+from geolib.models.base_model import MetaData
+
+from pathlib import Path
+from teamcity import is_running_under_teamcity
 
 
 class TestBaseModel:
     @pytest.fixture
     def default_base_model(self):
         return BaseModel()
+
+    @pytest.mark.unittest
+    def test_meta_init(self):
+        # test loading from geolib.env
+        m = MetaData()
+        assert m.company == "Deltares"
 
     @pytest.mark.unittest
     @pytest.mark.skip(reason="no way of currently testing this")

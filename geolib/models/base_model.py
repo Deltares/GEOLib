@@ -4,13 +4,16 @@
 This module contains the primary objects that power GEOLib.
 """
 import abc
+from abc import abstractproperty, abstractmethod
 import os
 import logging
+from subprocess import run, CompletedProcess
 from types import CoroutineType
-from typing import List, Optional, Type
+from typing import List, Optional, Type, Union
 
+from pathlib import Path
 from pydantic import BaseModel as DataClass
-from pydantic import FilePath, HttpUrl
+from pydantic import FilePath, DirectoryPath, HttpUrl
 
 from .meta import MetaData
 from .parsers import BaseParserProvider
@@ -18,20 +21,33 @@ from .base_model_structure import BaseModelStructure
 
 
 class BaseModel(DataClass, abc.ABC):
-    input_fn: Optional[FilePath]
-    output_fn: Optional[FilePath]
+    input_fn: Union[FilePath, DirectoryPath, None]
+    output_fn: Union[FilePath, DirectoryPath, None]
     datastructure: Optional[BaseModelStructure]
+    meta: MetaData = MetaData()
 
-    async def execute(self, timeout: int = 10) -> CoroutineType:
+    def execute(self, timeout: int = 10) -> Union[CompletedProcess, Exception]:
         """Execute a Model and wait for `timeout` seconds."""
+        self.serialize(self.input_fn)
+        return run(
+            [str(self.meta.console_folder / self.console_path), str(self.input_fn)],
+            timeout=timeout,
+        )
 
     async def execute_remote(self, endpoint: HttpUrl) -> CoroutineType:
         """Execute a Model on a remote endpoint."""
 
-    def serialize(self, filename: Optional[FilePath]) -> str:
+    @abstractmethod
+    def serialize(
+        self, filename: Union[FilePath, DirectoryPath, None]
+    ) -> Union[FilePath, DirectoryPath, Exception, None]:
         """Serialize model to input file."""
 
     @property
+    def console_path(self) -> Path:
+        raise NotImplementedError("Implement in concrete classes.")
+
+    @abstractproperty
     def parser_provider_type(self) -> Type[BaseParserProvider]:
         """Returns the parser provider type of the current concrete class.
 

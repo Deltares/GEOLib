@@ -1,6 +1,8 @@
 from datetime import timedelta
-from typing import List, Optional, Type
+from typing import List, Optional, Type, Union
+from subprocess import run, CompletedProcess
 
+from pathlib import Path
 from pydantic import BaseModel as DataClass
 from pydantic import FilePath
 from pydantic.types import confloat
@@ -38,6 +40,18 @@ class DSettlementModel(BaseModel):
     @property
     def parser_provider_type(self) -> Type[DSettlementParserProvider]:
         return DSettlementParserProvider
+
+    @property
+    def console_path(self) -> Path:
+        return Path("DSettlementConsole/DSettlementConsole.exe")
+
+    def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
+        """Execute a Model and wait for `timeout` seconds."""
+        self.serialize(self.input_fn)
+        return run(
+            [str(self.meta.console_folder / self.console_path), "/b", str(self.input_fn)],
+            timeout=timeout,
+        )
 
     def serialize(self, filename: str):
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())

@@ -3,6 +3,8 @@ import os
 import shutil
 from pathlib import Path
 
+from teamcity import is_running_under_teamcity
+
 from geolib.models import BaseModel
 from geolib.models import BaseModelStructure
 
@@ -70,3 +72,26 @@ class TestDStabilityModel:
         assert len(os.listdir(test_output_filepath)) > 0, (
             "" + "No data was generated while serializing."
         )
+
+    @pytest.mark.systemtest
+    @pytest.mark.skipif(
+        not is_running_under_teamcity(), reason="Console test only installed on TC."
+    )
+    def test_execute_model_succesfully(self):
+        # 1. Set up test data.
+        dm = DStabilityModel()
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
+        dm.parse(test_filepath)
+
+        test_output_filepath = Path(TestUtils.get_output_test_data_dir("test"))
+        dm.serialize(test_output_filepath)
+
+        # 2. Verify initial expectations.
+        assert os.path.exists(test_output_filepath)
+
+        # 3. Run test.
+        dm.input_fn = test_output_filepath
+        status = dm.execute()
+
+        # 3. Verify return code of 0 (indicates succesfull run)
+        assert status.returncode == 0

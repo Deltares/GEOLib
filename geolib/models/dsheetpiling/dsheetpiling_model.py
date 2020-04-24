@@ -53,6 +53,9 @@ class DSheetpilingModel(BaseModel):
     def parser_provider_type(self):
         raise NotImplementedError("Not implemented yet.")
 
+    def serialize(self):
+        """TODO: To implement."""
+
     def add_stage(
         self,
         label: str,

@@ -42,12 +42,15 @@ class DFoundationsModel(BaseModel):
     and shallow foundation in accordance with the Dutch (and Belgian) standards.
 
     This model can read, modify and create
-    \*.foi files, read \*.fod and \*.err files.
+    *.foi files, read *.fod and *.err files.
     """
 
     @property
     def parser_provider_type(self):
         raise NotImplementedError("Not implemented yet.")
+
+    def serialize(self):
+        """TODO: To implement."""
 
     def set_model(self, model: ModelType, sequence: ConstructionSequence, **kwargs):
         """(Re)Set ModelType (Bearing/Tension)(NL/BE) and ConstructionSequence for model."""
