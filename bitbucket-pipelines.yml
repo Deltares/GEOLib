@@ -17,32 +17,32 @@ pipelines:
         script: # Modify the commands below to build your repository.
           - pip install -r requirements.txt
     - parallel:
-      - step: # Run unittest
-          name: Run unittest and codecoverage.
-          caches:
-            - pip
-          script: 
-            - pip install -r requirements.txt
-            - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
-      - step: # Run integrationtest
-          name: Run integrationtest.
-          caches:
-            - pip
-          script: 
-            - pip install -r requirements.txt
-            - pytest -v -m "integrationtest and not workinprogress"
-      - step: # Run systemtest
-          name: Run systemtest.
-          caches:
-            - pip
-          script: 
-            - pip install -r requirements.txt
-            - pytest -v -m "systemtest and not workinprogress"
+        - step: # Run unittest
+            name: Run unittest and codecoverage.
+            caches:
+              - pip
+            script:
+              - pip install -r requirements.txt
+              - pytest -v --cov=geolib --cov-report xml:test-reports/coverage.xml --junitxml=test-reports/report.xml tests/ -m "unittest and not workinprogress"
+        - step: # Run integrationtest
+            name: Run integrationtest.
+            caches:
+              - pip
+            script:
+              - pip install -r requirements.txt
+              - pytest -v -m "integrationtest and not workinprogress"
+        - step: # Run systemtest
+            name: Run systemtest.
+            caches:
+              - pip
+            script:
+              - pip install -r requirements.txt
+              - pytest -v -m "systemtest and not workinprogress"
       # - step: # Run acceptancetest
       #     name: Run acceptancetest.
       #     caches:
       #       - pip
-      #     script: 
+      #     script:
       #       - pip install -r requirements.txt
       #       - pytest -v -m "acceptancetest and not workinprogress"
 
@@ -58,7 +58,7 @@ pipelines:
           name: Run tests and code coverage.
           caches:
             - pip
-          script: 
+          script:
             - pip install -r requirements.txt
             - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
             - pytest -v -m "not unittest and not workinprogress"
@@ -75,4 +75,4 @@ pipelines:
               variables:
                 BITBUCKET_USERNAME: $BITBUCKET_USERNAME
                 BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
-                FILENAME: 'docs.zip'
+                FILENAME: "docs.zip"
