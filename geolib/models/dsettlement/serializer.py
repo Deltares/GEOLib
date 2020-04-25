@@ -6,7 +6,7 @@ from jinja2 import Environment, PackageLoader
 from geolib import __version__ as glversion
 from geolib.models.serializers import BaseSerializer
 
-ENV = Environment(loader=PackageLoader("geolib.models.dsettlement"))
+ENV = Environment(loader=PackageLoader("geolib.models.dsettlement"), trim_blocks=True)
 
 
 class DSettlementInputSerializer(BaseSerializer):

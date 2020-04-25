@@ -18,7 +18,7 @@ class Point(DataModel):
 
     """
 
-    label: str
+    label: str = ""
     id: Optional[int]
     x: Optional[float]
     y: Optional[float]

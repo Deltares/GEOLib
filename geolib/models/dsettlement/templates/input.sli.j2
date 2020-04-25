@@ -7,24 +7,24 @@ FILENAME   : {{ output_fn }}
 CREATED BY : GEOLib version {{ glversion }}
 ==========================    BEGINNING OF DATA     ==========================
 [VERSION]
-{% if version is mapping -%}
+{% if version is mapping %}
 Soil={{ version.soil }}
 Geometry={{ version.geometry }}
 D-Settlement={{ version.d__settlement }}
-{% else -%}
+{% else %}
 {{ version }}
-{%- endif -%}
+{% endif %}
 [END OF VERSION]
 [SOIL COLLECTION]
-{% if soil_collection is mapping -%}
+{% if soil_collection is mapping %}
 {% for soil in soil_collection.soil %}
 [SOIL]
 {{ soil }}
 [END OF SOIL]
 {% endfor %}
-{% else -%}
+{% else %}
 {{ soil_collection }}
-{%- endif -%}
+{% endif %}
 [END OF SOIL COLLECTION]
 [GEOMETRY DATA]
 {{ geometry_data }}
@@ -36,40 +36,83 @@ D-Settlement={{ version.d__settlement }}
 {{ model }}
 [END OF MODEL]
 [VERTICALS]
-{% if verticals is mapping -%}
+{% if verticals is mapping %}
 {{ verticals.total_mesh }} = total Mesh
 {{ verticals.locations|length }} = number of items
 {% for location in locations %}
-{{ location.x}}        {{location.z}} = X, Z
+{{ location.x}}        {{ location.z}} = X, Z
 {% endfor %}
-{% else -%}
+{% else %}
 {{ verticals }}
-{%- endif -%}
+{% endif %}
 [END OF VERTICALS]
 [WATER]
 {{ water }}
 [END OF WATER]
 [NON-UNIFORM LOADS]
+{% if non__uniform_loads.loads is mapping %}
+{{ non__uniform_loads.loads|length }} = number of items
+{% for name, non__uniform_load in non__uniform_loads.loads.items() %}
+{{ name }}
+{{ non__uniform_load.time }} {{ non__uniform_load.gammadry }} {{ non__uniform_load.gammawet }} {{ non__uniform_load.temporary }} {{ non__uniform_load.endtime }} = Time, Gamma dry, Gamma wet, Temporary, Endtime
+{{ non__uniform_load.points|length }} = Number of co-ordinates
+    {% for point in non__uniform_load.points %}
+        {{ point.X }} {{ point.Y }} = X, Y
+    {% endfor %}
+{% endfor %}
+{% else %}
 {{ non__uniform_loads }}
+{% endif %}
 [END OF NON-UNIFORM LOADS]
 [WATER LOADS]
 {{ water_loads }}
 [END OF WATER LOADS]
 [OTHER LOADS]
+{% if other_loads.loads is mapping %}
+{{ other_loads.loads|length }} = number of items
+{% for name, load in other_loads.loads.items() %}
+{{ name }}
+{% if load.load_type.value == 0 %}
+0 : Trapeziform
+{{ load.time }} {{ load.load_values_trapeziform.gamma }} {{ load.load_values_trapeziform.height }} = Time, Gamma, H
+{{ load.load_values_trapeziform.xl }} {{ load.load_values_trapeziform.xm }} {{ load.load_values_trapeziform.xr }} {{ load.load_values_trapeziform.Xp }} {{ load.load_values_trapeziform.Yp }}  = xl, xm, xr, Xp, Yp
+{% endif %}
+{% if load.load_type.value == 1 %}
+1 : Circular
+{{ load.time }} {{ load.load_values_circular.weight }} {{ load.load_values_circular.alpha }} = Time, Weight, Alpha
+{{ load.load_values_circular.Xcp }} {{ load.load_values_circular.Ycp }} {{ load.load_values_circular.Zcp }} {{ load.load_values_circular.R }} = Xcp, Ycp, Zcp, R
+{% endif %}
+{% if load.load_type.value == 2 %}
+2 : Rectangular
+{{ load.time }} {{ load.load_values_rectangular.weight }} {{ load.load_values_rectangular.alpha }} = Time, Weight, Alpha
+{{ load.load_values_rectangular.Xcp }} {{ load.load_values_rectangular.Ycp }} {{ load.load_values_rectangular.Zcp }} {{ load.load_values_rectangular.xwidth }} {{ load.load_values_rectangular.zwidth }} = Xcp, Ycp, Zcp, xwidth, zwidth
+{% endif %}
+{% if load.load_type.value == 3 %}
+3 : Uniform
+{{ load.time }} {{ load.load_values_uniform.gamma }} {{ load.load_values_uniform.height }} {{ load.load_values_uniform.y_application }} = Time, Gamma, H, Yapplication
+{% endif %}
+{% if load.load_type.value == 4 %}
+4 : Tank
+{{ load.time }} {{ load.load_values_tank.gamma }} {{ load.load_values_tank.wallheight }} {{ load.load_values_tank.interalweight }} {{ load.load_values_tank.alpha }} = Time, WallWeight, InternalWeight, Alpha
+{{ load.load_values_tank.Xcp }} {{ load.load_values_tank.Ycp }} {{ load.load_values_tank.Zcp }} {{ load.load_values_tank.Rintern }} {{ load.load_values_tank.dWall }}= Xcp, Ycp, Zcp, Rintern, DWall
+{% endif %}
+{% endfor %}
+{% else %}
 {{ other_loads }}
+{% endif %}
 [END OF OTHER LOADS]
 [CALCULATION OPTIONS]
 {{ calculation_options }}
 [END OF CALCULATION OPTIONS]
 [RESIDUAL TIMES]
-{% if residual_times is mapping -%}
+{% if residual_times is mapping %}
 {{ residual_times.time_steps | length }} : Number of items
-{% for time_step in residual_times.time_steps -%}
+{% for time_step in residual_times.time_steps %}
     {{ time_step }}
-{% endfor -%}
-{% else -%}
+{% endfor %}
+{% else %}
 {{ residual_times }}
-{%- endif -%}
+{% endif %}
 [END OF RESIDUAL TIMES]
 [FILTER BAND WIDTH]
 {{ filter_band_width }}

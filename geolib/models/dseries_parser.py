@@ -9,7 +9,6 @@ from geolib.models.base_model_structure import BaseModelStructure
 
 
 class DSeriesStructure(BaseModelStructure):
-
     def __init__(self, *args, **kwargs):
         # TODO Needs a refactor!
 
@@ -23,7 +22,10 @@ class DSeriesStructure(BaseModelStructure):
                 if type(fieldtype) == _GenericAlias:  # quite hacky
                     element_type, *_ = fieldtype.__args__  # use getargs in 3.8
 
-                    if element_type.is_parseable():
+                    if (
+                        hasattr(element_type, "is_parseable")
+                        and element_type.is_parseable()
+                    ):
                         kwargs[field] = element_type.parse_text(body)
                     else:
                         logging.warning(f"Can't parse {element_type} for {field} yet")
@@ -33,10 +35,14 @@ class DSeriesStructure(BaseModelStructure):
 
             # If the body is a list[string], we should check
             # whether we can parse it further.
-            elif field in kwargs and isinstance(kwargs[field], list) and isinstance(kwargs[field][0], str):
+            elif (
+                field in kwargs
+                and isinstance(kwargs[field], list)
+                and isinstance(kwargs[field][0], str)
+            ):
                 body = kwargs[field]
                 element_type, *_ = fieldtype.__args__[0].__args__
-                if element_type.is_parseable():
+                if hasattr(element_type, "is_parseable") and element_type.is_parseable():
                     kwargs[field] = [element_type.parse_text(item) for item in body]
                 else:
                     logging.warning(f"Can't parse {element_type} for {field} yet")
@@ -72,7 +78,6 @@ class DSeriesListSubStructure(DSeriesStructure):
 
 
 class DSeriesNoParseSubStructure(DSeriesStructure):
-
     @staticmethod
     def is_parseable() -> bool:
         return False
@@ -178,7 +183,7 @@ class DSerieParser(BaseParser):
 
                 # end of current group
                 elif key == "end_of_" + currentkey:
-                    parsed_dictionary[currentkey] = data
+                    parsed_dictionary[currentkey] = data.strip()
                     data = ""
                     currentkey = ""
 
@@ -189,7 +194,7 @@ class DSerieParser(BaseParser):
             # dataline
             else:
                 data += line
-        
+
         return parsed_dictionary
 
     @staticmethod
@@ -220,7 +225,7 @@ class DSerieParser(BaseParser):
 
                 # end of current group
                 elif key == "end_of_" + currentkey:
-                    parsed_list.append(data)
+                    parsed_list.append(data.strip())
                     data = ""
                     currentkey = ""
 
@@ -236,7 +241,7 @@ class DSerieParser(BaseParser):
             # dataline
             else:
                 data += line + "\n"
-        
+
         return {collection_key: parsed_list}
 
     @staticmethod
@@ -275,6 +280,7 @@ class DSerieParser(BaseParser):
             fields = text_fields.split("=")
             parsed_dictionary[make_key(fields[0])] = fields[1]
         return parsed_dictionary
+
 
 def make_key(key: str) -> str:
     return key.strip().replace(" ", "_").replace("-", "__").lower()

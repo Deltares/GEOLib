@@ -3,19 +3,36 @@ import pathlib
 import pytest
 
 from datetime import timedelta
+from typing import List
+import pydantic
 from pathlib import Path
-
 from teamcity import is_running_under_teamcity
 
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
-from geolib.models.dsettlement.internal import DSettlementStructure, Version, Verticals
+from geolib.models.dsettlement.internal import (
+    DSettlementStructure,
+    Version,
+    OtherLoad,
+    TypeOtherLoads,
+)
 from geolib.geometry.one import Point
+import geolib.models.dsettlement.loads as loads
 
 from tests.utils import TestUtils
 
 
 class TestDSettlementModel:
+    def setup_dsettlement_model(self):
+        """Setup base structure from parsed file while
+        we can't initialize one from scratch yet."""
+        p = pathlib.Path("tests/test_data/dsettlement/bm1-1.sli")
+        ds = DSettlementModel()
+        ds.parse(p)
+        assert ds.datastructure is not None
+        assert isinstance(ds.datastructure, DSettlementStructure)
+        return ds
+
     @pytest.mark.unittest
     @pytest.mark.workinprogress
     def test_DSettlementModel_instance(self):
@@ -109,9 +126,9 @@ class TestDSettlementModel:
         ds.serialize("test2.sli")
 
     @pytest.mark.systemtest
-    # @pytest.mark.skipif(
-    # not is_running_under_teamcity(), reason="Console test only installed on TC."
-    # )
+    @pytest.mark.skipif(
+        not is_running_under_teamcity(), reason="Console test only installed on TC."
+    )
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         dm = DSettlementModel()
@@ -137,17 +154,16 @@ class TestDSettlementModel:
     def test_set_calculation_times(self):
 
         # parse file
-        p = pathlib.Path("tests/test_data/dsettlement/bm1-1.sli")
-        ds = DSettlementModel()
-        ds.parse(p)
-        assert ds.datastructure is not None
-        assert isinstance(ds.datastructure, DSettlementStructure)
-
+        ds = self.setup_dsettlement_model()
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_calc_times.sli"
+        )
         # set time steps
         days = [0, 1, 1000]
         time_steps = [timedelta(days=day) for day in days]
         ds.set_calculation_times(time_steps=time_steps)
-        ds.serialize("test.sli")
+        ds.serialize(test_output_filepath)
 
         # assert if time steps are in data structure
         assert ds.datastructure.residual_times.time_steps == days
@@ -164,19 +180,20 @@ class TestDSettlementModel:
 
     @pytest.mark.integrationtest
     def test_feature_verticals(self):
-        p = pathlib.Path("tests/test_data/dsettlement/bm1-1.sli")
-        ds = DSettlementModel()
-        ds.parse(p)
-        assert ds.datastructure is not None
-        assert isinstance(ds.datastructure, DSettlementStructure)
+        ds = self.setup_dsettlement_model()
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_verticals.sli"
+        )
 
         # set up the verical locations
         point1 = Point(label="1", x=0.0, y=1.0, z=0.0)
         point2 = Point(label="2", x=2.0, y=3.0, z=0.0)
         locations = [point1, point2]
+
         # call function
         ds.set_verticals(locations=locations)
-        ds.serialize("test.sli")
+        ds.serialize(test_output_filepath)
+
         # check if data were in datastructure
         assert ds.datastructure.verticals.total_mesh == 100
         assert ds.datastructure.verticals.locations[0].X == 0
@@ -185,3 +202,192 @@ class TestDSettlementModel:
         assert ds.datastructure.verticals.locations[1].X == 2
         assert ds.datastructure.verticals.locations[1].Y == 0
         assert ds.datastructure.verticals.locations[1].Z == 3
+
+    @pytest.mark.integrationtest
+    def test_non_uniform_loads(self):
+        ds = self.setup_dsettlement_model()
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_loads.sli"
+        )
+
+        # set up the point list
+        point1 = Point(label="1", x=0.0, y=1.0, z=0.0)
+        point2 = Point(label="2", x=2.0, y=3.0, z=0.0)
+        pointlist = [point1, point2]
+
+        # Add first uniform load
+        ds.add_non_uniform_load(
+            name="My First Load",
+            points=pointlist,
+            time_start=timedelta(days=0),
+            time_end=timedelta(days=100),
+            gamma_dry=10.001,
+            gamma_wet=11.002,
+        )
+
+        ds.add_non_uniform_load(
+            name="My Second Load",
+            points=pointlist,
+            time_start=timedelta(days=0),
+            time_end=timedelta(days=100),
+            gamma_dry=10.001,
+            gamma_wet=11.002,
+        )
+
+        ds.serialize(test_output_filepath)
+
+        # Verify expectations
+        assert len(ds.non_uniform_loads.loads) == 2
+        assert list(ds.non_uniform_loads.loads.values())[0].endtime == 100
+
+    @pytest.mark.integrationtest
+    def test_non_uniform_loads_raises_errors(self):
+        ds = self.setup_dsettlement_model()
+        # set up the point list
+        point1 = Point(label="1", x=0.0, y=1.0, z=0.0)
+        point2 = Point(label="2", x=2.0, y=3.0, z=0.0)
+        pointlist = [point1, point2]
+        # Add first uniform load
+        ds.add_non_uniform_load(
+            name="My First Load",
+            points=pointlist,
+            time_start=timedelta(days=0),
+            time_end=timedelta(days=100),
+            gamma_dry=10.001,
+            gamma_wet=11.002,
+        )
+
+        # character length is outside bounds.
+        with pytest.raises(pydantic.ValidationError):
+            ds.add_non_uniform_load(
+                name="My Second Load has a really, really big name",
+                points=pointlist,
+                time_start=timedelta(days=0),
+                time_end=timedelta(days=100),
+                gamma_dry=10.001,
+                gamma_wet=11.002,
+            )
+
+        # Name of load arleady exists.
+        with pytest.raises(
+            ValueError, match="Load with name 'My First Load' already exists.",
+        ):
+            ds.add_non_uniform_load(
+                name="My First Load",
+                points=pointlist,
+                time_start=timedelta(days=0),
+                time_end=timedelta(days=100),
+                gamma_dry=10.001,
+                gamma_wet=11.002,
+            )
+
+    @pytest.mark.integrationtest
+    def test_other_loads_trapeziform(self):
+        # setup test data
+        ds = self.setup_dsettlement_model()
+        name = "Load 1"
+        time = timedelta(days=1)
+        point = Point(x=0.4, z=0.5)
+        olt = loads.TrapeziformLoad(gamma=10, height=2, xl=0.1, xm=0.2, xr=0.3,)
+        ds.add_other_load(name, time, point, olt)
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_otherloads.sli"
+        )
+
+        ds.serialize(test_output_filepath)
+
+        # Verify data
+        assert list(ds.other_loads.loads.keys())[0] == "Load 1"
+        assert list(ds.other_loads.loads.values())[0].time == 1
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.gamma == 10
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.height == 2
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xl == 0.1
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xm == 0.2
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xr == 0.3
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.Xp == 0.4
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.Yp == 0.5
+
+    @pytest.mark.integrationtest
+    def test_other_loads_circular(self):
+        ds = self.setup_dsettlement_model()
+        name = "Load 1"
+        time = timedelta(days=1)
+        point = Point(x=0.2, z=0.3, y=0.4)
+        otc = loads.CircularLoad(weight=10.1, alpha=0.1, R=0.5,)
+        ds.add_other_load(name, time, point, otc)
+        assert list(ds.other_loads.loads.keys())[0] == "Load 1"
+        assert list(ds.other_loads.loads.values())[0].time == 1
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.weight == 10.1
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.alpha == 0.1
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.Xcp == 0.2
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.Ycp == 0.3
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.Zcp == 0.4
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.R == 0.5
+
+    @pytest.mark.integrationtest
+    def test_other_loads_rectangular(self):
+        ds = self.setup_dsettlement_model()
+        name = "Load 1"
+        time = timedelta(days=1)
+        point = Point(x=0.2, z=0.3, y=0.4)
+        olr = loads.RectangularLoad(
+            weight=10.1, alpha=0.1, Xcp=0.2, Ycp=0.3, Zcp=0.4, xwidth=0.5, zwidth=0.6,
+        )
+        ds.add_other_load(name, time, point, olr)
+        assert list(ds.other_loads.loads.keys())[0] == "Load 1"
+        assert list(ds.other_loads.loads.values())[0].time == 1
+        assert (
+            list(ds.other_loads.loads.values())[0].load_values_rectangular.weight == 10.1
+        )
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.alpha == 0.1
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Xcp == 0.2
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Ycp == 0.3
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Zcp == 0.4
+        assert (
+            list(ds.other_loads.loads.values())[0].load_values_rectangular.xwidth == 0.5
+        )
+        assert (
+            list(ds.other_loads.loads.values())[0].load_values_rectangular.zwidth == 0.6
+        )
+
+    @pytest.mark.integrationtest
+    def test_other_loads_tank(self):
+        ds = self.setup_dsettlement_model()
+        point = Point(x=0.2, z=0.3, y=0.4)
+        time = timedelta(days=1)
+        name = "Load 1"
+        olt = loads.TankLoad(
+            wallweight=10.1, internalweight=10.2, alpha=0.1, Rintern=0.5, dWall=0.6,
+        )
+        ds.add_other_load(name, time, point, olt)
+        assert list(ds.other_loads.loads.keys())[0] == "Load 1"
+        assert list(ds.other_loads.loads.values())[0].time == 1
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.wallweight == 10.1
+        assert (
+            list(ds.other_loads.loads.values())[0].load_values_tank.internalweight == 10.2
+        )
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.alpha == 0.1
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Xcp == 0.2
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Ycp == 0.3
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Zcp == 0.4
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Rintern == 0.5
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.dWall == 0.6
+
+    @pytest.mark.integrationtest
+    def test_other_loads_uniform(self):
+        ds = self.setup_dsettlement_model()
+        name = "Load 1"
+        time = timedelta(days=1)
+        p = Point(z=0.2)
+        olu = loads.UniformLoad(unit_weight=2, height=0.1, gamma=0.3)
+        ds.add_other_load(name, time, p, olu)
+        assert list(ds.other_loads.loads.keys())[0] == "Load 1"
+        assert list(ds.other_loads.loads.values())[0].time == 1
+        assert list(ds.other_loads.loads.values())[0].load_values_uniform.unit_weight == 2
+        assert list(ds.other_loads.loads.values())[0].load_values_uniform.height == 0.1
+        assert (
+            list(ds.other_loads.loads.values())[0].load_values_uniform.y_application
+            == 0.2
+        )
+        assert list(ds.other_loads.loads.values())[0].load_values_uniform.gamma == 0.3
