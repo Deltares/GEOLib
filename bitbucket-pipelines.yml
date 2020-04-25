@@ -54,25 +54,26 @@ pipelines:
             - pip
           script:
             - pip install -r requirements.txt
-      - step: # Run tests with code coverage for unittest
-          name: Run tests and code coverage.
-          caches:
-            - pip
-          script:
-            - pip install -r requirements.txt
-            - pytest -v --cov=geolib --cov-report html tests/ -m "unittest and not workinprogress"
-            - pytest -v -m "not unittest and not workinprogress"
-      - step: # create documentation
-          name: Create documentation.
-          caches:
-            - pip
-          script:
-            - pip install -r requirements.txt
-            - cd docs && make html
-            - apt-get update && apt-get --yes install zip
-            - cd build/html && zip -r docs.zip *
-            - pipe: atlassian/bitbucket-upload-file:0.1.3
-              variables:
-                BITBUCKET_USERNAME: $BITBUCKET_USERNAME
-                BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
-                FILENAME: "docs.zip"
+      - parallel:
+          - step: # Run tests with code coverage for unittest
+              name: Run tests and code coverage.
+              caches:
+                - pip
+              script:
+                - pip install -r requirements.txt
+                - pytest -v --cov=geolib --cov-report xml:test-reports/coverage.xml --junitxml=test-reports/report.xml tests/ -m "unittest and not workinprogress"
+                - pytest -v -m "not unittest and not workinprogress"
+          - step: # create documentation
+              name: Create documentation.
+              caches:
+                - pip
+              script:
+                - pip install -r requirements.txt
+                - cd docs && make html
+                - apt-get update && apt-get --yes install zip
+                - cd build/html && zip -r docs.zip *
+                - pipe: atlassian/bitbucket-upload-file:0.1.3
+                  variables:
+                    BITBUCKET_USERNAME: $BITBUCKET_USERNAME
+                    BITBUCKET_APP_PASSWORD: $BITBUCKET_APP_PASSWORD
+                    FILENAME: "docs.zip"
