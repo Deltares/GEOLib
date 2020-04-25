@@ -27,13 +27,16 @@ class OtherLoad(BaseModel, metaclass=ABCMeta):
 class TrapeziformLoad(OtherLoad):
     """
     Create a trapeziform load with the given name and properties.
-    
-    :param gamma: The weight of the load per m\ :sup:`3
+
+    Arguments:
+        gamma -- The weight of the load per m\ :sup:`3`
+
     .. image:: /figures/dsettlement/trapeziform.png
         :height: 200px
         :width: 400 px
         :scale: 50 %
         :align: center
+
     """
 
     gamma: float = 0
@@ -63,15 +66,18 @@ class TrapeziformLoad(OtherLoad):
 
 
 class CircularLoad(OtherLoad):
-    """
-        Create a circular load with the given name and properties.
-        :param weight: The mangitude of the load.
-        :param alpha: The shape factor alpha is used to specify the shape of the contact pressure.
-        .. image:: /figures/dsettlement/circular.png
-            :height: 200px
-            :width: 400 px
-            :scale: 50 %
-            :align: center
+    """Create a circular load with the given name and properties.
+       
+    Arguments:
+        weight: The mangitude of the load.
+        alpha: The shape factor alpha is used to specify the shape of the contact pressure.
+
+    .. image:: /figures/dsettlement/circular.png
+        :height: 200px
+        :width: 400 px
+        :scale: 50 %
+        :align: center
+
     """
 
     weight: float = 0
@@ -92,15 +98,18 @@ class CircularLoad(OtherLoad):
 
 
 class RectangularLoad(OtherLoad):
-    """
-        Create a rectangular load with the given name and properties
-        :param weight: The mangitude of the load.
-        :param alpha: The shape factor alpha is used to specify the shape of the contact pressure
-        .. image:: /figures/dsettlement/rectangural.png
-            :height: 200px
-            :width: 400 px
-            :scale: 50 %
-            :align: center
+    """Create a rectangular load with the given name and properties
+       
+    Arguments:
+        weight: The mangitude of the load.
+        alpha: The shape factor alpha is used to specify the shape of the contact pressure
+
+    .. image:: /figures/dsettlement/rectangural.png
+        :height: 200px
+        :width: 400 px
+        :scale: 50 %
+        :align: center
+
     """
 
     weight: float = 0  # kN/m2
@@ -129,14 +138,17 @@ class RectangularLoad(OtherLoad):
 
 # TODO This is a 1D Load and should not be other load?
 class UniformLoad(OtherLoad):
-    """
-        Create a uniform load with the given name and properties.
-        :param unit_weight: The weight of the load per m\ :sup:`3`
-        .. image:: /figures/dsettlement/uniform.png
-            :height: 200px
-            :width: 400 px
-            :scale: 50 %
-            :align: center
+    """Create a uniform load with the given name and properties.
+       
+    Arguments:
+        unit_weight: The weight of the load per m\ :sup:`3`
+
+    .. image:: /figures/dsettlement/uniform.png
+        :height: 200px
+        :width: 400 px
+        :scale: 50 %
+        :align: center
+
     """
 
     unit_weight: float = 0
@@ -161,16 +173,19 @@ class UniformLoad(OtherLoad):
 
 
 class TankLoad(OtherLoad):
-    """
-        Create a tank load with the given name and properties.
-        :param wallweight: The magnitude of the load induced by the weight of the material in which the tank is made.
-        :param alpha: The shape factor alpha is used to specify the shape of the contact pressure.
-        :param internalweight: The magnitude of the load induced by the weight of the material stored in the tank.          
-        .. image:: /figures/dsettlement/tank.png
-            :height: 200px
-            :width: 400 px
-            :scale: 50 %
-            :align: center
+    """Create a tank load with the given name and properties.
+       
+    Arguments:
+        wallweight: The magnitude of the load induced by the weight of the material in which the tank is made.
+        alpha: The shape factor alpha is used to specify the shape of the contact pressure.
+        internalweight: The magnitude of the load induced by the weight of the material stored in the tank.          
+
+    .. image:: /figures/dsettlement/tank.png
+        :height: 200px
+        :width: 400 px
+        :scale: 50 %
+        :align: center
+
     """
 
     wallweight: float = 0
