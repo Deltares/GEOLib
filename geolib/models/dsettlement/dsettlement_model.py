@@ -1,9 +1,10 @@
-from datetime import timedelta
-from typing import List, Optional, Type, Union
 import logging
-from subprocess import run, CompletedProcess
-
+from datetime import timedelta
+from operator import attrgetter
 from pathlib import Path
+from subprocess import CompletedProcess, run
+from typing import List, Optional, Type, Union
+
 from pydantic import BaseModel as DataClass
 from pydantic import FilePath
 from pydantic.types import confloat, constr
@@ -11,24 +12,30 @@ from pydantic.types import confloat, constr
 from geolib.geometry import Point
 from geolib.models import BaseModel, MetaData
 from geolib.soils import Soil
-from .loads import (
-    TrapeziformLoad,
-    RectangularLoad,
-    CircularLoad,
-    TankLoad,
-    UniformLoad,
-)
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
 from .internal import (
+    Boundary,
+    Curve,
     DSeriePoint,
-    Verticals,
-    ResidualTimes,
+    Layer,
+    Layers,
     NonUniformLoad,
     NonUniformLoads,
-    PointForLoad,
     OtherLoads,
+    PointForLoad,
+    Points,
+    ResidualTimes,
+    Verticals,
+)
+from .loads import (
+    CircularLoad,
+    OtherLoad,
+    RectangularLoad,
+    TankLoad,
+    TrapeziformLoad,
+    UniformLoad,
 )
 from .serializer import DSettlementInputSerializer
 
@@ -83,37 +90,85 @@ class DSettlementModel(BaseModel):
     ):
         pass
 
+    @property
+    def accuracy(self):
+        return self.datastructure.geometry_data.accuracy
+
+    @property
+    def curves(self):
+        return self.datastructure.geometry_data.curves
+
+    @property
+    def boundaries(self):
+        return self.datastructure.geometry_data.boundaries
+
     # 1.2.1 Soil profile
     # To create multiple layers
-    def add_point(self, point: Point):
-        """Add point to model."""
+    def add_boundary(self, points: List[DSeriePoint], twod=True) -> int:
+        """Add boundary to model."""
+        # Divide points into curves and boundary
+        # Check point uniqueness
+        tolerance = self.accuracy.accuracy
+        points = [
+            self.points.add_point_if_unique(point, tolerance=tolerance)
+            for point in points
+        ]
+        sorted_points = sorted(points, key=lambda point: (point.X, point.Y, point.Z))
+        curves = self.curves.create_curves(sorted_points)
+        boundary = self.boundaries.create_boundary(curves)
+        return boundary.id
 
     @property
     def points(self):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
+        return self.datastructure.geometry_data.points
 
     def add_head_line(self, label, points: List[int], is_phreatic=False) -> int:
         pass
 
+    @property
+    def layers(self):
+        return self.datastructure.geometry_data.layers
+
     def add_layer(
         self,
-        points: List[int],
+        boundary_top: int,
+        boundary_bottom: int,
         material: Soil,
         head_line_top: int,
         head_line_bottom: int,
-    ):
-        """Create layer based on point ids. These should ordered in the x direction.
+        overwrite: bool = False,  # TODO overwrite if layer already exists
+    ) -> int:
+        """Create layer based on boundary ids.
 
         .. todo::
             Determine how a 1D geometry would fit in here.
         """
 
-    def set_limits(self, x_min: float, x_max: float):
-        """Set limits of geometry.
+        # Required until we can parse
+        if isinstance(self.layers, str):
+            logging.warning("Replacing unparsed Layers!")
+            self.layers = Layers()
 
-        .. todo::
-            Determine how to handle points/layers outside of limits.
-        """
+        # Can be used after Soils are implemented
+        # soilname = self.soils.add_soil(material)
+        layer = Layer(
+            material=material.name,
+            piezo_top=head_line_top,
+            piezo_bottom=head_line_bottom,
+            boundary_top=boundary_top,
+            boundary_bottom=boundary_bottom,
+        )
+        layer = self.layers.add_layer(layer)
+        return layer.id
+
+    # TODO check whether this needs to be done
+    # def set_limits(self, x_min: float, x_max: float):
+    #     """Set limits of geometry.
+
+    #     .. todo::
+    #         Determine how to handle points/layers outside of limits.
+    #     """
 
     # 1.2.2 Loads
     @property

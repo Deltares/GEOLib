@@ -23,3 +23,11 @@ class Point(DataModel):
     x: Optional[float]
     y: Optional[float]
     z: Optional[float]
+    tolerance: float = 1e-4
+
+    def __eq__(self, other):
+        from math import isclose
+
+        return isclose(self.x, other.x, abs_tol=self.tolerance) \
+               and isclose(self.y, other.y, abs_tol=self.tolerance) \
+               and isclose(self.z, other.z, abs_tol=self.tolerance)

@@ -1,17 +1,16 @@
-from pydantic import BaseModel, constr
-from typing import Optional
-from abc import abstractmethod, ABCMeta
-from .internal import (
-    LoadValuesTrapeziform,
-    LoadValuesCircular,
-    LoadValuesRectangular,
-    LoadValuesUniform,
-    LoadValuesTank,
-    TypeOtherLoads,
-    OtherLoad as _OtherLoad,
-)
-from geolib.geometry import Point
+from abc import ABCMeta, abstractmethod
 from datetime import timedelta
+from typing import Optional
+
+from pydantic import BaseModel, constr
+
+from geolib.geometry import Point
+
+from .internal import (LoadValuesCircular, LoadValuesRectangular,
+                       LoadValuesTank, LoadValuesTrapeziform,
+                       LoadValuesUniform)
+from .internal import OtherLoad as _OtherLoad
+from .internal import TypeOtherLoads
 
 
 class OtherLoad(BaseModel, metaclass=ABCMeta):

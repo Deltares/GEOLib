@@ -1,25 +1,37 @@
+import logging
 import os
 import pathlib
-import pytest
-
 from datetime import timedelta
-from typing import List
-import pydantic
 from pathlib import Path
-from teamcity import is_running_under_teamcity
+from typing import List
 
+import pydantic
+import pytest
+from teamcity import is_running_under_teamcity
+from tests.utils import TestUtils
+
+import geolib.models.dsettlement.loads as loads
+from geolib.geometry.one import Point
+from geolib.soils import Soil
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
+    Accuracy,
+    Boundary,
+    Boundaries,
+    Curve,
+    Curves,
+    DSeriePoint,
     DSettlementStructure,
-    Version,
+    GeometryData,
+    Layer,
+    Layers,
     OtherLoad,
+    Points,
     TypeOtherLoads,
+    Version,
+    Verticals,
 )
-from geolib.geometry.one import Point
-import geolib.models.dsettlement.loads as loads
-
-from tests.utils import TestUtils
 
 
 class TestDSettlementModel:
@@ -120,6 +132,7 @@ class TestDSettlementModel:
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
             if not (ds_value == output_datastructure[ds_key]):
+                logging.warning(f"{ds_value} != {output_datastructure[ds_key]}")
                 errors.append(f"Values for key {ds_key} differ from parsed to serialized")
         if errors:
             pytest.fail(f"Failed with the following {errors}")
@@ -202,6 +215,206 @@ class TestDSettlementModel:
         assert ds.datastructure.verticals.locations[1].X == 2
         assert ds.datastructure.verticals.locations[1].Y == 0
         assert ds.datastructure.verticals.locations[1].Z == 3
+
+    @pytest.mark.unittest
+    def test_point_equals(self):
+        # Setup data
+        point1 = DSeriePoint(id=4, X=100.0, Y=-1.0, Z=0.0)
+        point2 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+
+        # Test equality
+        assert point1 == point2
+
+    @pytest.mark.unittest
+    def test_curves_equals(self):
+        # Setup data
+        point1 = DSeriePoint(id=4, X=100.0, Y=-1.0, Z=0.0)
+        point2 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+        curve1 = Curve(id=1, points=[point1, point2])
+        curve2 = Curve(id=2, points=[point1, point2])
+
+        # Test equality
+        assert curve1 == curve2
+
+    @pytest.mark.unittest
+    def test_boundaries_equals(self):
+        # Setup data
+        point1 = DSeriePoint(id=4, X=100.0, Y=-1.0, Z=0.0)
+        point2 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+        curve1 = Curve(id=1, points=[point1, point2])
+        curve2 = Curve(id=2, points=[point1, point2])
+        boundary1 = Boundary(id=1, curves=[curve1, curve2])
+        boundary2 = Boundary(id=2, curves=[curve1, curve2])
+
+        # Test equality
+        assert boundary1 == boundary2
+
+    @pytest.mark.unittest
+    def test_layers_equals(self):
+        # Setup data
+        layer1 = Layer(
+            id=4,
+            material="a",
+            piezo_top=1,
+            piezo_bottom=1,
+            boundary_top=1,
+            boundary_bottom=2,
+        )
+        layer2 = Layer(
+            id=6,
+            material="a",
+            piezo_top=1,
+            piezo_bottom=1,
+            boundary_top=1,
+            boundary_bottom=2,
+        )
+
+        # Test equality
+        assert layer1 == layer2
+
+    @pytest.mark.integrationtest
+    def test_add_boundary(self):
+
+        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
+        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
+        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
+        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
+
+        point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
+        point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+
+        ds = DSettlementModel()
+
+        ds.datastructure = DSettlementStructure()
+
+        ds.add_boundary([point1, point2])
+
+        assert ds.boundaries.boundaries[0].curves[0].points[0] == point1
+        assert ds.boundaries.boundaries[0].curves[0].points[1] == point2
+        assert ds.boundaries.boundaries[0].id == 0
+
+        # add points from right to left and test sorting
+        ds.add_boundary([point4, point3])
+
+        assert ds.boundaries.boundaries[1].curves[0].points[0] == point3
+        assert ds.boundaries.boundaries[1].curves[0].points[1] == point4
+        assert ds.boundaries.boundaries[1].id == 1
+
+        # add boundary below geometry, check if the newly added boundary is the first boundary
+        ds.add_boundary([point5, point6])
+        ds.boundaries.sort()
+
+        assert ds.boundaries.boundaries[0].curves[0].points[0] == point5
+        assert ds.boundaries.boundaries[0].curves[0].points[1] == point6
+        assert ds.boundaries.boundaries[0].id == 0
+
+        assert ds.boundaries.boundaries[1].curves[0].points[0] == point1
+        assert ds.boundaries.boundaries[1].curves[0].points[1] == point2
+        assert ds.boundaries.boundaries[1].id == 1
+
+    @pytest.mark.integrationtest
+    def test_add_boundary_serialize(self):
+        # todo work in progress
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_boundaries.sli"
+        )
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+
+        # initialize geometry
+        ds.datastructure.geometry_data = GeometryData()
+        assert ds.datastructure is not None
+        assert isinstance(ds.datastructure, DSettlementStructure)
+
+        # set up the verical locations
+        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
+        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
+        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
+        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
+
+        point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
+        point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+
+        # call function
+        ds.add_boundary([point1, point2])
+        ds.serialize(test_output_filepath)
+
+    @pytest.mark.integrationtest
+    def test_add_layer(self):
+        # todo work in progress
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+
+        # initialize geometry
+        ds.datastructure.geometry_data = GeometryData()
+        assert ds.datastructure is not None
+        assert isinstance(ds.datastructure, DSettlementStructure)
+
+        # set up the verical locations
+        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
+        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
+        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
+        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
+
+        point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
+        point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+
+        # call function
+        a = ds.add_boundary([point1, point2])
+        b = ds.add_boundary([point4, point3])
+        id_a = ds.add_layer(
+            material=Soil(name="a"),
+            head_line_top=0,
+            head_line_bottom=1,
+            boundary_top=a,
+            boundary_bottom=b,
+        )
+        id_b = ds.add_layer(
+            material=Soil(name="b"),
+            head_line_top=0,
+            head_line_bottom=1,
+            boundary_top=a,
+            boundary_bottom=b,
+        )
+        assert id_a == id_b
+
+    @pytest.mark.systemtest
+    def test_add_layer_serialize(self):
+        # setup data
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_layers.sli"
+        )
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+
+        # initialize geometry
+        ds.datastructure.geometry_data.accuracy = Accuracy()
+        ds.datastructure.geometry_data.points = Points()
+        ds.datastructure.geometry_data.curves = Curves()
+        ds.datastructure.geometry_data.boundaries = Boundaries()
+        ds.datastructure.geometry_data.layers = Layers()
+
+        # set up the verical locations
+        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
+        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
+        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
+        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
+
+        # call function
+        a = ds.add_boundary([point1, point2])
+        b = ds.add_boundary([point4, point3])
+        ds.add_layer(
+            material=Soil(name="test"),
+            head_line_top=0,
+            head_line_bottom=1,
+            boundary_top=a,
+            boundary_bottom=b,
+        )
+        ds.serialize(test_output_filepath)
 
     @pytest.mark.integrationtest
     def test_non_uniform_loads(self):

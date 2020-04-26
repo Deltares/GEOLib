@@ -131,7 +131,7 @@ class DSerieParser(BaseParser):
         logging.warning(f"Parsing {filename}")
 
         with open(filename) as io:
-            datastructure = self.dserie_structure.parse_text(io.readlines())
+            datastructure = self.dserie_structure.parse_text(io.read())
 
         return datastructure
 
@@ -151,7 +151,7 @@ class DSerieParser(BaseParser):
     #     return value_list
 
     @staticmethod
-    def parse_group(text_lines: List[str]) -> dict:
+    def parse_group(text_lines: str) -> dict:
         """Parses a text containing fields of type key=value into a dictionary
 
         Arguments:
@@ -163,7 +163,7 @@ class DSerieParser(BaseParser):
         parsed_dictionary = {}
         currentkey = ""
         data = ""
-        for i, line in enumerate(text_lines):
+        for i, line in enumerate(text_lines.split("\n")):
             sline = line.strip()
             # keyline
             if sline.startswith("[") and sline.endswith("]"):
@@ -189,11 +189,11 @@ class DSerieParser(BaseParser):
 
                 # sub group that is eaten for now
                 else:
-                    data += line
+                    data += line + "\n"
 
             # dataline
             else:
-                data += line
+                data += line + "\n"
 
         return parsed_dictionary
 

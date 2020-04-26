@@ -15,6 +15,7 @@ D-Settlement={{ version.d__settlement }}
 {{ version }}
 {% endif %}
 [END OF VERSION]
+
 [SOIL COLLECTION]
 {% if soil_collection is mapping %}
 {% for soil in soil_collection.soil %}
@@ -26,15 +27,121 @@ D-Settlement={{ version.d__settlement }}
 {{ soil_collection }}
 {% endif %}
 [END OF SOIL COLLECTION]
+
 [GEOMETRY DATA]
-{{ geometry_data }}
+
+[ACCURACY]
+{% if geometry_data.accuracy is mapping %}
+        {{ geometry_data.accuracy.accuracy }}
+{% else %}
+{{ geometry_data.accuracy }}
+{% endif %}
+[END OF ACCURACY]
+
+[POINTS]
+{% if geometry_data.points is mapping %}
+     {{ '{:>4}'.format( geometry_data.points.points|length) }}  - Number of geometry points -
+{% for point in geometry_data.points.points %}
+       {{ '{:>8}'.format(point.id) }}{{ '{:15.3f}'.format(point.X) }}{{ '{:15.3f}'.format(point.Y) }}{{ '{:15.3f}'.format(point.Z) }}
+{% endfor %}
+{% else %}
+{{ geometry_data.points }}
+{% endif %}
+[END OF POINTS]
+
+[CURVES]
+{% if geometry_data.curves is mapping %}
+    {{ '{:>4}'.format( geometry_data.curves.curves|length) }} - Number of curves -
+{% for curve in geometry_data.curves.curves %}
+    {{ '{:>6}'.format(curve.id) }} - Curve number
+    {{ '{:>8}'.format(2) }} - number of points on curve,  next line(s) are pointnumbers
+    {{ '{:>10}'.format(curve.points[0].id) }}{{ '{:>6}'.format(curve.points[1].id) }}
+{% endfor %}
+{% else %}
+{{ geometry_data.curves }}
+{% endif %}
+[END OF CURVES]
+
+[BOUNDARIES]
+{% if geometry_data.boundaries is mapping %}
+    {{ '{:>4}'.format( geometry_data.boundaries.boundaries|length ) }} - Number of boundaries -
+    {% for boundary in geometry_data.boundaries.boundaries %}
+        {{ '{:>6}'.format(boundary.id) }} - Curve number
+        {{ '{:>8}'.format(boundary|length) }} - number of curves on boundary, next line(s) are curvenumbers
+        {% if boundary.curves|length > 1 %}
+            {% for curve in boundary.curves %}
+                {% if loop.first %}
+                    {{ '{:>10}'.format(curve.id) }}
+                {% elif loop.index0 % 10 == 0 %}
+                    {{ '\n' }}{{ '{:>10}'.format(curve.id) }}
+                {% else %}
+                    {{ '{:>6}'.format(curve.id) }}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {{ '{:>10}'.format(boundary.curves[0].id) }}
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {{ geometry_data.boundaries }}
+{% endif %}
+
+[END OF BOUNDARIES]
+
+[USE PROBABILISTIC DEFAULTS BOUNDARIES]
+{{ geometry_data.use_probabilistic_defaults_boundaries }}
+[END OF USE PROBABILISTIC DEFAULTS BOUNDARIES]
+
+[STDV BOUNDARIES]
+{{ geometry_data.stdv_boundaries }}
+[END OF STDV BOUNDARIES]
+
+[DISTRIBUTION BOUNDARIES]
+{{ geometry_data.distribution_boundaries }}
+[END OF DISTRIBUTION BOUNDARIES]
+
+[PIEZO LINES]
+{{ geometry_data.piezo_lines }}
+[END OF PIEZO LINES]
+
+[PHREATIC LINE]
+{{ geometry_data.phreatic_line }}
+[END OF PHREATIC LINE]
+
+[WORLD CO-ORDINATES]
+{{ geometry_data.world_co__ordinates }}
+[END OF WORLD CO-ORDINATES]
+
+[LAYERS]
+{% if geometry_data.layers is mapping %}
+  {{ geometry_data.layers.layers|length }} - Number of layers -
+{% for layer in geometry_data.layers.layers %}
+{{ '{:>6}'.format(layer.id) }} - Layer number, next line is material of layer
+         {{ layer.material }}
+{{ '{:>10}'.format(layer.piezo_top) }} - Piezometric level line at top of layer
+{{ '{:>10}'.format(layer.piezo_bottom) }} - Piezometric level line at bottom of layer
+{{ '{:>10}'.format(layer.boundary_top) }} - Boundarynumber at top of layer
+{{ '{:>10}'.format(layer.boundary_bottom) }} - Boundarynumber at bottom of layer
+{% endfor %}
+{% else %}
+{{ geometry_data.layers }}
+{% endif %}
+[END OF LAYERS]
+
+[LAYERLOADS]
+{{ geometry_data.layerloads }}
+[END OF LAYERLOADS]
+
 [END OF GEOMETRY DATA]
+
 [RUN IDENTIFICATION]
 {{ run_ident }}
 [END OF RUN IDENTIFICATION]
+
 [MODEL]
 {{ model }}
 [END OF MODEL]
+
 [VERTICALS]
 {% if verticals is mapping %}
 {{ verticals.total_mesh }} = total Mesh
@@ -46,9 +153,11 @@ D-Settlement={{ version.d__settlement }}
 {{ verticals }}
 {% endif %}
 [END OF VERTICALS]
+
 [WATER]
 {{ water }}
 [END OF WATER]
+
 [NON-UNIFORM LOADS]
 {% if non__uniform_loads.loads is mapping %}
 {{ non__uniform_loads.loads|length }} = number of items
@@ -64,9 +173,11 @@ D-Settlement={{ version.d__settlement }}
 {{ non__uniform_loads }}
 {% endif %}
 [END OF NON-UNIFORM LOADS]
+
 [WATER LOADS]
 {{ water_loads }}
 [END OF WATER LOADS]
+
 [OTHER LOADS]
 {% if other_loads.loads is mapping %}
 {{ other_loads.loads|length }} = number of items
@@ -101,9 +212,11 @@ D-Settlement={{ version.d__settlement }}
 {{ other_loads }}
 {% endif %}
 [END OF OTHER LOADS]
+
 [CALCULATION OPTIONS]
 {{ calculation_options }}
 [END OF CALCULATION OPTIONS]
+
 [RESIDUAL TIMES]
 {% if residual_times is mapping %}
 {{ residual_times.time_steps | length }} : Number of items
@@ -114,40 +227,53 @@ D-Settlement={{ version.d__settlement }}
 {{ residual_times }}
 {% endif %}
 [END OF RESIDUAL TIMES]
+
 [FILTER BAND WIDTH]
 {{ filter_band_width }}
 [END OF FILTER BAND WIDTH]
+
 [PORE PRESSURE METERS]
 {{ pore_pressure_meters }}
 [END OF PORE PRESSURE METERS]
+
 [NON-UNIFORM LOADS PORE PRESSURES]
 {{ non__uniform_loads_pore_pressures }}
 [END OF NON-UNIFORM LOADS PORE PRESSURES]
+
 [OTHER LOADS PORE PRESSURES]
 {{ other_loads_pore_pressures }}
 [END OF OTHER LOADS PORE PRESSURES]
+
 [CALCULATION OPTIONS PORE PRESSURES]
 {{ calculation_options_pore_pressures }}
 [END OF CALCULATION OPTIONS PORE PRESSURES]
+
 [VERTICAL DRAIN]
 {{ vertical_drain }}
 [END OF VERTICAL DRAIN]
+
 [PROBABILISTIC DATA]
 {{ probabalistic_data }}
 [END OF PROBABILISTIC DATA]
+
 [PROBABILISTIC DEFAULTS]
 {{ probabalistic_defaults }}
 [END OF PROBABILISTIC DEFAULTS]
+
 [FIT OPTIONS]
 {{ fit_options }}
 [END OF FIT OPTIONS]
+
 [FIT CALCULATION]
 {{ fit_calculation }}
 [END OF FIT CALCULATION]
+
 [EPS]
 {{ eps }}
 [END OF EPS]
+
 [FIT]
 {{ fit }}
 [END OF FIT]
+
 [END OF INPUT FILE]
