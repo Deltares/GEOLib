@@ -20,7 +20,7 @@ from geolib.models.dseries_parser import (
     DSerieTableStructure,
     DSerieRepeatedTableStructure,
     DSerieOldTableStructure,
-    EvilVerticalSubstructure,
+    ComplexVerticalSubstructure,
 )
 
 DataClass.Config.arbitrary_types_allowed = True
@@ -469,7 +469,7 @@ class TimeDependentData(DSerieRepeatedTableStructure):
     timedependentdata: Dict[float, List[Dict[str, float]]]
 
 
-class Vertical(EvilVerticalSubstructure):
+class Vertical(ComplexVerticalSubstructure):
     """Representation of [Vertical] group in sld file."""
 
     id: int
@@ -498,6 +498,7 @@ class Results(DSeriesListSubStructure):
     vertical: List[Vertical]
     residual_settlements: List[ResidualSettlements]
     amounts_of_loads: Optional[str]
+    dissipation_in_layers: Optional[str]
 
 
 class DSettlementOutputStructure(DSeriesStructure):

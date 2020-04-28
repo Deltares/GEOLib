@@ -39,7 +39,7 @@ class DSeriesStructure(BaseModelStructure):
         """
         if len(kwargs) > len(get_type_hints(self)):
             raise Exception(
-                f"Got more fields {kwargs.keys()} than defined on model {self.__name__}"
+                f"Got more fields {kwargs.keys()} than defined on model {self.__class__.__name__}"
             )
 
         for field, fieldtype in get_type_hints(self).items():
@@ -345,7 +345,7 @@ class DSerieMatrixStructure(DSeriesStructure):
         return cls(**d)
 
 
-class EvilVerticalSubstructure(DSeriesStructure):
+class ComplexVerticalSubstructure(DSeriesStructure):
     """Specific Vertical substructure with a dedicated
     parser because of the oddities stored in that group."""
 
