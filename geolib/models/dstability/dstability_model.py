@@ -9,6 +9,7 @@ Usage::
 
 """
 
+import re
 from enum import Enum
 from typing import List, Optional, Union, Type
 
@@ -24,7 +25,7 @@ from .dstability_parserprovider import DStabilityParserProvider
 from .loads import DStabilityLoad
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer
-from .internal import DStabilityStructure, SoilCollection
+from .internal import Waternet, SoilCollection, DStabilityStructure
 
 
 class DStabilityCalculationType(Enum):
@@ -76,6 +77,16 @@ class DStabilityModel(BaseModel):
     current_stage: int = 0
     current_id: int = 100  # todo > after reading inputfiles, check for the next id or think about another implementation of the id
 
+    datastructure: DStabilityStructure = DStabilityStructure()
+
+    def _get_next_id(self) -> int:
+        self.current_id += 1
+        return self.current_id
+
+    @property
+    def waternets(self) -> List[Waternet]:
+        return self.datastructure.waternets
+
     def serialize(self, foldername: DirectoryPath):
         serializer = DStabilityInputSerializer(ds=self.datastructure)
         serializer.write(foldername)
@@ -103,9 +114,8 @@ class DStabilityModel(BaseModel):
         if self.soils.has_soilcode(soil.code):
             raise ValueError(f"The soil with code {soil.code} is already defined.")
 
-        soil.id = self.current_id
+        soil.id = self._get_next_id()
         self.soils.add_soil(soil)
-        self.current_id += 1
         return soil.id
 
     def remove_soil(self, id: int) -> None:
@@ -162,20 +172,81 @@ class DStabilityModel(BaseModel):
         """
 
     def add_head_line(
-        self, label: str, points: List[int], is_phreatic=False, stage=None
+            self,
+            points: List[Point],
+            label: str = "",
+            notes: str = "",
+            is_phreatic_line: bool = False,
+            stage_id: int = None
     ) -> int:
-        """Add a hydraulic headline to the object."""
-        pass
+        """
+        Add head line to the model
+
+        Args:
+            points (List[Point]): list of Point classes
+            label (str): label defaults to empty string
+            notes (str): notes defaults to empty string
+            is_phreatic_line (bool): set as phreatic line, defaults to False
+            stage_id (int): stage to add to, defaults to current stage
+
+        Returns:
+            bool: id of the added headline
+        """
+        stage_id = stage_id if stage_id else self.current_stage
+
+        try:
+            waternet = self.waternets[stage_id]
+        except IndexError:
+            raise IndexError(f"stage {stage_id} is not available")
+
+        persitable_headline = waternet.add_head_line(
+            str(self._get_next_id()),
+            label,
+            notes,
+            points,
+            is_phreatic_line
+        )
+        return int(persitable_headline.Id)
 
     def add_reference_line(
         self,
-        label: str,
-        points: List[int],
-        above_headline_id: int,
-        below_headline_id: int,
-        stage=None,
-    ):
-        """BB. Add a reference line to the object."""
+        points: List[Point],
+        bottom_headline_id: int,
+        top_head_line_id: int,
+        label: str = "",
+        notes: str = "",
+        stage_id: int = None
+    ) -> int:
+        """
+        Add reference line to the model
+
+        Args:
+            points (List[Point]): list of Point classes
+            bottom_headline_id (int): id of the headline to use as the bottom headline
+            top_head_line_id (int): id of the headline to use as the top headline
+            label (str): label defaults to empty string
+            notes (str): notes defaults to empty string
+            stage_id (int): stage to add to, defaults to 0
+
+        Returns:
+            int: id of the added reference line
+        """
+        stage_id = stage_id if stage_id else self.current_stage
+        
+        try:
+            waternet = self.waternets[stage_id]
+        except IndexError:
+            raise IndexError(f"stage {stage_id} is not available")
+
+        persistable_referenceline = waternet.add_reference_line(
+            str(self._get_next_id()),
+            label,
+            notes,
+            points,
+            str(bottom_headline_id),
+            str(top_head_line_id)
+        )
+        return int(persistable_referenceline.Id)
 
     def add_state_line(
         self,

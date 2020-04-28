@@ -6,25 +6,16 @@ from typing import List, Optional
 
 from pydantic import BaseModel as DataClass
 from pydantic import validator
+import abc
 
 from geolib.models import BaseModel
 from geolib import __version__ as version
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.soils import Soil
+from geolib.geometry import Point
 
 from .dstability_validator import DStabilityValidator
-
-_CAMEL_TO_SNAKE_PATTERN = re.compile(r"(?<!^)(?=[A-Z])")
-
-
-def camel_to_snake(name: str) -> str:  # TODO move to utils
-    name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-    return _CAMEL_TO_SNAKE_PATTERN.sub("_", name).lower()
-
-
-def snake_to_camel(name: str) -> str:  # TODO move to utils
-    return "".join(word.title() for word in name.split("_"))
-
+from geolib.utils import snake_to_camel, camel_to_snake
 
 BaseModelStructure.Config.arbitrary_types_allowed = True
 DataClass.Config.arbitrary_types_allowed = True
@@ -70,15 +61,70 @@ class Waternet(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "waternets"
 
-    ContentVersion: Optional[str]
-    HeadLines: Optional[List[Optional[PersistableHeadLine]]]
     Id: Optional[str]
+    ContentVersion: Optional[str]
     PhreaticLineId: Optional[str]
-    ReferenceLines: Optional[List[Optional[PersistableReferenceLine]]]
-    UnitWeightWater: Optional[float]
+    HeadLines: List[PersistableHeadLine] = []
+    ReferenceLines: List[PersistableReferenceLine] = []
+    UnitWeightWater: Optional[float] = 9.81
 
+    def get_head_line(self, head_line_id: str) -> PersistableHeadLine:
+        for head_line in self.HeadLines:
+            if head_line.Id == head_line_id:
+                return head_line
 
-# waternet creator
+        raise ValueError(f"No headline with id {head_line_id} in model.")
+
+    def get_reference_line(self, reference_line_id: str) -> PersistableReferenceLine:
+        for reference_line in self.ReferenceLines:
+            if reference_line.Id == reference_line_id:
+                return reference_line
+
+        raise ValueError(f"No referenceline with id {reference_line_id} in model.")
+
+    def has_head_line_id(self, head_line_id: str) -> bool:
+        return head_line_id in {head_line.Id for head_line in self.HeadLines}
+
+    def add_head_line(
+        self,
+        head_line_id: str,
+        label: str,
+        notes: str,
+        points: List[Point],
+        is_phreatic_line: bool
+    ) -> PersistableHeadLine:
+        head_line = PersistableHeadLine(Id=head_line_id, Label=label, Notes=notes)
+        head_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
+
+        self.HeadLines.append(head_line)
+        if is_phreatic_line:
+            self.PhreaticLineId = head_line.Id
+
+        return head_line
+
+    def add_reference_line(
+        self,
+        reference_line_id: str,
+        label: str,
+        notes: str,
+        points: List[Point],
+        bottom_head_line_id: str,
+        top_head_line_id: str
+    ) -> PersistableReferenceLine:
+        reference_line = PersistableReferenceLine(Id=reference_line_id, Label=label, Notes=notes)
+        reference_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
+
+        if not self.has_head_line_id(bottom_head_line_id):
+            raise ValueError(f"Unknown headline id {bottom_head_line_id} for bottom_head_line_id")
+
+        if not self.has_head_line_id(top_head_line_id):
+            raise ValueError(f"Unknown headline id {top_head_line_id} for top_head_line_id")
+
+        reference_line.BottomHeadLineId = bottom_head_line_id
+        reference_line.TopHeadLineId = top_head_line_id
+
+        self.ReferenceLines.append(reference_line)
+        return reference_line
 
 
 class PersistableDitchCharacteristics(DataClass):
@@ -362,7 +408,9 @@ class PersistableSoil(DataClass):
             PersistableSoil: Converted soil
         """
         # convert snake_case members to CamelCase
-        return cls(**{snake_to_camel(k): v for k, v in dict(soil).items()})
+        return cls(
+            **{snake_to_camel(k): v for k, v in dict(soil).items()}            
+        )
 
     def to_soil(self) -> Soil:
         """
@@ -372,7 +420,11 @@ class PersistableSoil(DataClass):
             Soil: Converted PersistableSoil
         """
         # convert CamelCase members to snake_case
-        return Soil(**{camel_to_snake(k): v for k, v in dict(self).items()})
+        return Soil(
+            **{
+                camel_to_snake(k) : v for k, v in dict(self).items()
+            }
+        )
 
 
 class SoilCollection(DStabilitySubStructure):
@@ -1033,7 +1085,6 @@ class UpliftVanResult(DStabilitySubStructure):
 ###########################
 # INPUT AND OUTPUT COMBINED
 ###########################
-
 
 class DStabilityStructure(BaseModelStructure):
     """Highest level DStability class that should be parsed to and serialized from.
