@@ -126,6 +126,25 @@ types and defaults for fields. We can even constrain fields (specifying a range 
 for a field) using only types: https://pydantic-docs.helpmanual.io/usage/types/#constrained-types
 Construction can be from dict and json, and vica versa. This is what we use for the internal dataclasses for each model.
 
+Type hinting
+------------
+
+GEOLib uses type hinting in all its classes and functions. This is partly used for automatic validation
+on initialization for classes by `pydantic`, but it's meant for overall readability.
+Annotating your code with type hints reduces the amount of bugs by improving readability
+and enabling the use of static code checkers such as `mypy`, which we also use.
+
+If the type of variables in a function is unclear in the current context we
+advise to also add type hints. An example:
+
+.. code-block:: python
+
+    def some_function(a: int) -> int:
+        b: int = result_with_unknown_type_from_other_function()
+        return a * b
+
+
+
 
 Adding requirements
 -------------------
