@@ -29,10 +29,7 @@ class TestUtils:
         Returns the full path of a directory containing generated
         data from the tests. If it does not exist it creates it.
         """
-        directory = \
-            TestUtils.get_test_data_dir(
-                dir_name,
-                TestUtils._name_output)
+        directory = TestUtils.get_test_data_dir(dir_name, TestUtils._name_output)
         if not os.path.exists(directory):
             os.makedirs(directory)
         return directory

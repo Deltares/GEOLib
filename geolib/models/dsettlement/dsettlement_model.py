@@ -10,7 +10,7 @@ from pydantic import FilePath
 from pydantic.types import confloat, constr
 
 from geolib.geometry import Point
-from geolib.models import BaseModel, MetaData
+from geolib.models import BaseModel, MetaData, BaseModelStructure
 from geolib.soils import Soil
 
 from .drains import VerticalDrain
@@ -19,6 +19,7 @@ from .internal import (
     Boundary,
     Curve,
     DSeriePoint,
+    DSettlementStructure,
     Layer,
     Layers,
     NonUniformLoad,
@@ -59,6 +60,8 @@ class DSettlementModel(BaseModel):
     *.sli files, read *.sld and *.err files.
     """
 
+    datastructure: BaseModelStructure = DSettlementStructure()
+
     @property
     def parser_provider_type(self) -> Type[DSettlementParserProvider]:
         return DSettlementParserProvider
@@ -69,15 +72,18 @@ class DSettlementModel(BaseModel):
 
     def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
         """Execute a Model and wait for `timeout` seconds."""
-        self.serialize(self.input_fn)
+        if not self.filename.exists():
+            logging.warning("Serializing before executing.")
+            self.serialize(self.filename)
         return run(
-            [str(self.meta.console_folder / self.console_path), "/b", str(self.input_fn)],
+            [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
             timeout=timeout,
         )
 
-    def serialize(self, filename: str):
+    def serialize(self, filename: FilePath):
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
+        self.filename = filename
 
     # 1.2.3 Models
     def set_model(
@@ -148,7 +154,7 @@ class DSettlementModel(BaseModel):
         # Required until we can parse
         if isinstance(self.layers, str):
             logging.warning("Replacing unparsed Layers!")
-            self.layers = Layers()
+            self.datastructure.geometry_data.layers = Layers()
 
         # Can be used after Soils are implemented
         # soilname = self.soils.add_soil(material)
@@ -185,7 +191,7 @@ class DSettlementModel(BaseModel):
             TrapeziformLoad, RectangularLoad, CircularLoad, TankLoad, UniformLoad
         ],
     ) -> None:
-        internal_other_load = other_load._to_internal(name, time, point)
+        internal_other_load = other_load._to_internal(time, point)
         if isinstance(self.other_loads, str):
             logging.warning("Replacing unparsed OtherLoads!")
             self.datastructure.other_loads = OtherLoads()

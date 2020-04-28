@@ -21,16 +21,16 @@ from .base_model_structure import BaseModelStructure
 
 
 class BaseModel(DataClass, abc.ABC):
-    input_fn: Union[FilePath, DirectoryPath, None]
-    output_fn: Union[FilePath, DirectoryPath, None]
-    datastructure: Optional[BaseModelStructure]
+    filename: Union[FilePath, DirectoryPath, None]
+    datastructure: Optional[Type[BaseModelStructure]]
     meta: MetaData = MetaData()
 
     def execute(self, timeout: int = 10) -> Union[CompletedProcess, Exception]:
         """Execute a Model and wait for `timeout` seconds."""
-        self.serialize(self.input_fn)
+        if not self.filename:
+            raise Exception("Set filename first.")
         return run(
-            [str(self.meta.console_folder / self.console_path), str(self.input_fn)],
+            [str(self.meta.console_folder / self.console_path), str(self.filename)],
             timeout=timeout,
         )
 
@@ -61,6 +61,7 @@ class BaseModel(DataClass, abc.ABC):
 
     def parse(self, filename: FilePath) -> BaseModelStructure:
         """Parse input or outputfile to Model, depending on extension."""
+        self.filename = filename
         self.datastructure = self.parser_provider_type().parse(filename)
         return self.datastructure
 
@@ -75,12 +76,12 @@ class BaseModel(DataClass, abc.ABC):
 
     def set_metadata(self, meta: MetaData):
         """Set custom metadata for input file."""
-        pass
+        self.metadata = meta
 
     @property
     def input(self):
         """Access internal dict-like datastructure of the input."""
-        pass
+        return self.datastructure
 
     @property
     def output(self):
@@ -89,6 +90,7 @@ class BaseModel(DataClass, abc.ABC):
         Requires a succesful execute. Throws an error with error codes
         and explanation from the error file if not.
         """
+        return self.datastructure.results
 
 
 class BaseModelList(DataClass):

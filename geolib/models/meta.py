@@ -13,6 +13,7 @@ such as an compute endpoint.
 from datetime import datetime
 from geolib import __version__ as version
 from pydantic import BaseSettings, AnyHttpUrl, DirectoryPath
+from pathlib import Path
 
 
 class MetaData(BaseSettings):
@@ -33,7 +34,7 @@ class MetaData(BaseSettings):
     remarks: str = f"Created by GEOLib {version}"
 
     endpoint: AnyHttpUrl = "http://localhost:8080/geolib"  # For remote execution
-    console_folder: DirectoryPath = ""
+    console_folder: DirectoryPath = Path(".")
 
     class Config:
         env_file = "geolib.env"

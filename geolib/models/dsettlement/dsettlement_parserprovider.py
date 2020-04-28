@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Type
 
 from pydantic import FilePath
 
 from geolib.models.dseries_parser import DSerieParser, DSeriesStructure
 from geolib.models.parsers import BaseParserProvider
 
-from .internal import DSettlementStructure
+from .internal import DSettlementStructure, DSettlementOutputStructure
 
 
 class DSettlementInputParser(DSerieParser):
@@ -16,23 +16,20 @@ class DSettlementInputParser(DSerieParser):
         return [".sli"]
 
     @property
-    def dserie_structure(self) -> DSettlementStructure:
+    def dserie_structure(self) -> Type[DSettlementStructure]:
         return DSettlementStructure
 
 
 class DSettlementOutputParser(DSerieParser):
-    """DSettlement parser of output files."""
+    """DSettlement parser of input files."""
 
     @property
     def suffix_list(self) -> List[str]:
         return [".sld"]
 
     @property
-    def dserie_structure(self) -> DSettlementStructure:
-        return DSettlementStructure
-
-    def parse(self, filename: FilePath):
-        raise NotImplementedError()
+    def dserie_structure(self) -> Type[DSettlementOutputStructure]:
+        return DSettlementOutputStructure
 
 
 class DSettlementParserProvider(BaseParserProvider):

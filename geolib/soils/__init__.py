@@ -4,6 +4,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 from pydantic.color import Color
 
+
 class PersistableStochasticParameter(BaseModel):
     """
     Stochastic parameters class
@@ -36,9 +37,7 @@ class MohrCoulombParameters(BaseModel):
     cohesion: Optional[float] = None
     cohesion_stochastic_parameter: Optional[PersistableStochasticParameter] = None
     dilatancy_angle: Optional[float] = None
-    dilatancy_angle_stochastic_parameter: Optional[
-        PersistableStochasticParameter
-    ] = None
+    dilatancy_angle_stochastic_parameter: Optional[PersistableStochasticParameter] = None
     friction_angle: Optional[float] = None
     friction_angle_stochastic_parameter: Optional[PersistableStochasticParameter] = None
     friction_angle_interface: Optional[float] = None
@@ -75,18 +74,14 @@ class BjerrumParameters(BaseModel):
 
     compression_input_type: Optional[Enum] = None
     reloading_ratio: Optional[float] = None
-    reloading_ratio_stochastic_parameter: Optional[
-        PersistableStochasticParameter
-    ] = None
+    reloading_ratio_stochastic_parameter: Optional[PersistableStochasticParameter] = None
     primary_compression_ratio: Optional[float] = None
     primary_compression_ratio_stochastic_parameter: Optional[
         PersistableStochasticParameter
     ] = None
     correlation_reload_primary_compression_ratio: Optional[float] = None
     reloading_index: Optional[float] = None
-    reloading_index_stochastic_parameter: Optional[
-        PersistableStochasticParameter
-    ] = None
+    reloading_index_stochastic_parameter: Optional[PersistableStochasticParameter] = None
     primary_compression_index: Optional[float] = None
     primary_compression_index_stochastic_parameter: Optional[
         PersistableStochasticParameter
@@ -234,7 +229,6 @@ class ConstitutiveModels(BaseModel):
 class Soil(BaseModel):
     """Soil Material class."""
 
-    
     id: Optional[str] = None
     name: Optional[str] = None
     code: Optional[str] = None

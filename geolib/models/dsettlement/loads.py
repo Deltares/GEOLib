@@ -6,9 +6,13 @@ from pydantic import BaseModel, constr
 
 from geolib.geometry import Point
 
-from .internal import (LoadValuesCircular, LoadValuesRectangular,
-                       LoadValuesTank, LoadValuesTrapeziform,
-                       LoadValuesUniform)
+from .internal import (
+    LoadValuesCircular,
+    LoadValuesRectangular,
+    LoadValuesTank,
+    LoadValuesTrapeziform,
+    LoadValuesUniform,
+)
 from .internal import OtherLoad as _OtherLoad
 from .internal import TypeOtherLoads
 
@@ -19,7 +23,7 @@ class OtherLoad(BaseModel, metaclass=ABCMeta):
     load_type: Optional[TypeOtherLoads]
 
     @abstractmethod
-    def _to_internal(self, name: str, time: timedelta, p: Point):
+    def _to_internal(self, time: timedelta, p: Point):
         """Creates internal datastructure from generic load"""
 
 
@@ -44,7 +48,7 @@ class TrapeziformLoad(OtherLoad):
     xm: float = 0
     xr: float = 0
 
-    def _to_internal(self, name: str, time: timedelta, p: Point) -> _OtherLoad:
+    def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
 
         load_values = LoadValuesTrapeziform(
             gamma=self.gamma,
@@ -56,7 +60,6 @@ class TrapeziformLoad(OtherLoad):
             Yp=p.z,
         )
         other_load = _OtherLoad(
-            name=name,
             time=time.days,
             load_type=TypeOtherLoads.Trapeziform,
             load_values_trapeziform=load_values,
@@ -83,12 +86,11 @@ class CircularLoad(OtherLoad):
     alpha: float = 0
     R: float = 0.01
 
-    def _to_internal(self, name: str, time: timedelta, p: Point) -> _OtherLoad:
+    def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
         load_values = LoadValuesCircular(
             weight=self.weight, alpha=self.alpha, Xcp=p.x, Ycp=p.z, Zcp=p.y, R=self.R,
         )
         other_load = _OtherLoad(
-            name=name,
             time=time.days,
             load_type=TypeOtherLoads.Circular,
             load_values_circular=load_values,
@@ -116,7 +118,7 @@ class RectangularLoad(OtherLoad):
     xwidth: float = 0.01
     zwidth: float = 0.01
 
-    def _to_internal(self, name: str, time: timedelta, p: Point) -> _OtherLoad:
+    def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
         load_values = LoadValuesRectangular(
             weight=self.weight,
             alpha=self.alpha,
@@ -127,7 +129,6 @@ class RectangularLoad(OtherLoad):
             zwidth=self.zwidth,
         )
         other_load = _OtherLoad(
-            name=name,
             time=time.days,
             load_type=TypeOtherLoads.Rectangular,
             load_values_rectangular=load_values,
@@ -155,7 +156,7 @@ class UniformLoad(OtherLoad):
     height: float = 0
     y_application: float = 0
 
-    def _to_internal(self, name: str, time: timedelta, point: Point) -> _OtherLoad:
+    def _to_internal(self, time: timedelta, point: Point) -> _OtherLoad:
         load_values = LoadValuesUniform(
             unit_weight=self.unit_weight,
             height=self.height,
@@ -163,7 +164,6 @@ class UniformLoad(OtherLoad):
             gamma=self.gamma,
         )
         other_load = _OtherLoad(
-            name=name,
             time=time.days,
             load_type=TypeOtherLoads.Uniform,
             load_values_uniform=load_values,
@@ -193,7 +193,7 @@ class TankLoad(OtherLoad):
     Rintern: float = 0.01
     dWall: float = 0.01
 
-    def _to_internal(self, name: str, time: timedelta, p: Point) -> _OtherLoad:
+    def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
         load_values = LoadValuesTank(
             wallweight=self.wallweight,
             alpha=self.alpha,
@@ -205,9 +205,6 @@ class TankLoad(OtherLoad):
             dWall=self.dWall,
         )
         other_load = _OtherLoad(
-            name=name,
-            time=time.days,
-            load_type=TypeOtherLoads.Tank,
-            load_values_tank=load_values,
+            time=time.days, load_type=TypeOtherLoads.Tank, load_values_tank=load_values,
         )
         return other_load

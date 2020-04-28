@@ -12,6 +12,8 @@ from typing import Optional
 
 from pydantic import BaseModel as DataModel
 
+NODATA = -999.0
+
 
 class Point(DataModel):
     """A single Point Class.
@@ -20,14 +22,16 @@ class Point(DataModel):
 
     label: str = ""
     id: Optional[int]
-    x: Optional[float]
-    y: Optional[float]
-    z: Optional[float]
+    x: float = NODATA
+    y: float = NODATA
+    z: float = NODATA
     tolerance: float = 1e-4
 
     def __eq__(self, other):
         from math import isclose
 
-        return isclose(self.x, other.x, abs_tol=self.tolerance) \
-               and isclose(self.y, other.y, abs_tol=self.tolerance) \
-               and isclose(self.z, other.z, abs_tol=self.tolerance)
+        return (
+            isclose(self.x, other.x, abs_tol=self.tolerance)
+            and isclose(self.y, other.y, abs_tol=self.tolerance)
+            and isclose(self.z, other.z, abs_tol=self.tolerance)
+        )

@@ -27,9 +27,9 @@ class BaseParser(abc.ABC):
         if not filename:
             return False
 
-        return  \
-            (filename.suffix == "" and filename.name in self.suffix_list) or \
-            (filename.suffix in self.suffix_list)
+        return (filename.suffix == "" and filename.name in self.suffix_list) or (
+            filename.suffix in self.suffix_list
+        )
 
 
 class BaseParserProvider(abc.ABC):
@@ -57,10 +57,11 @@ class BaseParserProvider(abc.ABC):
             return self.output_parser.parse(filename)
         else:
             raise Exception(
-                f"Unknown extension {filename.suffix} for {self.parser_name}.")
+                f"Unknown extension {filename.suffix} for {self.parser_name}."
+            )
 
         # compare_suffix = filename.suffix
-        
+
         # if filename.suffix == '':
         #     compare_suffix = filename.name
 

@@ -2,7 +2,7 @@ import logging
 from enum import Enum, IntEnum
 from math import isclose
 from operator import attrgetter
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Tuple, Any
 
 from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
@@ -12,9 +12,15 @@ from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSeriesKeyValueSubStructure,
     DSeriesListSubStructure,
+    DSerieListStructure,
+    DSerieMatrixStructure,
     DSeriesNameKeyValueSubStructure,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
+    DSerieTableStructure,
+    DSerieRepeatedTableStructure,
+    DSerieOldTableStructure,
+    EvilVerticalSubstructure,
 )
 
 DataClass.Config.arbitrary_types_allowed = True
@@ -305,6 +311,7 @@ class NonUniformLoads(DSeriesNoParseSubStructure):
         else:
             self.loads[name] = load
             self.loads = self.loads  # trigger validation
+            return None
 
 
 class ResidualTimes(DSeriesNoParseSubStructure):
@@ -398,6 +405,7 @@ class OtherLoads(DSeriesNoParseSubStructure):
             raise ValueError(f"Load with name '{name}' already exists.")
         else:
             self.loads[name] = load
+            return None
 
 
 class DSettlementStructure(DSeriesStructure):
@@ -427,3 +435,74 @@ class DSettlementStructure(DSeriesStructure):
     fit_calculation: str = ""
     eps: str = ""
     fit: str = ""
+
+
+class Stresses(DSerieTableStructure):
+    stresses: List[Dict[str, float]]
+
+
+class KoppejanSettlements(DSerieTableStructure):
+    koppejansettlements: List[Dict[str, float]]
+
+
+class Depths(DSerieListStructure):
+    depths: List[float]
+
+
+class Leakages(DSerieListStructure):
+    leakages: List[float]
+
+
+class DrainedLayers(DSerieListStructure):
+    drainedlayers: List[int]
+
+
+class TimeSettlementPerLoad(DSerieMatrixStructure):
+    timesettlementperload: List[List[float]]
+
+
+class HorizontalDisplacements(DSerieMatrixStructure):
+    horizontaldisplacements: List[List[float]]
+
+
+class TimeDependentData(DSerieRepeatedTableStructure):
+    timedependentdata: Dict[float, List[Dict[str, float]]]
+
+
+class Vertical(EvilVerticalSubstructure):
+    """Representation of [Vertical] group in sld file."""
+
+    id: int
+    x: float
+    z: float
+    time__settlement_per_load: Optional[TimeSettlementPerLoad]
+    depths: Depths
+    leakages: Optional[Leakages]
+    drained_layers: Optional[DrainedLayers]
+    stresses: Optional[Stresses]
+    koppejan_settlement: Optional[KoppejanSettlements]
+    time__dependent_data: List[TimeDependentData]
+    elasticity: Optional[float]
+    horizontal_displacements: Optional[HorizontalDisplacements]
+
+
+class ResidualSettlements(DSerieOldTableStructure):
+    # TODO LIst[Dict[str, float]] but can be empty which now gives a validation error
+    residualsettlements: List[Dict[str, float]]
+
+
+class Results(DSeriesListSubStructure):
+    """Representation of [results] group in sld file."""
+
+    verticals_count: int
+    vertical: List[Vertical]
+    residual_settlements: List[ResidualSettlements]
+    amounts_of_loads: Optional[str]
+
+
+class DSettlementOutputStructure(DSeriesStructure):
+    """Representation of complete .sld file, inherting
+    the structure of the .sli file as well."""
+
+    results: Results
+    input_data: DSettlementStructure

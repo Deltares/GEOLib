@@ -17,7 +17,7 @@ from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath
 
 from geolib.geometry import Point
-from geolib.models import BaseModel
+from geolib.models import BaseModel, BaseModelStructure
 from geolib.soils import Soil
 
 from .dstability_parserprovider import DStabilityParserProvider
@@ -58,8 +58,7 @@ class DStabilityModel(BaseModel):
     *.stix files
     """
 
-    input_fn: Optional[DirectoryPath]
-    output_fn: Optional[DirectoryPath]
+    datastructure: BaseModelStructure = DStabilityStructure()
 
     @property
     def parser_provider_type(self) -> Type[DStabilityParserProvider]:
@@ -76,8 +75,6 @@ class DStabilityModel(BaseModel):
 
     current_stage: int = 0
     current_id: int = 100  # todo > after reading inputfiles, check for the next id or think about another implementation of the id
-
-    datastructure: DStabilityStructure = DStabilityStructure()
 
     def serialize(self, foldername: DirectoryPath):
         serializer = DStabilityInputSerializer(ds=self.datastructure)

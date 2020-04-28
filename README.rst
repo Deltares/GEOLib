@@ -34,6 +34,12 @@ or, in case of using Poetry
 
     $ poetry run pytest
 
+Running flake8, mypy is also recommended. For mypy use:
+
+.. code-block:: bash
+
+    $ mypy --config-file pyproject.toml geolib
+
 
 Documentation
 -------------

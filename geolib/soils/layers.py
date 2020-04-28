@@ -8,7 +8,7 @@ from typing import List
 
 from pydantic import BaseModel as DataModel
 
-from geolib.geometry import Point
+from geolib.geometry.one import Point
 from geolib.soils import Soil
 
 

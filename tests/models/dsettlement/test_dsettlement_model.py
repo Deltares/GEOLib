@@ -69,27 +69,60 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # 4. Verify final expectations.
-        assert ds.datastructure, "No data has been generated."
+        assert ds.datastructure.version == Version()
         assert isinstance(ds.datastructure, DSettlementStructure)
 
     @pytest.mark.integrationtest
-    def test_given_outputfilepath_when_parse_then_raises_notimplemented(self):
-        # ToDo: Remove this test case and include it in the one where
-        # datastructure is generated once we impelment the output file importer.
+    def test_parse_output(self):
         # 1. Set up test data
-        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
+        test_folder = TestUtils.get_local_test_data_dir("dsettlement/benchmarks")
         test_file = pathlib.Path(os.path.join(test_folder, "bm1-1.sld"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
+        output_test_file = output_test_folder / "results.json"
         ds = DSettlementModel()
 
         # 2. Verify initial expectations
-        assert os.path.exists(test_file)
+        assert test_file.exists()
 
         # 3. Run test
-        with pytest.raises(NotImplementedError):
-            ds.parse(test_file)
+        ds.parse(test_file)
 
-        # 4. Verify final expectations.
-        assert not ds.datastructure, "Data has been generated but not expected."
+        # 4. Verify Depths substructure
+        assert ds.output.vertical[0].depths.depths[0] == -0.0000100
+        assert ds.output.vertical[0].depths.depths[-1] == -2.0
+        assert float(ds.output.vertical[0].depths.depths[-1]) == -2.0
+        assert len(ds.output.vertical[0].depths.depths) == 14
+
+        # 5. Verify Stresses substructure
+        assert ds.output.vertical[0].stresses.stresses[0]["final_water_stress"] == 0.0
+        assert ds.output.vertical[0].stresses.stresses[-1]["initial_total_stress"] == 40.0
+        assert (
+            type(ds.output.vertical[0].stresses.stresses[-1]["initial_total_stress"])
+            == float
+        )
+        assert len(ds.output.vertical[0].stresses.stresses) == 14
+
+        # 5. Verify residual settlements substructure
+        assert (
+            ds.output.residual_settlements[0].residualsettlements[0][
+                "residual_settlement"
+            ]
+            == 0.1889574
+        )
+        assert ds.output.residual_settlements[0].residualsettlements[-1]["vertical"] == 1
+        assert (
+            type(
+                ds.output.residual_settlements[0].residualsettlements[-1][
+                    "residual_settlement"
+                ]
+            )
+            == float
+        )
+        assert len(ds.output.residual_settlements[0].residualsettlements) == 2
+
+        # Serialize to json for acceptance
+        with open(output_test_file, "w") as io:
+            io.write(ds.output.json(indent=4))
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize("filename", [pytest.param("bm1-1.sli", id="Input file")])
