@@ -9,25 +9,33 @@ Usage::
 
 """
 import abc
-
 import re
 from enum import Enum
-from typing import List, Optional, Union, Type
-
 from pathlib import Path
+from typing import List, Optional, Type, Union, Dict
+
 from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, BaseModelStructure
+from geolib.models.dstability.internal import (
+    UpliftVanParticleSwarmResult,
+    UpliftVanResult,
+)
 from geolib.soils import Soil
 
 from .dstability_parserprovider import DStabilityParserProvider
-from .internal import DStabilityStructure, SoilCollection
+from .internal import (
+    AnalysisType,
+    CalculationType,
+    DStabilityStructure,
+    SoilCollection,
+    Waternet,
+)
 from .loads import DStabilityLoad
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer
-from .internal import Waternet, SoilCollection, DStabilityStructure
 
 
 class DStabilityCalculationType(Enum):
@@ -93,6 +101,40 @@ class DStabilityModel(BaseModel):
     @property
     def waternets(self) -> List[Waternet]:
         return self.datastructure.waternets
+
+    @property
+    def output(self):
+        # TODO Make something that works for all stages
+        return self.results(self.current_stage)
+
+    def results(self, stage_id: int) -> Dict:
+        """
+        Returns the results of a stage. Calculation results are based on analysis type and calculation type.
+
+        Args:
+            stage_id (int): Id of a stage.
+
+        Returns:
+            dict: Dictionary containing the analysis results of the stage.
+
+        Raises:
+            ValueError: No results or calculationsettings available
+        """
+        if self.datastructure.has_result(stage_id):
+            result_id = self.datastructure.stages[stage_id].ResultId
+            calculation_settings = self.datastructure.calculationsettings[stage_id]
+            analysis_type = calculation_settings.AnalysisType
+            calculation_type = calculation_settings.CalculationType
+
+            results = self.datastructure.get_result_substructure(
+                analysis_type, calculation_type
+            )
+
+            for result in results:
+                if result.Id == result_id:
+                    return result.dict()
+
+        raise ValueError(f"No result found for result id {stage_id}")
 
     def serialize(self, foldername: DirectoryPath):
 
@@ -180,12 +222,12 @@ class DStabilityModel(BaseModel):
         """
 
     def add_head_line(
-            self,
-            points: List[Point],
-            label: str = "",
-            notes: str = "",
-            is_phreatic_line: bool = False,
-            stage_id: int = None
+        self,
+        points: List[Point],
+        label: str = "",
+        notes: str = "",
+        is_phreatic_line: bool = False,
+        stage_id: int = None,
     ) -> int:
         """
         Add head line to the model
@@ -208,11 +250,7 @@ class DStabilityModel(BaseModel):
             raise IndexError(f"stage {stage_id} is not available")
 
         persitable_headline = waternet.add_head_line(
-            str(self._get_next_id()),
-            label,
-            notes,
-            points,
-            is_phreatic_line
+            str(self._get_next_id()), label, notes, points, is_phreatic_line
         )
         return int(persitable_headline.Id)
 
@@ -223,7 +261,7 @@ class DStabilityModel(BaseModel):
         top_head_line_id: int,
         label: str = "",
         notes: str = "",
-        stage_id: int = None
+        stage_id: int = None,
     ) -> int:
         """
         Add reference line to the model
@@ -252,7 +290,7 @@ class DStabilityModel(BaseModel):
             notes,
             points,
             str(bottom_headline_id),
-            str(top_head_line_id)
+            str(top_head_line_id),
         )
         return int(persistable_referenceline.Id)
 
@@ -285,9 +323,7 @@ class DStabilityModel(BaseModel):
         """
 
     def add_reinforcement(
-        self,
-        reinforcement: DStabilityReinforcement,
-        stage_id: int,
+        self, reinforcement: DStabilityReinforcement, stage_id: int,
     ) -> int:
         """Add a reinforcement to the model.
 
@@ -302,17 +338,21 @@ class DStabilityModel(BaseModel):
             ValueError: When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_id is provided, or the datastructure is no longer valid.
         """
         if not issubclass(type(reinforcement), DStabilityReinforcement):
-            raise ValueError(f"reinforcement should be a subclass of DstabilityReinforcement, received {reinforcement}")
+            raise ValueError(
+                f"reinforcement should be a subclass of DstabilityReinforcement, received {reinforcement}"
+            )
 
         try:
             reinforcements = self.datastructure.reinforcements[stage_id]
         except IndexError:
-            raise ValueError(f"No reinforcements found for stage found with id {stage_id}")
+            raise ValueError(
+                f"No reinforcements found for stage found with id {stage_id}"
+            )
 
         reinforcements.add_reinforcement(reinforcement)
 
         if not self.is_valid:
-            raise ValueError('Internal datastructure is not valid')
+            raise ValueError("Internal datastructure is not valid")
 
         return int(reinforcements.Id)
 

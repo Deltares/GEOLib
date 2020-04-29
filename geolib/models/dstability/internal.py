@@ -91,7 +91,7 @@ class Waternet(DStabilitySubStructure):
         label: str,
         notes: str,
         points: List[Point],
-        is_phreatic_line: bool
+        is_phreatic_line: bool,
     ) -> PersistableHeadLine:
         head_line = PersistableHeadLine(Id=head_line_id, Label=label, Notes=notes)
         head_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
@@ -109,16 +109,22 @@ class Waternet(DStabilitySubStructure):
         notes: str,
         points: List[Point],
         bottom_head_line_id: str,
-        top_head_line_id: str
+        top_head_line_id: str,
     ) -> PersistableReferenceLine:
-        reference_line = PersistableReferenceLine(Id=reference_line_id, Label=label, Notes=notes)
+        reference_line = PersistableReferenceLine(
+            Id=reference_line_id, Label=label, Notes=notes
+        )
         reference_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
 
         if not self.has_head_line_id(bottom_head_line_id):
-            raise ValueError(f"Unknown headline id {bottom_head_line_id} for bottom_head_line_id")
+            raise ValueError(
+                f"Unknown headline id {bottom_head_line_id} for bottom_head_line_id"
+            )
 
         if not self.has_head_line_id(top_head_line_id):
-            raise ValueError(f"Unknown headline id {top_head_line_id} for top_head_line_id")
+            raise ValueError(
+                f"Unknown headline id {top_head_line_id} for top_head_line_id"
+            )
 
         reference_line.BottomHeadLineId = bottom_head_line_id
         reference_line.TopHeadLineId = top_head_line_id
@@ -408,9 +414,7 @@ class PersistableSoil(DataClass):
             PersistableSoil: Converted soil
         """
         # convert snake_case members to CamelCase
-        return cls(
-            **{snake_to_camel(k): v for k, v in dict(soil).items()}            
-        )
+        return cls(**{snake_to_camel(k): v for k, v in dict(soil).items()})
 
     def to_soil(self) -> Soil:
         """
@@ -420,11 +424,7 @@ class PersistableSoil(DataClass):
             Soil: Converted PersistableSoil
         """
         # convert CamelCase members to snake_case
-        return Soil(
-            **{
-                camel_to_snake(k) : v for k, v in dict(self).items()
-            }
-        )
+        return Soil(**{camel_to_snake(k): v for k, v in dict(self).items()})
 
 
 class SoilCollection(DStabilitySubStructure):
@@ -545,7 +545,9 @@ class Reinforcements(DStabilitySubStructure):
     Geotextiles: List[PersistableGeotextile] = []
     Nails: List[PersistableNail] = []
 
-    def add_reinforcement(self, reinforcement: 'DStabilityReinforcement') -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
+    def add_reinforcement(
+        self, reinforcement: "DStabilityReinforcement"
+    ) -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
         internal_datastructure = reinforcement._to_internal_datastructure()
         plural_class_name = f"{reinforcement.__class__.__name__}s"
         getattr(self, plural_class_name).append(internal_datastructure)
@@ -1087,10 +1089,12 @@ class UpliftVanResult(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "results/upliftvan"
 
+DStabilityResult = Union[UpliftVanResult, UpliftVanParticleSwarmResult, UpliftVanReliabilityResult, SpencerGeneticAlgorithmResult, SpencerReliabilityResult, SpencerResult, BishopBruteForceResult, BishopReliabilityResult, BishopResult]
 
 ###########################
 # INPUT AND OUTPUT COMBINED
 ###########################
+
 
 class DStabilityStructure(BaseModelStructure):
     """Highest level DStability class that should be parsed to and serialized from.
@@ -1118,7 +1122,9 @@ class DStabilityStructure(BaseModelStructure):
     soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
     soils: SoilCollection = SoilCollection()  # soils.json
     reinforcements: List[Reinforcements] = [
-        Reinforcements(Id='1')  # TODO find a good way to do this for all input structure attributes.
+        Reinforcements(
+            Id="1"
+        )  # TODO find a good way to do this for all input structure attributes.
     ]  # reinforcements/reinforcements_x.json
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
@@ -1142,3 +1148,55 @@ class DStabilityStructure(BaseModelStructure):
 
     def validator(self):
         return DStabilityValidator(self)
+
+    def has_stage(self, stage_id: int) -> bool:
+        try:
+            self.stages[stage_id]
+            return True
+        except IndexError:
+            return False
+
+    def has_result(self, stage_id: int) -> bool:
+        if self.has_stage(stage_id):
+            result_id = self.stages[stage_id].ResultId
+            if result_id is None:
+                return False
+            else:
+                return True
+        return False
+
+    def get_result_substructure(
+        self, analysis_type: AnalysisType, calculation_type: CalculationType
+    ) -> List[DStabilityResult]:
+
+        result_types_mapping = {
+            AnalysisType.UPLIFT_VAN: {
+                "non_probabilistic": self.uplift_van_results,
+                "probabilistic": self.uplift_van_reliability_results,
+            },
+            AnalysisType.UPLIFT_VAN_PARTICLE_SWARM: {
+                "non_probabilistic": self.uplift_van_particle_swarm_results,
+                "probabilistic": self.uplift_van_reliability_results,
+            },
+            AnalysisType.SPENCER_GENETIC: {
+                "non_probabilistic": self.spencer_genetic_algorithm_results,
+                "probabilistic": self.spencer_reliability_results,
+            },
+            AnalysisType.SPENCER: {
+                "non_probabilistic": self.spencer_results,
+                "probabilistic": self.spencer_reliability_results,
+            },
+            AnalysisType.BISHOP_BRUTE_FORCE: {
+                "non_probabilistic": self.bishop_bruteforce_results,
+                "probabilistic": self.bishop_reliability_results,
+            },
+            AnalysisType.BISHOP: {
+                "non_probabilistic": self.bishop_results,
+                "probabilistic": self.bishop_reliability_results,
+            },
+        }
+
+        if calculation_type == CalculationType.PROBABILISTIC:
+            return result_types_mapping[analysis_type]["probabilistic"]
+
+        return result_types_mapping[analysis_type]["non_probabilistic"]
