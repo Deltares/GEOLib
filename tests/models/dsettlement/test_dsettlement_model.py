@@ -38,7 +38,7 @@ class TestDSettlementModel:
     def setup_dsettlement_model(self):
         """Setup base structure from parsed file while
         we can't initialize one from scratch yet."""
-        p = pathlib.Path("tests/test_data/dsettlement/bm1-1.sli")
+        p = Path("tests/test_data/dsettlement/bm1-1.sli")
         ds = DSettlementModel()
         ds.parse(p)
         assert ds.datastructure is not None
@@ -50,20 +50,20 @@ class TestDSettlementModel:
     def test_DSettlementModel_instance(self):
         dsettlement_model = DSettlementModel()
         assert dsettlement_model is not None
-        assert isinstance(dsettlement_model, BaseModel), (
-            "" + "DSheetpilingModel does not instanciate BaseModel"
-        )
+        assert isinstance(
+            dsettlement_model, BaseModel
+        ), "DSettlementModel does not instanciate BaseModel"
 
     @pytest.mark.integrationtest
-    @pytest.mark.parametrize("filename", [pytest.param("bm1-1.sli", id="Input file")])
-    def test_given_filepath_when_parse_then_does_not_raise(self, filename: str):
+    @pytest.mark.parametrize("filename", [pytest.param(Path("bm1-1.sli"), id="Input file")])
+    def test_given_filepath_when_parse_then_does_not_raise(self, filename: Path):
         # 1. Set up test data
-        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
-        test_file = pathlib.Path(os.path.join(test_folder, filename))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
+        test_file = test_folder / filename
         ds = DSettlementModel()
 
         # 2. Verify initial expectations
-        assert os.path.exists(test_file)
+        assert test_file.is_file()
 
         # 3. Run test.
         ds.parse(test_file)
@@ -75,8 +75,8 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_parse_output(self):
         # 1. Set up test data
-        test_folder = TestUtils.get_local_test_data_dir("dsettlement/benchmarks")
-        test_file = pathlib.Path(os.path.join(test_folder, "bm1-1.sld"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement/benchmarks"))
+        test_file = test_folder / "bm1-1.sld"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
         output_test_file = output_test_folder / "results.json"
         ds = DSettlementModel()
@@ -125,53 +125,6 @@ class TestDSettlementModel:
             io.write(ds.output.json(indent=4))
 
     @pytest.mark.systemtest
-    @pytest.mark.parametrize("filename", [pytest.param("bm1-1.sli", id="Input file")])
-    def test_given_parsed_input_when_serialize_then_same_content(self, filename: str):
-        # 1. Set up test data
-        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
-        test_file = pathlib.Path(os.path.join(test_folder, filename))
-        output_test_folder = TestUtils.get_output_test_data_dir("dsettlement")
-        output_test_file = pathlib.Path(
-            os.path.join(output_test_folder, "generated" + filename)
-        )
-        ds = DSettlementModel()
-
-        # 2. Verify initial expectations
-        assert os.path.exists(test_file)
-        if os.path.exists(output_test_file):
-            os.remove(output_test_file)
-
-        # 3. Run test.
-        ds.parse(test_file)
-        ds.serialize(output_test_file)
-
-        # 4.1. Verify final expectations.
-        assert ds.datastructure, "No data has been generated."
-        assert isinstance(ds.datastructure, DSettlementStructure)
-        input_datastructure = dict(ds.datastructure)
-
-        # 4.2. Read the generated data.
-        assert os.path.exists(output_test_file)
-        output_datastructure = dict(DSettlementModel().parse(output_test_file))
-        assert not (
-            input_datastructure is output_datastructure
-        ), "Both references are the same."
-
-        # 4.3. Compare values
-        output_keys = output_datastructure.keys()
-        errors = []
-        for ds_key, ds_value in input_datastructure.items():
-            if not (ds_key in output_keys):
-                errors.append(f"Key {ds_key} not serialized!")
-                continue
-            if not (ds_value == output_datastructure[ds_key]):
-                logging.warning(f"{ds_value} != {output_datastructure[ds_key]}")
-                errors.append(f"Values for key {ds_key} differ from parsed to serialized")
-        if errors:
-            pytest.fail(f"Failed with the following {errors}")
-        ds.serialize("test2.sli")
-
-    @pytest.mark.systemtest
     @pytest.mark.skipif(
         not is_running_under_teamcity(), reason="Console test only installed on TC."
     )
@@ -187,7 +140,7 @@ class TestDSettlementModel:
         dm.serialize(test_output_filepath)
 
         # 2. Verify initial expectations.
-        assert os.path.exists(test_output_filepath)
+        assert test_output_filepath.is_file()
 
         # 3. Run test.
         dm.input_fn = test_output_filepath
@@ -198,7 +151,6 @@ class TestDSettlementModel:
 
     @pytest.mark.integrationtest
     def test_set_calculation_times(self):
-
         # parse file
         ds = self.setup_dsettlement_model()
         test_output_filepath = (
@@ -248,6 +200,51 @@ class TestDSettlementModel:
         assert ds.datastructure.verticals.locations[1].X == 2
         assert ds.datastructure.verticals.locations[1].Y == 0
         assert ds.datastructure.verticals.locations[1].Z == 3
+
+    @pytest.mark.systemtest
+    @pytest.mark.parametrize(
+        "filename", [pytest.param(Path("bm1-1.sli"), id="Input file")],
+    )
+    def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
+        # 1. Set up test data
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
+        test_file = test_folder / filename
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
+        output_test_file = output_test_folder / filename
+        ds = DSettlementModel()
+
+        # 2. Verify initial expectations
+        assert test_file.is_file()
+        if output_test_file.is_file():
+            os.remove(output_test_file)
+
+        # 3. Run test.
+        ds.parse(test_file)
+        ds.serialize(output_test_file)
+
+        # 4.1. Verify final expectations.
+        assert ds.datastructure, "No data has been generated."
+        assert isinstance(ds.datastructure, DSettlementStructure)
+        input_datastructure = dict(ds.datastructure)
+
+        # 4.2. Read the generated data.
+        assert output_test_file.is_file()
+        output_datastructure = dict(DSettlementModel().parse(output_test_file))
+        assert not (
+            input_datastructure is output_datastructure
+        ), "Both references are the same."
+
+        # 4.3. Compare values
+        output_keys = output_datastructure.keys()
+        errors = []
+        for ds_key, ds_value in input_datastructure.items():
+            if not (ds_key in output_keys):
+                errors.append(f"Key {ds_key} not serialized!")
+                continue
+            if not (ds_value == output_datastructure[ds_key]):
+                errors.append(f"Values for key {ds_key} differ from parsed to serialized")
+        if errors:
+            pytest.fail(f"Failed with the following {errors}")
 
     @pytest.mark.unittest
     def test_point_equals(self):

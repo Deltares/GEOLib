@@ -38,14 +38,6 @@ pipelines:
             script:
               - pip install -r requirements.txt
               - pytest -v --junitxml=test-reports/report_system.xml -m "systemtest and not workinprogress"
-      # - step: # Run acceptancetest
-      #     name: Run acceptancetest.
-      #     caches:
-      #       - pip
-      #     script:
-      #       - pip install -r requirements.txt
-      #       - pytest -v -m "acceptancetest and not workinprogress"
-
   branches:
     master:
       - step: # Install packages.

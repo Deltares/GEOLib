@@ -17,8 +17,11 @@ from geolib.models.dseries_parser import (
     DSeriesNameKeyValueSubStructure,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
+    DSeriesTabbedTreeStructure,
+    DSeriesTabbedTreeStructureCollection,
     DSerieTableStructure,
     DSerieRepeatedTableStructure,
+    DSerieSingleStructure,
     DSerieOldTableStructure,
     ComplexVerticalSubstructure,
 )
@@ -260,6 +263,23 @@ class Accuracy(DSeriesNoParseSubStructure):
     accuracy: confloat(ge=1e-10) = 1e-3
 
 
+class PiezoLine(DSeriesTabbedTreeStructure):
+    id: int
+    curves: List[int]
+
+
+class PiezoLines(DSeriesTabbedTreeStructureCollection):
+    """Representation of [PIEZO LINES] group."""
+
+    piezolines: List[PiezoLine]
+
+
+class PhreaticLine(DSerieSingleStructure):
+    """Representation of [PHREATIC LINE] group."""
+
+    phreaticline: int
+
+
 class GeometryData(DSeriesStructure):
     """Representation of [GEOMETRY DATA] group."""
 
@@ -270,8 +290,8 @@ class GeometryData(DSeriesStructure):
     use_probabilistic_defaults_boundaries: str = ""
     stdv_boundaries: str = ""
     distribution_boundaries: str = ""
-    piezo_lines: str = ""
-    phreatic_line: str = ""
+    piezo_lines: Union[PiezoLines, str] = ""
+    phreatic_line: Union[PhreaticLine, str] = ""
     world_co__ordinates: str = ""
     layers: Union[Layers, str] = Layers()
     layerloads: str = ""

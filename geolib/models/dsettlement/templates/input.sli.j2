@@ -22,6 +22,7 @@ D-Settlement={{ version.d__settlement }}
 [SOIL]
 {{ soil }}
 [END OF SOIL]
+
 {% endfor %}
 {% else %}
 {{ soil_collection }}
@@ -101,11 +102,37 @@ D-Settlement={{ version.d__settlement }}
 [END OF DISTRIBUTION BOUNDARIES]
 
 [PIEZO LINES]
+{% if geometry_data.piezo_lines is mapping %}
+{{ '{:>4}'.format( geometry_data.piezo_lines.piezolines|length ) }} - Number of piezometric level lines -
+{% for pl_line in geometry_data.piezo_lines.piezolines -%}
+{{ '{:>6}'.format(pl_line.id) }} - PlLine number
+{{ '{:>8}'.format(pl_line.curves|length) }} - number of curves on PlLine, next line(s) are curvenumbers
+{% if pl_line.curves|length > 1 %}
+    {%- for curve in pl_line.curves %}
+        {%- if loop.first -%}
+            {{ '{:>10}'.format(curve) }}
+        {%- elif loop.index0 % 10 == 0 -%}
+            {{ '\n' }}{{ '{:>10}'.format(curve) }}
+        {%- else -%}
+            {{ '{:>6}'.format(curve) }}
+        {%- endif -%}
+    {% endfor %}
+{% else -%}
+    {{ '{:>10}'.format(pl_line.curves[0]) }}
+{% endif -%}
+{% endfor -%}
+{% else %}
 {{ geometry_data.piezo_lines }}
+{% endif %}
+
 [END OF PIEZO LINES]
 
 [PHREATIC LINE]
+{% if geometry_data.phreatic_line is mapping %}
+   {{ geometry_data.phreatic_line.phreaticline }} - Number of the piezometric level line acting as phreatic line -
+{% else %}
 {{ geometry_data.phreatic_line }}
+{% endif %}
 [END OF PHREATIC LINE]
 
 [WORLD CO-ORDINATES]

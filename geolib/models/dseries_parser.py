@@ -1,12 +1,13 @@
 from __future__ import annotations
 import logging
 from abc import abstractmethod
-from typing import List, get_type_hints, _GenericAlias, _SpecialForm, Dict, Type
+from typing import List, get_type_hints, _GenericAlias, _SpecialForm, Dict, Type, Tuple
 from pydantic import FilePath, BaseModel as DataClass
 
 from .parsers import BaseParser
 from geolib.models.base_model_structure import BaseModelStructure
 from .utils import get_args, is_union, is_list
+import re
 
 
 class DSeriesStructure(BaseModelStructure):
@@ -317,6 +318,26 @@ class DSerieListStructure(DSeriesStructure):
         return cls(**d)
 
 
+class DSerieSingleStructure(DSeriesStructure):
+    @classmethod
+    def parse_text(cls, text: str):
+        """Creates a DSeriesStructure that can parse fields like
+
+        [GROUP]
+        1
+        [END OF GROUP]
+
+        returning:
+        1
+
+        Arguments:
+            data {str} -- Data to parse.
+        """
+        value = strip_line_first_element(text)
+        d = {cls.__name__.lower(): value}
+        return cls(**d)
+
+
 class DSerieMatrixStructure(DSeriesStructure):
     @classmethod
     def parse_text(cls, text: str):
@@ -464,6 +485,136 @@ class DSeriesListSubStructure(DSeriesStructure):
         """
         parsed_structure = DSerieParser.parse_list_group(data)
         return cls(**parsed_structure)
+
+
+class DSeriesTabbedTreeStructure(DSeriesStructure):
+    @classmethod
+    def list_of_properties(cls) -> List[str]:
+        """Gets the list of properties that need to be mapped in the
+        order they are expected to be read.
+
+        :raises NotImplementedError: If not implemented in concrete class.
+        :return: Ordered list of property names.
+        :rtype: List[str]
+        """
+        return [k for k, _ in cls.__fields__.items()]
+
+    @staticmethod
+    def filter_tab(data: str, separator: str):
+        return [
+            value.strip()
+            for value in data.split(separator)
+            if value.strip()]
+
+    @classmethod
+    def parse_text(cls, data: str) -> DSeriesStructure:
+        """Creates a DSeriesStructure using the concrete parser
+            for fields such:
+            # Object #1.
+                # Number of properties for Object #1.
+                    # Value for Number of properties #1.
+        :param data: parsed text as string.
+        :type data: str
+        :return: Parsed structure
+        :rtype: DSeriesTabbedTreeLines
+        """
+        tab_level_lines = [
+            (DSerieParser.count_separator(line), line)
+            for line in data.split("\n")
+            if line]
+        return cls.parse_text_lines(tab_level_lines)
+
+    @classmethod
+    def parse_text_lines(cls, data_lines: List[Tuple[int, str]]) -> DSeriesStructure:
+        """Parses a list of lines into a DSeriesStructure of this type.
+        Expects values to be sperated by either tabs or spaces. The identation per line
+        will determine the property the values belong to.
+
+        Args:
+            data_lines (List[Tuple[int, str]]): Tuple of identation level and line content.
+
+        Returns:
+            DSeriesStructure: Generated structure with parsed properties.
+        """
+        list_of_properties = cls.list_of_properties()
+        data_dict = {}
+        # Assumption: First property represents the 'id', which is not placed at the same
+        # identation level as the rest of properties.
+        data_dict[list_of_properties[0]] = cls.filter_tab(data_lines[0][1], "-")[0]
+        properties_level = min(data_lines[1:])[0]
+        properties_idx = [
+            idx
+            for idx, (level, line) in enumerate(data_lines[1:])
+            if level == properties_level]
+        for idx, prop_idx in enumerate(properties_idx):
+            next_idx = -1
+            if not prop_idx == properties_idx[-1]:
+                next_idx = properties_idx[idx + 1]
+            property_values = [
+                value
+                for value in re.split(" |\t", data_lines[next_idx][1])
+                if value
+            ]
+            data_dict[list_of_properties[idx + 1]] = property_values
+
+        return cls(**data_dict)
+
+
+class DSeriesTabbedTreeStructureCollection(DSeriesStructure):
+    @classmethod
+    def TabbedTreeStructure(cls) -> Tuple[str, Type[DSeriesTabbedTreeStructure]]:
+        """Gets the name of the collection property and its type
+
+        :raises NotImplementedError: When not implemented in concrete class.
+        :return: Name and Type to implement.
+        :rtype: Tuple[str, Type[DSeriesTabbedTreeStructure]]
+        """
+        fieldmapping = list(cls.__fields__.items())
+        assert len(fieldmapping) == 1
+        k, v = fieldmapping[0]
+        return (k, v.type_)
+
+    @classmethod
+    def parse_text(cls, data: str) -> DSeriesStructure:        
+        """Creates a DSeriesStructure using the concrete parser
+            for fields such:
+            # Number of objects.
+                # Object #1.
+                    # Number of properties for Object #1.
+                        # Value for Number of properties #1.
+
+        Args:
+            data (str): Parsed text as a string.
+
+        Returns:
+            DSeriesStructure: Parsed structure containing a list of other DSeriesStructure.
+        """
+        tab_level_lines = [(DSerieParser.count_separator(line), line) for line in data.split("\n") if line]
+        initial_tabs, header_line = tab_level_lines[0]
+        min_tab = min(tab_level_lines[1:])[0]
+        structures_idx = [
+            idx
+            for idx, (tab_count, line) in enumerate(tab_level_lines)
+            if tab_count == min_tab
+        ]
+
+        # Verify structures_idx len = expected.
+        structures = []
+        collection_name, structure_type = cls.TabbedTreeStructure()
+        for idx, struct_idx in enumerate(structures_idx):
+            # If we are at the last index, get the remaining lines as properties
+            # for the current structure.
+            next_idx = len(tab_level_lines)
+            if not struct_idx == structures_idx[-1]:
+                # If we are not at the last structure, get the index of the
+                # next one so we fetch all the related properties.
+                next_idx = structures_idx[idx + 1]
+            parsed_structure = structure_type.parse_text_lines(
+                tab_level_lines[struct_idx:next_idx]
+            )
+            structures.append(parsed_structure)
+
+        return cls(**{collection_name: structures})
 
 
 class DSeriesNoParseSubStructure(DSeriesStructure):
@@ -724,14 +875,30 @@ class DSerieParser(BaseParser):
             parsed_dictionary[make_key(fields[0])] = fields[1]
         return parsed_dictionary
 
+    @staticmethod
+    def count_separator(line: str) -> int:
+        """Returns the number of occurrences of a separator before
+        a valid character is found.
+
+        :param line: Line to count start of line separator.
+        :type line: str
+        :return: Total occurrences of a separator.
+        :rtype: int
+        """
+        separator_count: int = 0
+        separators = [" ", "\t"]
+        for char in line:
+            if not(char in separators):
+                return separator_count
+            separator_count += 1
+
 
 def make_key(key: str) -> str:
     return key.strip().replace(" ", "_").replace("-", "__").lower()
 
 
 def strip_line_first_element(text: str):
-    stext = text.strip().split(" ")[0]
-    return stext
+    return split_line_elements(text)[0]
 
 
 def split_line_elements(text: str):
