@@ -5,7 +5,7 @@ from enum import Enum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel as DataClass
-from pydantic import validator, confloat
+from pydantic import validator, confloat, ValidationError
 import abc
 
 from geolib.models import BaseModel
@@ -19,6 +19,24 @@ from geolib.utils import snake_to_camel, camel_to_snake
 
 BaseModelStructure.Config.arbitrary_types_allowed = True
 DataClass.Config.arbitrary_types_allowed = True
+
+
+class BishopSlipCircleResult(DataClass):
+    x: float
+    z: float
+    radius: float
+
+
+class UpliftVanSlipCircleResult(DataClass):
+    x_left: float
+    z_left: float
+    x_right: float
+    z_right: float
+    z_tangent: float
+
+
+class SpencerSlipPlaneResult(DataClass):
+    slipplane: List[Point]
 
 
 class DStabilitySubStructure(BaseModelStructure):
@@ -1001,6 +1019,16 @@ class BishopBruteForceResult(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "results/bishopbruteforce"
 
+    def get_slipcircle_output(self) -> BishopSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return BishopSlipCircleResult(
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius
+                )
+        except (ValidationError, AttributeError):
+            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
 
 class PersistableSoilContribution(DataClass):
     Alpha: Optional[float] = None
@@ -1049,6 +1077,17 @@ class BishopReliabilityResult(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "results/bishopreliability"
 
+    def get_slipcircle_output(self) -> BishopSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return BishopSlipCircleResult(
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius
+                )
+        except (ValidationError, AttributeError):
+            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+
 
 class BishopResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
@@ -1060,6 +1099,17 @@ class BishopResult(DStabilitySubStructure):
     @classmethod
     def structure_group(cls) -> str:
         return "results/bishop"
+
+    def get_slipcircle_output(self) -> BishopSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return BishopSlipCircleResult(
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius
+                )
+        except (ValidationError, AttributeError):
+            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
 
 
 class PersistableSpencerSlice(BaseModelStructure):
@@ -1121,6 +1171,15 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "results/spencergeneticalgorithm"
 
+    def get_slipplane_output(self) -> SpencerSlipPlaneResult:
+        """Get condensed slipplane data"""
+        try:
+            return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
+        except (ValidationError, TypeError):
+            print('\nthis is the slipplane!:')
+            print(self.SlipPlane)
+            raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
+
 
 class SpencerReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
@@ -1141,6 +1200,15 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "results/spencerreliability"
 
+    def get_slipplane_output(self) -> SpencerSlipPlaneResult:
+        """Get condensed slipplane data"""
+        try:
+            return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
+        except (ValidationError, TypeError):
+            print('\nthis is the slipplane!:')
+            print(self.SlipPlane)
+            raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
+
 
 class SpencerResult(DStabilitySubStructure):
     FactorOfSafety: Optional[float] = None
@@ -1152,6 +1220,15 @@ class SpencerResult(DStabilitySubStructure):
     @classmethod
     def structure_group(cls) -> str:
         return "results/spencer"
+
+    def get_slipplane_output(self) -> SpencerSlipPlaneResult:
+        """Get condensed slipplane data"""
+        try:
+            return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
+        except (ValidationError, TypeError):
+            print('\nthis is the slipplane!:')
+            print(self.SlipPlane)
+            raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
@@ -1166,6 +1243,19 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
     @classmethod
     def structure_group(cls) -> str:
         return "results/upliftvanparticleswarm"
+
+    def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
+        """Get condensed slipplane data"""
+        try:
+            return UpliftVanSlipCircleResult(
+                x_left=self.LeftCenter.X,
+                z_left=self.LeftCenter.Z,
+                x_right=self.RightCenter.X,
+                z_right=self.RightCenter.Z,
+                z_tangent=self.TangentLine
+            )
+        except (ValidationError, AttributeError):
+            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
 
 
 class UpliftVanReliabilityResult(DStabilitySubStructure):
@@ -1189,6 +1279,19 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "results/upliftvanreliability"
 
+    def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return UpliftVanSlipCircleResult(
+                x_left=self.LeftCenter.X,
+                z_left=self.LeftCenter.Z,
+                x_right=self.RightCenter.X,
+                z_right=self.RightCenter.Z,
+                z_tangent=self.TangentLine
+            )
+        except (ValidationError, AttributeError):
+            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+
 
 class UpliftVanResult(DStabilitySubStructure):
     FactorOfSafety: Optional[float] = None
@@ -1202,6 +1305,19 @@ class UpliftVanResult(DStabilitySubStructure):
     @classmethod
     def structure_group(cls) -> str:
         return "results/upliftvan"
+
+    def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return UpliftVanSlipCircleResult(
+                    x_left=self.LeftCenter.X,
+                    z_left=self.LeftCenter.Z,
+                    x_right=self.RightCenter.X,
+                    z_right=self.RightCenter.Z,
+                    z_tangent=self.TangentLine
+                )
+        except (ValidationError, AttributeError):
+            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
 
 DStabilityResult = Union[UpliftVanResult, UpliftVanParticleSwarmResult, UpliftVanReliabilityResult, SpencerGeneticAlgorithmResult, SpencerReliabilityResult, SpencerResult, BishopBruteForceResult, BishopReliabilityResult, BishopResult]
 

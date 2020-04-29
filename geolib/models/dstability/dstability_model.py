@@ -28,9 +28,13 @@ from geolib.soils import Soil
 from .dstability_parserprovider import DStabilityParserProvider
 from .internal import (
     AnalysisType,
+    BishopSlipCircleResult,
     CalculationType,
     DStabilityStructure,
+    DStabilityResult,
     SoilCollection,
+    SpencerSlipPlaneResult,
+    UpliftVanSlipCircleResult,
     Waternet,
 )
 from .loads import DStabilityLoad
@@ -105,7 +109,7 @@ class DStabilityModel(BaseModel):
         # TODO Make something that works for all stages
         return self.results(self.current_stage)
 
-    def results(self, stage_id: int) -> Dict:
+    def get_result(self, stage_id: int) -> Dict:
         """
         Returns the results of a stage. Calculation results are based on analysis type and calculation type.
 
@@ -118,6 +122,10 @@ class DStabilityModel(BaseModel):
         Raises:
             ValueError: No results or calculationsettings available
         """
+        result = self._get_result_substructure(stage_id)
+        return result.dict()  # TODO snake_case keys?
+
+    def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
         if self.datastructure.has_result(stage_id):
             result_id = self.datastructure.stages[stage_id].ResultId
             calculation_settings = self.datastructure.calculationsettings[stage_id]
@@ -130,9 +138,43 @@ class DStabilityModel(BaseModel):
 
             for result in results:
                 if result.Id == result_id:
-                    return result.dict()
+                    return result
 
         raise ValueError(f"No result found for result id {stage_id}")
+
+    def get_slipcircle_result(self, stage_id: int) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
+        """
+        Get the slipcircle(s) of the calculation result of a given stage.
+
+        Args:
+            stage_id (int): stage for which to get the available results
+
+        Returns:
+            Dict: dictionary of the available slipcircles per model for the given stage
+        
+        Raises:
+            ValueError: Result is not available for provided stage id
+            AttributeError: When the result has no slipcircle. Try get the slipplane
+        """
+        result = self._get_result_substructure(stage_id)
+        return result.get_slipcircle_output()
+
+    def get_slipplane_result(self, stage_id: int = 0) -> SpencerSlipPlaneResult:
+        """
+        Get the slipplanes of the calculations result of a stage.
+
+        Args:
+            stage_id (int): stage for which to get the available results
+
+        Returns:
+            dict: dictionary of the available slip planes per model for the given stage
+        
+        Raises:
+            ValueError: Result is not available for provided stage id
+            AttributeError: When the result has no slipplane. Try get the slipcircle
+        """
+        result = self._get_result_substructure(stage_id)
+        return result.get_slipplane_output()
 
     def serialize(self, foldername: DirectoryPath):
 
