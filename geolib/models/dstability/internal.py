@@ -5,14 +5,14 @@ from enum import Enum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel as DataClass
-from pydantic import validator
+from pydantic import validator, confloat
 import abc
 
 from geolib.models import BaseModel
 from geolib import __version__ as version
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.soils import Soil
 from geolib.geometry import Point
+from geolib.soils import Soil
 
 from .dstability_validator import DStabilityValidator
 from geolib.utils import snake_to_camel, camel_to_snake
@@ -197,9 +197,9 @@ class WaternetCreatorSettings(DStabilitySubStructure):
 
 
 class PersistableStochasticParameter(DataClass):
-    IsProbabilistic: Optional[bool]
-    Mean: Optional[float]
-    StandardDeviation: Optional[float]
+    IsProbabilistic: bool = False
+    Mean: float = 1.0
+    StandardDeviation: float = 0.0
 
 
 class StateType(Enum):
@@ -377,58 +377,161 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
 
 
 class PersistableSoil(DataClass):
-    Code: Optional[str]
-    Cohesion: Optional[float]
-    CohesionAndFrictionAngleCorrelated: Optional[bool]
-    CohesionStochasticParameter: Optional[PersistableStochasticParameter]
-    Dilatancy: Optional[float]
-    DilatancyStochasticParameter: Optional[PersistableStochasticParameter]
-    FrictionAngle: Optional[float]
-    FrictionAngleStochasticParameter: Optional[PersistableStochasticParameter]
-    Id: Optional[str]
-    IsProbabilistic: Optional[bool]
-    Name: Optional[str]
-    ShearStrengthModelTypeAbovePhreaticLevel: Optional[
-        ShearStrengthModelTypePhreaticLevel
-    ]
-    ShearStrengthModelTypeBelowPhreaticLevel: Optional[
-        ShearStrengthModelTypePhreaticLevel
-    ]
-    ShearStrengthRatio: Optional[float]
-    ShearStrengthRatioAndShearStrengthExponentCorrelated: Optional[bool]
-    ShearStrengthRatioStochasticParameter: Optional[PersistableStochasticParameter]
-    StrengthIncreaseExponent: Optional[float]
-    StrengthIncreaseExponentStochasticParameter: Optional[PersistableStochasticParameter]
-    VolumetricWeightAbovePhreaticLevel: Optional[float]
-    VolumetricWeightBelowPhreaticLevel: Optional[float]
-
-    @classmethod
-    def from_soil(cls, soil: Soil) -> "PersistableSoil":
-        """
-        Convert Soil to PersistableSoil.
-
-        Args:
-            soil (Soil): the given soil
-
-        Returns:
-            PersistableSoil: Converted soil
-        """
-        # convert snake_case members to CamelCase
-        return cls(**{snake_to_camel(k): v for k, v in dict(soil).items()})
-
-    def to_soil(self) -> Soil:
-        """
-        Convert PersistableSoil to Soil
-
-        Returns:
-            Soil: Converted PersistableSoil
-        """
-        # convert CamelCase members to snake_case
-        return Soil(**{camel_to_snake(k): v for k, v in dict(self).items()})
+    Code: str = ""
+    Cohesion: confloat(ge=0) = 0.0
+    CohesionAndFrictionAngleCorrelated: bool = False
+    CohesionStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    Dilatancy: confloat(ge=0) = 0.0
+    DilatancyStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    FrictionAngle: confloat(ge=0) = 0.0
+    FrictionAngleStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    Id: str = ""
+    IsProbabilistic: bool = False
+    Name: str = ""
+    ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevel = ShearStrengthModelTypePhreaticLevel.C_PHI
+    ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevel = ShearStrengthModelTypePhreaticLevel.SU
+    ShearStrengthRatio: confloat(ge=0) = 0.0
+    ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
+    ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    StrengthIncreaseExponent: confloat(ge=0) = 1.0
+    StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    VolumetricWeightAbovePhreaticLevel: confloat(ge=0) = 0.0
+    VolumetricWeightBelowPhreaticLevel: confloat(ge=0) = 0.0
 
 
 class SoilCollection(DStabilitySubStructure):
     """soils.json"""
+    ContentVersion: Optional[str]
+    Soils: List[PersistableSoil] = [
+        PersistableSoil(
+            Id="2",
+            Name="Embankment new",
+            Code="H_Aa_ht_new",
+            Cohesion=7.0,
+            FrictionAngle=30.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.26,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=19.3,
+            VolumetricWeightBelowPhreaticLevel=19.3
+        ),
+        PersistableSoil(
+            Id="3",
+            Name="Embankment old",
+            Code="H_Aa_ht_old",
+            Cohesion=7.0,
+            FrictionAngle=30.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.26,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0
+        ),
+        PersistableSoil(
+            Id="4",
+            Name="Clay, shallow",
+            Code="H_Rk_k_shallow",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.23,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=14.8,
+            VolumetricWeightBelowPhreaticLevel=14.8
+        ),
+        PersistableSoil(
+            Id="5",
+            Name="Clay, deep",
+            Code="H_Rk_k_deep",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.23,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=15.6,
+            VolumetricWeightBelowPhreaticLevel=15.6
+        ),
+        PersistableSoil(
+            Id="6",
+            Name="Organic clay",
+            Code="H_Rk_ko",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.24,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.85,
+            VolumetricWeightAbovePhreaticLevel=13.9,
+            VolumetricWeightBelowPhreaticLevel=13.9
+        ),
+        PersistableSoil(
+            Id="7",
+            Name="Peat, shallow",
+            Code="H_vhv_v",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.3,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=10.1,
+            VolumetricWeightBelowPhreaticLevel=10.1
+        ),
+        PersistableSoil(
+            Id="8",
+            Name="Peat, deep",
+            Code="H_vbv_v",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.27,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=11.0,
+            VolumetricWeightBelowPhreaticLevel=11.0
+        ),
+        PersistableSoil(
+            Id="9",
+            Name="Sand",
+            Code="Sand",
+            Cohesion=0.0,
+            FrictionAngle=30.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.0,
+            ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevel.C_PHI,
+            StrengthIncreaseExponent=0.0,
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=20.0
+        ),
+        PersistableSoil(
+            Id="10",
+            Name="Clay with silt",
+            Code="P_Rk_k&s",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.22,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0
+        ),
+        PersistableSoil(
+            Id="11",
+            Name="Sand with clay",
+            Code="H_Ro_z&k",
+            Cohesion=0.0,
+            FrictionAngle=0.0,
+            Dilatancy=0.0,
+            ShearStrengthRatio=0.22,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            StrengthIncreaseExponent=0.9,
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0
+        )
+    ]
 
     @classmethod
     def structure_name(cls) -> str:
@@ -446,7 +549,7 @@ class SoilCollection(DStabilitySubStructure):
         """
         return code in {s.Code for s in self.Soils}
 
-    def add_soil(self, soil: Soil) -> None:
+    def add_soil(self, soil: Soil) -> PersistableSoil:
         """
         Add a new soil to the model.
 
@@ -456,43 +559,54 @@ class SoilCollection(DStabilitySubStructure):
         Returns:
             None
         """
-        ps = PersistableSoil.from_soil(soil)
-        self.Soils.append(ps)
+        ps = PersistableSoil() # create object with default values
+        for k, v in dict(soil).items(): # override default values with those of the soil
+            if snake_to_camel(k) in dict(ps).keys() and v is not None:
+                setattr(ps, snake_to_camel(k), v)
 
-    def get_soil(self, id: int) -> Soil:
+        self.Soils.append(ps)
+        return ps
+
+    def get_soil(self, code: str) -> Soil:
         """
-        Get soil by the given id.
+        Get soil by the given code.
 
         Args:
-            id (int): id of the soil
+            code (str): code of the soil
 
         Returns:
-            Soil: or None if not available
+            Soil: the soil object
         """
-        for s in self.Soils:
-            if s.Id == id:
-                return s.to_soil()
-        raise ValueError(f"Soil id {id} not found in the SoilCollection")
+        for persistable_soil in self.Soils:
+            if persistable_soil.Code == code:
+                return Soil(
+                    **{camel_to_snake(k) : v for k, v in dict(persistable_soil).items()}
+                )
 
-    def edit_soil(self, soil: Soil) -> None:
+        raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
+
+    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
         """
         Update a soil.
 
         Args:
-            soil (Soil): soil class with the new properties
+            code (str): code of the soil
+            kwargs (dict): dictionary with agument names and values
 
         Returns:
-            bool: True for succes, False otherwise
-        """
-        for ps in self.Soils:
-            if ps.Code == soil.code:
-                ps.from_soil(soil)
-                return True
+            PersistableSoil: the edited soil
+        """        
+        for persistable_soil in self.Soils:
+            if persistable_soil.Code == code:
+                for k, v in kwargs.items():
+                    try:
+                        setattr(persistable_soil, snake_to_camel(k), v)
+                    except AttributeError:
+                        raise ValueError(f"Unknown soil parameter {k}.")
 
-        return False
+                return persistable_soil
 
-    ContentVersion: Optional[str]
-    Soils: List[Optional[PersistableSoil]] = []
+        raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
 
 
 # Reinforcements

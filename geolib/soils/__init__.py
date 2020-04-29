@@ -4,6 +4,8 @@ from typing import List, Optional
 from pydantic import BaseModel
 from pydantic.color import Color
 
+from geolib.utils import snake_to_camel, camel_to_snake
+
 
 class PersistableStochasticParameter(BaseModel):
     """
@@ -269,3 +271,4 @@ class Soil(BaseModel):
     ] = None
     volumetric_weight_above_phreatic_level: Optional[float] = None
     volumetric_weight_below_phreatic_level: Optional[float] = None
+

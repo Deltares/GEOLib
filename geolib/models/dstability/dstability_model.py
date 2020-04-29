@@ -75,8 +75,6 @@ class DStabilityModel(BaseModel):
     .stix files
     """
 
-    datastructure: BaseModelStructure = DStabilityStructure()
-
     @property
     def parser_provider_type(self) -> Type[DStabilityParserProvider]:
         return DStabilityParserProvider
@@ -165,49 +163,21 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"The soil with code {soil.code} is already defined.")
 
         soil.id = self._get_next_id()
-        self.soils.add_soil(soil)
-        return soil.id
+        persistant_soil = self.soils.add_soil(soil)
+        return persistant_soil.Code
 
-    def remove_soil(self, id: int) -> None:
-        """
-        Remove a soil from to the model.
-
-        Args:
-            id (int): the code of the soil
-
-        Returns:
-            bool: True for succes, False otherwise
-        """
-        for idx, soil in enumerate(self.soils.Soils):
-            if soil.Id == id:
-                del self.soils.Soils[idx]
-                return
-
-        raise ValueError(f"The soil with code {id} is not found.")
-
-    def edit_soil(self, id: int, **kwargs) -> None:
+    def edit_soil(self, code: str, **kwargs: dict) -> None:
         """
         Edit an existing soil with parameter names based on the soil class members
 
         Args:
-            id (int): the id of the soil
-            kwargs (dict): the parameters and new values
+            code (str): the code of the soil
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angel=25.0'
 
         Returns:
             bool: True for succes, False otherwise
         """
-        soil = self.soils.get_soil(id)
-
-        if soil is None:
-            raise ValueError(f"Unknown soil id {id}.")
-
-        for k, v in kwargs.items():
-            try:
-                setattr(soil, k, v)
-            except AttributeError:
-                raise ValueError(f"Unknown soil parameter {k}.")
-
-        self.soils.edit_soil(soil)
+        return self.soils.edit_soil(code, **kwargs)
 
     @property
     def points(self):
