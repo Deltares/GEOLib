@@ -12,7 +12,7 @@ class DStabilityValidator(BaseValidator):
         """Number of stages should be the same:"""
         lengths_set = set()
         valid = True
-        for key, value in self.ds.dict().items():
+        for key, value in ((k, v) for k, v in self.ds.dict().items() if 'result' not in k):  # Results not required for stage validity.
             if isinstance(value, list):
                 lengths_set.add(len(value))
                 if len(lengths_set) > 1:

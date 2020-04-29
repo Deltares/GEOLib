@@ -8,6 +8,7 @@ Usage::
     <dict>
 
 """
+import abc
 
 import re
 from enum import Enum
@@ -22,6 +23,7 @@ from geolib.models import BaseModel, BaseModelStructure
 from geolib.soils import Soil
 
 from .dstability_parserprovider import DStabilityParserProvider
+from .internal import DStabilityStructure, SoilCollection
 from .loads import DStabilityLoad
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer
@@ -52,11 +54,17 @@ class DStabilityAnalysisMethod(DataClass):
     """
 
 
+class DStabilityObject(BaseModel, metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def _to_dstability_sub_structure(self):
+        raise NotImplementedError
+
+
 class DStabilityModel(BaseModel):
     """D-Stability is software for soft soil slope stability.
 
     This model can read, modify and create
-    *.stix files
+    .stix files
     """
 
     datastructure: BaseModelStructure = DStabilityStructure()
@@ -74,9 +82,8 @@ class DStabilityModel(BaseModel):
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
 
-    current_stage: int = 0
     current_id: int = 100  # todo > after reading inputfiles, check for the next id or think about another implementation of the id
-
+    current_stage: int = 0
     datastructure: DStabilityStructure = DStabilityStructure()
 
     def _get_next_id(self) -> int:
@@ -88,6 +95,7 @@ class DStabilityModel(BaseModel):
         return self.datastructure.waternets
 
     def serialize(self, foldername: DirectoryPath):
+
         serializer = DStabilityInputSerializer(ds=self.datastructure)
         serializer.write(foldername)
 
@@ -232,7 +240,7 @@ class DStabilityModel(BaseModel):
             int: id of the added reference line
         """
         stage_id = stage_id if stage_id else self.current_stage
-        
+
         try:
             waternet = self.waternets[stage_id]
         except IndexError:
@@ -279,14 +287,34 @@ class DStabilityModel(BaseModel):
     def add_reinforcement(
         self,
         reinforcement: DStabilityReinforcement,
-        startpoint: Point,
-        endpoint: Optional[Point],
-        stage=None,
-    ):
-        """Add reinforcement to model.
+        stage_id: int,
+    ) -> int:
+        """Add a reinforcement to the model.
 
-        A start point is required, an end point is only required for Textile and ForbiddenLine.
+        Args:
+            reinforcement: A subclass of DStabilityReinforcement.
+            stage_id: Id used to identify the stage to which the reinforcement is linked.
+        
+        Returns:
+            int: Assigned id of the reinforcements (collection object of all reinforcements for a stage).
+        
+        Raises:
+            ValueError: When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_id is provided, or the datastructure is no longer valid.
         """
+        if not issubclass(type(reinforcement), DStabilityReinforcement):
+            raise ValueError(f"reinforcement should be a subclass of DstabilityReinforcement, received {reinforcement}")
+
+        try:
+            reinforcements = self.datastructure.reinforcements[stage_id]
+        except IndexError:
+            raise ValueError(f"No reinforcements found for stage found with id {stage_id}")
+
+        reinforcements.add_reinforcement(reinforcement)
+
+        if not self.is_valid:
+            raise ValueError('Internal datastructure is not valid')
+
+        return int(reinforcements.Id)
 
     def set_model(self, analysis_method: DStabilityAnalysisMethod, stage=None):
         """Sets the calculation type based on the given input and parameters."""

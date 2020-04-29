@@ -2,7 +2,7 @@ import inspect
 import sys, re
 from datetime import date, datetime
 from enum import Enum
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from pydantic import BaseModel as DataClass
 from pydantic import validator
@@ -539,11 +539,17 @@ class PersistableNail(DataClass):
 class Reinforcements(DStabilitySubStructure):
     """reinforcements/reinforcements_x.json"""
 
-    ContentVersion: Optional[str]
-    ForbiddenLines: Optional[List[Optional[PersistableForbiddenLine]]]
-    Geotextiles: Optional[List[Optional[PersistableGeotextile]]]
     Id: Optional[str]
-    Nails: Optional[List[Optional[PersistableNail]]]
+    ContentVersion: Optional[str]
+    ForbiddenLines: List[PersistableForbiddenLine] = []
+    Geotextiles: List[PersistableGeotextile] = []
+    Nails: List[PersistableNail] = []
+
+    def add_reinforcement(self, reinforcement: 'DStabilityReinforcement') -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
+        internal_datastructure = reinforcement._to_internal_datastructure()
+        plural_class_name = f"{reinforcement.__class__.__name__}s"
+        getattr(self, plural_class_name).append(internal_datastructure)
+        return internal_datastructure
 
 
 class ProjectInfo(DStabilitySubStructure):
@@ -1112,7 +1118,7 @@ class DStabilityStructure(BaseModelStructure):
     soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
     soils: SoilCollection = SoilCollection()  # soils.json
     reinforcements: List[Reinforcements] = [
-        Reinforcements()
+        Reinforcements(Id='1')  # TODO find a good way to do this for all input structure attributes.
     ]  # reinforcements/reinforcements_x.json
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json

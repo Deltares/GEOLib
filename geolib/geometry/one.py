@@ -12,7 +12,7 @@ from typing import Optional
 
 from pydantic import BaseModel as DataModel
 
-NODATA = -999.0
+NODATA = -999.0  # TODO why is this implemented instead of None?
 
 
 class Point(DataModel):
@@ -20,7 +20,7 @@ class Point(DataModel):
 
     """
 
-    label: str = ""
+    label: Optional[str] = ""
     id: Optional[int]
     x: float = NODATA
     y: float = NODATA
