@@ -55,7 +55,9 @@ class TestDSettlementModel:
         ), "DSettlementModel does not instanciate BaseModel"
 
     @pytest.mark.integrationtest
-    @pytest.mark.parametrize("filename", [pytest.param(Path("bm1-1.sli"), id="Input file")])
+    @pytest.mark.parametrize(
+        "filename", [pytest.param(Path("bm1-1.sli"), id="Input file")]
+    )
     def test_given_filepath_when_parse_then_does_not_raise(self, filename: Path):
         # 1. Set up test data
         test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
@@ -143,7 +145,7 @@ class TestDSettlementModel:
         assert test_output_filepath.is_file()
 
         # 3. Run test.
-        dm.input_fn = test_output_filepath
+        dm.filename = test_output_filepath
         status = dm.execute()
 
         # 3. Verify return code of 0 (indicates succesfull run)

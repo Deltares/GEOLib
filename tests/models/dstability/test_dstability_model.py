@@ -90,7 +90,7 @@ class TestDStabilityModel:
         assert os.path.exists(test_output_filepath)
 
         # 3. Run test.
-        dm.input_fn = test_output_filepath
+        dm.filename = test_output_filepath
         status = dm.execute()
 
         # 3. Verify return code of 0 (indicates succesfull run)
