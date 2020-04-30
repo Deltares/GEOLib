@@ -1,14 +1,10 @@
-import inspect
-import sys, re
 from datetime import date, datetime
 from enum import Enum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel as DataClass
-from pydantic import validator, confloat, ValidationError
-import abc
+from pydantic import validator, conlist, confloat
 
-from geolib.models import BaseModel
 from geolib import __version__ as version
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.geometry import Point
@@ -370,7 +366,12 @@ class SoilLayerCollection(DStabilitySubStructure):
 
     ContentVersion: Optional[str]
     Id: Optional[str]
-    SoilLayers: Optional[List[Optional[PersistableSoilLayer]]] = []
+    SoilLayers: List[PersistableSoilLayer] = []
+
+    def add_soillayer(self, layer_id: str, soil_id: str) -> PersistableSoilLayer:
+        psl = PersistableSoilLayer(LayerId=layer_id, SoilId=soil_id)
+        self.SoilLayers.append(psl)
+        return psl
 
 
 class PersistableSoilCorrelation(DataClass):
@@ -789,8 +790,21 @@ class PersistableLayer(DataClass):
     Id: Optional[str]
     Label: Optional[str]
     Notes: Optional[str]
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: conlist(PersistablePoint, min_items=3)
 
+    @validator('Points')
+    def polygon_checks(cls, points):
+        """
+        Todo:
+            * find some way to check the validity of the given points
+        """
+        # implement some checks
+        # 1. is this a simple polygon
+        # 2. is it clockwise
+        # 3. is it a non closed polygon
+        # 4. does it intersect other polygons
+        return points
+        
 
 class Geometry(DStabilitySubStructure):
     """geometries/geometry_x.json"""
@@ -801,7 +815,39 @@ class Geometry(DStabilitySubStructure):
 
     ContentVersion: Optional[str]
     Id: Optional[str]
-    Layers: Optional[List[Optional[PersistableLayer]]]
+    Layers: List[PersistableLayer] = []
+
+    def add_layer(
+        self, 
+        id: str,
+        label: str,
+        notes: str,
+        points: List[Point]
+    ) -> PersistableLayer:
+        """
+        Add a new layer to the model. Layers are expected;
+        1. to contain at least 3 point (non closed polygons)
+        2. the points need to be in clockwise order
+        3. the polygon needs to be convex (no intersections with itsself)
+
+        Args:
+            id (str): id of the layer
+            label (str): label of the layer
+            notes (str): notes for the layers
+            points (List[Points]): list of Point classes
+
+        Returns:
+            PersistableLayer: the layer as a persistable object
+        """
+        layer = PersistableLayer(
+            Id=id,
+            Label=label,
+            Notes=notes,
+            Points=[PersistablePoint(X=p.x, Z=p.z) for p in points]
+        )
+
+        self.Layers.append(layer)
+        return layer
 
 
 class PersistableBerm(DataClass):
