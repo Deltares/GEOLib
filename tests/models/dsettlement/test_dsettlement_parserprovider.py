@@ -3,7 +3,13 @@ import os
 import pytest
 
 from geolib.models.dsettlement.dsettlement_parserprovider import *
-from geolib.models.dsettlement.internal import PiezoLines, PiezoLine
+from geolib.models.dsettlement.internal import (
+    PiezoLines, PiezoLine,
+    Accuracy,
+    Points,
+    Curves,
+    Boundaries,
+    Layers)
 from tests.utils import TestUtils
 
 
@@ -14,13 +20,9 @@ class Test_DSettlementInputParser:
         assert parser is not None
         assert len(parser.suffix_list) == 1
 
-    @pytest.mark.systemtest
-    def test_given_testfile_when_parse_then_piezovaluesadded(self):
+    @pytest.fixture
+    def parsed_dsettlement_testfile(self):
         # 1. Define test data
-        geometry_data_key = "geometry_data"
-        piezo_lines_key = "piezo_lines"
-        piezolines_key = "piezolines"
-        expected_piezolines_curves = [[4]]
         test_folder = TestUtils.get_local_test_data_dir("dsettlement")
         test_file = pathlib.Path(os.path.join(test_folder, "bm1-1.sli"))
         parser = DSettlementInputParser()
@@ -32,9 +34,56 @@ class Test_DSettlementInputParser:
         # 3. Run test
         parsed_structure = parser.parse(test_file)
 
-        # 4. Verify final expectations.
-        assert parsed_structure, "No structure was parsed."
+        # 4. Verify expectations
+        assert parsed_structure, 'No structure was parsed.'
+        assert isinstance(parsed_structure, DSettlementStructure)
 
+        return parsed_structure
+
+    @pytest.mark.systemtest
+    def test_given_testfile_when_parse_then_geometryadded(self, parsed_dsettlement_testfile: DSettlementStructure):
+        # 1. Define test data.
+        geometry_data_key = "geometry_data"
+        parsed_structure = parsed_dsettlement_testfile
+        keys_in_structure = {
+            "accuracy": Accuracy,
+            "points": Points,
+            "curves": Curves,
+            "boundaries": Boundaries,
+            "layers": Layers,
+            "world_co__ordinates": str}
+
+        # 2. Verify expectations.
+        parsed_struct_asdict = dict(parsed_structure)
+        assert geometry_data_key in parsed_struct_asdict.keys(), "" + \
+            "Geometry should be wrapping the piezo lines and " + \
+            "was not imported."
+        geometry_dict: dict = dict(parsed_struct_asdict[geometry_data_key])
+        errors: list = []
+        for key, key_type in keys_in_structure.items():
+            if not (key in geometry_dict.keys()):
+                errors.append(f"Key {key} has not been parsed.")
+            elif not (isinstance(geometry_dict[key], key_type)):
+                errors.append(
+                    f"Key type {key_type} expected, " +
+                    f"but got {type(geometry_dict[key])}.")
+
+        if errors:
+            parsed_errors = "\n".join(errors)
+            pytest.fail(
+                "Not all properties were parsed correctly: " +
+                f"{parsed_errors}")
+
+    @pytest.mark.systemtest
+    def test_given_testfile_when_parse_then_piezovaluesadded(self, parsed_dsettlement_testfile: DSettlementStructure):
+        # 1. Define test data
+        geometry_data_key = "geometry_data"
+        piezo_lines_key = "piezo_lines"
+        piezolines_key = "piezolines"
+        expected_piezolines_curves = [[4]]
+        parsed_structure = parsed_dsettlement_testfile
+
+        # 2. Verify final expectations.
         parsed_struct_asdict = dict(parsed_structure)
         assert geometry_data_key in parsed_struct_asdict.keys(), "" + \
             "Geometry should be wrapping the piezo lines and " + \

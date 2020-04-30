@@ -159,6 +159,7 @@ class TestDSettlementModel:
             Path(TestUtils.get_output_test_data_dir("dsettlement"))
             / "test_calc_times.sli"
         )
+
         # set time steps
         days = [0, 1, 1000]
         time_steps = [timedelta(days=day) for day in days]
@@ -168,15 +169,31 @@ class TestDSettlementModel:
         # assert if time steps are in data structure
         assert ds.datastructure.residual_times.time_steps == days
 
-        # check if value error is raised when a time step lower than 0 is added
-        with pytest.raises(
-            ValueError, match="ensure this value is greater than or equal to 0"
-        ):
-            ds.set_calculation_times(time_steps=[timedelta(days=-1)])
+    @pytest.mark.unittest
+    def test_given_timedelta_lesser_than_zero_when_set_calculation_times_raises_valueerror(
+        self,
+    ):
+        # 1. Set up test data.
+        test_model = DSettlementModel()
+        expected_mssg = "ensure this value is greater than or equal to 0"
 
-        # check if attribute error is raised when a time_step is not a list of timedeltas
+        # 2. Run and verify expectations
+        with pytest.raises(ValueError, match=expected_mssg):
+            test_model.set_calculation_times(time_steps=[timedelta(days=-1)])
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "timesteps",
+        [pytest.param("", id="Empty string"), pytest.param([], id="Empty list")],
+    )
+    def test_given_empty_time_steps_when_set_calculation_times_raises_attributeerror(
+        self, timesteps
+    ):
+        # 1. Set up test model:
+        test_model = DSettlementModel()
+        # 2. Run test
         with pytest.raises(AttributeError):
-            ds.set_calculation_times(time_steps=[""])
+            test_model.set_calculation_times(time_steps=[""])
 
     @pytest.mark.integrationtest
     def test_feature_verticals(self):
@@ -262,8 +279,8 @@ class TestDSettlementModel:
         # Setup data
         point1 = DSeriePoint(id=4, X=100.0, Y=-1.0, Z=0.0)
         point2 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
-        curve1 = Curve(id=1, points=[point1, point2])
-        curve2 = Curve(id=2, points=[point1, point2])
+        curve1 = Curve(id=1, points=[point1.id, point2.id])
+        curve2 = Curve(id=2, points=[point1.id, point2.id])
 
         # Test equality
         assert curve1 == curve2
@@ -273,10 +290,10 @@ class TestDSettlementModel:
         # Setup data
         point1 = DSeriePoint(id=4, X=100.0, Y=-1.0, Z=0.0)
         point2 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
-        curve1 = Curve(id=1, points=[point1, point2])
-        curve2 = Curve(id=2, points=[point1, point2])
-        boundary1 = Boundary(id=1, curves=[curve1, curve2])
-        boundary2 = Boundary(id=2, curves=[curve1, curve2])
+        curve1 = Curve(id=1, points=[point1.id, point2.id])
+        curve2 = Curve(id=2, points=[point1.id, point2.id])
+        boundary1 = Boundary(id=1, curves=[curve1.id, curve2.id])
+        boundary2 = Boundary(id=2, curves=[curve1.id, curve2.id])
 
         # Test equality
         assert boundary1 == boundary2
@@ -305,43 +322,104 @@ class TestDSettlementModel:
         assert layer1 == layer2
 
     @pytest.mark.integrationtest
-    def test_add_boundary(self):
+    @pytest.mark.parametrize(
+        "dserie_points, expected_result",
+        [
+            pytest.param(
+                [
+                    DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0),
+                    DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0),
+                ],
+                [1, 2],
+                id="Default ordered points",
+            ),
+            pytest.param(
+                [
+                    DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0),
+                    DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0),
+                ],
+                [2, 1],
+                id="Right to left sorted.",
+            ),
+        ],
+    )
+    def test_add_simpleboundary(
+        self, dserie_points: List[DSeriePoint], expected_result: List[int]
+    ):
+        # 1. Set up test model
+        model = DSettlementModel()
+        model.datastructure = DSettlementStructure()
 
+        # 2. Verify initial expectations.
+        assert len(dserie_points) == 2, "Required points not given."
+        assert len(expected_result) == 2, "Required expected results not given."
+        assert model.boundaries, "Field is none."
+        assert not model.boundaries.boundaries, "There should not be any boundaries."
+
+        # 3. Do test
+        b_id = model.add_boundary(dserie_points)
+
+        # 4. Verify final expectations.
+        assert (
+            len(model.boundaries.boundaries) == 1
+        ), "There should be 1 boundary created."
+        created_boundary = model.boundaries.boundaries[0]
+        assert b_id == 0
+        assert created_boundary.id == b_id
+        assert len(created_boundary.curves) == 1, "There should be 1 curve created."
+
+        curve = model.datastructure.geometry_data.get_curve(created_boundary.curves[0])
+        assert curve.points == expected_result
+
+    @pytest.mark.integrationtest
+    def test_given_geometry_when_sort_then_boundaries_reordered(self):
+        # 1. Set up test data.
         point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
         point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
         point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
         point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
-
         point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
         point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
 
         ds = DSettlementModel()
-
         ds.datastructure = DSettlementStructure()
+        print(ds.datastructure.geometry_data)
+        b_id = ds.add_boundary([point1, point2])
+        print(ds.datastructure.geometry_data)
 
-        ds.add_boundary([point1, point2])
+        assert b_id == 0
+        assert len(ds.boundaries.boundaries) == 1
+        assert ds.boundaries.boundaries[0].id == b_id
 
-        assert ds.boundaries.boundaries[0].curves[0].points[0] == point1
-        assert ds.boundaries.boundaries[0].curves[0].points[1] == point2
-        assert ds.boundaries.boundaries[0].id == 0
+        assert len(ds.boundaries.boundaries[0].curves) == 1
+        assert ds.boundaries.boundaries[0].curves[0] == 1
+
+        assert ds.curves.curves[0].points[0] == point1.id
+        assert ds.curves.curves[0].points[1] == point2.id
+        assert ds.points.points[0] == point1
+        assert ds.points.points[1] == point2
 
         # add points from right to left and test sorting
-        ds.add_boundary([point4, point3])
+        b_id = ds.add_boundary([point4, point3])
 
-        assert ds.boundaries.boundaries[1].curves[0].points[0] == point3
-        assert ds.boundaries.boundaries[1].curves[0].points[1] == point4
-        assert ds.boundaries.boundaries[1].id == 1
+        assert b_id == 1
+        assert len(ds.boundaries.boundaries) == 2
+        assert ds.boundaries.boundaries[1].id == b_id
+
+        assert ds.curves.curves[1].points[0] == point3.id
+        assert ds.curves.curves[1].points[1] == point4.id
 
         # add boundary below geometry, check if the newly added boundary is the first boundary
         ds.add_boundary([point5, point6])
-        ds.boundaries.sort()
 
-        assert ds.boundaries.boundaries[0].curves[0].points[0] == point5
-        assert ds.boundaries.boundaries[0].curves[0].points[1] == point6
+        # 2. Verify initial expectations
+        assert len(ds.boundaries.boundaries) == 3
+
+        # 3. Sort
+        ds.datastructure.geometry_data.sort_boundaries()
+
+        # 4. Verify final expectations.
         assert ds.boundaries.boundaries[0].id == 0
-
-        assert ds.boundaries.boundaries[1].curves[0].points[0] == point1
-        assert ds.boundaries.boundaries[1].curves[0].points[1] == point2
         assert ds.boundaries.boundaries[1].id == 1
 
     @pytest.mark.integrationtest
@@ -448,6 +526,8 @@ class TestDSettlementModel:
         )
         ds.serialize(test_output_filepath)
 
+        assert os.path.exists(test_output_filepath), "No file was generated."
+
     @pytest.mark.integrationtest
     def test_non_uniform_loads(self):
         ds = self.setup_dsettlement_model()
@@ -485,15 +565,38 @@ class TestDSettlementModel:
         assert len(ds.non_uniform_loads.loads) == 2
         assert list(ds.non_uniform_loads.loads.values())[0].endtime == 100
 
+    @pytest.mark.unittest
+    def test_given_long_name_when_add_non_uniform_load_raises_pydantic_error(self):
+        # 1. Set up test data.
+        test_model = DSettlementModel()
+        point1 = Point(label="1", x=0.0, y=1.0, z=0.0)
+        point2 = Point(label="2", x=2.0, y=3.0, z=0.0)
+        pointlist = [point1, point2]
+        long_name = "My Second Load has a really, really big name"
+
+        # 2. Run test and verify expectation.
+        # character length is outside bounds.
+        with pytest.raises(pydantic.ValidationError):
+            test_model.add_non_uniform_load(
+                name=long_name,
+                points=pointlist,
+                time_start=timedelta(days=0),
+                time_end=timedelta(days=100),
+                gamma_dry=10.001,
+                gamma_wet=11.002,
+            )
+
     @pytest.mark.integrationtest
-    def test_non_uniform_loads_raises_errors(self):
-        ds = self.setup_dsettlement_model()
+    def test_given_existing_load_when_add_non_uniform_loads_raises_valueerror(self):
+        # 1. Set up test data.
+        expected_error = "Load with name 'My First Load' already exists."
+        test_model = self.setup_dsettlement_model()
         # set up the point list
         point1 = Point(label="1", x=0.0, y=1.0, z=0.0)
         point2 = Point(label="2", x=2.0, y=3.0, z=0.0)
         pointlist = [point1, point2]
         # Add first uniform load
-        ds.add_non_uniform_load(
+        test_model.add_non_uniform_load(
             name="My First Load",
             points=pointlist,
             time_start=timedelta(days=0),
@@ -502,22 +605,9 @@ class TestDSettlementModel:
             gamma_wet=11.002,
         )
 
-        # character length is outside bounds.
-        with pytest.raises(pydantic.ValidationError):
-            ds.add_non_uniform_load(
-                name="My Second Load has a really, really big name",
-                points=pointlist,
-                time_start=timedelta(days=0),
-                time_end=timedelta(days=100),
-                gamma_dry=10.001,
-                gamma_wet=11.002,
-            )
-
-        # Name of load arleady exists.
-        with pytest.raises(
-            ValueError, match="Load with name 'My First Load' already exists.",
-        ):
-            ds.add_non_uniform_load(
+        # 2. Run and verify etest
+        with pytest.raises(ValueError, match=expected_error):
+            test_model.add_non_uniform_load(
                 name="My First Load",
                 points=pointlist,
                 time_start=timedelta(days=0),

@@ -42,9 +42,9 @@ D-Settlement={{ version.d__settlement }}
 
 [POINTS]
 {% if geometry_data.points is mapping %}
-     {{ '{:>4}'.format( geometry_data.points.points|length) }}  - Number of geometry points -
+{{ '{:>4}'.format( geometry_data.points.points|length) }}  - Number of geometry points -
 {% for point in geometry_data.points.points %}
-       {{ '{:>8}'.format(point.id) }}{{ '{:15.3f}'.format(point.X) }}{{ '{:15.3f}'.format(point.Y) }}{{ '{:15.3f}'.format(point.Z) }}
+{{ '{:>8}'.format(point.id) }}{{ '{:15.3f}'.format(point.X) }}{{ '{:15.3f}'.format(point.Y) }}{{ '{:15.3f}'.format(point.Z) }}
 {% endfor %}
 {% else %}
 {{ geometry_data.points }}
@@ -53,11 +53,11 @@ D-Settlement={{ version.d__settlement }}
 
 [CURVES]
 {% if geometry_data.curves is mapping %}
-    {{ '{:>4}'.format( geometry_data.curves.curves|length) }} - Number of curves -
+{{ '{:>4}'.format( geometry_data.curves.curves|length) }} - Number of curves -
 {% for curve in geometry_data.curves.curves %}
-    {{ '{:>6}'.format(curve.id) }} - Curve number
-    {{ '{:>8}'.format(2) }} - number of points on curve,  next line(s) are pointnumbers
-    {{ '{:>10}'.format(curve.points[0].id) }}{{ '{:>6}'.format(curve.points[1].id) }}
+{{ '{:>6}'.format(curve.id) }} - Curve number
+{{ '{:>8}'.format(2) }} - number of points on curve,  next line(s) are pointnumbers
+{{ '{:>10}'.format(curve.points[0]) }}{{ '{:>6}'.format(curve.points[1]) }}
 {% endfor %}
 {% else %}
 {{ geometry_data.curves }}
@@ -66,28 +66,27 @@ D-Settlement={{ version.d__settlement }}
 
 [BOUNDARIES]
 {% if geometry_data.boundaries is mapping %}
-    {{ '{:>4}'.format( geometry_data.boundaries.boundaries|length ) }} - Number of boundaries -
-    {% for boundary in geometry_data.boundaries.boundaries %}
-        {{ '{:>6}'.format(boundary.id) }} - Curve number
-        {{ '{:>8}'.format(boundary|length) }} - number of curves on boundary, next line(s) are curvenumbers
-        {% if boundary.curves|length > 1 %}
-            {% for curve in boundary.curves %}
-                {% if loop.first %}
-                    {{ '{:>10}'.format(curve.id) }}
-                {% elif loop.index0 % 10 == 0 %}
-                    {{ '\n' }}{{ '{:>10}'.format(curve.id) }}
-                {% else %}
-                    {{ '{:>6}'.format(curve.id) }}
-                {% endif %}
-            {% endfor %}
-        {% else %}
-            {{ '{:>10}'.format(boundary.curves[0].id) }}
-        {% endif %}
-    {% endfor %}
+{{ '{:>4}'.format( geometry_data.boundaries.boundaries|length ) }} - Number of boundaries -
+{% for boundary in geometry_data.boundaries.boundaries %}
+{{ '{:>6}'.format(boundary.id) }} - Curve number
+{{ '{:>8}'.format(boundary.curves|length) }} - number of curves on boundary, next line(s) are curvenumbers
+{% if boundary.curves|length > 1 %}
+{% for curve in boundary.curves %}
+{% if loop.first %}
+    {{ '{:>10}'.format(curve) }}
+{% elif loop.index0 % 10 == 0 %}
+    {{ '\n' }}{{ '{:>10}'.format(curve) }}
 {% else %}
-    {{ geometry_data.boundaries }}
+    {{ '{:>6}'.format(curve) }}
 {% endif %}
-
+{% endfor %}
+{% else %}
+{{ '{:>10}'.format(boundary.curves[0]) }}
+{% endif %}
+{% endfor %}
+{% else %}
+{{ geometry_data.boundaries }}
+{% endif %}
 [END OF BOUNDARIES]
 
 [USE PROBABILISTIC DEFAULTS BOUNDARIES]

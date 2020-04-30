@@ -17,8 +17,10 @@ from geolib.models.dseries_parser import (
     DSeriesNameKeyValueSubStructure,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
-    DSeriesTabbedTreeStructure,
-    DSeriesTabbedTreeStructureCollection,
+    DSeriesMatrixTreeStructure,
+    DSeriesSinglePropertyGroup,
+    DSeriesTreeStructure,
+    DSeriesListTreeStructureCollection,
     DSerieTableStructure,
     DSerieRepeatedTableStructure,
     DSerieSingleStructure,
@@ -39,7 +41,7 @@ class DSeriePoint(DataClass):
         So axis z of the geolib needs to be modified to y axis, which represents the depth.
     """
 
-    id: PositiveInt = 1
+    id: PositiveInt
     X: float
     Y: float
     Z: float
@@ -48,7 +50,7 @@ class DSeriePoint(DataClass):
 
     @classmethod
     def from_point(cls, p: Point):
-        return cls(X=p.x, Y=p.z, Z=p.y)
+        return cls(id=1, X=p.x, Y=p.z, Z=p.y)
 
     def __eq__(self, other: object):
         if isinstance(other, DSeriePoint):
@@ -74,7 +76,7 @@ class Version(DSeriesKeyValueSubStructure):
     d__settlement: int = 1007
 
 
-class Points(DSeriesNoParseSubStructure):
+class Points(DSeriesMatrixTreeStructure):
     """Representation of [POINTS] group."""
 
     points: List[DSeriePoint] = []
@@ -92,12 +94,17 @@ class Points(DSeriesNoParseSubStructure):
             self.points.append(point)
         return point
 
+    def __getitem__(self, point_id: int) -> Optional[Point]:
+        for point in self.points:
+            if point.id == point_id:
+                return point
 
-class Curve(DataClass):
+
+class Curve(DSeriesTreeStructure):
     """Curve is a Line consisting of two points (by reference)."""
 
     id: PositiveInt = 1
-    points: conlist(DSeriePoint, min_items=2, max_items=2)
+    points: conlist(int, min_items=2, max_items=2)
 
     def __eq__(self, other: object) -> bool:
         """
@@ -115,14 +122,14 @@ class Curve(DataClass):
             return self.points == other.points
 
 
-class Curves(DSeriesNoParseSubStructure):
+class Curves(DSeriesListTreeStructureCollection):
     """Representation of [CURVES] group."""
 
     curves: List[Curve] = []
 
     def create_curve(self, a: DSeriePoint, b: DSeriePoint):
 
-        curve = Curve(points=[a, b])
+        curve = Curve(points=[a.id, b.id])
         if curve in self.curves:
             return self.curves[self.curves.index(curve)]
         else:
@@ -144,20 +151,15 @@ class Curves(DSeriesNoParseSubStructure):
         ]
         return new_curves
 
-
-class Boundary(DataClass):
-    id: conint(ge=0) = 0
-    curves: List[Curve] = []
-
-    def area_above_horizontal(self, y: float = 0.0) -> float:
-        """Area above horizontal line defined by y-coordinate."""
-        area = 0.0
-
+    def __getitem__(self, curve_id: int) -> Optional[Curve]:
         for curve in self.curves:
-            _y = curve.points[0].Y + curve.points[1].Y / 2 - y
-            area += (curve.points[1].X - curve.points[0].X) * _y
+            if curve.id == curve_id:
+                return curve
 
-        return area
+
+class Boundary(DSeriesTreeStructure):
+    id: conint(ge=0) = 0
+    curves: List[int] = []
 
     def __eq__(self, other: object) -> bool:
         """
@@ -175,22 +177,13 @@ class Boundary(DataClass):
             return self.curves == other.curves
 
 
-class Boundaries(DSeriesNoParseSubStructure):
+class Boundaries(DSeriesListTreeStructureCollection):
     """Representation of [BOUNDARIES] group."""
 
     boundaries: List[Boundary] = []
 
-    # Only do this before serializing, as it mutates
-    # the ids of boundaries that we've already given
-    # back to the user!
-    def sort(self):
-        # TODO Explain resorting
-        self.boundaries.sort(key=lambda boundary: boundary.area_above_horizontal())
-        for i, boundary in enumerate(self.boundaries):
-            boundary.id = i
-
     def create_boundary(self, curves: List[Curve]) -> Boundary:
-        boundary = Boundary(curves=curves)
+        boundary = Boundary(curves=[curve.id for curve in curves])
 
         # Return the id of existing one
         if boundary in self.boundaries:
@@ -206,8 +199,13 @@ class Boundaries(DSeriesNoParseSubStructure):
 
         return boundary
 
+    def __getitem__(self, boundary_id: int) -> Optional[Boundary]:
+        for boundary in self.boundaries:
+            if boundary.id == boundary_id:
+                return boundary
 
-class Layer(DataClass):
+
+class Layer(DSeriesTreeStructure):
     id: PositiveInt = 1
     material: str = ""  # reference to soil name
     piezo_top: int = 0  # reference to head line
@@ -234,7 +232,7 @@ class Layer(DataClass):
             )
 
 
-class Layers(DSeriesNoParseSubStructure):
+class Layers(DSeriesListTreeStructureCollection):
     """Representation of [LAYERS] group."""
 
     layers: List[Layer] = []
@@ -256,19 +254,24 @@ class Layers(DSeriesNoParseSubStructure):
 
         return layer
 
+    def __getitem__(self, layer_id: int) -> Optional[Layer]:
+        for layer in self.layers:
+            if layer.id == layer_id:
+                return layer
 
-class Accuracy(DSeriesNoParseSubStructure):
+
+class Accuracy(DSeriesSinglePropertyGroup):
     """Representation of [ACCURACY] group."""
 
     accuracy: confloat(ge=1e-10) = 1e-3
 
 
-class PiezoLine(DSeriesTabbedTreeStructure):
+class PiezoLine(DSeriesTreeStructure):
     id: int
     curves: List[int]
 
 
-class PiezoLines(DSeriesTabbedTreeStructureCollection):
+class PiezoLines(DSeriesListTreeStructureCollection):
     """Representation of [PIEZO LINES] group."""
 
     piezolines: List[PiezoLine]
@@ -295,6 +298,45 @@ class GeometryData(DSeriesStructure):
     world_co__ordinates: str = ""
     layers: Union[Layers, str] = Layers()
     layerloads: str = ""
+
+    def boundary_area_above_horizontal(self, boundary: Boundary, y: float = 0.0) -> float:
+        """Area above horizontal line defined by y-coordinate."""
+        area = 0.0
+
+        for curve_id in boundary.curves:
+            curve = self.get_curve(curve_id)
+            points = [self.get_point(pid) for pid in curve.points]
+            _y = points[0].Y + points[1].Y / 2 - y
+            area += (points[1].X - points[0].X) * _y
+
+        return area
+
+    # Only do this before serializing, as it mutates
+    # the ids of boundaries that we've already given
+    # back to the user!
+    def sort_boundaries(self):
+        self.boundaries.boundaries.sort(
+            key=lambda boundary: self.boundary_area_above_horizontal(boundary)
+        )
+        for i, boundary in enumerate(self.boundaries.boundaries):
+            for layer in self.layers.layers:
+                if layer.boundary_top == boundary.id:
+                    layer.boundary_top = i
+                if layer.boundary_bottom == boundary.id:
+                    layer.boundary_bottom = i
+            boundary.id = i
+
+    def get_point(self, point_id: int) -> Optional[DSeriePoint]:
+        return self.points[point_id]
+
+    def get_curve(self, curve_id: int) -> Optional[Curve]:
+        return self.curves[curve_id]
+
+    def get_boundary(self, boundary_id: int) -> Optional[Boundary]:
+        a = self.boundaries[boundary_id]
+
+    def get_layer(self, layer_id: int) -> Optional[Layer]:
+        return self.layers[layer_id]
 
 
 class PointForLoad(DataClass):

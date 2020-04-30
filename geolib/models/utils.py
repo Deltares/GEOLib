@@ -27,4 +27,3 @@ def is_union(tp):
 
 def is_list(tp):
     return isinstance(tp, _GenericAlias) and tp._name == "List"
-
