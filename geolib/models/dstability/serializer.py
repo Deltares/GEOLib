@@ -16,8 +16,7 @@ class DStabilityInputSerializer(BaseSerializer):
     def write(self, filepath: DirectoryPath):
 
         # Find required .json files via type hints
-        for field, fieldtype in get_type_hints(type(self.ds)).items():
-            print(field, fieldtype)
+        for field, fieldtype in ((k, v) for k, v in get_type_hints(self.ds).items() if not k.startswith('__')):
             # On List types, write a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8

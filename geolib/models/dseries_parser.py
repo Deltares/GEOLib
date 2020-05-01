@@ -399,7 +399,7 @@ class DSeriesMatrixTreeStructure(DSeriesStructure):
         structure_properties = [
             (field_name, field)
             for field_name, field in structure_type.__fields__.items()
-            if field.required]
+            if field.required and not field_name.startswith('__')]
         if len(text_fields) != len(structure_properties):
             raise ValueError(
                 f"There should be {len(structure_properties)}" +
@@ -590,7 +590,8 @@ class DSeriesTreeStructure(DSeriesStructure):
         properties = {}
         structure_properties = [
             (field_name, field)
-            for field_name, field in get_type_hints(cls).items()]
+            for field_name, field in get_type_hints(cls).items()
+            if not field_name.startswith('__')]
 
         if len(text_lines) < len(structure_properties):
             raise ValueError(

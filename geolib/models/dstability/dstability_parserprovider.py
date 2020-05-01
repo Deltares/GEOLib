@@ -25,7 +25,7 @@ class DStabilityParser(BaseParser):
         ds = {}
 
         # Find required .json files via type hints
-        for field, fieldtype in get_type_hints(self.structure).items():
+        for field, fieldtype in ((k, v) for k, v in get_type_hints(self.structure).items() if not k.startswith('__')):
 
             # On List types, parse a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
