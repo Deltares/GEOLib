@@ -774,17 +774,38 @@ class PersistableUniformLoad(DataClass):
     Start: Optional[float]
 
 
+Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
+
 class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
+    Id: Optional[str]
     ContentVersion: Optional[str]
     Earthquake: Optional[PersistableEarthquake]
-    Id: Optional[str]
-    LayerLoads: Optional[List[Optional[PersistableLayerLoad]]]
-    LineLoads: Optional[List[Optional[PersistableLineLoad]]]
-    Trees: Optional[List[Optional[PersistableTree]]]
-    UniformLoads: Optional[List[Optional[PersistableUniformLoad]]]
+    LayerLoads: Optional[List[Optional[PersistableLayerLoad]]] = []
+    LineLoads: Optional[List[Optional[PersistableLineLoad]]] = []
+    Trees: Optional[List[Optional[PersistableTree]]] = []
+    UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
 
+    def add_load(self, load: "DStabilityLoad") -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
+        internal_datastructure = load.to_internal_datastructure()
+        target = load.__class__.__name__
+        if target == "Earthquake":
+            setattr(self, target, internal_datastructure)
+        else:
+            target += 's'
+            getattr(self, target).append(internal_datastructure)
+
+        return internal_datastructure
+    
+    def add_layer_load(self, soil_layer_id: int, consolidations: List['Consolidation']) -> PersistableLayerLoad:
+        layer_load = PersistableLayerLoad(
+            LayerId=str(soil_layer_id),
+            Consolidations=[c.to_internal_datastructure() for c in consolidations]
+            )
+        self.LayerLoads.append(layer_load)
+        return layer_load
+       
 
 class PersistableLayer(DataClass):
     Id: Optional[str]
@@ -1222,8 +1243,6 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
         try:
             return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
         except (ValidationError, TypeError):
-            print('\nthis is the slipplane!:')
-            print(self.SlipPlane)
             raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
 
 
@@ -1251,8 +1270,6 @@ class SpencerReliabilityResult(DStabilitySubStructure):
         try:
             return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
         except (ValidationError, TypeError):
-            print('\nthis is the slipplane!:')
-            print(self.SlipPlane)
             raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
 
 
@@ -1272,8 +1289,6 @@ class SpencerResult(DStabilitySubStructure):
         try:
             return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
         except (ValidationError, TypeError):
-            print('\nthis is the slipplane!:')
-            print(self.SlipPlane)
             raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
 
 
@@ -1398,9 +1413,7 @@ class DStabilityStructure(BaseModelStructure):
     soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
     soils: SoilCollection = SoilCollection()  # soils.json
     reinforcements: List[Reinforcements] = [
-        Reinforcements(
-            Id="1"
-        )  # TODO find a good way to do this for all input structure attributes.
+        Reinforcements()
     ]  # reinforcements/reinforcements_x.json
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
@@ -1436,6 +1449,41 @@ class DStabilityStructure(BaseModelStructure):
         if self.has_stage(stage_id):
             result_id = self.stages[stage_id].ResultId
             if result_id is None:
+                return False
+            else:
+                return True
+        return False
+    
+    def has_loads(self, stage_id: int) -> bool:
+        if self.has_stage(stage_id):
+            loads_id = self.stages[stage_id].LoadsId
+            if loads_id is None:
+                return False
+            else:
+                return True
+        return False
+    
+    def has_soil_layers(self, stage_id: int) -> bool:
+        if self.has_stage(stage_id):
+            soil_layers_id = self.stages[stage_id].SoilLayersId
+            if soil_layers_id is None:
+                return False
+            else:
+                return True
+        return False
+    
+    def has_soil_layer(self, stage_id: int, soil_layer_id: int) -> bool:
+        if self.has_soil_layers(stage_id):
+            for layer in self.soillayers[stage_id].SoilLayers:
+                if str(soil_layer_id) == layer.LayerId:
+                    return True
+            return False
+        return False
+    
+    def has_reinforcements(self, stage_id: int) -> bool:
+        if self.has_stage(stage_id):
+            reinforcements_id = self.stages[stage_id].ReinforcementsId
+            if reinforcements_id is None:
                 return False
             else:
                 return True

@@ -74,17 +74,19 @@ class TestForbiddenLine:
             )
 
     @pytest.mark.integrationtest
-    def test_add_reinforcement_forbiddenline(self, _get_forbidden_line):
+    @pytest.mark.parametrize("stage_id", [pytest.param(0, id="default stage id"), pytest.param(None, id="no stage_id argument")])
+    def test_add_reinforcement_forbiddenline(self, _get_forbidden_line, stage_id):
         dstability_model = DStabilityModel(inputfn=None)
-        stage_id = 0
+        stage_id = stage_id or 0
+        reinforcements_id = 10
+
+        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(reinforcements_id)
         forbiddenline = _get_forbidden_line
 
-        reinforcements_id = dstability_model.add_reinforcement(
+        dstability_model.add_reinforcement(
             reinforcement=forbiddenline,
             stage_id=stage_id
         )
-
-        assert isinstance(reinforcements_id, int)
 
         forbiddenlines_datastructure = dstability_model.datastructure.reinforcements[stage_id].ForbiddenLines
         assert len(forbiddenlines_datastructure) == 1
@@ -132,19 +134,20 @@ class TestGeotextile:
             )
 
     @pytest.mark.integrationtest
-    def test_add_reinforcement_geotextile(self, _get_geotextile):
+    @pytest.mark.parametrize("stage_id", [pytest.param(0, id="default stage id"), pytest.param(None, id="no stage_id argument")])
+    def test_add_reinforcement_geotextile(self, _get_geotextile, stage_id):
         dstability_model = DStabilityModel(inputfn=None)
-        stage_id = 0
+        stage_id = stage_id or 0
+        reinforcements_id = 10
 
+        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(reinforcements_id)
         geotextile = _get_geotextile
         geotextile.label = 'geotextile1'
 
-        reinforcements_id = dstability_model.add_reinforcement(
+        dstability_model.add_reinforcement(
             reinforcement=geotextile,
             stage_id=stage_id
         )
-
-        assert isinstance(reinforcements_id, int)
 
         geotextiles_datastructure = dstability_model.datastructure.reinforcements[stage_id].Geotextiles
         assert len(geotextiles_datastructure) == 1
@@ -203,18 +206,20 @@ class TestNail:
             )
 
     @pytest.mark.integrationtest
-    def test_add_reinforcement_nail(self, _get_nail):
+    @pytest.mark.parametrize("stage_id", [pytest.param(0, id="default stage id"), pytest.param(None, id="no stage_id argument")])
+    def test_add_reinforcement_nail(self, _get_nail, stage_id):
         dstability_model = DStabilityModel(inputfn=None)
-        stage_id = 0
+        stage_id = stage_id or 0
+        reinforcements_id = 10
+
+        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(reinforcements_id)
 
         nail = _get_nail
 
-        reinforcements_id = dstability_model.add_reinforcement(
+        dstability_model.add_reinforcement(
             reinforcement=nail,
             stage_id=stage_id
         )
-
-        assert isinstance(reinforcements_id, int)
 
         nails_datastructure = dstability_model.datastructure.reinforcements[stage_id].Nails
         assert len(nails_datastructure) == 1

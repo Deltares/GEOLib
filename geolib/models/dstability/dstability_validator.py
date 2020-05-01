@@ -1,5 +1,6 @@
 from geolib.models import BaseValidator
 import logging
+from typing import Set
 
 
 class DStabilityValidator(BaseValidator):
@@ -23,3 +24,24 @@ class DStabilityValidator(BaseValidator):
                     break
 
         return valid
+
+    def is_valid_layer_loads(self) -> bool:
+        """Each layer load must have a consolidation degree for each soil layer"""
+        for stage_id, _ in enumerate(self.ds.stages):
+            soil_layer_ids: Set[str] = {layer.LayerId for layer in self.ds.soillayers[stage_id].SoilLayers}
+
+            layer_load_layer_ids: Set[str] = set()
+            for layer_load in self.ds.loads[stage_id].LayerLoads:
+                layer_load_layer_ids.add(layer_load.LayerId)
+
+                consolidation_layer_id_references: Set[str] = set()
+                for consolidation in layer_load.Consolidations:
+                    consolidation_layer_id_references.add(consolidation.LayerId)
+                    if consolidation.LayerId is None:
+                        return False
+                if soil_layer_ids - consolidation_layer_id_references != set([layer_load.LayerId]):  # All other soillayer ids are included except the soillayers own id.
+                    return False
+            if layer_load_layer_ids != soil_layer_ids:
+                return False
+
+        return True

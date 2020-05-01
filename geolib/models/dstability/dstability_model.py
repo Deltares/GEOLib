@@ -12,7 +12,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Type, Union, Dict
+from typing import List, Optional, Type, Union, Dict, Set
 
 from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath
@@ -33,7 +33,7 @@ from .internal import (
     UpliftVanSlipCircleResult,
     Waternet,
 )
-from .loads import DStabilityLoad
+from .loads import DStabilityLoad, Consolidation
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer
 
@@ -362,56 +362,117 @@ class DStabilityModel(BaseModel):
         """Add state line. From the Soils, only the state parameters are used."""
 
     def add_load(
-        self, load: DStabilityLoad, x: Optional[float], z: Optional[float], stage=None,
-    ) -> int:
-        """Add a load to the object. Coordinates are required for loads except the Earthquake model."""
-
-    def set_consolidation(
         self,
-        layerid: Optional[int],
-        loadid: Optional[int],
-        percentages: List[float],
-        stage=None,
-    ):
-        """Set layer consolidation percentages for a load or layer.
+        load: DStabilityLoad,
+        consolidations: Optional[List[Consolidation]] = None,
+        stage_id: Optional[int] = None,
+    ) -> None:
+        """Add a load to the object.
 
-        Either a layerid needs to be given and loadid set to None, or vice versa.
-        The number of percentages given should equal the current layers.
+        The geometry should be defined before adding loads.
+
+        If no consolidations are provided, a Consolidation with default values will be made for each SoilLayer.
+        It is not possible to set consolidation degrees of loads afterwards since they don't have an id.
+
+        Args:
+            load: A subclass of DStabilityLoad.
+            stage_id: Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.
+
+        Raises:
+            ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.
         """
+        stage_id = stage_id if stage_id is not None else self.current_stage
+
+        if not issubclass(type(load), DStabilityLoad):
+            raise ValueError(
+                f"load should be a subclass of DstabilityReinforcement, received {load}"
+            )
+        if self.datastructure.has_soil_layers(stage_id) and self.datastructure.has_loads(stage_id):
+            if consolidations is None:
+                consolidations = self._get_default_consolidations(stage_id)
+            else:
+                self._verify_consolidations(consolidations, stage_id)
+            self.datastructure.loads[stage_id].add_load(load)
+        else:
+            raise ValueError(f"No loads found for stage id {stage_id}")
+
+    def add_soil_layer_consolidations(
+        self,
+        soil_layer_id: int,
+        consolidations: Optional[List[Consolidation]] = None,
+        stage_id: int = None,
+    ) -> None:
+        """Add consolidations for a layer (layerload).
+
+        Consolidations cannot be added when adding soil layers since in the consolidations, all other soil layers need to be referred.
+        Therefore, all soillayers in a stage should be defined before setting consolidation and
+        the number of consolidations given should equal the amount of layers.
+
+        Args:
+            soil_layer_id: Consolidation is set for this soil layer id.
+            consolidations: List of Consolidation. Must contain a Consolidation for every other layer.
+            stage_id: Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.
+
+        Raises:
+            ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.
+        """
+        stage_id = stage_id if stage_id is not None else self.current_stage
+
+        if self.datastructure.has_soil_layer(stage_id, soil_layer_id) and self.datastructure.has_loads(stage_id):
+            if consolidations is None:
+                consolidations = self._get_default_consolidations(stage_id)
+            else:
+                self._verify_consolidations(consolidations, stage_id)
+
+            self.datastructure.loads[stage_id].add_layer_load(soil_layer_id, consolidations)
+        else:
+            raise ValueError(f"No soil layers found found for stage id {stage_id}")
+
+    def _get_default_consolidations(self, stage_id: int) -> List[Consolidation]:
+        """Length of the consolidations is equal to the amount of soil layers"""
+        if self.datastructure.has_soil_layers(stage_id):
+            soil_layer_ids: Set[str] = {layer.LayerId for layer in self.datastructure.soillayers[stage_id].SoilLayers}
+            return [Consolidation(layer_id=layer_id) for layer_id in soil_layer_ids]
+
+        raise ValueError(f"No soil layers found for stage id {stage_id}")
+
+    def _verify_consolidations(self, consolidations: List[Consolidation], stage_id: int) -> None:
+        if self.datastructure.has_soil_layers(stage_id):
+            consolidation_soil_layer_ids: Set[str] = {str(c.layer_id) for c in consolidations}
+            soil_layer_ids: Set[str] = {layer.LayerId for layer in self.datastructure.soillayers[stage_id].SoilLayers}
+            if consolidation_soil_layer_ids != soil_layer_ids:
+                raise ValueError(f"Received consolidations ({consolidation_soil_layer_ids}) should contain all soil layer ids ({soil_layer_ids})")
+        else:
+            raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def add_reinforcement(
-        self, reinforcement: DStabilityReinforcement, stage_id: int,
-    ) -> int:
+        self, reinforcement: DStabilityReinforcement, stage_id: Optional[int] = None,
+    ) -> None:
         """Add a reinforcement to the model.
 
         Args:
             reinforcement: A subclass of DStabilityReinforcement.
             stage_id: Id used to identify the stage to which the reinforcement is linked.
-        
+
         Returns:
             int: Assigned id of the reinforcements (collection object of all reinforcements for a stage).
-        
+
         Raises:
             ValueError: When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_id is provided, or the datastructure is no longer valid.
         """
+        stage_id = stage_id if stage_id is not None else self.current_stage
+
         if not issubclass(type(reinforcement), DStabilityReinforcement):
             raise ValueError(
                 f"reinforcement should be a subclass of DstabilityReinforcement, received {reinforcement}"
             )
 
-        try:
-            reinforcements = self.datastructure.reinforcements[stage_id]
-        except IndexError:
+        if self.datastructure.has_reinforcements(stage_id):
+            self.datastructure.reinforcements[stage_id].add_reinforcement(reinforcement)
+        else:
             raise ValueError(
-                f"No reinforcements found for stage found with id {stage_id}"
-            )
-
-        reinforcements.add_reinforcement(reinforcement)
-
-        if not self.is_valid:
-            raise ValueError("Internal datastructure is not valid")
-
-        return int(reinforcements.Id)
+                    f"No reinforcements found for stage found with id {stage_id}"
+                )
 
     def set_model(self, analysis_method: DStabilityAnalysisMethod, stage=None):
         """Sets the calculation type based on the given input and parameters."""
