@@ -7,6 +7,7 @@ from pydantic import DirectoryPath, FilePath
 from geolib.models.parsers import BaseParser, BaseParserProvider
 
 from .internal import BaseModelStructure, DStabilityStructure
+from geolib.models.utils import get_filtered_type_hints
 
 
 class DStabilityParser(BaseParser):
@@ -25,7 +26,7 @@ class DStabilityParser(BaseParser):
         ds = {}
 
         # Find required .json files via type hints
-        for field, fieldtype in ((k, v) for k, v in get_type_hints(self.structure).items() if not k.startswith('__')):
+        for field, fieldtype in get_filtered_type_hints(self.structure):
 
             # On List types, parse a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky

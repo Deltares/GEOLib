@@ -14,6 +14,7 @@ from geolib.models.dsettlement.internal import (
     Boundaries, Boundary,
     Layers, Layer,
 )
+from geolib.models.utils import get_filtered_type_hints
 
 
 def generate_structure_text(struct_id: int, properties: list) -> str:
@@ -40,7 +41,7 @@ def generate_collection_text(structure_dict: dict) -> str:
 
 def get_structure_content(class_type: type) -> list:
     structure_content = []
-    for field_name, field_type in ((k, v) for k, v in get_type_hints(class_type).items() if not k.startswith('__')):
+    for field_name, field_type in get_filtered_type_hints(class_type):
         if field_name == "id":
             continue
         field_value = str(randint(0, 100))

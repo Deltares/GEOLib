@@ -6,7 +6,7 @@ from pydantic import FilePath, BaseModel as DataClass
 
 from .parsers import BaseParser
 from geolib.models.base_model_structure import BaseModelStructure
-from .utils import get_args, is_union, is_list
+from .utils import get_args, is_union, is_list, get_filtered_type_hints, get_required_class_field
 import re
 
 
@@ -396,10 +396,8 @@ class DSeriesMatrixTreeStructure(DSeriesStructure):
         """
         structure_type = get_field_collection_type(cls, 0)
         properties = {}
-        structure_properties = [
-            (field_name, field)
-            for field_name, field in structure_type.__fields__.items()
-            if field.required and not field_name.startswith('__')]
+        structure_properties = \
+            get_required_class_field(structure_type)
         if len(text_fields) != len(structure_properties):
             raise ValueError(
                 f"There should be {len(structure_properties)}" +
@@ -591,10 +589,7 @@ class DSeriesTreeStructure(DSeriesStructure):
             int: Index of last line being read as part of current structure.
         """
         properties = {}
-        structure_properties = [
-            (field_name, field)
-            for field_name, field in get_type_hints(cls).items()
-            if not field_name.startswith('__')]
+        structure_properties = get_filtered_type_hints(cls)
 
         if len(text_lines) < len(structure_properties):
             raise ValueError(

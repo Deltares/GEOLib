@@ -5,6 +5,7 @@ from typing import _GenericAlias, get_type_hints, List
 from os import makedirs
 
 from geolib.models.serializers import BaseSerializer
+from geolib.models.utils import get_filtered_type_hints
 from .internal import DStabilityStructure
 
 
@@ -16,7 +17,7 @@ class DStabilityInputSerializer(BaseSerializer):
     def write(self, filepath: DirectoryPath):
 
         # Find required .json files via type hints
-        for field, fieldtype in ((k, v) for k, v in get_type_hints(self.ds).items() if not k.startswith('__')):
+        for field, fieldtype in get_filtered_type_hints(self.ds):
             # On List types, write a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
