@@ -13,6 +13,7 @@ from geolib.soils import Soil
 from .dstability_validator import DStabilityValidator
 from geolib.utils import snake_to_camel, camel_to_snake
 
+
 BaseModelStructure.Config.arbitrary_types_allowed = True
 DataClass.Config.arbitrary_types_allowed = True
 
@@ -223,11 +224,11 @@ class StateType(Enum):
 
 
 class PersistableStress(DataClass):
-    Ocr: Optional[float]
-    Pop: Optional[float]
-    PopStochasticParameter: Optional[PersistableStochasticParameter]
+    Ocr: float = 1.0
+    Pop: float = 0.0
+    PopStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
     StateType: Optional[StateType]
-    YieldStress: Optional[float]
+    YieldStress: float = 0.0
 
 
 class PersistableStateLinePoint(DataClass):
@@ -267,12 +268,16 @@ class State(DStabilitySubStructure):
 
     ContentVersion: Optional[str]
     Id: Optional[str]
-    StateLines: Optional[List[Optional[PersistableStateLine]]]
-    StatePoints: Optional[List[Optional[PersistableStatePoint]]]
+    StateLines: List[PersistableStateLine] = []
+    StatePoints: List[PersistableStatePoint] = []
 
+    def add_state_point(self, state_point:  PersistableStatePoint) -> None:
+        self.StatePoints.append(state_point)             
+
+    def add_state_line(self, points: List[PersistablePoint], state_points: List[PersistableStateLinePoint]):
+        self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
 
 # statecorrelation
-
 
 class PersistableStateCorrelation(DataClass):
     CorrelatedStateIds: Optional[List[Optional[str]]]
@@ -837,6 +842,33 @@ class Geometry(DStabilitySubStructure):
     ContentVersion: Optional[str]
     Id: Optional[str]
     Layers: List[PersistableLayer] = []
+
+    def contains_point(self, point: Point) -> bool:
+        """
+        Check if the given point is on one of the points of the layers
+
+        Args:
+            point (Point): A point type
+
+        Returns:
+            bool: True if this point is found on a layer, False otherwise
+
+        Todo:
+            * how to take x, z accuracy into account
+        """
+        for layer in self.Layers:
+            for p in layer.Points:
+                if point.x == p.X and point.z == p.Z:  # not nice
+                    return True
+
+        return False
+    
+    def get_layer(self, id: int) -> PersistableLayer:
+        for layer in self.Layers:
+            if layer.Id == str(id):
+                return layer
+
+        raise ValueError(f"Layer id {id} not found in this geometry")
 
     def add_layer(
         self, 

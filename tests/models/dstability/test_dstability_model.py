@@ -11,14 +11,13 @@ from geolib.models import BaseModelStructure
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import DStabilityStructure
 
-
 from tests.utils import TestUtils
 
 
 class TestDStabilityModel:
     @pytest.mark.unittest
     def test_instantiate_DStabilityModel(self):
-        assert isinstance(DStabilityModel(inputfn=None), BaseModel), (
+        assert isinstance(DStabilityModel(filename=None), BaseModel), (
             "" + "DStabilityModel does not instanciate BaseModel"
         )
 
@@ -31,7 +30,7 @@ class TestDStabilityModel:
     ):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(filepath))
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
@@ -51,7 +50,7 @@ class TestDStabilityModel:
     def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dstability\\parseandserialize")
         )

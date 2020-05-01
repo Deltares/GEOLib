@@ -33,7 +33,7 @@ def _get_nail() -> Nail:
 
 class TestDStabilityModel:  # TODO move to test_dsettlementmodel
     def test_no_reinforcement_provided(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
 
         class NotaDStabilityReinforcement:
             pass
@@ -64,7 +64,7 @@ class TestForbiddenLine:
 
     @pytest.mark.unittest
     def test_given_invalid_arguments_when_add_reinforcement_then_raises_value_error(self, _get_forbidden_line):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         forbiddenline = _get_forbidden_line
 
         with pytest.raises(ValueError):
@@ -124,7 +124,7 @@ class TestGeotextile:
 
     @pytest.mark.unittest
     def test_given_invalid_arguments_when_add_reinforcement_then_raises_value_error(self, _get_geotextile):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         geotextile = _get_geotextile
 
         with pytest.raises(ValueError):
@@ -196,7 +196,7 @@ class TestNail:
 
     @pytest.mark.unittest
     def test_given_invalid_arguments_when_add_reinforcement_then_raises_value_error(self, _get_nail):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         nail = _get_nail
 
         with pytest.raises(ValueError):

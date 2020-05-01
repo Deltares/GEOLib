@@ -32,7 +32,11 @@ from .internal import (
     SpencerSlipPlaneResult,
     UpliftVanSlipCircleResult,
     Waternet,
+    PersistablePoint,
+
 )
+
+from .states import DStabilityStatePoint, DStabilityStateLinePoint
 from .loads import DStabilityLoad, Consolidation
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer
@@ -62,19 +66,12 @@ class DStabilityAnalysisMethod(DataClass):
     """
 
 
-class DStabilityObject(BaseModel, metaclass=abc.ABCMeta):
-    @abc.abstractmethod
-    def _to_dstability_sub_structure(self):
-        raise NotImplementedError
-
-
 class DStabilityModel(BaseModel):
     """D-Stability is software for soft soil slope stability.
 
     This model can read, modify and create
     .stix files
     """
-
     @property
     def parser_provider_type(self) -> Type[DStabilityParserProvider]:
         return DStabilityParserProvider
@@ -138,7 +135,9 @@ class DStabilityModel(BaseModel):
 
         raise ValueError(f"No result found for result id {stage_id}")
 
-    def get_slipcircle_result(self, stage_id: int) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
+    def get_slipcircle_result(
+        self, stage_id: int
+    ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
 
@@ -247,12 +246,12 @@ class DStabilityModel(BaseModel):
         """
         stage_id = stage_id if stage_id else self.current_stage
 
-        try:
-            geometry = self.datastructure.geometries[stage_id]
-            soillayerscollection = self.datastructure.soillayers[stage_id]
-        except IndexError:
+        if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
 
+        geometry = self.datastructure.geometries[stage_id]
+        soillayerscollection = self.datastructure.soillayers[stage_id]
+        
         # do we have this soil code?
         if not self.soils.has_soilcode(soil_code):
             raise ValueError(f"The soil with code {soil_code} is not defined in the soil collection.")
@@ -297,11 +296,11 @@ class DStabilityModel(BaseModel):
         """
         stage_id = stage_id if stage_id else self.current_stage
 
-        try:
-            waternet = self.waternets[stage_id]
-        except IndexError:
+        if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
 
+        waternet = self.waternets[stage_id]
+        
         persistable_headline = waternet.add_head_line(
             str(self._get_next_id()),
             label,
@@ -336,11 +335,11 @@ class DStabilityModel(BaseModel):
         """
         stage_id = stage_id if stage_id else self.current_stage
 
-        try:
-            waternet = self.waternets[stage_id]
-        except IndexError:
+        if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
 
+        waternet = self.waternets[stage_id]
+        
         persistable_referenceline = waternet.add_reference_line(
             str(self._get_next_id()),
             label,
@@ -351,15 +350,89 @@ class DStabilityModel(BaseModel):
         )
         return int(persistable_referenceline.Id)
 
+    def add_state_point(
+        self,
+        state_point: DStabilityStatePoint,
+        stage_id: int = None,
+    ) -> int:
+        """
+        Add state point to the model
+
+        Args:
+            state_point (DStabilityStatePoint): DStabilityStatePoint class
+            stage_id (int): stage_id (int): stage to add to, defaults to the current stage
+
+        Returns:
+            int: id of the added add_state_point
+
+        Todo:
+            * check if point lies within the given layer
+        """
+        stage_id = stage_id if stage_id else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+            
+        states = self.datastructure.states[stage_id]            
+
+        # check if the given layer id is valid
+        try:
+            _ = self.datastructure.geometries[stage_id].get_layer(state_point.layer_id)
+        except ValueError:
+            raise ValueError(f"No layer with id '{state_point.layer_id} in this geometry")
+
+        # todo > check if point is in layer
+
+        state_point.id = self._get_next_id()  # the user does not know the id so we have to add it
+        persistable_statepoint = state_point._to_internal_datastructure()
+        states.add_state_point(persistable_statepoint)
+        return int(persistable_statepoint.Id)
+    
     def add_state_line(
         self,
-        label: str,
-        points: List[int],
-        state_point: int,
-        above_material: Soil,
-        below_material: Soil,
-    ):
-        """Add state line. From the Soils, only the state parameters are used."""
+        points: List[Point],
+        state_points: List[DStabilityStateLinePoint],
+        stage_id: int = None
+    ) -> None:
+        """
+        Add state line. From the Soils, only the state parameters are used.
+
+        points are a list of points with x,z
+        state_point are a list of DStabilit.. where ONLY the x is used, the Z will be calculated
+
+        No result PersistableStateLine has no Id
+        """
+        # 1. check of de gegeven points aanwezig zijn in de layers want ze MOETEN op een
+        #    punt uit een layer liggen
+        # 2. voeg deze punten toe aan de PersistableStateLine.Points
+        # 3. voeg op alle x coordinaten in DStabilityStateLinePoint[] een PersistableStateLinePoint object toe
+        #    let op dat points.xmin <= x <= points.xmax
+        # 4. voeg de PersistableStateLine toe aan de interne datastructuur
+        # 5. geef de id terug
+        stage_id = stage_id if stage_id else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        states = self.datastructure.states[stage_id]
+        geometry = self.datastructure.geometries[stage_id]        
+
+        # each point should belong to a layer
+        persistable_points = []
+
+        for point in points:
+            point.id = self._get_next_id()  # assign a new id
+            if not geometry.contains_point(point):  # all points should be part of a player
+                raise ValueError(f"The point with x={point.x} and z={point.z} is not on any polygon")
+            persistable_points.append(PersistablePoint(X=point.x, Z=point.z))            
+
+        persistable_state_line_points = []
+        for state_point in state_points:
+            state_point.id = self._get_next_id()  # assign a new id
+            persistable_state_line_points.append(state_point._to_internal_datastructure())
+
+        states.add_state_line(persistable_points, persistable_state_line_points)
+        
 
     def add_load(
         self,

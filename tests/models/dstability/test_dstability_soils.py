@@ -6,7 +6,7 @@ from geolib.soils import Soil
 class TestDStabilitySoil:
     @pytest.mark.unittest
     def test_dstability_add_soil(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         soil_1 = Soil(name="Test", code="Test")
 
         dstability_model.add_soil(soil_1)
@@ -17,18 +17,18 @@ class TestDStabilitySoil:
             dstability_model.add_soil(soil_2)
 
     def test_dstability_edit_soil(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         soil_1 = Soil(name="Test", code="Test", cohesion=1.0)
         code = dstability_model.add_soil(soil_1)
         dstability_model.edit_soil(code=code, cohesion=2.0, friction_angle=35)
         assert pytest.approx(dstability_model.soils.get_soil("Test").cohesion, 2.0)
 
     def test_has_10_default_soils(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         assert len(dstability_model.soils.Soils) == 10
 
     def test_has_default_soil_codes(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel(filename=None)
         expected_soilcodes = {
             "H_Aa_ht_new",
             "H_Aa_ht_old",
