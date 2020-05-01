@@ -567,11 +567,13 @@ class DSeriesTreeStructure(DSeriesStructure):
         Returns:
             DSeriesStructure: Structure with parsed properties.
         """
-        return cls.parse_text_lines(
+        parsed_structure, _ = cls.parse_text_lines(
             [split_line_elements(line) for line in text.split("\n") if line != ""])
+        return parsed_structure
 
     @classmethod
-    def parse_text_lines(cls, text_lines: List[List[str]]) -> DSeriesStructure:
+    def parse_text_lines(
+            cls, text_lines: List[List[str]]) -> Tuple[DSeriesStructure, int]:
         """Parses a list of strings into the properties of a structure.
         Example:
             [   ["1", "Property value"],
@@ -586,6 +588,7 @@ class DSeriesTreeStructure(DSeriesStructure):
 
         Returns:
             DSeriesStructure: Structure with parsed properties.
+            int: Index of last line being read as part of current structure.
         """
         properties = {}
         structure_properties = [
@@ -597,20 +600,27 @@ class DSeriesTreeStructure(DSeriesStructure):
             raise ValueError(
                 f"There should be at least {len(structure_properties)}"
                 + f" fields to correctly initalize object {cls}")
-
-        for field_idx, (field_name, field) in enumerate(structure_properties):
-            value = text_lines[field_idx][0]
+        lines_read = 0
+        for field_name, field in structure_properties:
+            if lines_read >= len(text_lines):
+                raise ValueError(f"Expected text line property for {field_name}.")
             # if the current property is a list, then extract the next line values.
             if is_list(field) or issubclass(field, list):
-                list_size = int(text_lines.pop(field_idx)[0])
-                value = text_lines[field_idx]
-                if list_size != len(value):
-                    raise ValueError(
-                        f"Expected {list_size} values for "
-                        + f"property {field_name}.")
-            properties[field_name] = value
-
-        return cls(**properties)
+                list_size = int(text_lines[lines_read][0])
+                lines_read += 1
+                list_values = []
+                # Fetch values from next lines as it might have been split into different lines
+                # See GEOLIB-68 to know more about that problem.
+                while(len(list_values) < list_size):
+                    if lines_read >= len(text_lines):
+                        raise ValueError(f"Expected {list_size} values for property {field_name}.")
+                    list_values.extend(text_lines[lines_read])
+                    lines_read += 1
+                properties[field_name] = list_values
+            else:
+                properties[field_name] = text_lines[lines_read][0]
+                lines_read += 1
+        return cls(**properties), lines_read
 
 
 class DSeriesListTreeStructureCollection(DSeriesStructure):
@@ -640,25 +650,23 @@ class DSeriesListTreeStructureCollection(DSeriesStructure):
             for line in text.split("\n")
             if line != ""]
 
-        # Verify number of structures match with lines in text.
-        number_of_structures = int(lines.pop(0)[0])
-        if len(lines) % number_of_structures != 0:
-            raise ValueError(
-                f"All structures ({number_of_structures}) " +
-                "should have the same number of lines.")
-        lines_per_structure = int(len(lines) / number_of_structures)
-
         # Parse all the structures
-        parsed_structures = []
+        number_of_structures = int(lines.pop(0)[0])
+        parsed_structures_collection = []
+        read_lines = 0
         for structure_idx in range(number_of_structures):
-            first_pos = structure_idx * lines_per_structure
-            last_pos = first_pos + lines_per_structure
-            structure_lines = \
-                lines[first_pos:last_pos]
-            parsed_structures.append(
-                structure_type.parse_text_lines(structure_lines))
+            if read_lines >= len(lines):
+                raise ValueError(
+                    f"Expected {number_of_structures} structures,"
+                    + " but missing text lines for "
+                    + f"{number_of_structures - len(parsed_structures_collection)}.")
+            lines_to_parse = lines[read_lines:]
+            parsed_structure, parsed_lines = \
+                structure_type.parse_text_lines(lines_to_parse)
+            read_lines += parsed_lines
+            parsed_structures_collection.append(parsed_structure)
 
-        return cls(**{collection_proprety_name: parsed_structures})
+        return cls(**{collection_proprety_name: parsed_structures_collection})
 
 
 class DSeriesNoParseSubStructure(DSeriesStructure):

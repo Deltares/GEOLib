@@ -1,4 +1,5 @@
 import os
+from random import randint
 from typing import List, get_type_hints, _GenericAlias, Type, Tuple, Dict
 import pytest
 
@@ -23,10 +24,10 @@ class DummyListTreeStructureCollection(DSeriesListTreeStructureCollection):
 class TestDSeriesTreeStructure:
 
     @pytest.mark.unittest
-    def test_given_unmatchedpropertyvaluestext_when_parse_then_raises_valueerror(self):
+    def test_given_unmatchedpropertyvaluestext_when_parse_text_lines_then_raises_valueerror(self):
         # 1. Set up test data
-        text_lines = ["2", "4", "2"]
-        expected_error = f"Expected {text_lines[1]} values for property list_property."
+        text_lines = [["2"], ["4"], ["2"]]
+        expected_error = f"Expected 4 values for property list_property."
         parsed_structure = None
         # 2. Run and verify
         with pytest.raises(ValueError) as e_info:
@@ -35,6 +36,40 @@ class TestDSeriesTreeStructure:
         # 3. Verify final expectations
         assert parsed_structure is None
         assert str(e_info.value) == expected_error
+
+    class DummyTreeStructureListFirst(DSeriesTreeStructure):
+        list_property: List[int]
+        single_property: int
+
+    @pytest.mark.unittest
+    def test_given_notenoughlistvalues_when_parse_text_lines_then_raises_valueerror(self):
+        # 1. Set up test data
+        text_lines = ["2", "4", "2"]
+        expected_error = f"Expected text line property for single_property."
+        parsed_structure = None
+        # 2. Run and verify
+        with pytest.raises(ValueError) as e_info:
+            parsed_structure = self.DummyTreeStructureListFirst.parse_text_lines(text_lines)
+
+        # 3. Verify final expectations
+        assert parsed_structure is None
+        assert str(e_info.value) == expected_error
+
+    @pytest.mark.unittest
+    def test_given_enoughlist_values_when_parse_text_lines_then_parses_allproperties(self):
+        # 1. Set up test data
+        text_lines = [["2"], ["4", "2"], ["42"]]
+        parsed_structure = None
+
+        # 2. Run and verify
+        parsed_structure, consumed_lines = \
+            self.DummyTreeStructureListFirst.parse_text_lines(text_lines)
+
+        # 3. Verify final expectations
+        assert parsed_structure
+        assert consumed_lines == len(text_lines)
+        assert parsed_structure.list_property == [4, 2]
+        assert parsed_structure.single_property == 42
 
     @pytest.mark.unittest
     def test_given_unmatchedpropertylinestext_when_parse_then_raises_valueerror(self):
@@ -58,15 +93,71 @@ class TestDSeriesTreeStructure:
         text_lines = [["2"], ["2"], ["4", "2"]]
         expected_id = "2"
         expected_values = [4, 2]
-        parsed_structure = None
 
         # 2. Run test.
-        parsed_structure = DummyTreeStructure.parse_text_lines(text_lines)
+        parsed_structure, consumed_lines = \
+            DummyTreeStructure.parse_text_lines(text_lines)
 
         # 3. Verify final expectations
         assert parsed_structure, "No structure was parsed."
+        assert consumed_lines == len(text_lines)
         assert parsed_structure.simple_property == expected_id
         assert parsed_structure.list_property == expected_values
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "list_size", [
+            pytest.param(9, id="Below limit"),
+            pytest.param(15, id="One extra line"),
+            pytest.param(31, id="Three extra lines")
+        ])
+    def test_given_dummytreestructuretext_with_multiplecurvelines_when_parse_text_then_creates_correctly(self, list_size: int):
+        # 1. Set up test data
+        single_property_value = "dummy_id"
+        max_line_elements = 10
+        values = [randint(0, 100) for idx in range(1, list_size)]
+        text_to_parse = "" + \
+            f"{single_property_value} - Structure id\n" + \
+            f"{len(values)} - number of elements in list\n"
+        step_values = [values[i:i + max_line_elements] for i in range(0, len(values), max_line_elements)]
+        for step_value in step_values:
+            text_to_parse += " ".join([str(value) for value in step_value])
+            text_to_parse += "\n"
+
+        # 2. Run test
+        parsed_structure = DummyTreeStructure.parse_text(text_to_parse)
+
+        # 3. Verify final expectation
+        assert isinstance(parsed_structure, DSeriesTreeStructure)
+        assert parsed_structure.simple_property == single_property_value
+        assert parsed_structure.list_property == values, "Parsed values don't match expectations."
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "list_size", [
+            pytest.param(9, id="Below limit"),
+            pytest.param(15, id="One extra line"),
+            pytest.param(31, id="Three extra lines")
+        ])
+    def test_given_dummytreestructuretext_with_multiplecurvelines_when_parse_text_lines_then_creates_correctly(self, list_size: int):
+        # 1. Set up test data
+        single_property_value = "dummy_id"
+        max_line_elements = 10
+        values = [randint(0, 100) for idx in range(1, list_size)]
+        step_values = [values[i:i + max_line_elements] for i in range(0, len(values), max_line_elements)]
+        text_lines_to_parse = [[single_property_value]]
+        text_lines_to_parse.append([str(len(values))])
+        for step in step_values:
+            text_lines_to_parse.append([str(s_value) for s_value in step])
+
+        # 2. Run test
+        parsed_structure, read_lines = DummyTreeStructure.parse_text_lines(text_lines_to_parse)
+
+        # 3. Verify final expectation
+        assert isinstance(parsed_structure, DSeriesTreeStructure)
+        assert read_lines == len(text_lines_to_parse)
+        assert parsed_structure.simple_property == single_property_value
+        assert parsed_structure.list_property == values, "Parsed values don't match expectations."
 
 
 class TestDSeriesListTreeStructureCollection:
@@ -82,26 +173,29 @@ class TestDSeriesListTreeStructureCollection:
         # 1. Set up test model.
         structure_name = "my_structure"
         structure_content = {
-            "1": [1, 2],
-            "2": [3, 4],
-            "3": [5, 6],
-            "4": [7, 8],
+            "1": [randint(0, 100) for idx in range(1, 4)],
+            "2": [randint(0, 100) for idx in range(1, 24)],
+            "3": [randint(0, 100) for idx in range(1, 2)],
+            "4": [randint(0, 100) for idx in range(1, 42)],
         }
 
+        max_elements_per_line = 10
         content_lines = f"{len(structure_content)} - Number of {structure_name}\n"
         for s_key, s_value in structure_content.items():
-            id_line = f"{separator}{s_key} - dumb text"
-            n_prop_line = f"{separator*2}{len(s_value)} - dumb text too"
-            prop_values_line = ""
-            for value in s_value:
-                prop_values_line += f"{value}{separator}"
-            prop_values_line = f"{separator*3}{prop_values_line}"
-            content_lines += f"{id_line}\n{n_prop_line}\n{prop_values_line}\n"
+            content_lines += "" + \
+                f"{separator}{s_key} - Structure id\n" + \
+                f"{separator*2}{len(s_value)} - number of curves on boundary, next line(s) are curvenumbers\n"
+            step_values = [
+                s_value[i:i + max_elements_per_line]
+                for i in range(0, len(s_value), max_elements_per_line)]
+            for step_value in step_values:
+                content_lines += f"{separator*3}"
+                content_lines += f"{separator}".join([str(value) for value in step_value])
+                content_lines += "\n"
 
         # 2. Run test.
-        parsed_collection = DummyListTreeStructureCollection.parse_text(
-            content_lines
-        )
+        parsed_collection = \
+            DummyListTreeStructureCollection.parse_text(content_lines)
 
         # 3. Verify final expectations.
         assert parsed_collection, "No structure was generated."
@@ -120,10 +214,9 @@ class TestDSeriesListTreeStructureCollection:
     @pytest.mark.unittest
     def test_given_unmatchedstructurestext_when_parse_then_raises_valueerror(self):
         # 1. Set up test data
-        text = "2 - structures\n1 - structure id"
+        text = "2 - structures\n"
         expected_error = "" + \
-            "All structures (2) " + \
-            "should have the same number of lines."
+            "Expected 2 structures, but missing text lines for 2."
         parsed_structure = None
         # 2. Run and verify
         with pytest.raises(ValueError) as e_info:

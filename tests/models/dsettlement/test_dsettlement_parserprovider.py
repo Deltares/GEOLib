@@ -103,6 +103,34 @@ class Test_DSettlementInputParser:
         for idx, piezoline in enumerate(piezo_lines_dict[piezolines_key]):
             assert piezoline.curves == expected_piezolines_curves[idx]
 
+    @pytest.mark.systemtest
+    def test_given_testfilewithmultiplelineboundaries_then_addedcorrectly(self):
+        # 1. Define test data
+        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
+        test_file = pathlib.Path(os.path.join(test_folder, "2dgeom_with10.sli"))
+        parser = DSettlementInputParser()
+        expected_values = [
+            [41], [40], [39], [38], [37], [36], [35], [34], [33],
+            [29, 30, 31, 32],
+            [29, 30, 31, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+            [29, 30, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+            [29, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]]
+
+        # 2. Verify initial expectations
+        assert os.path.exists(test_file), "Test file does not exist."
+
+        # 3. Run test
+        parsed_model = parser.parse(test_file)
+
+        # 4. Verify expectations
+        assert parsed_model, 'No structure was parsed.'
+        parsed_boundaries = parsed_model.geometry_data.boundaries
+        assert len(parsed_boundaries.boundaries) == len(expected_values)
+        for struct_id, expected_value in enumerate(expected_values):
+            assert parsed_boundaries.boundaries[struct_id].id == struct_id
+            assert parsed_boundaries.boundaries[struct_id].curves == expected_value
+
 
 class Test_DSettlementOutputParser:
     @pytest.mark.unittest
