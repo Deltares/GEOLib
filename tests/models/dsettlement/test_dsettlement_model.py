@@ -13,7 +13,14 @@ from tests.utils import TestUtils
 
 import geolib.models.dsettlement.loads as loads
 from geolib.geometry.one import Point
-from geolib.soils import Soil
+from geolib.soils import (
+    Soil,
+    PreconType,
+    SoilParameters,
+    IsotacheParameters,
+    SoilClassificationParameters,
+)
+import geolib.soils as soil_external
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
@@ -484,14 +491,14 @@ class TestDSettlementModel:
         a = ds.add_boundary([point1, point2])
         b = ds.add_boundary([point4, point3])
         id_a = ds.add_layer(
-            material=Soil(name="a"),
+            material_name="a",
             head_line_top=0,
             head_line_bottom=1,
             boundary_top=a,
             boundary_bottom=b,
         )
         id_b = ds.add_layer(
-            material=Soil(name="b"),
+            material_name="b",
             head_line_top=0,
             head_line_bottom=1,
             boundary_top=a,
@@ -526,7 +533,7 @@ class TestDSettlementModel:
         a = ds.add_boundary([point1, point2])
         b = ds.add_boundary([point4, point3])
         ds.add_layer(
-            material=Soil(name="test"),
+            material_name="test",
             head_line_top=0,
             head_line_bottom=1,
             boundary_top=a,
@@ -736,11 +743,79 @@ class TestDSettlementModel:
         assert list(ds.other_loads.loads.values())[0].load_values_uniform.gamma == 0.3
 
     @pytest.mark.integrationtest
+    def test_add_soil_to_layer(self):
+        # step 1: set up test model
+        ds = self.setup_dsettlement_model()
+        # step 2: set up soil inputs
+        soil_input = Soil(name="MyNewSoil")
+        soil_input.soil_parameters = SoilParameters()
+        soil_input.soil_parameters.soil_classification_parameters = (
+            SoilClassificationParameters()
+        )
+        soil_input.soil_parameters.soil_weight_parameters = (
+            soil_external.SoilWeightParameters()
+        )
+
+        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.PersistableStochasticParameter(
+            mean=20
+        )
+        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.PersistableStochasticParameter(
+            mean=30
+        )
+        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.PersistableStochasticParameter(
+            mean=0.1
+        )
+
+        soil_input.soil_parameters.koppejan_parameters = soil_external.KoppejanParameters(
+            preconkoppejantype=PreconType.PreconsolidationPressure
+        )
+        soil_input.soil_state = soil_external.SoilState(
+            use_equivalent_age=True, equivalent_age=2
+        )
+        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.PersistableStochasticParameter(
+            mean=10
+        )
+        # step 3: run test
+        ds.add_soil(soil_input)
+        # step 4: verify final expectations
+        assert ds.input.soil_collection.soils[0].dict()["name"] == "MyNewSoil"
+        assert ds.input.soil_collection.soils[0].dict()["soilgamdry"] == 30
+        assert ds.input.soil_collection.soils[0].dict()["soilgamwet"] == 20
+        assert ds.input.soil_collection.soils[0].dict()["soilinitialvoidratio"] == 0.1
+
+    @pytest.mark.integrationtest
+    def test_add_soil_name_already_defined(self):
+        # step 1: set up test model
+        ds = self.setup_dsettlement_model()
+        expected_error_str = "Name for soil is multiply defined."
+        # step 2: set up soil inputs
+        soil_input = Soil(name="MyNewSoil")
+        soil_input.soil_parameters = SoilParameters()
+        ds.add_soil(soil_input)
+        soil_input_second = Soil(name="MyNewSoil")
+        soil_input_second.soil_parameters = SoilParameters()
+        # step 3: run test
+        with pytest.raises(Exception) as e_info:
+            ds.add_soil(soil_input_second)
+        # step 4: verify final expectations
+        assert not (soil_input_second in ds.input.soil_collection)
+        assert str(e_info.value) == expected_error_str
+
     def test_set_model(self):
         ds = self.setup_dsettlement_model()
         ds.datastructure.model = Model()
-        ds.set_model(SoilModel.ISOTACHE, ConsolidationModel.TERZAGHI, True, StrainType.LINEAR, True, True, True, True,
-                     True, True,)
+        ds.set_model(
+            SoilModel.ISOTACHE,
+            ConsolidationModel.TERZAGHI,
+            True,
+            StrainType.LINEAR,
+            True,
+            True,
+            True,
+            True,
+            True,
+            True,
+        )
 
         # Check if all options are in data structure
         assert ds.datastructure.model.soil_model == SoilModel.ISOTACHE

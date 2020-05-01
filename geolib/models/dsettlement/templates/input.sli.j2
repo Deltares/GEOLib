@@ -21,9 +21,12 @@ D-Settlement={{ version.d__settlement }}
     {{ soil_collection|length }} = number of items
 {% for soil in soil_collection.soil %}
 [SOIL]
+{% if soil_collection is mapping %}
+{% include 'soil_template.j2' %}
+{% else %}
 {{ soil }}
+{% endif %}
 [END OF SOIL]
-
 {% endfor %}
 {% else %}
 {{ soil_collection }}

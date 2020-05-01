@@ -6,8 +6,12 @@ from typing import Dict, List, Optional, Union, Tuple, Any
 from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 
+from geolib.soils import Soil, DistributionType, HorizontalBehaviourType
+from geolib.soils import PreconType as PreconType_external
+from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.geometry.one import Point
 from geolib.models.base_model_structure import BaseModelStructure
+from geolib.models.dsettlement.internal_soil import Soil_Internal
 from geolib.models.dseries_parser import (
     DSeriesKeyValueSubStructure,
     DSeriesListSubStructure,
@@ -61,12 +65,17 @@ class DSeriePoint(DataClass):
         return NotImplemented
 
 
-class Soil(DSeriesNoParseSubStructure):
-    name: str = "test soil"
-
-
 class SoilCollection(DSeriesListSubStructure):
-    soil: Union[List[Soil], List[str]] = []
+    # EleniSmyrniou_2020 : soils should be a Union[Set[Soil_Internal]] (no repeated soils)
+    # feel free to refactor this code I wasn't able to do so in sprint.
+    soils: Union[List[Soil_Internal], List[str]] = []
+
+    def add_soil_if_unique(self, soil, tolerance=TOLERANCE) -> None:
+        for added_soil in self.soils:
+            if soil.name == added_soil.name:
+                raise Exception("Name for soil is multiply defined.")
+        self.soils.append(soil)
+        return
 
 
 class Version(DSeriesKeyValueSubStructure):

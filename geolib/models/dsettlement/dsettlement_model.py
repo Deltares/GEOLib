@@ -11,7 +11,7 @@ from pydantic.types import confloat, constr, PositiveInt, conint
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, MetaData, BaseModelStructure
-from geolib.soils import Soil
+from geolib.soils import Soil as Soil_Input
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
@@ -36,6 +36,7 @@ from .internal import (
     CalculationOptions,
     Model,
 )
+from .internal_soil import Soil_Internal
 from .loads import (
     CircularLoad,
     OtherLoad,
@@ -82,6 +83,11 @@ class DSettlementModel(BaseModel):
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
         self.filename = filename
+
+    def add_soil(self, soil_input: Soil_Input) -> None:
+        """ Soil is converted in the internal structure and added in soil_collection."""
+        soil_new = Soil_Internal.convert_from_external_to_internal(soil_input)
+        self.datastructure.soil_collection.add_soil_if_unique(soil_new)
 
     # 1.2.3 Models
     def set_model(
@@ -215,7 +221,7 @@ class DSettlementModel(BaseModel):
 
     # 1.2.1 Soil profile
     # To create multiple layers
-    def add_boundary(self, points: List[DSeriePoint], twod=True) -> int:
+    def add_boundary(self, points: List[Point], twod=True) -> int:
         """Add boundary to model."""
         # Divide points into curves and boundary
         # Check point uniqueness
@@ -245,7 +251,7 @@ class DSettlementModel(BaseModel):
         self,
         boundary_top: int,
         boundary_bottom: int,
-        material: Soil,
+        material_name: str,
         head_line_top: int,
         head_line_bottom: int,
         overwrite: bool = False,  # TODO overwrite if layer already exists
@@ -262,9 +268,11 @@ class DSettlementModel(BaseModel):
             self.datastructure.geometry_data.layers = Layers()
 
         # Can be used after Soils are implemented
+        # TODO:: add check that the soil name exist
+        # TODO:: add soil together with the layer
         # soilname = self.soils.add_soil(material)
         layer = Layer(
-            material=material.name,
+            material=material_name,
             piezo_top=head_line_top,
             piezo_bottom=head_line_bottom,
             boundary_top=boundary_top,
