@@ -3,7 +3,6 @@ from enum import Enum, IntEnum
 from math import isclose
 from operator import attrgetter
 from typing import Dict, List, Optional, Union, Tuple, Any
-
 from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 
@@ -470,6 +469,115 @@ class OtherLoads(DSeriesNoParseSubStructure):
             return None
 
 
+class Dimension(Enum):
+    ONE_D = 0
+    TWO_D = 1
+
+
+class ConsolidationModel(Enum):
+    DARCY = 0
+    TERZAGHI = 1
+
+
+class SoilModel(Enum):
+    NEN_KOPPEJAN = 0
+    NEN_BJERRUM = 1
+    ISOTACHE = 2
+
+
+class StrainType(Enum):
+    LINEAR = 0
+    NATURAL = 1
+
+
+class ModelBool(Enum):
+    FALSE = 0
+    TRUE = 1
+
+
+class Model(DSeriesNoParseSubStructure):
+    dimension: Dimension = Dimension.ONE_D
+    consolidation_model: ConsolidationModel = ConsolidationModel.DARCY
+    soil_model: SoilModel = SoilModel.NEN_KOPPEJAN
+    strain_type: StrainType = StrainType.LINEAR
+    is_vertical_drains: ModelBool = ModelBool.FALSE
+    is_fit_for_settlement_plate: ModelBool = ModelBool.FALSE
+    is_probabilistic: ModelBool = ModelBool.FALSE
+    is_horizontal_displacements: ModelBool = ModelBool.FALSE
+    is_secondary_swelling: ModelBool = ModelBool.FALSE
+    is_waspan: ModelBool = ModelBool.FALSE
+
+
+class PreconPressureWithinLayer(Enum):
+    CONSTANT_NO_CORRECTION = 0
+    CONSTANT_CORRECTION_T0 = 1
+    CONSTANT_CORRECTION_ALL_T = 2
+    VARIABLE_NO_CORRECTION = 3
+    VARIABLE_CORRECTION_T0 = 4
+    VARIABLE_CORRECTION_ALL_T = 5
+
+
+class DispersionConditionLayerBoundary(Enum):
+    UNDRAINED = 0
+    DRAINED = 1
+
+
+class DispersionConditionsLayerBoundaries(DSeriesNoParseSubStructure):
+    dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
+    dispersion_conditions_layer_boundaries_bottom: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
+
+
+class StressDistributionSoil(Enum):
+    BUISMAN = 0
+    BOUSSINESQ = 1
+
+
+class StressDistributionLoads(Enum):
+    NONE = 0
+    SIMULATE = 1
+
+
+class CalculationOptions(DSeriesNoParseSubStructure):
+    precon_pressure_within_layer: PreconPressureWithinLayer = PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
+    is_imaginary_surface: ModelBool = ModelBool.FALSE
+    imaginary_surface_layer: Optional[PositiveInt]
+    is_submerging: ModelBool = ModelBool.FALSE
+    use_end_time_for_fit: ModelBool = ModelBool.FALSE
+    is_maintain_profile: ModelBool = ModelBool.FALSE
+    maintain_profile_material_name: str = "Superelevation"
+    maintain_profile_time: conint(ge=0, le=100000) = 0
+    maintain_profile_gamma_dry: confloat(ge=-100, le=100) = 10
+    maintain_profile_gamma_wet: confloat(ge=-100, le=100) = 10
+    dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
+    dispersion_conditions_layer_boundaries_bottom: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
+    stress_distribution_soil: StressDistributionSoil = StressDistributionSoil.BUISMAN
+    stress_distribution_loads: StressDistributionLoads = StressDistributionLoads.SIMULATE
+    iteration_stop_criteria_submerging: confloat(ge=0.0, le=1.0) = 0.0
+    iteration_stop_criteria_submerging_layer_height: confloat(ge=0, le=99.999) = 0
+    maximum_iteration_steps_for_submerging: conint(ge=1, le=100) = 1
+    iteration_stop_criteria_desired_profile: confloat(ge=0, le=1) = 0.1
+    load_column_width_imaginary_surface: confloat(ge=0.05, le=10000) = 1
+    load_column_width_non_uniform_loads: confloat(ge=0.05, le=10000) = 1
+    load_column_width_trapeziform_loads: confloat(ge=0.05, le=10000) = 1
+    end_of_consolidation: conint(ge=1, le=100000) = 100000
+    number_of_subtime_steps: conint(ge=1, le=100) = 2
+    reference_time: confloat(ge=0.001, le=1000000) = 1
+    dissipation: ModelBool = ModelBool.FALSE
+    x_coord_dissipation: float = 0.0
+    use_fit_factors: ModelBool = ModelBool.FALSE
+    x_coord_fit: float = 0.0
+    is_predict_settlements_omitting_additional_load_steps: ModelBool = ModelBool.FALSE
+
+    @classmethod
+    def set_options(cls, **kwargs):
+        cls_instance = cls(**kwargs)
+        if cls_instance.is_imaginary_surface == ModelBool.FALSE:
+            cls_instance.imaginary_surface_layer = None
+        elif cls_instance.imaginary_surface_layer is None:
+            cls_instance.imaginary_surface_layer = 1
+        return cls_instance
+
+
 class DSettlementStructure(DSeriesStructure):
     """Representation of complete .sli file."""
 
@@ -477,13 +585,13 @@ class DSettlementStructure(DSeriesStructure):
     soil_collection: Union[SoilCollection, str] = SoilCollection()
     geometry_data: Union[GeometryData, str] = GeometryData()
     run_identification: str = ""
-    model: str = ""
+    model: Union[Model, str] = Model()
     verticals: Union[Verticals, str] = Verticals()
     water: str = ""
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
     water_loads: str = ""
     other_loads: Union[OtherLoads, str] = OtherLoads()
-    calculation_options: str = ""
+    calculation_options: Union[CalculationOptions, str] = CalculationOptions()
     residual_times: Union[ResidualTimes, str] = ResidualTimes()
     filter_band_width: str = ""
     pore_pressure_meters: str = ""
@@ -497,6 +605,14 @@ class DSettlementStructure(DSeriesStructure):
     fit_calculation: str = ""
     eps: str = ""
     fit: str = ""
+
+    def validate_options(self):
+        """
+        Todo validation calculation options with geometry. I.e. validate x coordinate related options and layer related
+            options
+        Returns:
+
+        """
 
 
 class Stresses(DSerieTableStructure):

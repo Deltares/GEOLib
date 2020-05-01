@@ -166,7 +166,20 @@ D-Settlement={{ version.d__settlement }}
 [END OF RUN IDENTIFICATION]
 
 [MODEL]
+{% if model is mapping -%}
+{{ model.dimension.value }} : Dimension = {{ model.dimension.name }}
+{{ model.consolidation_model.value }} : Calculation type = {{ model.consolidation_model.name }}
+{{ model.soil_model.value }} : Model = {{ model.soil_model.name }}
+{{ model.strain_type.value }} : Strain type = {{ model.strain_type.name }}
+{{ model.is_vertical_drains.value }} : Vertical drains = {{ model.is_vertical_drains.name }}
+{{ model.is_fit_for_settlement_plate.value }} : Fit for settlement plate = {{ model.is_fit_for_settlement_plate.name }}
+{{ model.is_probabilistic.value }} : Probabilistic = {{ model.is_probabilistic.name }}
+{{ model.is_horizontal_displacements.value }} : Horizontal displacements = {{ model.is_horizontal_displacements.name }}
+{{ model.is_secondary_swelling.value }} : Secondary swelling = {{ model.is_secondary_swelling.name }}
+{{ model.is_waspan.value }} : Waspan = {{ model.is_waspan.name }}
+{% else -%}
 {{ model }}
+{% endif %}
 [END OF MODEL]
 
 [VERTICALS]
@@ -241,7 +254,41 @@ D-Settlement={{ version.d__settlement }}
 [END OF OTHER LOADS]
 
 [CALCULATION OPTIONS]
+{% if calculation_options is mapping -%}
+{{ calculation_options.precon_pressure_within_layer.value }} : Precon. pressure within a layer = {{ calculation_options.precon_pressure_within_layer.name }}
+{{ calculation_options.is_imaginary_surface.value }} : Imaginary surface = {{ calculation_options.is_imaginary_surface.name }}
+{% if calculation_options.imaginary_surface_layer is not none %}
+{{ calculation_options.imaginary_surface_layer.value }} : Imaginary surface layer =  {{ calculation_options.imaginary_surface_layer.name }}
+{% endif %}
+{{ calculation_options.is_submerging.value }} : Submerging =  {{ calculation_options.is_submerging.name }}
+{{ calculation_options.use_end_time_for_fit.value }} : Use end time for fit =  {{ calculation_options.use_end_time_for_fit.name }}
+{{ calculation_options.is_maintain_profile.value }} : Maintain profile =  {{ calculation_options.is_maintain_profile.name }}
+{{ calculation_options.maintain_profile_material_name }}
+{{ calculation_options.maintain_profile_time }} = Time {{ calculation_options.maintain_profile_material_name }}
+{{ calculation_options.maintain_profile_gamma_dry }} = Gamma dry {{ calculation_options.maintain_profile_material_name }}
+{{ calculation_options.maintain_profile_gamma_wet }} = Gamma wet {{ calculation_options.maintain_profile_material_name }}
+{{ calculation_options.dispersion_conditions_layer_boundaries_top.value }} : Dispersion conditions layer boundaries top = {{ calculation_options.dispersion_conditions_layer_boundaries_top.name }}
+{{ calculation_options.dispersion_conditions_layer_boundaries_bottom.value }} : Dispersion conditions layer boundaries bottom = {{ calculation_options.dispersion_conditions_layer_boundaries_bottom.name }}
+{{ calculation_options.stress_distribution_soil.value }}  : Stress distribution soil = {{ calculation_options.stress_distribution_soil.name }}
+{{ calculation_options.stress_distribution_loads.value }}  : Stress distribution loads = {{ calculation_options.stress_distribution_loads.name }}
+{{ calculation_options.iteration_stop_criteria_submerging }} = Iteration stop criteria submerging [m]
+{{ calculation_options.iteration_stop_criteria_submerging_layer_height }} = Iteration stop criteria submerging minimum layer height [m]
+{{ calculation_options.maximum_iteration_steps_for_submerging }} = Maximum iteration steps for submerging
+{{ calculation_options.iteration_stop_criteria_desired_profile }} = Iteration stop criteria desired profile [m]
+{{ calculation_options.load_column_width_imaginary_surface }} = Load column width imaginary surface [m]
+{{ calculation_options.load_column_width_non_uniform_loads }} = Load column width non-uniform loads [m]
+{{ calculation_options.load_column_width_trapeziform_loads }} = Load column width trapeziform loads [m]
+{{ calculation_options.end_of_consolidation }} = End of consolidation [days]
+{{ calculation_options.number_of_subtime_steps }} = Number of subtime steps
+{{ calculation_options.reference_time }} = Reference time
+{{ calculation_options.dissipation.value }} : Dissipation = {{ calculation_options.dissipation.name }}
+{{ calculation_options.x_coord_dissipation }} = X co-ordinate dissipation
+{{ calculation_options.use_fit_factors.value }} : Use fit factors = {{ calculation_options.use_fit_factors.name }}
+{{ calculation_options.x_coord_fit }} = X co-ordinate fit
+{{ calculation_options.is_predict_settlements_omitting_additional_load_steps.value }} : Predict settlements omitting additional loadsteps = {{ calculation_options.is_predict_settlements_omitting_additional_load_steps.name }}
+{% else %}
 {{ calculation_options }}
+{% endif -%}
 [END OF CALCULATION OPTIONS]
 
 [RESIDUAL TIMES]

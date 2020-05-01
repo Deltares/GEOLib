@@ -4,6 +4,7 @@ import pathlib
 from datetime import timedelta
 from pathlib import Path
 from typing import List
+from warnings import warn
 
 import pydantic
 import pytest
@@ -26,11 +27,18 @@ from geolib.models.dsettlement.internal import (
     GeometryData,
     Layer,
     Layers,
-    OtherLoad,
     Points,
-    TypeOtherLoads,
     Version,
-    Verticals,
+    SoilModel,
+    ConsolidationModel,
+    Model,
+    Dimension,
+    ModelBool,
+    DispersionConditionLayerBoundary,
+    StrainType,
+    PreconPressureWithinLayer,
+    StressDistributionSoil,
+    StressDistributionLoads,
 )
 
 
@@ -726,3 +734,206 @@ class TestDSettlementModel:
             == 0.2
         )
         assert list(ds.other_loads.loads.values())[0].load_values_uniform.gamma == 0.3
+
+    @pytest.mark.integrationtest
+    def test_set_model(self):
+        ds = self.setup_dsettlement_model()
+        ds.datastructure.model = Model()
+        ds.set_model(SoilModel.ISOTACHE, ConsolidationModel.TERZAGHI, True, StrainType.LINEAR, True, True, True, True,
+                     True, True,)
+
+        # Check if all options are in data structure
+        assert ds.datastructure.model.soil_model == SoilModel.ISOTACHE
+        assert ds.datastructure.model.consolidation_model == ConsolidationModel.TERZAGHI
+        assert ds.datastructure.model.dimension == Dimension.TWO_D
+        assert ds.datastructure.model.strain_type == StrainType.LINEAR
+        assert ds.datastructure.model.is_vertical_drains == ModelBool.TRUE
+        assert ds.datastructure.model.is_probabilistic == ModelBool.TRUE
+        assert ds.datastructure.model.is_horizontal_displacements == ModelBool.TRUE
+        assert ds.datastructure.model.is_secondary_swelling == ModelBool.TRUE
+        assert ds.datastructure.model.is_waspan == ModelBool.TRUE
+
+    @pytest.mark.systemtest
+    def test_serialize_model(self):
+        ds = self.setup_dsettlement_model()
+
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_model.sli"
+        )
+
+        ds.datastructure.model = Model()
+        ds.serialize(test_output_filepath)
+
+    @pytest.mark.integrationtest
+    def test_set_any_calculation_options_initial_value(self):
+        ds = self.setup_dsettlement_model()
+
+        ds.set_any_calculation_options()
+        calculation_options = ds.datastructure.calculation_options
+
+        assert (
+            calculation_options.precon_pressure_within_layer
+            == PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
+        )
+        assert calculation_options.is_imaginary_surface == ModelBool.FALSE
+        assert calculation_options.imaginary_surface_layer is None
+        assert calculation_options.is_submerging == ModelBool.FALSE
+        assert calculation_options.use_end_time_for_fit == ModelBool.FALSE
+        assert calculation_options.is_maintain_profile == ModelBool.FALSE
+        assert calculation_options.maintain_profile_material_name == "Superelevation"
+        assert calculation_options.maintain_profile_time == 0
+        assert calculation_options.maintain_profile_gamma_dry == 10
+        assert calculation_options.maintain_profile_gamma_wet == 10
+        assert (
+            calculation_options.dispersion_conditions_layer_boundaries_top
+            == DispersionConditionLayerBoundary.DRAINED
+        )
+        assert (
+            calculation_options.dispersion_conditions_layer_boundaries_bottom
+            == DispersionConditionLayerBoundary.DRAINED
+        )
+        assert (
+            calculation_options.stress_distribution_soil == StressDistributionSoil.BUISMAN
+        )
+        assert (
+            calculation_options.stress_distribution_loads
+            == StressDistributionLoads.SIMULATE
+        )
+        assert calculation_options.iteration_stop_criteria_submerging == 0.0
+        assert calculation_options.iteration_stop_criteria_submerging_layer_height == 0
+        assert calculation_options.maximum_iteration_steps_for_submerging == 1
+        assert calculation_options.iteration_stop_criteria_desired_profile == 0.1
+        assert calculation_options.load_column_width_imaginary_surface == 1
+        assert calculation_options.load_column_width_non_uniform_loads == 1
+        assert calculation_options.load_column_width_trapeziform_loads == 1
+        assert calculation_options.end_of_consolidation == 100000
+        assert calculation_options.number_of_subtime_steps == 2
+        assert calculation_options.reference_time == 1
+        assert calculation_options.dissipation == ModelBool.FALSE
+        assert calculation_options.x_coord_dissipation == 0.0
+        assert calculation_options.use_fit_factors == ModelBool.FALSE
+        assert calculation_options.x_coord_fit == 0.0
+        assert (
+            calculation_options.is_predict_settlements_omitting_additional_load_steps
+            == ModelBool.FALSE
+        )
+
+    @pytest.mark.integrationtest
+    def test_set_any_calculation_options_changed_value(self):
+        ds = self.setup_dsettlement_model()
+
+        ds.set_any_calculation_options(
+            precon_pressure_within_layer=PreconPressureWithinLayer.CONSTANT_CORRECTION_ALL_T,
+            is_imaginary_surface=ModelBool.TRUE,
+            imaginary_surface_layer=1,
+            is_submerging=ModelBool.TRUE,
+            use_end_time_for_fit=ModelBool.TRUE,
+            is_maintain_profile=ModelBool.TRUE,
+            maintain_profile_material_name="test",
+            maintain_profile_time=1,
+            maintain_profile_gamma_dry=20,
+            maintain_profile_gamma_wet=20,
+            dispersion_conditions_layer_boundaries_top=DispersionConditionLayerBoundary.UNDRAINED,
+            dispersion_conditions_layer_boundaries_bottom=DispersionConditionLayerBoundary.UNDRAINED,
+            stress_distribution_soil=StressDistributionSoil.BOUSSINESQ,
+            stress_distribution_loads=StressDistributionLoads.NONE,
+            iteration_stop_criteria_submerging=1.0,
+            iteration_stop_criteria_submerging_layer_height=1,
+            maximum_iteration_steps_for_submerging=2,
+            iteration_stop_criteria_desired_profile=0.2,
+            load_column_width_imaginary_surface=2,
+            load_column_width_non_uniform_loads=2,
+            load_column_width_trapeziform_loads=2,
+            end_of_consolidation=1000,
+            number_of_subtime_steps=3,
+            reference_time=2,
+            dissipation=ModelBool.TRUE,
+            x_coord_dissipation=1.0,
+            use_fit_factors=ModelBool.TRUE,
+            x_coord_fit=1.0,
+            is_predict_settlements_omitting_additional_load_steps=ModelBool.TRUE,
+        )
+
+        calculation_options = ds.datastructure.calculation_options
+
+        assert (
+            calculation_options.precon_pressure_within_layer
+            == PreconPressureWithinLayer.CONSTANT_CORRECTION_ALL_T
+        )
+        assert calculation_options.is_imaginary_surface == ModelBool.TRUE
+        assert calculation_options.imaginary_surface_layer == 1
+        assert calculation_options.is_submerging == ModelBool.TRUE
+        assert calculation_options.use_end_time_for_fit == ModelBool.TRUE
+        assert calculation_options.is_maintain_profile == ModelBool.TRUE
+        assert calculation_options.maintain_profile_material_name == "test"
+        assert calculation_options.maintain_profile_time == 1
+        assert calculation_options.maintain_profile_gamma_dry == 20
+        assert calculation_options.maintain_profile_gamma_wet == 20
+        assert (
+            calculation_options.dispersion_conditions_layer_boundaries_top
+            == DispersionConditionLayerBoundary.UNDRAINED
+        )
+        assert (
+            calculation_options.dispersion_conditions_layer_boundaries_bottom
+            == DispersionConditionLayerBoundary.UNDRAINED
+        )
+        assert (
+            calculation_options.stress_distribution_soil
+            == StressDistributionSoil.BOUSSINESQ
+        )
+        assert (
+            calculation_options.stress_distribution_loads == StressDistributionLoads.NONE
+        )
+        assert calculation_options.iteration_stop_criteria_submerging == 1.0
+        assert calculation_options.iteration_stop_criteria_submerging_layer_height == 1
+        assert calculation_options.maximum_iteration_steps_for_submerging == 2
+        assert calculation_options.iteration_stop_criteria_desired_profile == 0.2
+        assert calculation_options.load_column_width_imaginary_surface == 2
+        assert calculation_options.load_column_width_non_uniform_loads == 2
+        assert calculation_options.load_column_width_trapeziform_loads == 2
+        assert calculation_options.end_of_consolidation == 1000
+        assert calculation_options.number_of_subtime_steps == 3
+        assert calculation_options.reference_time == 2
+        assert calculation_options.dissipation == ModelBool.TRUE
+        assert calculation_options.x_coord_dissipation == 1.0
+        assert calculation_options.use_fit_factors == ModelBool.TRUE
+        assert calculation_options.x_coord_fit == 1.0
+        assert (
+            calculation_options.is_predict_settlements_omitting_additional_load_steps
+            == ModelBool.TRUE
+        )
+
+    @pytest.mark.integrationtest
+    def test_set_any_calculation_options_is_imaginary_surface(self):
+        ds = self.setup_dsettlement_model()
+
+        # Check if imaginary surface layer is initialized
+        ds.set_any_calculation_options(is_imaginary_surface=True)
+
+        assert ds.datastructure.calculation_options.is_imaginary_surface == ModelBool.TRUE
+        assert ds.datastructure.calculation_options.imaginary_surface_layer == 1
+
+        # Check if imaginary surface layer is not overwritten with default value
+        ds.set_any_calculation_options(imaginary_surface_layer=3)
+
+        assert ds.datastructure.calculation_options.imaginary_surface_layer == 3
+
+        # Check if imaginary surface layer is removed
+        ds.set_any_calculation_options(is_imaginary_surface=False)
+
+        assert (
+            ds.datastructure.calculation_options.is_imaginary_surface == ModelBool.FALSE
+        )
+        assert ds.datastructure.calculation_options.imaginary_surface_layer is None
+
+    @pytest.mark.systemtest
+    def test_serialize_calculation_options(self):
+        ds = self.setup_dsettlement_model()
+
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_calculation_options.sli"
+        )
+
+        ds.set_any_calculation_options()
+        ds.serialize(test_output_filepath)

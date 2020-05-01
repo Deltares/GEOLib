@@ -7,7 +7,7 @@ from typing import List, Optional, Type, Union
 
 from pydantic import BaseModel as DataClass
 from pydantic import FilePath
-from pydantic.types import confloat, constr
+from pydantic.types import confloat, constr, PositiveInt, conint
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, MetaData, BaseModelStructure
@@ -29,6 +29,12 @@ from .internal import (
     Points,
     ResidualTimes,
     Verticals,
+    Dimension,
+    StrainType,
+    SoilModel,
+    ConsolidationModel,
+    CalculationOptions,
+    Model,
 )
 from .loads import (
     CircularLoad,
@@ -41,14 +47,6 @@ from .loads import (
 from .serializer import DSettlementInputSerializer
 
 DataClass.Config.validate_assignment = True
-
-
-class CalculationModel(DataClass):
-    pass
-
-
-class ConsolidationModel(DataClass):
-    pass
 
 
 class DSettlementModel(BaseModel):
@@ -88,13 +86,120 @@ class DSettlementModel(BaseModel):
     # 1.2.3 Models
     def set_model(
         self,
-        constitutive_model: CalculationModel,
+        constitutive_model: SoilModel,
         consolidation_model: ConsolidationModel,
-        vertical_drain: Optional[VerticalDrain],
-        two_dimensional=True,
-        water_unit_weight=9.81,
+        is_two_dimensional: bool,
+        strain_type: StrainType,
+        is_vertical_drain: bool,
+        is_fit_for_settlement_plate: bool,
+        is_probabilistic: bool,
+        is_horizontal_displacements: bool,
+        is_secondary_swelling: bool,
+        is_waspan: bool,
     ):
-        pass
+        """
+        Sets the D-settlement Model. Initializes CalculationOptions and Model if the type is str
+        Args:
+            constitutive_model (SoilModel): enum
+            consolidation_model (ConsolidationModel): enum
+            is_two_dimensional (bool): true if geometry is 2 dimensional
+            strain_type (StrainType): enum
+            is_vertical_drain (bool): true if vertical drain is present
+            is_fit_for_settlement_plate (bool): true if fit for settlement plate
+            is_probabilistic (bool): true if probabilistic calculation should be made
+            is_horizontal_displacements (bool): true if horizontal displacements should be calculated
+            is_secondary_swelling (bool): true if secondary swelling is present
+            is_waspan (bool): true if waspan
+
+        Returns:
+            Model
+        """
+        if isinstance(self.datastructure.calculation_options, str):
+            logging.warning("Calculation options are overwritten")
+            self.datastructure.calculation_options = CalculationOptions()
+
+        if isinstance(self.datastructure.model, str):
+            logging.warning("Model options are overwritten")
+            self.datastructure.model = Model()
+
+        model_options = self.datastructure.model
+
+        model_options.dimension = (
+            Dimension.TWO_D if is_two_dimensional else Dimension.ONE_D
+        )
+        model_options.consolidation_model = consolidation_model
+        model_options.soil_model = constitutive_model
+        model_options.strain_type = strain_type
+        model_options.is_vertical_drains = is_vertical_drain
+        model_options.is_fit_for_settlement_plate = is_fit_for_settlement_plate
+        model_options.is_probabilistic = is_probabilistic
+        model_options.is_horizontal_displacements = is_horizontal_displacements
+        model_options.is_secondary_swelling = is_secondary_swelling
+        model_options.is_waspan = is_waspan
+
+        return model_options
+
+    def set_any_calculation_options(self, **kwargs):
+        """
+        Sets calculation options and initializes or removes data when necessary
+        Args:
+            **kwargs: Type variable, keyword arguments
+        Kwargs:
+            precon_pressure_within_layer (PreconPressureWithinLayer): type of preconsolidation pressure within the layer
+            is_imaginary_surface (bool): true if imaginary surface
+            imaginary_surface_layer (PositivInt): index of layer
+            is_submerging (bool): true if submerging
+            use_end_time_for_fit (bool): true if end time should be used for fit
+            is_maintain_profile (bool): true if profile should be maintained
+            maintain_profile_material_name (str): name of the profile
+            maintain_profile_time (conint(ge=0, le=100000)): time for maintain profile [days]
+            maintain_profile_gamma_dry (confloat(ge=-100, le=100)): unit weight above phreatic line for
+                maintain profile [kN/m3]
+            maintain_profile_gamma_wet (confloat(ge=-100, le=100)): unit weight below phreatic line for
+                maintain profile [kN/m3]
+            dispersion_conditions_layer_boundaries_top (DispersionConditionLayerBoundary): dispersion condition at the
+                top of the layer
+            dispersion_conditions_layer_boundaries_top (DispersionConditionLayerBoundary): dispersion condition at the
+                bottom of the layer
+            stress_distribution_soil (StressDistributionSoil): type of stress distribution of the soil
+            stress_distribution_loads (StressDistributionLoads): type of stress distribution loads
+            iteration_stop_criteria_submerging (confloat(ge=0.0, le=1.0)): submerging iteration stop criteria
+            iteration_stop_criteria_submerging_layer_height(confloat(ge=0, le=99.999)):  minimum settlement for
+                submerging iteration stop criteria [m]
+            maximum_iteration_steps_for_submerging (conint(ge=1, le=100)): maximum iteraion steps for submerging
+            iteration_stop_criteria_desired_profile (confloat(ge=0, le=1)): iteration stop criteria for desired profile
+            load_column_width_imaginary_surface (confloat(ge=0.05, le=10000)): load column width of the imaginary
+                surface [m]
+            load_column_width_non_uniform_loads (confloat(ge=0.05, le=10000)): load column width of non-uniform loads [m]
+            load_column_width_trapeziform_loads (confloat(ge=0.05, le=10000)): load column width of trapeziform loads [m]
+            end_of_consolidation (conint(ge=1, le=100000)): end of settlement calculation [days]
+            number_of_subtime_steps (conint(ge=1, le=100)): number of subtime steps [-]
+            reference_time (confloat(ge=0.001, le=1000000)): reference time [day]
+            dissipation (bool): true if dissipation calculation should be added
+            x_coord_dissipation (float): x-coordinate of the dissipation vertical [m]
+            use_fit_factors (bool): true if fit parameters should be used
+            x_coord_fit (float): x-coordinate of the fit [m]
+            is_predict_settlements_omitting_additional_load_steps (bool): true if output of settlements by partial
+                loading
+
+        Returns:
+            calculation options
+        """
+        if isinstance(self.datastructure.calculation_options, str):
+            logging.warning("Calculation options are overwritten")
+            self.datastructure.calculation_options = CalculationOptions()
+
+        if isinstance(self.datastructure.model, str):
+            logging.warning("Model options are overwritten")
+            self.datastructure.model = Model()
+
+        calculation_options = self.datastructure.calculation_options.dict()
+        calculation_options.update(**kwargs)
+        self.datastructure.calculation_options = CalculationOptions.set_options(
+            **calculation_options
+        )
+
+        return calculation_options
 
     @property
     def accuracy(self):
