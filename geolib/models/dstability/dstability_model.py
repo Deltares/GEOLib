@@ -40,6 +40,8 @@ from .states import DStabilityStatePoint, DStabilityStateLinePoint
 from .loads import DStabilityLoad, Consolidation
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer
+from .analysis import DStabilityAnalysisMethod
+from ...utils import snake_to_camel, camel_to_snake
 
 
 class DStabilityCalculationType(Enum):
@@ -57,13 +59,10 @@ class DStabilityCalculationModel(Enum):
     Spencer = 3
 
 
-class DStabilityAnalysisMethod(DataClass):
-    """Options to choose for calculation.
-
-    .. todo::
-        Determine proper classes for the 6
-        possible options, including swarms etc.
-    """
+class DStabilityObject(BaseModel, metaclass=abc.ABCMeta):
+    @abc.abstractmethod
+    def _to_dstability_sub_structure(self):
+        raise NotImplementedError
 
 
 class DStabilityModel(BaseModel):
@@ -547,5 +546,35 @@ class DStabilityModel(BaseModel):
                     f"No reinforcements found for stage found with id {stage_id}"
                 )
 
-    def set_model(self, analysis_method: DStabilityAnalysisMethod, stage=None):
-        """Sets the calculation type based on the given input and parameters."""
+    def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
+        """Sets the model and applies the given parameters
+
+        Args:
+            analysis_method (DStabilityAnalysisMethod): A subclass of DStabilityAnalysisMethod.
+            stage_id: Id used to identify the stage to which the analysis method is linked.
+        
+        Raises:
+            ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod, 
+            an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
+        """
+        stage_id = stage_id if stage_id else self.current_stage
+        
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        calculationsettings = self.datastructure.calculationsettings[stage_id]     
+
+        _analysis_method_mapping = {
+            AnalysisType.BISHOP: calculationsettings.set_bishop,
+            AnalysisType.BISHOP_BRUTE_FORCE: calculationsettings.set_bishop_brute_force,
+            AnalysisType.SPENCER: calculationsettings.set_spencer,
+            AnalysisType.SPENCER_GENETIC: calculationsettings.set_spencer_genetic,
+            AnalysisType.UPLIFT_VAN: calculationsettings.set_uplift_van,
+            AnalysisType.UPLIFT_VAN_PARTICLE_SWARM: calculationsettings.set_uplift_van_particle_swarm,
+        }
+
+        try:
+            _analysis_method_mapping[analysis_method.analysis_type](analysis_method._to_internal_datastructure())
+        except KeyError:
+            raise ValueError(f"Unknown analysis method {analysis_method.analysis_type.value} found")
+        

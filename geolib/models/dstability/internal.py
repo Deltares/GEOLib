@@ -1059,6 +1059,24 @@ class CalculationSettings(DStabilitySubStructure):
     UpliftVan: Optional[PersistableUpliftVanSettings]
     UpliftVanParticleSwarm: Optional[PersistableUpliftVanParticleSwarmSettings]
 
+    def set_bishop(self, bishop_settings: PersistableBishopSettings) -> None:
+        self.Bishop = bishop_settings
+
+    def set_bishop_brute_force(self, bishop_brute_force_settings: PersistableBishopBruteForceSettings) -> None:
+        self.BishopBruteForce = bishop_brute_force_settings
+
+    def set_spencer(self, spencer_settings: PersistableSpencerSettings) -> None:
+        self.Spencer = spencer_settings
+
+    def set_spencer_genetic(self, spencer_genetic_settings: PersistableSpencerGeneticSettings) -> None:
+        self.SpencerGenetic = spencer_genetic_settings
+
+    def set_uplift_van(self, uplift_van_settings: PersistableUpliftVanSettings) -> None:
+        self.UpliftVan = uplift_van_settings
+
+    def set_uplift_van_particle_swarm(self, uplift_van_particle_swarm_settings: PersistableUpliftVanParticleSwarmSettings) -> None:
+        self.UpliftVanParticleSwarm = uplift_van_particle_swarm_settings
+
 
 ########
 # OUTPUT
