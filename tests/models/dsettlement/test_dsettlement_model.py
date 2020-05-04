@@ -276,6 +276,7 @@ class TestDSettlementModel:
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
             if not (ds_value == output_datastructure[ds_key]):
+                logging.warning(f"{ds_value} != {output_datastructure[ds_key]}")
                 errors.append(f"Values for key {ds_key} differ from parsed to serialized")
         if errors:
             pytest.fail(f"Failed with the following {errors}")
@@ -778,10 +779,10 @@ class TestDSettlementModel:
         # step 3: run test
         ds.add_soil(soil_input)
         # step 4: verify final expectations
-        assert ds.input.soil_collection.soils[0].dict()["name"] == "MyNewSoil"
-        assert ds.input.soil_collection.soils[0].dict()["soilgamdry"] == 30
-        assert ds.input.soil_collection.soils[0].dict()["soilgamwet"] == 20
-        assert ds.input.soil_collection.soils[0].dict()["soilinitialvoidratio"] == 0.1
+        assert ds.input.soil_collection.soil[-1].dict()["name"] == "MyNewSoil"
+        assert ds.input.soil_collection.soil[-1].dict()["soilgamdry"] == 30
+        assert ds.input.soil_collection.soil[-1].dict()["soilgamwet"] == 20
+        assert ds.input.soil_collection.soil[-1].dict()["soilinitialvoidratio"] == 0.1
 
     @pytest.mark.integrationtest
     def test_add_soil_name_already_defined(self):

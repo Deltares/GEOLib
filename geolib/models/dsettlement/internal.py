@@ -66,16 +66,13 @@ class DSeriePoint(DataClass):
 
 
 class SoilCollection(DSeriesListSubStructure):
-    # EleniSmyrniou_2020 : soils should be a Union[Set[Soil_Internal]] (no repeated soils)
-    # feel free to refactor this code I wasn't able to do so in sprint.
-    soils: Union[List[Soil_Internal], List[str]] = []
+    soil: List[Soil_Internal] = []
 
     def add_soil_if_unique(self, soil, tolerance=TOLERANCE) -> None:
-        for added_soil in self.soils:
+        for added_soil in self.soil:
             if soil.name == added_soil.name:
                 raise Exception("Name for soil is multiply defined.")
-        self.soils.append(soil)
-        return
+        self.soil.append(soil)
 
 
 class Version(DSeriesKeyValueSubStructure):

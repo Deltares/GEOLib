@@ -18,7 +18,7 @@ D-Settlement={{ version.d__settlement }}
 
 [SOIL COLLECTION]
 {% if soil_collection is mapping %}
-    {{ soil_collection|length }} = number of items
+    {{ soil_collection.soil|length }} = number of items
 {% for soil in soil_collection.soil %}
 [SOIL]
 {% if soil_collection is mapping %}

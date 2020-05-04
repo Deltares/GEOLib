@@ -128,7 +128,6 @@ class Soil_Internal(DSeriesNameKeyValueSubStructure):
 
     @classmethod
     def convert_from_external_to_internal(cls, soil_external: Soil):
-        soil_external_dict = soil_external.dict()
         mapping_dictionary = {
             "name": "name",
             "soilcolor": "color",
@@ -252,8 +251,8 @@ class Soil_Internal(DSeriesNameKeyValueSubStructure):
             my_dict = external_dict
             for path in paths:
                 if path != paths[-1]:
-                    # check if the key exists or if it is initialised        
-                    if not (path in my_dict.keys()) or not(my_dict.get(path)):
+                    # check if the key exists or if it is initialised
+                    if not (path in my_dict.keys()) or not (my_dict.get(path)):
                         converted_dict[internal_key] = default_value
                         break
                     my_dict = dict(my_dict.get(path))
