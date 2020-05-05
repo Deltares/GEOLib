@@ -342,25 +342,19 @@ class TestDSettlementModel:
         "dserie_points, expected_result",
         [
             pytest.param(
-                [
-                    DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0),
-                    DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0),
-                ],
+                [Point(id=1, x=0.0, y=0.0, z=0.0), Point(id=2, x=100.0, y=0.0, z=0.0),],
                 [1, 2],
                 id="Default ordered points",
             ),
             pytest.param(
-                [
-                    DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0),
-                    DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0),
-                ],
+                [Point(id=4, x=100.0, y=0.0, z=1.0), Point(id=3, x=0.0, y=0.0, z=1.0),],
                 [2, 1],
                 id="Right to left sorted.",
             ),
         ],
     )
     def test_add_simpleboundary(
-        self, dserie_points: List[DSeriePoint], expected_result: List[int]
+        self, dserie_points: List[Point], expected_result: List[int]
     ):
         # 1. Set up test model
         model = DSettlementModel()
@@ -390,12 +384,12 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_given_geometry_when_sort_then_boundaries_reordered(self):
         # 1. Set up test data.
-        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
-        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
-        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
-        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
-        point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
-        point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+        point1 = Point(x=0.0, y=0.0, z=0.0)
+        point2 = Point(x=100.0, y=0.0, z=0.0)
+        point3 = Point(x=0.0, y=0.0, z=1.0)
+        point4 = Point(x=100.0, y=0.0, z=1.0)
+        point5 = Point(x=0.0, y=0.0, z=-1.0)
+        point6 = Point(x=100.0, y=0.0, z=-1.0)
 
         ds = DSettlementModel()
         ds.datastructure = DSettlementStructure()
@@ -410,10 +404,8 @@ class TestDSettlementModel:
         assert len(ds.boundaries.boundaries[0].curves) == 1
         assert ds.boundaries.boundaries[0].curves[0] == 1
 
-        assert ds.curves.curves[0].points[0] == point1.id
-        assert ds.curves.curves[0].points[1] == point2.id
-        assert ds.points.points[0] == point1
-        assert ds.points.points[1] == point2
+        assert ds.points.points[0] == DSeriePoint.from_point(point1)
+        assert ds.points.points[1] == DSeriePoint.from_point(point2)
 
         # add points from right to left and test sorting
         b_id = ds.add_boundary([point4, point3])
@@ -421,9 +413,6 @@ class TestDSettlementModel:
         assert b_id == 1
         assert len(ds.boundaries.boundaries) == 2
         assert ds.boundaries.boundaries[1].id == b_id
-
-        assert ds.curves.curves[1].points[0] == point3.id
-        assert ds.curves.curves[1].points[1] == point4.id
 
         # add boundary below geometry, check if the newly added boundary is the first boundary
         ds.add_boundary([point5, point6])
@@ -455,13 +444,8 @@ class TestDSettlementModel:
         assert isinstance(ds.datastructure, DSettlementStructure)
 
         # set up the verical locations
-        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
-        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
-        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
-        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
-
-        point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
-        point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+        point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
+        point2 = Point(id=2, x=100.0, y=0.0, z=0.0)
 
         # call function
         ds.add_boundary([point1, point2])
@@ -480,13 +464,10 @@ class TestDSettlementModel:
         assert isinstance(ds.datastructure, DSettlementStructure)
 
         # set up the verical locations
-        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
-        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
-        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
-        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
-
-        point5 = DSeriePoint(id=5, X=0.0, Y=-1.0, Z=0.0)
-        point6 = DSeriePoint(id=6, X=100.0, Y=-1.0, Z=0.0)
+        point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
+        point2 = Point(id=2, x=100.0, y=0.0, z=0.0)
+        point3 = Point(id=3, x=0.0, y=1.0, z=0.0)
+        point4 = Point(id=4, x=100.0, y=1.0, z=0.0)
 
         # call function
         a = ds.add_boundary([point1, point2])
@@ -500,8 +481,8 @@ class TestDSettlementModel:
         )
         id_b = ds.add_layer(
             material_name="b",
-            head_line_top=0,
-            head_line_bottom=1,
+            head_line_top=99,
+            head_line_bottom=99,
             boundary_top=a,
             boundary_bottom=b,
         )
@@ -524,11 +505,11 @@ class TestDSettlementModel:
         ds.datastructure.geometry_data.boundaries = Boundaries()
         ds.datastructure.geometry_data.layers = Layers()
 
-        # set up the verical locations
-        point1 = DSeriePoint(id=1, X=0.0, Y=0.0, Z=0.0)
-        point2 = DSeriePoint(id=2, X=100.0, Y=0.0, Z=0.0)
-        point3 = DSeriePoint(id=3, X=0.0, Y=1.0, Z=0.0)
-        point4 = DSeriePoint(id=4, X=100.0, Y=1.0, Z=0.0)
+        # set up the vertical locations
+        point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
+        point2 = Point(id=2, x=100.0, y=0.0, z=0.0)
+        point3 = Point(id=3, x=0.0, y=0.0, z=1.0)
+        point4 = Point(id=4, x=100.0, y=0.0, z=1.0)
 
         # call function
         a = ds.add_boundary([point1, point2])
@@ -744,6 +725,56 @@ class TestDSettlementModel:
         assert list(ds.other_loads.loads.values())[0].load_values_uniform.gamma == 0.3
 
     @pytest.mark.integrationtest
+    def test_piezo_lines(self):
+        # Setup date
+        ds = self.setup_dsettlement_model()
+        ds.datastructure.geometry_data = GeometryData()
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_piezo.sli"
+        )
+
+        point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
+        point2 = Point(id=2, x=100.0, y=0.0, z=0.0)
+        point3 = Point(id=3, x=0.0, y=0.0, z=1.0)
+        point4 = Point(id=4, x=100.0, y=0.0, z=1.0)
+        point5 = Point(id=5, x=0.0, y=0.0, z=1.0)
+        point6 = Point(id=6, x=100.0, y=0.0, z=1.0)
+        list1 = [point1, point2]
+        list2 = [point3, point4]
+        list3 = [point5, point6]
+
+        # Verify defaults
+        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == 0
+
+        # Verify add_head_line
+        h_id = ds.add_head_line(points=list1, is_phreatic=True)
+        assert ds.points[
+            ds.datastructure.geometry_data.curves[
+                ds.headlines.piezolines[0].curves[0]
+            ].points[0]
+        ] == DSeriePoint.from_point(point1)
+        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == h_id
+        assert ds.datastructure.geometry_data.points[
+            ds.datastructure.geometry_data.curves[
+                ds.datastructure.geometry_data.piezo_lines.piezolines[0].curves[0]
+            ].points[1]
+        ] == DSeriePoint.from_point(point2)
+
+        # Add another headline, verify phreatic line changed
+        h_id2 = ds.add_head_line(points=list2, is_phreatic=True)
+        assert h_id2 != h_id
+        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == h_id2
+
+        # Add another headline with duplicate points, should still be added
+        h_id3 = ds.add_head_line(points=list3)
+        assert h_id3 != h_id2
+        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == h_id2
+        assert len(ds.points.points) == 6
+
+        # Serialize resulting structure
+        ds.serialize(test_output_filepath)
+
+    @pytest.mark.integrationtest
     def test_add_soil_to_layer(self):
         # step 1: set up test model
         ds = self.setup_dsettlement_model()
@@ -788,7 +819,7 @@ class TestDSettlementModel:
     def test_add_soil_name_already_defined(self):
         # step 1: set up test model
         ds = self.setup_dsettlement_model()
-        expected_error_str = "Name for soil is multiply defined."
+        expected_error_str = "Soil with name MyNewSoil already exists."
         # step 2: set up soil inputs
         soil_input = Soil(name="MyNewSoil")
         soil_input.soil_parameters = SoilParameters()

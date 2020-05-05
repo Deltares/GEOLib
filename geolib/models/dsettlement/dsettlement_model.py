@@ -29,6 +29,8 @@ from .internal import (
     Points,
     ResidualTimes,
     Verticals,
+    PiezoLines,
+    PhreaticLine,
     Dimension,
     StrainType,
     SoilModel,
@@ -227,7 +229,9 @@ class DSettlementModel(BaseModel):
         # Check point uniqueness
         tolerance = self.accuracy.accuracy
         points = [
-            self.points.add_point_if_unique(point, tolerance=tolerance)
+            self.points.add_point_if_unique(
+                DSeriePoint.from_point(point), tolerance=tolerance
+            )
             for point in points
         ]
         sorted_points = sorted(points, key=lambda point: (point.X, point.Y, point.Z))
@@ -240,8 +244,25 @@ class DSettlementModel(BaseModel):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
         return self.datastructure.geometry_data.points
 
-    def add_head_line(self, label, points: List[int], is_phreatic=False) -> int:
-        pass
+    @property
+    def headlines(self):
+        return self.datastructure.geometry_data.piezo_lines
+
+    def add_head_line(self, points: List[Point], is_phreatic=False) -> int:
+        """Add head line to model."""
+        # New points have to be created, whether points at the same location exist or not
+        # This means that new points from geometry will re-use head line points,
+        # So first create geometry, then add headlines.
+        points = [
+            self.points.add_point(DSeriePoint.from_point(point)) for point in points
+        ]
+        sorted_points = sorted(points, key=lambda point: (point.X, point.Y, point.Z))
+        curves = self.curves.create_curves(sorted_points)
+
+        piezo_line = self.headlines.create_piezoline(curves)
+        if is_phreatic:
+            self.datastructure.geometry_data.phreatic_line.phreaticline = piezo_line.id
+        return piezo_line.id
 
     @property
     def layers(self):
@@ -261,11 +282,6 @@ class DSettlementModel(BaseModel):
         .. todo::
             Determine how a 1D geometry would fit in here.
         """
-
-        # Required until we can parse
-        if isinstance(self.layers, str):
-            logging.warning("Replacing unparsed Layers!")
-            self.datastructure.geometry_data.layers = Layers()
 
         # Can be used after Soils are implemented
         # TODO:: add check that the soil name exist
@@ -383,8 +399,6 @@ class DSettlementModel(BaseModel):
             .. todo::
                 Add check that checks that the verticals are not outside of the geometry boundaries. [GEOLIB-12]
         """
-        pointlist = []
-        for point in locations:
-            pointlist.append(DSeriePoint.from_point(point))
-        verticals = Verticals(locations=pointlist)
+        points = [DSeriePoint.from_point(point) for point in locations]
+        verticals = Verticals(locations=points)
         self.datastructure.verticals = verticals

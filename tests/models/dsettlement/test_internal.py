@@ -6,13 +6,18 @@ from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementStru
 from geolib.models.dseries_parser import (
     DSeriesSinglePropertyGroup,
     DSeriesListTreeStructureCollection,
-    DSeriesTreeStructure)
+    DSeriesTreeStructure,
+)
 from geolib.models.dsettlement.internal import (
     Accuracy,
-    Curves, Curve,
-    PiezoLines, PiezoLine,
-    Boundaries, Boundary,
-    Layers, Layer,
+    Curves,
+    Curve,
+    PiezoLines,
+    PiezoLine,
+    Boundaries,
+    Boundary,
+    Layers,
+    Layer,
 )
 from geolib.models.utils import get_filtered_type_hints
 
@@ -22,9 +27,11 @@ def generate_structure_text(struct_id: int, properties: list) -> str:
     for property_value in properties:
         if isinstance(property_value, list):
             formatted_value = "\t".join(str(value) for value in property_value)
-            text += "" + \
-                f"\t\t{len(property_value)} - number of values on first property for object\n" + \
-                f"\t\t\t{formatted_value}\n"
+            text += (
+                ""
+                + f"\t\t{len(property_value)} - number of values on first property for object\n"
+                + f"\t\t\t{formatted_value}\n"
+            )
         else:
             text += f"\t\t{property_value} - value for this property.\n"
     return text
@@ -45,7 +52,11 @@ def get_structure_content(class_type: type) -> list:
         if field_name == "id":
             continue
         field_value = str(randint(0, 100))
-        if isinstance(field_type, _GenericAlias) and field_type._name == "List" or issubclass(field_type, list):
+        if (
+            isinstance(field_type, _GenericAlias)
+            and field_type._name == "List"
+            or issubclass(field_type, list)
+        ):
             field_value = [str(randint(0, 100)), str(randint(0, 100))]
         structure_content.append(field_value)
 
@@ -55,12 +66,11 @@ def get_structure_content(class_type: type) -> list:
 def get_structure_collection_content(class_type: type, collection_size: int) -> dict:
     collection_dict = {}
     for struct_id in range(collection_size):
-        collection_dict[str(randint(1, 100))] = get_structure_content(class_type)
+        collection_dict[str(randint(1, 99))] = get_structure_content(class_type)
     return collection_dict
 
 
 class TestCurve:
-
     @pytest.mark.integrationtest
     def test_given_curvetext_when_parse_then_creates_structure(self):
         # 1. Define test data.
@@ -75,20 +85,24 @@ class TestCurve:
 
         # 4. Verify final expectations.
         assert parsed_curve, "No structure was parsed."
-        assert isinstance(parsed_curve, DSeriesTreeStructure), "" + \
-            f"Parsed structure type ({type(parsed_curve)}) " + \
-            f"is not of expected type {DSeriesTreeStructure}"
-        assert isinstance(parsed_curve, Curve), "" + \
-            f"Parsed curve {type(parsed_curve)} not of type {Curve}"
+        assert isinstance(parsed_curve, DSeriesTreeStructure), (
+            ""
+            + f"Parsed structure type ({type(parsed_curve)}) "
+            + f"is not of expected type {DSeriesTreeStructure}"
+        )
+        assert isinstance(parsed_curve, Curve), (
+            "" + f"Parsed curve {type(parsed_curve)} not of type {Curve}"
+        )
         parsed_curve_points = [str(point) for point in parsed_curve.points]
         assert parsed_curve.id == curve_id
-        assert parsed_curve_points == curve_content[0], "" + \
-            f"Curve {parsed_curve.id}, parsed points {parsed_curve.points} " + \
-            f"not as expected {curve_content[parsed_curve.id]}."
+        assert parsed_curve_points == curve_content[0], (
+            ""
+            + f"Curve {parsed_curve.id}, parsed points {parsed_curve.points} "
+            + f"not as expected {curve_content[parsed_curve.id]}."
+        )
 
 
 class TestAccuracy:
-
     @pytest.mark.integrationtest
     def test_given_accuracytext_when_parse_then_creates_structure(self):
         # 1. Set up test data.
@@ -101,13 +115,14 @@ class TestAccuracy:
 
         # 3. Verify final expectation.
         assert isinstance(parsed_accuracy, DSeriesSinglePropertyGroup)
-        assert parsed_accuracy.accuracy == value, "" + \
-            f"Parsed value {parsed_accuracy.accuracy} " + \
-            f"does not match expected {value}"
+        assert parsed_accuracy.accuracy == value, (
+            ""
+            + f"Parsed value {parsed_accuracy.accuracy} "
+            + f"does not match expected {value}"
+        )
 
 
 class TestInternalDSeriesListStructureCollections:
-
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "collection_type, structure_type",
@@ -116,11 +131,13 @@ class TestInternalDSeriesListStructureCollections:
             pytest.param(PiezoLines, PiezoLine, id="Piezo Lines"),
             pytest.param(Boundaries, Boundary, id="Boundaries"),
             pytest.param(Layers, Layer, id="Layers"),
-        ])
+        ],
+    )
     def test_given_treecollectiontext_when_parse_then_creates_structure(
-            self,
-            collection_type: DSeriesListTreeStructureCollection,
-            structure_type: DSeriesTreeStructure):
+        self,
+        collection_type: DSeriesListTreeStructureCollection,
+        structure_type: DSeriesTreeStructure,
+    ):
         # 1. Define test data.
         parsed_collection: DSettlementStructure = None
         structure_content = get_structure_collection_content(structure_type, 4)
@@ -137,12 +154,15 @@ class TestInternalDSeriesListStructureCollections:
         assert isinstance(parsed_collection, DSeriesListTreeStructureCollection)
         field_name = collection_type.__name__.lower()
         parsed_structures = dict(parsed_collection)[field_name]
-        assert len(parsed_structures) == len(structure_content), "" + \
-            "Not all the structures were parsed correctly."
+        assert len(parsed_structures) == len(structure_content), (
+            "" + "Not all the structures were parsed correctly."
+        )
         for parsed_structure in parsed_structures:
-            assert isinstance(parsed_structure, structure_type), "" + \
-                f"Parsed type {type(parsed_structure)} " + \
-                f"does not match expected {structure_type}."
+            assert isinstance(parsed_structure, structure_type), (
+                ""
+                + f"Parsed type {type(parsed_structure)} "
+                + f"does not match expected {structure_type}."
+            )
             properties = list(dict(parsed_structure).values())
             structure_id = str(properties.pop(0))
             for prop_idx, property_value in enumerate(properties):
@@ -151,7 +171,9 @@ class TestInternalDSeriesListStructureCollections:
                     parsed_values = [str(value) for value in property_value]
                 else:
                     parsed_values = str(property_value)
-                assert parsed_values == structure_content[structure_id][prop_idx], "" + \
-                    f"Structure {structure_id}, " + \
-                    f"parsed values {parsed_values} " + \
-                    f"do not match expected {structure_content[structure_id]}."
+                assert parsed_values == structure_content[structure_id][prop_idx], (
+                    ""
+                    + f"Structure {structure_id}, "
+                    + f"parsed values {parsed_values} "
+                    + f"do not match expected {structure_content[structure_id]}."
+                )

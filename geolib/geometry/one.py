@@ -11,6 +11,7 @@ For profiles used in 1D applications, see :class:`~geolib.soils.layers.ProfileLa
 from typing import Optional
 
 from pydantic import BaseModel as DataModel
+from math import isclose
 
 NODATA = -999.0  # TODO why is this implemented instead of None?
 
@@ -28,10 +29,12 @@ class Point(DataModel):
     tolerance: float = 1e-4
 
     def __eq__(self, other):
-        from math import isclose
 
-        return (
-            isclose(self.x, other.x, abs_tol=self.tolerance)
-            and isclose(self.y, other.y, abs_tol=self.tolerance)
-            and isclose(self.z, other.z, abs_tol=self.tolerance)
-        )
+        if isinstance(other, Point):
+            return (
+                isclose(self.x, other.x, abs_tol=self.tolerance)
+                and isclose(self.y, other.y, abs_tol=self.tolerance)
+                and isclose(self.z, other.z, abs_tol=self.tolerance)
+            )
+        else:
+            raise NotImplementedError()

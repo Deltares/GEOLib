@@ -1,7 +1,16 @@
 from __future__ import annotations
 import logging
 from abc import abstractmethod
-from typing import List, get_type_hints, _GenericAlias, _SpecialForm, Dict, Type, Tuple
+from typing import (
+    List,
+    get_type_hints,
+    _GenericAlias,
+    _SpecialForm,
+    Dict,
+    Type,
+    Tuple,
+    Union,
+)
 from pydantic import FilePath, BaseModel as DataClass
 
 from .parsers import BaseParser

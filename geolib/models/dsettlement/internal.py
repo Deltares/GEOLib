@@ -71,7 +71,7 @@ class SoilCollection(DSeriesListSubStructure):
     def add_soil_if_unique(self, soil, tolerance=TOLERANCE) -> None:
         for added_soil in self.soil:
             if soil.name == added_soil.name:
-                raise Exception("Name for soil is multiply defined.")
+                raise NameError(f"Soil with name {soil.name} already exists.")
         self.soil.append(soil)
 
 
@@ -86,23 +86,24 @@ class Points(DSeriesMatrixTreeStructure):
 
     points: List[DSeriePoint] = []
 
-    def add_point_if_unique(self, point, tolerance=TOLERANCE) -> DSeriePoint:
-        # tolerance = self.datastructure.geometry_data.accuracy.accuracy
-
+    def add_point_if_unique(self, point: DSeriePoint, tolerance=TOLERANCE) -> DSeriePoint:
         if point in self.points:
             point = self.points[self.points.index(point)]
         else:
-            new_point_id = (
-                max(self.points, key=attrgetter("id")).id + 1 if self.points else 1
-            )
-            point.id = new_point_id
-            self.points.append(point)
+            point = self.add_point(point)
         return point
 
-    def __getitem__(self, point_id: int) -> Optional[Point]:
+    def add_point(self, point: DSeriePoint) -> DSeriePoint:
+        new_point_id = max(self.points, key=attrgetter("id")).id + 1 if self.points else 1
+        point.id = new_point_id
+        self.points.append(point)
+        return point
+
+    def __getitem__(self, point_id: int) -> Point:
         for point in self.points:
             if point.id == point_id:
                 return point
+        raise KeyError(f"Can't find point with id {point_id}.")
 
 
 class Curve(DSeriesTreeStructure):
@@ -133,7 +134,7 @@ class Curves(DSeriesListTreeStructureCollection):
     curves: List[Curve] = []
 
     def create_curve(self, a: DSeriePoint, b: DSeriePoint):
-
+        assert a.id != b.id
         curve = Curve(points=[a.id, b.id])
         if curve in self.curves:
             return self.curves[self.curves.index(curve)]
@@ -156,10 +157,11 @@ class Curves(DSeriesListTreeStructureCollection):
         ]
         return new_curves
 
-    def __getitem__(self, curve_id: int) -> Optional[Curve]:
+    def __getitem__(self, curve_id: int) -> Curve:
         for curve in self.curves:
             if curve.id == curve_id:
                 return curve
+        raise KeyError(f"Can't find curve with id {curve_id}.")
 
 
 class Boundary(DSeriesTreeStructure):
@@ -204,17 +206,18 @@ class Boundaries(DSeriesListTreeStructureCollection):
 
         return boundary
 
-    def __getitem__(self, boundary_id: int) -> Optional[Boundary]:
+    def __getitem__(self, boundary_id: int) -> Boundary:
         for boundary in self.boundaries:
             if boundary.id == boundary_id:
                 return boundary
+        raise KeyError(f"Can't find boundary with id {boundary_id}.")
 
 
 class Layer(DSeriesTreeStructure):
     id: PositiveInt = 1
     material: str = ""  # reference to soil name
-    piezo_top: int = 0  # reference to head line
-    piezo_bottom: int = 0  # reference to head line
+    piezo_top: conint(ge=0, le=99) = 0  # reference to head line
+    piezo_bottom: conint(ge=0, le=99) = 0  # reference to head line
     boundary_top: int  # reference to boundary
     boundary_bottom: int  # reference to boundary
 
@@ -246,7 +249,9 @@ class Layers(DSeriesListTreeStructureCollection):
 
         if layer in self.layers:
             existing_layer = self.layers[self.layers.index(layer)]
-            logging.warning(f"Layer {existing_layer} already exists")
+            logging.warning(
+                f"It's not possible to replace existing layers: {existing_layer}"
+            )
             return existing_layer
         else:
             new_layer_id = (
@@ -259,10 +264,11 @@ class Layers(DSeriesListTreeStructureCollection):
 
         return layer
 
-    def __getitem__(self, layer_id: int) -> Optional[Layer]:
+    def __getitem__(self, layer_id: int) -> Layer:
         for layer in self.layers:
             if layer.id == layer_id:
                 return layer
+        raise KeyError(f"Can't find layer with id {layer_id}.")
 
 
 class Accuracy(DSeriesSinglePropertyGroup):
@@ -272,36 +278,62 @@ class Accuracy(DSeriesSinglePropertyGroup):
 
 
 class PiezoLine(DSeriesTreeStructure):
-    id: int
-    curves: List[int]
+    id: PositiveInt = 1
+    curves: List[int] = []
+
+    def __eq__(self, other: object):
+        if isinstance(other, PiezoLine):
+            return self.curves == other.curves
+        return NotImplemented
 
 
 class PiezoLines(DSeriesListTreeStructureCollection):
     """Representation of [PIEZO LINES] group."""
 
-    piezolines: List[PiezoLine]
+    piezolines: List[PiezoLine] = []
+
+    def create_piezoline(self, curves: List[Curve]) -> PiezoLine:
+        piezoline = PiezoLine(curves=[curve.id for curve in curves])
+
+        if piezoline in self.piezolines:
+            return self.piezolines[self.piezolines.index(piezoline)]
+        else:
+            new_piezoline_id = (
+                max(self.piezolines, key=attrgetter("id")).id + 1
+                if len(self.piezolines) > 0
+                else 1
+            )
+            piezoline.id = new_piezoline_id
+            self.piezolines.append(piezoline)
+        return piezoline
+
+    def __getitem__(self, piezo_line_id: int) -> PiezoLine:
+        for piezo_line in self.piezolines:
+            if piezo_line.id == piezo_line_id:
+                return piezo_line
+        raise KeyError(f"Can't find headline with id {piezo_line_id}.")
 
 
 class PhreaticLine(DSerieSingleStructure):
     """Representation of [PHREATIC LINE] group."""
 
-    phreaticline: int
+    phreaticline: conint(ge=0, lt=99) = 0
 
 
 class GeometryData(DSeriesStructure):
     """Representation of [GEOMETRY DATA] group."""
 
-    accuracy: Union[Accuracy, str] = Accuracy()
-    points: Union[Points, str] = Points()
-    curves: Union[Curves, str] = Curves()
-    boundaries: Union[Boundaries, str] = Boundaries()
+    accuracy: Accuracy = Accuracy()
+    points: Points = Points()
+    curves: Curves = Curves()
+    boundaries: Boundaries = Boundaries()
     use_probabilistic_defaults_boundaries: str = ""
     stdv_boundaries: str = ""
     distribution_boundaries: str = ""
-    piezo_lines: Union[PiezoLines, str] = ""
-    phreatic_line: Union[PhreaticLine, str] = ""
+    piezo_lines: PiezoLines = PiezoLines()
+    phreatic_line: PhreaticLine = PhreaticLine()
     world_co__ordinates: str = ""
-    layers: Union[Layers, str] = Layers()
+    layers: Layers = Layers()
     layerloads: str = ""
 
     def boundary_area_above_horizontal(self, boundary: Boundary, y: float = 0.0) -> float:
@@ -338,7 +370,7 @@ class GeometryData(DSeriesStructure):
         return self.curves[curve_id]
 
     def get_boundary(self, boundary_id: int) -> Optional[Boundary]:
-        a = self.boundaries[boundary_id]
+        return self.boundaries[boundary_id]
 
     def get_layer(self, layer_id: int) -> Optional[Layer]:
         return self.layers[layer_id]
@@ -588,8 +620,8 @@ class DSettlementStructure(DSeriesStructure):
     """Representation of complete .sli file."""
 
     version: Version = Version()
-    soil_collection: Union[SoilCollection, str] = SoilCollection()
-    geometry_data: Union[GeometryData, str] = GeometryData()
+    soil_collection: SoilCollection = SoilCollection()
+    geometry_data: GeometryData = GeometryData()
     run_identification: str = ""
     model: Union[Model, str] = Model()
     verticals: Union[Verticals, str] = Verticals()
