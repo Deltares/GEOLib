@@ -109,3 +109,88 @@ class TestDStabilityModel:
         assert dm.datastructure.waternets[0].Id == "21"
         new_id = dm.datastructure.get_unique_id()
         assert new_id == max_id_after_initialization_of_dstability_structure
+
+    @pytest.mark.integrationtest
+    def test_generate_simple_model(self):
+
+        import pathlib
+
+        from geolib.models.dstability import DStabilityModel
+
+        from geolib.models.dstability.analysis import (
+            DStabilityBishopAnalysisMethod,
+            DStabilityCircle,
+        )
+
+        from geolib.geometry.one import Point
+
+        dm = DStabilityModel()
+
+        bishop_analysis_method = DStabilityBishopAnalysisMethod(
+            circle=DStabilityCircle(center=Point(x=20, z=3), radius=15)
+        )
+
+        dm.set_model(bishop_analysis_method)
+
+        layer_1 = [
+            Point(x=-50, z=-10),
+            Point(x=50, z=-10),
+            Point(x=50, z=-20),
+            Point(x=-50, z=-20),
+        ]
+
+        layer_2 = [
+            Point(x=-50, z=-5),
+            Point(x=50, z=-5),
+            Point(x=50, z=-10),
+            Point(x=-50, z=-10),
+        ]
+
+        layer_3 = [
+            Point(x=-50, z=0),
+            Point(x=50, z=0),
+            Point(x=50, z=-5),
+            Point(x=-50, z=-5),
+        ]
+
+        embankment = [
+            Point(x=-10, z=0),
+            Point(x=0, z=2),
+            Point(x=10, z=2),
+            Point(x=30, z=0),
+        ]
+
+        layers_and_soils = [
+            (layer_1, "Sand"),
+            (layer_2, "H_Ro_z&k"),
+            (layer_3, "H_Rk_k_shallow"),
+            (embankment, "H_Aa_ht_old"),
+        ]
+
+        layer_ids = []
+
+        for layer, soil in layers_and_soils:
+
+            layer_id = dm.add_layer(layer, soil)
+
+            layer_ids.append(layer_id)
+
+        for (
+            layer_id
+        ) in (
+            layer_ids
+        ):  # Has to be done in separate loop since all layers first need to be definied.
+
+            dm.add_soil_layer_consolidations(soil_layer_id=layer_id)
+
+        assert len(dm.datastructure.loads[0].LayerLoads) == 4
+
+        # assert (
+        # dm.is_valid
+        # ), True  # TODO call this during serializing; also, consider raising error why it's not valid
+
+        # Serialize model to input file.
+
+        path = pathlib.Path.cwd() / "test.stix"
+
+        dm.serialize(path)
