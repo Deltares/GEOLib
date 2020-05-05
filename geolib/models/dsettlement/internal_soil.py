@@ -6,6 +6,19 @@ from geolib.soils import PreconType
 from geolib.soils import StorageTypes
 
 
+class Bool(IntEnum):
+    FALSE = 0
+    TRUE = 1
+
+    def __getattribute__(self, name):
+        if isinstance(name, bool):
+            if name:
+                name = "TRUE"
+            else:
+                name = "FALSE"
+        return super().__getattribute__(name)
+
+
 class Soil_Internal(DSeriesNameKeyValueSubStructure):
     """Representation of [SOIL] group."""
 
@@ -18,20 +31,20 @@ class Soil_Internal(DSeriesNameKeyValueSubStructure):
     soilphi: Optional[float] = 30  # fixed value cannot be modified
     soilpreconisotachetype: Optional[PreconType]
     soilpreconkoppejantype: Optional[PreconType]
-    soiluseequivalentage: Optional[bool] = False
+    soiluseequivalentage: Optional[Bool] = False
     soilequivalentage: Optional[float] = 19800
     soilpc: Optional[float] = 0
     soilocr: Optional[float] = 1
     soilpop: Optional[float] = 0
     soillimitstress: Optional[float] = 0  # fixed value
-    soildrained: Optional[bool] = False
-    soilapasapproximationbycpcs: Optional[bool] = False
+    soildrained: Optional[Bool] = False
+    soilapasapproximationbycpcs: Optional[Bool] = False
     soilcv: Optional[float] = 1e-12
     soilpermeabilityver: Optional[float] = 0.00000001
     soilpermeabilityhorfactor: Optional[float] = 1
     soilstoragetype: Optional[StorageTypes]
     soilpermeabilitystrainmodulus: Optional[float] = 1e15
-    soiluseprobdefaults: Optional[bool] = False
+    soiluseprobdefaults: Optional[Bool] = False
     soilstdgamdry: Optional[float] = 0
     soilstdgamwet: Optional[float] = 0
     soilstdcv: Optional[float] = 0
@@ -124,7 +137,7 @@ class Soil_Internal(DSeriesNameKeyValueSubStructure):
         HorizontalBehaviourType
     ] = HorizontalBehaviourType.Elastic
     soilelasticity: Optional[float] = 1000
-    soildefaultelasticity: Optional[bool] = True
+    soildefaultelasticity: Optional[Bool] = True
 
     @classmethod
     def convert_from_external_to_internal(cls, soil_external: Soil):

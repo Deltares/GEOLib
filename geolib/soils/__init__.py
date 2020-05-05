@@ -8,6 +8,7 @@ from geolib.utils import snake_to_camel, camel_to_snake
 
 
 class DistributionType(IntEnum):
+    Undefined = 0
     Normal = 2
     LogNormal = 3
     Deterministic = 4
@@ -118,8 +119,9 @@ class BjerrumParameters(BaseModel):
 
 
 class PreconType(IntEnum):
-    PreconsolidationPressure = 0
-    OverconsolidationRatio = 1
+    Undefined = -1
+    OverconsolidationRatio = 0
+    PreconsolidationPressure = 1
     PreoverburdenPressure = 2
 
 
@@ -230,9 +232,9 @@ class SoilParameters(BaseModel):
 
 
 class HorizontalBehaviourType(IntEnum):
-    Stiff = 0
-    Elastic = 1
-    Foundation = 2
+    Stiff = 1
+    Elastic = 2
+    Foundation = 3
 
 
 class HorizontalBehaviour(BaseModel):
