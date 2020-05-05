@@ -94,3 +94,14 @@ class TestDStabilityModel:
 
         # 3. Verify return code of 0 (indicates succesfull run)
         assert status.returncode == 0
+
+    @pytest.mark.unittest
+    def test_gen_unique_id(self):
+        """This test will fail when we've added new default
+        ids to the internal datastructure. Please update accordingly."""
+        max_id_after_initialization_of_dstability_structure = 32
+        dm = DStabilityModel()
+
+        assert dm.datastructure.waternets[0].Id == "21"
+        new_id = dm.datastructure.get_unique_id()
+        assert new_id == max_id_after_initialization_of_dstability_structure

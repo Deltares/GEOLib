@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Generator
 
 from pydantic import BaseModel as DataClass
 from pydantic import validator, conlist, confloat
@@ -271,13 +271,19 @@ class State(DStabilitySubStructure):
     StateLines: List[PersistableStateLine] = []
     StatePoints: List[PersistableStatePoint] = []
 
-    def add_state_point(self, state_point:  PersistableStatePoint) -> None:
-        self.StatePoints.append(state_point)             
+    def add_state_point(self, state_point: PersistableStatePoint) -> None:
+        self.StatePoints.append(state_point)
 
-    def add_state_line(self, points: List[PersistablePoint], state_points: List[PersistableStateLinePoint]):
+    def add_state_line(
+        self,
+        points: List[PersistablePoint],
+        state_points: List[PersistableStateLinePoint],
+    ):
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
 
+
 # statecorrelation
+
 
 class PersistableStateCorrelation(DataClass):
     CorrelatedStateIds: Optional[List[Optional[str]]]
@@ -425,6 +431,7 @@ class PersistableSoil(DataClass):
 
 class SoilCollection(DStabilitySubStructure):
     """soils.json"""
+
     ContentVersion: Optional[str]
     Soils: List[PersistableSoil] = [
         PersistableSoil(
@@ -437,7 +444,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthRatio=0.26,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=19.3,
-            VolumetricWeightBelowPhreaticLevel=19.3
+            VolumetricWeightBelowPhreaticLevel=19.3,
         ),
         PersistableSoil(
             Id="3",
@@ -449,7 +456,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthRatio=0.26,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=18.0,
-            VolumetricWeightBelowPhreaticLevel=18.0
+            VolumetricWeightBelowPhreaticLevel=18.0,
         ),
         PersistableSoil(
             Id="4",
@@ -462,7 +469,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=14.8,
-            VolumetricWeightBelowPhreaticLevel=14.8
+            VolumetricWeightBelowPhreaticLevel=14.8,
         ),
         PersistableSoil(
             Id="5",
@@ -475,7 +482,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=15.6,
-            VolumetricWeightBelowPhreaticLevel=15.6
+            VolumetricWeightBelowPhreaticLevel=15.6,
         ),
         PersistableSoil(
             Id="6",
@@ -488,7 +495,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.85,
             VolumetricWeightAbovePhreaticLevel=13.9,
-            VolumetricWeightBelowPhreaticLevel=13.9
+            VolumetricWeightBelowPhreaticLevel=13.9,
         ),
         PersistableSoil(
             Id="7",
@@ -501,7 +508,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=10.1,
-            VolumetricWeightBelowPhreaticLevel=10.1
+            VolumetricWeightBelowPhreaticLevel=10.1,
         ),
         PersistableSoil(
             Id="8",
@@ -514,7 +521,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=11.0,
-            VolumetricWeightBelowPhreaticLevel=11.0
+            VolumetricWeightBelowPhreaticLevel=11.0,
         ),
         PersistableSoil(
             Id="9",
@@ -527,7 +534,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevel.C_PHI,
             StrengthIncreaseExponent=0.0,
             VolumetricWeightAbovePhreaticLevel=18.0,
-            VolumetricWeightBelowPhreaticLevel=20.0
+            VolumetricWeightBelowPhreaticLevel=20.0,
         ),
         PersistableSoil(
             Id="10",
@@ -540,7 +547,7 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=18.0,
-            VolumetricWeightBelowPhreaticLevel=18.0
+            VolumetricWeightBelowPhreaticLevel=18.0,
         ),
         PersistableSoil(
             Id="11",
@@ -553,8 +560,8 @@ class SoilCollection(DStabilitySubStructure):
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=18.0,
-            VolumetricWeightBelowPhreaticLevel=18.0
-        )
+            VolumetricWeightBelowPhreaticLevel=18.0,
+        ),
     ]
 
     @classmethod
@@ -583,8 +590,8 @@ class SoilCollection(DStabilitySubStructure):
         Returns:
             None
         """
-        ps = PersistableSoil() # create object with default values
-        for k, v in dict(soil).items(): # override default values with those of the soil
+        ps = PersistableSoil()  # create object with default values
+        for k, v in dict(soil).items():  # override default values with those of the soil
             if snake_to_camel(k) in dict(ps).keys() and v is not None:
                 setattr(ps, snake_to_camel(k), v)
 
@@ -604,7 +611,7 @@ class SoilCollection(DStabilitySubStructure):
         for persistable_soil in self.Soils:
             if persistable_soil.Code == code:
                 return Soil(
-                    **{camel_to_snake(k) : v for k, v in dict(persistable_soil).items()}
+                    **{camel_to_snake(k): v for k, v in dict(persistable_soil).items()}
                 )
 
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
@@ -619,7 +626,7 @@ class SoilCollection(DStabilitySubStructure):
 
         Returns:
             PersistableSoil: the edited soil
-        """        
+        """
         for persistable_soil in self.Soils:
             if persistable_soil.Code == code:
                 for k, v in kwargs.items():
@@ -781,6 +788,7 @@ class PersistableUniformLoad(DataClass):
 
 Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
 
+
 class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
@@ -792,25 +800,29 @@ class Loads(DStabilitySubStructure):
     Trees: Optional[List[Optional[PersistableTree]]] = []
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
 
-    def add_load(self, load: "DStabilityLoad") -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
+    def add_load(
+        self, load: "DStabilityLoad"
+    ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
         internal_datastructure = load.to_internal_datastructure()
         target = load.__class__.__name__
         if target == "Earthquake":
             setattr(self, target, internal_datastructure)
         else:
-            target += 's'
+            target += "s"
             getattr(self, target).append(internal_datastructure)
 
         return internal_datastructure
-    
-    def add_layer_load(self, soil_layer_id: int, consolidations: List['Consolidation']) -> PersistableLayerLoad:
+
+    def add_layer_load(
+        self, soil_layer_id: int, consolidations: List["Consolidation"]
+    ) -> PersistableLayerLoad:
         layer_load = PersistableLayerLoad(
             LayerId=str(soil_layer_id),
-            Consolidations=[c.to_internal_datastructure() for c in consolidations]
-            )
+            Consolidations=[c.to_internal_datastructure() for c in consolidations],
+        )
         self.LayerLoads.append(layer_load)
         return layer_load
-       
+
 
 class PersistableLayer(DataClass):
     Id: Optional[str]
@@ -818,7 +830,7 @@ class PersistableLayer(DataClass):
     Notes: Optional[str]
     Points: conlist(PersistablePoint, min_items=3)
 
-    @validator('Points')
+    @validator("Points")
     def polygon_checks(cls, points):
         """
         Todo:
@@ -830,7 +842,7 @@ class PersistableLayer(DataClass):
         # 3. is it a non closed polygon
         # 4. does it intersect other polygons
         return points
-        
+
 
 class Geometry(DStabilitySubStructure):
     """geometries/geometry_x.json"""
@@ -862,7 +874,7 @@ class Geometry(DStabilitySubStructure):
                     return True
 
         return False
-    
+
     def get_layer(self, id: int) -> PersistableLayer:
         for layer in self.Layers:
             if layer.Id == str(id):
@@ -871,11 +883,7 @@ class Geometry(DStabilitySubStructure):
         raise ValueError(f"Layer id {id} not found in this geometry")
 
     def add_layer(
-        self, 
-        id: str,
-        label: str,
-        notes: str,
-        points: List[Point]
+        self, id: str, label: str, notes: str, points: List[Point]
     ) -> PersistableLayer:
         """
         Add a new layer to the model. Layers are expected;
@@ -896,7 +904,7 @@ class Geometry(DStabilitySubStructure):
             Id=id,
             Label=label,
             Notes=notes,
-            Points=[PersistablePoint(X=p.x, Z=p.z) for p in points]
+            Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
         )
 
         self.Layers.append(layer)
@@ -1140,12 +1148,13 @@ class BishopBruteForceResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X,
-                z=self.Circle.Center.Z,
-                radius=self.Circle.Radius
-                )
+                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+            )
         except (ValidationError, AttributeError):
-            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
+
 
 class PersistableSoilContribution(DataClass):
     Alpha: Optional[float] = None
@@ -1198,12 +1207,12 @@ class BishopReliabilityResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X,
-                z=self.Circle.Center.Z,
-                radius=self.Circle.Radius
-                )
+                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+            )
         except (ValidationError, AttributeError):
-            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class BishopResult(DStabilitySubStructure):
@@ -1221,12 +1230,12 @@ class BishopResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X,
-                z=self.Circle.Center.Z,
-                radius=self.Circle.Radius
-                )
+                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+            )
         except (ValidationError, AttributeError):
-            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class PersistableSpencerSlice(BaseModelStructure):
@@ -1291,9 +1300,13 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
     def get_slipplane_output(self) -> SpencerSlipPlaneResult:
         """Get condensed slipplane data"""
         try:
-            return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
+            return SpencerSlipPlaneResult(
+                slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane]
+            )
         except (ValidationError, TypeError):
-            raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class SpencerReliabilityResult(DStabilitySubStructure):
@@ -1318,9 +1331,13 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     def get_slipplane_output(self) -> SpencerSlipPlaneResult:
         """Get condensed slipplane data"""
         try:
-            return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
+            return SpencerSlipPlaneResult(
+                slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane]
+            )
         except (ValidationError, TypeError):
-            raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class SpencerResult(DStabilitySubStructure):
@@ -1337,9 +1354,13 @@ class SpencerResult(DStabilitySubStructure):
     def get_slipplane_output(self) -> SpencerSlipPlaneResult:
         """Get condensed slipplane data"""
         try:
-            return SpencerSlipPlaneResult(slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane])
+            return SpencerSlipPlaneResult(
+                slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane]
+            )
         except (ValidationError, TypeError):
-            raise ValueError(f"Slip plane not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
@@ -1363,10 +1384,12 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
                 z_left=self.LeftCenter.Z,
                 x_right=self.RightCenter.X,
                 z_right=self.RightCenter.Z,
-                z_tangent=self.TangentLine
+                z_tangent=self.TangentLine,
             )
         except (ValidationError, AttributeError):
-            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class UpliftVanReliabilityResult(DStabilitySubStructure):
@@ -1398,10 +1421,12 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
                 z_left=self.LeftCenter.Z,
                 x_right=self.RightCenter.X,
                 z_right=self.RightCenter.Z,
-                z_tangent=self.TangentLine
+                z_tangent=self.TangentLine,
             )
         except (ValidationError, AttributeError):
-            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 
 class UpliftVanResult(DStabilitySubStructure):
@@ -1421,16 +1446,29 @@ class UpliftVanResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return UpliftVanSlipCircleResult(
-                    x_left=self.LeftCenter.X,
-                    z_left=self.LeftCenter.Z,
-                    x_right=self.RightCenter.X,
-                    z_right=self.RightCenter.Z,
-                    z_tangent=self.TangentLine
-                )
+                x_left=self.LeftCenter.X,
+                z_left=self.LeftCenter.Z,
+                x_right=self.RightCenter.X,
+                z_right=self.RightCenter.Z,
+                z_tangent=self.TangentLine,
+            )
         except (ValidationError, AttributeError):
-            raise ValueError(f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}")
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
-DStabilityResult = Union[UpliftVanResult, UpliftVanParticleSwarmResult, UpliftVanReliabilityResult, SpencerGeneticAlgorithmResult, SpencerReliabilityResult, SpencerResult, BishopBruteForceResult, BishopReliabilityResult, BishopResult]
+
+DStabilityResult = Union[
+    UpliftVanResult,
+    UpliftVanParticleSwarmResult,
+    UpliftVanReliabilityResult,
+    SpencerGeneticAlgorithmResult,
+    SpencerReliabilityResult,
+    SpencerResult,
+    BishopBruteForceResult,
+    BishopReliabilityResult,
+    BishopResult,
+]
 
 ###########################
 # INPUT AND OUTPUT COMBINED
@@ -1448,31 +1486,49 @@ class DStabilityStructure(BaseModelStructure):
     """
 
     # input part
-    waternets: List[Waternet] = [Waternet()]  # waternets/waternet_x.json
+    waternets: List[Waternet] = [Waternet(Id="21")]  # waternets/waternet_x.json
     waternetcreatorsettings: List[WaternetCreatorSettings] = [
-        WaternetCreatorSettings()
+        WaternetCreatorSettings(Id="22")
     ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
-    states: List[State] = [State()]  # states/states_x.json
+    states: List[State] = [State(Id="23")]  # states/states_x.json
     statecorrelations: List[StateCorrelation] = [
-        StateCorrelation()
+        StateCorrelation(Id="24")
     ]  # statecorrelations/statecorrelations_x.json
-    stages: List[Stage] = [Stage()]  # stages/stage_x.json
+    stages: List[Stage] = [
+        Stage(
+            CalculationSettingsId="30",
+            DecorationsId="29",
+            GeometryId="31",
+            Id="25",
+            Label="Initial Stage",
+            LoadsId="28",
+            Notes="Default stage by GEOLib",
+            ReinforcementsId="27",
+            SoilLayersId="26",
+            StateCorrelationsId="24",
+            StateId="23",
+            WaternetCreatorSettingsId="22",
+            WaternetId="21",
+        )
+    ]  # stages/stage_x.json
     soillayers: List[SoilLayerCollection] = [
-        SoilLayerCollection()
+        SoilLayerCollection(Id="26")
     ]  # soillayers/soillayers_x.json
     soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
     soils: SoilCollection = SoilCollection()  # soils.json
     reinforcements: List[Reinforcements] = [
-        Reinforcements()
+        Reinforcements(Id="27")
     ]  # reinforcements/reinforcements_x.json
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
-    loads: List[Loads] = [Loads()]  # loads/loads_x.json
-    decorations: List[Decorations] = [Decorations()]  # decorations/decorations_x.json
+    loads: List[Loads] = [Loads(Id="28")]  # loads/loads_x.json
+    decorations: List[Decorations] = [
+        Decorations(Id="29")
+    ]  # decorations/decorations_x.json
     calculationsettings: List[CalculationSettings] = [
-        CalculationSettings()
+        CalculationSettings(Id="30")
     ]  # calculationsettings/calculationsettings_x.json
-    geometries: List[Geometry] = [Geometry()]  # geometries/geometry_x.json
+    geometries: List[Geometry] = [Geometry(Id="31")]  # geometries/geometry_x.json
 
     # Output parts
     uplift_van_results: List[UpliftVanResult] = []
@@ -1484,6 +1540,22 @@ class DStabilityStructure(BaseModelStructure):
     bishop_bruteforce_results: List[BishopBruteForceResult] = []
     bishop_reliability_results: List[BishopReliabilityResult] = []
     bishop_results: List[BishopResult] = []
+
+    def get_unique_id(self) -> int:
+        def recursive_items(dictionary) -> Generator:
+            for key, value in dictionary.items():
+                if isinstance(value, dict):
+                    yield from recursive_items(value)
+                elif isinstance(value, list):
+                    for item in value:
+                        yield from recursive_items(item)
+                else:
+                    if key == "Id":
+                        yield value
+
+        ids = recursive_items(self.dict())
+        new_id = max({int(id) for id in ids if id is not None}) + 1
+        return new_id
 
     def validator(self):
         return DStabilityValidator(self)
@@ -1503,7 +1575,7 @@ class DStabilityStructure(BaseModelStructure):
             else:
                 return True
         return False
-    
+
     def has_loads(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
             loads_id = self.stages[stage_id].LoadsId
@@ -1512,7 +1584,7 @@ class DStabilityStructure(BaseModelStructure):
             else:
                 return True
         return False
-    
+
     def has_soil_layers(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
             soil_layers_id = self.stages[stage_id].SoilLayersId
@@ -1521,7 +1593,7 @@ class DStabilityStructure(BaseModelStructure):
             else:
                 return True
         return False
-    
+
     def has_soil_layer(self, stage_id: int, soil_layer_id: int) -> bool:
         if self.has_soil_layers(stage_id):
             for layer in self.soillayers[stage_id].SoilLayers:
@@ -1529,7 +1601,7 @@ class DStabilityStructure(BaseModelStructure):
                     return True
             return False
         return False
-    
+
     def has_reinforcements(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
             reinforcements_id = self.stages[stage_id].ReinforcementsId
@@ -1574,3 +1646,39 @@ class DStabilityStructure(BaseModelStructure):
             return result_types_mapping[analysis_type]["probabilistic"]
 
         return result_types_mapping[analysis_type]["non_probabilistic"]
+
+
+mapping = {
+    # I've ignored waternetcreatorsettings in here.
+    "Waternet.Id": ("Stage.WaternetId",),
+    # Head line
+    "PersistableHeadLine.Id": (
+        "PersistableReferenceLine.BottomHeadLineId",
+        "PersistableReferenceLine.TopHeadLineId",
+    ),
+    "PersistableReferenceLine.Id": ("Waternet.PhreaticLineId",),
+    # Layer
+    "Layer.Id": (
+        "PersistableStatePoint.LayerId",
+        "PersistableSoilLayer.LayerId",
+        "PersistableConsolidation.LayerId",
+        "PersistableLayerLoad.LayerId",
+        "PersistableBerm.AddedLayerId",  #  check this one
+    ),
+    # Soil
+    "PersistableSoil.Id": (
+        "PersistableSoilVisualization.SoilId",
+        "PersistableSoilLayer.SoilId",
+        "CorrelatedSoilIds.CorrelatedSoilIds",
+    ),
+    "CalculationSettings.Id": ("Stage.CalculationSettingsId",),
+    "Decorations.Id": ("Stage.DecorationsId",),
+    "Geometry.Id": ("Stage.GeometryId",),
+    "Loads.Id": ("Stage.LoadsId",),
+    "Reinforcements.Id": ("Stage.ReinforcementsId",),
+    "Result.Id": ("Stage.ResultId",),  # nice way of looking up actual results
+    "SoilLayers.Id": ("Stage.SoilLayersId",),
+    "StateCorrelations.Id": ("Stage.StateCorrelationsId",),
+    "State.Id": ("Stage.StateId",),
+    "WaternetCreatorSettings.Id": ("Stage.WaternetCreatorSettingsId",),
+}

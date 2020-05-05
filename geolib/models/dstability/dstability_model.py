@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import List, Optional, Type, Union, Dict, Set
 
 from pydantic import BaseModel as DataClass
-from pydantic import DirectoryPath
+from pydantic import DirectoryPath, FilePath
 
 from geolib.geometry import Point
 from geolib.models import BaseModel
@@ -33,7 +33,6 @@ from .internal import (
     UpliftVanSlipCircleResult,
     Waternet,
     PersistablePoint,
-
 )
 
 from .states import DStabilityStatePoint, DStabilityStateLinePoint
@@ -71,6 +70,11 @@ class DStabilityModel(BaseModel):
     This model can read, modify and create
     .stix files
     """
+
+    def __init__(self, *args, **data) -> None:
+        super().__init__(*args, **data)
+        self.current_id = self.datastructure.get_unique_id()
+
     @property
     def parser_provider_type(self) -> Type[DStabilityParserProvider]:
         return DStabilityParserProvider
@@ -83,14 +87,18 @@ class DStabilityModel(BaseModel):
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
-    
-    current_id: int = 100  # todo > after reading inputfiles, check for the next id or think about another implementation of the id
+
     current_stage: int = 0
     datastructure: DStabilityStructure = DStabilityStructure()
+    current_id: int = -1
 
     def _get_next_id(self) -> int:
         self.current_id += 1
         return self.current_id
+
+    def parse(self, *args, **kwargs):
+        super().parse(*args, **kwargs)
+        self.current_id = self.datastructure.get_unique_id()
 
     @property
     def waternets(self) -> List[Waternet]:
@@ -225,7 +233,7 @@ class DStabilityModel(BaseModel):
         soil_code: str,
         label: str = "",
         notes: str = "",
-        stage_id: int = None
+        stage_id: int = None,
     ) -> int:
         """
         Add a soil layer to the model
@@ -250,26 +258,22 @@ class DStabilityModel(BaseModel):
 
         geometry = self.datastructure.geometries[stage_id]
         soillayerscollection = self.datastructure.soillayers[stage_id]
-        
+
         # do we have this soil code?
         if not self.soils.has_soilcode(soil_code):
-            raise ValueError(f"The soil with code {soil_code} is not defined in the soil collection.")
+            raise ValueError(
+                f"The soil with code {soil_code} is not defined in the soil collection."
+            )
 
         # add the layer to the geometry
         # the checks on the validity of the points are done in the PersistableLayer class
         persistable_layer = geometry.add_layer(
-            id=str(self._get_next_id()),
-            label=label,
-            points=points,
-            notes=notes
+            id=str(self._get_next_id()), label=label, points=points, notes=notes
         )
 
         # add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
-        soillayerscollection.add_soillayer(
-            layer_id=persistable_layer.Id,
-            soil_id=soil.id
-        )
+        soillayerscollection.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.id)
         return int(persistable_layer.Id)
 
     def add_head_line(
@@ -299,13 +303,9 @@ class DStabilityModel(BaseModel):
             raise IndexError(f"stage {stage_id} is not available")
 
         waternet = self.waternets[stage_id]
-        
+
         persistable_headline = waternet.add_head_line(
-            str(self._get_next_id()),
-            label,
-            notes,
-            points,
-            is_phreatic_line
+            str(self._get_next_id()), label, notes, points, is_phreatic_line
         )
         return int(persistable_headline.Id)
 
@@ -338,7 +338,7 @@ class DStabilityModel(BaseModel):
             raise IndexError(f"stage {stage_id} is not available")
 
         waternet = self.waternets[stage_id]
-        
+
         persistable_referenceline = waternet.add_reference_line(
             str(self._get_next_id()),
             label,
@@ -350,9 +350,7 @@ class DStabilityModel(BaseModel):
         return int(persistable_referenceline.Id)
 
     def add_state_point(
-        self,
-        state_point: DStabilityStatePoint,
-        stage_id: int = None,
+        self, state_point: DStabilityStatePoint, stage_id: int = None,
     ) -> int:
         """
         Add state point to the model
@@ -371,8 +369,8 @@ class DStabilityModel(BaseModel):
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
-            
-        states = self.datastructure.states[stage_id]            
+
+        states = self.datastructure.states[stage_id]
 
         # check if the given layer id is valid
         try:
@@ -382,16 +380,18 @@ class DStabilityModel(BaseModel):
 
         # todo > check if point is in layer
 
-        state_point.id = self._get_next_id()  # the user does not know the id so we have to add it
+        state_point.id = (
+            self._get_next_id()
+        )  # the user does not know the id so we have to add it
         persistable_statepoint = state_point._to_internal_datastructure()
         states.add_state_point(persistable_statepoint)
         return int(persistable_statepoint.Id)
-    
+
     def add_state_line(
         self,
         points: List[Point],
         state_points: List[DStabilityStateLinePoint],
-        stage_id: int = None
+        stage_id: int = None,
     ) -> None:
         """
         Add state line. From the Soils, only the state parameters are used.
@@ -414,16 +414,20 @@ class DStabilityModel(BaseModel):
             raise IndexError(f"stage {stage_id} is not available")
 
         states = self.datastructure.states[stage_id]
-        geometry = self.datastructure.geometries[stage_id]        
+        geometry = self.datastructure.geometries[stage_id]
 
         # each point should belong to a layer
         persistable_points = []
 
         for point in points:
             point.id = self._get_next_id()  # assign a new id
-            if not geometry.contains_point(point):  # all points should be part of a player
-                raise ValueError(f"The point with x={point.x} and z={point.z} is not on any polygon")
-            persistable_points.append(PersistablePoint(X=point.x, Z=point.z))            
+            if not geometry.contains_point(
+                point
+            ):  # all points should be part of a player
+                raise ValueError(
+                    f"The point with x={point.x} and z={point.z} is not on any polygon"
+                )
+            persistable_points.append(PersistablePoint(X=point.x, Z=point.z))
 
         persistable_state_line_points = []
         for state_point in state_points:
@@ -431,7 +435,6 @@ class DStabilityModel(BaseModel):
             persistable_state_line_points.append(state_point._to_internal_datastructure())
 
         states.add_state_line(persistable_points, persistable_state_line_points)
-        
 
     def add_load(
         self,
@@ -459,7 +462,9 @@ class DStabilityModel(BaseModel):
             raise ValueError(
                 f"load should be a subclass of DstabilityReinforcement, received {load}"
             )
-        if self.datastructure.has_soil_layers(stage_id) and self.datastructure.has_loads(stage_id):
+        if self.datastructure.has_soil_layers(stage_id) and self.datastructure.has_loads(
+            stage_id
+        ):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id)
             else:
@@ -490,30 +495,46 @@ class DStabilityModel(BaseModel):
         """
         stage_id = stage_id if stage_id is not None else self.current_stage
 
-        if self.datastructure.has_soil_layer(stage_id, soil_layer_id) and self.datastructure.has_loads(stage_id):
+        if self.datastructure.has_soil_layer(
+            stage_id, soil_layer_id
+        ) and self.datastructure.has_loads(stage_id):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id)
             else:
                 self._verify_consolidations(consolidations, stage_id)
 
-            self.datastructure.loads[stage_id].add_layer_load(soil_layer_id, consolidations)
+            self.datastructure.loads[stage_id].add_layer_load(
+                soil_layer_id, consolidations
+            )
         else:
             raise ValueError(f"No soil layers found found for stage id {stage_id}")
 
     def _get_default_consolidations(self, stage_id: int) -> List[Consolidation]:
         """Length of the consolidations is equal to the amount of soil layers"""
         if self.datastructure.has_soil_layers(stage_id):
-            soil_layer_ids: Set[str] = {layer.LayerId for layer in self.datastructure.soillayers[stage_id].SoilLayers}
+            soil_layer_ids: Set[str] = {
+                layer.LayerId
+                for layer in self.datastructure.soillayers[stage_id].SoilLayers
+            }
             return [Consolidation(layer_id=layer_id) for layer_id in soil_layer_ids]
 
         raise ValueError(f"No soil layers found for stage id {stage_id}")
 
-    def _verify_consolidations(self, consolidations: List[Consolidation], stage_id: int) -> None:
+    def _verify_consolidations(
+        self, consolidations: List[Consolidation], stage_id: int
+    ) -> None:
         if self.datastructure.has_soil_layers(stage_id):
-            consolidation_soil_layer_ids: Set[str] = {str(c.layer_id) for c in consolidations}
-            soil_layer_ids: Set[str] = {layer.LayerId for layer in self.datastructure.soillayers[stage_id].SoilLayers}
+            consolidation_soil_layer_ids: Set[str] = {
+                str(c.layer_id) for c in consolidations
+            }
+            soil_layer_ids: Set[str] = {
+                layer.LayerId
+                for layer in self.datastructure.soillayers[stage_id].SoilLayers
+            }
             if consolidation_soil_layer_ids != soil_layer_ids:
-                raise ValueError(f"Received consolidations ({consolidation_soil_layer_ids}) should contain all soil layer ids ({soil_layer_ids})")
+                raise ValueError(
+                    f"Received consolidations ({consolidation_soil_layer_ids}) should contain all soil layer ids ({soil_layer_ids})"
+                )
         else:
             raise ValueError(f"No soil layers found for stage id {stage_id}")
 
@@ -543,8 +564,8 @@ class DStabilityModel(BaseModel):
             self.datastructure.reinforcements[stage_id].add_reinforcement(reinforcement)
         else:
             raise ValueError(
-                    f"No reinforcements found for stage found with id {stage_id}"
-                )
+                f"No reinforcements found for stage found with id {stage_id}"
+            )
 
     def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
         """Sets the model and applies the given parameters
