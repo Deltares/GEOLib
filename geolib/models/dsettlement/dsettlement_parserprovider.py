@@ -1,4 +1,4 @@
-from typing import List, Type
+from typing import List, Type, Tuple
 
 from pydantic import FilePath
 
@@ -34,20 +34,20 @@ class DSettlementOutputParser(DSerieParser):
 
 class DSettlementParserProvider(BaseParserProvider):
 
-    __input_parser = None
-    __output_parser = None
+    __input_parsers = None
+    __output_parsers = None
 
     @property
-    def input_parser(self) -> DSettlementInputParser:
-        if not self.__input_parser:
-            self.__input_parser = DSettlementInputParser()
-        return self.__input_parser
+    def input_parsers(self) -> Tuple[DSettlementInputParser]:
+        if not self.__input_parsers:
+            self.__input_parsers = (DSettlementInputParser(),)
+        return self.__input_parsers
 
     @property
-    def output_parser(self) -> DSettlementOutputParser:
-        if not self.__output_parser:
-            self.__output_parser = DSettlementOutputParser()
-        return self.__output_parser
+    def output_parsers(self) -> Tuple[DSettlementOutputParser]:
+        if not self.__output_parsers:
+            self.__output_parsers = (DSettlementOutputParser(),)
+        return self.__output_parsers
 
     @property
     def parser_name(self) -> str:

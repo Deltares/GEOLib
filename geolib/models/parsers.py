@@ -38,12 +38,12 @@ class BaseParserProvider(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def input_parser(self) -> BaseParser:
+    def input_parsers(self) -> BaseParser:
         raise NotImplementedError("Should be implemented in concrete class.")
 
     @property
     @abc.abstractmethod
-    def output_parser(self) -> BaseParser:
+    def output_parsers(self) -> BaseParser:
         raise NotImplementedError("Should be implemented in concrete class.")
 
     @property
@@ -52,25 +52,11 @@ class BaseParserProvider(abc.ABC):
         raise NotImplementedError("Should be implemented in concrete class.")
 
     def parse(self, filename: FilePath) -> BaseModelStructure:
-        if self.input_parser.can_parse(filename):
-            return self.input_parser.parse(filename)
-        elif self.output_parser.can_parse(filename):
-            return self.output_parser.parse(filename)
-        else:
-            raise Exception(
-                f"Unknown extension {filename.suffix} for {self.parser_name}."
-            )
+        for parser in self.input_parsers:
+            if parser.can_parse(filename):
+                return parser.parse(filename)
 
-        # compare_suffix = filename.suffix
-
-        # if filename.suffix == '':
-        #     compare_suffix = filename.name
-
-        # if compare_suffix in self.input_parser.suffix_list:
-        #     return self.input_parser.parse(filename)
-        # elif compare_suffix in self.output_parser.suffix_list:
-        #     return self.output_parser.parse(filename)
-        # else:
-        #     raise Exception(
-        #         f"Unknown extension {compare_suffix} for {self.parser_name}."
-        #     )
+        for parser in self.output_parsers:
+            if parser.can_parse(filename):
+                return parser.parse(filename)
+        raise Exception(f"Unknown extension {filename.suffix} for {self.parser_name}.")

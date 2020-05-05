@@ -1,6 +1,6 @@
 from os import scandir, path
 from typing import List, _GenericAlias
-from typing import get_type_hints, Type
+from typing import get_type_hints, Type, Tuple
 
 from pydantic import DirectoryPath, FilePath
 
@@ -8,6 +8,10 @@ from geolib.models.parsers import BaseParser, BaseParserProvider
 
 from .internal import BaseModelStructure, DStabilityStructure
 from geolib.models.utils import get_filtered_type_hints
+
+from zipp import Path
+from zipfile import ZipFile
+import logging
 
 
 class DStabilityParser(BaseParser):
@@ -31,14 +35,14 @@ class DStabilityParser(BaseParser):
             # On List types, parse a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
-                ds[field] = self.__parse_folder(element_type, filepath)
+                ds[field] = self.__parse_folder(element_type, filepath / "")
 
             # Otherwise its a single .json in the root folder
             else:
                 fn = filepath / (fieldtype.structure_name() + ".json")
                 if not fn.exists():
                     raise Exception(f"Couldn't find required file at {fn}")
-                ds[field] = fieldtype.parse_file(fn)
+                ds[field] = fieldtype.parse_raw(fn.open().read())
 
         return self.structure(**ds)
 
@@ -46,37 +50,54 @@ class DStabilityParser(BaseParser):
         out = []
 
         folder = filepath / fieldtype.structure_group()
-        files = scandir(folder)
+        files = list(folder.iterdir())
+
         # We need to sort to make sure that files such as x.json, x_1.json,
         # x_2.json etc. are stored sequentally, scandir produces arbitrary order.
-        sorted_files = sorted(map(lambda x: x.path, files))
-
-        for file in sorted_files:
-            if fieldtype.structure_name() in str(file):
-                out.append(fieldtype.parse_file(file))
+        sorted_files = sorted(files, key=lambda x: x.name)
+        for file in files:
+            if fieldtype.structure_name() in file.name:
+                out.append(fieldtype.parse_raw(file.open().read()))
+            else:
+                logging.warning(f"Didn't match {fieldtype} for {file}")
 
         if len(out) == 0:
-            raise Exception(f"Couldn't find required file(s) at {folder}")
+            logging.warning(f"Couldn't find {fieldtype} file(s) at {folder}")
 
         return out
 
 
+class DStabilityZipParser(DStabilityParser):
+    @property
+    def suffix_list(self) -> List[str]:
+        return [".stix"]
+
+    def can_parse(self, filename: FilePath) -> bool:
+        return super().can_parse(filename)
+
+    def parse(self, filepath: FilePath) -> BaseModelStructure:
+        with ZipFile(filepath) as zip:
+            path = Path(zip)
+            ds = super().parse(path)
+        return ds
+
+
 class DStabilityParserProvider(BaseParserProvider):
 
-    _input_parser = None
-    _output_parser = None
+    _input_parsers = None
+    _output_parsers = None
 
     @property
-    def input_parser(self) -> DStabilityParser:
-        if not self._input_parser:
-            self._input_parser = DStabilityParser()
-        return self._input_parser
+    def input_parsers(self) -> Tuple[DStabilityParser, DStabilityZipParser]:
+        if not self._input_parsers:
+            self._input_parsers = (DStabilityParser(), DStabilityZipParser())
+        return self._input_parsers
 
     @property
-    def output_parser(self) -> DStabilityParser:
-        if not self._output_parser:
-            self._output_parser = DStabilityParser()
-        return self._output_parser
+    def output_parsers(self) -> Tuple[DStabilityParser, DStabilityZipParser]:
+        if not self._output_parsers:
+            self._output_parsers = (DStabilityParser(), DStabilityZipParser())
+        return self._output_parsers
 
     @property
     def parser_name(self) -> str:

@@ -1070,19 +1070,26 @@ class CalculationSettings(DStabilitySubStructure):
     def set_bishop(self, bishop_settings: PersistableBishopSettings) -> None:
         self.Bishop = bishop_settings
 
-    def set_bishop_brute_force(self, bishop_brute_force_settings: PersistableBishopBruteForceSettings) -> None:
+    def set_bishop_brute_force(
+        self, bishop_brute_force_settings: PersistableBishopBruteForceSettings
+    ) -> None:
         self.BishopBruteForce = bishop_brute_force_settings
 
     def set_spencer(self, spencer_settings: PersistableSpencerSettings) -> None:
         self.Spencer = spencer_settings
 
-    def set_spencer_genetic(self, spencer_genetic_settings: PersistableSpencerGeneticSettings) -> None:
+    def set_spencer_genetic(
+        self, spencer_genetic_settings: PersistableSpencerGeneticSettings
+    ) -> None:
         self.SpencerGenetic = spencer_genetic_settings
 
     def set_uplift_van(self, uplift_van_settings: PersistableUpliftVanSettings) -> None:
         self.UpliftVan = uplift_van_settings
 
-    def set_uplift_van_particle_swarm(self, uplift_van_particle_swarm_settings: PersistableUpliftVanParticleSwarmSettings) -> None:
+    def set_uplift_van_particle_swarm(
+        self,
+        uplift_van_particle_swarm_settings: PersistableUpliftVanParticleSwarmSettings,
+    ) -> None:
         self.UpliftVanParticleSwarm = uplift_van_particle_swarm_settings
 
 
@@ -1142,7 +1149,7 @@ class BishopBruteForceResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/bishopbruteforce"
+        return "results/bishopbruteforce/"
 
     def get_slipcircle_output(self) -> BishopSlipCircleResult:
         """Get condensed slipcircle data"""
@@ -1201,7 +1208,7 @@ class BishopReliabilityResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/bishopreliability"
+        return "results/bishopreliability/"
 
     def get_slipcircle_output(self) -> BishopSlipCircleResult:
         """Get condensed slipcircle data"""
@@ -1224,7 +1231,7 @@ class BishopResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/bishop"
+        return "results/bishop/"
 
     def get_slipcircle_output(self) -> BishopSlipCircleResult:
         """Get condensed slipcircle data"""
@@ -1295,7 +1302,7 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/spencergeneticalgorithm"
+        return "results/spencergeneticalgorithm/"
 
     def get_slipplane_output(self) -> SpencerSlipPlaneResult:
         """Get condensed slipplane data"""
@@ -1326,7 +1333,7 @@ class SpencerReliabilityResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/spencerreliability"
+        return "results/spencerreliability/"
 
     def get_slipplane_output(self) -> SpencerSlipPlaneResult:
         """Get condensed slipplane data"""
@@ -1349,7 +1356,7 @@ class SpencerResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/spencer"
+        return "results/spencer/"
 
     def get_slipplane_output(self) -> SpencerSlipPlaneResult:
         """Get condensed slipplane data"""
@@ -1374,7 +1381,7 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/upliftvanparticleswarm"
+        return "results/upliftvanparticleswarm/"
 
     def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
         """Get condensed slipplane data"""
@@ -1411,7 +1418,7 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/upliftvanreliability"
+        return "results/upliftvanreliability/"
 
     def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
         """Get condensed slipcircle data"""
@@ -1440,7 +1447,7 @@ class UpliftVanResult(DStabilitySubStructure):
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/upliftvan"
+        return "results/upliftvan/"
 
     def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
         """Get condensed slipcircle data"""

@@ -23,7 +23,11 @@ class TestDStabilityModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "filepath", [pytest.param("dstability/example_1", id="Input Structure")]
+        "filepath",
+        [
+            pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/example_1/Tutorial.stix", id="Input Structure"),
+        ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
         self, filepath: str

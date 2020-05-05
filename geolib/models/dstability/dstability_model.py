@@ -38,7 +38,7 @@ from .internal import (
 from .states import DStabilityStatePoint, DStabilityStateLinePoint
 from .loads import DStabilityLoad, Consolidation
 from .reinforcements import DStabilityReinforcement
-from .serializer import DStabilityInputSerializer
+from .serializer import DStabilityInputSerializer, DStabilityInputZipSerializer
 from .analysis import DStabilityAnalysisMethod
 from ...utils import snake_to_camel, camel_to_snake
 
@@ -178,10 +178,13 @@ class DStabilityModel(BaseModel):
         result = self._get_result_substructure(stage_id)
         return result.get_slipplane_output()
 
-    def serialize(self, foldername: DirectoryPath):
-
-        serializer = DStabilityInputSerializer(ds=self.datastructure)
-        serializer.write(foldername)
+    def serialize(self, location: Union[FilePath, DirectoryPath]):
+        """Support serializing to directory while developing for debugging purposes."""
+        if not location.is_dir():
+            serializer = DStabilityInputZipSerializer(ds=self.datastructure)
+        else:
+            serializer = DStabilityInputSerializer(ds=self.datastructure)
+        serializer.write(location)
 
     def add_stage(self, label: str, notes: str, copy=True, set_current=True) -> int:
         """Add a new stage to the model. Copies current stage if copy is True. Returns a unique id."""
@@ -579,11 +582,11 @@ class DStabilityModel(BaseModel):
             an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
         """
         stage_id = stage_id if stage_id else self.current_stage
-        
+
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
 
-        calculationsettings = self.datastructure.calculationsettings[stage_id]     
+        calculationsettings = self.datastructure.calculationsettings[stage_id]
 
         _analysis_method_mapping = {
             AnalysisType.BISHOP: calculationsettings.set_bishop,
@@ -595,7 +598,10 @@ class DStabilityModel(BaseModel):
         }
 
         try:
-            _analysis_method_mapping[analysis_method.analysis_type](analysis_method._to_internal_datastructure())
+            _analysis_method_mapping[analysis_method.analysis_type](
+                analysis_method._to_internal_datastructure()
+            )
         except KeyError:
-            raise ValueError(f"Unknown analysis method {analysis_method.analysis_type.value} found")
-        
+            raise ValueError(
+                f"Unknown analysis method {analysis_method.analysis_type.value} found"
+            )
