@@ -1,14 +1,20 @@
+import logging
 from enum import Enum
-from typing import List, Optional, Union
+from pathlib import Path
+from subprocess import CompletedProcess, run
+from typing import List, Optional, Type, Union
 
 from pydantic import BaseModel as DataModel
+from pydantic import FilePath
 
 from geolib.geometry import Point
-from geolib.models import BaseModel
+from geolib.models import BaseModel, BaseModelStructure
 from geolib.soils import Soil
 from geolib.soils.layers import Profile
 
 from .constructions import DiaphragmWall, Pile, Sheet
+from .dsheetpiling_parserprovider import DSheetPilingParserProvider
+from .internal import DSheetPilingInputStructure
 from .loads import (
     Earthquake,
     HorizontalLineLoad,
@@ -18,6 +24,7 @@ from .loads import (
     SurchargeLoad,
     UniformLoad,
 )
+from .serializer import DSheetPilingInputSerializer
 from .supports import Anchor, RigidSupport, SpringSupport, Strut
 
 
@@ -43,18 +50,39 @@ class DSheetpilingModel(BaseModel):
     """DSheetPiling is a tool used to design sheetpile and diaphragm walls and horizontally loaded piles.
 
     This model can read, modify and create
-    \*.shi files, read \*.shd and \*.err files.
+    *.shi files, read *.shd and *.err files.
     """
 
     current_stage: int = 0
     water_weight: float = 9.81
 
-    @property
-    def parser_provider_type(self):
-        raise NotImplementedError("Not implemented yet.")
+    datastructure: BaseModelStructure = DSheetPilingInputStructure()
 
-    def serialize(self):
-        """TODO: To implement."""
+    @property
+    def parser_provider_type(self) -> Type[DSheetPilingParserProvider]:
+        return DSheetPilingParserProvider
+
+    @property
+    def console_path(self) -> Path:
+        return Path("DSheetPilingConsole/DSheetPilingConsole.exe")
+
+    def serialize(self, filename: FilePath):
+        serializer = DSheetPilingInputSerializer(ds=self.datastructure.dict())
+        serializer.write(filename)
+        self.filename = filename
+
+    def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
+        """Execute a Model and wait for `timeout` seconds."""
+        if self.filename is None:
+            raise Exception("Set filename or serialize first!")
+        if not self.filename.exists():
+            logging.warning("Serializing before executing.")
+            self.serialize(self.filename)
+        return run(
+            [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
+            timeout=timeout,
+            cwd=self.filename.parent,
+        )
 
     def add_stage(
         self,
@@ -86,6 +114,10 @@ class DSheetpilingModel(BaseModel):
         .. todo::
             Can we use the add_layer method here as well?
         """
+
+    def add_strut(left: Strut, right: Optional[Strut]):
+        self.struts.add()
+        self.stage.strut += 1
 
     def add_sheet(
         self,

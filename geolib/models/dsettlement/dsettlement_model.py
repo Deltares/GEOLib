@@ -73,12 +73,15 @@ class DSettlementModel(BaseModel):
 
     def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
         """Execute a Model and wait for `timeout` seconds."""
+        if self.filename is None:
+            raise Exception("Set filename or serialize first!")
         if not self.filename.exists():
             logging.warning("Serializing before executing.")
             self.serialize(self.filename)
         return run(
             [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
             timeout=timeout,
+            cwd=self.filename.parent,
         )
 
     def serialize(self, filename: FilePath):

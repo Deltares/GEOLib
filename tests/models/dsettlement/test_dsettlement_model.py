@@ -8,8 +8,7 @@ from warnings import warn
 
 import pydantic
 import pytest
-from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils
+from tests.utils import TestUtils, only_teamcity
 
 import geolib.models.dsettlement.loads as loads
 from geolib.geometry.one import Point
@@ -142,9 +141,7 @@ class TestDSettlementModel:
             io.write(ds.output.json(indent=4))
 
     @pytest.mark.systemtest
-    @pytest.mark.skipif(
-        not is_running_under_teamcity(), reason="Console test only installed on TC."
-    )
+    @only_teamcity
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         dm = DSettlementModel()
@@ -165,6 +162,15 @@ class TestDSettlementModel:
 
         # 3. Verify return code of 0 (indicates succesfull run)
         assert status.returncode == 0
+
+    @pytest.mark.unittest
+    def test_execute_console_without_filename_raises_exception(self):
+        # 1. Set up test data.
+        df = DSettlementModel()
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert df.execute()
 
     @pytest.mark.integrationtest
     def test_set_calculation_times(self):

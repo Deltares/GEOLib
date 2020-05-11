@@ -1,0 +1,773 @@
+INPUT FILE FOR D-SHEET PILING
+==============================================================================
+COMPANY    : {{ company }}   
+
+DATE       : {{ timestamp.strftime('%d-%m-%Y') }}
+TIME       : {{ timestamp.strftime('%H:%M:%S') }}
+FILENAME   : {{ output_fn }}
+CREATED BY : GEOLib version {{ glversion }}
+
+==========================    BEGINNING OF DATA     ==========================
+[VERSION]
+Soil={{ version.soil }}
+D-Sheet Piling={{ version.d__sheet_piling }}
+[END OF VERSION]
+
+[VERSION EXTERNALS]
+DGSCPTipCalc.dll={{ version_externals.dgscptipcalc____dll }}
+DGSCPTipUI.dll={{ version_externals.dgscptipui____dll }}
+[END OF VERSION EXTERNALS]
+
+[SOIL COLLECTION]
+    {{ soil_collection.soil|length }} = number of items
+{% for soil in soil_collection.soil %}
+[SOIL]
+{{ soil.name }}
+SoilColor={{ soil.soilcolor }}
+SoilSoilType={{ soil.soilsoiltype }}
+SoilGrainType={{ soil.soilgraintype }}
+SoilGamDry={{ soil.soilgamdry }}
+SoilGamWet={{ soil.soilgamwet }}
+SoilRelativeDensity={{ soil.soilrelativedensity }}
+SoilEModMenard={{ soil.soilemodmenard }}
+SoilCohesion={{ soil.soilcohesion }}
+SoilPhi={{ soil.soilphi }}
+SoilDelta={{ soil.soildelta }}
+SoilCuTop={{ soil.soilcutop }}
+SoilCuBottom={{ soil.soilcubottom }}
+SoilCuBearingCapacityFactor={{ soil.soilcubearingcapacityfactor }}
+SoilOCR={{ soil.soilocr }}
+SoilDrained={{ soil.soildrained }}
+SoilPermeabKx={{ soil.soilpermeabkx }}
+SoilStdCohesion={{ soil.soilstdcohesion }}
+SoilStdPhi={{ soil.soilstdphi }}
+SoilDistCohesion={{ soil.soildistcohesion }}
+SoilDistPhi={{ soil.soildistphi }}
+SoilLa={{ soil.soilla }}
+SoilLn={{ soil.soilln }}
+SoilLp={{ soil.soillp }}
+SoilUseMenard={{ soil.soilusemenard }}
+SoilUseBrinchHansen={{ soil.soilusebrinchhansen }}
+SoilShellFactor={{ soil.soilshellfactor }}
+SoilLambdaType={{ soil.soillambdatype }}
+SoilLam1={{ soil.soillam1 }}
+SoilLam2={{ soil.soillam2 }}
+SoilLam3={{ soil.soillam3 }}
+SoilKb0={{ soil.soilkb0 }}
+SoilKb1={{ soil.soilkb1 }}
+SoilKb2={{ soil.soilkb2 }}
+SoilKb3={{ soil.soilkb3 }}
+SoilKb4={{ soil.soilkb4 }}
+SoilKo0={{ soil.soilko0 }}
+SoilKo1={{ soil.soilko1 }}
+SoilKo2={{ soil.soilko2 }}
+SoilKo3={{ soil.soilko3 }}
+SoilKo4={{ soil.soilko4 }}
+SoilCurKb1={{ soil.soilcurkb1 }}
+SoilCurKb2={{ soil.soilcurkb2 }}
+SoilCurKb3={{ soil.soilcurkb3 }}
+SoilCurKo1={{ soil.soilcurko1 }}
+SoilCurKo2={{ soil.soilcurko2 }}
+SoilCurKo3={{ soil.soilcurko3 }}
+SoilHorizontalBehaviourType={{ soil.soilhorizontalbehaviourtype }}
+SoilElasticity={{ soil.soilelasticity }}
+SoilDefaultElasticity={{ soil.soildefaultelasticity }}
+[END OF SOIL]
+{% endfor %}
+[END OF SOIL COLLECTION]
+
+[RUN IDENTIFICATION]
+{{ run_identification }}
+[END OF RUN IDENTIFICATION]
+
+[MODEL]
+{{ model }}
+[END OF MODEL]
+
+[CPT LIST]
+{{ cpt_list }}
+[END OF CPT LIST]
+
+
+[SHEET PILING]
+{{ sheet_piling }}
+[END OF SHEET PILING]
+
+[COMBINED WALL]
+{{ combined_wall }}
+[END OF COMBINED WALL]
+
+[VERTICAL BALANCE]
+{{ vertical_balance }}
+[END OF VERTICAL BALANCE]
+
+[SETTLEMENT BY VIBRATION PARAMS]
+{{ settlement_by_vibration_params }}
+[END OF SETTLEMENT BY VIBRATION PARAMS]
+
+[HORIZONTAL LINE LOADS]
+{{ horizontal_line_loads }}
+[END OF HORIZONTAL LINE LOADS]
+
+[WATER]
+{{ water }}
+[END OF WATER]
+
+[EARTH QUAKE]
+{{ earth_quake }}
+[END OF EARTH QUAKE]
+
+[SOIL PROFILES]
+{{ soil_profiles }}
+[END OF SOIL PROFILES]
+
+[SURFACES]
+{{ surfaces }}
+[END OF SURFACES]
+
+[WATERLEVELS]
+{{ waterlevels }}
+[END OF WATERLEVELS]
+
+[CONSTRUCTION STAGES]
+{{ construction_stages }}
+[END OF CONSTRUCTION STAGES]
+
+[CALCULATION OPTIONS PER STAGE]
+{{ calculation_options_per_stage }}
+[END OF CALCULATION OPTIONS PER STAGE]
+
+[CALCULATION OPTIONS]
+CalcFirstStageInitial=0
+CalcMinorNodesOn=1
+CalcReduceDeltas=1
+CalcEmpiricalFactorStressType=0
+InputCalculationType=0
+CalcAutoLambdasOn=1
+DesignStage=0
+DesignPileLengthFrom=0.00
+DesignPileLengthTo=0.00
+DesignPileLengthDecrement=0.00
+DesignPileLengthNew=1
+DesignType=0
+DesignEuroCodePartialFactorSet=0
+DesignPartialFactorSetEC7NADNL=1
+DesignEC7NLMethod=0
+DesignPartialFactorSetEC7NADB=0
+DesignEC7BMethod=0
+DesignPartialFactorSet=0
+DesignCURMethod=0
+DesignPartialFactorSetEC7NADSE=0
+DesignEC7SEMethod=0
+VerifyType=0
+EuroCodePartialFactorSet=0
+EuroCodeOverallStability=0
+EC7NLMethod=0
+EC7NLOverallPartialFactorSet=1
+EC7NLOverallAnchorFactor=1.000
+EC7NADNLOverallStability=0
+EC7BOverallStability=0
+NBMethod=0
+CURMethod=0
+CUROverallPartialFactorSet=0
+CUROverallAnchorFactor=1.000
+CUROverallStability=0
+EC7SEMethod=0
+EC7SEOverallPartialFactorSet=0
+EC7NADSEOverallStability=0
+CURAnchorForceStage=0
+CURStabilityStage=0
+OverallStabilityType=0
+StabilityEuroCodePartialFactorSet=0
+StabilityEC7NLPartialFactorSet=1
+StabilityEC7BPartialFactorSet=0
+StabilityCURPartialFactorSet=0
+StabilityEC7SEPartialFactorSet=0
+OverallStabilityDrained=1
+[PARTIAL FACTORS EUROCODE DA1 SET1]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.35
+EffectFactorVarUnfav=1.10
+MaterialFactorCohesion=1.00
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.000
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.00
+OverallStabilityFactorTgPhi=1.00
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EUROCODE DA1 SET1]
+[PARTIAL FACTORS EUROCODE DA1 SET2]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.30
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.25
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.250
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.00
+OverallStabilityFactorTgPhi=1.00
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EUROCODE DA1 SET2]
+[PARTIAL FACTORS EUROCODE DA2]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.35
+EffectFactorVarUnfav=1.10
+MaterialFactorCohesion=1.00
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.000
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.40
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.00
+OverallStabilityFactorTgPhi=1.00
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EUROCODE DA2]
+[PARTIAL FACTORS EUROCODE DA3]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.30
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.25
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.250
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.00
+OverallStabilityFactorTgPhi=1.00
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EUROCODE DA3]
+[PARTIAL FACTORS EC7 NL 0]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.00
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.050
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.15
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=0.90
+OverallStabilityFactorCohesion=1.30
+OverallStabilityFactorTgPhi=1.20
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.20
+VerticalBalanceGammaMb=1.20
+[END OF PARTIAL FACTORS EC7 NL 0]
+[PARTIAL FACTORS EC7 NL 1]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.15
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.150
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.20
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.30
+OverallStabilityFactorTgPhi=1.20
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.20
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EC7 NL 1]
+[PARTIAL FACTORS EC7 NL 2]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.25
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.175
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.25
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.45
+OverallStabilityFactorTgPhi=1.25
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.20
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EC7 NL 2]
+[PARTIAL FACTORS EC7 NL 3]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.25
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.40
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.200
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.25
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.60
+OverallStabilityFactorTgPhi=1.30
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.35
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS EC7 NL 3]
+[PARTIAL FACTORS EC7 B SET1]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.35
+EffectFactorVarUnfav=1.10
+MaterialFactorCohesion=1.00
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.000
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.00
+OverallStabilityFactorTgPhi=1.00
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.20
+[END OF PARTIAL FACTORS EC7 B SET1]
+[PARTIAL FACTORS EC7 B SET2]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.10
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.25
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.250
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=10.00
+GeometryMaxIncRetainingHeight=0.50
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.25
+OverallStabilityFactorTgPhi=1.25
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.20
+[END OF PARTIAL FACTORS EC7 B SET2]
+[PARTIAL FACTORS CUR I]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.00
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.050
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryDeltaPassiveSurfaceLevel=0.20
+GeometryDeltaPassivePhreaticLine=0.15
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=0.90
+OverallStabilityFactorCohesion=1.50
+OverallStabilityFactorTgPhi=1.20
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS CUR I]
+[PARTIAL FACTORS CUR II]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.00
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.150
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryDeltaPassiveSurfaceLevel=0.30
+GeometryDeltaPassivePhreaticLine=0.20
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.50
+OverallStabilityFactorTgPhi=1.20
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS CUR II]
+[PARTIAL FACTORS CUR III]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.25
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.00
+LoadFactorVarUnfavMultiply=1.00
+LoadFactorPermUnfavCalc=0.0000
+LoadFactorVarUnfavCalc=0.0000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=1.00
+ConstructLoadFactorPermUnfavMultiply=1.00
+ConstructLoadFactorVarUnfavMultiply=1.00
+ConstructLoadFactorPermUnfavCalc=1.0000
+ConstructLoadFactorVarUnfavCalc=1.0000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.10
+MaterialFactorUndrainedShearStrength=1.00
+MaterialFactorTgPhi=1.200
+MaterialFactorSubgradeReaction=1.30
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryDeltaPassiveSurfaceLevel=0.35
+GeometryDeltaPassivePhreaticLine=0.25
+GeometryDeltaActivePhreaticLine=0.05
+OverallStabilityFactorDrivingMoment=1.10
+OverallStabilityFactorCohesion=1.50
+OverallStabilityFactorTgPhi=1.20
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=0.00
+VerticalBalanceGammaMb=1.25
+[END OF PARTIAL FACTORS CUR III]
+[PARTIAL FACTORS EC7 SE VK1]
+SafetyFactorGammaD=0.83
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.10
+LoadFactorVarUnfavMultiply=1.40
+LoadFactorPermUnfavCalc=0.9130
+LoadFactorVarUnfavCalc=1.1620
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=0.00
+ConstructLoadFactorPermUnfavMultiply=1.35
+ConstructLoadFactorVarUnfavMultiply=1.50
+ConstructLoadFactorPermUnfavCalc=1.1205
+ConstructLoadFactorVarUnfavCalc=1.2450
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.30
+MaterialFactorUndrainedShearStrength=1.50
+MaterialFactorTgPhi=1.300
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.30
+OverallStabilityFactorTgPhi=1.30
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.00
+VerticalBalanceGammaMb=1.30
+[END OF PARTIAL FACTORS EC7 SE VK1]
+[PARTIAL FACTORS EC7 SE VK2]
+SafetyFactorGammaD=0.91
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.10
+LoadFactorVarUnfavMultiply=1.40
+LoadFactorPermUnfavCalc=1.0010
+LoadFactorVarUnfavCalc=1.2740
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=0.00
+ConstructLoadFactorPermUnfavMultiply=1.35
+ConstructLoadFactorVarUnfavMultiply=1.50
+ConstructLoadFactorPermUnfavCalc=1.2285
+ConstructLoadFactorVarUnfavCalc=1.3650
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.30
+MaterialFactorUndrainedShearStrength=1.50
+MaterialFactorTgPhi=1.300
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.30
+OverallStabilityFactorTgPhi=1.30
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.00
+VerticalBalanceGammaMb=1.30
+[END OF PARTIAL FACTORS EC7 SE VK2]
+[PARTIAL FACTORS EC7 SE VK3]
+SafetyFactorGammaD=1.00
+SafetyFactorEta=1.00
+LoadFactorPermUnfav=1.00
+LoadFactorPermFav=1.00
+LoadFactorVarUnfav=1.00
+LoadFactorVarFav=0.00
+LoadFactorPermUnfavMultiply=1.10
+LoadFactorVarUnfavMultiply=1.40
+LoadFactorPermUnfavCalc=1.1000
+LoadFactorVarUnfavCalc=1.4000
+ConstructLoadFactorPermFav=1.00
+ConstructLoadFactorVarFav=0.00
+ConstructLoadFactorPermUnfavMultiply=1.35
+ConstructLoadFactorVarUnfavMultiply=1.50
+ConstructLoadFactorPermUnfavCalc=1.3500
+ConstructLoadFactorVarUnfavCalc=1.5000
+EffectFactor=1.00
+EffectFactorVarUnfav=1.00
+MaterialFactorCohesion=1.30
+MaterialFactorUndrainedShearStrength=1.50
+MaterialFactorTgPhi=1.300
+MaterialFactorSubgradeReaction=1.00
+ResistanceFactor=1.00
+GeometryIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryDeltaPassiveSurfaceLevel=0.00
+GeometryDeltaPassivePhreaticLine=0.00
+GeometryDeltaActivePhreaticLine=0.00
+OverallStabilityFactorDrivingMoment=1.00
+OverallStabilityFactorCohesion=1.30
+OverallStabilityFactorTgPhi=1.30
+OverallStabilityFactorUnitWeight=1.00
+FactorRepValuesMDPmax=1.00
+VerticalBalanceGammaMb=1.30
+[END OF PARTIAL FACTORS EC7 SE VK3]
+[END OF CALCULATION OPTIONS]
+
+[PROBABILISTIC CALCULATION OPTIONS]
+{{ probabilistic_calculation_options }}
+[END OF PROBABILISTIC CALCULATION OPTIONS]
+
+[PROBABILISTIC CONTROL PARAMETERS]
+{{ probabilistic_control_parameters }}
+[END OF PROBABILISTIC CONTROL PARAMETERS]
+
+[END OF INPUT FILE]

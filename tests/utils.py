@@ -1,10 +1,16 @@
 import os
 import sys
+from teamcity import is_running_under_teamcity
+import pytest
 
 try:
     from pip import main as pipmain
 except:
     from pip._internal import main as pipmain
+
+only_teamcity = pytest.mark.skipif(
+    not is_running_under_teamcity(), reason="Console test only installed on TC."
+)
 
 
 class TestUtils:

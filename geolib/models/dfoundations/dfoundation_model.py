@@ -1,14 +1,19 @@
+import logging
 from enum import Enum
-from typing import List
+from pathlib import Path
+from subprocess import CompletedProcess, run
+from typing import Type, Union
 
 from pydantic import BaseModel as DataModel
+from pydantic import FilePath
 
 from geolib.geometry import Point
-from geolib.models import BaseModel
-from geolib.soils import Soil
-from geolib.soils.layers import Profile
+from geolib.models import BaseModel, BaseModelStructure
 
+from .dfoundations_parserprovider import DFoundationsParserProvider
+from .internal import DFoundationsStructure
 from .piles import Pile
+from .serializer import DFoundationsInputSerializer
 
 
 class ConstructionSequence(Enum):
@@ -29,6 +34,10 @@ class ModelType(DataModel):
     # ...
 
 
+class Profile(DataModel):
+    pass
+
+
 class BearingPiles(ModelType):
     pass
 
@@ -45,12 +54,33 @@ class DFoundationsModel(BaseModel):
     *.foi files, read *.fod and *.err files.
     """
 
-    @property
-    def parser_provider_type(self):
-        raise NotImplementedError("Not implemented yet.")
+    datastructure: BaseModelStructure = DFoundationsStructure()
 
-    def serialize(self):
-        """TODO: To implement."""
+    @property
+    def parser_provider_type(self) -> Type[DFoundationsParserProvider]:
+        return DFoundationsParserProvider
+
+    @property
+    def console_path(self) -> Path:
+        return Path("DFoundationsConsole/DFoundationsConsole.exe")
+
+    def serialize(self, filename: FilePath):
+        serializer = DFoundationsInputSerializer(ds=self.datastructure.dict())
+        serializer.write(filename)
+        self.filename = filename
+
+    def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
+        """Execute a Model and wait for `timeout` seconds."""
+        if self.filename is None:
+            raise Exception("Set filename or serialize first!")
+        if not self.filename.exists():
+            logging.warning("Serializing before executing.")
+            self.serialize(self.filename)
+        return run(
+            [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
+            timeout=timeout,
+            cwd=self.filename.parent,
+        )
 
     def set_model(self, model: ModelType, sequence: ConstructionSequence, **kwargs):
         """(Re)Set ModelType (Bearing/Tension)(NL/BE) and ConstructionSequence for model."""

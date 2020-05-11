@@ -51,13 +51,13 @@ def get_structure_content(class_type: type) -> list:
     for field_name, field_type in get_filtered_type_hints(class_type):
         if field_name == "id":
             continue
-        field_value = str(randint(0, 100))
+        field_value = str(randint(0, 99))
         if (
             isinstance(field_type, _GenericAlias)
             and field_type._name == "List"
             or issubclass(field_type, list)
         ):
-            field_value = [str(randint(0, 100)), str(randint(0, 100))]
+            field_value = [str(randint(0, 99)), str(randint(0, 99))]
         structure_content.append(field_value)
 
     return structure_content

@@ -139,6 +139,13 @@ class DSeriesStructure(BaseModelStructure):
         return cls(**parsed_structure)
 
 
+class DSheetOutputStructure(DSeriesStructure):
+    @classmethod
+    def parse_text(cls, text: str):
+        text = text.replace("ECHO OF MSHEET INPUT", "INPUT DATA")
+        return super().parse_text(text)
+
+
 class DSerieRepeatedTableStructure(DSeriesStructure):
     @classmethod
     def parse_text(cls, text: str):
@@ -945,7 +952,16 @@ class DSerieParser(BaseParser):
 
 
 def make_key(key: str) -> str:
-    return key.strip().replace(" ", "_").replace("-", "__").lower()
+    return (
+        key.strip()
+        .replace("(", "")
+        .replace(")", "")
+        .replace(" - ", "___")
+        .replace(" ", "_")
+        .replace("-", "__")
+        .replace(".", "____")
+        .lower()
+    )
 
 
 def strip_line_first_element(text: str):

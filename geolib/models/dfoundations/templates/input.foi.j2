@@ -1,0 +1,87 @@
+INPUT FILE FOR D-FOUNDATIONS
+==============================================================================
+COMPANY    : {{ company }}   
+
+DATE       : {{ timestamp.strftime('%d-%m-%Y') }}
+TIME       : {{ timestamp.strftime('%H:%M:%S') }}
+FILENAME   : {{ output_fn }}
+CREATED BY : GEOLib version {{ glversion }}
+
+==========================    BEGINNING OF DATA     ==========================
+[INPUT DATA]
+[VERSION]
+{{ version }}
+[END OF VERSION]
+
+[VERSION EXTERNALS]
+{{ version_externals }}
+[END OF VERSION EXTERNALS]
+
+[MODEL]
+{{ model }}
+[END OF MODEL]
+[SOIL COLLECTION]
+{{ soil_collection }}
+[END OF SOIL COLLECTION]
+
+
+[RUN IDENTIFICATION]
+
+
+{{ run_identification }}
+
+[END OF RUN IDENTIFICATION]
+[CPT LIST]
+{{ cpt_list }}
+[END OF CPT LIST]
+
+[PROFILES]
+{{ profiles }}
+[END OF PROFILES]
+[SLOPES]
+{{ slopes }}
+[END OF SLOPES]
+[TYPES - BEARING PILES]
+{{ types___bearing_piles }}
+[END OF TYPES - BEARING PILES]
+[TYPES - BEARING PILES BELGIAN]
+{{ types___bearing_piles_belgian }}
+[END OF TYPES - BEARING PILES BELGIAN]
+[TYPES - TENSION PILES (CUR)]
+{{ types___tension_piles_cur }}
+[END OF TYPES - TENSION PILES (CUR)]
+[TYPES - SHALLOW FOUNDATIONS]
+{{ types___shallow_foundations }}
+[END OF TYPES - SHALLOW FOUNDATIONS]
+[LOADS]
+{{ loads }}
+[END OF LOADS]
+[POSITIONS - BEARING PILES]
+{{ positions___bearing_piles }}
+[END OF POSITIONS - BEARING PILES]
+[POSITIONS - BEARING PILES BELGIAN]
+{{ positions___bearing_piles_belgian }}
+[END OF POSITIONS - BEARING PILES BELGIAN]
+[POSITIONS - TENSION PILES (CUR)]
+{{ positions___tension_piles_cur }}
+[END OF POSITIONS - TENSION PILES (CUR)]
+[POSITIONS - SHALLOW FOUNDATIONS]
+{{ positions___shallow_foundations }}
+[END OF POSITIONS - SHALLOW FOUNDATIONS]
+[CALCULATION OPTIONS]
+{{ calculation_options }}
+[END OF CALCULATION OPTIONS]
+[CALCULATIONTYPE]
+{{ calculationtype }}
+[END OF CALCULATIONTYPE]
+[PRELIMINARY DESIGN]
+{{ preliminary_design }}
+[END OF PRELIMINARY DESIGN]
+[DE BEER]
+{{ de_beer }}
+[END OF DE BEER]
+[LOCATION MAP]
+{{ location_map }}
+[END OF LOCATION MAP]
+
+[END OF INPUT DATA]
