@@ -9,6 +9,7 @@ from geolib.models.dseries_parser import (
     DSeriesTreeStructure,
     DSeriesListTreeStructureCollection,
     DSeriesStructure,
+    DSeriesKeyValueSubStructure,
     make_key,
 )
 
@@ -33,8 +34,7 @@ class DummyListTreeStructureCollection(DSeriesListTreeStructureCollection):
 class TestDSeriesTreeStructure:
     @pytest.mark.unittest
     def test_given_unmatchedpropertyvaluestext_when_parse_text_lines_then_raises_valueerror(
-        self,
-    ):
+            self):
         # 1. Set up test data
         text_lines = [["2"], ["4"], ["2"]]
         expected_error = f"Expected 4 values for property list_property."
@@ -198,8 +198,54 @@ class TestDSeriesTreeStructure:
             parsed_structure.list_property == values
         ), "Parsed values don't match expectations."
 
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "separator",
+        [
+            pytest.param(":", id="Two points"),
+            pytest.param("=", id="Equal")]
+    )
+    def test_given_structuretext_with_multiplesubstructures_property_then_allextracted(self, separator: str):
+        class tp_test_simple_element(DSeriesTreeStructure):
+            name: str
+            val_1: float
+
+        class tp_test_composite_element(DSeriesTreeStructure):
+            struct_name: str
+            val_0: float
+            composite_val: List[tp_test_simple_element]
+
+        # 1. Define test data.
+        text_to_parse = "" + \
+            "Struct_1\n" + \
+            f"4.2 {separator} val_0\n" + \
+            f"2 {separator} composite_val\n" + \
+            "SimpleElement \n" + \
+            f"42 {separator} val_1\n" + \
+            "OtherElement \n" + \
+            f"24 {separator} val_1\n"
+
+        # 2. Run test.
+        struct_result = \
+            tp_test_composite_element.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert isinstance(struct_result, tp_test_composite_element)
+        assert struct_result.struct_name == "Struct_1"
+        assert struct_result.val_0 == 4.2
+        assert len(struct_result.composite_val) == 2
+        first_element = struct_result.composite_val[0]
+        assert isinstance(first_element, tp_test_simple_element)
+        assert first_element.name == "SimpleElement"
+        assert first_element.val_1 == 42
+        last_element = struct_result.composite_val[1]
+        assert isinstance(last_element, tp_test_simple_element)
+        assert last_element.name == "OtherElement"
+        assert last_element.val_1 == 24
+
 
 class TestDSeriesListTreeStructureCollection:
+
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "separator", [pytest.param(" ", id="Space"), pytest.param("\t", id="Tabulated")]
@@ -249,6 +295,91 @@ class TestDSeriesListTreeStructureCollection:
             assert structure_content[structure_id] == parsed_as_dict["list_property"], (
                 "" + f"Structure {structure_id} has not been parsed correctly."
             )
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "separator",
+        [
+            pytest.param(":", id="Two points"),
+            pytest.param("=", id="Equal")]
+    )
+    def test_given_textwith_simplestructure_then_extracted(self, separator: str):
+        class tp_test_element(DSeriesTreeStructure):
+            struct_name: str
+            val_1: float
+            val_2: float
+
+        class tp_test_treecollection(DSeriesListTreeStructureCollection):
+            tree_collection : List[tp_test_element]
+
+        # 1. Define test data.
+        text_to_parse = "" + \
+            "1 = number of items\n" + \
+            "Struct_1\n" + \
+            f"4.2 {separator} val_1\n" + \
+            f"2.4 {separator} val_2\n"
+
+        # 2. Run test.
+        struct_result = \
+            tp_test_treecollection.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert isinstance(struct_result, tp_test_treecollection)
+        assert len(struct_result.tree_collection) == 1
+        read_element = struct_result.tree_collection[0]
+        assert isinstance(read_element, tp_test_element)
+        assert read_element.val_1 == 4.2
+        assert read_element.val_2 == 2.4
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "separator",
+        [
+            pytest.param(":", id="Two points"),
+            pytest.param("=", id="Equal")])
+    def test_given_textwith_complexstructure_then_extracted(self, separator: str):
+        class tp_test_simplestruct(DSeriesTreeStructure):
+            prop_1: float
+            prop_2: float
+
+        class tp_test_collection(DSeriesListTreeStructureCollection):
+            tp_collection: List[tp_test_simplestruct]
+
+        class tp_test_compositestruct(DSeriesTreeStructure):
+            struct_name: str
+            val_1: float
+            val_2: float
+            extra_struct: tp_test_collection
+
+        class tp_test_treecollection(DSeriesListTreeStructureCollection):
+            tree_collection : List[tp_test_compositestruct]
+
+        # 1. Define test data.
+        text_to_parse = "" + \
+            "1 = number of items\n" + \
+            "Struct_1\n" + \
+            f"4.2 {separator} val_1\n" + \
+            f"2.4 {separator} val_2\n" + \
+            f"1{separator} extra_struct \n" + \
+            f"24{separator} prop_1 \n" + \
+            f"42{separator} prop_2"
+
+        # 2. Run test.
+        struct_result = \
+            tp_test_treecollection.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert isinstance(struct_result, tp_test_treecollection)
+        assert len(struct_result.tree_collection) == 1
+        read_element = struct_result.tree_collection[0]
+        assert isinstance(read_element, tp_test_compositestruct)
+        assert read_element.val_1 == 4.2
+        assert read_element.val_2 == 2.4
+        assert len(read_element.extra_struct.tp_collection) == 1
+        substruct = read_element.extra_struct.tp_collection[0]
+        assert isinstance(substruct, tp_test_simplestruct)
+        assert substruct.prop_1 == 24
+        assert substruct.prop_2 == 42
 
     @pytest.mark.unittest
     def test_given_unmatchedstructurestext_when_parse_then_raises_valueerror(self):

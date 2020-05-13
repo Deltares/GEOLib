@@ -27,6 +27,42 @@ from geolib.models.dseries_parser import (
 DataClass.Config.arbitrary_types_allowed = True
 
 
+class Layer(DSeriesTreeStructure):
+    name: str
+    material: int
+    top_level: float
+    excess_pore_pressure_top: float
+    excess_pore_pressure_bottom: float
+    ocr_value: float
+    reduction_core_resistance: float
+
+
+class Profile(DSeriesTreeStructure):
+    name: str
+    matching_cpt: int
+    x_coordinate: float
+    y_coordinate: float
+    phreatic_level: float
+    pile_tip_level: float
+    overconsolidation_ratio: float
+    top_of_positive_skin_friction: float
+    bottom_of_negative_skin_friction: float
+    expected_ground_level_settlement: float
+    placement_depth_of_foundation: float
+    concentration_value_frohlich: float
+    top_tension_zone: float
+    reduction_of_core_resistance: float
+    excavation_level: float
+    excavation_width_infinite: bool
+    excavation_length_infinite: bool
+    distance_edge_pile_to_excavation_boundary: float
+    layers: List[Layer] = []
+
+
+class Profiles(DSeriesListTreeStructureCollection):
+    profiles: List[Profile] = []
+
+
 class DFoundationsInputStructure(DSeriesStructure):
     """Representation of complete .foi file."""
 
