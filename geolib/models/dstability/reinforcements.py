@@ -33,7 +33,7 @@ class Nail(DStabilityReinforcement):
     critical_angle: float = 0.0
     max_pull_force: float = 0.0
     plastic_moment: float = 0.0
-    bendingstiffness: confloat(gt=0) = 0.0
+    bending_stiffness: confloat(gt=0) = 0.0
     use_facing: bool = False
     use_lateral_stress: bool = False  # TODO set on wether or not lateralstresses are provided?
     use_shear_stress: bool = False  # TODO set on wether or not shearstresses are provided?

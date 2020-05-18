@@ -7,12 +7,12 @@ from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.dstability_parserprovider import (
     DStabilityParser,
-    DStabilityZipParser,
     DStabilityParserProvider,
+    DStabilityZipParser,
 )
 from geolib.models.dstability.serializer import (
-    DStabilityInputZipSerializer,
     DStabilityInputSerializer,
+    DStabilityInputZipSerializer,
 )
 from tests.utils import TestUtils
 
@@ -23,7 +23,9 @@ class TestDStabilityInputParser:
         # 1. Set up test model
         input_parser = DStabilityParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
-
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir("dstability/serialized")
+        )
         # 2. Verify initial expectations
         assert os.path.exists(test_filepath), "Testing directory not found."
 
@@ -34,7 +36,7 @@ class TestDStabilityInputParser:
         # 4. Verify final expectations.
         assert input_structure is not None
         data = input_structure.json(indent=4)
-        with open("dstability_parsed_input.json", "w") as io:
+        with open(test_output_filepath / "dstability_parsed_input.json", "w") as io:
             io.write(data)
 
     @pytest.mark.integrationtest
@@ -45,7 +47,9 @@ class TestDStabilityInputParser:
             Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
             / "Tutorial.stix"
         )
-
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir("dstability/serialized")
+        )
         # 2. Verify initial expectations
         assert test_filepath.exists(), "Test .stix not found."
 
@@ -56,7 +60,7 @@ class TestDStabilityInputParser:
         # 4. Verify final expectations.
         assert input_structure is not None
         data = input_structure.json(indent=4)
-        with open("dstability_parsed_input_stix.json", "w") as io:
+        with open(test_output_filepath / "dstability_parsed_input_stix.json", "w") as io:
             io.write(data)
 
     @pytest.mark.integrationtest
@@ -85,8 +89,8 @@ class TestDStabilityInputParser:
         # 1. Set up test model
         input_parser = DStabilityParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
-        test_output_filepath = (
-            Path(TestUtils.get_output_test_data_dir("dstability")) / "serialized/"
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir("dstability/serialized")
         )
 
         # 3. Run test.

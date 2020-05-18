@@ -1,5 +1,6 @@
 import logging
 from enum import Enum, IntEnum
+from inspect import cleandoc
 from math import isclose
 from operator import attrgetter
 from typing import Dict, List, Optional, Union, Tuple, Any
@@ -12,6 +13,7 @@ from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.geometry.one import Point
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dsettlement.internal_soil import Soil_Internal
+from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
     DSeriesKeyValueSubStructure,
     DSeriesListSubStructure,
@@ -332,7 +334,14 @@ class GeometryData(DSeriesStructure):
     distribution_boundaries: str = ""
     piezo_lines: PiezoLines = PiezoLines()
     phreatic_line: PhreaticLine = PhreaticLine()
-    world_co__ordinates: str = ""
+    world_co__ordinates: str = cleandoc(
+        """
+          0.000 - X world 1 -
+          0.000 - Y world 1 -
+          0.000 - X world 2 -
+          0.000 - Y world 2 -
+          """
+    )
     layers: Layers = Layers()
     layerloads: str = ""
 
@@ -381,18 +390,18 @@ class PointForLoad(DataClass):
     belong in [POINTS]."""
 
     X: float
-    Z: float
+    Y: float
 
     @classmethod
     def from_point(cls, p: Point):
-        return cls(X=p.x, Z=p.y)
+        return cls(X=p.x, Y=p.z)
 
 
 class NonUniformLoad(DataClass):
     time: int = 0
     gammadry: float = 10
     gammawet: float = 10
-    temporary: bool
+    temporary: Bool = False
     endtime: int = 0
     points: List[PointForLoad]
 
@@ -534,7 +543,7 @@ class ModelBool(Enum):
 
 
 class Model(DSeriesNoParseSubStructure):
-    dimension: Dimension = Dimension.ONE_D
+    dimension: Dimension = Dimension.TWO_D
     consolidation_model: ConsolidationModel = ConsolidationModel.DARCY
     soil_model: SoilModel = SoilModel.NEN_KOPPEJAN
     strain_type: StrainType = StrainType.LINEAR
@@ -625,24 +634,139 @@ class DSettlementStructure(DSeriesStructure):
     run_identification: str = ""
     model: Union[Model, str] = Model()
     verticals: Union[Verticals, str] = Verticals()
-    water: str = ""
+    water: Union[float, str] = 9.81
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
-    water_loads: str = ""
+    water_loads: str = "    0 = number of items"
     other_loads: Union[OtherLoads, str] = OtherLoads()
     calculation_options: Union[CalculationOptions, str] = CalculationOptions()
     residual_times: Union[ResidualTimes, str] = ResidualTimes()
-    filter_band_width: str = ""
-    pore_pressure_meters: str = ""
-    non__uniform_loads_pore_pressures: str = ""
-    other_loads_pore_pressures: str = ""
-    calculation_options_pore_pressures: str = ""
-    vertical_drain: str = ""
-    probabilistic_data: str = ""
-    probabilistic_defaults: str = ""
-    fit_options: str = ""
-    fit_calculation: str = ""
-    eps: str = ""
-    fit: str = ""
+    filter_band_width: str = cleandoc(
+        """
+        1 : Number of items
+        0.05
+        """
+    )
+    pore_pressure_meters: str = "    0 = number of items"
+    non__uniform_loads_pore_pressures: str = "    0 = number of items"
+    other_loads_pore_pressures: str = "    0 = number of items"
+    calculation_options_pore_pressures: str = cleandoc(
+        """
+        1 : Shear stress = TRUE
+        1 : calculation method of lateral stress ratio (k0) = Nu
+        """
+    )
+    vertical_drain: str = cleandoc(
+        """
+        0 : Flow type = Radial
+            0.000 = Bottom position
+            0.000 = Position of the drain pipe
+        -1.700E+0308 = Position of the leftmost drain
+        1.700E+0308 = Position of the rightmost drain
+            1.000 = Center to center distance
+            0.100 = Diameter
+            0.100 = Width
+            0.003 = Thickness
+        0 = Grid
+            0.000 = Begin time
+            0.000 = End time
+            35.000 = Under pressure for strips and columns
+            0.000 = Under pressure for sand wall
+            0.000 = Start of drainage
+            0.000 = Phreatic level in drain
+            0.000 = Water head during dewatering
+            10.00 = Tube pressure during dewatering
+        0 : Flow type = Off
+        1 = number of items
+            0.000       40.000      0.000      0.00 = Time, Under pressure, Water level, Tube pressure
+        """
+    )
+    probabilistic_data: str = cleandoc(
+        """
+        Reliability X Co-ordinate=0.000
+        Residual Settlement=1.00
+        Maximum Drawings=100
+        Maximum Iterations=15
+        Reliability Type=0
+        Is Reliability Calculation=0
+        """
+    )
+    probabilistic_defaults: str = cleandoc(
+        """
+        ProbDefGamDryVar=0.05
+        ProbDefGamWetVar=0.05
+        ProbDefPOPVar=0.25
+        ProbDefOCRVar=0.25
+        ProbDefPcVar=0.25
+        ProbDefPermeabilityVerVar=2.50
+        ProbDefRatioHorVerPermeabilityCvVar=0.25
+        ProbDefCvVar=0.50
+        ProbDefCpVar=0.30
+        ProbDefCp1Var=0.30
+        ProbDefCsVar=0.30
+        ProbDefCs1Var=0.30
+        ProbDefApVar=0.30
+        ProbDefASecVar=0.30
+        ProbDefRRCrVar=0.25
+        ProbDefCRCcVar=0.25
+        ProbDefCaVar=0.25
+        ProbDefPriCompIndexVar=0.25
+        ProbDefSecCompIndexVar=0.25
+        ProbDefSecCompRateVar=0.25
+        ProbDefCpCor=0.01
+        ProbDefCsCor=0.01
+        ProbDefCs1Cor=0.01
+        ProbDefApCor=0.01
+        ProbDefASecCor=0.01
+        ProbDefRRCrCor=0.01
+        ProbDefCaCor=0.01
+        ProbDefPriCompIndexCor=0.01
+        ProbDefSecCompRateCor=0.01
+        ProbDefGamDryDist=2
+        ProbDefGamWetDist=2
+        ProbDefPOPDist=2
+        ProbDefOCRDist=2
+        ProbDefPcDist=2
+        ProbDefPermeabilityVerDist=2
+        ProbDefRatioHorVerPermeabilityCvDist=2
+        ProbDefCvDist=2
+        ProbDefCpDist=2
+        ProbDefCp1Dist=2
+        ProbDefCsDist=2
+        ProbDefCs1Dist=2
+        ProbDefApDist=2
+        ProbDefASecDist=2
+        ProbDefRRCrDist=2
+        ProbDefCRCcDist=2
+        ProbDefCaDist=2
+        ProbDefPriCompIndexDist=2
+        ProbDefSecCompIndexDist=2
+        ProbDefSecCompRateDist=2
+        ProbDefLayerStd=0.10
+        ProbDefLayerDist=0
+        """
+    )
+    fit_options: str = cleandoc(
+        """
+        Fit Maximum Number of Iterations=5
+        Fit Required Iteration Accuracy=0.0001000000
+        Fit Required Correlation Coefficient=0.990
+        """
+    )
+    fit_calculation: str = cleandoc(
+        """
+        Is Fit Calculation=0
+        Fit Vertical Number=-1
+        """
+    )
+    eps: str = cleandoc(
+        """
+        0.00 = Dry unit weight
+        0.00 = Saturated unit weight
+        0.00 = Load
+        0.00 = Height above surface
+        """
+    )
+    fit: str = "    0 = number of items"
 
     def validate_options(self):
         """

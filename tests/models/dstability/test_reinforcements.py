@@ -185,7 +185,7 @@ class TestNail:
             'length',
             'diameter',
             'grout_diameter',
-            'bendingstiffness',
+            'bending_stiffness',
         }
         invalid_values = {0, -1}
         location = Point(x=0, z=0)

@@ -64,23 +64,6 @@ class TestDStabilityStates:
         _ = dstability_model.add_state_line(state_line_points, [dstability_state_line_point])
         assert isinstance(dstability_model.datastructure.states[0].StateLines[0], PersistableStateLine) 
 
-    @pytest.mark.unittest
-    def test_dstability_add_state_line_invalid_point_raises(self):
-        dstability_model = DStabilityModel(filename=None)
-
-        _ = dstability_model.add_soil(Soil(code="Peat"))
-        _ = dstability_model.add_layer(points=self.points, soil_code="Peat")
-
-        state_line_points = [Point(x=-10., z=2.0), Point(x=50., z=2.0)]
-        dstability_state_line_point = DStabilityStateLinePoint(
-            id=1,
-            above=DStabilityStress(state_type=StateType.OCR, ocr=10.0),
-            below=DStabilityStress(state_type=StateType.POP, pop=20.0),
-            x=0
-        )
-
-        with pytest.raises(ValueError):
-            _ = dstability_model.add_state_line(state_line_points, [dstability_state_line_point])
 
     # todo > add test to read the example and see if the statepoint and lines are read
     @pytest.mark.unittest

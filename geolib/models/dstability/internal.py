@@ -18,6 +18,18 @@ BaseModelStructure.Config.arbitrary_types_allowed = True
 DataClass.Config.arbitrary_types_allowed = True
 
 
+class AnalysisTypeEnum(Enum):
+    BISHOP = "Bishop"
+    BISHOP_BRUTE_FORCE = "BishopBruteForce"
+    SPENCER = "Spencer"
+    SPENCER_GENETIC = "SpencerGenetic"
+    UPLIFT_VAN = "UpliftVan"
+    UPLIFT_VAN_PARTICLE_SWARM = "UpliftVanParticleSwarm"
+
+
+AnalysisType = AnalysisTypeEnum
+
+
 class BishopSlipCircleResult(DataClass):
     x: float
     z: float
@@ -49,8 +61,8 @@ class DStabilitySubStructure(BaseModelStructure):
 
 # waternet schema
 class PersistablePoint(DataClass):
-    X: Optional[float]
-    Z: Optional[float]
+    X: Optional[float] = "NaN"
+    Z: Optional[float] = "NaN"
 
 
 class PersistableHeadLine(DataClass):
@@ -76,8 +88,12 @@ class Waternet(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "waternets"
 
+    @classmethod
+    def structure_name(cls) -> str:
+        return "waternets"
+
     Id: Optional[str]
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     PhreaticLineId: Optional[str]
     HeadLines: List[PersistableHeadLine] = []
     ReferenceLines: List[PersistableReferenceLine] = []
@@ -149,21 +165,21 @@ class Waternet(DStabilitySubStructure):
 
 
 class PersistableDitchCharacteristics(DataClass):
-    DitchBottomEmbankmentSide: Optional[float]
-    DitchBottomLandSide: Optional[float]
-    DitchEmbankmentSide: Optional[float]
-    DitchLandSide: Optional[float]
+    DitchBottomEmbankmentSide: Optional[float] = "NaN"
+    DitchBottomLandSide: Optional[float] = "NaN"
+    DitchEmbankmentSide: Optional[float] = "NaN"
+    DitchLandSide: Optional[float] = "NaN"
 
 
 class PersistableEmbankmentCharacteristics(DataClass):
-    EmbankmentToeLandSide: Optional[float]
-    EmbankmentToeWaterSide: Optional[float]
-    EmbankmentTopLandSide: Optional[float]
-    EmbankmentTopWaterSide: Optional[float]
-    ShoulderBaseLandSide: Optional[float]
+    EmbankmentToeLandSide: Optional[float] = "NaN"
+    EmbankmentToeWaterSide: Optional[float] = "NaN"
+    EmbankmentTopLandSide: Optional[float] = "NaN"
+    EmbankmentTopWaterSide: Optional[float] = "NaN"
+    ShoulderBaseLandSide: Optional[float] = "NaN"
 
 
-class EmbankmentSoilScenario(str, Enum):
+class EmbankmentSoilScenarioEnum(str, Enum):
     CLAY_EMBANKMENT_ON_CLAY = "ClayEmbankmentOnClay"
     CLAY_EMBANKMENT_ON_SAND = "ClayEmbankmentOnSand"
     SAND_EMBANKMENT_ON_CLAY = "SandEmbankmentOnClay"
@@ -173,41 +189,46 @@ class EmbankmentSoilScenario(str, Enum):
 class WaternetCreatorSettings(DStabilitySubStructure):
     """waternetcreatorsettings/waternetcreatorsettings_x.json"""
 
-    AdjustForUplift: Optional[bool]
+    AdjustForUplift: Optional[bool] = False
     AquiferInsideAquitardLayerId: Optional[str]
     AquiferLayerId: Optional[str]
-    AquiferLayerInsideAquitardLeakageLengthInwards: Optional[float]
-    AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[float]
-    AquitardHeadLandSide: Optional[float]
-    AquitardHeadWaterSide: Optional[float]
-    ContentVersion: Optional[str]
-    DitchCharacteristics: Optional[PersistableDitchCharacteristics]
-    DrainageConstruction: Optional[PersistablePoint]
-    EmbankmentCharacteristics: Optional[PersistableEmbankmentCharacteristics]
-    EmbankmentSoilScenario: Optional[EmbankmentSoilScenario]
+    AquiferLayerInsideAquitardLeakageLengthInwards: Optional[float] = "NaN"
+    AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[float] = "NaN"
+    AquitardHeadLandSide: Optional[float] = "NaN"
+    AquitardHeadWaterSide: Optional[float] = "NaN"
+    ContentVersion: Optional[str] = "1"
+    DitchCharacteristics: Optional[
+        PersistableDitchCharacteristics
+    ] = PersistableDitchCharacteristics()
+    DrainageConstruction: Optional[PersistablePoint] = PersistablePoint()
+    EmbankmentCharacteristics: Optional[
+        PersistableEmbankmentCharacteristics
+    ] = PersistableEmbankmentCharacteristics()
+    EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = "ClayEmbankmentOnClay"
     Id: Optional[str]
-    InitialLevelEmbankmentTopLandSide: Optional[float]
-    InitialLevelEmbankmentTopWaterSide: Optional[float]
-    IntrusionLength: Optional[float]
-    IsAquiferLayerInsideAquitard: Optional[bool]
-    IsDitchPresent: Optional[bool]
-    IsDrainageConstructionPresent: Optional[bool]
-    MeanWaterLevel: Optional[float]
-    NormativeWaterLevel: Optional[float]
-    OffsetEmbankmentToeLandSide: Optional[float]
-    OffsetEmbankmentTopLandSide: Optional[float]
-    OffsetEmbankmentTopWaterSide: Optional[float]
-    OffsetShoulderBaseLandSide: Optional[float]
-    PleistoceneLeakageLengthInwards: Optional[float]
-    PleistoceneLeakageLengthOutwards: Optional[float]
-    UseDefaultOffsets: Optional[bool]
-    WaterLevelHinterland: Optional[float]
+    InitialLevelEmbankmentTopLandSide: Optional[float] = "NaN"
+    InitialLevelEmbankmentTopWaterSide: Optional[float] = "NaN"
+    IntrusionLength: Optional[float] = "NaN"
+    IsAquiferLayerInsideAquitard: Optional[bool] = False
+    IsDitchPresent: Optional[bool] = False
+    IsDrainageConstructionPresent: Optional[bool] = False
+    MeanWaterLevel: Optional[float] = "NaN"
+    NormativeWaterLevel: Optional[float] = "NaN"
+    OffsetEmbankmentToeLandSide: Optional[float] = "NaN"
+    OffsetEmbankmentTopLandSide: Optional[float] = "NaN"
+    OffsetEmbankmentTopWaterSide: Optional[float] = "NaN"
+    OffsetShoulderBaseLandSide: Optional[float] = "NaN"
+    PleistoceneLeakageLengthInwards: Optional[float] = "NaN"
+    PleistoceneLeakageLengthOutwards: Optional[float] = "NaN"
+    UseDefaultOffsets: Optional[bool] = True
+    WaterLevelHinterland: Optional[float] = "NaN"
 
     @classmethod
     def structure_group(cls) -> str:
         return "waternetcreatorsettings"
 
 
+# WaternetCreatorSettings.update_forward_refs()
 # stateschema.json
 
 
@@ -266,7 +287,7 @@ class State(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "states"
 
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     Id: Optional[str]
     StateLines: List[PersistableStateLine] = []
     StatePoints: List[PersistableStatePoint] = []
@@ -301,9 +322,9 @@ class StateCorrelation(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "statecorrelations"
 
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     Id: Optional[str]
-    StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]]
+    StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
 
 
 class Stage(DStabilitySubStructure):
@@ -317,8 +338,9 @@ class Stage(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "stages"
 
+    AnalysisType: Optional[AnalysisTypeEnum] = AnalysisType.BISHOP_BRUTE_FORCE
     CalculationSettingsId: Optional[str]
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     DecorationsId: Optional[str]
     GeometryId: Optional[str]
     Id: Optional[str]
@@ -326,7 +348,7 @@ class Stage(DStabilitySubStructure):
     LoadsId: Optional[str]
     Notes: Optional[str]
     ReinforcementsId: Optional[str]
-    ResultId: Optional[str]
+    ResultId: Optional[str] = None
     SoilLayersId: Optional[str]
     StateCorrelationsId: Optional[str]
     StateId: Optional[str]
@@ -355,8 +377,8 @@ class PersistableSoilVisualization(DataClass):
 
 
 class SoilVisualisation(DataClass):
-    ContentVersion: Optional[str]
-    SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]]
+    ContentVersion: Optional[str] = "1"
+    SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
 
 
 class PersistableSoilLayer(DataClass):
@@ -375,7 +397,7 @@ class SoilLayerCollection(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "soillayers"
 
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     Id: Optional[str]
     SoilLayers: List[PersistableSoilLayer] = []
 
@@ -392,8 +414,8 @@ class PersistableSoilCorrelation(DataClass):
 class SoilCorrelation(DStabilitySubStructure):
     """soilcorrelations.json"""
 
-    ContentVersion: Optional[str]
-    SoilCorrelations: Optional[List[Optional[PersistableSoilCorrelation]]]
+    ContentVersion: Optional[str] = "1"
+    SoilCorrelations: Optional[List[Optional[PersistableSoilCorrelation]]] = []
 
     @classmethod
     def structure_name(cls) -> str:
@@ -432,7 +454,7 @@ class PersistableSoil(DataClass):
 class SoilCollection(DStabilitySubStructure):
     """soils.json"""
 
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     Soils: List[PersistableSoil] = [
         PersistableSoil(
             Id="2",
@@ -663,29 +685,29 @@ class PersistableStressAtDistance(DataClass):
 
 
 class PersistableNail(DataClass):
-    BendingStiffness: Optional[float]
-    CriticalAngle: Optional[float]
+    BendingStiffness: Optional[float] = 0.0
+    CriticalAngle: Optional[float] = 0.0
     Diameter: Optional[float]
-    Direction: Optional[float]
-    GroutDiameter: Optional[float]
-    HorizontalSpacing: Optional[float]
+    Direction: Optional[float] = 0.0
+    GroutDiameter: Optional[float] = 0.0
+    HorizontalSpacing: Optional[float] = 0.0
     Label: Optional[str]
-    LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]]
+    LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
     Length: Optional[float]
     Location: Optional[PersistablePoint]
-    MaxPullForce: Optional[float]
-    PlasticMoment: Optional[float]
-    ShearStresses: Optional[List[Optional[PersistableStressAtDistance]]]
-    UseFacing: Optional[bool]
-    UseLateralStress: Optional[bool]
-    UseShearStress: Optional[bool]
+    MaxPullForce: Optional[float] = 0.0
+    PlasticMoment: Optional[float] = 0.0
+    ShearStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
+    UseFacing: Optional[bool] = False
+    UseLateralStress: Optional[bool] = False
+    UseShearStress: Optional[bool] = False
 
 
 class Reinforcements(DStabilitySubStructure):
     """reinforcements/reinforcements_x.json"""
 
     Id: Optional[str]
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     ForbiddenLines: List[PersistableForbiddenLine] = []
     Geotextiles: List[PersistableGeotextile] = []
     Nails: List[PersistableNail] = []
@@ -702,21 +724,27 @@ class Reinforcements(DStabilitySubStructure):
 class ProjectInfo(DStabilitySubStructure):
     """projectinfo.json."""
 
-    Analyst: Optional[str]
-    ContentVersion: Optional[str]
+    Analyst: Optional[str] = ""
+    ContentVersion: Optional[str] = "1"
     Created: Optional[date] = datetime.now().date()
-    CrossSection: Optional[str]
+    CrossSection: Optional[str] = ""
     Date: Optional[date] = datetime.now().date()
     IsDataValidated: Optional[bool] = False
     LastModified: Optional[date] = datetime.now().date()
     LastModifier: Optional[str] = "GEOLib"
-    Path: Optional[str]
-    Project: Optional[str]
+    Path: Optional[str] = ""
+    Project: Optional[str] = ""
     Remarks: Optional[str] = f"Created with GEOLib {version}"
 
     @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
     def nltime(cls, datestring):
-        return datetime.strptime(datestring, "%d-%M-%Y").date()
+        if datestring:
+            position = datestring.index(max(datestring.split("-"), key=len))
+            if position > 0:
+                date = datetime.strptime(datestring, "%d-%M-%Y").date()
+            else:
+                date = datetime.strptime(datestring, "%Y-%M-%d").date()
+            return date
 
 
 class PersistableBondStress(DataClass):
@@ -725,7 +753,7 @@ class PersistableBondStress(DataClass):
 
 
 class PersistableNailPropertiesForSoil(DataClass):
-    BondStresses: Optional[List[Optional[PersistableBondStress]]]
+    BondStresses: Optional[List[Optional[PersistableBondStress]]] = []
     CompressionRatio: Optional[float]
     RheologicalCoefficient: Optional[float]
     SoilId: Optional[str]
@@ -734,8 +762,10 @@ class PersistableNailPropertiesForSoil(DataClass):
 class NailProperties(DStabilitySubStructure):
     """nailpropertiesforsoils.json"""
 
-    ContentVersion: Optional[str]
-    NailPropertiesForSoils: Optional[List[Optional[PersistableNailPropertiesForSoil]]]
+    ContentVersion: Optional[str] = "1"
+    NailPropertiesForSoils: Optional[
+        List[Optional[PersistableNailPropertiesForSoil]]
+    ] = []
 
     @classmethod
     def structure_name(cls) -> str:
@@ -748,21 +778,21 @@ class PersistableConsolidation(DataClass):
 
 
 class PersistableEarthquake(DataClass):
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]]
-    FreeWaterFactor: Optional[float]
-    HorizontalFactor: Optional[float]
-    IsEnabled: Optional[bool]
-    VerticalFactor: Optional[float]
+    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
+    FreeWaterFactor: Optional[float] = 0.0
+    HorizontalFactor: Optional[float] = 0.0
+    IsEnabled: Optional[bool] = False
+    VerticalFactor: Optional[float] = 0.0
 
 
 class PersistableLayerLoad(DataClass):
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]]
+    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     LayerId: Optional[str]
 
 
 class PersistableLineLoad(DataClass):
     Angle: Optional[float]
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]]
+    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     Label: Optional[str]
     Location: Optional[PersistablePoint]
     Magnitude: Optional[float]
@@ -778,7 +808,7 @@ class PersistableTree(DataClass):
 
 
 class PersistableUniformLoad(DataClass):
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]]
+    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     End: Optional[float]
     Label: Optional[str]
     Magnitude: Optional[float]
@@ -793,8 +823,8 @@ class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
     Id: Optional[str]
-    ContentVersion: Optional[str]
-    Earthquake: Optional[PersistableEarthquake]
+    ContentVersion: Optional[str] = "1"
+    Earthquake: Optional[PersistableEarthquake] = PersistableEarthquake()
     LayerLoads: Optional[List[Optional[PersistableLayerLoad]]] = []
     LineLoads: Optional[List[Optional[PersistableLineLoad]]] = []
     Trees: Optional[List[Optional[PersistableTree]]] = []
@@ -830,7 +860,7 @@ class PersistableLayer(DataClass):
     Notes: Optional[str]
     Points: conlist(PersistablePoint, min_items=3)
 
-    @validator("Points")
+    @validator("Points", pre=True, allow_reuse=True)
     def polygon_checks(cls, points):
         """
         Todo:
@@ -851,7 +881,7 @@ class Geometry(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "geometries"
 
-    ContentVersion: Optional[str]
+    ContentVersion: Optional[str] = "1"
     Id: Optional[str]
     Layers: List[PersistableLayer] = []
 
@@ -925,172 +955,191 @@ class PersistableExcavation(DataClass):
 class Decorations(DStabilitySubStructure):
     """decorations/decorations_x.json."""
 
-    Berms: Optional[List[Optional[PersistableBerm]]]
-    ContentVersion: Optional[str]
-    Excavations: Optional[List[Optional[PersistableExcavation]]]
+    Berms: Optional[List[Optional[PersistableBerm]]] = []
+    ContentVersion: Optional[str] = "1"
+    Excavations: Optional[List[Optional[PersistableExcavation]]] = []
     Id: Optional[str]
 
 
 # Calculation Settings
 
 
-class AnalysisType(Enum):
-    BISHOP = "Bishop"
-    BISHOP_BRUTE_FORCE = "BishopBruteForce"
-    SPENCER = "Spencer"
-    SPENCER_GENETIC = "SpencerGenetic"
-    UPLIFT_VAN = "UpliftVan"
-    UPLIFT_VAN_PARTICLE_SWARM = "UpliftVanParticleSwarm"
-
-
 class PersistableCircle(DataClass):
-    Center: Optional[PersistablePoint]
-    Radius: Optional[float]
+    Center: Optional[PersistablePoint] = PersistablePoint()
+    Radius: Optional[float] = "NaN"
 
 
 class PersistableBishopSettings(DataClass):
-    Circle: Optional[PersistableCircle]
+    Circle: Optional[PersistableCircle] = PersistableCircle()
 
 
 class PersistableGridEnhancements(DataClass):
-    ExtrapolateSearchSpace: Optional[bool]
+    ExtrapolateSearchSpace: Optional[bool] = True
 
 
 class NullablePersistablePoint(DataClass):
-    X: Optional[float]
-    Z: Optional[float]
+    X: Optional[float] = "NaN"
+    Z: Optional[float] = "NaN"
 
 
 class PersistableSearchGrid(DataClass):
-    BottomLeft: Optional[NullablePersistablePoint]
-    NumberOfPointsInX: Optional[int]
-    NumberOfPointsInZ: Optional[int]
-    Space: Optional[float]
+    BottomLeft: Optional[NullablePersistablePoint] = None
+    NumberOfPointsInX: Optional[int] = 1
+    NumberOfPointsInZ: Optional[int] = 1
+    Space: Optional[float] = 1.0
 
 
 class PersistableSlipPlaneConstraints(DataClass):
-    IsSizeConstraintsEnabled: Optional[bool]
-    IsZoneAConstraintsEnabled: Optional[bool]
-    IsZoneBConstraintsEnabled: Optional[bool]
-    MinimumSlipPlaneDepth: Optional[float]
-    MinimumSlipPlaneLength: Optional[float]
-    WidthZoneA: Optional[float]
-    WidthZoneB: Optional[float]
-    XLeftZoneA: Optional[float]
-    XLeftZoneB: Optional[float]
+    IsSizeConstraintsEnabled: Optional[bool] = False
+    IsZoneAConstraintsEnabled: Optional[bool] = False
+    IsZoneBConstraintsEnabled: Optional[bool] = False
+    MinimumSlipPlaneDepth: Optional[float] = 0.0
+    MinimumSlipPlaneLength: Optional[float] = 0.0
+    WidthZoneA: Optional[float] = 0.0
+    WidthZoneB: Optional[float] = 0.0
+    XLeftZoneA: Optional[float] = 0.0
+    XLeftZoneB: Optional[float] = 0.0
 
 
 class PersistableTangentLines(DataClass):
-    BottomTangentLineZ: Optional[float]
-    NumberOfTangentLines: Optional[int]
-    Space: Optional[float]
+    BottomTangentLineZ: Optional[float] = "NaN"
+    NumberOfTangentLines: Optional[int] = 1
+    Space: Optional[float] = 0.5
 
 
 class PersistableBishopBruteForceSettings(DataClass):
-    GridEnhancements: Optional[PersistableGridEnhancements]
-    SearchGrid: Optional[PersistableSearchGrid]
-    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints]
-    TangentLines: Optional[PersistableTangentLines]
+    GridEnhancements: Optional[
+        PersistableGridEnhancements
+    ] = PersistableGridEnhancements()
+    SearchGrid: Optional[PersistableSearchGrid] = PersistableSearchGrid()
+    SlipPlaneConstraints: Optional[
+        PersistableSlipPlaneConstraints
+    ] = PersistableSlipPlaneConstraints()
+    TangentLines: Optional[PersistableTangentLines] = PersistableTangentLines()
 
 
-class CalculationType(Enum):
+class CalculationTypeEnum(Enum):
     DESIGN = "Design"
     DETERMINISTIC = "Deterministic"
     MEAN = "Mean"
     PROBABILISTIC = "Probabilistic"
 
 
+CalculationType = CalculationTypeEnum
+
+
 class PersistableSpencerSettings(DataClass):
-    SlipPlane: Optional[List[Optional[PersistablePoint]]]
+    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
 
 
-class OptionsType(Enum):
+class OptionsTypeEnum(Enum):
     DEFAULT = "Default"
     THOROUGH = "Thorough"
 
 
+OptionsType = OptionsTypeEnum
+
+
 class PersistableGeneticSlipPlaneConstraints(DataClass):
-    IsEnabled: Optional[bool]
-    MinimumAngleBetweenSlices: Optional[float]
-    MinimumThrustLinePercentageInsideSlices: Optional[float]
+    IsEnabled: Optional[bool] = False
+    MinimumAngleBetweenSlices: Optional[float] = 0.0
+    MinimumThrustLinePercentageInsideSlices: Optional[float] = 0.0
 
 
 class PersistableSpencerGeneticSettings(DataClass):
-    OptionsType: Optional[OptionsType]
-    SlipPlaneA: Optional[List[Optional[PersistablePoint]]]
-    SlipPlaneB: Optional[List[Optional[PersistablePoint]]]
-    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints]
+    OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
+    SlipPlaneA: Optional[List[Optional[PersistablePoint]]] = None
+    SlipPlaneB: Optional[List[Optional[PersistablePoint]]] = None
+    SlipPlaneConstraints: Optional[
+        PersistableGeneticSlipPlaneConstraints
+    ] = PersistableGeneticSlipPlaneConstraints()
 
 
 class PersistableTwoCirclesOnTangentLine(DataClass):
-    FirstCircleCenter: Optional[NullablePersistablePoint]
-    FirstCircleRadius: Optional[float]
-    SecondCircleCenter: Optional[NullablePersistablePoint]
+    FirstCircleCenter: Optional[NullablePersistablePoint] = NullablePersistablePoint()
+    FirstCircleRadius: Optional[float] = "NaN"
+    SecondCircleCenter: Optional[NullablePersistablePoint] = NullablePersistablePoint()
 
 
 class PersistableUpliftVanSettings(DataClass):
-    SlipPlane: Optional[PersistableTwoCirclesOnTangentLine]
+    SlipPlane: Optional[
+        PersistableTwoCirclesOnTangentLine
+    ] = PersistableTwoCirclesOnTangentLine()
 
 
 class PersistableSearchArea(DataClass):
-    Height: Optional[float]
-    TopLeft: Optional[NullablePersistablePoint]
-    Width: Optional[float]
+    Height: Optional[float] = 0.0
+    TopLeft: Optional[NullablePersistablePoint] = None
+    Width: Optional[float] = 0.0
 
 
 class PersistableTangentArea(DataClass):
-    Height: Optional[float]
-    TopZ: Optional[float]
+    Height: Optional[float] = 0.0
+    TopZ: Optional[float] = None
 
 
 class PersistableUpliftVanParticleSwarmSettings(DataClass):
-    OptionsType: Optional[OptionsType]
-    SearchAreaA: Optional[PersistableSearchArea]
-    SearchAreaB: Optional[PersistableSearchArea]
-    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints]
-    TangentArea: Optional[PersistableTangentArea]
+    OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
+    SearchAreaA: Optional[PersistableSearchArea] = PersistableSearchArea()
+    SearchAreaB: Optional[PersistableSearchArea] = PersistableSearchArea()
+    SlipPlaneConstraints: Optional[
+        PersistableSlipPlaneConstraints
+    ] = PersistableSlipPlaneConstraints()
+    TangentArea: Optional[PersistableTangentArea] = PersistableTangentArea()
 
 
 class CalculationSettings(DStabilitySubStructure):
     """calculationsettings/calculationsettings_x.json"""
 
-    AnalysisType: Optional[AnalysisType]
-    Bishop: Optional[PersistableBishopSettings]
-    BishopBruteForce: Optional[PersistableBishopBruteForceSettings]
-    CalculationType: Optional[CalculationType]
-    ContentVersion: Optional[str]
-    Id: Optional[str]
-    ModelFactorMean: Optional[float]
-    ModelFactorStandardDeviation: Optional[float]
-    Spencer: Optional[PersistableSpencerSettings]
-    SpencerGenetic: Optional[PersistableSpencerGeneticSettings]
-    UpliftVan: Optional[PersistableUpliftVanSettings]
-    UpliftVanParticleSwarm: Optional[PersistableUpliftVanParticleSwarmSettings]
+    AnalysisType: Optional[AnalysisTypeEnum]
+    Bishop: Optional[PersistableBishopSettings] = PersistableBishopSettings()
+    BishopBruteForce: Optional[
+        PersistableBishopBruteForceSettings
+    ] = PersistableBishopBruteForceSettings()
+    CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.DETERMINISTIC
+    ContentVersion: Optional[str] = "1"
+    Id: Optional[str] = "19"
+    ModelFactorMean: Optional[float] = 1.05
+    ModelFactorStandardDeviation: Optional[float] = 0.033
+    Spencer: Optional[PersistableSpencerSettings] = PersistableSpencerSettings()
+    SpencerGenetic: Optional[
+        PersistableSpencerGeneticSettings
+    ] = PersistableSpencerGeneticSettings()
+    UpliftVan: Optional[PersistableUpliftVanSettings] = PersistableUpliftVanSettings()
+    UpliftVanParticleSwarm: Optional[
+        PersistableUpliftVanParticleSwarmSettings
+    ] = PersistableUpliftVanParticleSwarmSettings()
 
     def set_bishop(self, bishop_settings: PersistableBishopSettings) -> None:
         self.Bishop = bishop_settings
+        self.AnalysisType = AnalysisType.BISHOP
 
     def set_bishop_brute_force(
         self, bishop_brute_force_settings: PersistableBishopBruteForceSettings
     ) -> None:
         self.BishopBruteForce = bishop_brute_force_settings
+        self.AnalysisType = AnalysisType.BISHOP_BRUTE_FORCE
 
     def set_spencer(self, spencer_settings: PersistableSpencerSettings) -> None:
         self.Spencer = spencer_settings
+        self.AnalysisType = AnalysisType.SPENCER
 
     def set_spencer_genetic(
         self, spencer_genetic_settings: PersistableSpencerGeneticSettings
     ) -> None:
         self.SpencerGenetic = spencer_genetic_settings
+        self.AnalysisType = AnalysisType.SPENCER_GENETIC
 
     def set_uplift_van(self, uplift_van_settings: PersistableUpliftVanSettings) -> None:
         self.UpliftVan = uplift_van_settings
+        self.AnalysisType = AnalysisType.UPLIFT_VAN
 
     def set_uplift_van_particle_swarm(
         self,
         uplift_van_particle_swarm_settings: PersistableUpliftVanParticleSwarmSettings,
     ) -> None:
         self.UpliftVanParticleSwarm = uplift_van_particle_swarm_settings
+        self.AnalysisType = AnalysisType.UPLIFT_VAN_PARTICLE_SWARM
 
 
 ########
@@ -1493,49 +1542,49 @@ class DStabilityStructure(BaseModelStructure):
     """
 
     # input part
-    waternets: List[Waternet] = [Waternet(Id="21")]  # waternets/waternet_x.json
+    waternets: List[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
     waternetcreatorsettings: List[WaternetCreatorSettings] = [
-        WaternetCreatorSettings(Id="22")
+        WaternetCreatorSettings(Id="15")
     ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
-    states: List[State] = [State(Id="23")]  # states/states_x.json
+    states: List[State] = [State(Id="16")]  # states/states_x.json
     statecorrelations: List[StateCorrelation] = [
-        StateCorrelation(Id="24")
+        StateCorrelation(Id="17")
     ]  # statecorrelations/statecorrelations_x.json
     stages: List[Stage] = [
         Stage(
-            CalculationSettingsId="30",
-            DecorationsId="29",
-            GeometryId="31",
-            Id="25",
-            Label="Initial Stage",
-            LoadsId="28",
+            CalculationSettingsId="20",
+            DecorationsId="12",
+            GeometryId="11",
+            Id="0",
+            Label="Stage 1",
+            LoadsId="18",
             Notes="Default stage by GEOLib",
-            ReinforcementsId="27",
-            SoilLayersId="26",
-            StateCorrelationsId="24",
-            StateId="23",
-            WaternetCreatorSettingsId="22",
-            WaternetId="21",
+            ReinforcementsId="19",
+            SoilLayersId="13",
+            StateId="16",
+            StateCorrelationsId="17",
+            WaternetCreatorSettingsId="15",
+            WaternetId="14",
         )
     ]  # stages/stage_x.json
     soillayers: List[SoilLayerCollection] = [
-        SoilLayerCollection(Id="26")
+        SoilLayerCollection(Id="13")
     ]  # soillayers/soillayers_x.json
     soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
     soils: SoilCollection = SoilCollection()  # soils.json
     reinforcements: List[Reinforcements] = [
-        Reinforcements(Id="27")
+        Reinforcements(Id="19")
     ]  # reinforcements/reinforcements_x.json
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
-    loads: List[Loads] = [Loads(Id="28")]  # loads/loads_x.json
+    loads: List[Loads] = [Loads(Id="18")]  # loads/loads_x.json
     decorations: List[Decorations] = [
-        Decorations(Id="29")
+        Decorations(Id="12")
     ]  # decorations/decorations_x.json
     calculationsettings: List[CalculationSettings] = [
-        CalculationSettings(Id="30")
+        CalculationSettings(Id="20")
     ]  # calculationsettings/calculationsettings_x.json
-    geometries: List[Geometry] = [Geometry(Id="31")]  # geometries/geometry_x.json
+    geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
 
     # Output parts
     uplift_van_results: List[UpliftVanResult] = []
@@ -1619,37 +1668,37 @@ class DStabilityStructure(BaseModelStructure):
         return False
 
     def get_result_substructure(
-        self, analysis_type: AnalysisType, calculation_type: CalculationType
+        self, analysis_type: AnalysisTypeEnum, calculation_type: CalculationTypeEnum
     ) -> List[DStabilityResult]:
 
         result_types_mapping = {
-            AnalysisType.UPLIFT_VAN: {
+            AnalysisTypeEnum.UPLIFT_VAN: {
                 "non_probabilistic": self.uplift_van_results,
                 "probabilistic": self.uplift_van_reliability_results,
             },
-            AnalysisType.UPLIFT_VAN_PARTICLE_SWARM: {
+            AnalysisTypeEnum.UPLIFT_VAN_PARTICLE_SWARM: {
                 "non_probabilistic": self.uplift_van_particle_swarm_results,
                 "probabilistic": self.uplift_van_reliability_results,
             },
-            AnalysisType.SPENCER_GENETIC: {
+            AnalysisTypeEnum.SPENCER_GENETIC: {
                 "non_probabilistic": self.spencer_genetic_algorithm_results,
                 "probabilistic": self.spencer_reliability_results,
             },
-            AnalysisType.SPENCER: {
+            AnalysisTypeEnum.SPENCER: {
                 "non_probabilistic": self.spencer_results,
                 "probabilistic": self.spencer_reliability_results,
             },
-            AnalysisType.BISHOP_BRUTE_FORCE: {
+            AnalysisTypeEnum.BISHOP_BRUTE_FORCE: {
                 "non_probabilistic": self.bishop_bruteforce_results,
                 "probabilistic": self.bishop_reliability_results,
             },
-            AnalysisType.BISHOP: {
+            AnalysisTypeEnum.BISHOP: {
                 "non_probabilistic": self.bishop_results,
                 "probabilistic": self.bishop_reliability_results,
             },
         }
 
-        if calculation_type == CalculationType.PROBABILISTIC:
+        if calculation_type == CalculationTypeEnum.PROBABILISTIC:
             return result_types_mapping[analysis_type]["probabilistic"]
 
         return result_types_mapping[analysis_type]["non_probabilistic"]

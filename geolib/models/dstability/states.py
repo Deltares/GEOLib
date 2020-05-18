@@ -82,7 +82,7 @@ class DStabilityStatePoint(DStabilityObject):
 class DStabilityStateLinePoint(DStabilityObject):
     """
     """
-    id: int
+    id: int = -1
     above: DStabilityStress
     below: DStabilityStress
     is_above_and_below_correlated: bool = False

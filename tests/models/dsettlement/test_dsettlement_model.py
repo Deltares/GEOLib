@@ -8,44 +8,46 @@ from warnings import warn
 
 import pydantic
 import pytest
-from tests.utils import TestUtils, only_teamcity
+from pydantic.color import Color
+from teamcity import is_running_under_teamcity
 
 import geolib.models.dsettlement.loads as loads
-from geolib.geometry.one import Point
-from geolib.soils import (
-    Soil,
-    PreconType,
-    SoilParameters,
-    IsotacheParameters,
-    SoilClassificationParameters,
-)
 import geolib.soils as soil_external
+from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
     Accuracy,
-    Boundary,
     Boundaries,
+    Boundary,
+    ConsolidationModel,
     Curve,
     Curves,
+    Dimension,
+    DispersionConditionLayerBoundary,
     DSeriePoint,
     DSettlementStructure,
     GeometryData,
     Layer,
     Layers,
-    Points,
-    Version,
-    SoilModel,
-    ConsolidationModel,
     Model,
-    Dimension,
     ModelBool,
-    DispersionConditionLayerBoundary,
-    StrainType,
+    Points,
     PreconPressureWithinLayer,
-    StressDistributionSoil,
+    SoilModel,
+    StrainType,
     StressDistributionLoads,
+    StressDistributionSoil,
+    Version,
 )
+from geolib.soils import (
+    IsotacheParameters,
+    PreconType,
+    Soil,
+    SoilClassificationParameters,
+    SoilParameters,
+)
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestDSettlementModel:
@@ -282,7 +284,7 @@ class TestDSettlementModel:
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
             if not (ds_value == output_datastructure[ds_key]):
-                logging.warning(f"{ds_value} != {output_datastructure[ds_key]}")
+                print(f"{ds_value} != {output_datastructure[ds_key]}")
                 errors.append(f"Values for key {ds_key} differ from parsed to serialized")
         if errors:
             pytest.fail(f"Failed with the following {errors}")
@@ -1050,3 +1052,110 @@ class TestDSettlementModel:
 
         ds.set_any_calculation_options()
         ds.serialize(test_output_filepath)
+
+    @pytest.mark.acceptance
+    @only_teamcity
+    class TestDSettlementAcceptance:
+        def test_dsettlement_acceptance(self):
+            """Setup base structure from parsed file while
+            we can't initialize one from scratch yet."""
+            test_output_filepath = Path(
+                TestUtils.get_output_test_data_dir("dsettlement/acceptance")
+            )
+            dm = DSettlementModel()
+
+            p1 = Point(x=-50, z=0.0)
+            p2 = Point(x=-10, z=0.0)
+            p3 = Point(x=0, z=2)
+            p4 = Point(x=10, z=2)
+            p5 = Point(x=30, z=0.0)
+            p6 = Point(x=50, z=0.0)
+            p7 = Point(x=-50, z=-5)
+            p8 = Point(x=50, z=-5)
+            p9 = Point(x=-50, z=-10)
+            p10 = Point(x=50, z=-10)
+            p11 = Point(x=-50, z=-20)
+            p12 = Point(x=50, z=-20)
+
+            p15 = Point(x=-50, z=-30)
+            p16 = Point(x=-20, z=-30)
+            p17 = Point(x=-10, z=-30)
+            p18 = Point(x=0, z=-30)
+            p19 = Point(x=10, z=-30)
+            p20 = Point(x=20, z=-30)
+            p21 = Point(x=25, z=-30)
+            p22 = Point(x=30, z=-30)
+            p23 = Point(x=35, z=-30)
+            p24 = Point(x=40, z=-30)
+            p25 = Point(x=45, z=-30)
+            p26 = Point(x=50, z=-30)
+
+            # headline
+            p13 = Point(x=-50, z=-2)
+            p14 = Point(x=50, z=-2)
+
+            pl_id = dm.add_head_line([p13, p14], is_phreatic=True)
+
+            b6 = dm.add_boundary(
+                [p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26]
+            )
+            b1 = dm.add_boundary([p11, p12])
+            b2 = dm.add_boundary([p9, p10])
+            b3 = dm.add_boundary([p7, p8])
+            b4 = dm.add_boundary([p1, p2, p5, p6])
+            b5 = dm.add_boundary([p1, p2, p3, p4, p5, p6])
+
+            s1 = dm.add_soil(
+                Soil(
+                    name="Sand",
+                    volumetric_weight_above_phreatic_level=17.0,
+                    volumetric_weight_below_phreatic_level=19.0,
+                )
+            )
+
+            l1 = dm.add_layer(
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b1,
+                boundary_bottom=b2,
+            )
+            l2 = dm.add_layer(
+                # material_name="H_Ro_z&k",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b2,
+                boundary_bottom=b3,
+            )
+            l3 = dm.add_layer(
+                # material_name="HV",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b3,
+                boundary_bottom=b4,
+            )
+            l4 = dm.add_layer(
+                # material_name="H_Aa_ht_old",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b4,
+                boundary_bottom=b5,
+            )
+            l5 = dm.add_layer(
+                # material_name="H_Aa_ht_old",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b5,
+                boundary_bottom=b6,
+            )
+
+            path = test_output_filepath / "test_acceptance.sli"
+            dm.serialize(path)
+
+            # Test run and verify return code of 0 (indicates succesfull run)
+            status = dm.execute()
+            assert status.returncode == 0

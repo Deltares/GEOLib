@@ -157,7 +157,7 @@ class DStabilityGeneticSlipPlaneConstraints(DStabilityObject):
 
 
 class DStabilityBishopAnalysisMethod(DStabilityAnalysisMethod):
-    """Generates slip plane constraints object for the Spencer method
+    """Generates slip plane constraints object for the Bishop method
 
     Args:
         circle (DStabilityCircle): Bishop circle definition
@@ -172,7 +172,7 @@ class DStabilityBishopAnalysisMethod(DStabilityAnalysisMethod):
 
 
 class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
-    """Generates slip plane constraints object for the Spencer method
+    """Generates slip plane constraints object for the Bishop Brute Force method
 
     Args:
         extrapolate_search_space (bool): Extrapolate the search space, defaults to True

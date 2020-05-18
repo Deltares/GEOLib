@@ -107,7 +107,7 @@ class DStabilityModel(BaseModel):
     @property
     def output(self):
         # TODO Make something that works for all stages
-        return self.results(self.current_stage)
+        return self.get_result(self.current_stage)
 
     def get_result(self, stage_id: int) -> Dict:
         """
@@ -185,6 +185,7 @@ class DStabilityModel(BaseModel):
         else:
             serializer = DStabilityInputSerializer(ds=self.datastructure)
         serializer.write(location)
+        self.filename = location
 
     def add_stage(self, label: str, notes: str, copy=True, set_current=True) -> int:
         """Add a new stage to the model. Copies current stage if copy is True. Returns a unique id."""
@@ -424,12 +425,6 @@ class DStabilityModel(BaseModel):
 
         for point in points:
             point.id = self._get_next_id()  # assign a new id
-            if not geometry.contains_point(
-                point
-            ):  # all points should be part of a player
-                raise ValueError(
-                    f"The point with x={point.x} and z={point.z} is not on any polygon"
-                )
             persistable_points.append(PersistablePoint(X=point.x, Z=point.z))
 
         persistable_state_line_points = []

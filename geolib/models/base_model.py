@@ -25,7 +25,7 @@ class BaseModel(DataClass, abc.ABC):
     datastructure: Optional[Type[BaseModelStructure]]
     meta: MetaData = MetaData()
 
-    def execute(self, timeout: int = 10) -> Union[CompletedProcess, Exception]:
+    def execute(self, timeout: int = 60) -> Union[CompletedProcess, Exception]:
         """Execute a Model and wait for `timeout` seconds."""
         if not self.filename:
             raise Exception("Set filename first.")

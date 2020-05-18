@@ -69,22 +69,24 @@ D-Settlement={{ version.d__settlement }}
 
 [BOUNDARIES]
 {% if geometry_data.boundaries is mapping %}
-{{ '{:>4}'.format( geometry_data.boundaries.boundaries|length ) }} - Number of boundaries -
+{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
 {% for boundary in geometry_data.boundaries.boundaries %}
-{{ '{:>6}'.format(boundary.id) }} - Curve number
-{{ '{:>8}'.format(boundary.curves|length) }} - number of curves on boundary, next line(s) are curvenumbers
+{{ '{}'.format(boundary.id).rjust(5) }} - Boundary number
+{{ '{}'.format(boundary.curves|length).rjust(7) }} - number of curves on boundary, next line(s) are curvenumbers
 {% if boundary.curves|length > 1 %}
 {% for curve in boundary.curves %}
 {% if loop.first %}
-    {{ '{:>10}'.format(curve) }}
+{{ "{}".format(curve).rjust(9) -}}
 {% elif loop.index0 % 10 == 0 %}
-    {{ '\n' }}{{ '{:>10}'.format(curve) }}
+{{ '\n' }}{{ "{}".format(curve).rjust(9) }}
+{% elif loop.last %}
+{{ "{}".format(curve).rjust(6) }}
 {% else %}
-    {{ '{:>6}'.format(curve) }}
+{{ "{}".format(curve).rjust(6) -}}
 {% endif %}
 {% endfor %}
 {% else %}
-{{ '{:>10}'.format(boundary.curves[0]) }}
+{{ '{}'.format(boundary.curves[0]).rjust(9) }}
 {% endif %}
 {% endfor %}
 {% else %}
@@ -93,41 +95,63 @@ D-Settlement={{ version.d__settlement }}
 [END OF BOUNDARIES]
 
 [USE PROBABILISTIC DEFAULTS BOUNDARIES]
+{% if geometry_data.boundaries is mapping %}
+{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
+{% for boundary in geometry_data.boundaries.boundaries %}
+  1
+{% endfor %}
+{% else %}
 {{ geometry_data.use_probabilistic_defaults_boundaries }}
+{% endif %}
 [END OF USE PROBABILISTIC DEFAULTS BOUNDARIES]
 
 [STDV BOUNDARIES]
+{% if geometry_data.boundaries is mapping %}
+{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
+{% for boundary in geometry_data.boundaries.boundaries %}
+   1.00000000000000E-0001
+{% endfor %}
+{% else %}
 {{ geometry_data.stdv_boundaries }}
+{% endif %}
 [END OF STDV BOUNDARIES]
 
 [DISTRIBUTION BOUNDARIES]
+{% if geometry_data.boundaries is mapping %}
+{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
+{% for boundary in geometry_data.boundaries.boundaries %}
+  0
+{% endfor %}
+{% else %}
 {{ geometry_data.distribution_boundaries }}
+{% endif %}
 [END OF DISTRIBUTION BOUNDARIES]
 
 [PIEZO LINES]
 {% if geometry_data.piezo_lines is mapping %}
-{{ '{:>4}'.format( geometry_data.piezo_lines.piezolines|length ) }} - Number of piezometric level lines -
+{{ '{}'.format( geometry_data.piezo_lines.piezolines|length ).rjust(3) }} - Number of piezometric level lines -
 {% for pl_line in geometry_data.piezo_lines.piezolines -%}
-{{ '{:>6}'.format(pl_line.id) }} - PlLine number
-{{ '{:>8}'.format(pl_line.curves|length) }} - number of curves on PlLine, next line(s) are curvenumbers
+{{ '{}'.format(pl_line.id).rjust(5) }} - PlLine number
+{{ '{}'.format(pl_line.curves|length).rjust(7) }} - number of curves on PlLine, next line(s) are curvenumbers
 {% if pl_line.curves|length > 1 %}
-    {%- for curve in pl_line.curves %}
-        {%- if loop.first -%}
-            {{ '{:>10}'.format(curve) }}
-        {%- elif loop.index0 % 10 == 0 -%}
-            {{ '\n' }}{{ '{:>10}'.format(curve) }}
-        {%- else -%}
-            {{ '{:>6}'.format(curve) }}
-        {%- endif -%}
-    {% endfor %}
-{% else -%}
-    {{ '{:>10}'.format(pl_line.curves[0]) }}
-{% endif -%}
+{% for curve in pl_line.curves %}
+{% if loop.first %}
+{{ "{}".format(curve).rjust(9) -}}
+{% elif loop.index0 % 10 == 0 %}
+{{ '\n' }}{{ "{}".format(curve).rjust(9) }}
+{% elif loop.last %}
+{{ "{}".format(curve).rjust(6) }}
+{% else %}
+{{ "{}".format(curve).rjust(6) -}}
+{% endif %}
+{% endfor %}
+{% else %}
+{{ '{}'.format(pl_line.curves[0]).rjust(9) }}
+{% endif %}
 {% endfor -%}
 {% else %}
 {{ geometry_data.piezo_lines }}
 {% endif %}
-
 [END OF PIEZO LINES]
 
 [PHREATIC LINE]
@@ -187,10 +211,10 @@ D-Settlement={{ version.d__settlement }}
 
 [VERTICALS]
 {% if verticals is mapping %}
-{{ verticals.total_mesh }} = total Mesh
-{{ verticals.locations|length }} = number of items
-{% for location in locations %}
-{{ location.x}}        {{ location.z}} = X, Z
+    {{ verticals.total_mesh }} = total Mesh
+    {{ verticals.locations|length }} = number of items
+{% for location in verticals.locations %}
+       {{ location.X}}        {{ location.Z }} = X, Z
 {% endfor %}
 {% else %}
 {{ verticals }}
@@ -203,14 +227,14 @@ D-Settlement={{ version.d__settlement }}
 
 [NON-UNIFORM LOADS]
 {% if non__uniform_loads.loads is mapping %}
-{{ non__uniform_loads.loads|length }} = number of items
+    {{ non__uniform_loads.loads|length }} = number of items
 {% for name, non__uniform_load in non__uniform_loads.loads.items() %}
 {{ name }}
-{{ non__uniform_load.time }} {{ non__uniform_load.gammadry }} {{ non__uniform_load.gammawet }} {{ non__uniform_load.temporary }} {{ non__uniform_load.endtime }} = Time, Gamma dry, Gamma wet, Temporary, Endtime
-{{ non__uniform_load.points|length }} = Number of co-ordinates
-    {% for point in non__uniform_load.points %}
-        {{ point.X }} {{ point.Y }} = X, Y
-    {% endfor %}
+          {{ non__uniform_load.time }}  {{ non__uniform_load.gammadry }}  {{ non__uniform_load.gammawet }}  {{ non__uniform_load.temporary.value }}   {{ non__uniform_load.endtime }} = Time, Gamma dry, Gamma wet, Temporary, Endtime
+    {{ non__uniform_load.points|length }} = Number of co-ordinates
+{% for point in non__uniform_load.points %}
+       {{ point.X }}    {{ point.Y }} = X, Y
+{% endfor %}
 {% endfor %}
 {% else %}
 {{ non__uniform_loads }}
