@@ -25,10 +25,10 @@ class BaseModel(DataClass, abc.ABC):
     datastructure: Optional[Type[BaseModelStructure]]
     meta: MetaData = MetaData()
 
-    def execute(self, timeout: int = 60) -> Union[CompletedProcess, Exception]:
+    def execute(self, timeout: int = 60) -> Union[CompletedProcess, ValueError]:
         """Execute a Model and wait for `timeout` seconds."""
         if not self.filename:
-            raise Exception("Set filename first.")
+            raise ValueError("Set filename first.")
         return run(
             [str(self.meta.console_folder / self.console_path), str(self.filename)],
             timeout=timeout,

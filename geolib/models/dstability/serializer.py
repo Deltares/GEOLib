@@ -11,7 +11,7 @@ from zipp import Path
 
 from geolib.models.serializers import BaseSerializer
 from geolib.models.utils import get_filtered_type_hints
-
+from geolib.errors import NotConcreteError
 from .internal import DStabilityStructure
 
 
@@ -46,8 +46,7 @@ class DStabilityBaseSerializer(BaseSerializer, metaclass=ABCMeta):
 
     @abstractmethod
     def write(self, path):
-        serialized_datastructure = self.serialize()
-        # Implement in subclass
+        raise NotConcreteError
 
 
 class DStabilityInputSerializer(DStabilityBaseSerializer):

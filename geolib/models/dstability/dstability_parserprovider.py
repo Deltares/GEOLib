@@ -41,7 +41,7 @@ class DStabilityParser(BaseParser):
             else:
                 fn = filepath / (fieldtype.structure_name() + ".json")
                 if not fn.exists():
-                    raise Exception(f"Couldn't find required file at {fn}")
+                    raise FileNotFoundError(f"Couldn't find required file at {fn}")
                 ds[field] = fieldtype.parse_raw(fn.open().read())
 
         return self.structure(**ds)
@@ -55,7 +55,7 @@ class DStabilityParser(BaseParser):
         # We need to sort to make sure that files such as x.json, x_1.json,
         # x_2.json etc. are stored sequentally, scandir produces arbitrary order.
         sorted_files = sorted(files, key=lambda x: x.name)
-        for file in files:
+        for file in sorted_files:
             if fieldtype.structure_name() in file.name:
                 out.append(fieldtype.parse_raw(file.open().read()))
             else:

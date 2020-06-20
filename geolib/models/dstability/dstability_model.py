@@ -418,7 +418,6 @@ class DStabilityModel(BaseModel):
             raise IndexError(f"stage {stage_id} is not available")
 
         states = self.datastructure.states[stage_id]
-        geometry = self.datastructure.geometries[stage_id]
 
         # each point should belong to a layer
         persistable_points = []
@@ -464,6 +463,7 @@ class DStabilityModel(BaseModel):
             stage_id
         ):
             if consolidations is None:
+                # TODO This is never used. Probably bugged.
                 consolidations = self._get_default_consolidations(stage_id)
             else:
                 self._verify_consolidations(consolidations, stage_id)

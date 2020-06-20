@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from pydantic.color import Color
 
 from geolib.utils import snake_to_camel, camel_to_snake
+from geolib.geometry.one import Point
 
 
 class DistributionType(IntEnum):
@@ -188,7 +189,7 @@ class SoilWeightParameters(BaseModel):
     ] = PersistableStochasticParameter()
 
 
-class Compression_Parameters(BaseModel):
+class CompressionParameters(BaseModel):
     OCR: Optional[PersistableStochasticParameter] = PersistableStochasticParameter()
     POP: Optional[PersistableStochasticParameter] = PersistableStochasticParameter()
 
@@ -211,7 +212,7 @@ class SoilClassificationParameters(BaseModel):
 
 
 class SoilStiffnessParameters(BaseModel):
-    pass
+    """TODO Why is this class empty?"""
 
 
 class SoilParameters(BaseModel):
@@ -228,7 +229,7 @@ class SoilParameters(BaseModel):
     soil_weight_parameters: Optional[SoilWeightParameters] = None
     soil_classification_parameters: Optional[SoilClassificationParameters] = None
     soil_stiffness_parameters: Optional[SoilStiffnessParameters] = None
-    compression_parameters: Optional[Compression_Parameters] = None
+    compression_parameters: Optional[CompressionParameters] = None
 
 
 class HorizontalBehaviourType(IntEnum):
@@ -254,7 +255,6 @@ class ConeResistance(BaseModel):
 
     max_cone_resistance_type: Optional[Enum] = None
     max_cone_resistance: Optional[float] = None
-    pass
 
 
 class StateType(Enum):
@@ -288,19 +288,16 @@ class StatePoint(BaseModel):
 
 class StateLine(BaseModel):
     """
-    todo Decide if we want to keep state in soil class
-    todo decide if we want cross-dependency to geometry class
+    TODO Decide if we want to keep state in soil class
+    TODO decide if we want cross-dependency to geometry class
     """
 
-    from geolib.geometry import Point
-
     state_line_points: Optional[List[Point]]
-    pass
 
 
 class SoilState(BaseModel):
     """
-    todo Decide if we want to keep state in soil class
+    TODO Decide if we want to keep state in soil class
     """
 
     use_equivalent_age: Optional[bool] = None

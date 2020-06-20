@@ -12,7 +12,7 @@ from geolib.soils import PreconType as PreconType_external
 from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.geometry.one import Point
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.models.dsettlement.internal_soil import Soil_Internal
+from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
     DSeriesKeyValueSubStructure,
@@ -36,6 +36,7 @@ from geolib.models.dseries_parser import (
 DataClass.Config.arbitrary_types_allowed = True
 
 TOLERANCE = 1e-10
+ZERO_ITEMS = "    0 = number of items"
 
 
 class DSeriePoint(DataClass):
@@ -68,7 +69,7 @@ class DSeriePoint(DataClass):
 
 
 class SoilCollection(DSeriesListSubStructure):
-    soil: List[Soil_Internal] = []
+    soil: List[SoilInternal] = []
 
     def add_soil_if_unique(self, soil, tolerance=TOLERANCE) -> None:
         for added_soil in self.soil:
@@ -125,7 +126,7 @@ class Curve(DSeriesTreeStructure):
 
         """
         if not isinstance(other, Curve):
-            raise NotImplementedError()
+            return NotImplemented
         else:
             return self.points == other.points
 
@@ -181,7 +182,7 @@ class Boundary(DSeriesTreeStructure):
 
         """
         if not isinstance(other, Boundary):
-            raise NotImplementedError()
+            return NotImplemented
         else:
             return self.curves == other.curves
 
@@ -234,7 +235,7 @@ class Layer(DSeriesTreeStructure):
 
         """
         if not isinstance(other, Layer):
-            raise NotImplementedError()
+            return NotImplemented
         else:
             return (
                 self.boundary_top == other.boundary_top
@@ -636,7 +637,7 @@ class DSettlementStructure(DSeriesStructure):
     verticals: Union[Verticals, str] = Verticals()
     water: Union[float, str] = 9.81
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
-    water_loads: str = "    0 = number of items"
+    water_loads: str = ZERO_ITEMS
     other_loads: Union[OtherLoads, str] = OtherLoads()
     calculation_options: Union[CalculationOptions, str] = CalculationOptions()
     residual_times: Union[ResidualTimes, str] = ResidualTimes()
@@ -646,9 +647,9 @@ class DSettlementStructure(DSeriesStructure):
         0.05
         """
     )
-    pore_pressure_meters: str = "    0 = number of items"
-    non__uniform_loads_pore_pressures: str = "    0 = number of items"
-    other_loads_pore_pressures: str = "    0 = number of items"
+    pore_pressure_meters: str = ZERO_ITEMS
+    non__uniform_loads_pore_pressures: str = ZERO_ITEMS
+    other_loads_pore_pressures: str = ZERO_ITEMS
     calculation_options_pore_pressures: str = cleandoc(
         """
         1 : Shear stress = TRUE
@@ -766,7 +767,7 @@ class DSettlementStructure(DSeriesStructure):
         0.00 = Height above surface
         """
     )
-    fit: str = "    0 = number of items"
+    fit: str = ZERO_ITEMS
 
     def validate_options(self):
         """

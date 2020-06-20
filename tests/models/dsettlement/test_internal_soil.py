@@ -1,35 +1,14 @@
-import pathlib
-import os
 import pytest
 from pathlib import Path
-from geolib.models.dsettlement.dsettlement_parserprovider import *
-from tests.utils import TestUtils
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.soils import (
     Soil,
     PreconType,
     SoilParameters,
-    IsotacheParameters,
     SoilClassificationParameters,
 )
-from geolib.models.dsettlement.internal import (
-    Accuracy,
-    Boundary,
-    Boundaries,
-    Curve,
-    Curves,
-    DSeriePoint,
-    DSettlementStructure,
-    GeometryData,
-    Layer,
-    Layers,
-    OtherLoad,
-    Points,
-    TypeOtherLoads,
-    Version,
-    Verticals,
-)
-from geolib.models.dsettlement.internal_soil import *
+from geolib.models.dsettlement.internal import DSettlementStructure
+from geolib.models.dsettlement.internal_soil import SoilInternal
 import geolib.soils as soil_external
 
 
@@ -43,7 +22,7 @@ class TestSoilInternal:
         # 2. Verify initial expectations.
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
-        # 3. Set up second part of test data.        
+        # 3. Set up second part of test data.
         soil_input = Soil(name="MyNewSoil")
         soil_input.soil_parameters = SoilParameters()
         soil_input.soil_parameters.soil_classification_parameters = (
@@ -67,11 +46,22 @@ class TestSoilInternal:
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        assert soil_input.soil_parameters.soil_weight_parameters.saturated_weight.mean == 14
-        assert soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight.mean == 15
-        assert soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio.mean == 0.1
-        assert soil_input.soil_parameters.koppejan_parameters.precon_koppejan_type == PreconType.OverconsolidationRatio
-        assert soil_input.soil_state.use_equivalent_age  
+        assert (
+            soil_input.soil_parameters.soil_weight_parameters.saturated_weight.mean == 14
+        )
+        assert (
+            soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight.mean
+            == 15
+        )
+        assert (
+            soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio.mean
+            == 0.1
+        )
+        assert (
+            soil_input.soil_parameters.koppejan_parameters.precon_koppejan_type
+            == PreconType.OverconsolidationRatio
+        )
+        assert soil_input.soil_state.use_equivalent_age
         # 4. Verify expectations.
         return soil_input
 
@@ -83,7 +73,9 @@ class TestSoilInternal:
         # 2. Verify initial expectations.
         assert default_soil
         # 3. Run test.
-        test_soil = Soil_Internal.convert_from_external_to_internal(soil_external=default_soil)
+        test_soil = SoilInternal.convert_from_external_to_internal(
+            soil_external=default_soil
+        )
         # 4. Verify final expectations.
         assert test_soil.name == "MyNewSoil"
         assert test_soil.soilgamdry == 15

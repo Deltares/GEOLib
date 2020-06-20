@@ -69,10 +69,10 @@ class DFoundationsModel(BaseModel):
         serializer.write(filename)
         self.filename = filename
 
-    def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
+    def execute(self, timeout: int = 30) -> Union[CompletedProcess, ValueError]:
         """Execute a Model and wait for `timeout` seconds."""
         if self.filename is None:
-            raise Exception("Set filename or serialize first!")
+            raise ValueError("Set filename or serialize first!")
         if not self.filename.exists():
             logging.warning("Serializing before executing.")
             self.serialize(self.filename)

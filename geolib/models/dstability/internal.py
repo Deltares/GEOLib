@@ -3,8 +3,7 @@ from enum import Enum
 from typing import List, Optional, Union, Generator
 
 from pydantic import BaseModel as DataClass
-from pydantic import validator, conlist, confloat
-
+from pydantic import validator, conlist, confloat, ValidationError
 from geolib import __version__ as version
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.geometry import Point
@@ -226,10 +225,6 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     @classmethod
     def structure_group(cls) -> str:
         return "waternetcreatorsettings"
-
-
-# WaternetCreatorSettings.update_forward_refs()
-# stateschema.json
 
 
 class PersistableStochasticParameter(DataClass):

@@ -38,10 +38,9 @@ from .internal import (
     CalculationOptions,
     Model,
 )
-from .internal_soil import Soil_Internal
+from .internal_soil import SoilInternal
 from .loads import (
     CircularLoad,
-    OtherLoad,
     RectangularLoad,
     TankLoad,
     TrapeziformLoad,
@@ -71,10 +70,10 @@ class DSettlementModel(BaseModel):
     def console_path(self) -> Path:
         return Path("DSettlementConsole/DSettlementConsole.exe")
 
-    def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
+    def execute(self, timeout: int = 30) -> Union[CompletedProcess, ValueError]:
         """Execute a Model and wait for `timeout` seconds."""
         if self.filename is None:
-            raise Exception("Set filename or serialize first!")
+            raise ValueError("Set filename or serialize first!")
         if not self.filename.exists():
             logging.warning("Serializing before executing.")
             self.serialize(self.filename)
@@ -91,7 +90,7 @@ class DSettlementModel(BaseModel):
 
     def add_soil(self, soil_input: Soil_Input) -> None:
         """ Soil is converted in the internal structure and added in soil_collection."""
-        soil_new = Soil_Internal.convert_from_external_to_internal(soil_input)
+        soil_new = SoilInternal.convert_from_external_to_internal(soil_input)
         self.datastructure.soil_collection.add_soil_if_unique(soil_new)
 
     # 1.2.3 Models

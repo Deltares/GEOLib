@@ -71,10 +71,10 @@ class DSheetpilingModel(BaseModel):
         serializer.write(filename)
         self.filename = filename
 
-    def execute(self, timeout: int = 30) -> Union[CompletedProcess, Exception]:
+    def execute(self, timeout: int = 30) -> Union[CompletedProcess, ValueError]:
         """Execute a Model and wait for `timeout` seconds."""
         if self.filename is None:
-            raise Exception("Set filename or serialize first!")
+            raise ValueError("Set filename or serialize first!")
         if not self.filename.exists():
             logging.warning("Serializing before executing.")
             self.serialize(self.filename)
@@ -102,7 +102,7 @@ class DSheetpilingModel(BaseModel):
         """Set water level. Only the y of the Point is used."""
 
     def add_surface(self, left=List[Point], right=List[Point], stage=None):
-        """Add surface to model. 
+        """Add surface to model.
 
         .. todo::
             Determine how whether both should have positive X direction
@@ -110,12 +110,12 @@ class DSheetpilingModel(BaseModel):
 
     def add_profile(self, left: Profile, right=Profile, stage=None):
         """Add profile on either left/rightside of the model. Requires setup of the Profile first.
-        
+
         .. todo::
             Can we use the add_layer method here as well?
         """
 
-    def add_strut(left: Strut, right: Optional[Strut]):
+    def add_strut(self, left: Strut, right: Optional[Strut]):
         self.struts.add()
         self.stage.strut += 1
 

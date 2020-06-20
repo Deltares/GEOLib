@@ -20,7 +20,7 @@ class Bool(IntEnum):
         return super().__getattribute__(name)
 
 
-class Soil_Internal(DSeriesNameKeyValueSubStructure):
+class SoilInternal(DSeriesNameKeyValueSubStructure):
     """Representation of [SOIL] group."""
 
     name: str = ""

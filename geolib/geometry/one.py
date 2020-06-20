@@ -37,4 +37,4 @@ class Point(DataModel):
                 and isclose(self.z, other.z, abs_tol=self.tolerance)
             )
         else:
-            raise NotImplementedError()
+            return NotImplemented

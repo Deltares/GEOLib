@@ -4,6 +4,7 @@ from typing import List
 
 from pydantic import FilePath
 
+from geolib.errors import NotConcreteError
 from geolib.models.base_model_structure import BaseModelStructure
 
 
@@ -11,11 +12,11 @@ class BaseParser(abc.ABC):
     @property
     @abc.abstractmethod
     def suffix_list(self) -> List[str]:
-        raise NotImplementedError("Should be implemented in concrete class.")
+        raise NotConcreteError
 
     @abc.abstractmethod
     def parse(self, filename: FilePath):
-        raise NotImplementedError("Should be implemented in concrete class.")
+        raise NotConcreteError
 
     def can_parse(self, filename: FilePath) -> bool:
         """Verifies if a file or directory can be parsed with this instance.
@@ -39,17 +40,17 @@ class BaseParserProvider(abc.ABC):
     @property
     @abc.abstractmethod
     def input_parsers(self) -> BaseParser:
-        raise NotImplementedError("Should be implemented in concrete class.")
+        raise NotConcreteError
 
     @property
     @abc.abstractmethod
     def output_parsers(self) -> BaseParser:
-        raise NotImplementedError("Should be implemented in concrete class.")
+        raise NotConcreteError
 
     @property
     @abc.abstractmethod
     def parser_name(self) -> str:
-        raise NotImplementedError("Should be implemented in concrete class.")
+        raise NotConcreteError
 
     def parse(self, filename: FilePath) -> BaseModelStructure:
         for parser in self.input_parsers:
@@ -59,4 +60,4 @@ class BaseParserProvider(abc.ABC):
         for parser in self.output_parsers:
             if parser.can_parse(filename):
                 return parser.parse(filename)
-        raise Exception(f"Unknown extension {filename.suffix} for {self.parser_name}.")
+        raise ValueError(f"Unknown extension {filename.suffix} for {self.parser_name}.")
