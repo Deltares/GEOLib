@@ -47,7 +47,7 @@ class TestDStabilityInputParser:
             Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
             / "Tutorial.stix"
         )
-        test_output_filepath = Path(
+        test_output_dir = Path(
             TestUtils.get_output_test_data_dir("dstability/serialized")
         )
         # 2. Verify initial expectations
@@ -60,7 +60,7 @@ class TestDStabilityInputParser:
         # 4. Verify final expectations.
         assert input_structure is not None
         data = input_structure.json(indent=4)
-        with open(test_output_filepath / "dstability_parsed_input_stix.json", "w") as io:
+        with open(test_output_dir / "dstability_parsed_input_stix.json", "w") as io:
             io.write(data)
 
     @pytest.mark.integrationtest

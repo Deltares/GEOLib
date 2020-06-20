@@ -26,7 +26,6 @@ import geolib.soils as soil_external
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
-    Accuracy,
     Boundary,
     Boundaries,
     Curve,
@@ -140,13 +139,13 @@ class TestDSettlementAcceptance:
             soil_external.SoilWeightParameters()
         )
 
-        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=20
         )
-        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
             mean=30
         )
-        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
             mean=0.1
         )
 
@@ -156,7 +155,7 @@ class TestDSettlementAcceptance:
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
             mean=10
         )
 

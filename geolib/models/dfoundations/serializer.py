@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime
 
 from jinja2 import Environment, PackageLoader

@@ -4,24 +4,11 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import BaseModel as DataClass
 
-from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
-    ComplexVerticalSubstructure,
-    DSerieListStructure,
-    DSerieMatrixStructure,
-    DSerieOldTableStructure,
-    DSerieRepeatedTableStructure,
-    DSerieSingleStructure,
     DSeriesKeyValueSubStructure,
     DSeriesListSubStructure,
-    DSeriesListTreeStructureCollection,
-    DSeriesMatrixTreeStructure,
     DSeriesNameKeyValueSubStructure,
-    DSeriesNoParseSubStructure,
-    DSeriesSinglePropertyGroup,
     DSeriesStructure,
-    DSeriesTreeStructure,
-    DSerieTableStructure,
     DSheetOutputStructure,
 )
 

@@ -26,7 +26,7 @@ Architecture
 
 All exposed models are subclassed from a :class:`~geolib.models.base_model.BaseModel` that
 defines the generic functions, such as parsing, metadata, executing etc. The individual
-subclasses then define model specific functions, such as :meth:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetpilingModel.add_sheet`.
+subclasses then define model specific functions, such as :meth:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_sheet`.
 
 
 

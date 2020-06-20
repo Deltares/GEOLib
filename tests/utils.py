@@ -9,7 +9,8 @@ except:
     from pip._internal import main as pipmain
 
 only_teamcity = pytest.mark.skipif(
-    not is_running_under_teamcity(), reason="Console test only installed on TC."
+    not (is_running_under_teamcity() or "FORCE_TEAMCITY" in os.environ),
+    reason="Console test only installed on TC.",
 )
 
 

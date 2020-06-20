@@ -7,7 +7,7 @@ import pytest
 from teamcity import is_running_under_teamcity
 
 from geolib.models import BaseModel
-from geolib.models.dsheetpiling.dsheetpiling_model import DSheetpilingModel
+from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import (
     DSheetPilingInputStructure,
     DSheetPilingOutputStructure,
@@ -18,11 +18,11 @@ from tests.utils import TestUtils, only_teamcity
 class TestDsheetpilingModel:
     @pytest.mark.unittest
     @pytest.mark.workinprogress
-    def test_DSheetpilingModel_instance(self):
-        dsheetpiling_model = DSheetpilingModel()
+    def test_DSheetPilingModel_instance(self):
+        dsheetpiling_model = DSheetPilingModel()
         assert dsheetpiling_model is not None
         assert isinstance(dsheetpiling_model, BaseModel), (
-            "" + "DSheetpilingModel does not instanciate BaseModel"
+            "" + "DSheetPilingModel does not instanciate BaseModel"
         )
 
     @pytest.mark.integrationtest
@@ -41,7 +41,7 @@ class TestDsheetpilingModel:
         # 1. Set up test data
         test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
         test_file = test_folder / filename
-        ds = DSheetpilingModel()
+        ds = DSheetPilingModel()
 
         # 2. Verify initial expectations
         assert test_file.is_file()
@@ -62,7 +62,7 @@ class TestDsheetpilingModel:
         test_file = test_folder / filename
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
         output_test_file = output_test_folder / filename
-        ds = DSheetpilingModel()
+        ds = DSheetPilingModel()
 
         # 2. Verify initial expectations
         assert test_file.is_file()
@@ -80,7 +80,7 @@ class TestDsheetpilingModel:
 
         # 4.2. Read the generated data.
         assert output_test_file.is_file()
-        output_datastructure = dict(DSheetpilingModel().parse(output_test_file))
+        output_datastructure = dict(DSheetPilingModel().parse(output_test_file))
         assert not (
             input_datastructure is output_datastructure
         ), "Both references are the same."
@@ -103,7 +103,7 @@ class TestDsheetpilingModel:
     @only_teamcity
     def test_execute_console_successfully(self):
         # 1. Set up test data.
-        df = DSheetpilingModel()
+        df = DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
         test_file = test_folder / "bm1-1.shi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
@@ -125,7 +125,7 @@ class TestDsheetpilingModel:
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
         # 1. Set up test data.
-        df = DSheetpilingModel()
+        df = DSheetPilingModel()
 
         # 2. Run test
         with pytest.raises(Exception):
@@ -136,7 +136,7 @@ class TestDsheetpilingModel:
     @pytest.mark.xfail(reason="Can't work yet.")
     def test_run_model_from_scratch(self):
         # 1. Set up test data.
-        df = DSheetpilingModel()
+        df = DSheetPilingModel()
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
         output_test_file = output_test_folder / "acceptance_from_scratch.shi"
 

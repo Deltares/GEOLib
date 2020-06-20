@@ -8,7 +8,7 @@ from geolib.models.parsers import BaseParserProvider
 from .internal import (
     DFoundationsDumpStructure,
     DFoundationsInputStructure,
-    DFoundationsOutputStructure,
+    DFoundationsDumpfileOutputStructure,
     DFoundationsStructure,
 )
 

@@ -1,15 +1,13 @@
 import pytest
 from random import randint
-from typing import get_type_hints, _GenericAlias
+from typing import _GenericAlias
 
 from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementStructure
 from geolib.models.dseries_parser import (
-    DSeriesSinglePropertyGroup,
-    DSeriesListTreeStructureCollection,
+    DSeriesTreeStructureCollection,
     DSeriesTreeStructure,
 )
 from geolib.models.dsettlement.internal import (
-    Accuracy,
     Curves,
     Curve,
     PiezoLines,
@@ -76,7 +74,7 @@ class TestCurve:
         # 1. Define test data.
         parsed_curve: DSettlementStructure = None
         curve_content = get_structure_content(Curve)
-        curve_id = randint(0, 100)
+        curve_id = randint(1, 100)
         text = generate_structure_text(curve_id, curve_content)
         # remove general header (only needed when testing for collections)
 
@@ -102,26 +100,6 @@ class TestCurve:
         )
 
 
-class TestAccuracy:
-    @pytest.mark.integrationtest
-    def test_given_accuracytext_when_parse_then_creates_structure(self):
-        # 1. Set up test data.
-        value = 42.24
-        text = f"\t\t{value}"
-        parsed_accuracy = None
-
-        # 2. Run test.
-        parsed_accuracy = Accuracy.parse_text(text)
-
-        # 3. Verify final expectation.
-        assert isinstance(parsed_accuracy, DSeriesSinglePropertyGroup)
-        assert parsed_accuracy.accuracy == value, (
-            ""
-            + f"Parsed value {parsed_accuracy.accuracy} "
-            + f"does not match expected {value}"
-        )
-
-
 class TestInternalDSeriesListStructureCollections:
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
@@ -135,7 +113,7 @@ class TestInternalDSeriesListStructureCollections:
     )
     def test_given_treecollectiontext_when_parse_then_creates_structure(
         self,
-        collection_type: DSeriesListTreeStructureCollection,
+        collection_type: DSeriesTreeStructureCollection,
         structure_type: DSeriesTreeStructure,
     ):
         # 1. Define test data.
@@ -151,7 +129,7 @@ class TestInternalDSeriesListStructureCollections:
 
         # 4. Verify final expectations.
         assert parsed_collection, "No piezolines parsed."
-        assert isinstance(parsed_collection, DSeriesListTreeStructureCollection)
+        assert isinstance(parsed_collection, DSeriesTreeStructureCollection)
         field_name = collection_type.__name__.lower()
         parsed_structures = dict(parsed_collection)[field_name]
         assert len(parsed_structures) == len(structure_content), (

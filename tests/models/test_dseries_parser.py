@@ -1,16 +1,19 @@
 import os
 from random import randint
 from typing import List, get_type_hints, _GenericAlias, Type, Tuple, Dict
+from pydantic.error_wrappers import ValidationError
 import pytest
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
-    DSeriesMatrixTreeStructure,
     DSeriesTreeStructure,
-    DSeriesListTreeStructureCollection,
+    DSeriesTreeStructureCollection,
+    DSeriesMatrixTreeStructureCollection,
     DSeriesStructure,
+    DSeriesInlineProperties,
     DSeriesKeyValueSubStructure,
     make_key,
+    get_line_property_value,
 )
 
 
@@ -21,20 +24,56 @@ class TestParserUtil:
         out_key = "group___key__with_odd____name"
         assert make_key(in_key) == out_key
 
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "text, expected_value",
+        [
+            pytest.param("4.2 : property_value", "4.2"),
+            pytest.param("4.2 = property_value", "4.2"),
+            pytest.param("property_value", "property_value"),
+            pytest.param("property value", "property"),
+            pytest.param("= property_value", ""),
+            pytest.param(": property_value", ""),
+            pytest.param("=", ""),
+        ],
+    )
+    def test_get_line_property_value_reversed_key_true(
+        self, text: str, expected_value: bool
+    ):
+        assert get_line_property_value(text, reversed_key=True) == expected_value
+
+    @pytest.mark.parametrize(
+        "text, expected_value",
+        [
+            pytest.param("property_value: 4.2", "4.2"),
+            pytest.param("property_value = 4.2", "4.2"),
+            pytest.param("property_value", "property_value"),
+            pytest.param("property value", "property"),
+            pytest.param("property_value =", ""),
+            pytest.param("property_value :", ""),
+            pytest.param("=", ""),
+        ],
+    )
+    def test_get_line_property_value_reversed_key_false(
+        self, text: str, expected_value: bool
+    ):
+        assert get_line_property_value(text, reversed_key=False) == expected_value
+
 
 class DummyTreeStructure(DSeriesTreeStructure):
     simple_property: str
     list_property: List[int]
 
 
-class DummyListTreeStructureCollection(DSeriesListTreeStructureCollection):
+class DummyListTreeStructureCollection(DSeriesTreeStructureCollection):
     tabbedtreestructures: List[DummyTreeStructure]
 
 
 class TestDSeriesTreeStructure:
     @pytest.mark.unittest
     def test_given_unmatchedpropertyvaluestext_when_parse_text_lines_then_raises_valueerror(
-            self):
+        self,
+    ):
         # 1. Set up test data
         text_lines = [["2"], ["4"], ["2"]]
         expected_error = f"Expected 4 values for property list_property."
@@ -200,12 +239,11 @@ class TestDSeriesTreeStructure:
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
-        "separator",
-        [
-            pytest.param(":", id="Two points"),
-            pytest.param("=", id="Equal")]
+        "separator", [pytest.param(":", id="Two points"), pytest.param("=", id="Equal")]
     )
-    def test_given_structuretext_with_multiplesubstructures_property_then_allextracted(self, separator: str):
+    def test_given_structuretext_with_multiplesubstructures_property_then_allextracted(
+        self, separator: str
+    ):
         class tp_test_simple_element(DSeriesTreeStructure):
             name: str
             val_1: float
@@ -216,18 +254,19 @@ class TestDSeriesTreeStructure:
             composite_val: List[tp_test_simple_element]
 
         # 1. Define test data.
-        text_to_parse = "" + \
-            "Struct_1\n" + \
-            f"4.2 {separator} val_0\n" + \
-            f"2 {separator} composite_val\n" + \
-            "SimpleElement \n" + \
-            f"42 {separator} val_1\n" + \
-            "OtherElement \n" + \
-            f"24 {separator} val_1\n"
+        text_to_parse = (
+            ""
+            + "Struct_1\n"
+            + f"4.2 {separator} val_0\n"
+            + f"2 {separator} composite_val\n"
+            + "SimpleElement \n"
+            + f"42 {separator} val_1\n"
+            + "OtherElement \n"
+            + f"24 {separator} val_1\n"
+        )
 
         # 2. Run test.
-        struct_result = \
-            tp_test_composite_element.parse_text(text_to_parse)
+        struct_result = tp_test_composite_element.parse_text(text_to_parse)
 
         # 3. Verify final expectations.
         assert isinstance(struct_result, tp_test_composite_element)
@@ -244,8 +283,7 @@ class TestDSeriesTreeStructure:
         assert last_element.val_1 == 24
 
 
-class TestDSeriesListTreeStructureCollection:
-
+class TestDSeriesTreeStructureCollection:
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "separator", [pytest.param(" ", id="Space"), pytest.param("\t", id="Tabulated")]
@@ -284,7 +322,7 @@ class TestDSeriesListTreeStructureCollection:
 
         # 3. Verify final expectations.
         assert parsed_collection, "No structure was generated."
-        assert isinstance(parsed_collection, DSeriesListTreeStructureCollection)
+        assert isinstance(parsed_collection, DSeriesTreeStructureCollection)
         parsed_dict_collection = dict(parsed_collection)
         assert len(parsed_dict_collection["tabbedtreestructures"]) == len(
             structure_content
@@ -298,10 +336,7 @@ class TestDSeriesListTreeStructureCollection:
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
-        "separator",
-        [
-            pytest.param(":", id="Two points"),
-            pytest.param("=", id="Equal")]
+        "separator", [pytest.param(":", id="Two points"), pytest.param("=", id="Equal")]
     )
     def test_given_textwith_simplestructure_then_extracted(self, separator: str):
         class tp_test_element(DSeriesTreeStructure):
@@ -309,19 +344,20 @@ class TestDSeriesListTreeStructureCollection:
             val_1: float
             val_2: float
 
-        class tp_test_treecollection(DSeriesListTreeStructureCollection):
-            tree_collection : List[tp_test_element]
+        class tp_test_treecollection(DSeriesTreeStructureCollection):
+            tree_collection: List[tp_test_element]
 
         # 1. Define test data.
-        text_to_parse = "" + \
-            "1 = number of items\n" + \
-            "Struct_1\n" + \
-            f"4.2 {separator} val_1\n" + \
-            f"2.4 {separator} val_2\n"
+        text_to_parse = (
+            ""
+            + "1 = number of items\n"
+            + "Struct_1\n"
+            + f"4.2 {separator} val_1\n"
+            + f"2.4 {separator} val_2\n"
+        )
 
         # 2. Run test.
-        struct_result = \
-            tp_test_treecollection.parse_text(text_to_parse)
+        struct_result = tp_test_treecollection.parse_text(text_to_parse)
 
         # 3. Verify final expectations.
         assert isinstance(struct_result, tp_test_treecollection)
@@ -333,16 +369,14 @@ class TestDSeriesListTreeStructureCollection:
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
-        "separator",
-        [
-            pytest.param(":", id="Two points"),
-            pytest.param("=", id="Equal")])
+        "separator", [pytest.param(":", id="Two points"), pytest.param("=", id="Equal")]
+    )
     def test_given_textwith_complexstructure_then_extracted(self, separator: str):
         class tp_test_simplestruct(DSeriesTreeStructure):
             prop_1: float
             prop_2: float
 
-        class tp_test_collection(DSeriesListTreeStructureCollection):
+        class tp_test_collection(DSeriesTreeStructureCollection):
             tp_collection: List[tp_test_simplestruct]
 
         class tp_test_compositestruct(DSeriesTreeStructure):
@@ -351,22 +385,23 @@ class TestDSeriesListTreeStructureCollection:
             val_2: float
             extra_struct: tp_test_collection
 
-        class tp_test_treecollection(DSeriesListTreeStructureCollection):
-            tree_collection : List[tp_test_compositestruct]
+        class tp_test_treecollection(DSeriesTreeStructureCollection):
+            tree_collection: List[tp_test_compositestruct]
 
         # 1. Define test data.
-        text_to_parse = "" + \
-            "1 = number of items\n" + \
-            "Struct_1\n" + \
-            f"4.2 {separator} val_1\n" + \
-            f"2.4 {separator} val_2\n" + \
-            f"1{separator} extra_struct \n" + \
-            f"24{separator} prop_1 \n" + \
-            f"42{separator} prop_2"
+        text_to_parse = (
+            ""
+            + "1 = number of items\n"
+            + "Struct_1\n"
+            + f"4.2 {separator} val_1\n"
+            + f"2.4 {separator} val_2\n"
+            + f"1{separator} extra_struct \n"
+            + f"24{separator} prop_1 \n"
+            + f"42{separator} prop_2"
+        )
 
         # 2. Run test.
-        struct_result = \
-            tp_test_treecollection.parse_text(text_to_parse)
+        struct_result = tp_test_treecollection.parse_text(text_to_parse)
 
         # 3. Verify final expectations.
         assert isinstance(struct_result, tp_test_treecollection)
@@ -396,14 +431,14 @@ class TestDSeriesListTreeStructureCollection:
         assert str(e_info.value) == expected_error
 
 
-class DummyMatrixStructure(DSeriesStructure):
+class DummyMatrixStructure(DSeriesTreeStructure):
     first_prop: str
     second_prop: str
     third_prop: str
 
 
-class TestDSeriesMatrixTreeStructure:
-    class DummyMatrixTreeStructure(DSeriesMatrixTreeStructure):
+class TestDSeriesTreeStructureAsMatrix:
+    class DummyMatrixTreeStructureCollection(DSeriesMatrixTreeStructureCollection):
         dummymatrixtreestructure: List[DummyMatrixStructure]
 
     @pytest.mark.unittest
@@ -411,10 +446,10 @@ class TestDSeriesMatrixTreeStructure:
         # 1. Set up test data
         text_to_parse = "" + "2 - Number of structures\n" + "1 0 2"
         return_result = None
-        expected_error = "" + f"Number of rows does not match expected (2)."
+        expected_error = "Expected 2 structures, but missing text lines for 1."
         # 2. Run test
         with pytest.raises(ValueError) as e_info:
-            return_result = TestDSeriesMatrixTreeStructure.DummyMatrixTreeStructure.parse_text(
+            return_result = TestDSeriesTreeStructureAsMatrix.DummyMatrixTreeStructureCollection.parse_text(
                 text_to_parse
             )
 
@@ -435,29 +470,30 @@ class TestDSeriesMatrixTreeStructure:
         return_result = None
 
         # 2. Run test
-        return_result = TestDSeriesMatrixTreeStructure.DummyMatrixTreeStructure.parse_text(
+        return_result = TestDSeriesTreeStructureAsMatrix.DummyMatrixTreeStructureCollection.parse_text(
             text_to_parse
         )
 
         # 3. Verify final expectations.
         assert return_result, "Structure should have been generated."
-        assert isinstance(return_result, DSeriesMatrixTreeStructure)
+        assert isinstance(return_result, DSeriesMatrixTreeStructureCollection)
         for idx, result in enumerate(return_result.dummymatrixtreestructure):
             assert result.first_prop == values[idx][0]
             assert result.second_prop == values[idx][1]
             assert result.third_prop == values[idx][2]
 
     @pytest.mark.unittest
-    def test_given_unequal_fields_when_parse_structure_then_raise_exception(self):
+    def test_given_unequal_fields_when_parse_text_lines_then_raise_exception(self):
         # 1. Set up test data
         text_fields = ["1", "2"]
         return_result = None
         expected_error = (
-            "" + f"There should be 3 fields to initalize object {DummyMatrixStructure}"
+            ""
+            + f"There should be at least 3 fields to correctly initalize object {DummyMatrixStructure}"
         )
         # 2. Run test
         with pytest.raises(ValueError) as e_info:
-            return_result = TestDSeriesMatrixTreeStructure.DummyMatrixTreeStructure.parse_structure(
+            return_result = TestDSeriesTreeStructureAsMatrix.DummyMatrixTreeStructureCollection.parse_text_lines(
                 text_fields
             )
 
@@ -466,19 +502,116 @@ class TestDSeriesMatrixTreeStructure:
         assert str(e_info.value) == expected_error
 
     @pytest.mark.unittest
-    def test_given_equal_fields_when_parse_structure_then_returns(self):
+    def test_given_equal_fields_when_parse_text_lines_then_returns(self):
         # 1. Set up test data.
         text_fields = ["2", "4", "2"]
         parsed_structure = None
 
         # 2. Run test.
-        parsed_structure = TestDSeriesMatrixTreeStructure.DummyMatrixTreeStructure.parse_structure(
-            text_fields
-        )
+        parsed_structure, _ = DummyMatrixStructure.parse_text_lines(text_fields)
 
         # 3. Verify final expectations.
         assert parsed_structure is not None
-        assert isinstance(parsed_structure, DSeriesStructure)
+        assert isinstance(parsed_structure, DSeriesTreeStructure)
         assert parsed_structure.first_prop == text_fields[0]
         assert parsed_structure.second_prop == text_fields[1]
         assert parsed_structure.third_prop == text_fields[2]
+
+
+class TestDSeriesInlineProperties:
+
+    test_values = {"property_1": 42, "property_2": 24, "property_3": 4.2}
+
+    valid_inline_properties = "property_1 = 42\n" + "property_2 = 24"
+    valid_grouped_properties = "[PROPERTY_3]\n" + "4.2\n" + "[END OF PROPERTY_3]"
+
+    class only_inline(DSeriesInlineProperties):
+        property_1: int
+        property_2: int
+
+    class only_grouped(DSeriesInlineProperties):
+        property_3: float
+
+    class combined(DSeriesInlineProperties):
+        property_1: int
+        property_2: int
+        property_3: float
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "text_input, class_to_parse",
+        [
+            pytest.param(valid_inline_properties, only_inline, id="Inline properties"),
+            pytest.param(valid_grouped_properties, only_grouped, id="Group properties"),
+            pytest.param(
+                "\n".join([valid_inline_properties, valid_grouped_properties]),
+                combined,
+                id="Mixed properties",
+            ),
+        ],
+    )
+    def test_given_text_with_any_kind_of_properties_when_parse_text_then_returns_structure(
+        self, text_input: str, class_to_parse: Type
+    ):
+        # 1. Run test.
+        parsed_structure = class_to_parse.parse_text(text_input)
+
+        # 2. Verify final expectations.
+        assert parsed_structure is not None
+        for key, value in dict(parsed_structure).items():
+            assert self.test_values[key] == value
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "text_input, class_to_parse",
+        [
+            pytest.param(valid_inline_properties, only_inline, id="Inline properties"),
+            pytest.param(valid_grouped_properties, only_grouped, id="Group properties"),
+            pytest.param(
+                "\n".join([valid_inline_properties, valid_grouped_properties]),
+                combined,
+                id="Mixed properties",
+            ),
+        ],
+    )
+    def test_given_text_with_header_when_parse_text_then_returns_structure(
+        self, text_input: str, class_to_parse: Type
+    ):
+        # 1. Run test.
+        class with_header(class_to_parse):
+            @classmethod
+            def header_lines(cls) -> int:
+                return 2
+
+        header_lines = "Header line 1\n" + "Header line 2\n"
+        parsed_structure = with_header.parse_text(header_lines + text_input)
+
+        # 2. Verify final expectations.
+        assert parsed_structure is not None
+        for key, value in dict(parsed_structure).items():
+            assert self.test_values[key] == value
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "text_to_parse",
+        [
+            pytest.param("[property_1]\n[end of property_1]", id="Grouped"),
+            pytest.param(" = property_1", id="Inline equal"),
+            pytest.param(" : property_1", id="Inline two points"),
+        ],
+    )
+    def test_given_text_with_empty_properties_when_parse_text_then_returns_structure_with_default(
+        self, text_to_parse: str
+    ):
+        # 1. Define test data.
+        class with_defaults(DSeriesInlineProperties):
+            property_1: int = 42
+
+        parsed_structure = None
+
+        # 2. Run test.
+        with pytest.raises(ValidationError):
+            parsed_structure = with_defaults.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert parsed_structure is None

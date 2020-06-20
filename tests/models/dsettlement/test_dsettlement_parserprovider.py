@@ -6,7 +6,6 @@ from geolib.models.dsettlement.dsettlement_parserprovider import *
 from geolib.models.dsettlement.internal import (
     PiezoLines,
     PiezoLine,
-    Accuracy,
     Points,
     Curves,
     Boundaries,
@@ -50,7 +49,6 @@ class Test_DSettlementInputParser:
         geometry_data_key = "geometry_data"
         parsed_structure = parsed_dsettlement_testfile
         keys_in_structure = {
-            "accuracy": Accuracy,
             "points": Points,
             "curves": Curves,
             "boundaries": Boundaries,

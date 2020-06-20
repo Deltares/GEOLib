@@ -3,9 +3,11 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from math import isclose
 from operator import attrgetter
-from typing import Dict, List, Optional, Union, Tuple, Any
+from typing import Dict, List, Optional, Union, Tuple, Any, Type
 from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
+
+from geolib.models.utils import get_required_class_field
 
 from geolib.soils import Soil, DistributionType, HorizontalBehaviourType
 from geolib.soils import PreconType as PreconType_external
@@ -19,16 +21,14 @@ from geolib.models.dseries_parser import (
     DSeriesListSubStructure,
     DSerieListStructure,
     DSerieMatrixStructure,
-    DSeriesNameKeyValueSubStructure,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
-    DSeriesMatrixTreeStructure,
-    DSeriesSinglePropertyGroup,
     DSeriesTreeStructure,
-    DSeriesListTreeStructureCollection,
+    DSeriesTreeStructurePropertiesInGroups,
+    DSeriesTreeStructureCollection,
+    DSeriesMatrixTreeStructureCollection,
     DSerieTableStructure,
     DSerieRepeatedTableStructure,
-    DSerieSingleStructure,
     DSerieOldTableStructure,
     ComplexVerticalSubstructure,
 )
@@ -39,7 +39,7 @@ TOLERANCE = 1e-10
 ZERO_ITEMS = "    0 = number of items"
 
 
-class DSeriePoint(DataClass):
+class DSeriePoint(DSeriesTreeStructure):
     """
         Converting points from geolib co-ordinate system to the d-settlement UI
         Internal setting of the geometry differs from API.
@@ -53,6 +53,16 @@ class DSeriePoint(DataClass):
     Z: float
 
     tolerance: float = TOLERANCE
+
+    @classmethod
+    def get_structure_required_fields(cls) -> List[Tuple[str, Type]]:
+        point_required_field_names = [
+            required_field[0]
+            for required_field in get_required_class_field(cls)]
+        return [
+            field_tuple
+            for field_tuple in super().get_structure_required_fields()
+            if field_tuple[0] in point_required_field_names]
 
     @classmethod
     def from_point(cls, p: Point):
@@ -84,7 +94,7 @@ class Version(DSeriesKeyValueSubStructure):
     d__settlement: int = 1007
 
 
-class Points(DSeriesMatrixTreeStructure):
+class Points(DSeriesMatrixTreeStructureCollection):
     """Representation of [POINTS] group."""
 
     points: List[DSeriePoint] = []
@@ -131,7 +141,7 @@ class Curve(DSeriesTreeStructure):
             return self.points == other.points
 
 
-class Curves(DSeriesListTreeStructureCollection):
+class Curves(DSeriesTreeStructureCollection):
     """Representation of [CURVES] group."""
 
     curves: List[Curve] = []
@@ -187,7 +197,7 @@ class Boundary(DSeriesTreeStructure):
             return self.curves == other.curves
 
 
-class Boundaries(DSeriesListTreeStructureCollection):
+class Boundaries(DSeriesTreeStructureCollection):
     """Representation of [BOUNDARIES] group."""
 
     boundaries: List[Boundary] = []
@@ -243,7 +253,7 @@ class Layer(DSeriesTreeStructure):
             )
 
 
-class Layers(DSeriesListTreeStructureCollection):
+class Layers(DSeriesTreeStructureCollection):
     """Representation of [LAYERS] group."""
 
     layers: List[Layer] = []
@@ -274,12 +284,6 @@ class Layers(DSeriesListTreeStructureCollection):
         raise KeyError(f"Can't find layer with id {layer_id}.")
 
 
-class Accuracy(DSeriesSinglePropertyGroup):
-    """Representation of [ACCURACY] group."""
-
-    accuracy: confloat(ge=1e-10) = 1e-3
-
-
 class PiezoLine(DSeriesTreeStructure):
     id: PositiveInt = 1
     curves: List[int] = []
@@ -290,7 +294,7 @@ class PiezoLine(DSeriesTreeStructure):
         return NotImplemented
 
 
-class PiezoLines(DSeriesListTreeStructureCollection):
+class PiezoLines(DSeriesTreeStructureCollection):
     """Representation of [PIEZO LINES] group."""
 
     piezolines: List[PiezoLine] = []
@@ -317,16 +321,10 @@ class PiezoLines(DSeriesListTreeStructureCollection):
         raise KeyError(f"Can't find headline with id {piezo_line_id}.")
 
 
-class PhreaticLine(DSerieSingleStructure):
-    """Representation of [PHREATIC LINE] group."""
-
-    phreaticline: conint(ge=0, lt=99) = 0
-
-
-class GeometryData(DSeriesStructure):
+class GeometryData(DSeriesTreeStructurePropertiesInGroups):
     """Representation of [GEOMETRY DATA] group."""
 
-    accuracy: Accuracy = Accuracy()
+    accuracy: confloat(ge=1e-10) = 1e-3
     points: Points = Points()
     curves: Curves = Curves()
     boundaries: Boundaries = Boundaries()
@@ -334,7 +332,7 @@ class GeometryData(DSeriesStructure):
     stdv_boundaries: str = ""
     distribution_boundaries: str = ""
     piezo_lines: PiezoLines = PiezoLines()
-    phreatic_line: PhreaticLine = PhreaticLine()
+    phreatic_line: conint(ge=0, lt=99) = 0
     world_co__ordinates: str = cleandoc(
         """
           0.000 - X world 1 -

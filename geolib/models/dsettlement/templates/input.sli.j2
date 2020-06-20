@@ -36,11 +36,7 @@ D-Settlement={{ version.d__settlement }}
 [GEOMETRY DATA]
 
 [ACCURACY]
-{% if geometry_data.accuracy is mapping %}
-        {{ geometry_data.accuracy.accuracy }}
-{% else %}
 {{ geometry_data.accuracy }}
-{% endif %}
 [END OF ACCURACY]
 
 [POINTS]
@@ -155,11 +151,7 @@ D-Settlement={{ version.d__settlement }}
 [END OF PIEZO LINES]
 
 [PHREATIC LINE]
-{% if geometry_data.phreatic_line is mapping %}
-   {{ geometry_data.phreatic_line.phreaticline }} - Number of the piezometric level line acting as phreatic line -
-{% else %}
-{{ geometry_data.phreatic_line }}
-{% endif %}
+{{ geometry_data.phreatic_line }} - Number of the piezometric level line acting as phreatic line -
 [END OF PHREATIC LINE]
 
 [WORLD CO-ORDINATES]

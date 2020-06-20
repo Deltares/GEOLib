@@ -6,22 +6,48 @@ DATE       : {{ timestamp.strftime('%d-%m-%Y') }}
 TIME       : {{ timestamp.strftime('%H:%M:%S') }}
 FILENAME   : {{ output_fn }}
 CREATED BY : GEOLib version {{ glversion }}
-
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
-{{ version }}
+Soil={{ version.soil }}
+D-Foundations={{ version.d__foundations }}
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-{{ version_externals }}
+DGSFoundationCalc.dll={{ version_externals.dgdsfoundationcalc____dll }}
 [END OF VERSION EXTERNALS]
 
 [MODEL]
-{{ model }}
+{# {% if model is mapping %} #}
+{{ model.model.value }} : Model = {{ 'Bearing Piles (EC7-NL)' if model.model.value == 0 else 'Tension Piles (EC7-NL)' if model.model.value == 1 }}
+{# {% else %} #}
+{# {{ model }} #}
+{# {% endif %} #}
 [END OF MODEL]
 [SOIL COLLECTION]
-{{ soil_collection }}
+    {{ soil_collection.soil|length }} = number of items
+{% for soil in soil_collection.soil %}
+[SOIL]
+{{ soil.name }}
+SoilColor={{ soil.soilcolor }}
+SoilSoilType={{ soil.soilsoiltype.value }}
+SoilBelgianSoilType={{ soil.soilbelgiansoiltype.value }}
+SoilGamDry={{ soil.soilgamdry }}
+SoilGamWet={{ soil.soilgamwet }}
+SoilInitialVoidRatio={{ soil.soilinitialvoidratio }}
+SoilDiameterD50={{ soil.soildiameterd50 }}
+SoilMinVoidRatio={{ soil.soilminvoidratio }}
+SoilMaxVoidRatio={{ soil.soilmaxvoidratio }}
+SoilCohesion={{ soil.soilcohesion }}
+SoilPhi={{ soil.soilphi }}
+SoilCu={{ soil.soilcu }}
+SoilMaxConeResistType={{ soil.soilmaxconeresisttype.value }}
+SoilMaxConeResist={{ soil.soilmaxconeresist }}
+SoilUseTension={{ soil.soilusetension.value }}
+SoilCa={{ soil.soilca }}
+SoilCcIndex={{ soil.soilccindex }}
+[END OF SOIL]
+{% endfor %}
 [END OF SOIL COLLECTION]
 
 
@@ -32,23 +58,378 @@ CREATED BY : GEOLib version {{ glversion }}
 
 [END OF RUN IDENTIFICATION]
 [CPT LIST]
-{{ cpt_list }}
+[NUMBER OF CPTS]
+{{ cpt_list.cpt_collection|length }}
+--------------------------------------
+{% for cpt in cpt_list.cpt_collection %}
+[CPTNAME]
+{{ cpt.cptname }}
+[END OF CPTNAME]
+[PROJECT NAME]
+{{ cpt.project_name }}
+[END OF PROJECT NAME]
+[PROJECTID]
+{{ cpt.projectid }}
+[END OF PROJECTID]
+[PROJECT NUMBER]
+{{ cpt.project_number }}
+[END OF PROJECT NUMBER]
+[PROJECT SUBNUMBER]
+{{ cpt.project_subnumber }}
+[END OF PROJECT SUBNUMBER]
+[LOCATION NAME]
+{{ cpt.location_name }}
+[END OF LOCATION NAME]
+[CLIENT NAME]
+{{ cpt.client_name }}
+[END OF CLIENT NAME]
+[COMPANYID]
+{{ cpt.companyid }}
+[END OF COMPANYID]
+[FILEDATE]
+{{ cpt.filedate }}
+[END OF FILEDATE]
+[FILEOWNER]
+{{ cpt.fileowner }}
+[END OF FILEOWNER]
+[GEF VERSION]
+{{ cpt.gef_version }}
+[END OF GEF VERSION]
+[PROCEDURECODE]
+{{ cpt.procedurecode }}
+[END OF PROCEDURECODE]
+[ObjectID]
+{{ cpt.objectid }}
+[END OF ObjectID]
+[STARTDATE]
+{{ cpt.startdate }}
+[END OF STARTDATE]
+[STARTTIME]
+{{ cpt.starttime }}
+[END OF STARTTIME]
+[EXCAVATION TYPE]
+{{ cpt.excavation_type.value }}
+[END OF EXCAVATION TYPE]
+[TIMEORDER TYPE]
+{{ cpt.timeorder_type.value }}
+[END OF TIMEORDER TYPE]
+[CPT TYPE]
+{{ cpt.cpt_type }}
+[END OF CPT TYPE]
+[USAGE CONE VALUE]
+{{ cpt.usage_cone_value }}
+[END OF USAGE CONE VALUE]
+[XY COORDINATE SYSTEM]
+{{ cpt.xy_coordinate_system }}
+[END OF XY COORDINATE SYSTEM]
+[XWORLD]
+{{ cpt.xworld }}
+[END OF XWORLD]
+[XWORLD ACCURACY]
+{{ cpt.xworld_accuracy }}
+[END OF XWORLD ACCURACY]
+[YWORLD]
+{{ cpt.yworld }}
+[END OF YWORLD]
+[YWORLD ACCURACY]
+{{ cpt.yworld_accuracy}}
+[END OF YWORLD ACCURACY]
+[GROUNDLEVEL]
+          {{ cpt.groundlevel }}
+[END OF GROUNDLEVEL]
+[GROUNDLEVEL ACCURACY]
+{{ cpt.groundlevel_accuracy }}
+[END OF GROUNDLEVEL ACCURACY]
+[GROUNDLEVEL WAS MEASURED]
+{{ cpt.groundlevel_was_measured.value }}
+[END OF GROUNDLEVEL WAS MEASURED]
+[LEVELTEXT]
+{{ cpt.leveltext }}
+[END OF LEVELTEXT]
+[PRE EXCAVATION]
+{{ cpt.pre_excavation }}
+[END OF PRE EXCAVATION]
+[WATERLEVEL]
+{{ cpt.waterlevel }}
+[END OF WATERLEVEL]
+[XLOCAL]
+{{ cpt.xlocal }}
+[END OF XLOCAL]
+[YLOCAL]
+{{ cpt.ylocal }}
+[END OF YLOCAL]
+[LOCAL X CROSSSECTION]
+{{ cpt.local_x_crosssection }}
+[END OF LOCAL X CROSSSECTION]
+[INTERPRETATION MODEL]
+{{ cpt.interpretation_model.value }}
+[END OF INTERPRETATION MODEL]
+[INTERPRETATION MODEL STRESSDEPENDENT]
+{{ cpt.interpretation_model_stressdependent.value }}
+[END OF INTERPRETATION MODEL STRESSDEPENDENT]
+[DEPTHRANGE]
+{{ cpt.depthrange }}
+[END OF DEPTHRANGE]
+[GRAPH MAX PERCENTAGE]
+{{ cpt.graph_max_percentage }}
+[END OF GRAPH MAX PERCENTAGE]
+[GRAPH WIDTH]
+{{ cpt.graph_width }}
+[END OF GRAPH WIDTH]
+[GRAPH LINEWIDTH]
+{{ cpt.graph_linewidth }}
+[END OF GRAPH LINEWIDTH]
+[GRAPH BORDERWIDTH]
+{{ cpt.graph_borderwidth }}
+[END OF GRAPH BORDERWIDTH]
+[GRAPH BORDERCOLOR]
+{{ cpt.graph_bordercolor }}
+[END OF GRAPH BORDERCOLOR]
+[GRAPH FRICTIONCOLOR]
+{{ cpt.graph_frictioncolor }}
+[END OF GRAPH FRICTIONCOLOR]
+[GRAPH QCCOLOR]
+{{ cpt.graph_gccolor }}
+[END OF GRAPH QCCOLOR]
+[GRAPH PLANE COLOR]
+{{ cpt.graph_plane_color }}
+[END OF GRAPH PLANE COLOR]
+[GRAPH FIT FOR SIZE]
+{{ cpt.graph_fit_for_size.value }}
+[END OF GRAPH FIT FOR SIZE]
+[GRAPH FIT SYMBOL FOR SIZE]
+{{ cpt.graph_fit_symbol_for_size.value }}
+[END OF GRAPH FIT SYMBOL FOR SIZE]
+[GRAPH SYMBOL SIZE]
+{{ cpt.graph_symbol_syze }}
+[END OF GRAPH SYMBOL SIZE]
+[VOID VALUE DEPTH]
+{{ cpt.void_value_depth }}
+[END OF VOID VALUE DEPTH]
+[VOID VALUE CONE RESISTANCE]
+{{ cpt.void_value_cone_resistance }}
+[END OF VOID VALUE CONE RESISTANCE]
+[VOID VALUE PORE WATER PRESSURE]
+{{ cpt.void_value_pore_water_pressure }}
+[END OF VOID VALUE PORE WATER PRESSURE]
+[VOID VALUE SLEEVE FRICTION]
+{{ cpt.void_value_sleeve_friction }}
+[END OF VOID VALUE SLEEVE FRICTION]
+[VOID VALUE FRICTION NUMBER]
+{{ cpt.void_value_friction_number }}
+[END OF VOID VALUE FRICTION NUMBER]
+[VOID VALUE EQUIVALENT ELECTRONIC QC]
+{{ cpt.void_value_equivalent_electronic_qc }}
+[END OF VOID VALUE EQUIVALENT ELECTRONIC QC]
+[MEASURED DATA]
+[TABLE]
+[COLUMN INDICATION]
+{% for key in cpt.measured_data.data[0].keys() %}
+{{ key }}
+{% endfor %}
+[END OF COLUMN INDICATION]
+[DATA]
+{% for row in cpt.measured_data.data %}
+{% for value in row.values() %}
+{% if loop.last %}
+{{ "{}".format(value).rjust(6) }}
+{% else %}
+{{ "{}".format(value).rjust(6) -}}
+{% endif %}
+{% endfor %}
+{% endfor %}
+[END OF DATA]
+[END OF TABLE]
+[END OF MEASURED DATA]
+{% if not loop.last %}
+[NEXT OF NUMBER OF CPTS]
+{% endif %}
+{% endfor %} 
+[END OF NUMBER OF CPTS]
 [END OF CPT LIST]
-
 [PROFILES]
-{{ profiles }}
+{{ '{:>4}'.format(profiles.profiles|length) }} = number of items
+{% for profile in profiles.profiles %}
+{{ profile.name }}
+{{ '{:>5}'.format(profile.matching_cpt) }} : Matching CPT = {{ cpt_list.cpt_collection[profile.matching_cpt].cptname }}
+{{ '{:>12.2f}'.format(profile.x_coordinate) }} : X coordinate [m]
+{{ '{:>12.2f}'.format(profile.y_coordinate) }} : Y coordinate [m]
+{{ '{:>12.2f}'.format(profile.phreatic_level) }} : Phreatic level [m]
+{{ '{:>12.2f}'.format(profile.pile_tip_level) }} : Pile tip level [m]
+{{ '{:>12.2f}'.format(profile.overconsolidation_ratio) }} : Overconsolidation ratio of bearing layer [m]
+{{ '{:>12.2f}'.format(profile.top_of_positive_skin_friction) }} : Top of positive skin friction zone [m]
+{{ '{:>12.2f}'.format(profile.bottom_of_negative_skin_friction) }} : Bottom of negative skin friction zone [m]
+{{ '{:>12.2f}'.format(profile.expected_ground_level_settlement) }} : Expected ground level settlement [m]
+{{ '{:>12.2f}'.format(profile.placement_depth_of_foundation) }} : Placement depth of foundation element [m]
+{{ '{:>12}'.format(profile.concentration_value_frohlich) }} : Concentration value according to Frohlich [-]
+{{ '{:>12.2f}'.format(profile.top_tension_zone) }} : Top of tension zone [m]
+{{ '{:>12}'.format(profile.reduction_of_core_resistance) }} : Reduction type of cone resistance = {{ 'Standard' if cone_resistance_reduction_type == 0 else 'Begemann' if cone_resistance_reduction_type == 1 else 'Manual' }}
+{{ '{:>12.2f}'.format(profile.excavation_level) }} : Excavation level [m]
+{{ '{}'.format(profile.excavation_width_infinite) }} : Excavation width infinite = TRUE
+{{ '{}'.format(profile.excavation_length_infinite) }} : Excavation length infinite = TRUE
+{{ '{:>12.2f}'.format(profile.distance_edge_pile_to_excavation_boundary) }} : Distance edge pile to excavation boundary [m]
+{{ '{:>5}'.format(profile.layers|length) }} : Number of layers
+{% for layer in profile.layers %}
+Layer ({{ loop.index }})
+{{ '{:>5}'.format(layer.material) }} : Material = {{ soil_collection.soil[layer.material].name }}
+{{ '{:>12.3f}'.format(layer.top_level) }} : Top level [m]
+{{ '{:>12.2f}'.format(layer.excess_pore_pressure_top) }} : Excess pore pressure at top [kN/m3]
+{{ '{:>12.2f}'.format(layer.excess_pore_pressure_bottom) }} : Excess pore pressure at bottom [kN/m3]
+{{ '{:>12.2f}'.format(layer.ocr_value) }} : OCR value [-]
+{{ '{:>12}'.format(layer.reduction_core_resistance) }} : Reduction of cone resistance [%]
+{% endfor %}
+{% endfor %}
 [END OF PROFILES]
 [SLOPES]
 {{ slopes }}
 [END OF SLOPES]
 [TYPES - BEARING PILES]
+{% if types___bearing_piles is not string %}
+0 : pile type shown in main graph
+{{ types___bearing_piles|length }} = number of items
+{% for pile in types___bearing_piles %}
+{{ pile.pile_name }}
+{{ '{:>2}'.format(pile.pile_type.value) }} : Pile Type = {{ pile.pile_type.name }}
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
+{{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
+{% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}
+    {{ '{:>12.4f}'.format(pile.execution_factor_clay_loam_peat) }} : Execution factor clay/loam/peat [-)
+{% endif %}
+{{ '{:>2}'.format(pile.pile_type_for_pile_class_factor.value) }} : Pile type for pile class factor = {{ pile.pile_type_for_pile_class_factor.name }}
+{{ '{:>12.4f}'.format(pile.pile_class_factor) }} : Pile class factor [-)
+{{ '{:>2}'.format(pile.pile_type_for_load_settlement_curve.value) }} : Pile type for load-settlement curve = {{ pile.pile_type_for_load_settlement_curve.name }}
+{{ '{:>2}'.format(pile.material.value) }} : Material = {{ pile.material.name }}
+{% if pile.material.value == 3 %}
+    {{ '{:>10.3E}'.format(pile.elasticity_modulus) }} : Elasticity modulus [kN/m2)
+{% endif %}
+{{ '{:>2}'.format(pile.slip_layer.value) }} : Slip Layer = {{ pile.slip_layer.name }}
+{{ '{:>12.2f}'.format(pile.characteristic_adhesion) }} : Characteristic adhesion [kN/m2)
+{{ '{:>2}'.format(pile.shape.value) }} : Shape = {{ pile.shape.name }}
+{% if pile.shape.value == 0 %}
+    {{ '{:>12.2f}'.format(pile.diameter) }} : Diameter [m)
+{% elif pile.shape.value == 1 %}
+    {{ '{:>12.2f}'.format(pile.base_width) }} : Width [m)
+    {{ '{:>12.2f}'.format(pile.base_length) }} : "Length [m)
+{% elif pile.shape.value == 2 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+    {{ '{:>12.2f}'.format(pile.base_height) }} : Base height [m)
+{% elif pile.shape.value == 3 %}
+    {{ '{:>12.2f}'.format(pile.base_width_v) }} : Base width [m)
+    {{ '{:>12.2f}'.format(pile.base_length_v) }} : Base length [m)
+    {{ '{:>12.2f}'.format(pile.base_height) }} : Base height [m)
+    {{ '{:>12.2f}'.format(pile.shaft_width) }} : Shaft width [m)
+    {{ '{:>12.2f}'.format(pile.shaft_length) }} : Shaft length [m)
+{% elif pile.shape.value == 4 %}
+    {{ '{:>12.2f}'.format(pile.diameter) }} : Diameter [m)
+    {{ '{:>12.2f}'.format(pile.increase_in_diameter) }} : Increase in diameter [m/m)
+{% elif pile.shape.value == 5 %}
+    {{ '{:>12.2f}'.format(pile.external_diameter) }} : External diameter [m)
+    {{ '{:>12.2f}'.format(pile.internal_diameter) }} : Internal diameter [m)
+{% elif pile.shape.value == 6 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+{% elif pile.shape.value == 7 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+    {{ '{:>12.2f}'.format(pile.base_height) }} : Base height [m)
+{% elif pile.shape.value == 8 %}
+    {{ '{:>12.2f}'.format(pile.base_width) }} : Width [m)
+    {{ '{:>12.2f}'.format(pile.base_length) }} : Length [m)
+{% elif pile.shape.value == 9 %}
+    {{ '{:>12.2f}'.format(pile.external_diameter) }} : External diameter [m)
+    {{ '{:>12.2f}'.format(pile.internal_diameter) }} : Internal diameter [m)
+{% elif pile.shape.value == 10 %}
+    {{ '{:>12.2f}'.format(pile.height_h_shape) }} : Height H-shape [m)
+    {{ '{:>12.2f}'.format(pile.width_h_shape) }} : Width H-shape [m)
+    {{ '{:>12.2f}'.format(pile.thickness_web) }} : Thickness web [m)
+    {{ '{:>12.2f}'.format(pile.thickness_flange) }} : Thickness flange [m)
+{% endif %}
+{{ '{:>2}'.format(pile.overrule_pile_tip_shape_factor.value) }} : Factor beta overruled = {{ pile.overrule_pile_tip_shape_factor.name }}
+{% if pile.overrule_pile_tip_shape_factor.value == 1 %}
+{{ '{:>12.2f}'.format(pile.pile_tip_shape_factor) }} : Factor beta user defined
+{% endif %}
+{{ '{:>2}'.format(pile.overrule_pile_tip_cross_section_factors.value) }} : Factor s overruled = {{ pile.overrule_pile_tip_cross_section_factors.name }}
+{% if pile.overrule_pile_tip_cross_section_factors.value == 1 %}
+{{ '{:>12.2f}'.format(pile.pile_tip_cross_section_factor) }} : Factor s user defined
+{% endif %}
+{{ '{:>2}'.format(pile.use_pre_2016.value) }} : Use Pre 2016 Alpha P Factor = {{ pile.use_pre_2016.name }}
+{{ '{:>2}'.format(pile.user_defined_pile_type_as_prefab.value) }} : User Defined piletype as Overig = {{ '{:>2}'.format(pile.user_defined_pile_type_as_prefab.name) }}
+{{ '{:>2}'.format(pile.use_manual_reduction_for_qc.value) }} : Use manual reduction for qc;III = {{ '{:>2}'.format(pile.use_manual_reduction_for_qc.name) }}
+{{ '{:>6.2f}'.format(pile.reduction_percentage_qc) }} : Reduction percentage qc;III
+{{ '{:>2}'.format(pile.is_user_defined.value) }} : User defined name
+{% endfor %}
+{% else %}
 {{ types___bearing_piles }}
+{% endif %}
 [END OF TYPES - BEARING PILES]
 [TYPES - BEARING PILES BELGIAN]
 {{ types___bearing_piles_belgian }}
 [END OF TYPES - BEARING PILES BELGIAN]
 [TYPES - TENSION PILES (CUR)]
+{% if types___tension_piles_cur is not string %}
+0 : pile type shown in main graph
+{{ types___tension_piles_cur|length }} = number of items
+{% for pile in types___tension_piles_cur %}
+{{ pile.pile_name }}
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
+{{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
+{% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}
+    {{ '{:>12.4f}'.format(pile.execution_factor_clay_loam_peat) }} : Execution factor clay/loam/peat [-)
+{% endif %}
+{{ '{:>2}'.format(pile.material.value) }} : Material = {{ pile.material.name }}
+{% if pile.material.value == 3 %}
+    {{ '{:>10.3E}'.format(pile.unit_weight_pile) }} : Unit weigth pile material [kN/m3)
+    {{ '{:>10.3E}'.format(pile.elasticity_modulus) }} : Elasticity modulus [kN/m2)
+{% endif %}
+{{ '{:>2}'.format(pile.shape.value) }} : Shape = {{ pile.shape.name }}
+{% if pile.shape.value == 0 %}
+    {{ '{:>12.2f}'.format(pile.diameter) }} : Diameter [m)
+{% elif pile.shape.value == 1 %}
+    {{ '{:>12.2f}'.format(pile.base_width) }} : Width [m)
+    {{ '{:>12.2f}'.format(pile.base_length) }} : "Length [m)
+{% elif pile.shape.value == 2 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+    {{ '{:>12.2f}'.format(pile.base_height) }} : Base height [m)
+{% elif pile.shape.value == 3 %}
+    {{ '{:>12.2f}'.format(pile.base_width_v) }} : Base width [m)
+    {{ '{:>12.2f}'.format(pile.base_length_v) }} : Base length [m)
+    {{ '{:>12.2f}'.format(pile.base_height) }} : Base height [m)
+    {{ '{:>12.2f}'.format(pile.shaft_width) }} : Shaft width [m)
+    {{ '{:>12.2f}'.format(pile.shaft_length) }} : Shaft length [m)
+{% elif pile.shape.value == 4 %}
+    {{ '{:>12.2f}'.format(pile.diameter) }} : Diameter [m)
+    {{ '{:>12.2f}'.format(pile.increase_in_diameter) }} : Increase in diameter [m/m)
+{% elif pile.shape.value == 5 %}
+    {{ '{:>12.2f}'.format(pile.external_diameter) }} : External diameter [m)
+    {{ '{:>12.2f}'.format(pile.internal_diameter) }} : Internal diameter [m)
+{% elif pile.shape.value == 6 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+{% elif pile.shape.value == 7 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+    {{ '{:>12.2f}'.format(pile.base_height) }} : Base height [m)
+{% elif pile.shape.value == 9 %}
+    {{ '{:>12.2f}'.format(pile.external_diameter) }} : External diameter [m)
+    {{ '{:>12.2f}'.format(pile.internal_diameter) }} : Internal diameter [m)
+{% elif pile.shape.value == 10 %}
+    {{ '{:>12.2f}'.format(pile.height_h_shape) }} : Height H-shape [m)
+    {{ '{:>12.2f}'.format(pile.width_h_shape) }} : Width H-shape [m)
+    {{ '{:>12.2f}'.format(pile.thickness_web) }} : Thickness web [m)
+    {{ '{:>12.2f}'.format(pile.thickness_flange) }} : Thickness flange [m)
+{% elif pile.shape.value == 11 %}
+    {{ '{:>12.2f}'.format(pile.circumference) }} : Circumference of pile [m)
+    {{ '{:>12.2f}'.format(pile.cross_section) }} : Pile area [m)
+{% endif %}
+{{ '{:>2}'.format(pile.is_user_defined.value) }} : User defined name
+{% endfor %}
+{% else %}
 {{ types___tension_piles_cur }}
+{% endif %}
 [END OF TYPES - TENSION PILES (CUR)]
 [TYPES - SHALLOW FOUNDATIONS]
 {{ types___shallow_foundations }}
@@ -57,31 +438,191 @@ CREATED BY : GEOLib version {{ glversion }}
 {{ loads }}
 [END OF LOADS]
 [POSITIONS - BEARING PILES]
+{% if positions___bearing_piles is mapping %}
+[TABLE]
+[COLUMN INDICATION]
+index
+X
+Y
+PileHeadLevel
+Surcharge
+LimitStateStrGeo
+LimitStateService
+PileName
+[END OF COLUMN INDICATION]
+[DATA]
+{% for position in positions___bearing_piles.positions %}
+{{ '{:>6}'.format(position.index) }}  {{ '{:>9.2f}'.format(position.x_coordinate) }} {{ '{:>9.2f}'.format(position.y_coordinate) }} {{ '{:>9.2f}'.format(position.pile_head_level) }} {{ '{:>9.2f}'.format(position.surcharge) }} {{ '{:>9.2f}'.format(position.limit_state_str) }} {{ '{:>9.2f}'.format(position.limit_state_service) }} {{ '{:>12}'.format(position.pile_name)}}
+{% endfor %}
+[END OF DATA]
+[END OF TABLE]
+{% else %}
 {{ positions___bearing_piles }}
+{% endif %}
 [END OF POSITIONS - BEARING PILES]
 [POSITIONS - BEARING PILES BELGIAN]
 {{ positions___bearing_piles_belgian }}
 [END OF POSITIONS - BEARING PILES BELGIAN]
 [POSITIONS - TENSION PILES (CUR)]
+{% if positions___tension_piles_cur is not string %}
+[TABLE]
+[COLUMN INDICATION]
+index
+X
+Y
+PileHeadLevel
+UseAlternatingLoads
+MaxForce
+MinForce
+LimitStateStrGeo
+LimitStateService
+PileName
+[END OF COLUMN INDICATION]
+[DATA]
+{% for position in positions___tension_piles_cur.positions %}
+{{ '{:>6}'.format(position.index) }}  {{ '{:>9.2f}'.format(position.x_coordinate) }} {{ '{:>9.2f}'.format(position.y_coordinate) }} {{ '{:>9.2f}'.format(position.pile_head_level) }} {{ '{:>2}'.format(position.use_alternating_loads) }} {{ '{:>9.2f}'.format(position.max_force) }} {{ '{:>9.2f}'.format(position.min_force) }} {{ '{:>9.2f}'.format(position.limit_state_str) }} {{ '{:>9.2f}'.format(position.limit_state_service) }} {{ '{:>12}'.format(position.pile_name)}}
+{% endfor %}
+[END OF DATA]
+[END OF TABLE]
+{% else %}
 {{ positions___tension_piles_cur }}
+{% endif %}
 [END OF POSITIONS - TENSION PILES (CUR)]
 [POSITIONS - SHALLOW FOUNDATIONS]
 {{ positions___shallow_foundations }}
 [END OF POSITIONS - SHALLOW FOUNDATIONS]
 [CALCULATION OPTIONS]
+{% if calculation_options is mapping %}
+{% set co = calculation_options %}
+{{ '1 : Superstructure rigidity = Rigid' if co.is_rigid else '0 : Superstructure rigidity = Non-rigid' }}
+{{ '{:>12.3f}'.format(co.max_allowed_settlement_lim_state_str) }} : Max. allowed settlement [m]; lim. state STR/GEO
+{{ '{:>12.6f}'.format(co.max_allowed_rel_rotation_lim_state_str) }} : Max. allowed rel. rotation [m/m]; lim. state STR/GEO
+{{ '{:>12.3f}'.format(co.max_allowed_settlement_lim_state_serv) }} : Max. allowed settlement [m]; serv. lim. state
+{{ '{:>12.6f}'.format(co.max_allowed_rel_rotation_lim_state_serv) }} : Max. allowed rel. rotation [m/m]; serv. lim. state
+{{ co.is_xi3_overruled.value }} : Factor xi3 NEN overruled = {{ co.is_xi3_overruled.name }}
+{% if co.is_xi3_overruled %}
+{{ '{:>12.2f}'.format(co.factor_xi3) }} : Factor xi3 user defined
+{% endif %}
+{{ co.is_xi4_overruled.value }} : Factor xi4 NEN overruled = {{ co.is_xi4_overruled.name }}
+{% if co.is_xi4_overruled %}
+{{ '{:>12.2f}'.format(co.factor_xi4) }} : Factor xi4 user defined
+{% endif %}
+{{ co.is_gamma_b_overruled.value }} : Gamma b NEN overruled = {{ co.is_gamma_b_overruled.name }}
+{% if co.is_gamma_b_overruled %}
+{{ '{:>12.2f}'.format(co.factor_gamma_b) }} : Factor gamma b user defined
+{% endif %}
+{{ co.is_gamma_fnk_overruled.value }} : Gamma fnk NEN overruled = {{ co.is_gamma_fnk_overruled.name }}
+{% if co.is_gamma_fnk_overruled %}
+{{ '{:>12.2f}'.format(co.factor_gamma_fnk) }} : Factor gamma fnk user defined
+{% endif %}
+{{ co.is_area_overruled.value }} : Area overruled = {{ co.is_area_overruled.name }}
+{% if co.is_area_overruled %}
+{{ '{:>12.2f}'.format(co.area) }} : Area [m2] user defined
+{% endif %}
+{{ co.is_suppress_qc_reduction.value }} : Suppress qcIII reduction = {{ co.is_suppress_qc_reduction.name }}
+{{ co.is_overrule_excavation.value }} : Overrule excavation = {{ co.is_overrule_excavation.name }}
+{{ co.use_pile_group.value }} : Use pile group = {{ co.use_pile_group.name }}
+{{ co.is_write_intermediate_results.value }} : Write intermediate results = {{ co.is_write_intermediate_results.name }}
+{{ co.use_interaction_model.value }} : Use interaction model = {{ co.use_interaction_model.name }}
+0 : Is gamma;gamma overruled (LS STR/GEO) = FALSE
+        1.00 : Factor gamma;gamma (LS STR/GEO) user defined
+0 : Is gamma;coh overruled = FALSE
+        1.00 : Factor gamma;coh user defined
+0 : Is gamma;phi overruled = FALSE
+        1.00 : Factor gamma;phi user defined
+0 : Is gamma;fundr overruled = FALSE
+        1.00 : Factor gamma;fundr user defined
+0 : Is gamma;gamma (SLS) overruled = FALSE
+        1.00 : Factor gamma;gamma (SLS) user defined
+0 : Is gamma;Cc overruled = FALSE
+        1.00 : Factor gamma;Cc user defined
+0 : Is gamma;Ca overruled = FALSE
+        1.00 : Factor gamma;Ca user defined
+0 : Keep length constant when optimizing dimensions = FALSE
+0 : Use the 5% limit instead of the 20% limit to determine the inclination = FALSE
+0.8330 : LoadFactor between limitstate 1 and limitstate 2 for the determination of maximum vertical load option
+{{ '{:>12.2f}'.format(co.unit_weight_water) }} : Unit weight water [kN/m3]
+{{ co.use_compaction.value }} : Use compaction = {{ co.use_compaction.name }}
+{{ co.is_gamma_var_overruled.value }} : Gamma var overruled = {{ co.is_gamma_var_overruled.name }}
+{{ '{:>12.2f}'.format(co.factor_gamma_var) }} : Factor gamma var user defined
+{{ co.is_gamma_st_overruled.value }} : Gamma st overruled = {{ co.is_gamma_st_overruled.name }}
+{{ '{:>12.2f}'.format(co.factor_gamma_st) }} : Factor gamma st user defined
+{{ co.is_gamma_gamma_overruled.value }} : Gamma gamma overruled = {{ co.is_gamma_gamma_overruled.name }}
+{{ '{:>12.2f}'.format(co.factor_gamma_gamma) }} : Factor gamma_gamma user defined
+{{ '{:>12.2f}'.format(co.surcharge) }} : Surcharge [kN/m2]
+{{ co.use_piezometric_levels.value }} : Use Piezometric levels = {{ co.use_piezometric_levels.name }}
+{{ co.use_almere_rules.value }} : Use Almere rules = {{ co.use_almere_rules.name }}
+{{ co.use_extra_almere_rules.value }} : Use Extra Almere rules = {{ co.use_extra_almere_rules.name }}
+0 : Xi3 BPB overruled = FALSE
+0 : Xi4 BPB overruled = FALSE
+0 : Gamma rd overruled = FALSE
+        1.00 : Factor xi3 user defined
+        1.00 : Factor xi4 user defined
+        1.00 : Factor Gamma rd user defined
+0 : Gamma b BPB overruled = FALSE
+        1.00 : Factor Gamma b user defined
+0 : Gamma s BPB overruled = FALSE
+        1.00 : Factor Gamma s user defined
+ 0 : Suppress all qc reduction (BP) = FALSE
+{{ co.is_ea_gem_overruled.value }} : Eea;gem overruled = {{ co.is_ea_gem_overruled.name }}
+{{ '{:.2f}'.format(co.ea_gem) }} : Eea;gem user defined
+0 : Use Quality Assurance = FALSE
+     1000.00 : Area covered per CPT
+{{ co.is_gamma_s_overruled.value }} : Gamma s for NEN overruled = {{ co.is_gamma_s_overruled.name }}
+{{ '{:>12.2f}'.format(co.factor_gamma_s) }} : Factor Gamma s for NEN user defined
+0 : Factor Beta (BPB) overruled = FALSE
+        1.00 : Factor Beta (BPB) user defined
+{% else %}
 {{ calculation_options }}
+{% endif %}
 [END OF CALCULATION OPTIONS]
 [CALCULATIONTYPE]
+{% if calculationtype is mapping %}
+ {{ calculationtype.main_calculationtype.value }} : Main calculationtype
+ {{ calculationtype.sub_calculationtype.value }} : Sub calculationtype
+{% else %}
 {{ calculationtype }}
+{% endif %}
 [END OF CALCULATIONTYPE]
 [PRELIMINARY DESIGN]
+{% if preliminary_design is mapping %}
+{{ '{:>8.2f}'.format(preliminary_design.trajectory_begin) }} : Trajectory begin [m]
+{{ '{:>8.2f}'.format(preliminary_design.trajectory_end) }} : Trajectory end [m]
+{{ '{:>8.2f}'.format(preliminary_design.trajectory_interval) }} : Trajectory interval [m]
+{% if calculationtype.main_calculationtype.value == 0 %}
+{{ '{:>8}'.format(preliminary_design.net_bearing_capacity) }} : Net bearing capacity [kN]
+{% endif %}
+{{ preliminary_design.profiles|length }} : Number of Profiles selected for calculation
+{% for profile in preliminary_design.profiles %}
+{{ loop.index0 }} : {{ profiles.profiles[loop.index0].name }}
+{% endfor %}
+{% if calculationtype.main_calculationtype.value == 1 %}
+{% if model.model.value == 0 %}
+    {{ preliminary_design.pile_types[0] }} : Pile type = {{ types___bearing_piles[preliminary_design.pile_types[0]].pile_name }}
+{% elif model.model.value == 1 %}
+    {{ preliminary_design.pile_types[0] }} : Pile type = {{ types___tension_piles_cur[preliminary_design.pile_types[0]].pile_name }}
+{% endif %}
+{{ '{:>8.2f}'.format(preliminary_design.cpt_test_level) }} : CPT Test Level [m]
+{% else %}
+{{ preliminary_design.pile_types|length }} : Number of PileTypes selected for calculation
+{% for pile_type in preliminary_design.pile_types %}
+{% if model.model.value == 0 %}
+{{ loop.index0 }} : {{ types___bearing_piles[loop.index0].pile_name }}
+{% elif model.model.value == 1 %}
+{{ loop.index0 }} : {{ types___tension_piles_cur[loop.index0].pile_name }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% else %}
 {{ preliminary_design }}
+{% endif %}
 [END OF PRELIMINARY DESIGN]
 [DE BEER]
 {{ de_beer }}
 [END OF DE BEER]
 [LOCATION MAP]
-{{ location_map }}
+
+       {{ location_map }}
 [END OF LOCATION MAP]
 
 [END OF INPUT DATA]

@@ -17,7 +17,6 @@ from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
-    Accuracy,
     Boundaries,
     Boundary,
     ConsolidationModel,
@@ -507,7 +506,6 @@ class TestDSettlementModel:
         ds.parse(test_filepath)
 
         # initialize geometry
-        ds.datastructure.geometry_data.accuracy = Accuracy()
         ds.datastructure.geometry_data.points = Points()
         ds.datastructure.geometry_data.curves = Curves()
         ds.datastructure.geometry_data.boundaries = Boundaries()
@@ -752,7 +750,7 @@ class TestDSettlementModel:
         list3 = [point5, point6]
 
         # Verify defaults
-        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == 0
+        assert ds.datastructure.geometry_data.phreatic_line == 0
 
         # Verify add_head_line
         h_id = ds.add_head_line(points=list1, is_phreatic=True)
@@ -761,7 +759,7 @@ class TestDSettlementModel:
                 ds.headlines.piezolines[0].curves[0]
             ].points[0]
         ] == DSeriePoint.from_point(point1)
-        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == h_id
+        assert ds.datastructure.geometry_data.phreatic_line == h_id
         assert ds.datastructure.geometry_data.points[
             ds.datastructure.geometry_data.curves[
                 ds.datastructure.geometry_data.piezo_lines.piezolines[0].curves[0]
@@ -771,12 +769,12 @@ class TestDSettlementModel:
         # Add another headline, verify phreatic line changed
         h_id2 = ds.add_head_line(points=list2, is_phreatic=True)
         assert h_id2 != h_id
-        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == h_id2
+        assert ds.datastructure.geometry_data.phreatic_line == h_id2
 
         # Add another headline with duplicate points, should still be added
         h_id3 = ds.add_head_line(points=list3)
         assert h_id3 != h_id2
-        assert ds.datastructure.geometry_data.phreatic_line.phreaticline == h_id2
+        assert ds.datastructure.geometry_data.phreatic_line == h_id2
         assert len(ds.points.points) == 6
 
         # Serialize resulting structure
@@ -796,13 +794,13 @@ class TestDSettlementModel:
             soil_external.SoilWeightParameters()
         )
 
-        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=20
         )
-        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
             mean=30
         )
-        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
             mean=0.1
         )
 
@@ -812,7 +810,7 @@ class TestDSettlementModel:
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.PersistableStochasticParameter(
+        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
             mean=10
         )
         # step 3: run test

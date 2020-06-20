@@ -46,7 +46,7 @@ class Side(Enum):
     RIGHT = 2
 
 
-class DSheetpilingModel(BaseModel):
+class DSheetPilingModel(BaseModel):
     """DSheetPiling is a tool used to design sheetpile and diaphragm walls and horizontally loaded piles.
 
     This model can read, modify and create

@@ -1,23 +1,8 @@
-from typing import Optional
-from enum import Enum, IntEnum
 from geolib.models.dseries_parser import DSeriesNameKeyValueSubStructure
+from geolib.models.internal import Bool
 from geolib.soils import Soil, DistributionType, HorizontalBehaviourType
 from geolib.soils import PreconType
 from geolib.soils import StorageTypes
-from datetime import timedelta
-
-
-class Bool(IntEnum):
-    FALSE = 0
-    TRUE = 1
-
-    def __getattribute__(self, name):
-        if isinstance(name, bool):
-            if name:
-                name = "TRUE"
-            else:
-                name = "FALSE"
-        return super().__getattribute__(name)
 
 
 class SoilInternal(DSeriesNameKeyValueSubStructure):
@@ -158,7 +143,7 @@ class SoilInternal(DSeriesNameKeyValueSubStructure):
             "soilpermeabilityver": "soil_parameters\\storage_parameters\\vertical_permeability\\mean",
             "soilpermeabilityhorfactor": "soil_parameters\\storage_parameters\\permeability_horizontal_factor\\mean",
             "soilstoragetype": "soil_parameters\\storage_parameters\\storage_type",
-            "soilpermeabilitystrainmodulus": "soil_parameters\\storage_parameters\\permeability_strain_type",
+            "soilpermeabilitystrainmodulus": "soil_parameters\\storage_parameters\\permeability_strain_type\\mean",
             "soiluseprobdefaults": "use_probabilistic_defaults",
             "soilstdgamdry": "soil_parameters\\soil_weight_parameters\\unsaturated_weight\\standard_deviation",
             "soilstdgamwet": "soil_parameters\\soil_weight_parameters\\saturated_weight\\standard_deviation",
@@ -200,7 +185,7 @@ class SoilInternal(DSeriesNameKeyValueSubStructure):
             "soildistpop": "soil_parameters\\compression_parameters\\POP\\distribution_type",
             "soildistpermeabilityhorfactor": "soil_parameters\\storage_parameters\\permeability_horizontal_factor\\distribution_type",
             "soildistinitialvoidratio": "soil_parameters\\soil_classification_parameters\\initial_void_ratio\\distribution_type",
-            "soildistpermeabilitystrainmodulus": "soil_parameters\\storage_parameters\\permeability_strain_type",
+            "soildistpermeabilitystrainmodulus": "soil_parameters\\storage_parameters\\permeability_strain_type\\distribution_type",
             "soildistlimitstress": "",
             "soildistcp": "soil_parameters\\koppejan_parameters\\primary_Cp\\distribution_type",
             "soildistcp1": "soil_parameters\\koppejan_parameters\\primary_Cp_point\\distribution_type",

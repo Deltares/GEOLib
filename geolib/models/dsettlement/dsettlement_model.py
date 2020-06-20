@@ -30,7 +30,6 @@ from .internal import (
     ResidualTimes,
     Verticals,
     PiezoLines,
-    PhreaticLine,
     Dimension,
     StrainType,
     SoilModel,
@@ -229,7 +228,7 @@ class DSettlementModel(BaseModel):
         """Add boundary to model."""
         # Divide points into curves and boundary
         # Check point uniqueness
-        tolerance = self.accuracy.accuracy
+        tolerance = self.accuracy
         points = [
             self.points.add_point_if_unique(
                 DSeriePoint.from_point(point), tolerance=tolerance
@@ -263,7 +262,7 @@ class DSettlementModel(BaseModel):
 
         piezo_line = self.headlines.create_piezoline(curves)
         if is_phreatic:
-            self.datastructure.geometry_data.phreatic_line.phreaticline = piezo_line.id
+            self.datastructure.geometry_data.phreatic_line = piezo_line.id
         return piezo_line.id
 
     @property
