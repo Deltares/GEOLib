@@ -1,6 +1,8 @@
 import os
 import sys
+from typing import List
 from teamcity import is_running_under_teamcity
+from pathlib import Path
 import pytest
 
 try:
@@ -29,6 +31,25 @@ class TestUtils:
             package {str} -- Name of the PIP package.
         """
         pipmain(["install", package])
+
+    @staticmethod
+    def get_test_files_from_local_test_dir(dir_name: str, glob_filter: str) -> List[Path]:
+        """Returns all the files that need to be used as test input parameters from a given directory.
+
+        Args:
+            dir_name (str): Name of the local test data directory.
+            glob_filter (str): Filter that will be applied with the glob function.
+
+        Returns:
+            List[Path]: List of files matching the above criteria.
+        """
+        return [
+            input_file
+            for input_file in Path(TestUtils.get_local_test_data_dir(dir_name)).glob(
+                glob_filter
+            )
+            if input_file.is_file()
+        ]
 
     @staticmethod
     def get_output_test_data_dir(dir_name: str):

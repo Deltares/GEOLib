@@ -138,12 +138,35 @@ class TestInternalInputDFoundations:
         profile = parsed_profiles.profiles[0]
         assert len(profile.layers) == 1
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_default_soils_generated(self):
         from geolib.models.dfoundations.internal_soil import Soil
 
         soils = Soil.default_soils()
         assert len(soils) == 56
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "model, soilgamdryvalue",
+        [
+            pytest.param("TENSION_PILES", 17, id="Tension default soils",),
+            pytest.param("BEARING_PILES", 18, id="Bearing default soils",),
+        ],
+    )
+    def test_default_soils_generated_model_specific(self, model, soilgamdryvalue):
+        from geolib.models.dfoundations.internal_soil import Soil
+
+        soils = Soil.default_soils(model=model)
+        assert len(soils) == 56
+        assert soils[0].name == "BClay, clean, moderate"
+        assert soils[0].soilgamdry == soilgamdryvalue
+
+    @pytest.mark.unittest
+    def test_default_soils_generated_unknown_model(self):
+        from geolib.models.dfoundations.internal_soil import Soil
+
+        soils = Soil.default_soils(model="Belgian")
+        assert len(soils) == 0
 
     @pytest.mark.integrationtest
     def test_given_single_cpt_text_when_parse_cpt_then_structure_parsed(self):

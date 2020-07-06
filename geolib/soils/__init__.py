@@ -155,6 +155,7 @@ class StorageTypes(IntEnum):
 
 class StorageParameters(BaseModel):
     vertical_permeability: Optional[StochasticParameter] = StochasticParameter()
+    horizontal_permeability: Optional[float] = None
     permeability_horizontal_factor: Optional[StochasticParameter] = StochasticParameter()
     storage_type: Optional[StorageTypes]
     permeability_strain_type: Optional[StochasticParameter] = StochasticParameter(
@@ -191,11 +192,44 @@ class SoilStiffnessParameters(BaseModel):
     """TODO Why is this class empty?"""
 
 
+class SubgradeReactionParameters(BaseModel):
+    modulus_subgrade_reaction_type: Optional[IntEnum] = None
+    lambda_type: Optional[IntEnum] = None
+    tangent_secant_1: Optional[float] = None
+    tangent_secant_2: Optional[float] = None
+    tangent_secant_3: Optional[float] = None
+    k_o_top: Optional[float] = None
+    k_1_top: Optional[float] = None
+    k_2_top: Optional[float] = None
+    k_3_top: Optional[float] = None
+    k_4_top: Optional[float] = None
+    k_o_bottom: Optional[float] = None
+    k_1_bottom: Optional[float] = None
+    k_2_bottom: Optional[float] = None
+    k_3_bottom: Optional[float] = None
+    k_4_bottom: Optional[float] = None
+    k_1_top_side: Optional[float] = None
+    k_2_top_side: Optional[float] = None
+    k_3_top_side: Optional[float] = None
+    k_1_bottom_side: Optional[float] = None
+    k_2_bottom_side: Optional[float] = None
+    k_3_bottom_side: Optional[float] = None
+
+
+class EarthPressureCoefficients(BaseModel):
+    earth_pressure_coefficients_type: Optional[IntEnum] = None
+    active: Optional[float] = None
+    neutral: Optional[float] = None
+    passive: Optional[float] = None
+
+
 class SoilParameters(BaseModel):
     """
     Soil Parameters class
     """
 
+    shell_factor: Optional[float] = None
+    emod_menard: Optional[float] = None
     mohr_coulomb_parameters: Optional[MohrCoulombParameters] = MohrCoulombParameters()
     undrained_parameters: Optional[UndrainedParameters] = UndrainedParameters()
     bjerrum_parameters: Optional[BjerrumParameters] = BjerrumParameters()
@@ -210,6 +244,12 @@ class SoilParameters(BaseModel):
         SoilStiffnessParameters
     ] = SoilStiffnessParameters()
     compression_parameters: Optional[CompressionParameters] = CompressionParameters()
+    earth_pressure_coefficients: Optional[
+        EarthPressureCoefficients
+    ] = EarthPressureCoefficients()
+    subgrade_reaction_parameters: Optional[
+        SubgradeReactionParameters
+    ] = SubgradeReactionParameters()
 
 
 class HorizontalBehaviourType(IntEnum):
@@ -325,7 +365,8 @@ class Soil(BaseModel):
     cohesion_stochastic_parameter: Optional[StochasticParameter] = StochasticParameter()
     dilatancy: Optional[float] = None
     dilatancy_stochastic_parameter: Optional[StochasticParameter] = StochasticParameter()
-    # ..todo:: value is multiply defined and should be removed
+    # ..TODO:: value is multiply defined and should be removed
+    delta_friction_angle: Optional[float] = None
     friction_angle: Optional[float] = None
     friction_angle_stochastic_parameter: Optional[
         StochasticParameter
@@ -372,4 +413,55 @@ class Soil(BaseModel):
             soilusetension=self.use_tension,
             soilca=self.soil_parameters.bjerrum_parameters.coef_secondary_compression_Ca.mean,
             soilccindex=self.soil_parameters.bjerrum_parameters.compression_index_Cc.mean,
+        )
+
+    def _to_dsheetpiling(self):
+        # Only import it here to prevent circular import errors
+        from geolib.models.dsheetpiling.internal import Soil as DSheetPilingSoil
+
+        return DSheetPilingSoil(
+            name=self.name,
+            soilcolor=self.color,
+            soilsoiltype=self.soil_type_nl,
+            soilgraintype=self.soil_parameters.soil_classification_parameters.grain_type,
+            soilgamdry=self.soil_parameters.soil_weight_parameters.unsaturated_weight.mean,
+            soilgamwet=self.soil_parameters.soil_weight_parameters.saturated_weight.mean,
+            soilrelativedensity=self.soil_parameters.soil_classification_parameters.relative_density,
+            soilemodmenard=self.soil_parameters.emod_menard,
+            soilcohesion=self.soil_parameters.mohr_coulomb_parameters.cohesion.mean,
+            soilphi=self.soil_parameters.mohr_coulomb_parameters.friction_angle_stochastic_parameter.mean,
+            soildelta=self.delta_friction_angle,
+            soilocr=self.soil_parameters.compression_parameters.OCR.mean,
+            soilpermeabkx=self.soil_parameters.storage_parameters.horizontal_permeability,
+            soilstdcohesion=self.soil_parameters.mohr_coulomb_parameters.cohesion.standard_deviation,
+            soilstdphi=self.soil_parameters.mohr_coulomb_parameters.friction_angle_stochastic_parameter.standard_deviation,
+            soildistcohesion=self.soil_parameters.mohr_coulomb_parameters.cohesion.distribution_type,
+            soildistphi=self.soil_parameters.mohr_coulomb_parameters.friction_angle_stochastic_parameter.distribution_type,
+            soilla=self.soil_parameters.earth_pressure_coefficients.active,
+            soilln=self.soil_parameters.earth_pressure_coefficients.neutral,
+            soillp=self.soil_parameters.earth_pressure_coefficients.passive,
+            soilusemenard=self.soil_parameters.subgrade_reaction_parameters.modulus_subgrade_reaction_type,
+            soilusebrinchhansen=self.soil_parameters.earth_pressure_coefficients.earth_pressure_coefficients_type,
+            soilshellfactor=self.soil_parameters.shell_factor,
+            soillambdatype=self.soil_parameters.subgrade_reaction_parameters.lambda_type,
+            soillam1=self.soil_parameters.subgrade_reaction_parameters.tangent_secant_1,
+            soillam2=self.soil_parameters.subgrade_reaction_parameters.tangent_secant_2,
+            soillam3=self.soil_parameters.subgrade_reaction_parameters.tangent_secant_3,
+            soilkb0=self.soil_parameters.subgrade_reaction_parameters.k_o_top,
+            soilkb1=self.soil_parameters.subgrade_reaction_parameters.k_1_top,
+            soilkb2=self.soil_parameters.subgrade_reaction_parameters.k_2_top,
+            soilkb3=self.soil_parameters.subgrade_reaction_parameters.k_3_top,
+            soilkb4=self.soil_parameters.subgrade_reaction_parameters.k_4_top,
+            soilko0=self.soil_parameters.subgrade_reaction_parameters.k_o_bottom,
+            soilko1=self.soil_parameters.subgrade_reaction_parameters.k_1_bottom,
+            soilko2=self.soil_parameters.subgrade_reaction_parameters.k_2_bottom,
+            soilko3=self.soil_parameters.subgrade_reaction_parameters.k_3_bottom,
+            soilko4=self.soil_parameters.subgrade_reaction_parameters.k_4_bottom,
+            soilcurkb1=self.soil_parameters.subgrade_reaction_parameters.k_1_top_side,
+            soilcurkb2=self.soil_parameters.subgrade_reaction_parameters.k_2_top_side,
+            soilcurkb3=self.soil_parameters.subgrade_reaction_parameters.k_3_top_side,
+            soilcurko1=self.soil_parameters.subgrade_reaction_parameters.k_1_bottom_side,
+            soilcurko2=self.soil_parameters.subgrade_reaction_parameters.k_2_bottom_side,
+            soilcurko3=self.soil_parameters.subgrade_reaction_parameters.k_3_bottom_side,
+            soilhorizontalbehaviourtype=self.horizontal_behaviour.horizontal_behavior_type,
         )

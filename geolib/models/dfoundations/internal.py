@@ -9,20 +9,16 @@ from pydantic.types import PositiveInt, confloat, constr, confloat, conint
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
-    ComplexVerticalSubstructure,
     DSerieListStructure,
     DSerieMatrixStructure,
     DSerieOldTableStructure,
-    DSerieRepeatedTableStructure,
-    DSeriesKeyValueSubStructure,
-    DSeriesListSubStructure,
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
-    DSeriesNameKeyValueSubStructure,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
-    DSerieTableStructure,
+    DSeriesStructureCollection,
     DSeriesInlineProperties,
+    DSeriesInlineMappedProperties,
 )
 from .internal_soil import Soil
 from .dfoundations_structures import (
@@ -186,7 +182,7 @@ class TypesTensionPiles(DSeriesNoParseSubStructure):
     is_user_defined: Bool = Bool.TRUE
 
 
-class SoilCollection(DSeriesListSubStructure):
+class SoilCollection(DSeriesStructureCollection):
     soil: List[Soil] = Soil.default_soils()
 
     def add_soil_if_unique(self, soil) -> None:
@@ -588,12 +584,12 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
     net_bearing_capacity: Optional[float] = 0  # [kN]
 
 
-class Version(DSeriesKeyValueSubStructure):
+class Version(DSeriesInlineMappedProperties):
     soil: int = 1005
     d__foundations: int = 1015
 
 
-class VersionExternal(DSeriesKeyValueSubStructure):
+class VersionExternal(DSeriesInlineMappedProperties):
     dgdsfoundationcalc____dll: str = "19.1.2.26122"
 
 

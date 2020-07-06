@@ -1,30 +1,36 @@
 from __future__ import annotations
-import logging
+
 import inspect
+import logging
+import re
 from abc import abstractclassmethod, abstractmethod
+from itertools import groupby
 from typing import (
+    Dict,
+    Iterable,
     List,
-    get_type_hints,
+    Tuple,
+    Type,
+    Union,
     _GenericAlias,
     _SpecialForm,
-    Dict,
-    Type,
-    Tuple,
-    Union,
-    Iterable,
+    get_type_hints,
 )
-from pydantic import FilePath, BaseModel as DataClass
+
+from pydantic import BaseModel as DataClass
+from pydantic import FilePath
+
+from geolib.errors import ParserError
+from geolib.models.base_model_structure import BaseModelStructure
 
 from .parsers import BaseParser
-from geolib.models.base_model_structure import BaseModelStructure
 from .utils import (
     get_args,
-    is_union,
-    is_list,
     get_filtered_type_hints,
     get_required_class_field,
+    is_list,
+    is_union,
 )
-import re
 
 
 class DSeriesStructure(BaseModelStructure):
@@ -97,7 +103,6 @@ class DSeriesStructure(BaseModelStructure):
                 and len(kwargs[field]) > 0
                 and isinstance(kwargs[field][0], str)
             ):
-                logging.warning(f"Parsing list for {field}")
                 body = kwargs[field]
 
                 # We need to decompose a possible Union
@@ -158,13 +163,6 @@ class DSeriesStructure(BaseModelStructure):
         return get_filtered_type_hints(cls)
 
 
-class DSheetOutputStructure(DSeriesStructure):
-    @classmethod
-    def parse_text(cls, text: str):
-        text = text.replace("ECHO OF MSHEET INPUT", "INPUT DATA")
-        return super().parse_text(text)
-
-
 class DSerieListGroupNextStructure(DSeriesStructure):
     """Creates a DSeriesStructure that can parse fields like this:
 
@@ -203,77 +201,20 @@ class DSerieListGroupNextStructure(DSeriesStructure):
 
         num_elements = int(body.strip().split("\n")[0])
         elements = body.split(cls.group_delimiter())
-        assert len(elements) == num_elements
+        # Check whether we find the number of elements
+        # as stated in the header.
+        if num_elements == 0:
+            # Even if there are zero elements, the split() method will still return a list of length 1
+            # "a".split("b") -> ["a"]
+            if not len(elements) - 1 == num_elements:
+                raise ParserError(f"Error in parsing in number of elements for {cls}")
+            elements = []
+        else:
+            if not len(elements) == num_elements:
+                raise ParserError(f"Error in parsing in number of elements for {cls}")
 
         collection_property_name = list(cls.__fields__.items())[0][0]
         return cls(**{collection_property_name: elements})
-
-
-class DSerieRepeatedTableStructure(DSeriesStructure):
-    @classmethod
-    def parse_text(cls, text: str):
-        """Creates a DSeriesStructure that can parse fields like
-
-        [GROUP]
-        [COLUMN INDICATION]
-        A
-        B
-        C
-        [END OF COLUMN INDICATION]
-        [GROUP DATA]
-        3
-        1 1 1
-        2 2 2
-        2 3 4
-        [END OF GROUP DATA]
-        [GROUP DATA]
-        4
-        1 1 1
-        2 2 2
-        2 3 4
-        [END OF GROUP DATA]
-        [END OF GROUP]
-
-        returning:
-        {
-            "3": [
-                {"A": 1, "B": 1, "C": 1},
-                {"A": 1, "B": 1, "C": 1},
-                {"A": 2, "B": 3, "C": 4}
-            ],
-            "4": [
-                {"A": 1, "B": 1, "C": 1},
-                {"A": 1, "B": 1, "C": 1},
-                {"A": 2, "B": 3, "C": 4}
-            ]
-        } 
-
-        The group name can differ and is not parsed,
-        but the classname is used as fieldname.
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        out = {}
-        groups = DSerieParser.parse_list_group(text)
-        assert len(groups) == 2
-        for groupname, grouptext in groups.items():
-            if groupname == "column_indication":
-                columns = [make_key(line) for line in grouptext.split("\n") if line != ""]
-            else:
-                for subgroup in grouptext:
-                    lines = [
-                        split_line_elements(line)
-                        for line in subgroup.split("\n")
-                        if line != ""
-                    ]
-                    time = float(lines.pop(0)[0])
-                    lines = [dict(zip(columns, parts)) for parts in lines]
-                    assert time not in out
-                    out[time] = lines
-
-        d = {cls.__name__.lower(): out}
-        return cls(**d)
 
 
 class DSerieTableStructure(DSeriesStructure):
@@ -309,7 +250,8 @@ class DSerieTableStructure(DSeriesStructure):
             data {str} -- Data to parse.
         """
         groups = DSerieParser.parse_group_as_dict(text)
-        assert len(groups) == 2
+        if not len(groups) == 2:
+            raise ParserError(f"Error parsing for {cls}, expected only 2 elements.")
         for groupname, text in groups.items():
             if groupname == "column_indication":
                 columns = [make_key(line) for line in text.split("\n") if line != ""]
@@ -318,7 +260,10 @@ class DSerieTableStructure(DSeriesStructure):
                     split_line_elements(line) for line in text.split("\n") if line != ""
                 ]
                 count = int(lines.pop(0)[0])
-                assert count == len(lines)
+                if not count == len(lines):
+                    raise ParserError(
+                        f"Error parsing for {cls}, header indicates {count} lines, while there are {len(lines)} lines."
+                    )
 
         lines = [dict(zip(columns, parts)) for parts in lines]
 
@@ -361,7 +306,8 @@ class DSerieOldTableStructure(DSeriesStructure):
             data {str} -- Data to parse.
         """
         groups = DSerieParser.parse_group_as_dict(text)
-        assert len(groups) == 3
+        if not len(groups) == 3:
+            raise ParserError(f"Error parsing for {cls}, expected only 3 elements.")
         for groupname, text in groups.items():
             if groupname == "column_indication":
                 columns = [make_key(line) for line in text.split("\n") if line != ""]
@@ -374,7 +320,10 @@ class DSerieOldTableStructure(DSeriesStructure):
                 lines = [
                     split_line_elements(line) for line in text.split("\n") if line != ""
                 ]
-                assert count == len(lines)
+                if not count == len(lines):
+                    raise ParserError(
+                        f"Error parsing for {cls}, header indicates {count} lines, while there are {len(lines)} lines."
+                    )
 
         lines = [dict(zip(columns, parts)) for parts in lines]
         d = {cls.__name__.lower(): lines}
@@ -403,7 +352,10 @@ class DSerieListStructure(DSeriesStructure):
             strip_line_first_element(line) for line in text.split("\n") if line != ""
         ]
         nrow = int(lines.pop(0))
-        assert nrow == len(lines)
+        if not nrow == len(lines):
+            raise ParserError(
+                f"Error parsing for {cls}, header indicates {nrow} lines, while there are {len(lines)} lines."
+            )
         d = {cls.__name__.lower(): lines}
         return cls(**d)
 
@@ -430,134 +382,38 @@ class DSerieMatrixStructure(DSeriesStructure):
         lines = [split_line_elements(line) for line in text.split("\n") if line != ""]
         nrow = int(lines.pop(0)[0])
         ncol = int(lines.pop(0)[0]) + 1
-        assert nrow == len(lines)
-        assert ncol == len(lines[0])
+        if not nrow == len(lines):
+            raise ParserError(
+                f"Error parsing for {cls}, header indicates {nrow} lines, while there are {len(lines)} lines."
+            )
+        if not ncol == len(lines[0]):
+            raise ParserError(
+                f"Error parsing for {cls}, header indicates {ncol} columns, while there are {len(lines[0])} columns."
+            )
         d = {cls.__name__.lower(): lines}
         return cls(**d)
 
 
-class ComplexVerticalSubstructure(DSeriesStructure):
-    """Specific Vertical substructure with a dedicated
-    parser because of the oddities stored in that group."""
-
-    def __init__(self, *args, **kwargs):
-        """Replace unnamed arguments by fieldnames in order.
-
-        Some structure in DSerie files have no names attached
-        and are just values. This provides a way to still parse
-        them.
-        """
-        largs = list(args)
-        for field, fieldtype in self.__fields__.items():
-            if len(largs) == 0:
-                break
-            if field in kwargs:
-                continue
-            else:
-                value = strip_line_first_element(largs.pop(0))
-                logging.warning(f"Setting {field}: {fieldtype} to {value}")
-                kwargs[field] = value
-
-        if len(largs) > 0:
-            raise ValueError(f"Failed to convert args to kwargs: {largs} left unmapped.")
-
-        super().__init__(*args, **kwargs)
-
-    @classmethod
-    def parse_text(cls, text: str):
-        """Parser that:
-
-        - Knows about structure with fields and subgroups
-        - Knows about repeated Vertical fields without a specific collection
-        - Knows about the bug of time-dependent data groups that end without the - included
-        - Knows about the bug of absence of the second end-tag of time-dependent data
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        EXCEPTIONS = ["soil", "vertical", "time__dependent_data"]
-        parsed_dict = {}
-        currentkey = ""
-        data = []
-        args = []
-        text_lines = list(filter(None, text.split("\n")))
-        for i, line in enumerate(text_lines):
-            sline = line.strip()
-            # keyline
-            if sline.startswith("[") and sline.endswith("]"):
-                # [ key name ] => key_name
-                key = make_key(sline[1:-1])
-
-                # new group
-                if currentkey == "":
-                    logging.warning(f"Found new {key}")
-                    currentkey = key
-                    if len(data) > 0:
-                        args.extend(data)
-                    data = []
-
-                # duplicate group before end
-                elif currentkey == key:
-
-                    # If key already exists, this is a group -> List
-                    if currentkey in parsed_dict:
-                        parsed_dict[currentkey] = parsed_dict[currentkey] + [
-                            "".join(data)
-                        ]
-                    elif currentkey in EXCEPTIONS:
-                        parsed_dict[currentkey] = ["".join(data)]
-                    else:
-                        parsed_dict[currentkey] = "".join(data)
-
-                    data = []
-
-                    logging.warning(
-                        f"Duplicate key {key} at line {i} without first encountered and END OF."
-                    )
-
-                # end of current group
-                elif key == "end_of_" + currentkey:
-                    logging.warning(f"Found {key}")
-                    # If key already exists, this is a group -> List
-                    if currentkey in parsed_dict:
-                        parsed_dict[currentkey] = parsed_dict[currentkey] + [
-                            "".join(data)
-                        ]
-                    elif currentkey in EXCEPTIONS:
-                        parsed_dict[currentkey] = ["".join(data)]
-                    else:
-                        parsed_dict[currentkey] = "".join(data)
-                    data = ""
-                    currentkey = ""
-
-                # sub group that is eaten for now
-                else:
-                    data.append(line + "\n")
-
-            # dataline
-            else:
-                data.append(line + "\n")
-
-        # Because no [end] exist for duplicate group...
-        parsed_dict[currentkey] = parsed_dict[currentkey] + ["".join(data)]
-
-        return cls(*args, **parsed_dict)
-
-
-class DSeriesListSubStructure(DSeriesStructure):
-    @classmethod
-    def parse_text(cls, data: str):
-        """ Creates a DSeriesStructure that can have repeated
-        group names as a list, such as [SOIL]
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        parsed_structure = DSerieParser.parse_list_group(data)
-        return cls(**parsed_structure)
-
-
 class DSeriesInlineProperties(DSeriesStructure):
+    """Generates a structure where the properties are assumed to be
+    in the same order as define in the concrete implementation.
+    Hence, only the read value field is relevant here.
+    Use when properties are in order.
+    Example:
+        Given class my_structure(DSeriesInlineProperties):
+            property_one: int
+        and text, text_to_parse:
+            [InlineStructure]
+            dummy_text: 42 some unit/and scale
+            [END OF InlineStructure]
+        When ms = my_structure.parse_text(text)
+        Then:
+            parsed_structure.property_one = 42
+
+    Returns:
+        DSeriesStructure: Parsed structure.
+    """
+
     @classmethod
     def header_lines(cls) -> int:
         """Returns the amount of header lines expected for the text.
@@ -569,16 +425,46 @@ class DSeriesInlineProperties(DSeriesStructure):
         return 0
 
     @classmethod
-    def extract_value(cls, text: str) -> str:
-        """Extracts the value from a text line as it they were in INI format.
+    def get_property_key_value(cls, text: str, expected_property: str) -> Tuple[str, str]:
+        """Gets the property key and value for a given text line.
+        It allows concrete classes to override it and either use the expected property
+        name or another value.
 
         Args:
-            text (str): [description]
+            text (str): Text line to parse.
+            expected_property (str): The expected property key if parsing the structure properties in order.
 
         Returns:
-            str: [description]
+            Tuple[str, str]: Property name and property value text.
         """
-        return get_line_property_value(text, reversed_key=False)
+        # If there's no key it's because this is actually a property,
+        # the real key and values are stored in the second item of the tuple.
+        if text:
+            # If the value is not empty, extract its value (assume it's on the first position)
+            # Note: If that is the case, you should be using other structure such as:
+            # DSeriesRepeatedGroupsWithInlineMappedProperties
+            _, value = get_line_property_key_value(text, reversed_key=False)
+            return expected_property, value
+        return expected_property, text
+
+    @classmethod
+    def get_properties_in_text(cls, text: str):
+        required_properties_names = [
+            structure_name for structure_name, _ in cls.get_structure_required_fields()
+        ]
+        header_lines = cls.header_lines()
+        for idx, (key, value) in enumerate(
+            DSerieParser.parse_group(text, loose_properties=True)
+        ):
+            if idx < header_lines:
+                continue
+            if not key:
+                # Only loose properties would get through here.
+                # So a grouped property enclosed like [PROPERTY][END OF PROPERTY].
+                key, value = cls.get_property_key_value(
+                    value, required_properties_names[idx - header_lines]
+                )
+            yield key, value
 
     @classmethod
     def parse_text(cls, text: str) -> DSeriesStructure:
@@ -605,29 +491,277 @@ class DSeriesInlineProperties(DSeriesStructure):
         Returns:
             DSeriesStructure: Parsed structure.
         """
-        required_properties_names = [
-            structure_name for structure_name, _ in cls.get_structure_required_fields()
-        ]
-        header_lines = cls.header_lines()
-        parsed_properties = {}
-        for idx, (key, value) in enumerate(
-            DSerieParser.parse_group(text, loose_properties=True)
-        ):
-            if idx < header_lines:
-                continue
-            if not key:
-                # If there's no key it's because this is actually a property,
-                # the real key and values are stored in the second item of the tuple.
-                key = required_properties_names[idx - header_lines]
-                if value:
-                    # If the value is not empty, extract its value (assume it's on the first position)
-                    value = cls.extract_value(value)
-            parsed_properties[key] = value
+        return cls(**{key: value for key, value in cls.get_properties_in_text(text)})
 
-        return cls(**parsed_properties)
+
+class DSeriesInlineMappedProperties(DSeriesInlineProperties):
+    """Specialization of DSeriesInlineProperties, use this class when the
+    properties in the text are the same as in the concrete class definition:
+    Example:
+        Given class my_structure(DSeriesInlineMappedProeprties):
+            property_dummy_int: int
+            property_dummy_str: str
+        and text, text_to_parse:
+            [STRUCTURE]
+            property dummy int = 42 some unit/scale
+            [PROPERTY DUMMY STR]
+            It also works with mixed groups.
+            [END OF PROPERTY DUMMY STR]
+            [END OF STRUCTURE]
+        When ms = my_structure.parse_text(text_to_parse)
+        Then:
+            ms.property_dummy_int = 42
+            ms.proeprty_dummy_str = "It also works with mixed groups."
+    """
+
+    @classmethod
+    def get_property_key_value(cls, text: str, expected_property: str) -> Tuple[str, str]:
+        """Gets both property key and value from the text line.
+
+        Args:
+            text (str): Text containing key and value.
+            expected_property (str): The expected property if there was no key.
+
+        Returns:
+            Tuple[str, str]: Parsed key and value.
+        """
+        key = expected_property
+        unformatted_key, value = get_line_property_key_value(text, reversed_key=False)
+        if unformatted_key:
+            key = make_key(unformatted_key)
+        return key, value
+
+
+class DSeriesUnmappedNameProperties(DSeriesInlineMappedProperties):
+    """Specialization of DSeriesInlineMappedProperties, use this class when the
+    properties in the text are the same as in the concrete class definition except
+    for "name", which has not been declared as a key in the input text:
+    Example:
+        Given class my_structure(DSeriesInlineMappedProeprties):
+            name: str
+            property_dummy_int: 42
+        and text, text_to_parse:
+            [STRUCTURE]
+            This is a name
+            property dummy int = 42 some unit/scale
+            [END OF STRUCTURE]
+        When ms = my_structure.parse_text(text_to_parse)
+        Then:
+            ms.name: "This is a name"
+            ms.property_dummy_int = 42
+    """
+
+    @classmethod
+    def get_property_key_value(cls, text: str, expected_property: str) -> Tuple[str, str]:
+        """Gets both property key and value from the text line.
+
+        Args:
+            text (str): Text containing key and value.
+            expected_property (str): The expected property if there was no key.
+
+        Returns:
+            Tuple[str, str]: Parsed key and value.
+        """
+
+        if expected_property == "name":
+            return expected_property, text.strip()
+        return super().get_property_key_value(text, expected_property)
+
+
+class DSeriesStructureCollection(DSeriesStructure):
+    @classmethod
+    def parse_text(cls, text: str) -> DSeriesStructure:
+        """Parses a text containing a collection of DSeriesStructure.
+        Example:
+            Given:
+                [STRUCTURE COLLECTION]
+                    2 = Number of items
+                    [STRUCTURE]
+                    Property 1 = 1
+                    Property 2 = 2
+                    [END OF STRUCTURE]
+                    [STRUCTURE]
+                    Property 1 = 3
+                    Property 2 = 4
+                    [END OF STRUCTURE]
+                [END OF STRUCTURE]
+            Returns:
+                [
+                    structure({property_1: 1, property_2: 2}),
+                    structure({property_1: 3, property_2: 3}),
+                ]
+
+        Args:
+            text (str): Text containing collection to parse.
+
+        Raises:
+            ValueError: When number of read structures does not match declared expectation.
+            ValueError: When number of concrete class properties is not equal to 1.
+
+        Returns:
+            DSeriesStructure: Parsed structure.
+        """
+        fields = cls.get_structure_required_fields()
+        if len(fields) != 1:
+            raise ValueError(
+                f"This type of collection is only meant to have one field but {len(fields)} were defined."
+            )
+
+        parsed_groups = [
+            text_value
+            for _, text_value in DSerieParser.parse_group(text, loose_properties=True)
+        ]
+        number_of_groups = get_line_property_value(
+            parsed_groups.pop(0), reversed_key=True
+        )
+
+        if len(parsed_groups) != int(number_of_groups):
+            raise ValueError(
+                f"Expected {number_of_groups} groups, but parsed {len(parsed_groups)}."
+            )
+
+        parsed_collection = {fields[0][0]: parsed_groups}
+        return cls(**parsed_collection)
+
+
+class DSeriesRepeatedGroupedProperties(DSeriesStructure):
+    @classmethod
+    def parse_text(cls, text: str) -> DSeriesStructure:
+        """Parses a structure which fields are all encapsulated in subgroups,
+        some of them might appear repeated and they have to be grouped in lists.
+        Example:
+            Given input:
+                [PROPERTY ONE]
+                    42
+                    2.4
+                [END OF PROPERTY ONE]
+                [PROPERTY ONE]
+                    24
+                    4.2
+                [END OF PROPERTY ONE]
+            Returns:
+                {'property_one': ['42\n2.4\n', '24\n4.2\n']}
+
+        Args:
+            text (str): Text to parse.
+
+        Returns:
+            DSeriesStructure: Parsed structrure.
+        """
+        generated_dict = {}
+        no_key_group_values = []
+        for group_key, group_values in groupby(
+            list(DSerieParser.parse_group(text, loose_properties=True)),
+            lambda key_value: key_value[0],
+        ):
+            filtered_values = [value for key, value in group_values]
+            if not group_key:
+                no_key_group_values.extend(filtered_values)
+                continue
+            if cls.group_value_is_list(group_key):
+                generated_dict[group_key] = filtered_values
+            else:
+                generated_dict[group_key] = filtered_values[0]
+
+        generated_dict.update(cls.get_inline_properties(no_key_group_values))
+        return cls(**cls.get_validated_mappings(generated_dict))
+
+    @classmethod
+    def group_value_is_list(cls, group_key: str) -> bool:
+        """Returns whether a group key should be parsed as list or flat value.
+        Allows inherited classes to override its behavior.
+
+        Args:
+            group_key (str): Property name.
+
+        Returns:
+            bool: Whether the key represents a list of values or not.
+        """
+        return group_key in cls.get_list_field_names()
+
+    @classmethod
+    def get_list_field_names(cls) -> List[str]:
+        """Returns the field names which are typed as list.
+        Allows for extension on concrete classes.
+
+        Returns:
+            List[str]: List of field names.
+        """
+        return [
+            field_name
+            for field_name, field_type in get_type_hints(cls).items()
+            if is_list(field_type)
+        ]
+
+    @classmethod
+    def get_inline_properties(cls, inline_properties: List[str]) -> Dict[str, str]:
+        """Processes all unmapped properties and returns them in a dictionary.
+        This method can be replaced in concrete implementations of this class.
+        Args:
+            inline_properties (List[str]): List of property values which key was not found.
+        Returns:
+            Dict[str, str]: Returns a dictionary of inline properties.
+        """
+        logging.warning(
+            "The following properties were not mapped because no key was found for them:"
+            + "\n".join(inline_properties)
+        )
+        # This class should not return unmapped properties.
+        return {}
+
+    @classmethod
+    def get_validated_mappings(cls, generated_dict: Dict[str, str]) -> Dict[str, str]:
+        """Validates the input dictionary mapping within this class properties.
+        Allows for extension on lower classes.
+
+        Args:
+            generated_dict (Dict[str, str]): [description]
+
+        Returns:
+            Dict[str, str]: Validated dictionary.
+        """
+        return generated_dict
+
+
+class DSeriesRepeatedGroupsWithInlineMappedProperties(DSeriesRepeatedGroupedProperties):
+    @classmethod
+    def get_inline_properties(cls, inline_properties: List[str]) -> Dict[str, str]:
+        """Processes all unmapped properties and returns them in a dictionary.
+        This method can be replaced in concrete implementations of this class.
+        Follows a philosophy of FIFO for repeated keys.
+        Args:
+            inline_properties (List[str]): List of property values which key was not found.
+        Returns:
+            Dict[str, str]: Resulting inline mapped properties.
+        """
+        result_dict: Dict[str, str] = {}
+        for unmapped in inline_properties:
+            unformatted_key, value = get_line_property_key_value(
+                unmapped, reversed_key=False
+            )
+            key = make_key(unformatted_key)
+
+            if not key:
+                # If no value was found then we just need the stripped remaining.
+                value = unmapped.strip()
+
+            if key in result_dict:
+                logging.warning(
+                    f"Key {key} already mapped, value {value} will not be mapped."
+                )
+                continue
+            result_dict[key] = value
+        return result_dict
+
+
+# region TODO: Deprecate.
 
 
 class DSeriesTreeStructure(DSeriesStructure):
+    # TODO Deprecate.
+    # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
+    # It should therefore only be responsible for generating a dictionary of field name - string values,
+    # but not object creation.
     @classmethod
     def parse_text(cls, text: str) -> DSeriesStructure:
         """Parses a text containing listed properties.
@@ -752,6 +886,10 @@ class DSeriesTreeStructure(DSeriesStructure):
 
 
 class DSeriesTreeStructurePropertiesInGroups(DSeriesTreeStructure):
+    # TODO Deprecate.
+    # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
+    # It should therefore only be responsible for generating a dictionary of field name - string values,
+    # but not object creation.
     @classmethod
     def parse_text(cls, text: str):
         """Creates a DSeriesStructure which properties are divided in subgroups.
@@ -802,6 +940,10 @@ class DSeriesTreeStructurePropertiesInGroups(DSeriesTreeStructure):
 
 
 class DSeriesTreeStructureCollection(DSeriesStructure):
+    # TODO Deprecate.
+    # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
+    # It should therefore only be responsible for generating a dictionary of field name - string values,
+    # but not object creation.
     @classmethod
     def parse_text(cls, text: str) -> DSeriesStructure:
         """Parses a text into a list of fields that is then
@@ -872,6 +1014,10 @@ class DSeriesTreeStructureCollection(DSeriesStructure):
 
 
 class DSeriesMatrixTreeStructureCollection(DSeriesTreeStructureCollection):
+    # TODO Deprecate.
+    # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
+    # It should therefore only be responsible for generating a dictionary of field name - string values,
+    # but not object creation.
     @classmethod
     def parse_collection_type(
         cls, collecion_type: Type, lines: list
@@ -882,6 +1028,9 @@ class DSeriesMatrixTreeStructureCollection(DSeriesTreeStructureCollection):
         return parsed_structure, 1
 
 
+# endregion
+
+
 class DSeriesNoParseSubStructure(DSeriesStructure):
     """DSerie structure that prevents its field from
     being parsed further."""
@@ -889,64 +1038,6 @@ class DSeriesNoParseSubStructure(DSeriesStructure):
     @staticmethod
     def is_parseable() -> bool:
         return False
-
-
-class DSeriesKeyValueSubStructure(DSeriesStructure):
-    @classmethod
-    def parse_text(cls, data: str):
-        """ Creates a DSeriesStructure using the concrete parser
-        for fields such key=value.
-            Example:
-                [GROUP DUMMY]
-                    field one = 42
-                    field two = 24
-                [END GROUP]
-            Returns:
-                {
-                    'field_one': 42,
-                    'field_two': 24}
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        parsed_structure = DSerieParser.parse_key_value(data)
-        return cls(**parsed_structure)
-
-
-class DSeriesValueKeySubStructure(DSeriesStructure):
-    @classmethod
-    def parse_text(cls, data: str):
-        """ Creates a DSeriesStructure using the concrete parser
-        for fields such value=key.
-            Example:
-                [GROUP DUMMY]
-                    42 = field one
-                    24 = field two
-                [END GROUP]
-            Returns:
-                {
-                    'field_one': 42,
-                    'field_two': 24}
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        parsed_structure = DSerieParser.parse_key_value(data, reversed=True)
-        return cls(**parsed_structure)
-
-
-class DSeriesNameKeyValueSubStructure(DSeriesStructure):
-    @classmethod
-    def parse_text(cls, data: str):
-        """ Creates a DSeriesStructure using the concrete parser
-        for fields such key=value, with lines without = defaulting
-        to a name key.
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        parsed_structure = DSerieParser.parse_name_key_value(data)
-        return cls(**parsed_structure)
 
 
 class DSerieParser(BaseParser):
@@ -1173,59 +1264,6 @@ class DSerieParser(BaseParser):
 
         return parsed_dict
 
-    @staticmethod
-    def parse_name_key_value(text: str) -> Dict[str, str]:
-        """Parses a text containing fields of type key=value into a dictionary
-        with the addition that if one field has no key, it's set to "name".
-
-        Arguments:
-            text {str} -- List of fields
-
-        Returns:
-            dict -- Parsed dictionary.
-        """
-        parsed_dictionary = {}
-        text_fields_list = list(filter(None, text.split("\n")))
-        for text_fields in text_fields_list:
-            fields = text_fields.split("=")
-            if len(fields) == 1:
-                if "name" in parsed_dictionary:
-                    raise ValueError(
-                        "Can't parse more than one field {fields[0]} as name"
-                    )
-                parsed_dictionary["name"] = fields[0]
-                continue
-            parsed_dictionary[make_key(fields[0])] = fields[1]
-        return parsed_dictionary
-
-    @staticmethod
-    def parse_key_value(text: str) -> Dict[str, str]:
-        """Parses a text containing fields of type key=value into a dictionary
-        Example:
-            Given:
-                [GROUP DUMMY]
-                    property one : 42
-                    property two : 24
-                [END GROUP]
-            Returns:
-                {
-                    'property_one': '42',
-                    'property_two': '24'
-                }
-
-        Arguments:
-            text {str} -- List of fields
-
-        Returns:
-            dict -- Parsed dictionary.
-        """
-        parsed_dictionary = {}
-        text_fields_list = list(filter(None, text.split("\n")))
-        for text_fields in text_fields_list:
-            fields = text_fields.split("=")
-            parsed_dictionary[make_key(fields[0])] = fields[1]
-        return parsed_dictionary
-
 
 def make_key(key: str) -> str:
     return (
@@ -1278,12 +1316,36 @@ def get_line_property_value(text: str, reversed_key: bool) -> str:
     Returns:
         str: First field containing value.
     """
-    value_idx = 0 if reversed_key else -1
-    value_part = re.split(":|=", text.strip())[value_idx].strip()
+    _, value = get_line_property_key_value(text, reversed_key)
+    return value
+
+
+def get_line_property_key_value(text: str, reversed_key: bool) -> Tuple[str, str]:
+    """Returns the unformatted key and formatted value for a given line.
+    Examples:
+        reversed_key = False
+        key= value 123 -> key, value
+        reversed_key = True
+        value 123= key asdf -> key, value
+
+    Args:
+        text (str): Text from where to extract key and value.
+        reversed_key (bool): Whether the key comes before or after the value.
+
+    Returns:
+        Tuple[str, str]: Unformatted key and formatted value.
+    """
+    key_idx, value_idx = (-1, 0) if reversed_key else (0, -1)
+    text_parts = re.split(":|=", text.strip())
+    key_part = ""
+    if len(text_parts) > 1:
+        # Only consider a value if there is more than one field.
+        key_part = text_parts[key_idx].strip()
+    value_part = text_parts[value_idx].strip()
     if value_part:
         # If there was a value in the first field, clean it.
-        return re.split(" ", value_part)[0].strip()
-    return ""
+        return key_part, re.split(" ", value_part)[0].strip()
+    return key_part, ""
 
 
 def get_field_collection_type(class_type: Type, field_idx: int) -> Type:

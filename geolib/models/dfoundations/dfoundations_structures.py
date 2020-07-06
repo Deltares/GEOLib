@@ -1,12 +1,12 @@
 from __future__ import annotations
-from typing import Dict, Any
+from typing import Dict, Any, Tuple
 from geolib.models.dseries_parser import (
     DSerieParser,
     DSeriesStructure,
     DSeriesInlineProperties,
-    DSeriesTreeStructure,
     DSerieListGroupNextStructure,
     split_line_elements,
+    get_line_property_key_value,
     get_line_property_value,
 )
 
@@ -33,7 +33,7 @@ class DFoundationsEnumStructure(DSeriesStructure):
 
 class DFoundationsInlineProperties(DSeriesInlineProperties):
     @classmethod
-    def extract_value(cls, text) -> str:
+    def get_property_key_value(cls, text: str, expected_property: str) -> Tuple[str, str]:
         """Returns the value content for a line of format:
         value : key || value = key
 
@@ -43,7 +43,11 @@ class DFoundationsInlineProperties(DSeriesInlineProperties):
         Returns:
             str: Filtered value.
         """
-        return get_line_property_value(text, reversed_key=True)
+        if text:
+            # If the value is not empty, extract its value (assume it's on the first position)
+            _, value = get_line_property_key_value(text, reversed_key=True)
+            return expected_property, value
+        return expected_property, text
 
 
 class DFoundationsTableWrapper(DSeriesStructure):

@@ -1,9 +1,9 @@
 from pydantic import BaseModel as DataClass
 
-from geolib.models.dseries_parser import DSeriesKeyValueSubStructure
+from geolib.models.dseries_parser import DSeriesInlineMappedProperties
 
 
-class PartialFactorsEurocodeDa1Set1(DSeriesKeyValueSubStructure):
+class PartialFactorsEurocodeDa1Set1(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -40,7 +40,7 @@ class PartialFactorsEurocodeDa1Set1(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEurocodeDa1Set2(DSeriesKeyValueSubStructure):
+class PartialFactorsEurocodeDa1Set2(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -77,7 +77,7 @@ class PartialFactorsEurocodeDa1Set2(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEurocodeDa2(DSeriesKeyValueSubStructure):
+class PartialFactorsEurocodeDa2(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -114,7 +114,7 @@ class PartialFactorsEurocodeDa2(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEurocodeDa3(DSeriesKeyValueSubStructure):
+class PartialFactorsEurocodeDa3(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -151,7 +151,7 @@ class PartialFactorsEurocodeDa3(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7Nl0(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7Nl0(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -188,7 +188,7 @@ class PartialFactorsEc7Nl0(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.20
 
 
-class PartialFactorsEc7Nl1(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7Nl1(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -225,7 +225,7 @@ class PartialFactorsEc7Nl1(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7Nl2(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7Nl2(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -262,7 +262,7 @@ class PartialFactorsEc7Nl2(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7Nl3(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7Nl3(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -299,7 +299,7 @@ class PartialFactorsEc7Nl3(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7BSet1(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7BSet1(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -336,7 +336,7 @@ class PartialFactorsEc7BSet1(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.20
 
 
-class PartialFactorsEc7BSet2(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7BSet2(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -373,7 +373,7 @@ class PartialFactorsEc7BSet2(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.20
 
 
-class PartialFactorsCurI(DSeriesKeyValueSubStructure):
+class PartialFactorsCurI(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -410,7 +410,7 @@ class PartialFactorsCurI(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsCurIi(DSeriesKeyValueSubStructure):
+class PartialFactorsCurIi(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -447,7 +447,7 @@ class PartialFactorsCurIi(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsCurIii(DSeriesKeyValueSubStructure):
+class PartialFactorsCurIii(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -484,7 +484,7 @@ class PartialFactorsCurIii(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7SeVk1(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7SeVk1(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 0.83
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -521,7 +521,7 @@ class PartialFactorsEc7SeVk1(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.30
 
 
-class PartialFactorsEc7SeVk2(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7SeVk2(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 0.91
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -558,7 +558,7 @@ class PartialFactorsEc7SeVk2(DSeriesKeyValueSubStructure):
     verticalbalancegammamb: float = 1.30
 
 
-class PartialFactorsEc7SeVk3(DSeriesKeyValueSubStructure):
+class PartialFactorsEc7SeVk3(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00

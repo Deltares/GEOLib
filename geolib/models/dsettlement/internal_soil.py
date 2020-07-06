@@ -1,11 +1,13 @@
-from geolib.models.dseries_parser import DSeriesNameKeyValueSubStructure
+from typing import Optional
+from enum import Enum, IntEnum
+from geolib.models.dseries_parser import DSeriesUnmappedNameProperties
 from geolib.models.internal import Bool
 from geolib.soils import Soil, DistributionType, HorizontalBehaviourType
 from geolib.soils import PreconType
 from geolib.soils import StorageTypes
 
 
-class SoilInternal(DSeriesNameKeyValueSubStructure):
+class SoilInternal(DSeriesUnmappedNameProperties):
     """Representation of [SOIL] group."""
 
     name: str = ""

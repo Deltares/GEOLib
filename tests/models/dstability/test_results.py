@@ -229,7 +229,6 @@ class TestDStabilityResults:
                 result_substructure,
                 (SpencerReliabilityResult, SpencerResult, SpencerGeneticAlgorithmResult),
             ):
-                print(result_substructure.__class__)
                 with pytest.raises(AttributeError):
                     model.get_slipcircle_result(stage_id=i)
             else:

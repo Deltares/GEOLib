@@ -18,14 +18,15 @@ DGSCPTipCalc.dll={{ version_externals.dgscptipcalc____dll }}
 DGSCPTipUI.dll={{ version_externals.dgscptipui____dll }}
 [END OF VERSION EXTERNALS]
 
+[INPUT DATA]
 [SOIL COLLECTION]
     {{ soil_collection.soil|length }} = number of items
 {% for soil in soil_collection.soil %}
 [SOIL]
 {{ soil.name }}
 SoilColor={{ soil.soilcolor }}
-SoilSoilType={{ soil.soilsoiltype }}
-SoilGrainType={{ soil.soilgraintype }}
+SoilSoilType={{ soil.soilsoiltype.value }}
+SoilGrainType={{ soil.soilgraintype.value }}
 SoilGamDry={{ soil.soilgamdry }}
 SoilGamWet={{ soil.soilgamwet }}
 SoilRelativeDensity={{ soil.soilrelativedensity }}
@@ -39,17 +40,17 @@ SoilCuBearingCapacityFactor={{ soil.soilcubearingcapacityfactor }}
 SoilOCR={{ soil.soilocr }}
 SoilDrained={{ soil.soildrained }}
 SoilPermeabKx={{ soil.soilpermeabkx }}
-SoilStdCohesion={{ soil.soilstdcohesion }}
+SoilStdCohesion={{ soil.soilstdcohesion}}
 SoilStdPhi={{ soil.soilstdphi }}
-SoilDistCohesion={{ soil.soildistcohesion }}
-SoilDistPhi={{ soil.soildistphi }}
+SoilDistCohesion={{ soil.soildistcohesion.value  }}
+SoilDistPhi={{ soil.soildistphi.value  }}
 SoilLa={{ soil.soilla }}
 SoilLn={{ soil.soilln }}
 SoilLp={{ soil.soillp }}
-SoilUseMenard={{ soil.soilusemenard }}
-SoilUseBrinchHansen={{ soil.soilusebrinchhansen }}
+SoilUseMenard={{ soil.soilusemenard.value }}
+SoilUseBrinchHansen={{ soil.soilusebrinchhansen.value }}
 SoilShellFactor={{ soil.soilshellfactor }}
-SoilLambdaType={{ soil.soillambdatype }}
+SoilLambdaType={{ soil.soillambdatype.value  }}
 SoilLam1={{ soil.soillam1 }}
 SoilLam2={{ soil.soillam2 }}
 SoilLam3={{ soil.soillam3 }}
@@ -69,7 +70,7 @@ SoilCurKb3={{ soil.soilcurkb3 }}
 SoilCurKo1={{ soil.soilcurko1 }}
 SoilCurKo2={{ soil.soilcurko2 }}
 SoilCurKo3={{ soil.soilcurko3 }}
-SoilHorizontalBehaviourType={{ soil.soilhorizontalbehaviourtype }}
+SoilHorizontalBehaviourType={{ soil.soilhorizontalbehaviourtype.value  }}
 SoilElasticity={{ soil.soilelasticity }}
 SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 [END OF SOIL]
@@ -81,7 +82,30 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 [END OF RUN IDENTIFICATION]
 
 [MODEL]
+{% if model is mapping -%}
+{{ model.model.value }} : {{ {0: 'Sheet piling', 1: 'Single pile', 2: 'Diaphragm wall'}[model.model.value]}}
+{{ model.method.value }} : {{ {0: 'Ka, Ko, Kp soil parameters', 1: 'C, phi, delta soil parameters', 2: 'Mixed'}[model.method.value]}}
+{{ model.verification | int }} : Verification = {{ model.verification | string | upper }}
+{{ model.ec7se_visible | int }} : EC7-SE visible = {{ model.ec7se_visible | string | upper }}
+{% if model.pile_load_option.value == 'forces' %}
+0 : Pile loaded by forces
+0 : Pile loaded by user defined soil displacements
+{% elif model.pile_load_option.value == 'user_defined_displacements' %}
+1 : Pile loaded by user defined soil displacements
+0 : Pile loaded by user defined soil displacements
+{% elif model.pile_load_option.value == 'calculated_displacements' %}
+1 : Pile loaded by calculated soil displacements
+1 : Pile loaded by calculated soil displacements
+{% endif %}
+{{ model.probabilistic | int }} : Probabilistic = {{ model.probabilistic | string | upper }}
+{{ model.check_vertical_balance | int }} : Check vertical balance = {{ model.check_vertical_balance | string | upper }}
+{{ model.trildens_calculation | int }} : Trildens calculation = {{ model.trildens_calculation | string | upper }}
+{{ model.diepwand_calculation | int }} : Diepwand calculation = {{ model.diepwand_calculation | string | upper }}
+{{ model.elastic_calculation | int }} : Elastic calculation = {{ model.elastic_calculation | string | upper }}
+{{ model.wooden_sheetpiling | int }} : Wooden sheet piling = {{ model.wooden_sheetpiling | string | upper }}
+{% else -%}
 {{ model }}
+{% endif %}
 [END OF MODEL]
 
 [CPT LIST]
@@ -90,7 +114,55 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 
 
 [SHEET PILING]
+{% if sheet_piling is mapping %}
+0
+     {{sheet_piling.leveltopsheetpiling}} Level top sheet piling
+     {{sheet_piling.lengthsheetpiling}} Length
+  {{sheet_piling.sheetpiling|length}} Number of elements
+{% for element in sheet_piling.sheetpiling %}
+[SHEET PILING ELEMENT]
+{{ element.name }}
+SheetPilingElementMaterialType={{ element.sheetpilingelementmaterialtype.value }}
+SheetPilingElementEI={{ element.sheetpilingelementei }}
+SheetPilingElementWidth={{ element.sheetpilingelementwidth }}
+SheetPilingElementLevel={{ element.sheetpilingelementlevel }}
+SheetPilingElementHeight={{ element.sheetpilingelementheight }}
+SheetPilingElementCoatingArea={{ element.sheetpilingelementcoatingarea }}
+SheetPilingPileWidth={{ element.sheetpilingpilewidth }}
+SheetPilingElementSectionArea={{ element.sheetpilingelementsectionarea }}
+SheetPilingElementResistingMoment={{ element.sheetpilingelementresistingmoment }}
+SheetPilingElementReductionFactorEI={{ element.sheetpilingelementreductionfactorei }}
+SheetPilingElementNote={{ element.sheetpilingelementnote }}
+SheetPilingElementMaxCharacteristicMoment={{ element.sheetpilingelementmaxcharacteristicmoment }}
+SheetPilingElementMaxPlasticCharacteristicMoment={{ element.sheetpilingelementmaxplasticcharacteristicmoment }}
+SheetPilingElementKMod={{ element.sheetpilingelementkmod }}
+SheetPilingElementMaterialFactor={{ element.sheetpilingelementmaterialfactor }}
+sSheetPilingElementReductionFactorMaxMoment={{ element.ssheetpilingelementreductionfactormaxmoment }}
+DiaphragmWallIsSymmetric={{ element.diaphragmwallissymmetric }}
+DiaphragmWallPosEIElastoPlastic1={{ element.diaphragmwallposeielastoplastic1 }}
+DiaphragmWallNegEIElastoPlastic1={{ element.diaphragmwallnegeielastoplastic1 }}
+DiaphragmWallPosMomElastic={{ element.diaphragmwallposmomelastic }}
+DiaphragmWallNegMomElastic={{ element.diaphragmwallnegmomelastic }}
+DiaphragmWallPosMomPlastic={{ element.diaphragmwallposmomplastic }}
+DiaphragmWallNegMomPlastic={{ element.diaphragmwallnegmomplastic }}
+DiaphragmWallPosEIElastoPlastic2={{ element.diaphragmwallposeielastoplastic2 }}
+DiaphragmWallPosMomElastoPlastic={{ element.diaphragmwallposmomelastoplastic }}
+DiaphragmWallNegEIElastoPlastic2={{ element.diaphragmwallnegeielastoplastic2 }}
+DiaphragmWallNegMomElastoPlastic={{ element.diaphragmwallnegmomelastoplastic }}
+WoodenSheetPilingElementE={{ element.woodensheetpilingelemente }}
+WoodenSheetPilingElementCharacFlexuralStrength={{ element.woodensheetpilingelementcharacflexuralstrength }}
+WoodenSheetPilingElementKSys={{ element.woodensheetpilingelementksys }}
+WoodenSheetPilingElementKDef={{ element.woodensheetpilingelementkdef }}
+WoodenSheetPilingElementPsi2Eff={{ element.woodensheetpilingelementpsi2eff }}
+WoodenSheetPilingElementMaterialFactor={{ element.woodensheetpilingelementmaterialfactor }}
+WoodenSheetPilingElementKModFShort={{ element.woodensheetpilingelementkmodfshort }}
+WoodenSheetPilingElementKModFLong={{ element.woodensheetpilingelementkmodflong }}
+WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
+[END OF SHEET PILING ELEMENT]
+{% endfor %}
+{% else %}
 {{ sheet_piling }}
+{% endif %}
 [END OF SHEET PILING]
 
 [COMBINED WALL]
@@ -104,6 +176,36 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 [SETTLEMENT BY VIBRATION PARAMS]
 {{ settlement_by_vibration_params }}
 [END OF SETTLEMENT BY VIBRATION PARAMS]
+
+{% if anchors %}
+[ANCHORS]
+{% if anchors is mapping %}
+  {{ anchors.anchors | length }} Number of anchors
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
+{% for anchor in anchors.anchors %}
+  {{ loop.index }}   {{ anchor.level }}  {{ anchor.e_modulus }}  {{ anchor.cross_section }}     {{ anchor.length }}     {{ anchor.yield_force }}     {{ anchor.angle }}     {{ anchor.wall_height_kranz }}      {{ anchor.side.value }} {{ anchor.name }}
+{% endfor %}
+
+{% else %}
+{{ anchors }}
+{% endif %}
+[END OF ANCHORS]
+{% endif %}
+
+{% if struts %}
+[STRUTS]
+{% if struts is mapping %}
+  {{ struts.struts | length }} Number of struts
+ Nr        Level        E-mod     Cross sect.    Length     YieldF   Side
+{% for strut in struts.struts %}
+  {{ loop.index }}   {{ strut.level }}  {{ strut.e_modulus }}  {{ strut.cross_section }}     {{ strut.length }}     {{ strut.side.value }} {{ strut.name }}
+{% endfor %}
+
+{% else %}
+{{ struts }}
+{% endif %}
+[END OF STRUTS]
+{% endif %}
 
 [HORIZONTAL LINE LOADS]
 {{ horizontal_line_loads }}
@@ -122,68 +224,148 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 [END OF SOIL PROFILES]
 
 [SURFACES]
+{% if surfaces is mapping %}
+  {{ surfaces.surfaces | length }} Number of surfaces 
+{% for surface in surfaces.surfaces %}
+  {{ loop.index }}     {{ surface.points | length }} {{ surface.name }}
+{{ surface.std | round(2)}}  Standard deviation
+  {{ surface.distribution_type.value }}  Distribution type
+ Nr     X-coord     Value
+{% for point in surface.points %}
+  {{ point.Nr }}       {{ point.X-coord | round(2)}}      {{ point.Value | round(2)}}
+{% endfor %}
+{% endfor %}
+{% else %}
 {{ surfaces }}
+{% endif %}
 [END OF SURFACES]
 
 [WATERLEVELS]
+{% if waterlevels is mapping %}
+  {{ waterlevels.levels | length }} Number of Waterlevels 
+{% for waterlevel in waterlevels.levels %}
+  3 Number of Data per Waterlevel 
+Level {{ waterlevel.name }}
+    {{ waterlevel.level | round(2)}}
+      {{ waterlevel.standard_deviation | round(2)}}
+         {{ waterlevel.distribution_type.value }}
+
+{% endfor %}
+{% else %}
 {{ waterlevels }}
+{% endif %}
 [END OF WATERLEVELS]
 
 [CONSTRUCTION STAGES]
+{% if construction_stages is mapping %}
+  {{ construction_stages.stages | length }} Number of Construction stages
+{% for stage in construction_stages.stages %}
+{{ stage.name }}
+         {{ stage.method_left.value }}          {{ stage.method_right.value }} Method Left: {{ {1: 'Ka, Ko, Kp', 2: 'C, phi, delta'}[stage.method_left.value] }}  Method Right: {{ {1: 'Ka, Ko, Kp', 2: 'C, phi, delta'}[stage.method_left.value] }}
+{{ stage.surface_left }}
+{{ stage.surface_right }}
+{{ stage.water_level_left }}
+{{ stage.water_level_right }}
+{{ stage.soil_profile_left }}
+{{ stage.soil_profile_right }}
+     {{ stage.displacement_top_sheet_piling }}             Displacement top sheet piling
+         {{ 0 if stage.displacement_top_sheet_piling else 0 }}             Use top displacement
+         {{ stage.anchors | length }}              Anchors present in stage
+         {% for anchor in stage.anchors %}
+         {{ loop.index }}       {{ anchor.pre_stress }} {{ anchor.name }}
+         {% endfor %}
+         {{ stage.struts | length }}              Struts present in stage
+         {% for strut in stage.struts %}
+         {{ loop.index }}       {{ strut.pre_stress }} {{ strut.name }}
+         {% endfor %}
+         {{ stage.spring_supports | length }}              Spring supports present in stage
+         {{ stage.rigid_supports | length }}              Rigid supports present in stage
+         {{ stage.uniform_loads | length }}              Uniform loads in stage
+         {{ stage.surcharge_loadss_left + stage.surcharge_loadss_right | length }}          0   Surcharge loads in stage
+         {{ stage.horizontal_line_loads | length }}              Horizontal line loads in stage
+         {{ stage.moment_loads | length }}              Moments in stage
+         {{ stage.normal_forces | length }}              Normal forces in stage
+         {{ stage.passive_side.value }}              Passive side overrule
+{% endfor %}
+{% else %}
 {{ construction_stages }}
+{% endif %}
 [END OF CONSTRUCTION STAGES]
 
 [CALCULATION OPTIONS PER STAGE]
+{% if calculation_options_per_stage is mapping %}
+{{ calculation_options_per_stage.stageoptions | length }} = number of items
+{% for stage in calculation_options_per_stage.stageoptions %}
+[STAGE]
+StagePartialFactorSetCUR={{ stage.stagepartialfactorsetcur.value }}
+StageVerify={{ stage.stageverify }}
+StageAnchorFactor={{ stage.stageanchorfactor }}
+StagePartialFactorSetEC7NADNL={{ stage.stagepartialfactorsetec7nadnl.value }}
+StageVerifyEC7NADNL={{ stage.stageverifyec7nadnl }}
+StageAnchorFactorEC7NADNL={{ stage.stageanchorfactorec7nadnl }}
+StageVerifyEC7NADB={{ stage.stageverifyec7nadb }}
+StagePartialFactorSetEC7NADSE={{ stage.stagepartialfactorsetec7nadse }}
+StageVerifyEC7NADSE={{ stage.stageverifyec7nadse }}
+[END OF STAGE]
+{% endfor %}
+{% else %}
 {{ calculation_options_per_stage }}
+{% endif %}
 [END OF CALCULATION OPTIONS PER STAGE]
 
 [CALCULATION OPTIONS]
-CalcFirstStageInitial=0
-CalcMinorNodesOn=1
-CalcReduceDeltas=1
-CalcEmpiricalFactorStressType=0
-InputCalculationType=0
-CalcAutoLambdasOn=1
-DesignStage=0
-DesignPileLengthFrom=0.00
-DesignPileLengthTo=0.00
-DesignPileLengthDecrement=0.00
-DesignPileLengthNew=1
-DesignType=0
-DesignEuroCodePartialFactorSet=0
-DesignPartialFactorSetEC7NADNL=1
-DesignEC7NLMethod=0
-DesignPartialFactorSetEC7NADB=0
-DesignEC7BMethod=0
-DesignPartialFactorSet=0
-DesignCURMethod=0
-DesignPartialFactorSetEC7NADSE=0
-DesignEC7SEMethod=0
-VerifyType=0
-EuroCodePartialFactorSet=0
-EuroCodeOverallStability=0
-EC7NLMethod=0
-EC7NLOverallPartialFactorSet=1
-EC7NLOverallAnchorFactor=1.000
-EC7NADNLOverallStability=0
-EC7BOverallStability=0
-NBMethod=0
-CURMethod=0
-CUROverallPartialFactorSet=0
-CUROverallAnchorFactor=1.000
-CUROverallStability=0
-EC7SEMethod=0
-EC7SEOverallPartialFactorSet=0
-EC7NADSEOverallStability=0
-CURAnchorForceStage=0
-CURStabilityStage=0
-OverallStabilityType=0
-StabilityEuroCodePartialFactorSet=0
-StabilityEC7NLPartialFactorSet=1
-StabilityEC7BPartialFactorSet=0
-StabilityCURPartialFactorSet=0
-StabilityEC7SEPartialFactorSet=0
-OverallStabilityDrained=1
+{% if calculation_options is mapping %}
+CalcFirstStageInitial={{ calculation_options.calcfirststageinitial|int }}
+CalcMinorNodesOn={{ calculation_options.calcminornodeson|int }}
+CalcReduceDeltas={{ calculation_options.calcreducedeltas|int }}
+CalcEmpiricalFactorStressType={{ calculation_options.calcempiricalfactorstresstype }}
+InputCalculationType={{ calculation_options.inputcalculationtype.value }}
+IsVibrationCalculation={{ calculation_options.isvibrationcalculation|int}}
+AllowableAnchorForceCalculationType={{ calculation_options.allowableanchorforcecalculationtype|int }}
+CalcAutoLambdasOn={{ calculation_options.calcautolambdason|int}}
+DesignStage={{ calculation_options.designstage }}
+DesignPileLengthFrom={{ calculation_options.designpilelengthfrom }}
+DesignPileLengthTo={{ calculation_options.designpilelengthto }}
+DesignPileLengthDecrement={{ calculation_options.designpilelengthdecrement }}
+DesignPileLengthNew={{ calculation_options.designpilelengthnew }}
+DesignType={{ calculation_options.designtype.value }}
+DesignEuroCodePartialFactorSet={{ calculation_options.designeurocodepartialfactorset.value }}
+DesignPartialFactorSetEC7NADNL={{ calculation_options.designpartialfactorsetec7nadnl.value }}
+DesignEC7NLMethod={{ calculation_options.designec7nlmethod.value }}
+DesignPartialFactorSetEC7NADB={{ calculation_options.designpartialfactorsetec7nadb.value }}
+DesignEC7BMethod={{ calculation_options.designec7bmethod.value }}
+DesignPartialFactorSet={{ calculation_options.designpartialfactorset.value }}
+DesignCURMethod={{ calculation_options.designcurmethod.value }}
+DesignPartialFactorSetEC7NADSE={{ calculation_options.designpartialfactorsetec7nadse }}
+DesignEC7SEMethod={{ calculation_options.designec7semethod }}
+VerifyType={{ calculation_options.verifytype.value }}
+EuroCodePartialFactorSet={{ calculation_options.eurocodepartialfactorset.value }}
+EuroCodeOverallStability={{ calculation_options.eurocodeoverallstability|int }}
+EC7NLMethod={{ calculation_options.ec7nlmethod.value }}
+EC7NLOverallPartialFactorSet={{ calculation_options.ec7nloverallpartialfactorset.value }}
+EC7NLOverallAnchorFactor={{ calculation_options.ec7nloverallanchorfactor }}
+EC7NADNLOverallStability={{ calculation_options.ec7nadnloverallstability|int }}
+EC7BOverallStability={{ calculation_options.ec7boverallstability|int }}
+NBMethod={{ calculation_options.nbmethod.value}}
+CURMethod={{ calculation_options.curmethod.value }}
+CUROverallPartialFactorSet={{ calculation_options.curoverallpartialfactorset.value }}
+CUROverallAnchorFactor={{ calculation_options.curoverallanchorfactor }}
+CUROverallStability={{ calculation_options.curoverallstability|int }}
+EC7SEMethod={{ calculation_options.ec7semethod }}
+EC7SEOverallPartialFactorSet={{ calculation_options.ec7seoverallpartialfactorset }}
+EC7NADSEOverallStability={{ calculation_options.ec7nadseoverallstability }}
+CURAnchorForceStage={{ calculation_options.curanchorforcestage }}
+CURStabilityStage={{ calculation_options.curstabilitystage }}
+OverallStabilityType={{ calculation_options.overallstabilitytype.value }}
+StabilityEuroCodePartialFactorSet={{ calculation_options.stabilityeurocodepartialfactorset.value }}
+StabilityEC7NLPartialFactorSet={{ calculation_options.stabilityec7nlpartialfactorset.value }}
+StabilityEC7BPartialFactorSet={{ calculation_options.stabilityec7bpartialfactorset.value }}
+StabilityCURPartialFactorSet={{ calculation_options.stabilitycurpartialfactorset.value }}
+StabilityEC7SEPartialFactorSet={{ calculation_options.stabilityec7separtialfactorset }}
+OverallStabilityDrained={{ calculation_options.overallstabilitydrained }}
+{% else %}
+{{ calculation_options }}
+{% endif %}
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
@@ -770,4 +952,4 @@ VerticalBalanceGammaMb=1.30
 {{ probabilistic_control_parameters }}
 [END OF PROBABILISTIC CONTROL PARAMETERS]
 
-[END OF INPUT FILE]
+[END OF INPUT DATA]

@@ -35,6 +35,7 @@ from .piles import (
     TensionPileLocation,
 )
 from .serializer import DFoundationsInputSerializer
+from .internal_soil import Soil as InternalSoil
 
 
 class ModelOptions(DataClass):
@@ -178,6 +179,10 @@ class DFoundationsModel(BaseModel):
             sub_calculationtype=calculation.calculationtype
         )
         self.datastructure.input_data.preliminary_design = calculation._to_internal()
+        logging.warning("Overwriting currently defined soils with default.")
+        self.datastructure.input_data.soil_collection.soil = InternalSoil.default_soils(
+            model=model.model_type().name
+        )
 
     @property
     def soils(self) -> SoilCollection:

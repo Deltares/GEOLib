@@ -5,7 +5,7 @@ from pydantic import FilePath
 from geolib.models.dseries_parser import DSerieParser, DSeriesStructure
 from geolib.models.parsers import BaseParserProvider
 
-from .internal import DSheetPilingInputStructure, DSheetPilingOutputStructure
+from .internal import DSheetPilingStructure, DSheetPilingDumpStructure
 
 
 class DSheetPilingInputParser(DSerieParser):
@@ -16,8 +16,8 @@ class DSheetPilingInputParser(DSerieParser):
         return [".shi"]
 
     @property
-    def dserie_structure(self) -> Type[DSheetPilingInputStructure]:
-        return DSheetPilingInputStructure
+    def dserie_structure(self) -> Type[DSheetPilingStructure]:
+        return DSheetPilingStructure
 
 
 class DSheetPilingOutputParser(DSerieParser):
@@ -28,8 +28,8 @@ class DSheetPilingOutputParser(DSerieParser):
         return [".shd"]
 
     @property
-    def dserie_structure(self) -> Type[DSheetPilingOutputStructure]:
-        return DSheetPilingOutputStructure
+    def dserie_structure(self) -> Type[DSheetPilingDumpStructure]:
+        return DSheetPilingDumpStructure
 
 
 class DSheetPilingParserProvider(BaseParserProvider):

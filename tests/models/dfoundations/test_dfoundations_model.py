@@ -19,6 +19,7 @@ from geolib.models.dfoundations.internal import (
 )
 from geolib.models.dfoundations.dfoundations_model import (
     BearingPilesModel,
+    TensionPilesModel,
     CalculationOptions,
 )
 from geolib.models.internal import Bool
@@ -693,6 +694,32 @@ class TestDFoundationsModel:
             == MainCalculationType.VERIFICATION_DESIGN
         )
         assert df.input.preliminary_design.cpt_test_level == -50.0
+
+    @pytest.mark.integrationtest
+    def test_default_soils_generated_on_model_change(self):
+
+        # Setup
+        df = DFoundationsModel()
+        mo = BearingPilesModel(is_rigid=False, factor_xi3=9)
+        mo_change = TensionPilesModel(is_rigid=False, factor_xi3=9)
+
+        cp = CalculationOptions(
+            calculationtype=SubCalculationType.VERIFICATION_DESIGN, cpt_test_level=-50.0
+        )
+        df.set_model(mo, cp)
+
+        # Check assumptions
+        assert len(df.soils.soil) != 0
+        assert df.soils.soil[0].name == "BClay, clean, moderate"
+        assert df.soils.soil[0].soilgamdry == 18
+
+        # Change model
+        df.set_model(mo_change, cp)
+
+        # Verify soils have changed
+        assert len(df.soils.soil) != 0
+        assert df.soils.soil[0].name == "BClay, clean, moderate"
+        assert df.soils.soil[0].soilgamdry == 17
 
     @pytest.mark.unittest
     def test_calculation_options_when_value_set_toggle_true(self):

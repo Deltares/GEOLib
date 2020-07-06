@@ -17,20 +17,23 @@ from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
-    DSeriesKeyValueSubStructure,
-    DSeriesListSubStructure,
+    DSeriesInlineMappedProperties,
     DSerieListStructure,
     DSerieMatrixStructure,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
+    DSeriesRepeatedGroupedProperties,
+    DSeriesStructureCollection,
     DSeriesTreeStructure,
     DSeriesTreeStructurePropertiesInGroups,
     DSeriesTreeStructureCollection,
     DSeriesMatrixTreeStructureCollection,
     DSerieTableStructure,
-    DSerieRepeatedTableStructure,
     DSerieOldTableStructure,
+)
+from geolib.models.dsettlement.dsettlement_structures import (
     ComplexVerticalSubstructure,
+    DSerieRepeatedTableStructure,
 )
 
 DataClass.Config.arbitrary_types_allowed = True
@@ -57,12 +60,13 @@ class DSeriePoint(DSeriesTreeStructure):
     @classmethod
     def get_structure_required_fields(cls) -> List[Tuple[str, Type]]:
         point_required_field_names = [
-            required_field[0]
-            for required_field in get_required_class_field(cls)]
+            required_field[0] for required_field in get_required_class_field(cls)
+        ]
         return [
             field_tuple
             for field_tuple in super().get_structure_required_fields()
-            if field_tuple[0] in point_required_field_names]
+            if field_tuple[0] in point_required_field_names
+        ]
 
     @classmethod
     def from_point(cls, p: Point):
@@ -78,7 +82,7 @@ class DSeriePoint(DSeriesTreeStructure):
         return NotImplemented
 
 
-class SoilCollection(DSeriesListSubStructure):
+class SoilCollection(DSeriesStructureCollection):
     soil: List[SoilInternal] = []
 
     def add_soil_if_unique(self, soil, tolerance=TOLERANCE) -> None:
@@ -88,7 +92,7 @@ class SoilCollection(DSeriesListSubStructure):
         self.soil.append(soil)
 
 
-class Version(DSeriesKeyValueSubStructure):
+class Version(DSeriesInlineMappedProperties):
     soil: int = 1005
     geometry: int = 1000
     d__settlement: int = 1007
@@ -830,7 +834,7 @@ class ResidualSettlements(DSerieOldTableStructure):
     residualsettlements: List[Dict[str, float]]
 
 
-class Results(DSeriesListSubStructure):
+class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
 
     verticals_count: int

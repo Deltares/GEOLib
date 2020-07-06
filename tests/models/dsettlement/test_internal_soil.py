@@ -12,7 +12,7 @@ from geolib.models.dsettlement.internal_soil import SoilInternal
 import geolib.soils as soil_external
 
 
-class TestSoilInternal:
+class TestSoil_Internal:
     @pytest.fixture
     def default_soil(self):
         # 1. Set up test data.

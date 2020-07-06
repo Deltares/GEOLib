@@ -6,14 +6,19 @@ import pytest
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
+    DSeriesStructure,
+    DSeriesStructureCollection,
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
     DSeriesMatrixTreeStructureCollection,
-    DSeriesStructure,
     DSeriesInlineProperties,
-    DSeriesKeyValueSubStructure,
+    DSeriesInlineMappedProperties,
+    DSeriesUnmappedNameProperties,
+    DSeriesRepeatedGroupedProperties,
+    DSeriesRepeatedGroupsWithInlineMappedProperties,
     make_key,
     get_line_property_value,
+    get_line_property_key_value,
 )
 
 
@@ -32,16 +37,19 @@ class TestParserUtil:
             pytest.param("4.2 = property_value", "4.2"),
             pytest.param("property_value", "property_value"),
             pytest.param("property value", "property"),
+            pytest.param("4.2 :", "4.2"),
+            pytest.param("4.2 =", "4.2"),
             pytest.param("= property_value", ""),
             pytest.param(": property_value", ""),
             pytest.param("=", ""),
         ],
     )
     def test_get_line_property_value_reversed_key_true(
-        self, text: str, expected_value: bool
+        self, text: str, expected_value: str
     ):
         assert get_line_property_value(text, reversed_key=True) == expected_value
 
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "text, expected_value",
         [
@@ -51,13 +59,55 @@ class TestParserUtil:
             pytest.param("property value", "property"),
             pytest.param("property_value =", ""),
             pytest.param("property_value :", ""),
+            pytest.param(": 4.2", "4.2"),
+            pytest.param("= 4.2", "4.2"),
             pytest.param("=", ""),
         ],
     )
     def test_get_line_property_value_reversed_key_false(
-        self, text: str, expected_value: bool
+        self, text: str, expected_value: str
     ):
         assert get_line_property_value(text, reversed_key=False) == expected_value
+
+    @pytest.mark.parametrize(
+        "text, expected_value",
+        [
+            pytest.param("property_value: 4.2", ("property_value", "4.2")),
+            pytest.param("property_value = 4.2", ("property_value", "4.2")),
+            pytest.param("property_value", ("", "property_value")),
+            pytest.param("property value", ("", "property")),
+            pytest.param("property_value =", ("property_value", "")),
+            pytest.param("property_value :", ("property_value", "")),
+            pytest.param("= 4.2", ("", "4.2")),
+            pytest.param(": 4.2", ("", "4.2")),
+            pytest.param("=", ("", "")),
+        ],
+    )
+    @pytest.mark.unittest
+    def test_get_line_property_key_value_reversed_key_false(
+        self, text: str, expected_value: Tuple[str, str]
+    ):
+        assert get_line_property_key_value(text, reversed_key=False) == expected_value
+
+    @pytest.mark.parametrize(
+        "text, expected_value",
+        [
+            pytest.param("4.2 : property_value", ("property_value", "4.2")),
+            pytest.param("4.2 = property_value", ("property_value", "4.2")),
+            pytest.param("property_value", ("", "property_value")),
+            pytest.param("property value", ("", "property")),
+            pytest.param("= property_value", ("property_value", "")),
+            pytest.param(": property_value", ("property_value", "")),
+            pytest.param("4.2 :", ("", "4.2")),
+            pytest.param("4.2 =", ("", "4.2")),
+            pytest.param("=", ("", "")),
+        ],
+    )
+    @pytest.mark.unittest
+    def test_get_line_property_key_value_reversed_key_true(
+        self, text: str, expected_value: Tuple[str, str]
+    ):
+        assert get_line_property_key_value(text, reversed_key=True) == expected_value
 
 
 class DummyTreeStructure(DSeriesTreeStructure):
@@ -615,3 +665,270 @@ class TestDSeriesInlineProperties:
 
         # 3. Verify final expectations.
         assert parsed_structure is None
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "text_to_parse, expected_key, expected_result",
+        [
+            pytest.param("key: value", "dummy_key", ("dummy_key", "value")),
+            pytest.param("key= value", "dummy_key", ("dummy_key", "value")),
+            pytest.param("value", "dummy_key", ("dummy_key", "value")),
+            pytest.param("", "dummy_key", ("dummy_key", "")),
+        ],
+    )
+    def test_given_text_without_key_when_get_property_key_value_then_returns_expected_property(
+        self, text_to_parse: str, expected_key: str, expected_result: Tuple[str, str]
+    ):
+        # 1. Define test data:
+        expected_key = "dummy_key"
+
+        # 2. Run test
+        key, value = DSeriesInlineMappedProperties.get_property_key_value(
+            text_to_parse, expected_key
+        )
+
+        # 3. Verify final expectations.
+        assert key, value == expected_result
+
+
+class TestDSeriesInlineMappedProperties:
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "text_to_parse, expected_key, expected_result",
+        [
+            pytest.param("key: value", "dummy_key", ("key", "value")),
+            pytest.param("key= value", "dummy_key", ("key", "value")),
+            pytest.param("value", "dummy_key", ("dummy_key", "value")),
+            pytest.param("", "dummy_key", ("dummy_key", "")),
+        ],
+    )
+    def test_given_text_without_key_when_get_property_key_value_then_returns_expected_property(
+        self, text_to_parse: str, expected_key: str, expected_result: Tuple[str, str]
+    ):
+        # 1. Define test data:
+        expected_key = "dummy_key"
+
+        # 2. Run test
+        key, value = DSeriesInlineMappedProperties.get_property_key_value(
+            text_to_parse, expected_key
+        )
+
+        # 3. Verify final expectations.
+        assert key, value == expected_result
+
+
+class TestDSeriesUnmappedNameProperties:
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "text_to_parse",
+        [
+            pytest.param("  value without key  "),
+            pytest.param("  value without: key  "),
+            pytest.param("  value without = key  "),
+            pytest.param(" 42 "),
+        ],
+    )
+    def test_given_expected_property_name_when_get_property_key_value_then_returns_stripped_text(
+        self, text_to_parse: str
+    ):
+        # 1. Prepare test data.
+        key = "name"
+
+        # 2. Run test.
+        parsed_key, parsed_value = DSeriesUnmappedNameProperties.get_property_key_value(
+            text=text_to_parse, expected_property=key
+        )
+
+        # 3. Verify final expectations.
+        assert parsed_key, parsed_value == (key, text_to_parse.strip())
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "text_to_parse, expected_tuple",
+        [
+            pytest.param("  value without key  ", (None, "value without key")),
+            pytest.param("  value with: key  ", ("value with", "key")),
+            pytest.param("  value with = key  ", ("value with", "key")),
+            pytest.param(" 42 ", (None, "42")),
+        ],
+    )
+    def test_given_no_expected_property_when_get_property_key_value_then_returns_expected(
+        self, text_to_parse: str, expected_tuple: Tuple[str, str]
+    ):
+        # 1. Prepare test data.
+        key = "dummy_key"
+        expected_key, expected_value = expected_tuple
+        if not expected_key:
+            expected_key = key
+
+        # 2. Run test.
+        parsed_key, parsed_value = DSeriesUnmappedNameProperties.get_property_key_value(
+            text=text_to_parse, expected_property=key
+        )
+
+        # 3. Verify final expectations.
+        assert parsed_key, parsed_value == (expected_key, expected_value)
+
+
+class TestDSeriesRepeatedGroupedProperties:
+    class grouped_properties(DSeriesRepeatedGroupedProperties):
+        property_one: int
+        property_list: List[str]
+        property_two: float
+
+    @pytest.mark.integrationtest
+    def test_given_grouped_properties_class_when_parse_inline_text_then_raises(self):
+        # This test verifies that the class DSeriesRepeatedGroupedProperties is only being used
+        # when the input text is all encapsulated in groups. For other cases a new class should
+        # be implemented.
+        # 1. Prepare test data
+        text = (
+            "property one = 42\n"
+            + "[PROPERTY LIST]\nLorem\n[END OF PROPERTY LIST]\n"
+            + "[PROPERTY LIST]\nIpsum\n[END OF PROPERTY LIST]\n"
+            + "property two = 4.2"
+        )
+        parsed_structure = None
+
+        # 2. Run test.
+        with pytest.raises(ValidationError):
+            parsed_structure = self.grouped_properties.parse_text(text)
+
+        # 3. Verify final expectations.
+        assert not parsed_structure, "No structure should have been generated."
+
+
+class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
+    @pytest.mark.unittest
+    def test_given_unmapped_properties_when_get_inline_properties_then_returns_mapped(
+        self,
+    ):
+        # 1. Prepare test data:
+        expected_dict = {"property_1": "42", "property_2": "Lorem"}
+        input_properties = [" Property 1 = 42 ", "Property 2: Lorem ipsum  "]
+        # 2. Run test
+        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+            input_properties
+        )
+
+        # 3. Verify final expectations
+        assert output_dict == expected_dict
+
+    @pytest.mark.unittest
+    def test_given_repeated_property_when_get_inline_properties_then_returns_only_first_value(
+        self,
+    ):
+        # 1. Prepare test data:
+        expected_dict = {"property_1": "42"}
+        input_properties = [" Property 1 = 42 ", "Property 1: 24"]
+        # 2. Run test
+        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+            input_properties
+        )
+
+        # 3. Verify final expectations
+        assert output_dict == expected_dict
+
+    @pytest.mark.integrationtest
+    def test_given_mixed_group_with_inline_mapped_when_parse_text_returns_structure(self):
+        # 1. Set up test data.
+        class mixed_group(DSeriesRepeatedGroupsWithInlineMappedProperties):
+            property_one: int
+            property_two: float
+            property_list: List[str]
+
+        text = (
+            "property one = 42\n"
+            + "[PROPERTY LIST]\nLorem\n[END OF PROPERTY LIST]\n"
+            + "[PROPERTY LIST]\nIpsum\n[END OF PROPERTY LIST]\n"
+            + "property two = 4.2"
+        )
+
+        # 2. Run test.
+        parsed_structure = mixed_group.parse_text(text)
+
+        # 3. Verify final expectations.
+        assert parsed_structure
+        assert parsed_structure.property_one == 42
+        assert parsed_structure.property_two == 4.2
+        assert parsed_structure.property_list == ["Lorem", "Ipsum"]
+
+
+class TestDSeriesStructureCollection:
+    @pytest.mark.unittest
+    def test_given_collection_with_multiple_properties_when_parse_text_raises_valueerror(
+        self,
+    ):
+        # 1. Define test data.
+        class multiple_properties(DSeriesStructureCollection):
+            property_one: List[DSeriesStructure]
+            property_two: List[DSeriesStructure]
+
+        expected_error = (
+            "This type of collection is only meant to have one field but 2 were defined."
+        )
+        parsed_collection = None
+
+        # 2. Run test
+        with pytest.raises(ValueError) as e_info:
+            parsed_collection = multiple_properties.parse_text("")
+
+        # 3. Verify final expectations.
+        assert parsed_collection is None
+        assert str(e_info.value) == expected_error
+
+    @pytest.mark.unittest
+    def test_given_collection_with_wrong_number_of_structures_when_parse_text_raises_valueerror(
+        self,
+    ):
+        class default_collection(DSeriesStructureCollection):
+            collection_one: List[DSeriesStructure]
+
+        # 1. Define test data.
+        text_to_parse = (
+            "1 = number of structures\n"
+            + "[STRUCTURE]\n"
+            + "property_dummy = 42\n"
+            + "[END OF STRUCTURE]\n"
+            + "[STRUCTURE]\n"
+            + "property_dummy = 24\n"
+            + "[END OF STRUCTURE]"
+        )
+        expected_error = "Expected 1 groups, but parsed 2."
+        parsed_collection = None
+
+        # 2. Run test
+        with pytest.raises(ValueError) as e_info:
+            parsed_collection = default_collection.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert parsed_collection is None
+        assert str(e_info.value) == expected_error
+
+    @pytest.mark.unittest
+    def test_given_valid_collection_text_when_parse_text_then_returns_structure(self,):
+        class inline_properties_structure(DSeriesInlineProperties):
+            property_dummy: int
+
+        class default_collection(DSeriesStructureCollection):
+            data: List[inline_properties_structure]
+
+        # 1. Define test data.
+        text_to_parse = (
+            "2 = number of structures\n"
+            + "[STRUCTURE]\n"
+            + "property_dummy = 42\n"
+            + "[END OF STRUCTURE]\n"
+            + "[STRUCTURE]\n"
+            + "property_dummy = 24\n"
+            + "[END OF STRUCTURE]"
+        )
+        parsed_collection = None
+
+        # 2. Run test
+        parsed_collection = default_collection.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert len(parsed_collection.data) == 2
+        assert parsed_collection.data[0].property_dummy == 42
+        assert parsed_collection.data[1].property_dummy == 24
