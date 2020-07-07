@@ -509,6 +509,8 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         """
         toggles = {}
         for field, value in kwargs.items():
+            if value is None:
+                continue  # Nones will be passed by default settings
             toggle_field = self.find_toggle(field)
             if toggle_field in self.__fields__:
                 toggles[toggle_field] = True
@@ -559,7 +561,6 @@ class CalculationType(DFoundationsInlineProperties):
     sub_calculationtype: SubCalculationType = SubCalculationType.INDICATION_BEARING_CAPACITY
 
     def __init__(self, *args, **kwargs):
-        print(kwargs)
         # Set maintype automatically based on subtype
         super().__init__(*args, **kwargs)
         if self.sub_calculationtype.value >= 2:
@@ -581,7 +582,7 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
     cpt_test_level: Optional[float] = 0.0  # [m]
 
     # Only valid for Prelimary Design
-    net_bearing_capacity: Optional[float] = 0  # [kN]
+    net_bearing_capacity: Optional[int] = 0  # [kN]
 
 
 class Version(DSeriesInlineMappedProperties):
@@ -695,7 +696,7 @@ class DFoundationsInputStructure(DSeriesStructure):
     )
     location_map: str = cleandoc(
         """
-        0.0000
+         0.0000
                 0.0000
                 0.0000
                 0.0000

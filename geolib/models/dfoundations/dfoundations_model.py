@@ -106,6 +106,10 @@ class CalculationOptions(DataClass):
     INDICATION_BEARING_CAPACITY = 2
     BEARING_CAPACITY_AT_FIXED_PILETIP_LEVELS = 3
     PILETIP_LEVELS_AND_NET_BEARING_CAPACITY = 4
+
+    Note that cpt_test_level is related to the
+    chosen CPTs for the calculation. The GUI will
+    override the display of an invalid value.
     """
 
     calculationtype: CalculationType
@@ -169,9 +173,16 @@ class DFoundationsModel(BaseModel):
     def set_model(
         self,
         model: Union[BearingPilesModel, TensionPilesModel],
-        calculation: CalculationType,
+        calculation: CalculationOptions,
     ) -> None:
-        """(Re)Set ModelType (Bearing/Tension) and ConstructionType for model."""
+        """(Re)Set ModelType (Bearing/Tension) and ConstructionType for model. Please note that:
+        - All  profiles will be automatically selected for calculation
+        - Only the relevant pile types will be used (bearing/tension)
+            - Only the first one added will be used in the case of verification calculation
+        - On model change (bearing to tensions and reverse) the soils will be replaced by defaults
+
+        It is advised to only use this method once at the beginning of your workflow.
+        """
 
         self.datastructure.input_data.model.model = model.model_type()
         self.datastructure.input_data.calculation_options = model._to_internal()
@@ -179,6 +190,9 @@ class DFoundationsModel(BaseModel):
             sub_calculationtype=calculation.calculationtype
         )
         self.datastructure.input_data.preliminary_design = calculation._to_internal()
+        self.datastructure.input_data.preliminary_design.profiles = list(
+            range(len(self.profiles.profiles))
+        )
         logging.warning("Overwriting currently defined soils with default.")
         self.datastructure.input_data.soil_collection.soil = InternalSoil.default_soils(
             model=model.model_type().name

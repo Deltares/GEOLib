@@ -400,9 +400,7 @@ class TestDSettlementModel:
 
         ds = DSettlementModel()
         ds.datastructure = DSettlementStructure()
-        print(ds.datastructure.geometry_data)
         b_id = ds.add_boundary([point1, point2])
-        print(ds.datastructure.geometry_data)
 
         assert b_id == 0
         assert len(ds.boundaries.boundaries) == 1

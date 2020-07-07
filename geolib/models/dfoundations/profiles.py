@@ -1,6 +1,4 @@
-import logging
-from enum import Enum, IntEnum
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel as DataClass
 
@@ -23,7 +21,7 @@ class CPT(DataClass):
 
     measure_data need to be provided as a list of dicts:
     [{
-        "z": float,  # negative 
+        "z": float,  # negative
         "qc": float,
     }]
 
@@ -79,8 +77,8 @@ class Profile(DataClass):
 
     Layers need to be provided as a list of dicts:
     [{
-        "name": str, 
-        "material": str, 
+        "name": str,
+        "material": str,
         "top_level": float  # [m]
         "excess_pore_pressure_top": float = 0.0  # [kN/m3]
         "excess_pore_pressure_bottom": float = 0.0  # [kN/m3]

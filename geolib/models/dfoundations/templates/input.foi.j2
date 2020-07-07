@@ -589,17 +589,17 @@ PileName
 {{ '{:>8.2f}'.format(preliminary_design.trajectory_begin) }} : Trajectory begin [m]
 {{ '{:>8.2f}'.format(preliminary_design.trajectory_end) }} : Trajectory end [m]
 {{ '{:>8.2f}'.format(preliminary_design.trajectory_interval) }} : Trajectory interval [m]
-{% if calculationtype.main_calculationtype.value == 0 %}
+{% if calculationtype.main_calculationtype.value == 0 %} {# Preliminary design #}
 {{ '{:>8}'.format(preliminary_design.net_bearing_capacity) }} : Net bearing capacity [kN]
 {% endif %}
 {{ preliminary_design.profiles|length }} : Number of Profiles selected for calculation
 {% for profile in preliminary_design.profiles %}
 {{ loop.index0 }} : {{ profiles.profiles[loop.index0].name }}
 {% endfor %}
-{% if calculationtype.main_calculationtype.value == 1 %}
-{% if model.model.value == 0 %}
+{% if calculationtype.main_calculationtype.value == 1 %} {# Verification design #}
+{% if model.model.value == 0 %} {# Bearing piles #}
     {{ preliminary_design.pile_types[0] }} : Pile type = {{ types___bearing_piles[preliminary_design.pile_types[0]].pile_name }}
-{% elif model.model.value == 1 %}
+{% elif model.model.value == 1 %}  {# Tension piles #}
     {{ preliminary_design.pile_types[0] }} : Pile type = {{ types___tension_piles_cur[preliminary_design.pile_types[0]].pile_name }}
 {% endif %}
 {{ '{:>8.2f}'.format(preliminary_design.cpt_test_level) }} : CPT Test Level [m]
