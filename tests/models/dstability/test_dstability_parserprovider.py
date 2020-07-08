@@ -19,13 +19,21 @@ from tests.utils import TestUtils
 
 class TestDStabilityInputParser:
     @pytest.mark.integrationtest
-    def test_dstability_parse_directory(self):
+    @pytest.mark.parametrize(
+        "dir_path",
+        [
+            pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
+        ],
+    )
+    def test_dstability_parse_directory(self, dir_path: str):
         # 1. Set up test model
         input_parser = DStabilityParser()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
+        test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dstability/serialized")
         )
+
         # 2. Verify initial expectations
         assert os.path.exists(test_filepath), "Testing directory not found."
 

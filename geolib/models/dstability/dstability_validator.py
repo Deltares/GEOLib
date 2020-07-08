@@ -43,5 +43,4 @@ class DStabilityValidator(BaseValidator):
                     return False
             if layer_load_layer_ids != soil_layer_ids:
                 return False
-
         return True

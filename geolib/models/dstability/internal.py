@@ -1594,12 +1594,16 @@ class DStabilityStructure(BaseModelStructure):
 
     def get_unique_id(self) -> int:
         def recursive_items(dictionary) -> Generator:
+            print(dictionary)
             for key, value in dictionary.items():
                 if isinstance(value, dict):
                     yield from recursive_items(value)
                 elif isinstance(value, list):
                     for item in value:
-                        yield from recursive_items(item)
+                        if isinstance(item, dict):
+                            yield from recursive_items(item)
+                        else:
+                            yield item
                 else:
                     if key == "Id":
                         yield value

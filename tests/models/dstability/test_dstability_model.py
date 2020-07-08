@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pytest
 from teamcity import is_running_under_teamcity
+from tests.utils import TestUtils, only_teamcity
 
 from geolib.geometry.one import Point
 from geolib.models import BaseModel, BaseModelStructure
@@ -34,7 +35,6 @@ from geolib.models.dstability.states import (
     DStabilityStress,
 )
 from geolib.soils import Soil
-from tests.utils import TestUtils, only_teamcity
 
 
 class TestDStabilityModel:
@@ -49,7 +49,10 @@ class TestDStabilityModel:
         "filepath",
         [
             pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/example_1/Tutorial.stix", id="Input Structure"),
+            pytest.param(
+                "dstability/example_1/Tutorial.stix", id="Input Structure for zip"
+            ),
+            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -72,7 +75,11 @@ class TestDStabilityModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure"),],
+        "dir_path",
+        [
+            pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
+        ],
     )
     def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
         # 1. Set up test data.
@@ -103,10 +110,17 @@ class TestDStabilityModel:
     @pytest.mark.skipif(
         not is_running_under_teamcity(), reason="Console test only installed on TC."
     )
-    def test_execute_model_succesfully(self):
+    @pytest.mark.parametrize(
+        "dir_path",
+        [
+            pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
+        ],
+    )
+    def test_execute_model_succesfully(self, dir_path: str):
         # 1. Set up test data.
         dm = DStabilityModel()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
+        test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dm.parse(test_filepath)
 
         test_output_filepath = Path(TestUtils.get_output_test_data_dir("test"))
@@ -132,6 +146,59 @@ class TestDStabilityModel:
         assert dm.datastructure.waternets[0].Id == "14"
         new_id = dm.datastructure.get_unique_id()
         assert new_id == max_id_after_initialization_of_dstability_structure
+
+    @pytest.mark.acceptance
+    @only_teamcity
+    def test_generate_simple_model(self):
+
+        dm = DStabilityModel()
+
+        layer_1 = [
+            Point(x=-50, z=-10),
+            Point(x=50, z=-10),
+            Point(x=50, z=-20),
+            Point(x=-50, z=-20),
+        ]
+        layer_2 = [
+            Point(x=-50, z=-5),
+            Point(x=50, z=-5),
+            Point(x=50, z=-10),
+            Point(x=-50, z=-10),
+        ]
+        layer_3 = [
+            Point(x=-50, z=0),
+            Point(x=50, z=0),
+            Point(x=50, z=-5),
+            Point(x=-50, z=-5),
+        ]
+        embankment = [
+            Point(x=-10, z=0),
+            Point(x=0, z=2),
+            Point(x=10, z=2),
+            Point(x=30, z=0),
+        ]
+
+        layers_and_soils = [
+            (layer_1, "Sand"),
+            (layer_2, "H_Ro_z&k"),
+            (layer_3, "H_Rk_k_shallow"),
+            (embankment, "H_Aa_ht_old"),
+        ]
+
+        layer_ids = [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+        for layer_id in layer_ids:
+            # Has to be done in separate loop since all layers first need to be definied.
+            dm.add_soil_layer_consolidations(soil_layer_id=layer_id)
+
+        assert len(dm.datastructure.loads[0].LayerLoads) == 4
+        assert dm.is_valid
+
+        # Serialize model to input file.
+        path = pathlib.Path.cwd() / "test.stix"
+        dm.serialize(path)
+
+        status = dm.execute()
+        assert status.returncode == 0
 
     @pytest.mark.systemtest
     def test_get_stabfactor(self):

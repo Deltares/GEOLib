@@ -497,7 +497,7 @@ class DStabilityModel(BaseModel):
             stage_id, soil_layer_id
         ) and self.datastructure.has_loads(stage_id):
             if consolidations is None:
-                consolidations = self._get_default_consolidations(stage_id)
+                consolidations = self._get_default_consolidations(stage_id, soil_layer_id)
             else:
                 self._verify_consolidations(consolidations, stage_id)
 
@@ -507,13 +507,18 @@ class DStabilityModel(BaseModel):
         else:
             raise ValueError(f"No soil layers found found for stage id {stage_id}")
 
-    def _get_default_consolidations(self, stage_id: int) -> List[Consolidation]:
-        """Length of the consolidations is equal to the amount of soil layers"""
+    def _get_default_consolidations(self, stage_id: int, exclude_soil_layer_id: Optional[int] = None) -> List[Consolidation]:
+        """Length of the consolidations is equal to the amount of soil layers.
+        
+        If exclude_soil_layer_id is provided, that specific soil layer id is not included in the consolidations.
+        """
         if self.datastructure.has_soil_layers(stage_id):
             soil_layer_ids: Set[str] = {
                 layer.LayerId
                 for layer in self.datastructure.soillayers[stage_id].SoilLayers
             }
+            if exclude_soil_layer_id:
+                soil_layer_ids.remove(str(exclude_soil_layer_id))
             return [Consolidation(layer_id=layer_id) for layer_id in soil_layer_ids]
 
         raise ValueError(f"No soil layers found for stage id {stage_id}")

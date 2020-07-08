@@ -30,7 +30,7 @@ class TestDStabilityGeometry:
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")],
+        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
     )
     def test_given_data_contains_num_soillayers(self, dir_path: str):
         # 1. Set up test data.
@@ -47,7 +47,7 @@ class TestDStabilityGeometry:
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")],
+        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
     )
     def test_given_data_soillayer_polygon_points_equal(self, dir_path: str):
         # 1. Set up test data.
