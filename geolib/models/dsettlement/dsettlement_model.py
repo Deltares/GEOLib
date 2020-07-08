@@ -12,6 +12,7 @@ from pydantic.types import confloat, constr, PositiveInt, conint
 from geolib.geometry import Point
 from geolib.models import BaseModel, MetaData, BaseModelStructure
 from geolib.soils import Soil as Soil_Input
+from geolib.soils import DistributionType
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
@@ -46,6 +47,9 @@ from .loads import (
     UniformLoad,
 )
 from .serializer import DSettlementInputSerializer
+from geolib.models.dsettlement.probabilistic_calculation_types import (
+    ProbabilisticCalculationType,
+)
 
 DataClass.Config.validate_assignment = True
 
@@ -222,13 +226,73 @@ class DSettlementModel(BaseModel):
     def boundaries(self):
         return self.datastructure.geometry_data.boundaries
 
+    @property
+    def use_probabilistic_defaults_boundaries(self):
+        return self.datastructure.geometry_data.use_probabilistic_defaults_boundaries
+
+    @property
+    def stdv_boundaries(self):
+        return self.datastructure.geometry_data.stdv_boundaries
+
+    @property
+    def distribution_boundaries(self):
+        return self.datastructure.geometry_data.distribution_boundaries
+
+    def set_probabilistic_data(
+        self,
+        point_of_vertical: Point,
+        residual_settlement: float,
+        maximum_number_of_samples: int,
+        maximum_iterations: int,
+        reliability_type: ProbabilisticCalculationType,
+        is_reliability_calculation: bool,
+    ):
+        """
+            Set calculation options for probabilistic calculation.
+            Args:
+               point_of_vertical : Select point that correspond to a defined vertical for the reliability analysis.
+               residual_settlement : For FORM and Monte Carlo methods, the allowed residual settlement can be set.
+               maximum_number_of_samples : The number of samples that the Monte Carlo method will use.
+               maximum_iterations : The maximum number of iterations for the FORM method.
+               reliability_type : Select one of the following methods: 
+                    - SettlementsDeterministic: a regular deterministic settlement analysis along all verticals, based on fixed mean values of the parameters.
+                    - BandWidthOfSettlementsFOSM: Quick and approximate determination of the bandwidth and the influencing factors (parameter 
+                        sensitivity) for the total settlements along one vertical. The determination is executed at user defined time points and at the time points
+                        of measurements. Calculation time will increase with an increasing number of stochastic parameters.
+                    - ProbabilityOfFailureFORM: Iterative determination of the reliability index, bandwidth and influencing factors for the residual
+                        settlement along one vertical. A separate FORM analysis is performed for each residual settlement that starts from each different
+                        user defined time point. Calculation time will increase with an increasing number of stochastic parameters, user defined time points
+                        and iterations. Furthermore, the FORM method is only conditionally stable.
+                    - BandWidthAndProbabilityOfFailureMonteCarlo: Determination of the bandwidth for the total settlements along one vertical, and also of the reliability index
+                        and bandwidth for the residual settlements, by repetitive execution of settlement analyses (sampling). Each sample is executed with
+                        random parameter values, derived from the stochastic distributions. Calculation time will increase with the number of samples. Accurate
+                        Monte Carlo analysis requires a large number of samples, if many stochastic parameters are involved.
+                is_reliability_calculation : set to True if a probabilistic calculation should be performed.s
+        """
+        self.datastructure.check_x_in_vertical(point_of_vertical=point_of_vertical)
+        self.datastructure.probabilistic_data = self.datastructure.probabilistic_data.set_probabilistic_data(
+            point_of_vertical=point_of_vertical,
+            residual_settlement=residual_settlement,
+            maximum_number_of_samples=maximum_number_of_samples,
+            maximum_iterations=maximum_iterations,
+            reliability_type=reliability_type,
+            is_reliability_calculation=is_reliability_calculation,
+        )
+
     # 1.2.1 Soil profile
     # To create multiple layers
-    def add_boundary(self, points: List[Point], twod=True) -> int:
+    def add_boundary(
+        self,
+        points: List[Point],
+        twod=True,
+        use_probabilistic_defaults=True,
+        stdv=0,
+        distribution_boundaries=DistributionType.Undefined,
+    ) -> int:
         """Add boundary to model."""
         # Divide points into curves and boundary
         # Check point uniqueness
-        tolerance = self.accuracy
+        tolerance = self.accuracy.accuracy
         points = [
             self.points.add_point_if_unique(
                 DSeriePoint.from_point(point), tolerance=tolerance
@@ -238,6 +302,12 @@ class DSettlementModel(BaseModel):
         sorted_points = sorted(points, key=lambda point: (point.X, point.Y, point.Z))
         curves = self.curves.create_curves(sorted_points)
         boundary = self.boundaries.create_boundary(curves)
+        # Probabilistic input for boundaries
+        self.use_probabilistic_defaults_boundaries.append_use_probabilistic_defaults_boundary(
+            use_probabilistic_defaults
+        )
+        self.stdv_boundaries.append_stdv_boundary(stdv)
+        self.distribution_boundaries.append_distribution_boundary(distribution_boundaries)
         return boundary.id
 
     @property
@@ -262,7 +332,7 @@ class DSettlementModel(BaseModel):
 
         piezo_line = self.headlines.create_piezoline(curves)
         if is_phreatic:
-            self.datastructure.geometry_data.phreatic_line = piezo_line.id
+            self.datastructure.geometry_data.phreatic_line.phreatic_line = piezo_line.id
         return piezo_line.id
 
     @property

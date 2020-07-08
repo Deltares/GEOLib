@@ -25,15 +25,18 @@ from geolib.models.dseries_parser import (
     DSeriesRepeatedGroupedProperties,
     DSeriesStructureCollection,
     DSeriesTreeStructure,
-    DSeriesTreeStructurePropertiesInGroups,
     DSeriesTreeStructureCollection,
     DSeriesMatrixTreeStructureCollection,
     DSerieTableStructure,
     DSerieOldTableStructure,
+    DSeriesUnmappedNameProperties,
 )
 from geolib.models.dsettlement.dsettlement_structures import (
     ComplexVerticalSubstructure,
     DSerieRepeatedTableStructure,
+)
+from geolib.models.dsettlement.probabilistic_calculation_types import (
+    ProbabilisticCalculationType,
 )
 
 DataClass.Config.arbitrary_types_allowed = True
@@ -325,18 +328,58 @@ class PiezoLines(DSeriesTreeStructureCollection):
         raise KeyError(f"Can't find headline with id {piezo_line_id}.")
 
 
-class GeometryData(DSeriesTreeStructurePropertiesInGroups):
+class UseProbabilisticDefaultsBoundaries(DSerieListStructure):
+    useprobabilisticdefaultsboundaries: List[Bool] = []
+
+    def append_use_probabilistic_defaults_boundary(
+        self, use_probabilistic_boundary: bool
+    ):
+        self.useprobabilisticdefaultsboundaries.append(
+            Bool(int(use_probabilistic_boundary))
+        )
+
+
+class StdvBoundaries(DSerieListStructure):
+    stdvboundaries: List[float] = []
+
+    def append_stdv_boundary(self, stdv_boundary: float):
+        self.stdvboundaries.append(stdv_boundary)
+
+
+class DistributionBoundaries(DSerieListStructure):
+    distributionboundaries: List[DistributionType] = []
+
+    def append_distribution_boundary(self, distribution_boundary: DistributionType):
+        if (distribution_boundary is DistributionType.Normal) or (
+            distribution_boundary is DistributionType.Undefined
+        ):
+            self.distributionboundaries.append(distribution_boundary)
+        else:
+            raise ValueError(
+                f"Enumeration member {repr(distribution_boundary)} is not supported for probabilistic boundary, please select Normal Distribution"
+            )
+
+
+class Accuracy(DSeriesUnmappedNameProperties):
+    accuracy: confloat(ge=1e-10) = 1e-3
+
+
+class PhreaticLine(DSeriesUnmappedNameProperties):
+    phreatic_line: conint(ge=0, lt=99) = 0
+
+
+class GeometryData(DSeriesStructure):
     """Representation of [GEOMETRY DATA] group."""
 
-    accuracy: confloat(ge=1e-10) = 1e-3
+    accuracy: Accuracy = Accuracy()
     points: Points = Points()
     curves: Curves = Curves()
     boundaries: Boundaries = Boundaries()
-    use_probabilistic_defaults_boundaries: str = ""
-    stdv_boundaries: str = ""
-    distribution_boundaries: str = ""
+    use_probabilistic_defaults_boundaries: UseProbabilisticDefaultsBoundaries = UseProbabilisticDefaultsBoundaries()
+    stdv_boundaries: StdvBoundaries = StdvBoundaries()
+    distribution_boundaries: DistributionBoundaries = DistributionBoundaries()
     piezo_lines: PiezoLines = PiezoLines()
-    phreatic_line: conint(ge=0, lt=99) = 0
+    phreatic_line: PhreaticLine = PhreaticLine()
     world_co__ordinates: str = cleandoc(
         """
           0.000 - X world 1 -
@@ -367,6 +410,9 @@ class GeometryData(DSeriesTreeStructurePropertiesInGroups):
         self.boundaries.boundaries.sort(
             key=lambda boundary: self.boundary_area_above_horizontal(boundary)
         )
+        # sort probabilistic values
+        self.sort_probabilistic_list_based_on_new_indexes()
+
         for i, boundary in enumerate(self.boundaries.boundaries):
             for layer in self.layers.layers:
                 if layer.boundary_top == boundary.id:
@@ -374,6 +420,25 @@ class GeometryData(DSeriesTreeStructurePropertiesInGroups):
                 if layer.boundary_bottom == boundary.id:
                     layer.boundary_bottom = i
             boundary.id = i
+
+    def sort_probabilistic_list_based_on_new_indexes(self):
+        new_indexes = self.create_list_of_indexes()
+        self.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries = self.sort_based_on_new_indexes(
+            new_indexes,
+            self.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries,
+        )
+        self.stdv_boundaries.stdvboundaries = self.sort_based_on_new_indexes(
+            new_indexes, self.stdv_boundaries.stdvboundaries,
+        )
+        self.distribution_boundaries.distributionboundaries = self.sort_based_on_new_indexes(
+            new_indexes, self.distribution_boundaries.distributionboundaries,
+        )
+
+    def create_list_of_indexes(self) -> List:
+        return [boundary.id for boundary in self.boundaries.boundaries]
+
+    def sort_based_on_new_indexes(self, new_indexes: List, unsorted_list: List) -> List:
+        return [unsorted_list[i] for i in new_indexes]
 
     def get_point(self, point_id: int) -> Optional[DSeriePoint]:
         return self.points[point_id]
@@ -628,6 +693,59 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         return cls_instance
 
 
+class InternalProbabilisticCalculationType(IntEnum):
+    FOSMOrDeterministic = 0
+    ProbabilityOfFailureFORM = 1
+    BandWidthAndProbabilityOfFailureMonteCarlo = 2
+
+
+class ProbabilisticData(DSeriesInlineMappedProperties):
+    reliability_x_co__ordinate: float = 0
+    residual_settlement: confloat(ge=0, le=1000) = 1
+    maximum_drawings: conint(ge=0, le=999999999) = 100
+    maximum_iterations: conint(ge=1, le=50) = 15
+    reliability_type: InternalProbabilisticCalculationType = InternalProbabilisticCalculationType.FOSMOrDeterministic
+    is_reliability_calculation: Bool = Bool.FALSE
+
+    def set_probabilistic_data(
+        self,
+        point_of_vertical: Point,
+        residual_settlement: float,
+        maximum_number_of_samples: int,
+        maximum_iterations: int,
+        reliability_type: ProbabilisticCalculationType,
+        is_reliability_calculation: bool,
+    ):
+        if (
+            reliability_type == ProbabilisticCalculationType.SettlementsDeterministic
+            and is_reliability_calculation
+        ):
+            raise ValueError(
+                f"is_reliability_calculation is set to True but reliability type {repr(reliability_type)} is not probabilistic."
+            )
+        return ProbabilisticData(
+            reliability_x_co__ordinate=point_of_vertical.x,
+            residual_settlement=residual_settlement,
+            maximum_drawings=maximum_number_of_samples,
+            maximum_iterations=maximum_iterations,
+            reliability_type=self.externaltointernalprobabilisticcalculationtype(
+                reliability_type
+            ),
+            is_reliability_calculation=Bool(int(is_reliability_calculation)),
+        )
+
+    def externaltointernalprobabilisticcalculationtype(
+        self, reliability_type: ProbabilisticCalculationType
+    ) -> InternalProbabilisticCalculationType:
+        map_values = {
+            -1: InternalProbabilisticCalculationType.FOSMOrDeterministic,
+            0: InternalProbabilisticCalculationType.FOSMOrDeterministic,
+            1: InternalProbabilisticCalculationType.ProbabilityOfFailureFORM,
+            2: InternalProbabilisticCalculationType.BandWidthAndProbabilityOfFailureMonteCarlo,
+        }
+        return map_values[reliability_type.value]
+
+
 class DSettlementStructure(DSeriesStructure):
     """Representation of complete .sli file."""
 
@@ -683,16 +801,7 @@ class DSettlementStructure(DSeriesStructure):
             0.000       40.000      0.000      0.00 = Time, Under pressure, Water level, Tube pressure
         """
     )
-    probabilistic_data: str = cleandoc(
-        """
-        Reliability X Co-ordinate=0.000
-        Residual Settlement=1.00
-        Maximum Drawings=100
-        Maximum Iterations=15
-        Reliability Type=0
-        Is Reliability Calculation=0
-        """
-    )
+    probabilistic_data: ProbabilisticData = ProbabilisticData()
     probabilistic_defaults: str = cleandoc(
         """
         ProbDefGamDryVar=0.05
@@ -778,6 +887,16 @@ class DSettlementStructure(DSeriesStructure):
         Returns:
 
         """
+
+    def check_x_in_vertical(self, point_of_vertical: Point):
+        check_that_x_in_verticals = False
+        for point in self.verticals.locations:
+            if abs(point.X - point_of_vertical.x) <= point_of_vertical.tolerance:
+                check_that_x_in_verticals = True
+        if not (check_that_x_in_verticals):
+            raise ValueError(
+                f"The x-coordinate of point_of_vertical does not correspond to an existing vertical."
+            )
 
 
 class Stresses(DSerieTableStructure):

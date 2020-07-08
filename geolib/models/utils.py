@@ -21,6 +21,13 @@ def get_args(tp):
     return ()
 
 
+def unpack_if_union(tp):
+    if is_union(tp):
+        return get_args(tp)[0]
+    else:
+        return tp
+
+
 def is_union(tp):
     return isinstance(tp, _GenericAlias) and tp._name is None
 
@@ -41,7 +48,8 @@ def get_filtered_type_hints(class_type: Type) -> List[Tuple[str, Type]]:
     return [
         (field_name, field)
         for field_name, field in get_type_hints(class_type).items()
-        if not field_name.startswith('__')]
+        if not field_name.startswith("__")
+    ]
 
 
 def get_required_class_field(class_type: Type) -> List[Tuple[str, Type]]:
@@ -56,4 +64,5 @@ def get_required_class_field(class_type: Type) -> List[Tuple[str, Type]]:
     return [
         (field_name, field)
         for field_name, field in class_type.__fields__.items()
-        if field.required and not field_name.startswith('__')]
+        if field.required and not field_name.startswith("__")
+    ]

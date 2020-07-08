@@ -36,7 +36,7 @@ D-Settlement={{ version.d__settlement }}
 [GEOMETRY DATA]
 
 [ACCURACY]
-{{ geometry_data.accuracy }}
+{{ geometry_data.accuracy.accuracy }}
 [END OF ACCURACY]
 
 [POINTS]
@@ -91,36 +91,24 @@ D-Settlement={{ version.d__settlement }}
 [END OF BOUNDARIES]
 
 [USE PROBABILISTIC DEFAULTS BOUNDARIES]
-{% if geometry_data.boundaries is mapping %}
-{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
-{% for boundary in geometry_data.boundaries.boundaries %}
-  1
+{{ '{}'.format(geometry_data.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries|length).rjust(3) }} - Number of boundaries -
+{% for boundary in geometry_data.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries %}
+  {{ boundary.value }}
 {% endfor %}
-{% else %}
-{{ geometry_data.use_probabilistic_defaults_boundaries }}
-{% endif %}
 [END OF USE PROBABILISTIC DEFAULTS BOUNDARIES]
 
 [STDV BOUNDARIES]
-{% if geometry_data.boundaries is mapping %}
-{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
-{% for boundary in geometry_data.boundaries.boundaries %}
-   1.00000000000000E-0001
+{{ '{}'.format(geometry_data.stdv_boundaries.stdvboundaries|length).rjust(3) }} - Number of boundaries -
+{% for boundary in geometry_data.stdv_boundaries.stdvboundaries %}
+   {{ boundary}}
 {% endfor %}
-{% else %}
-{{ geometry_data.stdv_boundaries }}
-{% endif %}
 [END OF STDV BOUNDARIES]
 
 [DISTRIBUTION BOUNDARIES]
-{% if geometry_data.boundaries is mapping %}
-{{ '{}'.format(geometry_data.boundaries.boundaries|length).rjust(3) }} - Number of boundaries -
-{% for boundary in geometry_data.boundaries.boundaries %}
-  0
+{{ '{}'.format(geometry_data.distribution_boundaries.distributionboundaries|length).rjust(3) }} - Number of boundaries -
+{% for boundary in geometry_data.distribution_boundaries.distributionboundaries %}
+  {{ boundary.value }}
 {% endfor %}
-{% else %}
-{{ geometry_data.distribution_boundaries }}
-{% endif %}
 [END OF DISTRIBUTION BOUNDARIES]
 
 [PIEZO LINES]
@@ -151,7 +139,7 @@ D-Settlement={{ version.d__settlement }}
 [END OF PIEZO LINES]
 
 [PHREATIC LINE]
-{{ geometry_data.phreatic_line }} - Number of the piezometric level line acting as phreatic line -
+{{ geometry_data.phreatic_line.phreatic_line }} - Number of the piezometric level line acting as phreatic line -
 [END OF PHREATIC LINE]
 
 [WORLD CO-ORDINATES]
@@ -346,7 +334,16 @@ D-Settlement={{ version.d__settlement }}
 [END OF VERTICAL DRAIN]
 
 [PROBABILISTIC DATA]
+{% if probabilistic_data is mapping %}
+Reliability X Co-ordinate={{"%10.3f"|format(probabilistic_data.reliability_x_co__ordinate)}}
+Residual Settlement={{"%10.2f"|format(probabilistic_data.residual_settlement)}}
+Maximum Drawings={{probabilistic_data.maximum_drawings}}
+Maximum Iterations={{probabilistic_data.maximum_iterations}}
+Reliability Type={{probabilistic_data.reliability_type.value}}
+Is Reliability Calculation={{probabilistic_data.is_reliability_calculation.value}}
+{% else %}
 {{ probabilistic_data }}
+{% endif %}
 [END OF PROBABILISTIC DATA]
 
 [PROBABILISTIC DEFAULTS]

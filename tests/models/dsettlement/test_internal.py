@@ -16,8 +16,16 @@ from geolib.models.dsettlement.internal import (
     Boundary,
     Layers,
     Layer,
+    GeometryData,
+    DSeriePoint,
+    ProbabilisticData,
+    DSettlementStructure,
 )
 from geolib.models.utils import get_filtered_type_hints
+from geolib.geometry.one import Point
+from geolib.models.dsettlement.probabilistic_calculation_types import (
+    ProbabilisticCalculationType,
+)
 
 
 def generate_structure_text(struct_id: int, properties: list) -> str:
@@ -101,6 +109,74 @@ class TestCurve:
 
 
 class TestInternalDSeriesListStructureCollections:
+    @pytest.mark.unittest
+    def test_sort_based_on_new_indexes(self):
+
+        # initialise values
+        mylist = ["a", "b", "c", "d", "e"]
+        myorder = [3, 2, 0, 1, 4]
+
+        # initialise model
+        geometry = GeometryData()
+
+        # run test
+        result = geometry.sort_based_on_new_indexes(
+            new_indexes=myorder, unsorted_list=mylist
+        )
+
+        # check if test succeeds
+        assert ["d", "c", "a", "b", "e"] == result
+
+    @pytest.mark.integrationtest
+    def test_set_probabilistic_data_raises_error(self):
+        # Set inputs
+        point_of_vertical = Point(X=1, Y=1, Z=1)
+        residual_settlement = 0.01
+        maximum_number_of_samples = 15
+        maximum_iterations = 100
+        reliability_type = ProbabilisticCalculationType.SettlementsDeterministic
+        is_reliability_calculation = True
+        expected_error = "is_reliability_calculation is set to True but reliability type <ProbabilisticCalculationType.SettlementsDeterministic: -1> is not probabilistic."
+        # initialise model
+        prob_data = ProbabilisticData()
+        # Check expectations
+        with pytest.raises(ValueError, match=expected_error):
+            prob_data.set_probabilistic_data(
+                point_of_vertical=point_of_vertical,
+                residual_settlement=residual_settlement,
+                maximum_number_of_samples=maximum_number_of_samples,
+                maximum_iterations=maximum_iterations,
+                reliability_type=reliability_type,
+                is_reliability_calculation=is_reliability_calculation,
+            )
+
+    @pytest.mark.integrationtest
+    def test_set_probabilistic_data(self):
+        # Set inputs
+        point_of_vertical = Point(x=1, y=2, z=3)
+        residual_settlement = 0.01
+        maximum_number_of_samples = 15
+        maximum_iterations = 10
+        reliability_type = ProbabilisticCalculationType.BandWidthOfSettlementsFOSM
+        is_reliability_calculation = True
+        # initialise model
+        prob_data = ProbabilisticData()
+        # Check expectations
+        test_data = prob_data.set_probabilistic_data(
+            point_of_vertical=point_of_vertical,
+            residual_settlement=residual_settlement,
+            maximum_number_of_samples=maximum_number_of_samples,
+            maximum_iterations=maximum_iterations,
+            reliability_type=reliability_type,
+            is_reliability_calculation=is_reliability_calculation,
+        )
+        assert test_data.reliability_x_co__ordinate == 1
+        assert test_data.residual_settlement == 0.01
+        assert test_data.maximum_drawings == 15
+        assert test_data.maximum_iterations == 10
+        assert test_data.reliability_type.value == 0
+        assert test_data.is_reliability_calculation.value == 1
+
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "collection_type, structure_type",

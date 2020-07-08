@@ -30,6 +30,7 @@ from .utils import (
     get_required_class_field,
     is_list,
     is_union,
+    unpack_if_union,
 )
 
 
@@ -358,6 +359,11 @@ class DSerieListStructure(DSeriesStructure):
             )
         d = {cls.__name__.lower(): lines}
         return cls(**d)
+
+    @classmethod
+    def parse_text_lines(cls, lines: List[List[str]]):
+        d = {cls.__name__.lower(): [line[0] for line in lines]}
+        return cls(**d), 1
 
 
 class DSerieMatrixStructure(DSeriesStructure):
@@ -835,6 +841,7 @@ class DSeriesTreeStructure(DSeriesStructure):
             if lines_read >= len(text_lines):
                 raise ValueError(f"Expected text line property for {field_name}.")
             iteration_lines = 1
+            field = unpack_if_union(field)
             # if the current property is a list, then extract the next line values.
             if (
                 is_list(field)
@@ -883,60 +890,6 @@ class DSeriesTreeStructure(DSeriesStructure):
             Tuple[DSeriesStructure, int]: Resulting tuple with real number of parsed lines.
         """
         return parsed_tuple
-
-
-class DSeriesTreeStructurePropertiesInGroups(DSeriesTreeStructure):
-    # TODO Deprecate.
-    # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
-    # It should therefore only be responsible for generating a dictionary of field name - string values,
-    # but not object creation.
-    @classmethod
-    def parse_text(cls, text: str):
-        """Creates a DSeriesStructure which properties are divided in subgroups.
-        Example
-
-        [PROPERTY_1]
-        42
-        [END OF PROPERTY_1]
-        [PROPERTY_2]
-        24, 42
-        [END OF PROPERTY_2]
-        returns:
-        DSeriesTreeStructurePropertiesInGroups({
-            property_1: 42,
-            property_2: [24, 42]
-        })
-
-        Arguments:
-            data {str} -- Data to parse.
-        """
-        tuple_lines = [[value, key] for key, value in DSerieParser.parse_group(text)]
-        return cls.parse_text_lines(tuple_lines)[0]
-
-    @classmethod
-    def get_next_property_text_lines(cls, text_lines: list) -> list:
-        """Retrieves the first element of a list of Tuples[PropertyTextValue, PropertyName]
-        and splits it into further parseable lines.
-
-        Args:
-            text_lines (list): list of Tuples[PropertyTextValue, PropertyName].
-
-        Returns:
-            list: List of lines representing a property value (another structure).
-        """
-        filtered_property_lines = [
-            split_line_elements(line)
-            for line in text_lines[0][0].split("\n")
-            if line != ""
-        ]
-        return filtered_property_lines
-
-    @classmethod
-    def get_tree_structure_read_lines(
-        cls, parsed_tuple: Tuple[DSeriesStructure, int]
-    ) -> Tuple[DSeriesStructure, int]:
-        # Only one line is meant to be read as parsed_text_lines is mapped 1:1 lines-properties.
-        return parsed_tuple[0], 1
 
 
 class DSeriesTreeStructureCollection(DSeriesStructure):

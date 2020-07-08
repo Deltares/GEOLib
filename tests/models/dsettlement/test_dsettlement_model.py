@@ -13,6 +13,7 @@ from teamcity import is_running_under_teamcity
 
 import geolib.models.dsettlement.loads as loads
 import geolib.soils as soil_external
+from geolib.soils import StochasticParameter
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
@@ -38,6 +39,7 @@ from geolib.models.dsettlement.internal import (
     StressDistributionLoads,
     StressDistributionSoil,
     Version,
+    InternalProbabilisticCalculationType,
 )
 from geolib.soils import (
     IsotacheParameters,
@@ -46,7 +48,12 @@ from geolib.soils import (
     SoilClassificationParameters,
     SoilParameters,
 )
+from geolib.models.dsettlement.probabilistic_calculation_types import (
+    ProbabilisticCalculationType,
+)
+
 from tests.utils import TestUtils, only_teamcity
+from geolib.soils import DistributionType
 
 
 class TestDSettlementModel:
@@ -400,7 +407,14 @@ class TestDSettlementModel:
 
         ds = DSettlementModel()
         ds.datastructure = DSettlementStructure()
-        b_id = ds.add_boundary([point1, point2])
+        print(ds.datastructure.geometry_data)
+        b_id = ds.add_boundary(
+            [point1, point2],
+            use_probabilistic_defaults=False,
+            stdv=0.05,
+            distribution_boundaries=DistributionType.Normal,
+        )
+        print(ds.datastructure.geometry_data)
 
         assert b_id == 0
         assert len(ds.boundaries.boundaries) == 1
@@ -413,7 +427,12 @@ class TestDSettlementModel:
         assert ds.points.points[1] == DSeriePoint.from_point(point2)
 
         # add points from right to left and test sorting
-        b_id = ds.add_boundary([point4, point3])
+        b_id = ds.add_boundary(
+            [point4, point3],
+            use_probabilistic_defaults=False,
+            stdv=0.6,
+            distribution_boundaries=DistributionType.Normal,
+        )
 
         assert b_id == 1
         assert len(ds.boundaries.boundaries) == 2
@@ -431,6 +450,99 @@ class TestDSettlementModel:
         # 4. Verify final expectations.
         assert ds.boundaries.boundaries[0].id == 0
         assert ds.boundaries.boundaries[1].id == 1
+        assert (
+            ds.datastructure.geometry_data.distribution_boundaries.distributionboundaries
+            == [
+                DistributionType.Undefined,
+                DistributionType.Normal,
+                DistributionType.Normal,
+            ]
+        )
+        assert ds.datastructure.geometry_data.stdv_boundaries.stdvboundaries == [
+            0.0,
+            0.05,
+            0.6,
+        ]
+
+    @pytest.mark.integrationtest
+    def test_boundaries_with_error_raised(self):
+        # Set up test data.
+        point1 = Point(x=0.0, y=0.0, z=0.0)
+        point2 = Point(x=100.0, y=0.0, z=0.0)
+        point3 = Point(x=0.0, y=0.0, z=1.0)
+        point4 = Point(x=100.0, y=0.0, z=1.0)
+        point5 = Point(x=0.0, y=0.0, z=-1.0)
+        point6 = Point(x=100.0, y=0.0, z=-1.0)
+        # Set up model
+        ds = DSettlementModel()
+        ds.datastructure = DSettlementStructure()
+        expected_error = "Enumeration member <DistributionType.LogNormal: 3> is not supported for probabilistic boundary, please select Normal Distribution"
+        # Check expectations
+        with pytest.raises(ValueError, match=expected_error):
+            ds.add_boundary(
+                [point1, point2],
+                use_probabilistic_defaults=False,
+                stdv=0.05,
+                distribution_boundaries=DistributionType.LogNormal,
+            )
+
+    @pytest.mark.integrationtest
+    def test_parse_probabilistic_data(self):
+        # todo work in progress
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dsettlement/benchmarks/bm3-15c.sli")
+        )
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_parse_probabilistic_data.sli"
+        )
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+        assert ds.datastructure.probabilistic_data.is_reliability_calculation.value == 1
+        assert ds.datastructure.probabilistic_data.maximum_drawings == 1000
+        assert ds.datastructure.probabilistic_data.maximum_iterations == 30
+        assert ds.datastructure.probabilistic_data.reliability_x_co__ordinate == 0.0
+        assert (
+            ds.datastructure.probabilistic_data.reliability_type
+            == InternalProbabilisticCalculationType.FOSMOrDeterministic
+        )
+
+    @pytest.mark.integrationtest
+    def test_add_boundary_with_probabilistic_serialize(self):
+        # todo work in progress
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_boundaries_with_probabilistic_serialize.sli"
+        )
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+
+        # initialize geometry
+        ds.datastructure.geometry_data = GeometryData()
+        assert ds.datastructure is not None
+        assert isinstance(ds.datastructure, DSettlementStructure)
+
+        # set up the verical locations
+        point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
+        point2 = Point(id=2, x=100.0, y=0.0, z=0.0)
+
+        # call function
+        ds.add_boundary(
+            [point1, point2],
+            use_probabilistic_defaults=False,
+            stdv=0.05,
+            distribution_boundaries=DistributionType.Normal,
+        )
+        ds.serialize(test_output_filepath)
+        f = open(test_output_filepath, "r")
+        contents = f.read()
+        expected_values = (
+            "\n[USE PROBABILISTIC DEFAULTS BOUNDARIES]\n  1 - Number of boundaries -\n"
+            "  0\n[END OF USE PROBABILISTIC DEFAULTS BOUNDARIES]\n\n[STDV BOUNDARIES]\n  1 - Number of boundaries"
+            " -\n   0.05\n[END OF STDV BOUNDARIES]\n\n[DISTRIBUTION BOUNDARIES]\n  1 - Number of boundaries -\n  2\n[END OF DISTRIBUTION BOUNDARIES]"
+        )
+        assert expected_values in contents
 
     @pytest.mark.integrationtest
     def test_add_boundary_serialize(self):
@@ -748,7 +860,7 @@ class TestDSettlementModel:
         list3 = [point5, point6]
 
         # Verify defaults
-        assert ds.datastructure.geometry_data.phreatic_line == 0
+        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == 0
 
         # Verify add_head_line
         h_id = ds.add_head_line(points=list1, is_phreatic=True)
@@ -757,7 +869,7 @@ class TestDSettlementModel:
                 ds.headlines.piezolines[0].curves[0]
             ].points[0]
         ] == DSeriePoint.from_point(point1)
-        assert ds.datastructure.geometry_data.phreatic_line == h_id
+        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == h_id
         assert ds.datastructure.geometry_data.points[
             ds.datastructure.geometry_data.curves[
                 ds.datastructure.geometry_data.piezo_lines.piezolines[0].curves[0]
@@ -767,12 +879,12 @@ class TestDSettlementModel:
         # Add another headline, verify phreatic line changed
         h_id2 = ds.add_head_line(points=list2, is_phreatic=True)
         assert h_id2 != h_id
-        assert ds.datastructure.geometry_data.phreatic_line == h_id2
+        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == h_id2
 
         # Add another headline with duplicate points, should still be added
         h_id3 = ds.add_head_line(points=list3)
         assert h_id3 != h_id2
-        assert ds.datastructure.geometry_data.phreatic_line == h_id2
+        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == h_id2
         assert len(ds.points.points) == 6
 
         # Serialize resulting structure
@@ -1150,6 +1262,191 @@ class TestDSettlementModel:
             )
 
             path = test_output_filepath / "test_acceptance.sli"
+            dm.serialize(path)
+
+            # Test run and verify return code of 0 (indicates succesfull run)
+            status = dm.execute()
+            assert status.returncode == 0
+
+        def test_dsettlement_acceptance_probabilistic(self):
+            """Setup base structure from parsed file while
+            we can't initialize one from scratch yet."""
+            test_output_filepath = Path(
+                TestUtils.get_output_test_data_dir("dsettlement/acceptance")
+            )
+            dm = DSettlementModel()
+            dm.set_model(
+                constitutive_model=SoilModel.ISOTACHE,
+                consolidation_model=ConsolidationModel.TERZAGHI,
+                is_two_dimensional=True,
+                strain_type=StrainType.LINEAR,
+                is_vertical_drain=False,
+                is_fit_for_settlement_plate=False,
+                is_probabilistic=True,
+                is_horizontal_displacements=False,
+                is_secondary_swelling=False,
+                is_waspan=False,
+            )
+
+            p1 = Point(x=-50, z=0.0)
+            p2 = Point(x=-10, z=0.0)
+            p3 = Point(x=0, z=2)
+            p4 = Point(x=10, z=2)
+            p5 = Point(x=30, z=0.0)
+            p6 = Point(x=50, z=0.0)
+            p7 = Point(x=-50, z=-5)
+            p8 = Point(x=50, z=-5)
+            p9 = Point(x=-50, z=-10)
+            p10 = Point(x=50, z=-10)
+            p11 = Point(x=-50, z=-20)
+            p12 = Point(x=50, z=-20)
+
+            p15 = Point(x=-50, z=-30)
+            p16 = Point(x=-20, z=-30)
+            p17 = Point(x=-10, z=-30)
+            p18 = Point(x=0, z=-30)
+            p19 = Point(x=10, z=-30)
+            p20 = Point(x=20, z=-30)
+            p21 = Point(x=25, z=-30)
+            p22 = Point(x=30, z=-30)
+            p23 = Point(x=35, z=-30)
+            p24 = Point(x=40, z=-30)
+            p25 = Point(x=45, z=-30)
+            p26 = Point(x=50, z=-30)
+
+            # headline
+            p13 = Point(x=-50, z=-2)
+            p14 = Point(x=50, z=-2)
+
+            pl_id = dm.add_head_line([p13, p14], is_phreatic=True)
+
+            b6 = dm.add_boundary(
+                [p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26],
+                use_probabilistic_defaults=True,
+            )
+            b1 = dm.add_boundary([p11, p12], use_probabilistic_defaults=True)
+            b2 = dm.add_boundary([p9, p10], use_probabilistic_defaults=True)
+            b3 = dm.add_boundary([p7, p8], use_probabilistic_defaults=True)
+            b4 = dm.add_boundary(
+                [p1, p2, p5, p6],
+                use_probabilistic_defaults=False,
+                stdv=0.1,
+                distribution_boundaries=DistributionType.Normal,
+            )
+            b5 = dm.add_boundary(
+                [p1, p2, p3, p4, p5, p6],
+                use_probabilistic_defaults=False,
+                stdv=0.1,
+                distribution_boundaries=DistributionType.Normal,
+            )
+
+            soil = Soil(name="Sand")
+            soil.soil_parameters.soil_weight_parameters.saturated_weight.mean = 17
+            soil.soil_parameters.soil_weight_parameters.unsaturated_weight.mean = 15
+            soil.soil_parameters.soil_weight_parameters.saturated_weight.standard_deviation = (
+                0.7
+            )
+            soil.soil_parameters.soil_weight_parameters.unsaturated_weight.standard_deviation = (
+                0.8
+            )
+            soil.soil_parameters.undrained_parameters.vertical_consolidation_coefficient.mean = (
+                1.00e-12
+            )
+            soil.soil_parameters.undrained_parameters.vertical_consolidation_coefficient.standard_deviation = (
+                5.00e-13
+            )
+            soil.soil_parameters.compression_parameters.POP.mean = 5
+            soil.soil_parameters.isotache_parameters.precon_isotache_type = (
+                PreconType.PreoverburdenPressure
+            )
+            soil.soil_parameters.isotache_parameters.reloading_swelling_constant_a = StochasticParameter(
+                mean=1.000e-02, standard_deviation=2.500e-03, correlation_coefficient=0.01
+            )
+            soil.soil_parameters.isotache_parameters.primary_compression_constant_b = StochasticParameter(
+                mean=1.000e-01, standard_deviation=2.500e-03
+            )
+            soil.soil_parameters.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
+                mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
+            )
+            s1 = dm.add_soil(soil)
+
+            l1 = dm.add_layer(
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b1,
+                boundary_bottom=b2,
+            )
+            l2 = dm.add_layer(
+                # material_name="H_Ro_z&k",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b2,
+                boundary_bottom=b3,
+            )
+            l3 = dm.add_layer(
+                # material_name="HV",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b3,
+                boundary_bottom=b4,
+            )
+            l4 = dm.add_layer(
+                # material_name="H_Aa_ht_old",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b4,
+                boundary_bottom=b5,
+            )
+            l5 = dm.add_layer(
+                # material_name="H_Aa_ht_old",
+                material_name="Sand",
+                head_line_top=pl_id,
+                head_line_bottom=pl_id,
+                boundary_top=b5,
+                boundary_bottom=b6,
+            )
+            # set up the vertical locations
+            point1 = Point(label="1", x=-10.0, y=-50, z=0.0)
+            point2 = Point(label="2", x=0.0, y=-50, z=0.0)
+            locations = [point1, point2]
+
+            # call function
+            dm.set_verticals(locations=locations)
+            # For a calculation at least one load should be defined
+            # set up the point list
+            point3 = Point(label="1", x=-50, y=0, z=0)
+            point4 = Point(label="2", x=-50, y=0, z=2)
+            point5 = Point(label="3", x=-10, y=0, z=2)
+            point6 = Point(label="4", x=-10, y=0, z=0)
+            pointlist = [point3, point4, point5, point6]
+
+            # Add first uniform load
+            dm.add_non_uniform_load(
+                name="My First Load",
+                points=pointlist,
+                time_start=timedelta(days=0),
+                time_end=timedelta(days=100),
+                gamma_dry=20.02,
+                gamma_wet=21.02,
+            )
+
+            dm.set_calculation_times(
+                time_steps=[timedelta(days=d) for d in [10, 100, 1000, 2000, 3000, 4000]]
+            )
+            # calculation setting to probabilistic
+            dm.set_probabilistic_data(
+                point_of_vertical=Point(x=-10, y=0, z=0),
+                residual_settlement=0.01,
+                maximum_number_of_samples=10,
+                maximum_iterations=15,
+                reliability_type=ProbabilisticCalculationType.BandWidthOfSettlementsFOSM,
+                is_reliability_calculation=True,
+            )
+            path = test_output_filepath / "test_acceptance_probabilistic.sli"
             dm.serialize(path)
 
             # Test run and verify return code of 0 (indicates succesfull run)
