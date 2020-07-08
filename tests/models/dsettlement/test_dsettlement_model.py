@@ -5,6 +5,7 @@ from datetime import timedelta
 from pathlib import Path
 from typing import List
 from warnings import warn
+from datetime import timedelta
 
 import pydantic
 import pytest
@@ -17,6 +18,14 @@ from geolib.soils import StochasticParameter
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
+from geolib.models.dsettlement.drains import (
+    VerticalDrain,
+    ScheduleValuesOff,
+    ScheduleValuesSimpleInput,
+    ScheduleValuesDetailedInput,
+    ScheduleValues,
+)
+from geolib.models.dsettlement.drain_types import DrainType, DrainGridType, DrainSchedule
 from geolib.models.dsettlement.internal import (
     Boundaries,
     Boundary,
@@ -1165,13 +1174,23 @@ class TestDSettlementModel:
     @only_teamcity
     class TestDSettlementAcceptance:
         def test_dsettlement_acceptance(self):
-            """Setup base structure from parsed file while
-            we can't initialize one from scratch yet."""
+            """ Acceptance test for D-Settlement serialisation"""
             test_output_filepath = Path(
                 TestUtils.get_output_test_data_dir("dsettlement/acceptance")
             )
             dm = DSettlementModel()
-
+            dm.set_model(
+                SoilModel.ISOTACHE,
+                ConsolidationModel.TERZAGHI,
+                True,
+                StrainType.LINEAR,
+                True,
+                True,
+                True,
+                True,
+                True,
+                True,
+            )
             p1 = Point(x=-50, z=0.0)
             p2 = Point(x=-10, z=0.0)
             p3 = Point(x=0, z=2)
@@ -1261,12 +1280,270 @@ class TestDSettlementModel:
                 boundary_bottom=b6,
             )
 
+            test_drain = VerticalDrain(
+                drain_type=DrainType.COLUMN,
+                range_from=0.1,
+                range_to=1.5,
+                bottom_position=-10,
+                center_to_center=4,
+                diameter=0.1,
+                grid=DrainGridType.RECTANGULAR,
+                schedule=ScheduleValuesSimpleInput(
+                    start_of_drainage=timedelta(days=0.1),
+                    phreatic_level_in_drain=2,
+                    begin_time=1,
+                    end_time=100,
+                    underpressure=55,
+                    tube_pressure_during_dewatering=10,
+                    water_head_during_dewatering=12,
+                ),
+            )
+            # set vertical drains
+            dm.set_vertical_drain(test_drain)
+
             path = test_output_filepath / "test_acceptance.sli"
             dm.serialize(path)
 
             # Test run and verify return code of 0 (indicates succesfull run)
             status = dm.execute()
             assert status.returncode == 0
+
+    @pytest.mark.integrationtest
+    def test_add_vertical_drain_ScheduleValues_Off(self):
+        # parse file
+        ds = self.setup_dsettlement_model()
+        ds.set_model(
+            constitutive_model=SoilModel.ISOTACHE,
+            consolidation_model=ConsolidationModel.TERZAGHI,
+            is_two_dimensional=True,
+            strain_type=StrainType.LINEAR,
+            is_vertical_drain=True,
+            is_fit_for_settlement_plate=True,
+            is_probabilistic=True,
+            is_horizontal_displacements=True,
+            is_secondary_swelling=True,
+            is_waspan=True,
+        )
+        test_schedule = ScheduleValuesOff(
+            start_of_drainage=timedelta(days=1), phreatic_level_in_drain=2
+        )
+        test_drain = VerticalDrain(
+            drain_type=DrainType.STRIP,
+            range_from=0.1,
+            range_to=1.5,
+            bottom_position=-10,
+            center_to_center=4,
+            width=0.1,
+            grid=DrainGridType.UNDERDETERMINED,
+            schedule=test_schedule,
+        )
+        # set vertical drains
+        ds.set_vertical_drain(test_drain)
+        # check final expectations
+        assert ds.datastructure.vertical_drain.drain_type == test_drain.drain_type
+        assert ds.datastructure.vertical_drain.range_from == test_drain.range_from
+        assert ds.datastructure.vertical_drain.range_to == test_drain.range_to
+        assert (
+            ds.datastructure.vertical_drain.bottom_position == test_drain.bottom_position
+        )
+        assert (
+            ds.datastructure.vertical_drain.center_to_center
+            == test_drain.center_to_center
+        )
+        assert ds.datastructure.vertical_drain.width == test_drain.width
+        assert ds.datastructure.vertical_drain.diameter == 0.1
+        assert ds.datastructure.vertical_drain.thickness == 0.003
+        assert ds.datastructure.vertical_drain.grid == test_drain.grid
+        assert (
+            ds.datastructure.vertical_drain.start_of_drainage
+            == test_drain.schedule.start_of_drainage.days
+        )
+
+    @pytest.mark.integrationtest
+    def test_add_vertical_drain_ScheduleValues_SIMPLE_INPUT(self):
+        # parse file
+        ds = self.setup_dsettlement_model()
+        ds.set_model(
+            SoilModel.ISOTACHE,
+            ConsolidationModel.TERZAGHI,
+            True,
+            StrainType.LINEAR,
+            True,
+            True,
+            True,
+            True,
+            True,
+            True,
+        )
+        test_drain = VerticalDrain(
+            drain_type=DrainType.COLUMN,
+            range_from=0.1,
+            range_to=1.5,
+            bottom_position=-10,
+            center_to_center=4,
+            diameter=0.1,
+            grid=DrainGridType.RECTANGULAR,
+            schedule=ScheduleValuesSimpleInput(
+                start_of_drainage=timedelta(days=0.1),
+                phreatic_level_in_drain=2,
+                begin_time=1,
+                end_time=100,
+                underpressure=55,
+                tube_pressure_during_dewatering=10,
+                water_head_during_dewatering=12,
+            ),
+        )
+        # set vertical drains
+        ds.set_vertical_drain(test_drain)
+        # check final expectations
+        assert ds.datastructure.vertical_drain.drain_type == test_drain.drain_type
+        assert ds.datastructure.vertical_drain.range_from == test_drain.range_from
+        assert ds.datastructure.vertical_drain.range_to == test_drain.range_to
+        assert (
+            ds.datastructure.vertical_drain.bottom_position == test_drain.bottom_position
+        )
+        assert (
+            ds.datastructure.vertical_drain.center_to_center
+            == test_drain.center_to_center
+        )
+        assert ds.datastructure.vertical_drain.diameter == test_drain.diameter
+        assert ds.datastructure.vertical_drain.width == 0.1
+        assert ds.datastructure.vertical_drain.thickness == 0.003
+        assert ds.datastructure.vertical_drain.grid == test_drain.grid
+        assert (
+            ds.datastructure.vertical_drain.start_of_drainage
+            == test_drain.schedule.start_of_drainage.days
+        )
+        assert (
+            ds.datastructure.vertical_drain.begin_time == test_drain.schedule.begin_time
+        )
+        assert ds.datastructure.vertical_drain.end_time == test_drain.schedule.end_time
+        assert (
+            ds.datastructure.vertical_drain.under_pressure_for_strips_and_columns
+            == test_drain.schedule.underpressure
+        )
+        assert (
+            ds.datastructure.vertical_drain.tube_pressure_during_dewatering
+            == test_drain.schedule.tube_pressure_during_dewatering
+        )
+
+    @pytest.mark.integrationtest
+    def test_add_vertical_drain_ScheduleValues_DETAILED_INPUT(self):
+        # parse file
+        ds = self.setup_dsettlement_model()
+        ds.set_model(
+            SoilModel.ISOTACHE,
+            ConsolidationModel.TERZAGHI,
+            True,
+            StrainType.LINEAR,
+            True,
+            True,
+            True,
+            True,
+            True,
+            True,
+        )
+        time = [
+            timedelta(days=0.1),
+            timedelta(days=1),
+            timedelta(days=4),
+            timedelta(days=8),
+        ]
+        underpressure = [1.2, 1.6, 1, 0.1]
+        water_level = [12, 8.5, 7.5, 6]
+        test_drain = VerticalDrain(
+            drain_type=DrainType.SANDWALL,
+            range_from=0.1,
+            range_to=1.5,
+            bottom_position=-10,
+            center_to_center=4,
+            width=0.1,
+            thickness=0.005,
+            grid=DrainGridType.RECTANGULAR,
+            schedule=ScheduleValuesDetailedInput(
+                time=time, underpressure=underpressure, water_level=water_level
+            ),
+        )
+        # set vertical drains
+        ds.set_vertical_drain(test_drain)
+        # check final expectations
+        assert ds.datastructure.vertical_drain.drain_type == test_drain.drain_type
+        assert ds.datastructure.vertical_drain.range_from == test_drain.range_from
+        assert ds.datastructure.vertical_drain.range_to == test_drain.range_to
+        assert (
+            ds.datastructure.vertical_drain.bottom_position == test_drain.bottom_position
+        )
+        assert (
+            ds.datastructure.vertical_drain.center_to_center
+            == test_drain.center_to_center
+        )
+        assert ds.datastructure.vertical_drain.width == test_drain.width
+        assert ds.datastructure.vertical_drain.thickness == test_drain.thickness
+        assert ds.datastructure.vertical_drain.grid == test_drain.grid
+        assert ds.datastructure.vertical_drain.time == [
+            onetime.days for onetime in test_drain.schedule.time
+        ]
+        assert (
+            ds.datastructure.vertical_drain.underpressure
+            == test_drain.schedule.underpressure
+        )
+        assert (
+            ds.datastructure.vertical_drain.water_level == test_drain.schedule.water_level
+        )
+
+    @pytest.mark.integrationtest
+    def test_add_vertical_drain_serialize(self):
+        # todo work in progress
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_vertical_drain.sli"
+        )
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+
+        # initialize geometry
+        ds.datastructure.geometry_data = GeometryData()
+        assert ds.datastructure is not None
+        assert isinstance(ds.datastructure, DSettlementStructure)
+
+        # Define vertical drain
+        time = [
+            timedelta(days=0.1),
+            timedelta(days=1),
+            timedelta(days=4),
+            timedelta(days=8),
+        ]
+        underpressure = [1.2, 1.6, 1, 0.1]
+        water_level = [12, 8.5, 7.5, 6]
+        test_drain = VerticalDrain(
+            drain_type=DrainType.SANDWALL,
+            range_from=0.1,
+            range_to=1.5,
+            bottom_position=-10,
+            center_to_center=4,
+            width=0.1,
+            thickness=0.005,
+            grid=DrainGridType.RECTANGULAR,
+            schedule=ScheduleValuesDetailedInput(
+                time=time, underpressure=underpressure, water_level=water_level
+            ),
+        )
+        # call function
+        ds.set_model(
+            SoilModel.ISOTACHE,
+            ConsolidationModel.TERZAGHI,
+            True,
+            StrainType.LINEAR,
+            True,
+            True,
+            True,
+            True,
+            True,
+            True,
+        )
+        ds.set_vertical_drain(test_drain)
+        ds.serialize(test_output_filepath)
 
         def test_dsettlement_acceptance_probabilistic(self):
             """Setup base structure from parsed file while

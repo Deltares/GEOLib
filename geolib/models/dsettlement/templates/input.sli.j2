@@ -330,7 +330,42 @@ D-Settlement={{ version.d__settlement }}
 [END OF CALCULATION OPTIONS PORE PRESSURES]
 
 [VERTICAL DRAIN]
+{% if vertical_drain is mapping %}
+{{ vertical_drain.drain_type.value }} : Flow type
+      {{ '{:15.3f}'.format(vertical_drain.bottom_position) }} = Bottom position
+       0.000 = Position of the drain pipe
+      {{ '{:15.3f}'.format(vertical_drain.range_from) }} = Position of the leftmost drain
+      {{ '{:15.3f}'.format(vertical_drain.range_to) }} = Position of the rightmost drain
+      {{ '{:15.3f}'.format(vertical_drain.center_to_center) }} = Center to center distance
+      {{ '{:15.3f}'.format(vertical_drain.diameter) }} = Diameter
+      {{ '{:15.3f}'.format(vertical_drain.width) }} = Width
+      {{ '{:15.3f}'.format(vertical_drain.thickness) }} = Thickness
+{{ vertical_drain.grid.value }} = Grid
+      {{ '{:15.3f}'.format(vertical_drain.begin_time) }} = Begin time
+      {{ '{:15.3f}'.format(vertical_drain.end_time) }} = End time
+      {{ '{:15.3f}'.format(vertical_drain.under_pressure_for_strips_and_columns) }} = Under pressure for strips and columns
+      {{ '{:15.3f}'.format(vertical_drain.under_pressure_for_sand_wall) }} = Under pressure for sand wall
+      {{ '{:15.3f}'.format(vertical_drain.start_of_drainage) }} = Start of drainage
+      {{ '{:15.3f}'.format(vertical_drain.phreatic_level_in_drain) }} = Phreatic level in drain
+      {{ '{:15.3f}'.format(vertical_drain.water_head_during_dewatering) }} = Water head during dewatering
+    {{ '{:15.3f}'.format(vertical_drain.tube_pressure_during_dewatering) }} = Tube pressure during dewatering
+{{ vertical_drain.schedule_type.value }} : Flow type
+{% if vertical_drain.time is defined %}
+{{vertical_drain.time | length }} = number of items
+{% for i in vertical_drain.time %}
+      {% set time_step = vertical_drain.time[loop.index-1] %}
+      {% set underpressure_item = vertical_drain.underpressure[loop.index-1] %}
+      {% set water_level_item = vertical_drain.water_level[loop.index-1] %}
+     {{'{:15.3f}'.format(time_step)}}       {{'{:15.3f}'.format(underpressure_item)}}   {{'{:15.3f}'.format(water_level_item)}}   0.000 = Time, Under pressure, Water level, Tube pressure
+{% endfor %}
+{% else %}
+{# This section represent the defaults so when the drain schedule time selected is not of "Detailed input"#}
+1 = number of items
+     0.000       40.000      0.000      0.00 = Time, Under pressure, Water level, Tube pressure
+{% endif %}
+{% else %}
 {{ vertical_drain }}
+{% endif %}
 [END OF VERTICAL DRAIN]
 
 [PROBABILISTIC DATA]

@@ -15,6 +15,7 @@ from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.geometry.one import Point
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dsettlement.internal_soil import SoilInternal
+from .drain_types import DrainType, DrainGridType, DrainSchedule
 from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
     DSeriesInlineMappedProperties,
@@ -693,6 +694,36 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         return cls_instance
 
 
+class VerticalDrain(DSeriesNoParseSubStructure):
+    # geometry of drain
+    drain_type: DrainType = DrainType.STRIP
+    range_from: confloat(ge=-10000000.000, le=10000000.000) = 0
+    range_to: confloat(ge=-10000000.000, le=10000000.000) = 0
+    bottom_position: confloat(ge=-10000000.000, le=10000000.000) = 0
+    center_to_center: confloat(ge=0.001, le=1000) = 3
+    width: confloat(ge=0.001, le=1000) = 0.1
+    diameter: confloat(ge=0.001, le=1000) = 0.1
+    thickness: confloat(ge=0.001, le=1000) = 0.003
+    grid: DrainGridType = DrainGridType.UNDERDETERMINED
+    # schedule
+    schedule_type: DrainSchedule = DrainSchedule.OFF
+    begin_time: confloat(ge=0, le=100000) = 0
+    end_time: confloat(ge=0, le=100000) = 0
+    under_pressure_for_strips_and_columns: confloat(ge=0, le=100000) = 35
+    under_pressure_for_sand_wall: confloat(ge=0, le=100000) = 35
+    start_of_drainage: confloat(ge=0, le=100000) = 0
+    phreatic_level_in_drain: confloat(ge=-10000000.000, le=10000000.000) = 0
+    water_head_during_dewatering: confloat(
+        ge=-10000000.000, le=10000000.000
+    ) = 0  # relevant for strip and column
+    tube_pressure_during_dewatering: confloat(
+        ge=-10000000.000, le=10000000.000
+    ) = 0  # relevant for the sand wall
+    time: List[confloat(ge=0, le=100000)] = []
+    underpressure: List[confloat(ge=0, le=100000)] = []
+    water_level: List[confloat(ge=-10000000.000, le=10000000.000)] = []
+
+
 class InternalProbabilisticCalculationType(IntEnum):
     FOSMOrDeterministic = 0
     ProbabilityOfFailureFORM = 1
@@ -776,31 +807,7 @@ class DSettlementStructure(DSeriesStructure):
         1 : calculation method of lateral stress ratio (k0) = Nu
         """
     )
-    vertical_drain: str = cleandoc(
-        """
-        0 : Flow type = Radial
-            0.000 = Bottom position
-            0.000 = Position of the drain pipe
-        -1.700E+0308 = Position of the leftmost drain
-        1.700E+0308 = Position of the rightmost drain
-            1.000 = Center to center distance
-            0.100 = Diameter
-            0.100 = Width
-            0.003 = Thickness
-        0 = Grid
-            0.000 = Begin time
-            0.000 = End time
-            35.000 = Under pressure for strips and columns
-            0.000 = Under pressure for sand wall
-            0.000 = Start of drainage
-            0.000 = Phreatic level in drain
-            0.000 = Water head during dewatering
-            10.00 = Tube pressure during dewatering
-        0 : Flow type = Off
-        1 = number of items
-            0.000       40.000      0.000      0.00 = Time, Under pressure, Water level, Tube pressure
-        """
-    )
+    vertical_drain: Union[VerticalDrain, str] = VerticalDrain()
     probabilistic_data: ProbabilisticData = ProbabilisticData()
     probabilistic_defaults: str = cleandoc(
         """

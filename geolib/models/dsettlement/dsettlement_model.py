@@ -38,15 +38,15 @@ from .internal import (
     CalculationOptions,
     Model,
 )
-from .internal_soil import SoilInternal
-from .loads import (
+from geolib.models.dsettlement.internal_soil import SoilInternal
+from geolib.models.dsettlement.loads import (
     CircularLoad,
     RectangularLoad,
     TankLoad,
     TrapeziformLoad,
     UniformLoad,
 )
-from .serializer import DSettlementInputSerializer
+from geolib.models.dsettlement.serializer import DSettlementInputSerializer
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
@@ -473,3 +473,12 @@ class DSettlementModel(BaseModel):
         points = [DSeriePoint.from_point(point) for point in locations]
         verticals = Verticals(locations=points)
         self.datastructure.verticals = verticals
+
+    def set_vertical_drain(self, verticaldrain: VerticalDrain):
+        if self.datastructure.model.is_vertical_drains:
+            self.datastructure.vertical_drain = verticaldrain._to_internal()
+        else:
+            raise ValueError(
+                "If you wish to add a vertical drain then value is_vertical_drains for the model should be True"
+            )
+
