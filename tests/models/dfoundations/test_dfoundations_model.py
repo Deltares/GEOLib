@@ -6,6 +6,7 @@ from typing import Type
 import pytest
 from teamcity import is_running_under_teamcity
 
+from geolib.errors import CalculationError
 from geolib.models import BaseModel
 from geolib.models import DFoundationsModel
 from geolib.models.dfoundations.internal import (
@@ -159,10 +160,10 @@ class TestDFoundationsModel:
 
         # 3. Run test.
         df.filename = output_test_file
-        status = df.execute()
+        model = df.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 3. Verify model output has been parsed
+        assert model
 
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
@@ -324,10 +325,10 @@ class TestDFoundationsModel:
 
         # 3. Run test.
         df.filename = output_test_file
-        status = df.execute()
+        model = df.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 3. Verify model output has been parsed
+        assert model
 
     @pytest.mark.integrationtest
     def test_add_bearing_pile_location(self, create_bearing_pile):
@@ -618,10 +619,12 @@ class TestDFoundationsModel:
 
         # 5. Run test.
         df.filename = output_test_file
-        status = df.execute()
 
-        # 6. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 6. Verify model output has been parsed.
+        with pytest.raises(CalculationError) as e:
+            df.execute()
+
+        assert "Number of CPTs (0 ) is outside its limits" in e.value.message
 
     @only_teamcity
     @pytest.mark.systemtest
@@ -664,10 +667,12 @@ class TestDFoundationsModel:
 
         # 5. Run test.
         df.filename = output_test_file
-        status = df.execute()
 
-        # 6. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 3. Verify model output has been parsed.
+        with pytest.raises(CalculationError) as e:
+            df.execute()
+
+        assert "Number of CPTs (0 ) is outside its limits" in e.value.message
 
     @pytest.mark.integrationtest
     def test_set_model_options(self):
@@ -820,7 +825,7 @@ def create_tension_pile():
             BearingSection,
         ],
         [
-            "test_add_bearing_round_open_ended_hollow_pile",
+            "test_add_bearing_round_open_ended_hollow_pile.foi",
             dict(external_diameter=1, wall_thickness=0.01),
             BearingRoundOpenEndedHollowPile,
         ],
@@ -890,7 +895,7 @@ def create_bearing_pile_shape(request):
             TensionSection,
         ],
         [
-            "test_add_tension_round_open_ended_hollow_pile",
+            "test_add_tension_round_open_ended_hollow_pile.foi",
             dict(external_diameter=1, wall_thickness=0.01),
             TensionRoundOpenEndedHollowPile,
         ],

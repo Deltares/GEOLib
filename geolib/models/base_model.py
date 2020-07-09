@@ -4,20 +4,23 @@
 This module contains the primary objects that power GEOLib.
 """
 import abc
-from abc import abstractproperty, abstractmethod
-import os
 import logging
-from subprocess import run, CompletedProcess
+import os
+from abc import abstractmethod, abstractproperty
+from pathlib import Path
+from subprocess import run
 from types import CoroutineType
 from typing import List, Optional, Type, Union
 
-from pathlib import Path
+import requests
 from pydantic import BaseModel as DataClass
-from pydantic import FilePath, DirectoryPath, HttpUrl
+from pydantic import DirectoryPath, FilePath, HttpUrl
 
+from geolib.errors import CalculationError
+
+from .base_model_structure import BaseModelStructure
 from .meta import MetaData
 from .parsers import BaseParserProvider
-from .base_model_structure import BaseModelStructure
 
 
 class BaseModel(DataClass, abc.ABC):
@@ -25,27 +28,72 @@ class BaseModel(DataClass, abc.ABC):
     datastructure: Optional[Type[BaseModelStructure]]
     meta: MetaData = MetaData()
 
-    def execute(self, timeout: int = 60) -> Union[CompletedProcess, ValueError]:
+    def execute(self, timeout_in_seconds: int = 2 * 60) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds."""
-        if not self.filename:
-            raise ValueError("Set filename first.")
-        return run(
-            [str(self.meta.console_folder / self.console_path), str(self.filename)],
-            timeout=timeout,
+        if self.filename is None:
+            raise ValueError("Set filename or serialize first!")
+        if not self.filename.exists():
+            logging.warning("Serializing before executing.")
+            self.serialize(self.filename)
+        process = run(
+            [str(self.meta.console_folder / self.console_path)]
+            + self.console_flags
+            + [str(self.filename)],
+            timeout=timeout_in_seconds,
+            cwd=str(self.meta.console_folder),
         )
 
-    async def execute_remote(self, endpoint: HttpUrl) -> CoroutineType:
+        # Successfull run
+        output_filename = output_filename_from_input(self)
+        logging.info(
+            f"Checking for {output_filename}, while process exited with {process.returncode}"
+        )
+        if process.returncode == 0 and output_filename.exists():
+            self.parse(output_filename)
+            return self  # TODO Figure out whether we should instantiate a new model (parse is a classmethod)
+
+        # Unsuccessfull run
+        else:
+            error = self.get_error_context()
+            raise CalculationError(process.returncode, error)
+
+    def execute_remote(self, endpoint: HttpUrl) -> "BaseModel":
         """Execute a Model on a remote endpoint."""
+        r = requests.post(endpoint + "calculate", json={"model": self.json()})
+        if r.status_code == 200:
+            return self.__class__(**r.json())
+        else:
+            raise CalculationError(r.status_code, r.text)
+
+    def get_error_context(self) -> str:
+        err_fn = output_filename_from_input(self, extension=".err")
+        batch_fn = self.meta.console_folder / "Batchlog.txt"
+        error = ""
+        if err_fn.exists():
+            with open(err_fn) as f:
+                error += f"### {err_fn} ###\n"
+                error += f.read()
+        elif batch_fn.exists():
+            with open(batch_fn) as f:
+                error += f"### {batch_fn} ###\n"
+                error += f.read()
+        else:
+            error = "Couldn't determine source of error."
+        return error
 
     @abstractmethod
     def serialize(
         self, filename: Union[FilePath, DirectoryPath, None]
-    ) -> Union[FilePath, DirectoryPath, Exception, None]:
+    ) -> Union[FilePath, DirectoryPath, None]:
         """Serialize model to input file."""
 
     @property
     def console_path(self) -> Path:
         raise NotImplementedError("Implement in concrete classes.")
+
+    @property
+    def console_flags(self) -> List[str]:
+        return []
 
     @abstractproperty
     def parser_provider_type(self) -> Type[BaseParserProvider]:
@@ -109,3 +157,9 @@ class BaseModelList(DataClass):
     async def execute_remote(self, endpoint: HttpUrl) -> CoroutineType:
         """Execute all models in this class in parallel on a remote endpoint.
         """
+
+
+def output_filename_from_input(model: BaseModel, extension: str = None) -> Path:
+    if not extension:
+        extension = model.parser_provider_type().output_parsers[-1].suffix_list[0]
+    return model.filename.with_suffix(extension)

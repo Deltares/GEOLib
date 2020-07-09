@@ -1,7 +1,6 @@
 import csv
 import re
 from collections import namedtuple
-
 from pathlib import Path
 
 _CAMEL_TO_SNAKE_PATTERN = re.compile(r"(?<!^)(?=[A-Z])")

@@ -10,6 +10,7 @@ from pydantic import FilePath, PositiveFloat
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, BaseModelStructure
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 from geolib.soils.layers import Profile
 
@@ -135,6 +136,10 @@ class DSheetPilingModel(BaseModel):
         return Path("DSheetPilingConsole/DSheetPilingConsole.exe")
 
     @property
+    def console_flags(self) -> List[str]:
+        return [CONSOLE_RUN_BATCH_FLAG]
+
+    @property
     def output(self) -> DSheetPilingOutputStructure:
         return self.datastructure.dumpfile.output_data
 
@@ -153,19 +158,6 @@ class DSheetPilingModel(BaseModel):
         serializer = DSheetPilingInputSerializer(ds=ds)
         serializer.write(filename)
         self.filename = filename
-
-    def execute(self, timeout: int = 30) -> Union[CompletedProcess, ValueError]:
-        """Execute a Model and wait for `timeout` seconds."""
-        if self.filename is None:
-            raise ValueError("Set filename or serialize first!")
-        if not self.filename.exists():
-            logging.warning("Serializing before executing.")
-            self.serialize(self.filename)
-        return run(
-            [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
-            timeout=timeout,
-            cwd=self.filename.parent,
-        )
 
     def _is_calculation_per_stage_required(self) -> bool:
         """ Function that checks if [CALCULATION PER STAGE] can be modified. This is true for a verify sheet-piling calculation and method B."""
@@ -309,12 +301,7 @@ class DSheetPilingModel(BaseModel):
                 stage_id, right.to_internal(), side=Side.RIGHT
             )
 
-    def add_surface(
-        self,
-        surface: Surface,
-        side: Side,
-        stage_id: int,
-    ) -> None:
+    def add_surface(self, surface: Surface, side: Side, stage_id: int,) -> None:
         """Set surface for a stage.
 
         Surface is added to [SURFACES] if not yet added; reference is done by name.

@@ -5,27 +5,27 @@ from datetime import timedelta
 from pathlib import Path
 from typing import List
 from warnings import warn
-from datetime import timedelta
 
 import pydantic
 import pytest
 from pydantic.color import Color
 from teamcity import is_running_under_teamcity
+from tests.utils import TestUtils, only_teamcity
 
 import geolib.models.dsettlement.loads as loads
 import geolib.soils as soil_external
-from geolib.soils import StochasticParameter
+from geolib.errors import CalculationError
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
-from geolib.models.dsettlement.dsettlement_model import DSettlementModel
+from geolib.models.dsettlement.drain_types import DrainGridType, DrainSchedule, DrainType
 from geolib.models.dsettlement.drains import (
-    VerticalDrain,
+    ScheduleValues,
+    ScheduleValuesDetailedInput,
     ScheduleValuesOff,
     ScheduleValuesSimpleInput,
-    ScheduleValuesDetailedInput,
-    ScheduleValues,
+    VerticalDrain,
 )
-from geolib.models.dsettlement.drain_types import DrainType, DrainGridType, DrainSchedule
+from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
     Boundaries,
     Boundary,
@@ -35,8 +35,10 @@ from geolib.models.dsettlement.internal import (
     Dimension,
     DispersionConditionLayerBoundary,
     DSeriePoint,
+    DSettlementOutputStructure,
     DSettlementStructure,
     GeometryData,
+    InternalProbabilisticCalculationType,
     Layer,
     Layers,
     Model,
@@ -48,21 +50,18 @@ from geolib.models.dsettlement.internal import (
     StressDistributionLoads,
     StressDistributionSoil,
     Version,
-    InternalProbabilisticCalculationType,
-)
-from geolib.soils import (
-    IsotacheParameters,
-    PreconType,
-    Soil,
-    SoilClassificationParameters,
-    SoilParameters,
 )
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
-
-from tests.utils import TestUtils, only_teamcity
-from geolib.soils import DistributionType
+from geolib.soils import (
+    DistributionType,
+    PreconType,
+    Soil,
+    SoilClassificationParameters,
+    SoilParameters,
+    StochasticParameter,
+)
 
 
 class TestDSettlementModel:
@@ -175,10 +174,10 @@ class TestDSettlementModel:
 
         # 3. Run test.
         dm.filename = test_output_filepath
-        status = dm.execute()
+        model = dm.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 3. Verify model has been parsed
+        assert model
 
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
@@ -1223,6 +1222,8 @@ class TestDSettlementModel:
 
             pl_id = dm.add_head_line([p13, p14], is_phreatic=True)
 
+            dm.set_verticals([p21])
+
             b6 = dm.add_boundary(
                 [p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26]
             )
@@ -1304,9 +1305,11 @@ class TestDSettlementModel:
             path = test_output_filepath / "test_acceptance.sli"
             dm.serialize(path)
 
-            # Test run and verify return code of 0 (indicates succesfull run)
-            status = dm.execute()
-            assert status.returncode == 0
+            # Verify output has been parsed
+            with pytest.raises(CalculationError) as e:
+                dm.execute()
+
+            assert "at least one load is needed" in e.value.message
 
     @pytest.mark.integrationtest
     def test_add_vertical_drain_ScheduleValues_Off(self):
@@ -1726,6 +1729,6 @@ class TestDSettlementModel:
             path = test_output_filepath / "test_acceptance_probabilistic.sli"
             dm.serialize(path)
 
-            # Test run and verify return code of 0 (indicates succesfull run)
-            status = dm.execute()
-            assert status.returncode == 0
+            # Verify successfull run and parsing of output
+            dm.execute()
+            assert isinstance(self.datastructure, DSettlementOutputStructure)

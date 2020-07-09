@@ -2,7 +2,7 @@ import logging
 from enum import Enum
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import Type, Union, Optional
+from typing import Type, Union, Optional, List
 
 from pydantic import BaseModel as DataClass, confloat
 from pydantic import FilePath
@@ -10,6 +10,7 @@ from pydantic import FilePath
 from geolib.geometry import Point
 from geolib.models import BaseModel, BaseModelStructure
 from geolib.models.internal import Bool
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 
 from .dfoundations_parserprovider import DFoundationsParserProvider
@@ -145,6 +146,10 @@ class DFoundationsModel(BaseModel):
         return Path("DFoundationsConsole/DFoundationsConsole.exe")
 
     @property
+    def console_flags(self) -> List[str]:
+        return [CONSOLE_RUN_BATCH_FLAG]
+
+    @property
     def output(self):
         return self.datastructure.dumpfile.dumpfile_output
 
@@ -156,19 +161,6 @@ class DFoundationsModel(BaseModel):
         serializer = DFoundationsInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
         self.filename = filename
-
-    def execute(self, timeout: int = 30) -> Union[CompletedProcess, ValueError]:
-        """Execute a Model and wait for `timeout` seconds."""
-        if self.filename is None:
-            raise ValueError("Set filename or serialize first!")
-        if not self.filename.exists():
-            logging.warning("Serializing before executing.")
-            self.serialize(self.filename)
-        return run(
-            [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
-            timeout=timeout,
-            cwd=self.filename.parent,
-        )
 
     def set_model(
         self,

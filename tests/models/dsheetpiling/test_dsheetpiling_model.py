@@ -155,10 +155,10 @@ class TestDsheetPilingModel:
 
         # 3. Run test.
         df.filename = output_test_file
-        status = df.execute()
+        model = df.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 3. Verify model output can be parsed
+        assert model
 
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
@@ -289,10 +289,10 @@ class TestDsheetPilingModel:
 
         # 3. Run test.
         model.filename = output_test_file
-        status = model.execute()
+        output = model.execute()
 
-        # 4. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 4. Verify model output can be parsed
+        assert output
 
     @pytest.mark.integrationtest
     def test_add_sheet(self):

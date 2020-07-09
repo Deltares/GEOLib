@@ -15,6 +15,8 @@ from geolib import __version__ as version
 from pydantic import BaseSettings, AnyHttpUrl, DirectoryPath
 from pathlib import Path
 
+CONSOLE_RUN_BATCH_FLAG = "/b"
+
 
 class MetaData(BaseSettings):
     """Holds all metadata found in the header of model files.
@@ -33,7 +35,7 @@ class MetaData(BaseSettings):
     project: str = ""
     remarks: str = f"Created by GEOLib {version}"
 
-    endpoint: AnyHttpUrl = "http://localhost:8080/geolib"  # For remote execution
+    endpoint: AnyHttpUrl = "http://localhost:8000/"  # For remote execution
     console_folder: DirectoryPath = Path(".")
 
     class Config:

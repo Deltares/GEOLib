@@ -6,6 +6,7 @@ from tests.utils import TestUtils, only_teamcity
 import geolib as gl
 from geolib.geometry import Point
 from geolib.models.dfoundations import piles, profiles
+from geolib.models.dfoundations.internal import DFoundationsDumpStructure
 from geolib.soils import Soil
 
 
@@ -122,7 +123,7 @@ def test_run_model_from_scratch_expanded():
 
     # 3. Run test.
     df.filename = output_test_file
-    status = df.execute()
+    df.execute()
 
-    # 3. Verify return code of 0 (indicates succesfull run)
-    assert status.returncode == 0
+    # 4. Verify model has run and output has been parsed
+    assert isinstance(df.datastructure, DFoundationsDumpStructure)

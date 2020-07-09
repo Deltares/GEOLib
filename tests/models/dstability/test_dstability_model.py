@@ -123,7 +123,9 @@ class TestDStabilityModel:
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dm.parse(test_filepath)
 
-        test_output_filepath = Path(TestUtils.get_output_test_data_dir("test"))
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dstability")) / "test.stix"
+        )
         dm.serialize(test_output_filepath)
 
         # 2. Verify initial expectations.
@@ -131,10 +133,10 @@ class TestDStabilityModel:
 
         # 3. Run test.
         dm.filename = test_output_filepath
-        status = dm.execute()
+        model = dm.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
-        assert status.returncode == 0
+        # 3. Verify model output has been parsed
+        assert model
 
     @pytest.mark.unittest
     def test_gen_unique_id(self):
@@ -197,8 +199,9 @@ class TestDStabilityModel:
         path = pathlib.Path.cwd() / "test.stix"
         dm.serialize(path)
 
-        status = dm.execute()
-        assert status.returncode == 0
+        # Check for succesfull execution
+        dm.execute()
+        assert dm.datastructure
 
     @pytest.mark.systemtest
     def test_get_stabfactor(self):
@@ -498,6 +501,6 @@ class TestDStabilityModel:
         path = outputdir / "test_state_line.stix"
         dm.serialize(path)
 
-        # Test run and verify return code of 0 (indicates succesfull run)
-        status = dm.execute()
-        assert status.returncode == 0
+        # 3. Verify model output has been parsed
+        model = dm.execute()
+        assert model

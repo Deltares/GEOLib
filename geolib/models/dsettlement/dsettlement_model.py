@@ -11,6 +11,7 @@ from pydantic.types import confloat, constr, PositiveInt, conint
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, MetaData, BaseModelStructure
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil as Soil_Input
 from geolib.soils import DistributionType
 
@@ -73,18 +74,9 @@ class DSettlementModel(BaseModel):
     def console_path(self) -> Path:
         return Path("DSettlementConsole/DSettlementConsole.exe")
 
-    def execute(self, timeout: int = 30) -> Union[CompletedProcess, ValueError]:
-        """Execute a Model and wait for `timeout` seconds."""
-        if self.filename is None:
-            raise ValueError("Set filename or serialize first!")
-        if not self.filename.exists():
-            logging.warning("Serializing before executing.")
-            self.serialize(self.filename)
-        return run(
-            [str(self.meta.console_folder / self.console_path), "/b", str(self.filename)],
-            timeout=timeout,
-            cwd=self.filename.parent,
-        )
+    @property
+    def console_flags(self) -> List[str]:
+        return [CONSOLE_RUN_BATCH_FLAG]
 
     def serialize(self, filename: FilePath):
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
