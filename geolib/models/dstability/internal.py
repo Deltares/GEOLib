@@ -607,13 +607,63 @@ class SoilCollection(DStabilitySubStructure):
         Returns:
             None
         """
-        ps = PersistableSoil()  # create object with default values
-        for k, v in dict(soil).items():  # override default values with those of the soil
-            if snake_to_camel(k) in dict(ps).keys() and v is not None:
-                setattr(ps, snake_to_camel(k), v)
+        ps = soil._to_dstability()
 
         self.Soils.append(ps)
         return ps
+
+    @staticmethod
+    def __to_global_stochastic_parameter(persistable_stochastic_parameter: PersistableStochasticParameter):
+        from geolib.soils import StochasticParameter
+
+        return StochasticParameter(is_probabilistic=persistable_stochastic_parameter.IsProbabilistic,
+                                   mean=persistable_stochastic_parameter.Mean,
+                                   standard_deviation=persistable_stochastic_parameter.StandardDeviation)
+
+    def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
+        from geolib.soils import MohrCoulombParameters, UndrainedParameters, SoilWeightParameters
+
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=
+                                                        self.__to_global_stochastic_parameter(
+                                                            persistable_soil.CohesionStochasticParameter
+                                                        ),
+                                                        friction_angle=
+                                                        self.__to_global_stochastic_parameter(
+                                                            persistable_soil.FrictionAngleStochasticParameter
+                                                        ),
+                                                        dilatancy_angle=
+                                                        self.__to_global_stochastic_parameter(
+                                                            persistable_soil.DilatancyStochasticParameter
+                                                        ),
+                                                        cohesion_and_friction_angle_correlated=
+                                                        persistable_soil.CohesionAndFrictionAngleCorrelated
+                                                        )
+
+        undrained_parameters = UndrainedParameters(shear_strength_ratio=
+                                                   self.__to_global_stochastic_parameter(
+                                                       persistable_soil.ShearStrengthRatioStochasticParameter
+                                                   ),
+                                                   strength_increase_exponent=
+                                                   self.__to_global_stochastic_parameter(
+                                                       persistable_soil.StrengthIncreaseExponentStochasticParameter
+                                                   ),
+                                                   shear_strength_ratio_and_shear_strength_exponent_correlated=
+                                                   persistable_soil.ShearStrengthRatioAndShearStrengthExponentCorrelated
+                                                   )
+
+        soil_weight_parameters = SoilWeightParameters()
+        soil_weight_parameters.saturated_weight.mean = persistable_soil.VolumetricWeightAbovePhreaticLevel
+        soil_weight_parameters.unsaturated_weight.mean = persistable_soil.VolumetricWeightAbovePhreaticLevel
+
+        return Soil(id=persistable_soil.Id,
+               name=persistable_soil.Name,
+               code=persistable_soil.Code,
+               is_probabilistic=persistable_soil.IsProbabilistic,
+               shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value,
+               shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value,
+               mohr_coulomb_parameters=mohr_coulomb_parameters,
+               undrained_parameters=undrained_parameters
+               )
 
     def get_soil(self, code: str) -> Soil:
         """
@@ -627,9 +677,7 @@ class SoilCollection(DStabilitySubStructure):
         """
         for persistable_soil in self.Soils:
             if persistable_soil.Code == code:
-                return Soil(
-                    **{camel_to_snake(k): v for k, v in dict(persistable_soil).items()}
-                )
+                return self.__internal_soil_to_global_soil(persistable_soil)
 
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
 

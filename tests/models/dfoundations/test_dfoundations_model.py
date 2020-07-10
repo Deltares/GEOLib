@@ -54,7 +54,7 @@ from geolib.models.dfoundations.piles import (
     TensionPileLocation,
 )
 from geolib.models.dfoundations.profiles import CPT, Profile, Excavation
-from geolib.soils import Soil
+from geolib.soils import Soil, MohrCoulombParameters
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -178,8 +178,10 @@ class TestDFoundationsModel:
     def test_add_generic_soil(self):
         # 1. Set up test data
         ds = DFoundationsModel()
-        soil = Soil(name="Test Soil", soil_type_nl=3, friction_angle=0.01)
-        soil.soil_parameters.undrained_parameters.undrained_shear_strength = 1000
+
+        mohr_coulomb_parameters = MohrCoulombParameters(friction_angle=0.01)
+        soil = Soil(name="Test Soil", soil_type_nl=3, mohr_coulomb_parameters=mohr_coulomb_parameters)
+        soil.undrained_parameters.undrained_shear_strength = 1000
         output_test_folder = Path(
             TestUtils.get_output_test_data_dir("dfoundations/serialize/")
         )

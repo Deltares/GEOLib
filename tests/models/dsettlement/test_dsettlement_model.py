@@ -55,11 +55,14 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
 from geolib.soils import (
-    DistributionType,
-    PreconType,
+    IsotacheParameters,
+    StateType,
     Soil,
     SoilClassificationParameters,
-    SoilParameters,
+    SoilWeightParameters,
+    DistributionType,
+    Soil,
+    SoilClassificationParameters,
     StochasticParameter,
 )
 
@@ -904,31 +907,30 @@ class TestDSettlementModel:
         ds = self.setup_dsettlement_model()
         # step 2: set up soil inputs
         soil_input = Soil(name="MyNewSoil")
-        soil_input.soil_parameters = SoilParameters()
-        soil_input.soil_parameters.soil_classification_parameters = (
+        soil_input.soil_classification_parameters = (
             SoilClassificationParameters()
         )
-        soil_input.soil_parameters.soil_weight_parameters = (
+        soil_input.soil_weight_parameters = (
             soil_external.SoilWeightParameters()
         )
 
-        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
+        soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=20
         )
-        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
+        soil_input.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
             mean=30
         )
-        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
+        soil_input.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
             mean=0.1
         )
 
-        soil_input.soil_parameters.koppejan_parameters = soil_external.KoppejanParameters(
-            preconkoppejantype=PreconType.PreconsolidationPressure
+        soil_input.koppejan_parameters = soil_external.KoppejanParameters(
+            preconkoppejantype=StateType.YIELD_STRESS
         )
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
+        soil_input.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
             mean=10
         )
         # step 3: run test
@@ -946,10 +948,8 @@ class TestDSettlementModel:
         expected_error_str = "Soil with name MyNewSoil already exists."
         # step 2: set up soil inputs
         soil_input = Soil(name="MyNewSoil")
-        soil_input.soil_parameters = SoilParameters()
         ds.add_soil(soil_input)
         soil_input_second = Soil(name="MyNewSoil")
-        soil_input_second.soil_parameters = SoilParameters()
         # step 3: run test
         with pytest.raises(Exception) as e_info:
             ds.add_soil(soil_input_second)
@@ -1233,11 +1233,12 @@ class TestDSettlementModel:
             b4 = dm.add_boundary([p1, p2, p5, p6])
             b5 = dm.add_boundary([p1, p2, p3, p4, p5, p6])
 
+            soil_weight_parameters = SoilWeightParameters(unsaturated_weight=17,
+                                                          saturated_weight=19.0)
             s1 = dm.add_soil(
                 Soil(
                     name="Sand",
-                    volumetric_weight_above_phreatic_level=17.0,
-                    volumetric_weight_below_phreatic_level=19.0,
+                    soil_weight_parameters=soil_weight_parameters,
                 )
             )
 
@@ -1621,31 +1622,31 @@ class TestDSettlementModel:
             )
 
             soil = Soil(name="Sand")
-            soil.soil_parameters.soil_weight_parameters.saturated_weight.mean = 17
-            soil.soil_parameters.soil_weight_parameters.unsaturated_weight.mean = 15
-            soil.soil_parameters.soil_weight_parameters.saturated_weight.standard_deviation = (
+            soil.soil_weight_parameters.saturated_weight.mean = 17
+            soil.soil_weight_parameters.unsaturated_weight.mean = 15
+            soil.soil_weight_parameters.saturated_weight.standard_deviation = (
                 0.7
             )
-            soil.soil_parameters.soil_weight_parameters.unsaturated_weight.standard_deviation = (
+            soil.soil_weight_parameters.unsaturated_weight.standard_deviation = (
                 0.8
             )
-            soil.soil_parameters.undrained_parameters.vertical_consolidation_coefficient.mean = (
+            soil.undrained_parameters.vertical_consolidation_coefficient.mean = (
                 1.00e-12
             )
-            soil.soil_parameters.undrained_parameters.vertical_consolidation_coefficient.standard_deviation = (
+            soil.undrained_parameters.vertical_consolidation_coefficient.standard_deviation = (
                 5.00e-13
             )
-            soil.soil_parameters.compression_parameters.POP.mean = 5
-            soil.soil_parameters.isotache_parameters.precon_isotache_type = (
-                PreconType.PreoverburdenPressure
+            soil.soil_state.pop_layer.mean = 5
+            soil.isotache_parameters.precon_isotache_type = (
+                StateType.POP
             )
-            soil.soil_parameters.isotache_parameters.reloading_swelling_constant_a = StochasticParameter(
+            soil.isotache_parameters.reloading_swelling_constant_a = StochasticParameter(
                 mean=1.000e-02, standard_deviation=2.500e-03, correlation_coefficient=0.01
             )
-            soil.soil_parameters.isotache_parameters.primary_compression_constant_b = StochasticParameter(
+            soil.isotache_parameters.primary_compression_constant_b = StochasticParameter(
                 mean=1.000e-01, standard_deviation=2.500e-03
             )
-            soil.soil_parameters.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
+            soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
                 mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
             )
             s1 = dm.add_soil(soil)

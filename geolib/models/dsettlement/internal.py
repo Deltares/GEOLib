@@ -10,7 +10,6 @@ from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 from geolib.models.utils import get_required_class_field
 
 from geolib.soils import Soil, DistributionType, HorizontalBehaviourType
-from geolib.soils import PreconType as PreconType_external
 from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.geometry.one import Point
 from geolib.models.base_model_structure import BaseModelStructure

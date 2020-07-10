@@ -17,8 +17,7 @@ import geolib.models.dsettlement.loads as loads
 from geolib.geometry.one import Point
 from geolib.soils import (
     Soil,
-    PreconType,
-    SoilParameters,
+    StateType,
     IsotacheParameters,
     SoilClassificationParameters,
 )
@@ -131,31 +130,30 @@ class TestDSettlementAcceptance:
         # )
 
         soil_input = Soil(name="MyNewSoil")
-        soil_input.soil_parameters = SoilParameters()
-        soil_input.soil_parameters.soil_classification_parameters = (
+        soil_input.soil_classification_parameters = (
             SoilClassificationParameters()
         )
-        soil_input.soil_parameters.soil_weight_parameters = (
+        soil_input.soil_weight_parameters = (
             soil_external.SoilWeightParameters()
         )
 
-        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
+        soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=20
         )
-        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
+        soil_input.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
             mean=30
         )
-        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
+        soil_input.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
             mean=0.1
         )
 
-        soil_input.soil_parameters.koppejan_parameters = soil_external.KoppejanParameters(
-            preconkoppejantype=PreconType.PreconsolidationPressure
+        soil_input.koppejan_parameters = soil_external.KoppejanParameters(
+            preconkoppejantype=StateType.YIELD_STRESS
         )
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        soil_input.soil_parameters.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
+        soil_input.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
             mean=10
         )
 

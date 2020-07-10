@@ -3,12 +3,11 @@ from pathlib import Path
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.soils import (
     Soil,
-    PreconType,
-    SoilParameters,
+    StateType,
     SoilClassificationParameters,
 )
 from geolib.models.dsettlement.internal import DSettlementStructure
-from geolib.models.dsettlement.internal_soil import SoilInternal
+from geolib.models.dsettlement.internal_soil import PreconType
 import geolib.soils as soil_external
 
 
@@ -24,42 +23,39 @@ class TestSoil_Internal:
         assert isinstance(ds.datastructure, DSettlementStructure)
         # 3. Set up second part of test data.
         soil_input = Soil(name="MyNewSoil")
-        soil_input.soil_parameters = SoilParameters()
-        soil_input.soil_parameters.soil_classification_parameters = (
+        soil_input.soil_classification_parameters = (
             SoilClassificationParameters()
         )
-        soil_input.soil_parameters.soil_weight_parameters = (
-            soil_external.SoilWeightParameters()
-        )
-        soil_input.soil_parameters.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
+
+        soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=14
         )
-        soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
+        soil_input.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
             mean=15
         )
-        soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
+        soil_input.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
             mean=0.1
         )
-        soil_input.soil_parameters.koppejan_parameters = soil_external.KoppejanParameters(
-            precon_koppejan_type=PreconType.OverconsolidationRatio
+        soil_input.koppejan_parameters = soil_external.KoppejanParameters(
+            precon_koppejan_type=StateType.OCR
         )
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
         assert (
-            soil_input.soil_parameters.soil_weight_parameters.saturated_weight.mean == 14
+            soil_input.soil_weight_parameters.saturated_weight.mean == 14
         )
         assert (
-            soil_input.soil_parameters.soil_weight_parameters.unsaturated_weight.mean
+            soil_input.soil_weight_parameters.unsaturated_weight.mean
             == 15
         )
         assert (
-            soil_input.soil_parameters.soil_classification_parameters.initial_void_ratio.mean
+            soil_input.soil_classification_parameters.initial_void_ratio.mean
             == 0.1
         )
         assert (
-            soil_input.soil_parameters.koppejan_parameters.precon_koppejan_type
-            == PreconType.OverconsolidationRatio
+            soil_input.koppejan_parameters.precon_koppejan_type
+            == StateType.OCR
         )
         assert soil_input.soil_state.use_equivalent_age
         # 4. Verify expectations.
@@ -73,13 +69,11 @@ class TestSoil_Internal:
         # 2. Verify initial expectations.
         assert default_soil
         # 3. Run test.
-        test_soil = SoilInternal.convert_from_external_to_internal(
-            soil_external=default_soil
-        )
+        test_soil = default_soil._to_dsettlement()
         # 4. Verify final expectations.
         assert test_soil.name == "MyNewSoil"
         assert test_soil.soilgamdry == 15
         assert test_soil.soilgamwet == 14
         assert test_soil.soilinitialvoidratio == 0.1
-        assert test_soil.soilpreconkoppejantype == PreconType.OverconsolidationRatio
+        assert test_soil.soilpreconkoppejantype == PreconType.OCR
         assert test_soil.soiluseequivalentage

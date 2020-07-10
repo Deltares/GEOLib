@@ -74,8 +74,8 @@ def test_run_model_from_scratch_expanded():
 
     soil = Soil()
     soil.name = "test"
-    soil.friction_angle = 20
-    soil.soil_parameters.undrained_parameters.undrained_shear_strength = 20
+    soil.mohr_coulomb_parameters.friction_angle = 20
+    soil.undrained_parameters.undrained_shear_strength = 20
 
     df.add_soil(soil)
 

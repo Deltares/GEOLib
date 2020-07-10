@@ -1,6 +1,6 @@
 import pytest
 from geolib.models.dstability.dstability_model import DStabilityModel
-from geolib.soils import Soil
+from geolib.soils import Soil, MohrCoulombParameters
 
 
 class TestDStabilitySoil:
@@ -18,10 +18,12 @@ class TestDStabilitySoil:
 
     def test_dstability_edit_soil(self):
         dstability_model = DStabilityModel(filename=None)
-        soil_1 = Soil(name="Test", code="Test", cohesion=1.0)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0)
+        soil_1 = Soil(name="Test", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters)
         code = dstability_model.add_soil(soil_1)
+
         dstability_model.edit_soil(code=code, cohesion=2.0, friction_angle=35)
-        assert pytest.approx(dstability_model.soils.get_soil("Test").cohesion, 2.0)
+        assert pytest.approx(dstability_model.soils.get_soil("Test").mohr_coulomb_parameters.cohesion.mean, 2.0)
 
     def test_has_10_default_soils(self):
         dstability_model = DStabilityModel(filename=None)

@@ -85,7 +85,7 @@ class DSettlementModel(BaseModel):
 
     def add_soil(self, soil_input: Soil_Input) -> None:
         """ Soil is converted in the internal structure and added in soil_collection."""
-        soil_new = SoilInternal.convert_from_external_to_internal(soil_input)
+        soil_new = soil_input._to_dsettlement()
         self.datastructure.soil_collection.add_soil_if_unique(soil_new)
 
     # 1.2.3 Models

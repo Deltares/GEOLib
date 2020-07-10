@@ -51,7 +51,7 @@ from geolib.models.dsheetpiling.settings import (
     Side,
 )
 from tests.utils import TestUtils, only_teamcity
-from geolib.soils import Soil
+from geolib.soils import Soil, MohrCoulombParameters
 
 
 class TestDsheetPilingModel:
@@ -505,8 +505,9 @@ class TestDsheetPilingModel:
     def test_add_soil(self):
         # 1. Set up test data
         ds = DSheetPilingModel()
-        soil = Soil(name="Test Soil", soil_type_nl=3, friction_angle=0.01)
-        soil2 = Soil(name="Test Soil 2", soil_type_nl=3, friction_angle=0.01)
+        mohr_coulomb_parameters = MohrCoulombParameters(friction_angle=0.01)
+        soil = Soil(name="Test Soil", soil_type_nl=3, mohr_coulomb_parameters=mohr_coulomb_parameters)
+        soil2 = Soil(name="Test Soil 2", soil_type_nl=3, mohr_coulomb_parameters=mohr_coulomb_parameters)
         output_test_folder = Path(
             TestUtils.get_output_test_data_dir("dsheetpiling/serialize/")
         )
