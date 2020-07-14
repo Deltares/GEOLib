@@ -1,11 +1,14 @@
+from itertools import chain
+from collections import defaultdict
 from datetime import date, datetime
 from enum import Enum
-from typing import List, Optional, Union, Generator
+from typing import List, Optional, Union, Generator, Dict, Tuple
 
 from pydantic import BaseModel as DataClass
-from pydantic import validator, conlist, confloat, ValidationError
+from pydantic import validator, conlist, confloat, ValidationError, root_validator
 from geolib import __version__ as version
 from geolib.models.base_model_structure import BaseModelStructure
+from .utils import children
 from geolib.geometry import Point
 from geolib.soils import Soil
 
@@ -14,6 +17,7 @@ from geolib.utils import snake_to_camel, camel_to_snake
 
 
 BaseModelStructure.Config.arbitrary_types_allowed = True
+BaseModelStructure.Config.validate_on_assignment = True
 DataClass.Config.arbitrary_types_allowed = True
 
 
@@ -403,7 +407,7 @@ class SoilLayerCollection(DStabilitySubStructure):
 
 
 class PersistableSoilCorrelation(DataClass):
-    CorrelatedSoilIds: Optional[List[Optional[str]]]
+    CorrelatedSoilIds: Optional[List[str]]
 
 
 class SoilCorrelation(DStabilitySubStructure):
@@ -613,57 +617,65 @@ class SoilCollection(DStabilitySubStructure):
         return ps
 
     @staticmethod
-    def __to_global_stochastic_parameter(persistable_stochastic_parameter: PersistableStochasticParameter):
+    def __to_global_stochastic_parameter(
+        persistable_stochastic_parameter: PersistableStochasticParameter,
+    ):
         from geolib.soils import StochasticParameter
 
-        return StochasticParameter(is_probabilistic=persistable_stochastic_parameter.IsProbabilistic,
-                                   mean=persistable_stochastic_parameter.Mean,
-                                   standard_deviation=persistable_stochastic_parameter.StandardDeviation)
+        return StochasticParameter(
+            is_probabilistic=persistable_stochastic_parameter.IsProbabilistic,
+            mean=persistable_stochastic_parameter.Mean,
+            standard_deviation=persistable_stochastic_parameter.StandardDeviation,
+        )
 
     def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
-        from geolib.soils import MohrCoulombParameters, UndrainedParameters, SoilWeightParameters
+        from geolib.soils import (
+            MohrCoulombParameters,
+            UndrainedParameters,
+            SoilWeightParameters,
+        )
 
-        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=
-                                                        self.__to_global_stochastic_parameter(
-                                                            persistable_soil.CohesionStochasticParameter
-                                                        ),
-                                                        friction_angle=
-                                                        self.__to_global_stochastic_parameter(
-                                                            persistable_soil.FrictionAngleStochasticParameter
-                                                        ),
-                                                        dilatancy_angle=
-                                                        self.__to_global_stochastic_parameter(
-                                                            persistable_soil.DilatancyStochasticParameter
-                                                        ),
-                                                        cohesion_and_friction_angle_correlated=
-                                                        persistable_soil.CohesionAndFrictionAngleCorrelated
-                                                        )
+        mohr_coulomb_parameters = MohrCoulombParameters(
+            cohesion=self.__to_global_stochastic_parameter(
+                persistable_soil.CohesionStochasticParameter
+            ),
+            friction_angle=self.__to_global_stochastic_parameter(
+                persistable_soil.FrictionAngleStochasticParameter
+            ),
+            dilatancy_angle=self.__to_global_stochastic_parameter(
+                persistable_soil.DilatancyStochasticParameter
+            ),
+            cohesion_and_friction_angle_correlated=persistable_soil.CohesionAndFrictionAngleCorrelated,
+        )
 
-        undrained_parameters = UndrainedParameters(shear_strength_ratio=
-                                                   self.__to_global_stochastic_parameter(
-                                                       persistable_soil.ShearStrengthRatioStochasticParameter
-                                                   ),
-                                                   strength_increase_exponent=
-                                                   self.__to_global_stochastic_parameter(
-                                                       persistable_soil.StrengthIncreaseExponentStochasticParameter
-                                                   ),
-                                                   shear_strength_ratio_and_shear_strength_exponent_correlated=
-                                                   persistable_soil.ShearStrengthRatioAndShearStrengthExponentCorrelated
-                                                   )
+        undrained_parameters = UndrainedParameters(
+            shear_strength_ratio=self.__to_global_stochastic_parameter(
+                persistable_soil.ShearStrengthRatioStochasticParameter
+            ),
+            strength_increase_exponent=self.__to_global_stochastic_parameter(
+                persistable_soil.StrengthIncreaseExponentStochasticParameter
+            ),
+            shear_strength_ratio_and_shear_strength_exponent_correlated=persistable_soil.ShearStrengthRatioAndShearStrengthExponentCorrelated,
+        )
 
         soil_weight_parameters = SoilWeightParameters()
-        soil_weight_parameters.saturated_weight.mean = persistable_soil.VolumetricWeightAbovePhreaticLevel
-        soil_weight_parameters.unsaturated_weight.mean = persistable_soil.VolumetricWeightAbovePhreaticLevel
+        soil_weight_parameters.saturated_weight.mean = (
+            persistable_soil.VolumetricWeightAbovePhreaticLevel
+        )
+        soil_weight_parameters.unsaturated_weight.mean = (
+            persistable_soil.VolumetricWeightAbovePhreaticLevel
+        )
 
-        return Soil(id=persistable_soil.Id,
-               name=persistable_soil.Name,
-               code=persistable_soil.Code,
-               is_probabilistic=persistable_soil.IsProbabilistic,
-               shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value,
-               shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value,
-               mohr_coulomb_parameters=mohr_coulomb_parameters,
-               undrained_parameters=undrained_parameters
-               )
+        return Soil(
+            id=persistable_soil.Id,
+            name=persistable_soil.Name,
+            code=persistable_soil.Code,
+            is_probabilistic=persistable_soil.IsProbabilistic,
+            shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value,
+            shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value,
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
+            undrained_parameters=undrained_parameters,
+        )
 
     def get_soil(self, code: str) -> Soil:
         """
@@ -781,7 +793,7 @@ class ProjectInfo(DStabilitySubStructure):
 
     @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
     def nltime(cls, datestring):
-        if datestring:
+        if isinstance(datestring, str):
             position = datestring.index(max(datestring.split("-"), key=len))
             if position > 0:
                 date = datetime.strptime(datestring, "%d-%M-%Y").date()
@@ -1580,7 +1592,7 @@ class DStabilityStructure(BaseModelStructure):
     The List[] items (one for each stage in the model) will be stored in a subfolder
     to multiple json files. Where the first (0) instance
     has no suffix, but the second one has (1 => _1) etc.
-    
+
     also parses the outputs which are part of the json files
     """
 
@@ -1640,23 +1652,147 @@ class DStabilityStructure(BaseModelStructure):
     bishop_reliability_results: List[BishopReliabilityResult] = []
     bishop_results: List[BishopResult] = []
 
-    def get_unique_id(self) -> int:
-        def recursive_items(dictionary) -> Generator:
-            print(dictionary)
-            for key, value in dictionary.items():
-                if isinstance(value, dict):
-                    yield from recursive_items(value)
-                elif isinstance(value, list):
-                    for item in value:
-                        if isinstance(item, dict):
-                            yield from recursive_items(item)
-                        else:
-                            yield item
-                else:
-                    if key == "Id":
-                        yield value
+    class Config:
+        arbitrary_types_allowed = True
+        validate_assignment = True
 
-        ids = recursive_items(self.dict())
+    @root_validator(skip_on_failure=True, allow_reuse=True)
+    def ensure_validaty_foreign_keys(cls, values):
+        """TODO Include more fk relations, left for another issue."""
+        for i, stage in enumerate(values.get("stages")):
+            if not values.get("stages")[i].GeometryId == values.get("geometries")[i].Id:
+                raise ValueError("Ids not linked!")
+        return values
+
+    @property
+    def stage_specific_fields(self):
+        return [
+            "waternets",
+            "waternetcreatorsettings",
+            "states",
+            "statecorrelations",
+            "stages",
+            "soillayers",
+            "reinforcements",
+            "loads",
+            "decorations",
+            "calculationsettings",
+            "geometries",
+        ]
+
+    def get_stage_specific_fields(self, stage=0) -> Tuple[str, DStabilitySubStructure]:
+        """Yield stage specific fields for given stage."""
+        for fieldname in self.stage_specific_fields:
+            field = getattr(self, fieldname)
+            if len(field) > stage:
+                yield fieldname, field[stage]
+
+    def renumber_fk_fields(self, instance, mapping: Dict, unique_id: int) -> int:
+        """Replace id (foreign key) fields on instance based on a mapping and unique id."""
+        fk = ForeignKeys()
+        fkfields = fk.class_fields
+
+        def get_correct_key(key, mapping):
+            if key not in mapping:
+                nonlocal unique_id
+                mapping[key] = unique_id
+                unique_id += 1
+            return mapping[key]
+
+        for fkfield in fkfields.get(instance.__class__.__name__, []):
+            value = getattr(instance, fkfield)
+            if isinstance(value, (list, set, tuple)):
+                setattr(
+                    instance, fkfield, [get_correct_key(x, mapping) for x in value],
+                )
+            if isinstance(value, (int, float, str)):
+                setattr(instance, fkfield, get_correct_key(value, mapping))
+
+        return unique_id
+
+    def duplicate_stage(
+        self, current_stage: int, label: str, notes: str, unique_start_id: int
+    ):
+        """Duplicates an existing stage.
+        Copies the specific stage fields for a stage and renumbers all Ids, 
+        taking into account foreign keys by using the same renumbering.
+        """
+
+        old_to_new = {}
+        for fieldname, stagefield in self.get_stage_specific_fields(current_stage):
+            newstagefield = stagefield.copy(deep=True)
+
+            # Renumber the upper class
+            unique_start_id = self.renumber_fk_fields(
+                newstagefield, old_to_new, unique_start_id
+            )
+            # Renumber all children
+            for classinstance in children(newstagefield):
+                unique_start_id = self.renumber_fk_fields(
+                    classinstance, old_to_new, unique_start_id
+                )
+
+            # Update the stage with extra supplied fields
+            if fieldname == "stages":
+                newstagefield.Label = label
+                newstagefield.Notes = notes
+
+            getattr(self, fieldname).append(newstagefield)
+
+        return len(self.stages) - 1, unique_start_id
+
+    def add_default_stage(self, label: str, notes: str, unique_start_id=500) -> int:
+        """Add a new default (empty) stage to DStability."""
+        self.waternets += [Waternet(Id=str(unique_start_id + 1))]
+        self.waternetcreatorsettings += [
+            WaternetCreatorSettings(Id=str(unique_start_id + 2))
+        ]
+        self.states += [State(Id=str(unique_start_id + 3))]
+        self.statecorrelations += [StateCorrelation(Id=str(unique_start_id + 4))]
+        self.stages += [
+            Stage(
+                CalculationSettingsId=str(unique_start_id + 10),
+                DecorationsId=str(unique_start_id + 9),
+                GeometryId=str(unique_start_id + 8),
+                Id=str(unique_start_id),
+                Label=label,
+                LoadsId=str(unique_start_id + 7),
+                Notes=notes,
+                ReinforcementsId=str(unique_start_id + 6),
+                SoilLayersId=str(unique_start_id + 5),
+                StateId=str(unique_start_id + 3),
+                StateCorrelationsId=str(unique_start_id + 4),
+                WaternetCreatorSettingsId=str(unique_start_id + 2),
+                WaternetId=str(unique_start_id + 1),
+            )
+        ]
+        self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
+        self.soilcorrelation: SoilCorrelation = SoilCorrelation()
+        self.reinforcements += [Reinforcements(Id=str(unique_start_id + 6))]
+        self.loads += [Loads(Id=str(unique_start_id + 7))]
+        self.decorations += [Decorations(Id=str(unique_start_id + 9))]
+        self.calculationsettings += [CalculationSettings(Id=str(unique_start_id + 10))]
+        self.geometries += [Geometry(Id=str(unique_start_id + 8))]
+
+        return len(self.stages) - 1, unique_start_id + 11
+
+    def get_unique_id(self) -> int:
+        """Return unique id that can be used in DStability.
+        Finds all existing ids, takes the max and does +1.
+        """
+
+        fk = ForeignKeys()
+        classfields = fk.class_fields
+
+        ids = []
+        for instance in children(self):
+            for field in classfields.get(instance.__class__.__name__, []):
+                value = getattr(instance, field)
+                if isinstance(value, (list, set, tuple)):
+                    ids.extend(value)
+                if isinstance(value, (int, float, str)):
+                    ids.append(value)
+
         new_id = max({int(id) for id in ids if id is not None}) + 1
         return new_id
 
@@ -1751,37 +1887,62 @@ class DStabilityStructure(BaseModelStructure):
         return result_types_mapping[analysis_type]["non_probabilistic"]
 
 
-mapping = {
-    # I've ignored waternetcreatorsettings in here.
-    "Waternet.Id": ("Stage.WaternetId",),
-    # Head line
-    "PersistableHeadLine.Id": (
-        "PersistableReferenceLine.BottomHeadLineId",
-        "PersistableReferenceLine.TopHeadLineId",
-    ),
-    "PersistableReferenceLine.Id": ("Waternet.PhreaticLineId",),
-    # Layer
-    "Layer.Id": (
-        "PersistableStatePoint.LayerId",
-        "PersistableSoilLayer.LayerId",
-        "PersistableConsolidation.LayerId",
-        "PersistableLayerLoad.LayerId",
-        "PersistableBerm.AddedLayerId",  #  check this one
-    ),
-    # Soil
-    "PersistableSoil.Id": (
-        "PersistableSoilVisualization.SoilId",
-        "PersistableSoilLayer.SoilId",
-        "CorrelatedSoilIds.CorrelatedSoilIds",
-    ),
-    "CalculationSettings.Id": ("Stage.CalculationSettingsId",),
-    "Decorations.Id": ("Stage.DecorationsId",),
-    "Geometry.Id": ("Stage.GeometryId",),
-    "Loads.Id": ("Stage.LoadsId",),
-    "Reinforcements.Id": ("Stage.ReinforcementsId",),
-    "Result.Id": ("Stage.ResultId",),  # nice way of looking up actual results
-    "SoilLayers.Id": ("Stage.SoilLayersId",),
-    "StateCorrelations.Id": ("Stage.StateCorrelationsId",),
-    "State.Id": ("Stage.StateId",),
-    "WaternetCreatorSettings.Id": ("Stage.WaternetCreatorSettingsId",),
-}
+class ForeignKeys(DataClass):
+    """A dataclass that store the connections between the
+    various unique Ids used in DStability. These can be seen
+    as (implicit) foreign keys.
+    """
+
+    mapping: Dict[str, Tuple[str]] = {
+        "Waternet.Id": ("Stage.WaternetId",),
+        "PersistableHeadLine.Id": (
+            "PersistableReferenceLine.BottomHeadLineId",
+            "PersistableReferenceLine.TopHeadLineId",
+        ),
+        "PersistableReferenceLine.Id": ("Waternet.PhreaticLineId",),
+        "PersistableLayer.Id": (
+            "PersistableStatePoint.LayerId",
+            "PersistableSoilLayer.LayerId",
+            "PersistableConsolidation.LayerId",
+            "PersistableLayerLoad.LayerId",
+            "PersistableBerm.AddedLayerId",
+            "WaternetCreatorSettings.AquiferInsideAquitardLayerId",
+            "WaternetCreatorSettings.AquiferLayerId",
+        ),
+        # Soil commented out for now, isn't used in stages
+        # "PersistableSoil.Id": (
+        #     "PersistableSoilVisualization.SoilId",
+        #     "PersistableSoilLayer.SoilId",
+        #     "PersistableSoilCorrelation.CorrelatedSoilIds",
+        #     "PersistableNailPropertiesForSoil.SoilId",
+        #     "PersistableSoilContribution.SoilId"
+        # ),
+        "CalculationSettings.Id": ("Stage.CalculationSettingsId",),
+        "Decorations.Id": ("Stage.DecorationsId",),
+        "Geometry.Id": ("Stage.GeometryId",),
+        "Loads.Id": ("Stage.LoadsId",),
+        "Reinforcements.Id": ("Stage.ReinforcementsId",),
+        "Result.Id": ("Stage.ResultId",),
+        "SoilLayerCollection.Id": ("Stage.SoilLayersId",),
+        "StateCorrelation.Id": ("Stage.StateCorrelationsId",),
+        "State.Id": ("Stage.StateId",),
+        "WaternetCreatorSettings.Id": ("Stage.WaternetCreatorSettingsId",),
+        "Stage.Id": ("PersistableStageContribution.StageId",),
+        "PersistableStateLinePoint.Id": (
+            "PersistableStateCorrelation.CorrelatedStateIds",
+            "PersistableStateLinePointContribution.StateLinePointId",
+        ),
+        "PersistableStatePoint.Id": ("PersistableStatePointContribution.StatePointId",),
+    }
+
+    @property
+    def class_fields(self) -> Dict[str, List[str]]:
+        """Return a mapping in the form:
+            classname: [fields]
+        """
+        id_keys = chain(*((k, *v) for k, v in self.mapping.items()))
+        class_fields = defaultdict(list)
+        for id_key in id_keys:
+            classname, fieldname = id_key.split(".")
+            class_fields[classname].append(fieldname)
+        return class_fields

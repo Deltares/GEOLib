@@ -33,6 +33,7 @@ from .internal import (
     UpliftVanSlipCircleResult,
     Waternet,
     PersistablePoint,
+    Stage,
 )
 
 from .states import DStabilityStatePoint, DStabilityStateLinePoint
@@ -170,7 +171,7 @@ class DStabilityModel(BaseModel):
 
         Returns:
             dict: dictionary of the available slip planes per model for the given stage
-        
+
         Raises:
             ValueError: Result is not available for provided stage id
             AttributeError: When the result has no slipplane. Try get the slipcircle
@@ -187,8 +188,51 @@ class DStabilityModel(BaseModel):
         serializer.write(location)
         self.filename = location
 
-    def add_stage(self, label: str, notes: str, copy=True, set_current=True) -> int:
-        """Add a new stage to the model. Copies current stage if copy is True. Returns a unique id."""
+    def add_stage(self, label: str, notes: str, set_current=True) -> int:
+        """Add a new stage to the model.
+
+        Args:
+            label: Label for the stage
+            notes: Notes for the stage
+            set_current: Whether to make the new stage the current stage.
+
+        Returns:
+            the id of the new stage
+        """
+        new_id = self._get_next_id()
+        new_stage_id, new_unique_id = self.datastructure.add_default_stage(
+            label, notes, new_id
+        )
+
+        if set_current:
+            self.current_stage = new_stage_id
+        self.current_id = new_unique_id
+        return new_stage_id
+
+    def copy_stage(self, label: str, notes: str, set_current=True) -> int:
+        """Copy an existing stage and add it to the model.
+
+        Args:
+            label: Label for the stage
+            notes: Notes for the stage
+            set_current: Whether to make the new stage the current stage.
+
+        Returns:
+            the id of the new stage
+        """
+        new_id = self._get_next_id()
+        new_stage_id, new_unique_id = self.datastructure.duplicate_stage(
+            self.current_stage, label, notes, new_id
+        )
+
+        if set_current:
+            self.current_stage = new_stage_id
+        self.current_id = new_unique_id
+        return new_stage_id
+
+    @property
+    def stages(self) -> List[Stage]:
+        return self.datastructure.stages
 
     def add_point(self, point: Point, stage=None) -> int:
         """Add point, which should be unique in the model and return the created point id.
@@ -507,7 +551,9 @@ class DStabilityModel(BaseModel):
         else:
             raise ValueError(f"No soil layers found found for stage id {stage_id}")
 
-    def _get_default_consolidations(self, stage_id: int, exclude_soil_layer_id: Optional[int] = None) -> List[Consolidation]:
+    def _get_default_consolidations(
+        self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
+    ) -> List[Consolidation]:
         """Length of the consolidations is equal to the amount of soil layers.
         
         If exclude_soil_layer_id is provided, that specific soil layer id is not included in the consolidations.

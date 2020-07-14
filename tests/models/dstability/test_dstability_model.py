@@ -138,6 +138,50 @@ class TestDStabilityModel:
         # 3. Verify model output has been parsed
         assert model
 
+    @pytest.mark.integrationtest
+    def test_add_default_stage(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        # Test
+        new_stage_id = dm.add_stage("new stage", "")
+
+        # Assert new stage has default (empty geometry)
+        assert new_stage_id == 1
+        assert len(dm.stages) == 2
+        assert len(dm.datastructure.geometries[-1].Layers) == 0
+
+    @pytest.mark.integrationtest
+    def test_copy_stage(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        # Test
+        new_stage_id = dm.copy_stage("new stage", "")
+
+        # Assert new stage has default (empty geometry)
+        assert new_stage_id == 1
+        assert len(dm.stages) == 2
+        assert len(dm.datastructure.geometries[-1].Layers) == 1
+
     @pytest.mark.unittest
     def test_gen_unique_id(self):
         """This test will fail when we've added new default

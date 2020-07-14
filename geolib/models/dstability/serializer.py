@@ -32,7 +32,7 @@ class DStabilityBaseSerializer(BaseSerializer, metaclass=ABCMeta):
                 serialized_datastructure[folder] = {}
 
                 for i, data in enumerate(getattr(self.ds, field)):
-                    suffix = f"_i" if i > 0 else ""
+                    suffix = f"_{i}" if i > 0 else ""
                     fn = element_type.structure_name() + suffix + ".json"
                     serialized_datastructure[folder][fn] = data.json(indent=4)
 

@@ -28,7 +28,7 @@ class BaseModel(DataClass, abc.ABC):
     datastructure: Optional[Type[BaseModelStructure]]
     meta: MetaData = MetaData()
 
-    def execute(self, timeout_in_seconds: int = 2 * 60) -> "BaseModel":
+    def execute(self, timeout_in_seconds: int = 5 * 60) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds."""
         if self.filename is None:
             raise ValueError("Set filename or serialize first!")
