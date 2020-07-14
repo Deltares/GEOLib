@@ -79,6 +79,13 @@ class DSettlementModel(BaseModel):
         return [CONSOLE_RUN_BATCH_FLAG]
 
     def serialize(self, filename: FilePath):
+        """
+        Serialize and pre-process
+        Args:
+            filename:
+        """
+        self.datastructure.geometry_data.pre_process()
+
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
         self.filename = filename
@@ -276,7 +283,6 @@ class DSettlementModel(BaseModel):
     def add_boundary(
         self,
         points: List[Point],
-        twod=True,
         use_probabilistic_defaults=True,
         stdv=0,
         distribution_boundaries=DistributionType.Undefined,

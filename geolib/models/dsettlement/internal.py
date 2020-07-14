@@ -419,6 +419,9 @@ class GeometryData(DSeriesStructure):
                     layer.boundary_top = i
                 if layer.boundary_bottom == boundary.id:
                     layer.boundary_bottom = i
+
+            if boundary.id != i:
+                logging.warning(f"Boundary id {boundary.id} has changed to {i} in sorting process")
             boundary.id = i
 
     def sort_probabilistic_list_based_on_new_indexes(self):
@@ -433,6 +436,10 @@ class GeometryData(DSeriesStructure):
         self.distribution_boundaries.distributionboundaries = self.sort_based_on_new_indexes(
             new_indexes, self.distribution_boundaries.distributionboundaries,
         )
+
+    def pre_process(self):
+        self.sort_boundaries()
+        self.sort_probabilistic_list_based_on_new_indexes()
 
     def create_list_of_indexes(self) -> List:
         return [boundary.id for boundary in self.boundaries.boundaries]

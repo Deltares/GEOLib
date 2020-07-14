@@ -9,7 +9,7 @@ from warnings import warn
 import pydantic
 import pytest
 from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils
+from tests.utils import TestUtils, only_teamcity
 
 from pydantic.color import Color
 
@@ -130,12 +130,8 @@ class TestDSettlementAcceptance:
         # )
 
         soil_input = Soil(name="MyNewSoil")
-        soil_input.soil_classification_parameters = (
-            SoilClassificationParameters()
-        )
-        soil_input.soil_weight_parameters = (
-            soil_external.SoilWeightParameters()
-        )
+        soil_input.soil_classification_parameters = SoilClassificationParameters()
+        soil_input.soil_weight_parameters = soil_external.SoilWeightParameters()
 
         soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=20
@@ -414,7 +410,6 @@ class TestDSettlementAcceptance:
     @pytest.mark.systemtest
     def test_set_model(self):
         # koppejan, natural strain, darcy, vertical drains
-
         dm = DSettlementModel()
 
         dm.set_model(
@@ -570,3 +565,77 @@ class TestDSettlementAcceptance:
 
         path = self.outputdir / "test_other_load.sli"
         dm.serialize(path)
+
+    @pytest.mark.acceptance
+    @pytest.mark.xfail  #   Wrong soils for now
+    @only_teamcity
+    def test_sorting_vertical_layer_boundaries(self):
+        """
+        Test sorting boundaries with 2 vertical layer boundaries
+        Returns:
+
+        """
+
+        points = [
+            Point(x=-50, z=-10),  # 0
+            Point(x=50, z=-10),  # 1
+            Point(x=-50, z=0.0),  # 2
+            Point(x=0, z=0.0),  # 3
+            Point(x=0.0, z=-10.0),  # 4
+            Point(x=-50, z=-20),  # 5
+            Point(x=50, z=-20),  # 6
+            Point(x=50, z=0.0),  # 7
+        ]
+
+        dm = DSettlementModel()
+
+        for soil in self.soils:
+            dm.add_soil(soil)
+
+        pl_id = dm.add_head_line(points=[points[0], points[1]], is_phreatic=True)
+
+        b1 = dm.add_boundary(points=[points[0], points[4], points[1]])
+        b2 = dm.add_boundary(points=[points[2], points[3], points[7]])
+        b3 = dm.add_boundary(points=[points[0], points[4], points[3], points[7]])
+        b4 = dm.add_boundary(points=[points[5], points[6]])
+
+        l1 = dm.add_layer(
+            material_name="Sand",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b1,
+            boundary_bottom=b4,
+        )
+
+        l2 = dm.add_layer(
+            material_name="Clay",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b3,
+            boundary_bottom=b1,
+        )
+
+        l3 = dm.add_layer(
+            material_name="peat",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b2,
+            boundary_bottom=b3,
+        )
+
+        dm.set_verticals(locations=[Point(x=-10), Point(x=0), Point(x=10)])
+
+        dm.add_other_load(
+            name="rectangle",
+            time=timedelta(days=100),
+            point=Point(x=-5.0, y=-5.0, z=0.0),
+            other_load=RectangularLoad(weight=25, alpha=0, xwidth=5.0, zwidth=10.0),
+        )
+
+        # For manual checks
+        path = self.outputdir / "test_sort_vertical_layer_boundaries.sli"
+        dm.serialize(path)
+
+        # Verify geometry is correct and we can parse output
+        dm.execute()  # will raise on execution error
+        assert dm.datastructure
