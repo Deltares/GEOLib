@@ -1,11 +1,16 @@
 import logging
-from typing import Tuple, List, Dict
+import re
+from typing import Tuple, List, Dict, Any, get_type_hints
+from geolib.errors import ParserError
 from geolib.models.dseries_parser import (
     DSeriesStructure,
+    DSeriesInlineProperties,
     DSeriesUnmappedNameProperties,
     DSeriesRepeatedGroupsWithInlineMappedProperties,
+    DSeriesWrappedTableStructure,
     DSerieParser,
     get_line_property_value,
+    DSerieListStructure,
 )
 
 
@@ -55,3 +60,59 @@ class DSheetpilingSurchargeLoad(DSeriesRepeatedGroupsWithInlineMappedProperties)
         generated_dict["name"] = name_field
         generated_dict["points"] = generated_dict.pop("point", [])
         return generated_dict
+
+
+class DSheetpilingWithNumberOfRowsTable(DSeriesWrappedTableStructure):
+    @classmethod
+    def parse_text(cls, text):
+        """These sort of tables contain the number of lines in the first row
+        the rest of its structure is similar to DSeriesWrappedTableStructure.
+
+        Args:
+            text (str): Full contains containing table structure and values.
+
+        Returns:
+            DSeriesStructure: Fully parsed structure.
+        """
+        splitted_text = text.split("\n")
+        # Skip validating for now.
+        splitted_text.pop(0)
+        return super().parse_text("\n".join(splitted_text))
+
+
+class DSheetpilingUnwrappedTable(DSeriesStructure):
+    @classmethod
+    def parse_text(cls, text):
+        lines = text.split("\n")
+        nrow = int(lines.pop(0).split()[0])
+        # Remove the line with the column names.
+        lines.pop(0)
+        # Count the rest of the lines.
+        if not nrow == len(lines):
+            raise ParserError(
+                f"Error parsing for {cls}, header indicates {nrow} lines, while there are {len(lines)} lines."
+            )
+
+        return cls(**{cls.__name__.lower(): lines})
+
+
+class DSheetpilingTableEntry(DSeriesStructure):
+    """Parses a table entry where the latest column is actually a name (which can be composed by a few strings.)
+    E.g.:
+        Nr        Level        E-mod     Cross sect.    Length     YieldF   Side 
+        1 -10.00  2.100E+0008  1.000E-0004  10.00 500.00 -30  0.00 2 Strut
+    """
+
+    @classmethod
+    def parse_text(cls, text):
+        values = [value for value in text.split() if value]
+        # Remove the first value (it's just the line number)
+        values.pop(0)
+        number_of_fields = len(get_type_hints(cls))
+        name_field = " ".join(
+            name_value for name_value in values[number_of_fields - 1 :] if name_value
+        )
+        rest_fields = values[0 : number_of_fields - 1]
+        rest_fields.insert(0, name_field)
+
+        return cls(**dict(zip(get_type_hints(cls).keys(), rest_fields)))

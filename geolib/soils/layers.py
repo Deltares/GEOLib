@@ -16,7 +16,7 @@ class CPT(DataModel):
     """Internal Placeholder CPT measurements as used in D-Foundations/D-Sheetpiling.
 
     It is here because input files can contain CPTs coupled to a Profile.
-    
+
     .. todo::
         Add Friction and other parameters?
     """
@@ -32,11 +32,10 @@ class CPTRule(DataModel):
 class ProfileLayer(DataModel):
     """Layer in a Profile. Note that we add the vertical location of
     the layer with a Point class.
-    
-    .. todo::
-        Will the ocr be added to the Soil class?
 
-        Decouple pore_pressures into special Class/Line
+    .. todo::
+        * Will the ocr be added to the Soil class?
+        * Decouple pore_pressures into special Class/Line
     """
 
     top: Point
@@ -49,13 +48,9 @@ class ProfileLayer(DataModel):
 
 class Profile(DataModel):
     """D-Foundations Profile.
-    
+
     .. todo::
-        Determine extra fields related to Excavations
-
-        Do we want a Profile class? Or an add layer class as with 2D models.
-
-        Unify this approach.
+        * Determine extra fields related to Excavations
 
     """
 

@@ -5,53 +5,92 @@ from typing import List, Type
 
 import pytest
 from teamcity import is_running_under_teamcity
+from tests.utils import TestUtils, only_teamcity
 
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
-    StandardCalculationOptions,
     CalculationOptions,
+    CalculationOptionsPerStage,
     DesignSheetpilingLengthCalculationOptions,
-    VerifyCalculationOptions,
     KranzAnchorStrengthCalculationOptions,
     OverallStabilityCalculationOptions,
     ReliabilityAnalysisCalculationOptions,
-    CalculationOptionsPerStage,
-)
-from geolib.models.dsheetpiling.dsheetpiling_model import (
-    DSheetPilingModel,
-    SheetModelType,
-    WoodenSheetPileModelType,
-    SinglePileModelType,
-    DiaphragmModelType,
-)
-from geolib.models.dsheetpiling.internal import (
-    DSheetPilingInputStructure,
-    DSheetPilingOutputStructure,
-    DSheetPilingStructure,
-    DSheetPilingDumpStructure,
+    StandardCalculationOptions,
+    VerifyCalculationOptions,
 )
 from geolib.models.dsheetpiling.constructions import (
     DiaphragmWall,
+    DiaphragmWallProperties,
     Pile,
+    PileProperties,
     Sheet,
     SheetPileProperties,
-    PileProperties,
-    DiaphragmWallProperties,
 )
-from geolib.models.dsheetpiling.water_level import WaterLevel
-from geolib.models.dsheetpiling.supports import Anchor, Strut
+from geolib.models.dsheetpiling.dsheetpiling_model import (
+    DiaphragmModelType,
+    DSheetPilingModel,
+    SheetModelType,
+    SinglePileModelType,
+    WoodenSheetPileModelType,
+)
+from geolib.models.dsheetpiling.internal import (
+    DSheetPilingDumpStructure,
+    DSheetPilingInputStructure,
+    DSheetPilingOutputStructure,
+    DSheetPilingStructure,
+    SurchargePoint,
+)
+from geolib.models.dsheetpiling.loads import (
+    HorizontalLineLoad,
+    LoadTypeFavourableUnfavourable,
+    LoadTypePermanentVariable,
+    Moment,
+    NormalForce,
+    SurchargeLoad,
+    UniformLoad,
+    VerificationLoadSettings,
+    VerificationLoadSettingsHorizontalLineLoad,
+)
+from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
-    LateralEarthPressureMethod,
-    ModelType,
     CalculationType,
-    VerifyType,
+    CurveSettings,
+    DistributionType,
+    LateralEarthPressureMethod,
+    LateralEarthPressureMethodStage,
+    ModelType,
+    ModulusReactionType,
+    ModulusSubgradeReaction,
     PartialFactorCalculationType,
     PartialFactorSetEC7NADNL,
+    PassiveSide,
+    SheetPilingElementMaterialType,
     Side,
+    VerifyType,
 )
-from tests.utils import TestUtils, only_teamcity
-from geolib.soils import Soil, MohrCoulombParameters
+from geolib.models.dsheetpiling.supports import (
+    Anchor,
+    RigidSupport,
+    SpringSupport,
+    Strut,
+    SupportType,
+)
+from geolib.models.dsheetpiling.surface import Surface
+from geolib.models.dsheetpiling.water_level import WaterLevel
+from geolib.soils import MohrCoulombParameters, Soil
+
+
+@pytest.fixture
+def model() -> DSheetPilingModel:
+    model = DSheetPilingModel()
+    model.add_stage(
+        name="Initial stage",
+        passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+        method_left=LateralEarthPressureMethodStage.KA_KO_KP,
+        method_right=LateralEarthPressureMethodStage.KA_KO_KP,
+    )
+    return model
 
 
 class TestDsheetPilingModel:
@@ -137,7 +176,7 @@ class TestDsheetPilingModel:
         if errors:
             pytest.fail(f"Failed with the following {errors}")
 
-    @pytest.mark.systemtest
+    @pytest.mark.acceptance
     @only_teamcity
     def test_execute_console_successfully(self):
         # 1. Set up test data.
@@ -155,10 +194,10 @@ class TestDsheetPilingModel:
 
         # 3. Run test.
         df.filename = output_test_file
-        model = df.execute()
+        df.execute()
 
-        # 3. Verify model output can be parsed
-        assert model
+        # 3. Verify return code of 0 (indicates succesfull run)
+        assert df.datastructure
 
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
@@ -169,152 +208,37 @@ class TestDsheetPilingModel:
         with pytest.raises(Exception):
             assert df.execute()
 
-    @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
-        "modeltype,first_sheet,second_sheet",
+        "reverse_elements",
         [
-            pytest.param(
-                SheetModelType(),
-                SheetModelType(
-                    name="First inputted pile",
-                    sheet_pile_properties=SheetPileProperties(section_bottom_level=-2),
-                ),
-                SheetModelType(
-                    name="Second inputted pile",
-                    sheet_pile_properties=SheetPileProperties(section_bottom_level=-7),
-                ),
-                id="Sheetpile",
-            ),
-            pytest.param(
-                DiaphragmModelType(),
-                DiaphragmModelType(
-                    name="First inputted pile",
-                    sheet_pile_properties=DiaphragmWallProperties(
-                        section_bottom_level=-2
-                    ),
-                ),
-                DiaphragmModelType(
-                    name="Second inputted pile",
-                    sheet_pile_properties=DiaphragmWallProperties(
-                        section_bottom_level=-7
-                    ),
-                ),
-                id="Diaphragm wall",
-            ),
+            pytest.param(True, id="Reverse elements"),
+            pytest.param(False, id="Don't reverse elements"),
         ],
     )
-    @pytest.mark.xfail(reason="Can't work yet.")
-    def test_run_sheet_model_from_scratch(self, modeltype, first_sheet, second_sheet):
-        """
-        Model is a 3 staged model with an excavation to the left.
-        """
-        # 0. Set up test data.
-        model = DSheetPilingModel()
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
-        output_test_file = output_test_folder / "acceptance_from_scratch.shi"
-
-        # 1. Build model.
-        model.set_model(modeltype)
-
-        # Add construction.
-        location_top = Point(x=0, z=1)
-        model.add_sheet(sheet=first_sheet, location_top=location_top)
-        model.add_sheet(sheet=second_sheet)
-
-        # Add soil
-        soil = Soil(name="Test Soil", soil_type_nl=3, friction_angle=0.01)
-        new_soil = model.add_soil(soil)
-
-        # Add general calculation options for model
-        calc_options = VerifyCalculationOptions(
-            input_calculation_type=CalculationType.VERIFY_SHEETPILING,
-            verify_type=VerifyType.EC7NL,
-            ec7_nl_method=PartialFactorCalculationType.METHODB,
-        )
-        model.set_calculation_options(calculation_options=calc_options)
-        calc_options_per_stage = CalculationOptionsPerStage(
-            anchor_factor=1.5, partial_factor_set=settings.PartialFactorSetEC7NADNL.RC2
-        )
-
-        # Add 1st stage.
-        profile = Profile()
-        left_initial_surface: List[Point] = [Point(x=0, z=0)]
-        right_initial_surface: List[Point] = [Point(x=0, z=0)]
-        intial_water_level = WaterLevel(name="Intitial water level", level=-2)
-
-        model.add_stage(name="Intial situation")
-        model.add_profile(left=profile, right=profile)
-        model.add_surface(left=left_initial_surface, right=right_initial_surface)
-        model.add_head_line(left=intial_water_level, right=intial_water_level)
-        model.add_calculation_options_per_stage(
-            calculation_options_per_stage=calc_options_per_stage
-        )
-
-        # Add 2nd stage.
-        half_excavated_surface: List[Point] = [Point(x=0, z=-5)]
-        halfway_water_level = WaterLevel(name="Halfway water level", level=-7)
-        anchor = Anchor(name="Grout anchor", level=-2, side=Side.RIGHT)
-
-        model.add_stage(name="Halfway through excavation")
-        model.add_profile(left=profile, right=profile)
-        model.add_surface(left=half_excavated_surface, right=right_initial_surface)
-        model.add_head_line(left=halfway_water_level, right=intial_water_level)
-        model.add_support(support=anchor)
-        model.add_calculation_options_per_stage(
-            calculation_options_per_stage=calc_options_per_stage
-        )
-
-        # Add 3th stage.
-        right_final_surface: List[Point] = [Point(x=0, y=-10)]
-        final_water_level = WaterLevel(
-            name="After dry pumping", level=-12
-        )  # Model a dry cofferdam by setting water level lower than the surface.
-        floor = Strut(name="Concrete floor", level=-10, side=Side.LEFT)
-
-        model.add_stage(name="Final situation")
-        model.add_surface(left=left_initial_surface, right=right_final_surface)
-        model.add_head_line(left=final_water_level, right=intial_water_level)
-        model.add_support(support=floor)
-        model.add_calculation_options_per_stage(
-            calculation_options_per_stage=calc_options_per_stage
-        )
-
-        # TODO add uniform loads
-        # TODO add non-uniform loads
-
-        # 2. Verify initial expectations.
-        model.serialize(output_test_file)
-        assert output_test_file.is_file()
-
-        # 3. Run test.
-        model.filename = output_test_file
-        output = model.execute()
-
-        # 4. Verify model output can be parsed
-        assert output
-
     @pytest.mark.integrationtest
-    def test_add_sheet(self):
+    def test_add_sheet(self, reverse_elements: bool):
         # 0. Set up test data.
         model = DSheetPilingModel()
-        # output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
-        # output_test_file = output_test_folder / "acceptance_from_scratch.shi"
 
         # Define inputs
         # first define the top level of the sheet pile
-        location_top = Point(x=0, y=1)
+        top_level = 1
         sheet1 = Sheet(name="First inputted pile")
         sheet1.sheet_pile_properties = SheetPileProperties(section_bottom_level=-2)
         sheet2 = Sheet(name="Second inputted pile")
         sheet2.sheet_pile_properties = SheetPileProperties(section_bottom_level=-7)
+        sheets = [sheet1, sheet2]
+        if reverse_elements:
+            sheets.reverse()
+
         # Initial expectation tested
         assert sheet1
         assert sheet2
-        assert location_top
+        assert top_level
+
         # Run test
-        model.add_sheet(sheet=sheet1, location_top=location_top)
-        model.add_sheet(sheet=sheet2)
+        model.set_construction(top_level=top_level, elements=sheets)
+
         # test final
         assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
@@ -327,27 +251,38 @@ class TestDsheetPilingModel:
             == "Second inputted pile"
         )
 
+    @pytest.mark.parametrize(
+        "reverse_elements",
+        [
+            pytest.param(True, id="Reverse elements"),
+            pytest.param(False, id="Don't reverse elements"),
+        ],
+    )
     @pytest.mark.integrationtest
-    def test_add_pile(self):
+    def test_add_pile(self, reverse_elements: bool):
         # 0. Set up test data.
         model = DSheetPilingModel()
-        # output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
-        # output_test_file = output_test_folder / "acceptance_from_scratch.shi"
 
         # Define inputs
         # first define the top level of the sheet pile
-        location_top = Point(x=0, y=1)
+        top_level = 1
         pile1 = Pile(name="First inputted pile")
         pile1.pile_properties = PileProperties(section_bottom_level=-2)
         pile2 = Pile(name="Second inputted pile")
         pile2.pile_properties = PileProperties(section_bottom_level=-7)
+
+        piles = [pile1, pile2]
+        if reverse_elements:
+            piles.reverse()
+
         # Initial expectation tested
         assert pile1
         assert pile2
-        assert location_top
+        assert top_level
+
         # Run test
-        model.add_pile(pile=pile1, location_top=location_top)
-        model.add_pile(pile=pile2)
+        model.set_construction(top_level=top_level, elements=piles)
+
         # test final
         assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
@@ -360,27 +295,37 @@ class TestDsheetPilingModel:
             == "Second inputted pile"
         )
 
+    @pytest.mark.parametrize(
+        "reverse_elements",
+        [
+            pytest.param(True, id="Reverse elements"),
+            pytest.param(False, id="Don't reverse elements"),
+        ],
+    )
     @pytest.mark.integrationtest
-    def test_add_diaphragm_wall(self):
+    def test_add_diaphragm_wall(self, reverse_elements: bool):
         # 0. Set up test data.
         model = DSheetPilingModel()
-        # output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
-        # output_test_file = output_test_folder / "acceptance_from_scratch.shi"
 
         # Define inputs
         # first define the top level of the sheet pile
-        location_top = Point(x=0, y=1)
+        top_level = 1
         wall1 = DiaphragmWall(name="First inputted pile")
         wall1.diaphragm_wall_properties = DiaphragmWallProperties(section_bottom_level=-2)
         wall2 = DiaphragmWall(name="Second inputted pile")
         wall2.diaphragm_wall_properties = DiaphragmWallProperties(section_bottom_level=-7)
+        walls = [wall1, wall2]
+        if reverse_elements:
+            walls.reverse()
+
         # Initial expectation tested
         assert wall1
         assert wall2
-        assert location_top
+        assert top_level
+
         # Run test
-        model.add_pile(pile=wall1, location_top=location_top)
-        model.add_pile(pile=wall2)
+        model.set_construction(top_level=top_level, elements=walls)
+
         # test final
         assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
@@ -420,36 +365,45 @@ class TestDsheetPilingModel:
     @pytest.mark.parametrize(
         "stage_method_left",
         [
-            pytest.param(LateralEarthPressureMethod.KA_KO_KP),
-            pytest.param(LateralEarthPressureMethod.C_PHI_DELTA),
+            pytest.param(LateralEarthPressureMethodStage.KA_KO_KP),
+            pytest.param(LateralEarthPressureMethodStage.C_PHI_DELTA),
         ],
     )
     @pytest.mark.parametrize(
         "stage_method_right",
         [
-            pytest.param(LateralEarthPressureMethod.KA_KO_KP),
-            pytest.param(LateralEarthPressureMethod.C_PHI_DELTA),
+            pytest.param(LateralEarthPressureMethodStage.KA_KO_KP),
+            pytest.param(LateralEarthPressureMethodStage.C_PHI_DELTA),
         ],
     )
     def test_set_model_updates_all_stages(
         self,
         model_method: LateralEarthPressureMethod,
-        stage_method_left: LateralEarthPressureMethod,
-        stage_method_right: LateralEarthPressureMethod,
+        stage_method_left: LateralEarthPressureMethodStage,
+        stage_method_right: LateralEarthPressureMethodStage,
     ):
         model = DSheetPilingModel()
         name_1st_stage = "Initial stage"
         name_2nd_stage = "Second stage"
-        model.add_stage(name=name_1st_stage)
-        model.add_stage(name=name_2nd_stage)
-
+        model.add_stage(
+            name=name_1st_stage,
+            passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+            method_left=stage_method_left,
+            method_right=stage_method_right,
+        )
+        model.add_stage(
+            name=name_2nd_stage,
+            passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+            method_left=stage_method_left,
+            method_right=stage_method_right,
+        )
         model_type = SheetModelType(method=model_method)
         model.set_model(model_type)
 
         # Check if all stage methods are updated
         for stage in model.datastructure.input_data.construction_stages.stages:
             if (
-                model == LateralEarthPressureMethod.MIXED
+                model_method == LateralEarthPressureMethod.MIXED
             ):  # Should not affect set methods.
                 assert stage.method_left == stage_method_left
                 assert stage.method_right == stage_method_right
@@ -461,23 +415,25 @@ class TestDsheetPilingModel:
     @pytest.mark.parametrize(
         "method_left",
         [
-            pytest.param(LateralEarthPressureMethod.KA_KO_KP, id="Left, not right"),
-            pytest.param(LateralEarthPressureMethod.C_PHI_DELTA, id="Not left, right"),
-            pytest.param(LateralEarthPressureMethod.MIXED, id="Both"),
+            pytest.param(LateralEarthPressureMethodStage.KA_KO_KP, id="Left, not right"),
+            pytest.param(
+                LateralEarthPressureMethodStage.C_PHI_DELTA, id="Not left, right"
+            ),
         ],
     )
     @pytest.mark.parametrize(
         "method_right",
         [
-            pytest.param(LateralEarthPressureMethod.KA_KO_KP, id="Left, not right"),
-            pytest.param(LateralEarthPressureMethod.C_PHI_DELTA, id="Not left, right"),
-            pytest.param(LateralEarthPressureMethod.MIXED, id="Both"),
+            pytest.param(LateralEarthPressureMethodStage.KA_KO_KP, id="Left, not right"),
+            pytest.param(
+                LateralEarthPressureMethodStage.C_PHI_DELTA, id="Not left, right"
+            ),
         ],
     )
     def test_add_stage_with_single_pile_model_stages_are_not_equal_raises_value_error(
         self,
-        method_left: LateralEarthPressureMethod,
-        method_right: LateralEarthPressureMethod,
+        method_left: LateralEarthPressureMethodStage,
+        method_right: LateralEarthPressureMethodStage,
     ):
         model = DSheetPilingModel()
         model.set_model(SinglePileModelType())
@@ -485,33 +441,36 @@ class TestDsheetPilingModel:
         # Assert test correctness.
         assert model.datastructure.input_data.model.model.value == ModelType.SINGLE_PILE
 
-        if (
-            method_left != method_right
-            or method_left == LateralEarthPressureMethod.MIXED
-            or method_right == LateralEarthPressureMethod.MIXED
-        ):
+        if method_left != method_right:
             with pytest.raises(ValueError):
                 model.add_stage(
                     name="Intial stage",
+                    passive_side=PassiveSide.DSHEETPILING_DETERMINED,
                     method_left=method_left,
                     method_right=method_right,
                 )
         else:
             model.add_stage(
-                name="Intial stage", method_left=method_left, method_right=method_right
+                name="Intial stage",
+                passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+                method_left=method_left,
+                method_right=method_right,
             )
 
     @pytest.mark.integrationtest
     def test_add_soil(self):
         # 1. Set up test data
         ds = DSheetPilingModel()
-        mohr_coulomb_parameters = MohrCoulombParameters(friction_angle=0.01)
-        soil = Soil(name="Test Soil", soil_type_nl=3, mohr_coulomb_parameters=mohr_coulomb_parameters)
-        soil2 = Soil(name="Test Soil 2", soil_type_nl=3, mohr_coulomb_parameters=mohr_coulomb_parameters)
-        output_test_folder = Path(
-            TestUtils.get_output_test_data_dir("dsheetpiling/serialize/")
-        )
-        output_test_file = output_test_folder / "soils.shi"
+        soil = Soil(name="Test Soil")
+        soil.soil_weight_parameters.unsaturated_weight = 10
+        soil.soil_weight_parameters.saturated_weight = 11
+        soil.mohr_coulomb_parameters.cohesion = 10
+        soil.mohr_coulomb_parameters.friction_angle = 17
+        soil2 = Soil(name="Test Soil 2")
+        soil2.soil_weight_parameters.unsaturated_weight = 11
+        soil2.soil_weight_parameters.saturated_weight = 12
+        soil2.mohr_coulomb_parameters.cohesion = 13
+        soil2.mohr_coulomb_parameters.friction_angle = 14
 
         # 2. Verify initial expectations
         assert ds.datastructure.input_data.soil_collection.soil == []
@@ -522,8 +481,291 @@ class TestDsheetPilingModel:
 
         # 4. Verify final expectations.
         assert new_soil == "Test Soil"
+        assert new_soil2 == "Test Soil 2"
         assert ds.datastructure.input_data.soil_collection.soil[0].name == "Test Soil"
         assert ds.datastructure.input_data.soil_collection.soil[-1].name == "Test Soil 2"
 
-        # 5. Serialize result to check manually
-        ds.serialize(output_test_file)
+    @pytest.mark.parametrize(
+        "testload",
+        [
+            pytest.param(
+                HorizontalLineLoad(
+                    name="New load",
+                    level=-1,
+                    load=10,
+                    verification_load_settings=VerificationLoadSettingsHorizontalLineLoad(
+                        duration_type=LoadTypePermanentVariable.VARIABLE,
+                        load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+                    ),
+                )
+            ),
+            pytest.param(
+                Moment(
+                    name="New load",
+                    level=-1,
+                    load=10,
+                    verification_load_settings=VerificationLoadSettings(
+                        duration_type=LoadTypePermanentVariable.VARIABLE,
+                        load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+                    ),
+                )
+            ),
+        ],
+    )
+    @pytest.mark.integrationtest
+    def test_add_loads_normal_calculation(self, model: DSheetPilingModel, testload):
+        # call the test function
+        model.add_load(load=testload, stage_id=0)
+
+        # test expectations
+        if isinstance(testload, Moment):
+            comparison_load = model.datastructure.input_data.moments
+            assert (
+                model.datastructure.input_data.construction_stages.stages[0].moment_loads[
+                    0
+                ]
+                == "New load"
+            )
+        elif isinstance(testload, HorizontalLineLoad):
+            comparison_load = model.datastructure.input_data.horizontal_line_loads
+            assert (
+                model.datastructure.input_data.construction_stages.stages[
+                    0
+                ].horizontal_line_loads[0]
+                == "New load"
+            )
+        assert 1 == len(comparison_load.loads)
+        assert "New load" == comparison_load.loads[0].name
+        assert -1 == comparison_load.loads[0].level
+        assert 10 == comparison_load.loads[0].load
+
+        assert (
+            comparison_load.loads[0].duration_type == LoadTypePermanentVariable.VARIABLE
+        )
+        assert (
+            comparison_load.loads[0].load_type
+            == LoadTypeFavourableUnfavourable.UNFAVOURABLE
+        )
+
+    @pytest.mark.parametrize(
+        "testload",
+        [
+            pytest.param(
+                NormalForce(
+                    name="New load",
+                    force_at_sheet_pile_top=-1,
+                    force_at_surface_level_left_side=-10,
+                    force_at_surface_level_right_side=1,
+                    force_at_sheet_pile_toe=10,
+                    verification_load_settings=VerificationLoadSettingsHorizontalLineLoad(
+                        duration_type=LoadTypePermanentVariable.VARIABLE,
+                        load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+                    ),
+                )
+            ),
+        ],
+    )
+    @pytest.mark.integrationtest
+    def test_add_normal_force_normal_calculation(
+        self, model: DSheetPilingModel, testload
+    ):
+        # call the test function
+        model.add_load(load=testload, stage_id=0)
+
+        # test expectations
+        assert (
+            model.datastructure.input_data.construction_stages.stages[0].normal_forces[0]
+            == "New load"
+        )
+
+        assert 1 == len(model.datastructure.input_data.normal_forces.loads)
+        assert "New load" == model.datastructure.input_data.normal_forces.loads[0].name
+        assert (
+            -1
+            == model.datastructure.input_data.normal_forces.loads[
+                0
+            ].force_at_sheet_pile_top
+        )
+        assert (
+            -10
+            == model.datastructure.input_data.normal_forces.loads[
+                0
+            ].force_at_surface_level_left_side
+        )
+        assert (
+            1
+            == model.datastructure.input_data.normal_forces.loads[
+                0
+            ].force_at_surface_level_right_side
+        )
+        assert (
+            10
+            == model.datastructure.input_data.normal_forces.loads[
+                0
+            ].force_at_sheet_pile_toe
+        )
+        assert (
+            model.datastructure.input_data.normal_forces.loads[0].duration_type
+            == LoadTypePermanentVariable.VARIABLE
+        )
+        assert (
+            model.datastructure.input_data.normal_forces.loads[0].load_type
+            == LoadTypeFavourableUnfavourable.UNFAVOURABLE
+        )
+
+    @pytest.mark.integrationtest
+    def test_add_horizontal_line_loads_error_raised(self, model: DSheetPilingModel):
+        # set up test data
+        load = HorizontalLineLoad(name="New load", level=-1, load=10)
+        expected_message = "Stage 1 is not added to the internal datastructure"
+
+        # test expectations
+        with pytest.raises(ValueError, match=expected_message):
+            model.add_load(load=load, stage_id=1)
+
+    def test_add_support_with_invalid_support_raises_ValueError(
+        self, model: DSheetPilingModel
+    ):
+        stage_id = model.current_stage
+
+        with pytest.raises(
+            ValueError,
+            match=r"support should be SpringSupport or RigidSupport, received ",
+        ):
+            model.add_support(support="not a support object", stage_id=stage_id)
+
+    def test_add_anchor_or_strut_with_invalid_support_raises_ValueError(
+        self, model: DSheetPilingModel
+    ):
+        stage_id = model.current_stage
+
+        with pytest.raises(
+            ValueError, match=r"support should be Anchor or Strut, received "
+        ):
+            model.add_anchor_or_strut(support="not a support object", stage_id=stage_id)
+
+    def test_intialized_model_can_be_serialized(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        filename = "serialized_from_intialized_model.shi"
+        output_test_file = output_test_folder / filename
+
+        # 2. Verify initial expectations
+        model = DSheetPilingModel()
+        assert isinstance(model, DSheetPilingModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert output_test_file.is_file()
+
+    @pytest.mark.integrationtest
+    def test_add_surcharge_load(self, model: DSheetPilingModel):
+        # set up test load
+        testload = SurchargeLoad(
+            name="New SurchargeLoad",
+            points=[Point(x=0, z=5), Point(x=5, z=10), Point(x=10, z=0)],
+            verification_load_settings=VerificationLoadSettings(
+                duration_type=LoadTypePermanentVariable.VARIABLE,
+                load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+            ),
+            standard_deviation=0.1,
+            distribution_type=DistributionType.LOG_NORMAL,
+        )
+
+        # perform test function
+        model.add_surcharge_load(load=testload, side=Side.LEFT, stage_id=0)
+
+        # test results
+        # model.input_data
+        assert 1 == len(model.datastructure.input_data.surcharge_loads.loads)
+
+        assert (
+            "New SurchargeLoad"
+            == model.datastructure.input_data.surcharge_loads.loads[0].name
+        )
+
+        assert model.datastructure.input_data.surcharge_loads.loads[0].points[
+            0
+        ] == SurchargePoint(surchargeloaddistance=0.0, surchargeloadvalue=5.0)
+        assert model.datastructure.input_data.surcharge_loads.loads[0].points[
+            1
+        ] == SurchargePoint(surchargeloaddistance=5.0, surchargeloadvalue=10.0)
+        assert model.datastructure.input_data.surcharge_loads.loads[0].points[
+            2
+        ] == SurchargePoint(surchargeloaddistance=10.0, surchargeloadvalue=0.0)
+
+        assert (
+            1
+            == model.datastructure.input_data.surcharge_loads.loads[
+                0
+            ].surchargeloadpermanent
+        )
+        assert (
+            2
+            == model.datastructure.input_data.surcharge_loads.loads[
+                0
+            ].surchargeloadfavourable
+        )
+        assert (
+            3
+            == model.datastructure.input_data.surcharge_loads.loads[
+                0
+            ].surchargeloaddistribution
+        )
+        assert (
+            0.1
+            == model.datastructure.input_data.surcharge_loads.loads[
+                0
+            ].surchargeloadstandarddeviation
+        )
+
+    @pytest.mark.integrationtest
+    def test_add_surcharge_load_error_of_points(self, model: DSheetPilingModel):
+        # Error with negative values
+        error_message = (
+            "All x-coordinates must be greater than or equal to 0, found -10.0"
+        )
+        with pytest.raises(ValueError, match=error_message):
+            SurchargeLoad(
+                name="New SurchargeLoad",
+                points=[Point(x=0, z=-5), Point(x=-5, z=-10), Point(x=-10, z=0)],
+                verification_load_settings=VerificationLoadSettings(
+                    duration_type=LoadTypePermanentVariable.VARIABLE,
+                    load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+                ),
+                standard_deviation=0.1,
+                distribution_type=DistributionType.LOG_NORMAL,
+            )
+
+        # Error the points are not strictly increasing
+        error_message = "x-coordinates must be strictly increasing"
+        with pytest.raises(ValueError, match=error_message):
+            SurchargeLoad(
+                name="New SurchargeLoad",
+                points=[Point(x=10, z=5), Point(x=0, z=5), Point(x=10, z=0)],
+                verification_load_settings=VerificationLoadSettings(
+                    duration_type=LoadTypePermanentVariable.VARIABLE,
+                    load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+                ),
+                standard_deviation=0.1,
+                distribution_type=DistributionType.LOG_NORMAL,
+            )
+
+    @pytest.mark.integrationtest
+    def test_duplicate_loads(self, model: DSheetPilingModel):
+        testload = SurchargeLoad(
+            name="New SurchargeLoad",
+            points=[Point(x=0, z=5), Point(x=5, z=10), Point(x=10, z=10)],
+            verification_load_settings=VerificationLoadSettings(
+                duration_type=LoadTypePermanentVariable.VARIABLE,
+                load_type=LoadTypeFavourableUnfavourable.UNFAVOURABLE,
+            ),
+            standard_deviation=0.1,
+            distribution_type=DistributionType.LOG_NORMAL,
+        )
+        model.add_surcharge_load(load=testload, side=Side.LEFT, stage_id=0)
+        error_message = "New SurchargeLoad load name is duplicated. Please change the name of the load."
+        with pytest.raises(ValueError, match=error_message):
+            model.add_surcharge_load(load=testload, side=Side.LEFT, stage_id=0)

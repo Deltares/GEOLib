@@ -7,8 +7,8 @@ from .internal import WaterLevel as InternalWaterLevel
 class WaterLevel(DataModel):
     name: str
     level: float
-    distribution_type: Optional[DistributionType] = None
-    standard_deviation: Optional[float] = None
+    distribution_type: DistributionType = DistributionType.NONE
+    standard_deviation: float = 0.0
 
     def to_internal(self) -> InternalWaterLevel:
         return InternalWaterLevel(**self.dict(exclude_none=True))

@@ -1,7 +1,5 @@
 """Pile Library for D-Foundations.
 
-.. todo::
-    Fill Pile Library, we wait for third-party code.
 """
 from enum import Enum
 from typing import Optional
@@ -25,6 +23,7 @@ from geolib.geometry import Point
 
 class PileLocation(DataModel):
     """"Base Class for Pile location."""
+
     pile_name: constr(min_length=0, max_length=10) = ""
     point: Point
     pile_head_level: confloat(ge=-1000, le=1000)
@@ -45,6 +44,7 @@ class PileLocation(DataModel):
 
 class BearingPileLocation(PileLocation):
     """Inherits :class:`~geolib.models.dfoundations.piles.PileLocation`."""
+
     surcharge: confloat(ge=0, le=100000)
 
     def _to_internal(self, index: PositiveInt):
@@ -54,6 +54,7 @@ class BearingPileLocation(PileLocation):
 
 class TensionPileLocation(PileLocation):
     """Inherits :class:`~geolib.models.dfoundations.piles.PileLocation`."""
+
     use_alternating_loads: bool
     max_force: confloat(ge=-100000, le=100000)
     min_force: confloat(ge=-100000, le=100000)

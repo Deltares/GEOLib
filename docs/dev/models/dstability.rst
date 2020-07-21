@@ -10,6 +10,10 @@ D-Stability model
     :members:
     :undoc-members:
 
+.. automodule:: geolib.models.dstability.analysis
+    :members:
+    :undoc-members:
+
 
 Loads
 ----------------
@@ -23,5 +27,12 @@ Reinforcements
 -------------------------
 
 .. automodule:: geolib.models.dstability.reinforcements
+    :members:
+    :undoc-members:
+
+States
+------
+
+.. automodule:: geolib.models.dstability.states
     :members:
     :undoc-members:

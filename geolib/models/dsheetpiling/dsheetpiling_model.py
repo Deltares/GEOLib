@@ -4,16 +4,13 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import List, Optional, Type, Union, Any
 from pydantic.types import confloat, conint
-
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from pydantic import BaseModel as DataModel
 from pydantic import FilePath, PositiveFloat
 
 from geolib.geometry import Point
 from geolib.models import BaseModel, BaseModelStructure
-from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
-from geolib.soils.layers import Profile
-
 from geolib.models.dsheetpiling.constructions import (
     DiaphragmWall,
     Pile,
@@ -30,7 +27,12 @@ from .loads import (
     UniformLoad,
 )
 from .internal import CalculationOptions as CalculationOptionsInternal
-from .internal import DSheetPilingStructure, DSheetPilingOutputStructure
+from .internal import (
+    DSheetPilingStructure,
+    DSheetPilingOutputStructure,
+    DSheetPilingDumpStructure,
+)
+from .internal import Water
 from .loads import (
     Earthquake,
     HorizontalLineLoad,
@@ -40,14 +42,16 @@ from .loads import (
     SurchargeLoad,
     UniformLoad,
 )
+from .profiles import SoilProfile
 from .serializer import DSheetPilingInputSerializer
 from .surface import Surface
 from .supports import Anchor, RigidSupport, SpringSupport, Strut
-
 from .settings import (
+    CurveSettings,
     ModelType,
     SinglePileLoadOptions,
     LateralEarthPressureMethod,
+    LateralEarthPressureMethodStage,
     PassiveSide,
     CalculationType,
     DesignType,
@@ -73,6 +77,9 @@ class BaseModelType(DataModel, metaclass=ABCMeta):
     def model(self):
         raise NotImplementedError
 
+    def to_internal(self):
+        return dict(self)
+
 
 class SheetModelType(BaseModelType):
     method: Optional[LateralEarthPressureMethod] = None
@@ -80,6 +87,7 @@ class SheetModelType(BaseModelType):
     verification: Optional[bool] = None
     trildens_calculation: Optional[bool] = None
     reliability_analysis: Optional[bool] = None
+    elastic_calculation: Optional[bool] = None
 
     @property
     def model(self) -> ModelType:
@@ -90,6 +98,7 @@ class WoodenSheetPileModelType(BaseModelType):
     method: Optional[LateralEarthPressureMethod] = None
     check_vertical_balance: Optional[bool] = None
     verification: Optional[bool] = None
+    elastic_calculation: Optional[bool] = None
 
     @property
     def model(self) -> ModelType:
@@ -98,10 +107,22 @@ class WoodenSheetPileModelType(BaseModelType):
 
 class SinglePileModelType(BaseModelType):
     pile_load_option: Optional[SinglePileLoadOptions] = None
+    elastic_calculation: Optional[bool] = None
 
     @property
     def model(self) -> ModelType:
         return ModelType.SINGLE_PILE
+
+    def to_internal(self):
+        if self.pile_load_option:
+            if self.pile_load_option.value == "forces":
+                return {"pile_load_option": 0, "pile_load_by_user": 0}
+            elif self.pile_load_option.value == "user_defined_displacements":
+                return {"pile_load_option": 1, "pile_load_by_user": 0}
+            elif self.pile_load_option.value == "calculated_displacements":
+                return {"pile_load_option": 1, "pile_load_by_user": 1}
+        else:
+            return {}
 
 
 class DiaphragmModelType(BaseModelType):
@@ -115,17 +136,16 @@ class DiaphragmModelType(BaseModelType):
 
 
 class DSheetPilingModel(BaseModel):
-    """DSheetPiling is a tool used to design sheetpile and diaphragm walls and
+    r"""DSheetPiling is a tool used to design sheetpile and diaphragm walls and
     horizontally loaded piles.
 
-    This model can read, modify and create
-    *.shi files, read *.shd and *.err files.
+    This model can read, modify and create \*.shi files, read \*.shd and \*.err files.
     """
 
     current_stage: Optional[int] = None  # Forces user to always set a stage.
-    water_weight: float = 9.81
-
-    datastructure: BaseModelStructure = DSheetPilingStructure()
+    datastructure: Union[
+        DSheetPilingStructure, DSheetPilingDumpStructure
+    ] = DSheetPilingStructure()
 
     @property
     def parser_provider_type(self) -> Type[DSheetPilingParserProvider]:
@@ -187,59 +207,64 @@ class DSheetPilingModel(BaseModel):
 
     def set_unit_weight_water(self, unit_weight: float) -> None:
         """Sets the unit weight for water in the [WATER] block"""
-        self.datastructure.input_data.water = f"  {unit_weight}  Unit weight of water"
+        self.datastructure.input_data.water = Water(unit_weight_of_water=unit_weight)
 
     def add_stage(
         self,
         name: str,
-        copy: bool = False,
-        pile_top_displacement: float = 0,
-        passive_side: Optional[PassiveSide] = None,
-        method_left: Optional[LateralEarthPressureMethod] = None,
-        method_right: Optional[LateralEarthPressureMethod] = None,
-        set_current: bool = True,
+        passive_side: PassiveSide,
+        method_left: LateralEarthPressureMethodStage,
+        method_right: LateralEarthPressureMethodStage,
+        pile_top_displacement: float = 0.0,
     ) -> int:
         """Add a new stage to the model.
 
-        When using a Single Pile model, the lateral earth pressure method left and right need to be the same.
+        When using a Single Pile model, the lateral earth pressure method left and right need to be the same. 
+        Their inputs however do not effect the outcome of the calculation.
 
         Args:
             name: Name of the stage.
-            copy: If True, the current stage will be copied.
-            pile_top_displacement: Pile top displacement [m]. When not provided, Use top displacement will be set to false.
             passive_side: Option to set the passive side for the stage.
-            method_left: LateralEarthPressureMethod for the left side, must be compatible with the Model LateralEarthPressureMethod
-            method_right: LateralEarthPressureMethod for the right side, must be compatible with the Model LateralEarthPressureMethod
+            method_left: LateralEarthPressureMethodStage applied to left side, must be compatible with the Model LateralEarthPressureMethod
+            method_right: LateralEarthPressureMethodStage applied to right side, must be compatible with the Model LateralEarthPressureMethod
+            pile_top_displacement: Pile top displacement [m]. When not provided, Use top displacement will be set to false.
 
         Raises:
-            ValueError: duplicate stage names, copy=True
             ValidationError: when input arguments are not within constraints
 
         Returns:
             int: Stage id which can be used to modify the stage.
         """
-        if copy:
-            raise ValueError("Copying of stages is currently not supported")
         new_stage_id = self.current_stage + 1 if self.current_stage is not None else 0
         self.datastructure.input_data.add_stage(
-            name, pile_top_displacement, passive_side, method_left, method_right
+            name, passive_side, method_left, method_right, pile_top_displacement
         )
         self.current_stage = new_stage_id
         return new_stage_id
 
     def add_calculation_options_per_stage(
-        self, calculation_options_per_stage: CalculationOptionsPerStage
-    ):
+        self, calculation_options_per_stage: CalculationOptionsPerStage, stage_id: int
+    ) -> None:
+        """Set calculation options per stage.
+
+        Calculation options per stage are set in [CALCULATION OPTIONS PER STAGE].
+
+        Args:
+            stage_id: Curvesettings are set to this stage. This refers to the Pythonic input and has a starting point of 0.
+
+        Raises:
+            ValueError: When non-existing stage_id is passed or when no
+                        CalculationOptionsPerStage are required.
+        """
         if self._is_calculation_per_stage_required():
-            if calculation_options_per_stage:
-                self.datastructure.input_data.add_calculation_options_per_stage(
-                    input_calc_options=calculation_options_per_stage,
-                    stage_id=self.current_stage,
-                )
-            else:
-                raise ValueError(
-                    f"calculation_options_per_stage is not defined for stage {self.current_stage}."
-                )
+            self._check_if_stage_id_exists(stage_id)
+            self.datastructure.input_data.add_calculation_options_per_stage(
+                input_calc_options=calculation_options_per_stage, stage_id=stage_id,
+            )
+        else:
+            raise ValueError(
+                f"calculation_options_per_stage is not required for stage {stage_id}."
+            )
 
     def _get_default_stage_none_provided(self, stage_id: Optional[int]) -> int:
         stage_id = stage_id if stage_id is not None else self.current_stage
@@ -261,21 +286,35 @@ class DSheetPilingModel(BaseModel):
                 f"model should be of subtype BaseModelType, received {model}"
             )
 
-        self.datastructure.input_data.set_model(**dict(model), model=model.model)
+        self.datastructure.input_data.set_model(**model.to_internal(), model=model.model)
 
     def set_calculation_options(self, calculation_options: CalculationOptions) -> None:
+        """Set calculation options.
+
+        Calculation options per stage are set in [CALCULATION OPTIONS].
+
+        Args:
+            stage_id: Curvesettings are set to this stage.
+        """
         if not issubclass(type(calculation_options), CalculationOptions):
             raise ValueError(
                 f"model should be of subtype CalculationOptions, received {calculation_options}"
             )
         self.datastructure.input_data.set_calculation_options(**dict(calculation_options))
 
-    def add_head_line(
-        self,
-        left: Optional[WaterLevel] = None,
-        right: Optional[WaterLevel] = None,
-        stage_id: Optional[int] = None,
-    ) -> None:
+    def set_curve_settings(
+        self, curve_settings: CurveSettings,
+    ):
+        """Set curve settings for soil profiles.
+
+        Curve settings are set in  [SOIL PROFILES].
+
+        Args:
+            curve_settings: Curvesettings
+        """
+        self.datastructure.input_data.set_curve_settings(curve_settings)
+
+    def add_head_line(self, water_level: WaterLevel, side: Side, stage_id: int,) -> None:
         """Set water level for a stage.
 
         If a water level already exists, it is refered to that water level.
@@ -283,29 +322,23 @@ class DSheetPilingModel(BaseModel):
         Related to the [WATERLEVELS] block in the .shi file.
 
         Args:
-            left: WaterLevel
-            stage_id: ID of the stage. Of no ID is provided, the current stage ID will be taken.
+            water_level: WaterLevel.
+            side: Side which determines on which side the surface is added.
+            stage_id: WaterLevel is added to this stage.
 
         Raises:
-            ValueError: When no stage has yet been added.
+            ValueError: When non-existing stage_id is passed.
         """
-        stage_id = self._get_default_stage_none_provided(stage_id)
-        if not (left or right):
-            raise ValueError("Provide either left or right water level")
-        if left:
-            self.datastructure.input_data.add_water_level(
-                stage_id, left.to_internal(), side=Side.LEFT
-            )
-        if right:
-            self.datastructure.input_data.add_water_level(
-                stage_id, right.to_internal(), side=Side.RIGHT
-            )
+        self._check_if_stage_id_exists(stage_id)
+        self.datastructure.input_data.add_water_level(
+            stage_id, water_level.to_internal(), side=side
+        )
 
     def add_surface(self, surface: Surface, side: Side, stage_id: int,) -> None:
         """Set surface for a stage.
 
         Surface is added to [SURFACES] if not yet added; reference is done by name.
-        A reference to [CONSTRUCTION STAGES]
+        A reference in [CONSTRUCTION STAGES] is updated.
 
         Args:
             surface: Surface.
@@ -313,85 +346,146 @@ class DSheetPilingModel(BaseModel):
             stage_id: Surface is added to this stage.
 
         Raises:
-            ValueError: When no stage has yet been added.
+            ValueError: When non-existing stage_id is passed.
         """
         self._check_if_stage_id_exists(stage_id)
         self.datastructure.input_data.add_surface(
             stage_id, surface.to_internal(), side=side
         )
 
-    def add_profile(self, left: Profile, right=Profile, stage=None):
-        """Add profile on either left/rightside of the model. Requires setup of
-        the Profile first.
-        .. TODO::     Can we use the add_layer method here as well?
-        """
+    def add_profile(self, profile: SoilProfile, side: Side, stage_id: int,) -> None:
+        """Add a Profile on the left or right side of a stage.
 
-    def add_sheet(
-        self, sheet: Union[Sheet, DiaphragmWall], location_top: Optional[Point] = None
+        Profile is added to [SOIL PROFILES] if not yet added; reference is done by name.
+        A reference in [CONSTRUCTION STAGES] is updated.
+
+        Args:
+            profile: Profile.
+            side: Side which determines on which side the profile is added.
+            stage_id: Surface is added to this stage.
+
+        Raises:
+            ValueError: When non-existing stage_id is passed.
+        """
+        self._check_if_stage_id_exists(stage_id)
+        self.datastructure.input_data.add_profile(
+            stage_id, profile.to_internal(), side=side
+        )
+
+    def set_construction(
+        self, top_level: float, elements: List[Union[Sheet, DiaphragmWall, Pile]]
     ) -> None:
-        """Add sheet/wall to the list of sheet piles."""
-        self.datastructure.input_data.add_element_in_sheet_piling(
-            sheet=sheet, location_top=location_top
-        )
+        """Sets construction for the DSheetPilingModel.
 
-    def add_pile(self, pile: Pile, location_top: Optional[Point] = None) -> None:
-        """Add pile to the model.
+        Elements are added to [SHEET PILING].
+        Removes current sheetpiling when called.
 
-        Requires setup of the Pile and Locations first.
+        Args:
+            top_level: Top level of the sheet piling.
+            elements: List of sheet piling elements, can be Sheet, DiaphragmWall, or Pile.
+            Elements are sorted on sheetpilingelementlevel.
         """
-        self.datastructure.input_data.add_element_in_sheet_piling(
-            sheet=pile, location_top=location_top
+        self.datastructure.input_data.set_construction(
+            top_level=top_level, elements=[element.to_internal() for element in elements]
         )
 
-    def add_non_uniform_load(
+    def add_load(
         self,
-        left: Union[None, SurchargeLoad],
-        sheet: Union[
-            None, Moment, HorizontalLineLoad, NormalForce, SoilDisplacement, Earthquake
+        load: Union[
+            Moment,
+            HorizontalLineLoad,
+            NormalForce,
+            SoilDisplacement,
+            Earthquake,
+            UniformLoad,
         ],
-        right: Union[None, SurchargeLoad],
-        location: Point,
-        stage=None,
+        stage_id: int,
     ):
-        """Add all other loads.
+        """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake
 
-        Only SoilDisplacement and Earthquake are valid for a Pile
-        construction.
+        Args:       
+            load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake.
+            Note that SoilDisplacement and Earthquake are only valid for a Pile construction.
+            stage_id: Load is added to this stage.
+
+        Raises:
+            ValueError: When non-existing stage_id is passed.
+            ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.
         """
+        self._check_if_stage_id_exists(stage_id)
+        self.datastructure.input_data.add_load(load=load.to_internal(), stage_id=stage_id)
 
-    def add_support(
-        self,
-        support: Union[Anchor, Strut, SpringSupport, RigidSupport],
-        pre_stress: Optional[PositiveFloat] = None,
-        stage_id: Optional[int] = None,
+    def add_surcharge_load(self, load: SurchargeLoad, side: Side, stage_id: int) -> None:
+        """Add surcharge load to a stage.
+
+        Args:
+            load: SurchargeLoad.
+            side: Side which determines on which side the load is added.
+            stage_id: SurchareLoad is added to this stage.
+
+        Raises:
+            ValueError: When non-existing stage_id is passed.
+        """
+        self._check_if_stage_id_exists(stage_id)
+        self.datastructure.input_data.add_surcharge_load(
+            stage_id, load.to_internal(), side=side
+        )
+
+    def add_anchor_or_strut(
+        self, support: Union[Anchor, Strut], stage_id: int, pre_stress: PositiveFloat = 0,
     ) -> None:
-        """Add support.
+        """Add anchor or strut to a stage.
 
         Anchor and Strut supports are only available for the sheetpiling model.
 
         Args:
-            support: A DSheetPiling suppport.
+            support: Anchor and Strut.
             pre_stress: Prestress for the support which is added to a construction stage.
                         This is a tension stress for the anchor and a compression stress for the strut.
-            stage_id: ID of the stage. Of no ID is provided, the current stage ID will be taken.
-
+            stage_id: Support is added to this stage.
         """
-        stage_id = self._get_default_stage_none_provided(stage_id)
+        self._check_if_stage_id_exists(stage_id)
 
         if isinstance(self.model_type, str):
             raise ValueError("Cannot read model type when it's not yet set; set model.")
-        if not isinstance(support, (Anchor, Strut, SpringSupport, RigidSupport)):
-            raise ValueError(f"Provide a valid support, received {support}")
-        if self.model_type == ModelType.SINGLE_PILE and isinstance(
-            support, (Anchor, Strut)
-        ):
+        if self.model_type == ModelType.SINGLE_PILE:
             raise ValueError(
                 f"Only spring and rigid supports can be used for the single pile model; received {support}"
             )
 
-        self.datastructure.input_data.add_support(
-            stage_id, support.to_internal(), pre_stress=pre_stress
-        )
+        if isinstance(support, Anchor):
+            self.datastructure.input_data.add_anchor(
+                stage_id, support.to_internal(), pre_tension=pre_stress
+            )
+        elif isinstance(support, Strut):
+            self.datastructure.input_data.add_strut(
+                stage_id, support.to_internal(), pre_compression=pre_stress
+            )
+        else:
+            raise ValueError(f"support should be Anchor or Strut, received {support}")
+
+    def add_support(
+        self, support: Union[SpringSupport, RigidSupport], stage_id: int,
+    ) -> None:
+        """Add spring or rigid support to a stage.
+
+        Args:
+            support: SpringSupport or RigidSupport.
+            stage_id: ID of the stage. Of no ID is provided, the current stage ID will be taken.
+        """
+        self._check_if_stage_id_exists(stage_id)
+        if isinstance(support, SpringSupport):
+            self.datastructure.input_data.add_spring_support(
+                stage_id, support.to_internal(),
+            )
+        elif isinstance(support, RigidSupport):
+            self.datastructure.input_data.add_rigid_support(
+                stage_id, support.to_internal(),
+            )
+        else:
+            raise ValueError(
+                f"support should be SpringSupport or RigidSupport, received {support}"
+            )
 
     def add_soil(self, soil: Soil) -> str:
         """ Soil is converted in the internal structure and added in soil_collection."""

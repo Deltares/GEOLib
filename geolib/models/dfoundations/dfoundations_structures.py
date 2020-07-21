@@ -1,11 +1,11 @@
 from __future__ import annotations
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, List
+import re
 from geolib.models.dseries_parser import (
     DSerieParser,
     DSeriesStructure,
     DSeriesInlineProperties,
     DSerieListGroupNextStructure,
-    split_line_elements,
     get_line_property_key_value,
     get_line_property_value,
 )
@@ -71,13 +71,18 @@ class DFoundationsTableWrapper(DSeriesStructure):
         Returns:
             DSerieStructure: Parsed structure.
         """
+
+        def split_line(text: str) -> List[str]:
+            parts = re.split(" |\t", text.strip())
+            return list(filter(lambda part: part != "", parts))
+
         table_text = list(DSerieParser.parse_list_group(text).values())[0]
         table_data = list(DSerieParser.parse_list_group(table_text).values())
         # Expected two groups (column_indication and data)
         keys = table_data[0].split("\n")
         values_dict_list = [
             dict(zip(keys, values))
-            for values in map(split_line_elements, table_data[1].split("\n"))
+            for values in map(split_line, table_data[1].split("\n"))
         ]
         collection_property_name = list(cls.__fields__.items())[0][0]
         return cls(**{collection_property_name: values_dict_list})

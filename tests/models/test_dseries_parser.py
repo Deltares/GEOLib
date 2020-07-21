@@ -11,7 +11,10 @@ from geolib.models.dseries_parser import (
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
     DSeriesMatrixTreeStructureCollection,
+    DSeriesWrappedTableStructure,
+    DSeriesTableStructure,
     DSeriesInlineProperties,
+    DSeriesInlineReversedProperties,
     DSeriesInlineMappedProperties,
     DSeriesUnmappedNameProperties,
     DSeriesRepeatedGroupedProperties,
@@ -568,6 +571,59 @@ class TestDSeriesTreeStructureAsMatrix:
         assert parsed_structure.third_prop == text_fields[2]
 
 
+class TestDSeriesTableStructure:
+    @pytest.mark.integrationtest
+    def test_given_column_with_string_value_when_parse_then_returns_valid_structure(self):
+        # 1. Define test data
+        class test_table(DSeriesTableStructure):
+            test_table: List[Dict[str, str]]
+
+        string_value = "This is a string value"
+        text_to_parse = f"""[COLUMN INDICATION]
+            string_column
+            [END OF COLUMN INDICATION]
+            [DATA]
+            1
+            '{string_value}'
+            [END OF DATA]"""
+        # 2. Run test.
+        parsed_structure = test_table.parse_text(text_to_parse)
+        # 3. Validate final expectations.
+        assert parsed_structure
+        assert len(parsed_structure.test_table) == 1
+        assert parsed_structure.test_table[0]["string_column"] == string_value
+
+
+class TestDSeriesWrappedTableStructure:
+    @pytest.mark.unittest
+    def test_given_table_without_number_of_rows_structure_is_parsed(self):
+        # 1. Prepare test data
+        class test_structure(DSeriesWrappedTableStructure):
+            test_structure: List[Dict[str, float]]
+
+        text_to_parse = """
+            [TABLE]
+            [COLUMN INDICATION]
+            Moment
+            Shear force
+            Displacements
+            [END OF COLUMN INDICATION]
+            [DATA]
+                0.00000      0.00000   -193.89808
+            [END OF DATA]
+            [END OF TABLE]
+            """
+        # 2. Run test
+        parsed_structure = test_structure.parse_text(text_to_parse)
+        # 3. Verify final expectations.
+        assert parsed_structure
+        assert len(parsed_structure.test_structure) == 1
+        parsed_value = parsed_structure.test_structure[0]
+        assert parsed_value["moment"] == 0
+        assert parsed_value["shear_force"] == 0
+        assert parsed_value["displacements"] == -193.89808
+
+
 class TestDSeriesInlineProperties:
 
     test_values = {"property_1": 42, "property_2": 24, "property_3": 4.2}
@@ -689,6 +745,33 @@ class TestDSeriesInlineProperties:
 
         # 3. Verify final expectations.
         assert key, value == expected_result
+
+
+class TestDSeriesInlineReversedProperties:
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize(
+        "text_to_parse",
+        [
+            pytest.param("[property_1]\n[end of property_1]", id="Grouped"),
+            pytest.param(" = property_1", id="Inline equal"),
+            pytest.param(" : property_1", id="Inline two points"),
+        ],
+    )
+    def test_given_text_with_empty_properties_when_parse_text_then_returns_structure_with_default(
+        self, text_to_parse: str
+    ):
+        # 1. Define test data.
+        class with_defaults(DSeriesInlineReversedProperties):
+            property_1: int = 42
+
+        parsed_structure = None
+
+        # 2. Run test.
+        with pytest.raises(ValidationError):
+            parsed_structure = with_defaults.parse_text(text_to_parse)
+
+        # 3. Verify final expectations.
+        assert parsed_structure is None
 
 
 class TestDSeriesInlineMappedProperties:

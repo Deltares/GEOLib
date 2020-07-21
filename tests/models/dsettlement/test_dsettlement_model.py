@@ -159,7 +159,7 @@ class TestDSettlementModel:
         with open(output_test_file, "w") as io:
             io.write(ds.output.json(indent=4))
 
-    @pytest.mark.systemtest
+    @pytest.mark.acceptance
     @only_teamcity
     def test_execute_console_successfully(self):
         # 1. Set up test data.
@@ -208,6 +208,41 @@ class TestDSettlementModel:
 
         # assert if time steps are in data structure
         assert ds.datastructure.residual_times.time_steps == days
+
+    @pytest.mark.integrationtest
+    def test_get_layer_headlines_util(self):
+        # Setup
+        ds = self.setup_dsettlement_model()
+
+        # Verify return structure and headline.top, headline.bottom for each layer
+        headlines = ds.datastructure.get_headlines_for_layers()
+        assert headlines == [[1, 1], [1, 1]]
+
+    @pytest.mark.integrationtest
+    def test_add_water_load(self):
+        # Setup
+        ds = self.setup_dsettlement_model()
+        test_output_filepath = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement"))
+            / "test_waterloads.sli"
+        )
+
+        # Verify expecatations
+        assert isinstance(ds.datastructure.water_loads, str)
+
+        # Add water load
+        ds.add_water_load("test", timedelta(days=5), 1)
+
+        # Verify resulting datastructure
+        assert not isinstance(ds.datastructure.water_loads, str)
+        assert len(ds.datastructure.water_loads.waterloads) == 1
+        assert ds.datastructure.water_loads.waterloads[0].name == "test"
+        assert ds.datastructure.water_loads.waterloads[0].time == 5
+        assert ds.datastructure.water_loads.waterloads[0].phreatic_line == 1
+        assert ds.datastructure.water_loads.waterloads[0].headlines == [[1, 1], [1, 1]]
+
+        # For manual verification
+        ds.serialize(test_output_filepath)
 
     @pytest.mark.unittest
     def test_given_timedelta_lesser_than_zero_when_set_calculation_times_raises_valueerror(
@@ -907,12 +942,8 @@ class TestDSettlementModel:
         ds = self.setup_dsettlement_model()
         # step 2: set up soil inputs
         soil_input = Soil(name="MyNewSoil")
-        soil_input.soil_classification_parameters = (
-            SoilClassificationParameters()
-        )
-        soil_input.soil_weight_parameters = (
-            soil_external.SoilWeightParameters()
-        )
+        soil_input.soil_classification_parameters = SoilClassificationParameters()
+        soil_input.soil_weight_parameters = soil_external.SoilWeightParameters()
 
         soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
             mean=20
@@ -1179,16 +1210,16 @@ class TestDSettlementModel:
             )
             dm = DSettlementModel()
             dm.set_model(
-                SoilModel.ISOTACHE,
-                ConsolidationModel.TERZAGHI,
-                True,
-                StrainType.LINEAR,
-                True,
-                True,
-                True,
-                True,
-                True,
-                True,
+                constitutive_model=SoilModel.ISOTACHE,
+                consolidation_model=ConsolidationModel.DARCY,
+                is_two_dimensional=True,
+                strain_type=StrainType.LINEAR,
+                is_vertical_drain=True,
+                is_fit_for_settlement_plate=False,
+                is_probabilistic=False,
+                is_horizontal_displacements=False,
+                is_secondary_swelling=False,
+                is_waspan=True,
             )
             p1 = Point(x=-50, z=0.0)
             p2 = Point(x=-10, z=0.0)
@@ -1233,14 +1264,27 @@ class TestDSettlementModel:
             b4 = dm.add_boundary([p1, p2, p5, p6])
             b5 = dm.add_boundary([p1, p2, p3, p4, p5, p6])
 
-            soil_weight_parameters = SoilWeightParameters(unsaturated_weight=17,
-                                                          saturated_weight=19.0)
-            s1 = dm.add_soil(
-                Soil(
-                    name="Sand",
-                    soil_weight_parameters=soil_weight_parameters,
-                )
+            soil = Soil(name="Sand")
+            soil.soil_weight_parameters.saturated_weight.mean = 17
+            soil.soil_weight_parameters.unsaturated_weight.mean = 15
+            soil.soil_weight_parameters.saturated_weight.standard_deviation = 0.7
+            soil.soil_weight_parameters.unsaturated_weight.standard_deviation = 0.8
+            soil.storage_parameters.vertical_consolidation_coefficient.mean = 1.00e-12
+            soil.storage_parameters.vertical_consolidation_coefficient.standard_deviation = (
+                5.00e-13
             )
+            soil.soil_state.pop_layer.mean = 5
+            soil.isotache_parameters.precon_isotache_type = StateType.POP
+            soil.isotache_parameters.reloading_swelling_constant_a = StochasticParameter(
+                mean=1.000e-02, standard_deviation=2.500e-03, correlation_coefficient=0.01
+            )
+            soil.isotache_parameters.primary_compression_constant_b = StochasticParameter(
+                mean=1.000e-01, standard_deviation=2.500e-03
+            )
+            soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
+                mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
+            )
+            s1 = dm.add_soil(soil)
 
             l1 = dm.add_layer(
                 material_name="Sand",
@@ -1284,8 +1328,8 @@ class TestDSettlementModel:
 
             test_drain = VerticalDrain(
                 drain_type=DrainType.COLUMN,
-                range_from=0.1,
-                range_to=1.5,
+                range_from=-15,
+                range_to=20,
                 bottom_position=-10,
                 center_to_center=4,
                 diameter=0.1,
@@ -1303,14 +1347,28 @@ class TestDSettlementModel:
             # set vertical drains
             dm.set_vertical_drain(test_drain)
 
+            # set up the point list
+            point3 = Point(label="1", x=-50, y=0, z=0)
+            point4 = Point(label="2", x=-50, y=0, z=2)
+            point5 = Point(label="3", x=-10, y=0, z=2)
+            point6 = Point(label="4", x=-10, y=0, z=0)
+            pointlist = [point3, point4, point5, point6]
+
+            # Add first uniform load
+            dm.add_non_uniform_load(
+                name="My First Load",
+                points=pointlist,
+                time_start=timedelta(days=0),
+                time_end=timedelta(days=100),
+                gamma_dry=20.02,
+                gamma_wet=21.02,
+            )
+
             path = test_output_filepath / "test_acceptance.sli"
             dm.serialize(path)
 
             # Verify output has been parsed
-            with pytest.raises(CalculationError) as e:
-                dm.execute()
-
-            assert "at least one load is needed" in e.value.message
+            dm.execute()
 
     @pytest.mark.integrationtest
     def test_add_vertical_drain_ScheduleValues_Off(self):
@@ -1549,187 +1607,174 @@ class TestDSettlementModel:
         ds.set_vertical_drain(test_drain)
         ds.serialize(test_output_filepath)
 
-        def test_dsettlement_acceptance_probabilistic(self):
-            """Setup base structure from parsed file while
-            we can't initialize one from scratch yet."""
-            test_output_filepath = Path(
-                TestUtils.get_output_test_data_dir("dsettlement/acceptance")
-            )
-            dm = DSettlementModel()
-            dm.set_model(
-                constitutive_model=SoilModel.ISOTACHE,
-                consolidation_model=ConsolidationModel.TERZAGHI,
-                is_two_dimensional=True,
-                strain_type=StrainType.LINEAR,
-                is_vertical_drain=False,
-                is_fit_for_settlement_plate=False,
-                is_probabilistic=True,
-                is_horizontal_displacements=False,
-                is_secondary_swelling=False,
-                is_waspan=False,
-            )
+    @pytest.mark.acceptance
+    def test_dsettlement_acceptance_probabilistic(self):
+        """Setup base structure from parsed file while
+        we can't initialize one from scratch yet."""
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir("dsettlement/acceptance")
+        )
+        dm = DSettlementModel()
+        dm.set_model(
+            constitutive_model=SoilModel.ISOTACHE,
+            consolidation_model=ConsolidationModel.DARCY,
+            is_two_dimensional=True,
+            strain_type=StrainType.LINEAR,
+            is_vertical_drain=False,
+            is_fit_for_settlement_plate=False,
+            is_probabilistic=True,
+            is_horizontal_displacements=False,
+            is_secondary_swelling=False,
+            is_waspan=False,
+        )
+        p1 = Point(x=-50, z=0.0)
+        p2 = Point(x=-10, z=0.0)
+        p3 = Point(x=0, z=2)
+        p4 = Point(x=10, z=2)
+        p5 = Point(x=30, z=0.0)
+        p6 = Point(x=50, z=0.0)
+        p7 = Point(x=-50, z=-5)
+        p8 = Point(x=50, z=-5)
+        p9 = Point(x=-50, z=-10)
+        p10 = Point(x=50, z=-10)
+        p11 = Point(x=-50, z=-20)
+        p12 = Point(x=50, z=-20)
+        p15 = Point(x=-50, z=-30)
+        p16 = Point(x=-20, z=-30)
+        p17 = Point(x=-10, z=-30)
+        p18 = Point(x=0, z=-30)
+        p19 = Point(x=10, z=-30)
+        p20 = Point(x=20, z=-30)
+        p21 = Point(x=25, z=-30)
+        p22 = Point(x=30, z=-30)
+        p23 = Point(x=35, z=-30)
+        p24 = Point(x=40, z=-30)
+        p25 = Point(x=45, z=-30)
+        p26 = Point(x=50, z=-30)
 
-            p1 = Point(x=-50, z=0.0)
-            p2 = Point(x=-10, z=0.0)
-            p3 = Point(x=0, z=2)
-            p4 = Point(x=10, z=2)
-            p5 = Point(x=30, z=0.0)
-            p6 = Point(x=50, z=0.0)
-            p7 = Point(x=-50, z=-5)
-            p8 = Point(x=50, z=-5)
-            p9 = Point(x=-50, z=-10)
-            p10 = Point(x=50, z=-10)
-            p11 = Point(x=-50, z=-20)
-            p12 = Point(x=50, z=-20)
+        # headline
+        p13 = Point(x=-50, z=-2)
+        p14 = Point(x=50, z=-2)
+        pl_id = dm.add_head_line([p13, p14], is_phreatic=True)
+        b6 = dm.add_boundary(
+            [p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26],
+            use_probabilistic_defaults=True,
+        )
+        b1 = dm.add_boundary([p11, p12], use_probabilistic_defaults=True)
+        b2 = dm.add_boundary([p9, p10], use_probabilistic_defaults=True)
+        b3 = dm.add_boundary([p7, p8], use_probabilistic_defaults=True)
+        b4 = dm.add_boundary(
+            [p1, p2, p5, p6],
+            use_probabilistic_defaults=False,
+            stdv=0.1,
+            distribution_boundaries=DistributionType.Normal,
+        )
+        b5 = dm.add_boundary(
+            [p1, p2, p3, p4, p5, p6],
+            use_probabilistic_defaults=False,
+            stdv=0.1,
+            distribution_boundaries=DistributionType.Normal,
+        )
+        soil = Soil(name="Sand")
+        soil.soil_weight_parameters.saturated_weight.mean = 17
+        soil.soil_weight_parameters.unsaturated_weight.mean = 15
+        soil.soil_weight_parameters.saturated_weight.standard_deviation = 0.7
+        soil.soil_weight_parameters.unsaturated_weight.standard_deviation = 0.8
+        soil.storage_parameters.vertical_consolidation_coefficient.mean = 1.00e-12
+        soil.storage_parameters.vertical_consolidation_coefficient.standard_deviation = (
+            5.00e-13
+        )
+        soil.soil_state.pop_layer.mean = 5
+        soil.isotache_parameters.precon_isotache_type = StateType.POP
+        soil.isotache_parameters.reloading_swelling_constant_a = StochasticParameter(
+            mean=1.000e-02, standard_deviation=2.500e-03, correlation_coefficient=0.01
+        )
+        soil.isotache_parameters.primary_compression_constant_b = StochasticParameter(
+            mean=1.000e-01, standard_deviation=2.500e-03
+        )
+        soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
+            mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
+        )
+        s1 = dm.add_soil(soil)
+        l1 = dm.add_layer(
+            material_name="Sand",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b1,
+            boundary_bottom=b2,
+        )
+        l2 = dm.add_layer(
+            # material_name="H_Ro_z&k",
+            material_name="Sand",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b2,
+            boundary_bottom=b3,
+        )
+        l3 = dm.add_layer(
+            # material_name="HV",
+            material_name="Sand",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b3,
+            boundary_bottom=b4,
+        )
+        l4 = dm.add_layer(
+            # material_name="H_Aa_ht_old",
+            material_name="Sand",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b4,
+            boundary_bottom=b5,
+        )
+        l5 = dm.add_layer(
+            # material_name="H_Aa_ht_old",
+            material_name="Sand",
+            head_line_top=pl_id,
+            head_line_bottom=pl_id,
+            boundary_top=b5,
+            boundary_bottom=b6,
+        )
 
-            p15 = Point(x=-50, z=-30)
-            p16 = Point(x=-20, z=-30)
-            p17 = Point(x=-10, z=-30)
-            p18 = Point(x=0, z=-30)
-            p19 = Point(x=10, z=-30)
-            p20 = Point(x=20, z=-30)
-            p21 = Point(x=25, z=-30)
-            p22 = Point(x=30, z=-30)
-            p23 = Point(x=35, z=-30)
-            p24 = Point(x=40, z=-30)
-            p25 = Point(x=45, z=-30)
-            p26 = Point(x=50, z=-30)
+        # set up the vertical locations
+        point1 = Point(label="1", x=-10.0, y=-50, z=0.0)
+        point2 = Point(label="2", x=0.0, y=-50, z=0.0)
+        locations = [point1, point2]
+        # call function
+        dm.set_verticals(locations=locations)
 
-            # headline
-            p13 = Point(x=-50, z=-2)
-            p14 = Point(x=50, z=-2)
+        # For a calculation at least one load should be defined
+        # set up the point list
+        point3 = Point(label="1", x=-50, y=0, z=0)
+        point4 = Point(label="2", x=-50, y=0, z=2)
+        point5 = Point(label="3", x=-10, y=0, z=2)
+        point6 = Point(label="4", x=-10, y=0, z=0)
+        pointlist = [point3, point4, point5, point6]
 
-            pl_id = dm.add_head_line([p13, p14], is_phreatic=True)
+        # Add first uniform load
+        dm.add_non_uniform_load(
+            name="My First Load",
+            points=pointlist,
+            time_start=timedelta(days=0),
+            time_end=timedelta(days=100),
+            gamma_dry=20.02,
+            gamma_wet=21.02,
+        )
+        dm.set_calculation_times(
+            time_steps=[timedelta(days=d) for d in [10, 100, 1000, 2000, 3000, 4000]]
+        )
 
-            b6 = dm.add_boundary(
-                [p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26],
-                use_probabilistic_defaults=True,
-            )
-            b1 = dm.add_boundary([p11, p12], use_probabilistic_defaults=True)
-            b2 = dm.add_boundary([p9, p10], use_probabilistic_defaults=True)
-            b3 = dm.add_boundary([p7, p8], use_probabilistic_defaults=True)
-            b4 = dm.add_boundary(
-                [p1, p2, p5, p6],
-                use_probabilistic_defaults=False,
-                stdv=0.1,
-                distribution_boundaries=DistributionType.Normal,
-            )
-            b5 = dm.add_boundary(
-                [p1, p2, p3, p4, p5, p6],
-                use_probabilistic_defaults=False,
-                stdv=0.1,
-                distribution_boundaries=DistributionType.Normal,
-            )
+        # calculation setting to probabilistic
+        dm.set_probabilistic_data(
+            point_of_vertical=Point(x=-10, y=0, z=0),
+            residual_settlement=0.01,
+            maximum_number_of_samples=10,
+            maximum_iterations=15,
+            reliability_type=ProbabilisticCalculationType.BandWidthOfSettlementsFOSM,
+            is_reliability_calculation=True,
+        )
+        path = test_output_filepath / "test_acceptance_probabilistic.sli"
+        dm.serialize(path)
 
-            soil = Soil(name="Sand")
-            soil.soil_weight_parameters.saturated_weight.mean = 17
-            soil.soil_weight_parameters.unsaturated_weight.mean = 15
-            soil.soil_weight_parameters.saturated_weight.standard_deviation = (
-                0.7
-            )
-            soil.soil_weight_parameters.unsaturated_weight.standard_deviation = (
-                0.8
-            )
-            soil.undrained_parameters.vertical_consolidation_coefficient.mean = (
-                1.00e-12
-            )
-            soil.undrained_parameters.vertical_consolidation_coefficient.standard_deviation = (
-                5.00e-13
-            )
-            soil.soil_state.pop_layer.mean = 5
-            soil.isotache_parameters.precon_isotache_type = (
-                StateType.POP
-            )
-            soil.isotache_parameters.reloading_swelling_constant_a = StochasticParameter(
-                mean=1.000e-02, standard_deviation=2.500e-03, correlation_coefficient=0.01
-            )
-            soil.isotache_parameters.primary_compression_constant_b = StochasticParameter(
-                mean=1.000e-01, standard_deviation=2.500e-03
-            )
-            soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
-                mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
-            )
-            s1 = dm.add_soil(soil)
-
-            l1 = dm.add_layer(
-                material_name="Sand",
-                head_line_top=pl_id,
-                head_line_bottom=pl_id,
-                boundary_top=b1,
-                boundary_bottom=b2,
-            )
-            l2 = dm.add_layer(
-                # material_name="H_Ro_z&k",
-                material_name="Sand",
-                head_line_top=pl_id,
-                head_line_bottom=pl_id,
-                boundary_top=b2,
-                boundary_bottom=b3,
-            )
-            l3 = dm.add_layer(
-                # material_name="HV",
-                material_name="Sand",
-                head_line_top=pl_id,
-                head_line_bottom=pl_id,
-                boundary_top=b3,
-                boundary_bottom=b4,
-            )
-            l4 = dm.add_layer(
-                # material_name="H_Aa_ht_old",
-                material_name="Sand",
-                head_line_top=pl_id,
-                head_line_bottom=pl_id,
-                boundary_top=b4,
-                boundary_bottom=b5,
-            )
-            l5 = dm.add_layer(
-                # material_name="H_Aa_ht_old",
-                material_name="Sand",
-                head_line_top=pl_id,
-                head_line_bottom=pl_id,
-                boundary_top=b5,
-                boundary_bottom=b6,
-            )
-            # set up the vertical locations
-            point1 = Point(label="1", x=-10.0, y=-50, z=0.0)
-            point2 = Point(label="2", x=0.0, y=-50, z=0.0)
-            locations = [point1, point2]
-
-            # call function
-            dm.set_verticals(locations=locations)
-            # For a calculation at least one load should be defined
-            # set up the point list
-            point3 = Point(label="1", x=-50, y=0, z=0)
-            point4 = Point(label="2", x=-50, y=0, z=2)
-            point5 = Point(label="3", x=-10, y=0, z=2)
-            point6 = Point(label="4", x=-10, y=0, z=0)
-            pointlist = [point3, point4, point5, point6]
-
-            # Add first uniform load
-            dm.add_non_uniform_load(
-                name="My First Load",
-                points=pointlist,
-                time_start=timedelta(days=0),
-                time_end=timedelta(days=100),
-                gamma_dry=20.02,
-                gamma_wet=21.02,
-            )
-
-            dm.set_calculation_times(
-                time_steps=[timedelta(days=d) for d in [10, 100, 1000, 2000, 3000, 4000]]
-            )
-            # calculation setting to probabilistic
-            dm.set_probabilistic_data(
-                point_of_vertical=Point(x=-10, y=0, z=0),
-                residual_settlement=0.01,
-                maximum_number_of_samples=10,
-                maximum_iterations=15,
-                reliability_type=ProbabilisticCalculationType.BandWidthOfSettlementsFOSM,
-                is_reliability_calculation=True,
-            )
-            path = test_output_filepath / "test_acceptance_probabilistic.sli"
-            dm.serialize(path)
-
-            # Verify successfull run and parsing of output
-            dm.execute()
-            assert isinstance(self.datastructure, DSettlementOutputStructure)
+        # Verify successfull run and parsing of output
+        dm.execute()

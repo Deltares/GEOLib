@@ -14,3 +14,7 @@ class BaseModelStructure(DataClass, abc.ABC):
     def validator(self) -> BaseValidator:
         """Set the Validator class."""
         return BaseValidator(self)
+
+    class Config:
+        extra = "forbid"
+

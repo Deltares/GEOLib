@@ -24,6 +24,10 @@ Drains
     :members:
     :undoc-members:
 
+.. automodule:: geolib.models.dsettlement.drain_types
+    :members:
+    :undoc-members:
+
 Geometry
 --------
 
@@ -116,9 +120,3 @@ Below example code is is shown on how to add boundaries in the geolib code to cr
     b3 = dm.add_boundary(points=[points[0], points[4], points[3], points[7]])   # points (1, 2, 5, 6)
     b4 = dm.add_boundary(points=[points[5], points[6]])                         # points (7, 8)
 
-
-Add probabilistic boundary
-..........................
-
-Add head line
-.............

@@ -12,7 +12,7 @@ class Surface(DataModel):
     """Surface.
 
     Args:
-        name: Unique name.
+        name: Name of the surface.
         points: Surface points. Points (X, Z) must be defined from the sheet outwards regarding x-coordinate.
         distribution_type: Distribution type.
         std: Standard deviation of the distribution type.

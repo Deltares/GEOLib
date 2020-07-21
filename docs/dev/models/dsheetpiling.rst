@@ -10,6 +10,14 @@ D-Sheetpiling model
     :members:
     :undoc-members:
 
+.. automodule:: geolib.models.dsheetpiling.settings
+    :members:
+    :undoc-members:
+
+.. automodule:: geolib.models.dsheetpiling.calculation_options
+    :members:
+    :undoc-members:
+
 Constructions
 -------------
 
@@ -28,5 +36,20 @@ Supports
 -------------
 
 .. automodule:: geolib.models.dsheetpiling.supports
+    :members:
+    :undoc-members:
+
+Geometry
+--------
+
+.. automodule:: geolib.models.dsheetpiling.profiles
+    :members:
+    :undoc-members:
+
+.. automodule:: geolib.models.dsheetpiling.surface
+    :members:
+    :undoc-members:
+
+.. automodule:: geolib.models.dsheetpiling.water_level
     :members:
     :undoc-members:

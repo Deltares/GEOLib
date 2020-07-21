@@ -1,14 +1,27 @@
 import pytest
 from typing import Any
+from contextlib import nullcontext as does_not_raise
 
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
-from geolib.models.dsheetpiling.supports import Anchor, RigidSupport, SpringSupport, Strut
+from geolib.models.dsheetpiling.supports import (
+    Anchor,
+    RigidSupport,
+    SpringSupport,
+    Strut,
+    SupportType,
+)
 from geolib.models.dsheetpiling.internal import (
     _DEFAULT_PRE_STRESS,
     Anchors,
     Anchor as InternalAnchor,
     Struts,
     Strut as InternalStrut,
+    Support as InternalSupport,
+    SupportContainer,
+)
+from geolib.models.dsheetpiling.settings import (
+    LateralEarthPressureMethodStage,
+    PassiveSide,
 )
 from pydantic import ValidationError
 
@@ -16,7 +29,12 @@ from pydantic import ValidationError
 @pytest.fixture
 def _model() -> DSheetPilingModel:
     model = DSheetPilingModel()
-    model.add_stage(name="Initial stage")
+    model.add_stage(
+        name="Initial stage",
+        passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+        method_left=LateralEarthPressureMethodStage.KA_KO_KP,
+        method_right=LateralEarthPressureMethodStage.KA_KO_KP,
+    )
     return model
 
 
@@ -31,7 +49,6 @@ def _strut() -> Strut:
 
 
 class TestAnchor:
-    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "argument,value",
         [
@@ -51,7 +68,7 @@ class TestAnchor:
     ):
         anchor_name = "Anchor 1"
         level = 0
-        kwargs = {"name": anchor_name, "level": level, argument: value}
+        kwargs = {"name": anchor_name, "level": level, argument: value, "stage_id": 0}
         with pytest.raises(ValidationError):
             Anchor(**kwargs)
 
@@ -65,17 +82,19 @@ class TestAnchor:
         assert isinstance(internal, InternalAnchor)
 
     @pytest.mark.unittest
-    def test_dsheetpilingmodel_add_anchor_no_support_provided_raises_value_error(
+    def test_dsheetpilingmodel_add_anchor_or_strut_no_invalid_support_provided_raises_value_error(
         self, _model: DSheetPilingModel
     ):
         with pytest.raises(ValueError):
-            _model.add_support(support=None)
+            _model.add_anchor_or_strut(support=None, stage_id=0)
 
     @pytest.mark.integrationtest
     def test_dsheetpilingmodel_add_anchor(
         self, _model: DSheetPilingModel, _anchor: Anchor
     ):
-        _model.add_support(support=_anchor)
+        _model.add_anchor_or_strut(
+            support=_anchor, pre_stress=_DEFAULT_PRE_STRESS, stage_id=0
+        )
 
         # Validate [ANCHORS]
         assert isinstance(_model.datastructure.input_data.anchors, Anchors)
@@ -107,7 +126,9 @@ class TestAnchor:
         self, _model: DSheetPilingModel, _anchor: Anchor
     ):
         pre_stress = 10
-        _model.add_support(support=_anchor, pre_stress=pre_stress)
+        _model.add_anchor_or_strut(
+            support=_anchor, pre_stress=pre_stress, stage_id=_model.current_stage
+        )
 
         # Validate [ANCHORS]
         assert isinstance(_model.datastructure.input_data.anchors, Anchors)
@@ -141,7 +162,7 @@ class TestAnchor:
         pre_stress = -10
 
         with pytest.raises(ValidationError):
-            _model.add_support(support=_anchor, pre_stress=pre_stress)
+            _model.add_anchor_or_strut(support=_anchor, pre_stress=pre_stress, stage_id=0)
 
 
 class TestStrut:
@@ -183,11 +204,13 @@ class TestStrut:
         self, _model: DSheetPilingModel
     ):
         with pytest.raises(ValueError):
-            _model.add_support(support=None)
+            _model.add_anchor_or_strut(support=None, stage_id=0)
 
     @pytest.mark.integrationtest
     def test_dsheetpilingmodel_add_strut(self, _model: DSheetPilingModel, _strut: Strut):
-        _model.add_support(support=_strut)
+        _model.add_anchor_or_strut(
+            support=_strut, pre_stress=_DEFAULT_PRE_STRESS, stage_id=0
+        )
 
         # Validate [ANCHORS]
         assert isinstance(_model.datastructure.input_data.struts, Struts)
@@ -218,7 +241,7 @@ class TestStrut:
         self, _model: DSheetPilingModel, _strut: Strut
     ):
         pre_stress = 10
-        _model.add_support(support=_strut, pre_stress=pre_stress)
+        _model.add_anchor_or_strut(support=_strut, pre_stress=pre_stress, stage_id=0)
 
         # Validate [ANCHORS]
         assert isinstance(_model.datastructure.input_data.struts, Struts)
@@ -251,4 +274,312 @@ class TestStrut:
         pre_stress = -10
 
         with pytest.raises(ValidationError):
-            _model.add_support(support=_strut, pre_stress=pre_stress)
+            _model.add_anchor_or_strut(support=_strut, pre_stress=pre_stress, stage_id=0)
+
+
+class TestSpringSupport:
+    @pytest.mark.unittest
+    @pytest.mark.parametrize("name", [pytest.param("Correct name"),])
+    @pytest.mark.parametrize(
+        "level",
+        [
+            pytest.param(10, id="Valid level as int"),
+            pytest.param(10.0, id="Valid level as float"),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "rotational_stiffness",
+        [
+            pytest.param(0.0, id="Valid zero rotational stiffness"),
+            pytest.param(10, id="Valid rotational stiffness as int"),
+            pytest.param(10.0, id="Valid rotational stiffness as float"),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "translational_stiffness",
+        [
+            pytest.param(0.0, id="Valid zero translational stiffness"),
+            pytest.param(10, id="Valid translational stiffness as int"),
+            pytest.param(10.0, id="Valid translational stiffness as float"),
+        ],
+    )
+    def test_intialization_spring_support(
+        self,
+        name: str,
+        level: float,
+        rotational_stiffness: float,
+        translational_stiffness: float,
+    ):
+        support = SpringSupport(
+            name=name,
+            level=level,
+            rotational_stiffness=rotational_stiffness,
+            translational_stiffness=translational_stiffness,
+        )
+
+        internal = support.to_internal()
+
+        assert isinstance(internal, InternalSupport)
+        assert support.name == internal.name
+        assert support.level == internal.level
+        assert support.rotational_stiffness == internal.rotational_stiffness
+        assert support.translational_stiffness == internal.translational_stiffness
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "argument,value,raising_context",
+        [
+            pytest.param(
+                "name",
+                "i" * 51,
+                pytest.raises(
+                    ValidationError, match=r"ensure this value has at most 50 characters"
+                ),
+                id="Name too long",
+            ),
+            pytest.param(
+                "rotational_stiffness",
+                -1,
+                pytest.raises(
+                    ValidationError,
+                    match=r"ensure this value is greater than or equal to 0",
+                ),
+                id="Name too long",
+            ),
+            pytest.param(
+                "translational_stiffness",
+                -1,
+                pytest.raises(
+                    ValidationError,
+                    match=r"ensure this value is greater than or equal to 0",
+                ),
+                id="Negative translational stiffness",
+            ),
+        ],
+    )
+    def test_intialization_spring_support_invalid_input_raises(
+        self, argument: str, value: Any, raising_context,
+    ):
+        valid_kwargs = {
+            "name": "Valid name",
+            "level": -5,
+            "rotational_stiffness": 10,
+            "translational_stiffness": 10,
+        }
+        valid_kwargs[argument] = value
+
+        with raising_context:
+            SpringSupport(**valid_kwargs)
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize("name", [pytest.param("Correct name"),])
+    @pytest.mark.parametrize(
+        "level",
+        [
+            pytest.param(10, id="Valid level as int"),
+            pytest.param(10.0, id="Valid level as float"),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "rotational_stiffness",
+        [
+            pytest.param(0.0, id="Valid zero rotational stiffness"),
+            pytest.param(10, id="Valid rotational stiffness as int"),
+            pytest.param(10.0, id="Valid rotational stiffness as float"),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "translational_stiffness",
+        [
+            pytest.param(0.0, id="Valid zero translational stiffness"),
+            pytest.param(10, id="Valid translational stiffness as int"),
+            pytest.param(10.0, id="Valid translational stiffness as float"),
+        ],
+    )
+    def test_dsheetpilingmodel_add_support(
+        self,
+        _model: DSheetPilingModel,
+        name: str,
+        level: float,
+        rotational_stiffness: float,
+        translational_stiffness: float,
+    ):
+        support = SpringSupport(
+            name=name,
+            level=level,
+            rotational_stiffness=rotational_stiffness,
+            translational_stiffness=translational_stiffness,
+        )
+        current_stage = _model.current_stage
+        _model.add_support(support=support, stage_id=current_stage)
+
+        # Validate [RIGID SUPPORTS]
+        assert isinstance(
+            _model.datastructure.input_data.spring_supports, SupportContainer
+        )
+        assert len(_model.datastructure.input_data.spring_supports.supports) == 1
+        internal = _model.datastructure.input_data.spring_supports.supports[0]
+        assert isinstance(internal, InternalSupport)
+        assert internal.name == support.name
+        assert internal.level == support.level
+        assert rotational_stiffness == internal.rotational_stiffness
+        assert translational_stiffness == internal.translational_stiffness
+
+        # Validate [CONSTRUCTION STAGES]
+        assert len(_model.datastructure.input_data.construction_stages.stages) == 1
+        assert (
+            len(
+                _model.datastructure.input_data.construction_stages.stages[
+                    0
+                ].spring_supports
+            )
+            == 1
+        )
+        assert (
+            _model.datastructure.input_data.construction_stages.stages[0].spring_supports[
+                0
+            ]
+            == support.name
+        )
+
+
+class TestRigidSupport:
+    @pytest.mark.unittest
+    @pytest.mark.parametrize("name", [pytest.param("Correct name"),])
+    @pytest.mark.parametrize(
+        "level",
+        [
+            pytest.param(10, id="Valid level as int"),
+            pytest.param(10.0, id="Valid level as float"),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "support_type, translational_stiffness, rotational_stiffness",
+        [
+            pytest.param(SupportType.TRANSLATION, 1, 0, id="Translation support type"),
+            pytest.param(SupportType.ROTATION, 0, 1, id="Rotation support type"),
+            pytest.param(
+                SupportType.TRANSLATION_AND_ROTATION,
+                1,
+                1,
+                id="Translation and rotation support type",
+            ),
+        ],
+    )
+    def test_intialization_rigid_support(
+        self,
+        name: str,
+        level: float,
+        support_type: SupportType,
+        rotational_stiffness: int,
+        translational_stiffness: int,
+    ):
+        support = RigidSupport(name=name, level=level, support_type=support_type,)
+
+        internal = support.to_internal()
+
+        assert isinstance(internal, InternalSupport)
+        assert support.name == internal.name
+        assert support.level == internal.level
+        assert rotational_stiffness == internal.rotational_stiffness
+        assert translational_stiffness == internal.translational_stiffness
+
+    @pytest.mark.unittest
+    @pytest.mark.parametrize(
+        "argument,value,raising_context",
+        [
+            pytest.param(
+                "name",
+                "i" * 51,
+                pytest.raises(
+                    ValidationError, match=r"ensure this value has at most 50 characters"
+                ),
+                id="Name too long",
+            ),
+            pytest.param(
+                "support_type",
+                5,
+                pytest.raises(
+                    ValidationError,
+                    match=r"value is not a valid enumeration member; permitted: 1, 2, 3",
+                ),
+                id="Name too long",
+            ),
+        ],
+    )
+    def test_intialization_rigid_support_invalid_input_raises(
+        self, argument: str, value: Any, raising_context,
+    ):
+        valid_kwargs = {
+            "name": "Valid name",
+            "level": -5,
+            "support_type": SupportType.TRANSLATION,
+        }
+        valid_kwargs[argument] = value
+
+        with raising_context:
+            RigidSupport(**valid_kwargs)
+
+    @pytest.mark.integrationtest
+    @pytest.mark.parametrize("name", [pytest.param("Correct name"),])
+    @pytest.mark.parametrize(
+        "level",
+        [
+            pytest.param(10, id="Valid level as int"),
+            pytest.param(10.0, id="Valid level as float"),
+        ],
+    )
+    @pytest.mark.parametrize(
+        "support_type, translational_stiffness, rotational_stiffness",
+        [
+            pytest.param(SupportType.TRANSLATION, 1, 0, id="Translation support type"),
+            pytest.param(SupportType.ROTATION, 0, 1, id="Rotation support type"),
+            pytest.param(
+                SupportType.TRANSLATION_AND_ROTATION,
+                1,
+                1,
+                id="Translation and rotation support type",
+            ),
+        ],
+    )
+    def test_dsheetpilingmodel_add_support(
+        self,
+        _model: DSheetPilingModel,
+        name: str,
+        level: float,
+        support_type: SupportType,
+        rotational_stiffness: int,
+        translational_stiffness: int,
+    ):
+        support = RigidSupport(name=name, level=level, support_type=support_type,)
+        current_stage = _model.current_stage
+        _model.add_support(support=support, stage_id=current_stage)
+
+        # Validate [RIGID SUPPORTS]
+        assert isinstance(
+            _model.datastructure.input_data.rigid_supports, SupportContainer
+        )
+        assert len(_model.datastructure.input_data.rigid_supports.supports) == 1
+        internal = _model.datastructure.input_data.rigid_supports.supports[0]
+        assert isinstance(internal, InternalSupport)
+        assert internal.name == support.name
+        assert internal.level == support.level
+        assert rotational_stiffness == internal.rotational_stiffness
+        assert translational_stiffness == internal.translational_stiffness
+
+        # Validate [CONSTRUCTION STAGES]
+        assert len(_model.datastructure.input_data.construction_stages.stages) == 1
+        assert (
+            len(
+                _model.datastructure.input_data.construction_stages.stages[
+                    0
+                ].rigid_supports
+            )
+            == 1
+        )
+        assert (
+            _model.datastructure.input_data.construction_stages.stages[0].rigid_supports[
+                0
+            ]
+            == support.name
+        )

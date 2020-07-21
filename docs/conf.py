@@ -22,9 +22,6 @@ project = "geolib"
 copyright = "2020, Deltares"
 author = "Deltares"
 
-# The full version, including alpha/beta/rc tags
-release = "0.1"
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -34,10 +31,10 @@ release = "0.1"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.todo",
-    "sphinx.ext.viewcode",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
     "rst2pdf.pdfbuilder",
+    "releases",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -88,9 +85,10 @@ html_theme_options = {
     "show_related": False,
     "note_bg": "#FFF59C",
     "extra_nav_links": {
-        "Source code @ Bitbucket": "https://bitbucket.org/DeltaresGEO/geolib/src",
-        "Jira Issue Tracker": "https://bitbucket.org/DeltaresGEO/geolib/issues?status=new&status=open",
-        "Project documentation @ Wiki": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home",
+        "@Source code": "https://bitbucket.org/DeltaresGEO/geolib/src",
+        "@Issue Tracker": "https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB",
+        "@Project documentation": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home",
+        "@Releases": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases",
     },
     "show_related": False,
     "show_relbars": True,
@@ -108,10 +106,15 @@ html_sidebars: {
 }
 
 # If true, links to the reST sources are added to the pages.
-html_show_sourcelink = True
+html_show_sourcelink = False
 
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 html_show_sphinx = False
 
 # Display todos
 todo_include_todos = True
+
+# Releases config
+releases_release_uri = "https://publicwiki.deltares.nl/download/attachments/166462065/geolib-%s-py3-none-any.whl?api=v2"
+releases_issue_uri = "https://issuetracker.deltares.nl/browse/%s"
+releases_unstable_prehistory = True

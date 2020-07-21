@@ -7,7 +7,6 @@ from geolib.soils import StorageTypes
 from enum import IntEnum
 
 
-
 class PreconType(IntEnum):
     UNDEFINED = -1
     OCR = 0
@@ -121,7 +120,7 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soilsratio: float = 0  # fixed value
     soilcrindex: float = 1
     soilccindex: float = 1
-    soilcswindexfixed: float = 0  # fixed value
+    soilcswindex: float = 0  # fixed value
     soilpricompindex: float = 0.01  # SoilPriCompIndex
     soilseccompindex: float = 0.1  # SoilSecCompIndex
     soilseccomprate: float = 0.005  # SoilSecCompRate

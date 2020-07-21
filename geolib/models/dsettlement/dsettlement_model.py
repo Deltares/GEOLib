@@ -22,6 +22,7 @@ from .internal import (
     Curve,
     DSeriePoint,
     DSettlementStructure,
+    DSettlementOutputStructure,
     Layer,
     Layers,
     NonUniformLoad,
@@ -38,6 +39,7 @@ from .internal import (
     ConsolidationModel,
     CalculationOptions,
     Model,
+    WaterLoads,
 )
 from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.loads import (
@@ -56,15 +58,17 @@ DataClass.Config.validate_assignment = True
 
 
 class DSettlementModel(BaseModel):
-    """
+    r"""
     D-Settlement is a dedicated tool for predicting soil settlements
     by external loading.
 
     This model can read, modify and create
-    *.sli files, read *.sld and *.err files.
+    \*.sli files, read \*.sld and \*.err files.
     """
 
-    datastructure: BaseModelStructure = DSettlementStructure()
+    datastructure: Union[
+        DSettlementStructure, DSettlementOutputStructure
+    ] = DSettlementStructure()
 
     @property
     def parser_provider_type(self) -> Type[DSettlementParserProvider]:
@@ -111,6 +115,7 @@ class DSettlementModel(BaseModel):
     ):
         """
         Sets the D-settlement Model. Initializes CalculationOptions and Model if the type is str
+
         Args:
             constitutive_model (SoilModel): enum
             consolidation_model (ConsolidationModel): enum
@@ -154,9 +159,8 @@ class DSettlementModel(BaseModel):
     def set_any_calculation_options(self, **kwargs):
         """
         Sets calculation options and initializes or removes data when necessary
+
         Args:
-            **kwargs: Type variable, keyword arguments
-        Kwargs:
             precon_pressure_within_layer (PreconPressureWithinLayer): type of preconsolidation pressure within the layer
             is_imaginary_surface (bool): true if imaginary surface
             imaginary_surface_layer (PositivInt): index of layer
@@ -165,23 +169,17 @@ class DSettlementModel(BaseModel):
             is_maintain_profile (bool): true if profile should be maintained
             maintain_profile_material_name (str): name of the profile
             maintain_profile_time (conint(ge=0, le=100000)): time for maintain profile [days]
-            maintain_profile_gamma_dry (confloat(ge=-100, le=100)): unit weight above phreatic line for
-                maintain profile [kN/m3]
-            maintain_profile_gamma_wet (confloat(ge=-100, le=100)): unit weight below phreatic line for
-                maintain profile [kN/m3]
-            dispersion_conditions_layer_boundaries_top (DispersionConditionLayerBoundary): dispersion condition at the
-                top of the layer
-            dispersion_conditions_layer_boundaries_top (DispersionConditionLayerBoundary): dispersion condition at the
-                bottom of the layer
+            maintain_profile_gamma_dry (confloat(ge=-100, le=100)): unit weight above phreatic line for maintain profile [kN/m3]
+            maintain_profile_gamma_wet (confloat(ge=-100, le=100)): unit weight below phreatic line for maintain profile [kN/m3]
+            dispersion_conditions_layer_boundaries_top (DispersionConditionLayerBoundary): dispersion condition at the top of the layer
+            dispersion_conditions_layer_boundaries_top (DispersionConditionLayerBoundary): dispersion condition at the bottom of the layer
             stress_distribution_soil (StressDistributionSoil): type of stress distribution of the soil
             stress_distribution_loads (StressDistributionLoads): type of stress distribution loads
             iteration_stop_criteria_submerging (confloat(ge=0.0, le=1.0)): submerging iteration stop criteria
-            iteration_stop_criteria_submerging_layer_height(confloat(ge=0, le=99.999)):  minimum settlement for
-                submerging iteration stop criteria [m]
+            iteration_stop_criteria_submerging_layer_height(confloat(ge=0, le=99.999)):  minimum settlement for submerging iteration stop criteria [m]
             maximum_iteration_steps_for_submerging (conint(ge=1, le=100)): maximum iteraion steps for submerging
             iteration_stop_criteria_desired_profile (confloat(ge=0, le=1)): iteration stop criteria for desired profile
-            load_column_width_imaginary_surface (confloat(ge=0.05, le=10000)): load column width of the imaginary
-                surface [m]
+            load_column_width_imaginary_surface (confloat(ge=0.05, le=10000)): load column width of the imaginary surface [m]
             load_column_width_non_uniform_loads (confloat(ge=0.05, le=10000)): load column width of non-uniform loads [m]
             load_column_width_trapeziform_loads (confloat(ge=0.05, le=10000)): load column width of trapeziform loads [m]
             end_of_consolidation (conint(ge=1, le=100000)): end of settlement calculation [days]
@@ -191,8 +189,7 @@ class DSettlementModel(BaseModel):
             x_coord_dissipation (float): x-coordinate of the dissipation vertical [m]
             use_fit_factors (bool): true if fit parameters should be used
             x_coord_fit (float): x-coordinate of the fit [m]
-            is_predict_settlements_omitting_additional_load_steps (bool): true if output of settlements by partial
-                loading
+            is_predict_settlements_omitting_additional_load_steps (bool): true if output of settlements by partial loading
 
         Returns:
             calculation options
@@ -247,26 +244,30 @@ class DSettlementModel(BaseModel):
         is_reliability_calculation: bool,
     ):
         """
-            Set calculation options for probabilistic calculation.
-            Args:
-               point_of_vertical : Select point that correspond to a defined vertical for the reliability analysis.
-               residual_settlement : For FORM and Monte Carlo methods, the allowed residual settlement can be set.
-               maximum_number_of_samples : The number of samples that the Monte Carlo method will use.
-               maximum_iterations : The maximum number of iterations for the FORM method.
-               reliability_type : Select one of the following methods: 
-                    - SettlementsDeterministic: a regular deterministic settlement analysis along all verticals, based on fixed mean values of the parameters.
-                    - BandWidthOfSettlementsFOSM: Quick and approximate determination of the bandwidth and the influencing factors (parameter 
-                        sensitivity) for the total settlements along one vertical. The determination is executed at user defined time points and at the time points
-                        of measurements. Calculation time will increase with an increasing number of stochastic parameters.
-                    - ProbabilityOfFailureFORM: Iterative determination of the reliability index, bandwidth and influencing factors for the residual
-                        settlement along one vertical. A separate FORM analysis is performed for each residual settlement that starts from each different
-                        user defined time point. Calculation time will increase with an increasing number of stochastic parameters, user defined time points
-                        and iterations. Furthermore, the FORM method is only conditionally stable.
-                    - BandWidthAndProbabilityOfFailureMonteCarlo: Determination of the bandwidth for the total settlements along one vertical, and also of the reliability index
-                        and bandwidth for the residual settlements, by repetitive execution of settlement analyses (sampling). Each sample is executed with
-                        random parameter values, derived from the stochastic distributions. Calculation time will increase with the number of samples. Accurate
-                        Monte Carlo analysis requires a large number of samples, if many stochastic parameters are involved.
-                is_reliability_calculation : set to True if a probabilistic calculation should be performed.s
+        Set calculation options for probabilistic calculation.
+
+        Args:
+            point_of_vertical : Select point that correspond to a defined vertical for the reliability analysis.
+            residual_settlement : For FORM and Monte Carlo methods, the allowed residual settlement can be set.
+            maximum_number_of_samples : The number of samples that the Monte Carlo method will use.
+            maximum_iterations : The maximum number of iterations for the FORM method.
+            reliability_type : Select one of the following methods
+
+                - SettlementsDeterministic: a regular deterministic settlement analysis along all verticals, based on fixed mean values of the parameters.
+                - BandWidthOfSettlementsFOSM: Quick and approximate determination of the bandwidth and the influencing factors (parameter 
+                    sensitivity) for the total settlements along one vertical. The determination is executed at user defined time points and at the time points
+                    of measurements. Calculation time will increase with an increasing number of stochastic parameters.
+                - ProbabilityOfFailureFORM: Iterative determination of the reliability index, bandwidth and influencing factors for the residual
+                    settlement along one vertical. A separate FORM analysis is performed for each residual settlement that starts from each different
+                    user defined time point. Calculation time will increase with an increasing number of stochastic parameters, user defined time points
+                    and iterations. Furthermore, the FORM method is only conditionally stable.
+                - BandWidthAndProbabilityOfFailureMonteCarlo: Determination of the bandwidth for the total settlements along one vertical, and also of the reliability index
+                    and bandwidth for the residual settlements, by repetitive execution of settlement analyses (sampling). Each sample is executed with
+                    random parameter values, derived from the stochastic distributions. Calculation time will increase with the number of samples. Accurate
+                    Monte Carlo analysis requires a large number of samples, if many stochastic parameters are involved.
+
+            is_reliability_calculation : set to True if a probabilistic calculation should be performed.
+
         """
         self.datastructure.check_x_in_vertical(point_of_vertical=point_of_vertical)
         self.datastructure.probabilistic_data = self.datastructure.probabilistic_data.set_probabilistic_data(
@@ -352,9 +353,7 @@ class DSettlementModel(BaseModel):
             Determine how a 1D geometry would fit in here.
         """
 
-        # Can be used after Soils are implemented
         # TODO:: add check that the soil name exist
-        # TODO:: add soil together with the layer
         # soilname = self.soils.add_soil(material)
         layer = Layer(
             material=material_name,
@@ -437,11 +436,18 @@ class DSettlementModel(BaseModel):
             self.datastructure.non__uniform_loads = NonUniformLoads()
         self.non_uniform_loads.add_load(name, non_uniform_load)
 
-    def add_water_load(self, time: timedelta, phreatic_line_id: int):
+    def add_water_load(self, name: str, time: timedelta, phreatic_line_id: int):
         """Create water load for a time in days, based on a phreatic line.
 
         Edit the head lines for each layer with `create layer`.
         """
+        if isinstance(self.datastructure.water_loads, str):
+            logging.warning("Replacing unparsed [WATER LOADS]!")
+            self.datastructure.water_loads = WaterLoads()
+        headlines = self.datastructure.get_headlines_for_layers()
+        self.datastructure.water_loads.add_waterload(
+            name, time.days, phreatic_line_id, headlines
+        )
 
     def set_calculation_times(self, time_steps: List[timedelta]):
         """(Re)set calculation time(s).
@@ -462,11 +468,11 @@ class DSettlementModel(BaseModel):
 
     def set_verticals(self, locations: List[Point]) -> None:
         """
-            Set calculation verticals in geometry.
-            X and Y coordinates should be defined for each vertical.
+        Set calculation verticals in geometry.
+        X and Y coordinates should be defined for each vertical.
 
-            .. todo::
-                Add check that checks that the verticals are not outside of the geometry boundaries. [GEOLIB-12]
+        .. todo::
+            Add check that checks that the verticals are not outside of the geometry boundaries. [GEOLIB-12]
         """
         points = [DSeriePoint.from_point(point) for point in locations]
         verticals = Verticals(locations=points)
@@ -479,4 +485,3 @@ class DSettlementModel(BaseModel):
             raise ValueError(
                 "If you wish to add a vertical drain then value is_vertical_drains for the model should be True"
             )
-

@@ -206,7 +206,7 @@ D-Settlement={{ version.d__settlement }}
 [END OF WATER]
 
 [NON-UNIFORM LOADS]
-{% if non__uniform_loads.loads is mapping %}
+{% if non__uniform_loads is mapping %}
     {{ non__uniform_loads.loads|length }} = number of items
 {% for name, non__uniform_load in non__uniform_loads.loads.items() %}
 {{ name }}
@@ -222,7 +222,21 @@ D-Settlement={{ version.d__settlement }}
 [END OF NON-UNIFORM LOADS]
 
 [WATER LOADS]
+{% if water_loads is mapping %}
+    {{ water_loads.waterloads|length }} = number of items
+{% for water_load in water_loads.waterloads %}
+{{ water_load.name }}
+{{ '{:5}'.format(water_load.time) }} = Time
+{{ '{:5}'.format(water_load.phreatic_line) }} = Phreatic line
+{{ '{:5}'.format(water_load.headlines|length) }} = number of items
+{% for head_line in water_load.headlines %}
+
+{{ '{:8}'.format(head_line[0]) }}{{ '{:8}'.format(head_line[1]) }} = PL-line top, PL-line bottom
+{% endfor %}
+{% endfor %}
+{% else %}
 {{ water_loads }}
+{% endif %}
 [END OF WATER LOADS]
 
 [OTHER LOADS]

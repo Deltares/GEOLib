@@ -1,14 +1,19 @@
+.. _soil_tut:
+
+Tutorial Soils
+==============
+
 Soils in GEOlib are added in a generic way, this means that there is one basis soil
 class which is meant to be the input for all the separate D-Serie products.
 For this reason it is possible that the parameter locations are not as you
 are used to in the D-Serie products.
 
 Parameters in the Soil class are clustered based on physical meaning. I.e. cohesion
-and friction angle are clustered in the MohrCoulombParameters class; reloading_swelling_constant_a
-is stored in the IsotacheParameters class and permeability parameters are stored in the StorageParameters
-class. See @@todo to be discussed @@ for a complete overview where each parameter is stored.
+and friction angle are clustered in the MohrCoulombParameters class; ``reloading_swelling_constant_a``
+is stored in the ``IsotacheParameters`` class and permeability parameters are stored in the ``StorageParameters``
+class.
 
-Since paramaters are clustered in different classes as the Soil class, it is required to
+Since parameters are clustered in different classes as the Soil class, it is required to
 fill in parameters in these respective classes. Below an example is given on how to
 to initialise a soil with a friction angle and cohesion.
 
@@ -74,7 +79,7 @@ Below three examples are given on how to input a stochastic variable in the soil
 When the parameters, required for the corresponding model are set, the soil can be added
 to the soil list of the corresponding model. Note that, for non-filled in parameters, the default value is used.
 Below an example is given on how to add a soil in D-Settlement. For an overview on how to pass the complete workflow
-for each model, see @@@.
+for each model, see the other :ref:`tutorial`.
 
 .. code-block:: python
 

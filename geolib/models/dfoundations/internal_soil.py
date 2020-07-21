@@ -57,6 +57,7 @@ class Soil(DSeriesUnmappedNameProperties):
     class Config:
         arbitrary_types_allowed = True
         validate_assignment = True
+        extra: "forbid"
 
     @classmethod
     def default_soils(cls, model: str = "BEARING_PILES") -> List["Soil"]:

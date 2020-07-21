@@ -16,6 +16,7 @@ from geolib.soils import Soil
 from .dfoundations_parserprovider import DFoundationsParserProvider
 from .internal import (
     DFoundationsStructure,
+    DFoundationsDumpStructure,
     CPTList,
     PreliminaryDesign,
     SoilCollection,
@@ -128,14 +129,15 @@ class CalculationOptions(DataClass):
 
 
 class DFoundationsModel(BaseModel):
-    """D-Foundations enables the user to calculate piles (bearing and tension) 
+    r"""D-Foundations enables the user to calculate piles (bearing and tension) 
     and shallow foundation in accordance with the Dutch (and Belgian) standards.
 
-    This model can read, modify and create
-    *.foi files, read *.fod and *.err files.
+    This model can read, modify and create \*.foi files, read \*.fod and \*.err files.
     """
 
-    datastructure: BaseModelStructure = DFoundationsStructure()
+    datastructure: Union[
+        DFoundationsDumpStructure, DFoundationsStructure,
+    ] = DFoundationsStructure()
 
     @property
     def parser_provider_type(self) -> Type[DFoundationsParserProvider]:
@@ -167,10 +169,15 @@ class DFoundationsModel(BaseModel):
         model: Union[BearingPilesModel, TensionPilesModel],
         calculation: CalculationOptions,
     ) -> None:
-        """(Re)Set ModelType (Bearing/Tension) and ConstructionType for model. Please note that:
-        - All  profiles will be automatically selected for calculation
-        - Only the relevant pile types will be used (bearing/tension)
+        """(Re)Set ModelType (Bearing/Tension) and ConstructionType for model.
+
+        Please note:
+
+        - All profiles will be automatically selected for calculation
+        - Only the relevant pile types will be used (bearing/tension):
+
             - Only the first one added will be used in the case of verification calculation
+
         - On model change (bearing to tensions and reverse) the soils will be replaced by defaults
 
         It is advised to only use this method once at the beginning of your workflow.

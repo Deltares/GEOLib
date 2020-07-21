@@ -27,7 +27,3 @@ object as of yet.
 Note however that for D-Settlement this List of points should
 form a LineString (ordered in X), while for D-Stability they should 
 form an ordered Ring (Polygon).
-
-.. automodule:: geolib.geometry.two
-    :members:
-    :undoc-members:

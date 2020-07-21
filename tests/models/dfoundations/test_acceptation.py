@@ -114,6 +114,7 @@ def test_run_model_from_scratch_expanded():
         calculationtype=gl.models.dfoundations.dfoundations_model.CalculationType.VERIFICATION_DESIGN,
         cpt_test_level=-19.0,
     )
+    # Model needs to be set prior to pile
     df.set_model(model_options, calculation_options)
     df.add_pile_if_unique(pile, location)
 

@@ -919,7 +919,7 @@ class PersistableLayer(DataClass):
     def polygon_checks(cls, points):
         """
         Todo:
-            * find some way to check the validity of the given points
+            Find a way to check the validity of the given points
         """
         # implement some checks
         # 1. is this a simple polygon
@@ -951,7 +951,7 @@ class Geometry(DStabilitySubStructure):
             bool: True if this point is found on a layer, False otherwise
 
         Todo:
-            * how to take x, z accuracy into account
+            Take x, z accuracy into account
         """
         for layer in self.Layers:
             for p in layer.Points:
@@ -1655,6 +1655,7 @@ class DStabilityStructure(BaseModelStructure):
     class Config:
         arbitrary_types_allowed = True
         validate_assignment = True
+        extra: "forbid"
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validaty_foreign_keys(cls, values):

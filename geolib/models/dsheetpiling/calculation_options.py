@@ -73,12 +73,14 @@ class ReliabilityAnalysisCalculationOptions(CalculationOptions):
     """Reliability analysis calculation selected in Start Calculation
     window."""
 
+    input_calculation_type: CalculationType = CalculationType.RELIABILITY_ANALYSIS
+
 
 class OverallStabilityCalculationOptions(CalculationOptions):
     """Overall stability calculation selected in Start Calculation window.
 
     Arguments:
-     cur_stability_stage: Id if the stage to be checked.
+     cur_stability_stage: Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.
      overall_stability_type: which type of calculation is going to be performed
      stability_eurocode_partial_factor_set: partial factor set selected for the EC7 General calculation
      stability_ec7_nl_partial_factor_set: partial factor set selected for the EC7 NL calculation
@@ -86,6 +88,7 @@ class OverallStabilityCalculationOptions(CalculationOptions):
      stability_cur_partial_factor_set: partial factor set selected for the CUR calculation
     """
 
+    input_calculation_type: CalculationType = CalculationType.OVERALL_STABILITY
     cur_stability_stage: conint(ge=0) = 0
     overall_stability_type: DesignType = DesignType.REPRESENTATIVE
     stability_eurocode_partial_factor_set: EuroCodePartialFactorSet = EuroCodePartialFactorSet.DA1SET1
@@ -99,9 +102,10 @@ class KranzAnchorStrengthCalculationOptions(CalculationOptions):
     window.
     
     Arguments:
-     cur_anchor_force_stage: Id if the stage to be checked.
+     cur_anchor_force_stage: Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.
     """
 
+    input_calculation_type: CalculationType = CalculationType.CHARACTERISTIC_KRANZ_ANCHOR_STRENGTH
     cur_anchor_force_stage: conint(ge=0) = 0
 
 
@@ -112,6 +116,7 @@ class StandardCalculationOptions(CalculationOptions):
      calc_auto_lambdas_on: When True Automatic leaves the values of the lateral earth pressure ratios that are calculated by the Culmann (c, phi, delta) method as they are.
     """
 
+    input_calculation_type: CalculationType = CalculationType.STANDARD
     calc_auto_lambdas_on: bool = True
 
 
@@ -134,6 +139,7 @@ class VerifyCalculationOptions(CalculationOptions):
      cur_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
     """
 
+    input_calculation_type: CalculationType = CalculationType.VERIFY_SHEETPILING
     verify_type: VerifyType = VerifyType.CUR
     eurocode_partial_factor_set: VerifyEurocodePartialFactorSet = VerifyEurocodePartialFactorSet.DA1
     eurocode_overall_stability: bool = False
@@ -157,10 +163,13 @@ class VerifyCalculationOptions(CalculationOptions):
 
 class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     """Design sheet pile calculation selected in Start Calculation window.
-    
-    Arguments:
-     design_stage: construction stage for which a stability analysis is to be used in order to determine the minimum length for the sheet piling.
-     design_pile_length_from: The starting point of the pile over which the analysis should be performed
+
+    Note that design_pile_length can show up as a different value in the GUI
+    compared to what's been set in the .shi file.
+
+    Args:
+     design_stage: Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.
+     design_pile_length_from: The starting point of the pile over which the analysis should be performed.
      design_pile_length_to: The end point of the pile over which the analysis should be performed
      design_pile_length_decrement: the Decrement in length for each analysis step.
      design_type: types of design.
@@ -173,6 +182,7 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
      design_cur_method: Select method of calculation according to CUR 166 design procedure
     """
 
+    input_calculation_type: CalculationType = CalculationType.DESIGN_SHEETPILING_LENGTH
     design_stage: conint(ge=0) = 0
     design_pile_length_from: confloat(ge=1, le=100) = 1
     design_pile_length_to: confloat(ge=1, le=100) = 1

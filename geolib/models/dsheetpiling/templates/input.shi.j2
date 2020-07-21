@@ -54,24 +54,24 @@ SoilLambdaType={{ soil.soillambdatype.value  }}
 SoilLam1={{ soil.soillam1 }}
 SoilLam2={{ soil.soillam2 }}
 SoilLam3={{ soil.soillam3 }}
-SoilKb0={{ soil.soilkb0 }}
-SoilKb1={{ soil.soilkb1 }}
-SoilKb2={{ soil.soilkb2 }}
-SoilKb3={{ soil.soilkb3 }}
-SoilKb4={{ soil.soilkb4 }}
-SoilKo0={{ soil.soilko0 }}
-SoilKo1={{ soil.soilko1 }}
-SoilKo2={{ soil.soilko2 }}
-SoilKo3={{ soil.soilko3 }}
-SoilKo4={{ soil.soilko4 }}
-SoilCurKb1={{ soil.soilcurkb1 }}
-SoilCurKb2={{ soil.soilcurkb2 }}
-SoilCurKb3={{ soil.soilcurkb3 }}
-SoilCurKo1={{ soil.soilcurko1 }}
-SoilCurKo2={{ soil.soilcurko2 }}
-SoilCurKo3={{ soil.soilcurko3 }}
+SoilKb0={{ "%.5E"|format(soil.soilkb0) }}
+SoilKb1={{ "%.5E"|format(soil.soilkb1) }}
+SoilKb2={{ "%.5E"|format(soil.soilkb2) }}
+SoilKb3={{ "%.5E"|format(soil.soilkb3) }}
+SoilKb4={{ "%.5E"|format(soil.soilkb4) }}
+SoilKo0={{ "%.5E"|format(soil.soilko0) }}
+SoilKo1={{ "%.5E"|format(soil.soilko1) }}
+SoilKo2={{ "%.5E"|format(soil.soilko2) }}
+SoilKo3={{ "%.5E"|format(soil.soilko3) }}
+SoilKo4={{ "%.5E"|format(soil.soilko4) }}
+SoilCurKb1={{ "%.5E"|format(soil.soilcurkb1) }}
+SoilCurKb2={{ "%.5E"|format(soil.soilcurkb2) }}
+SoilCurKb3={{ "%.5E"|format(soil.soilcurkb3) }}
+SoilCurKo1={{ "%.5E"|format(soil.soilcurko1) }}
+SoilCurKo2={{ "%.5E"|format(soil.soilcurko2) }}
+SoilCurKo3={{ "%.5E"|format(soil.soilcurko3) }}
 SoilHorizontalBehaviourType={{ soil.soilhorizontalbehaviourtype.value  }}
-SoilElasticity={{ soil.soilelasticity }}
+SoilElasticity={{ "%.5E"|format(soil.soilelasticity) }}
 SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 [END OF SOIL]
 {% endfor %}
@@ -79,6 +79,8 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 
 [RUN IDENTIFICATION]
 {{ run_identification }}
+
+
 [END OF RUN IDENTIFICATION]
 
 [MODEL]
@@ -87,15 +89,15 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 {{ model.method.value }} : {{ {0: 'Ka, Ko, Kp soil parameters', 1: 'C, phi, delta soil parameters', 2: 'Mixed'}[model.method.value]}}
 {{ model.verification | int }} : Verification = {{ model.verification | string | upper }}
 {{ model.ec7se_visible | int }} : EC7-SE visible = {{ model.ec7se_visible | string | upper }}
-{% if model.pile_load_option.value == 'forces' %}
-0 : Pile loaded by forces
-0 : Pile loaded by user defined soil displacements
-{% elif model.pile_load_option.value == 'user_defined_displacements' %}
-1 : Pile loaded by user defined soil displacements
-0 : Pile loaded by user defined soil displacements
-{% elif model.pile_load_option.value == 'calculated_displacements' %}
-1 : Pile loaded by calculated soil displacements
-1 : Pile loaded by calculated soil displacements
+{% if not model.pile_load_option %}
+{{ model.pile_load_option | int }} : Pile loaded by forces
+{{ model.pile_load_by_user | int }} : Pile loaded by user defined soil displacements
+{% elif model.pile_load_option and not model.pile_load_by_user %}
+{{ model.pile_load_option | int }} : Pile loaded by user defined soil displacements
+{{ model.pile_load_by_user | int }} : Pile loaded by user defined soil displacements
+{% elif model.pile_load_option and model.pile_load_by_user %}
+{{ model.pile_load_option | int }} : Pile loaded by calculated soil displacements
+{{ model.pile_load_by_user | int }} : Pile loaded by calculated soil displacements
 {% endif %}
 {{ model.probabilistic | int }} : Probabilistic = {{ model.probabilistic | string | upper }}
 {{ model.check_vertical_balance | int }} : Check vertical balance = {{ model.check_vertical_balance | string | upper }}
@@ -112,32 +114,31 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 {{ cpt_list }}
 [END OF CPT LIST]
 
-
 [SHEET PILING]
 {% if sheet_piling is mapping %}
 0
-     {{sheet_piling.leveltopsheetpiling}} Level top sheet piling
-     {{sheet_piling.lengthsheetpiling}} Length
-  {{sheet_piling.sheetpiling|length}} Number of elements
+{{ "%10.2f"|format(sheet_piling.leveltopsheetpiling) }} Level top sheet piling
+{{ "%10.2f"|format(sheet_piling.lengthsheetpiling) }} Length
+  {{ sheet_piling.sheetpiling|length }} Number of elements
 {% for element in sheet_piling.sheetpiling %}
 [SHEET PILING ELEMENT]
 {{ element.name }}
 SheetPilingElementMaterialType={{ element.sheetpilingelementmaterialtype.value }}
-SheetPilingElementEI={{ element.sheetpilingelementei }}
-SheetPilingElementWidth={{ element.sheetpilingelementwidth }}
-SheetPilingElementLevel={{ element.sheetpilingelementlevel }}
-SheetPilingElementHeight={{ element.sheetpilingelementheight }}
+SheetPilingElementEI={{ "%E"|format(element.sheetpilingelementei) }}
+SheetPilingElementWidth={{ "%0.2f"|format(element.sheetpilingelementwidth) }}
+SheetPilingElementLevel={{ "%0.2f"|format(element.sheetpilingelementlevel) }}
+SheetPilingElementHeight={{ element.sheetpilingelementheight|int }}
 SheetPilingElementCoatingArea={{ element.sheetpilingelementcoatingarea }}
 SheetPilingPileWidth={{ element.sheetpilingpilewidth }}
 SheetPilingElementSectionArea={{ element.sheetpilingelementsectionarea }}
 SheetPilingElementResistingMoment={{ element.sheetpilingelementresistingmoment }}
-SheetPilingElementReductionFactorEI={{ element.sheetpilingelementreductionfactorei }}
+SheetPilingElementReductionFactorEI={{ "%0.2f"|format(element.sheetpilingelementreductionfactorei) }}
 SheetPilingElementNote={{ element.sheetpilingelementnote }}
-SheetPilingElementMaxCharacteristicMoment={{ element.sheetpilingelementmaxcharacteristicmoment }}
-SheetPilingElementMaxPlasticCharacteristicMoment={{ element.sheetpilingelementmaxplasticcharacteristicmoment }}
-SheetPilingElementKMod={{ element.sheetpilingelementkmod }}
-SheetPilingElementMaterialFactor={{ element.sheetpilingelementmaterialfactor }}
-sSheetPilingElementReductionFactorMaxMoment={{ element.ssheetpilingelementreductionfactormaxmoment }}
+SheetPilingElementMaxCharacteristicMoment={{ "%0.2f"|format(element.sheetpilingelementmaxcharacteristicmoment) }}
+SheetPilingElementMaxPlasticCharacteristicMoment={{ "%0.2f"|format(element.sheetpilingelementmaxplasticcharacteristicmoment) }}
+SheetPilingElementKMod={{ "%0.2f"|format(element.sheetpilingelementkmod) }}
+SheetPilingElementMaterialFactor={{ "%0.2f"|format(element.sheetpilingelementmaterialfactor) }}
+sSheetPilingElementReductionFactorMaxMoment={{ "%0.2f"|format(element.ssheetpilingelementreductionfactormaxmoment) }}
 DiaphragmWallIsSymmetric={{ element.diaphragmwallissymmetric }}
 DiaphragmWallPosEIElastoPlastic1={{ element.diaphragmwallposeielastoplastic1 }}
 DiaphragmWallNegEIElastoPlastic1={{ element.diaphragmwallnegeielastoplastic1 }}
@@ -176,14 +177,15 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
 [SETTLEMENT BY VIBRATION PARAMS]
 {{ settlement_by_vibration_params }}
 [END OF SETTLEMENT BY VIBRATION PARAMS]
-
 {% if anchors %}
+
 [ANCHORS]
 {% if anchors is mapping %}
   {{ anchors.anchors | length }} Number of anchors
  Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
 {% for anchor in anchors.anchors %}
-  {{ loop.index }}   {{ anchor.level }}  {{ anchor.e_modulus }}  {{ anchor.cross_section }}     {{ anchor.length }}     {{ anchor.yield_force }}     {{ anchor.angle }}     {{ anchor.wall_height_kranz }}      {{ anchor.side.value }} {{ anchor.name }}
+  {{ loop.index }}{{ "%7.2f"|format(anchor.level) }}{{ "%11.4E"|format(anchor.e_modulus) }}{{ "%11.4E"|format(anchor.cross_section) }}{{ "%9.2f"|format(anchor.length) }}{{ "%8.2f"|format(anchor.yield_force) }}{{ "%9.2f"|format(anchor.angle) }}{{ "%9.2f"|format(anchor.wall_height_kranz) }}{{ "%7d"|format(anchor.side.value) }} {{ anchor.name }}
+
 {% endfor %}
 
 {% else %}
@@ -191,14 +193,14 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
 {% endif %}
 [END OF ANCHORS]
 {% endif %}
-
 {% if struts %}
+
 [STRUTS]
 {% if struts is mapping %}
   {{ struts.struts | length }} Number of struts
  Nr        Level        E-mod     Cross sect.    Length     YieldF   Side
 {% for strut in struts.struts %}
-  {{ loop.index }}   {{ strut.level }}  {{ strut.e_modulus }}  {{ strut.cross_section }}     {{ strut.length }}     {{ strut.side.value }} {{ strut.name }}
+  {{ loop.index }} {{ "%7.2f"|format(strut.level) }} {{ "%11.4E"|format(strut.e_modulus) }} {{ "%11.4E"|format(strut.cross_section) }} {{ "%7.2f"|format(strut.length) }} {{ "%6.2f"|format(strut.buckling_force) }} {{ "%2d"|format(strut.angle) }} 0.00 {{ strut.side.value }} {{ strut.name }}
 {% endfor %}
 
 {% else %}
@@ -206,13 +208,132 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
 {% endif %}
 [END OF STRUTS]
 {% endif %}
+{% if spring_supports %}
+
+[SPRING SUPPORTS]
+{% if spring_supports is mapping %}
+  {{ spring_supports.supports | length }} Number of spring supports
+ Nr        Level    Rot stiff.    Tr stiff.
+{% for support in spring_supports.supports %}
+  {{ loop.index }}{{ "%11.2f"|format(support.level) }}{{ "%13.5f"|format(support.rotational_stiffness) }}  {{ "%11.5f"|format(support.translational_stiffness) }} {{ support.name }}
+{% endfor %}
+
+{% else %}
+{{ spring_supports }}
+{% endif %}
+[END OF SPRING SUPPORTS]
+{% endif %}
+{% if rigid_supports %}
+
+[RIGID SUPPORTS]
+{% if rigid_supports is mapping %}
+  {{ rigid_supports.supports | length }} Number of rigid supports
+ Nr        Level    Rot stiff.    Tr stiff.
+{% for support in rigid_supports.supports %}
+  {{ loop.index }}{{ "%11.2f"|format(support.level) }} {{ support.rotational_stiffness | int }} {{ support.translational_stiffness | int }} {{ support.name }}
+{% endfor %}
+
+{% else %}
+{{ rigid_supports }}
+{% endif %}
+[END OF RIGID SUPPORTS]
+{% endif %}
+
+{% if uniform_loads %}
+
+[UNIFORM LOADS]
+{% if uniform_loads is mapping %}
+{{ "%5d"|format(uniform_loads.loads | length) }} = number of items
+{% for load in uniform_loads.loads %}
+[LOAD]
+{{ load.name }}
+UniformLoadLeft={{ "%.2f"|format(load.uniformloadleft) }}
+UniformLoadRight={{ "%.2f"|format(load.uniformloadright) }}
+UniformLoadPermanent={{ load.uniformloadpermanent.value }}
+UniformLoadFavourable={{ load.uniformloadfavourable.value }}
+UniformLoadStandardDeviationLeft={{ "%.2f"|format(load.uniformloadstandarddeviationleft) }}
+UniformLoadStandardDeviationRight={{ "%.2f"|format(load.uniformloadstandarddeviationright) }}
+UniformLoadDistLeft={{ load.uniformloaddistleft.value }}
+UniformLoadDistRight={{ load.uniformloaddistright.value}}
+[END OF LOAD]
+{% endfor %}
+{% else %}
+{{ uniform_loads }}
+{% endif %}
+[END OF UNIFORM LOADS]
+
+{% endif %}
+{% if surcharge_loads %}
+
+[SURCHARGE LOADS]
+{% if surcharge_loads is mapping %}
+{{ "%5d"|format(surcharge_loads.loads | length) }} = number of items
+{% for load in surcharge_loads.loads %}
+[LOAD]
+{{ load.name }}
+{{ load.points | length }}
+{% for point in load.points %}
+[POINT]
+SurchargeLoadDistance={{ "%.2f"|format(point.surchargeloaddistance) }}
+SurchargeLoadValue={{ "%.2f"|format(point.surchargeloadvalue) }}
+[END OF POINT]
+{% endfor %}
+SurchargeLoadPermanent={{ load.surchargeloadpermanent.value }}
+SurchargeLoadFavourable={{ load.surchargeloadfavourable.value }}
+SurchargeLoadStandardDeviation={{ "%.2f"|format(load.surchargeloadstandarddeviation) }}
+SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
+[END OF LOAD]
+{% endfor %}
+{% else %}
+{{ surcharge_loads }}
+{% endif %}
+[END OF SURCHARGE LOADS]
+{% endif %}
+{% if horizontal_line_loads %}
 
 [HORIZONTAL LINE LOADS]
+{% if horizontal_line_loads is mapping %}
+  {{ horizontal_line_loads.loads | length }} Number of horizontal line loads 
+ Nr      Level      Value  Permanent Favourable Name
+{% for load in horizontal_line_loads.loads %}
+  {{ loop.index }} {{"%11.2f"|format(load.level)}} {{"%11.2f"|format(load.load)}} {{load.duration_type.value}} {{load.load_type.value}} {{load.name}}
+{% endfor %}
+{% else %}
 {{ horizontal_line_loads }}
+{% endif %}
 [END OF HORIZONTAL LINE LOADS]
+{% endif %}
+{% if moments %}
+
+[MOMENTS]
+{% if moments is mapping %}
+  {{ moments.loads | length }} Number of moments
+ Nr      Level      Value  Permanent Favourable Name
+{% for load in moments.loads %}
+  {{ loop.index }} {{"%11.2f"|format(load.level)}} {{"%11.2f"|format(load.load)}} {{load.duration_type.value}} {{load.load_type.value}} {{load.name}}
+{% endfor %}
+{% else %}
+{{ moments }}
+{% endif %}
+[END OF MOMENTS]
+{% endif %}
+{% if normal_forces %}
+
+[NORMAL FORCES]
+{% if normal_forces is mapping %}
+  {{ normal_forces.loads | length }} Number of normal forces
+ Nr   FPileTop  FSurfLeft FSurfRight   FPileToe  Permanent Favourable Name
+{% for load in normal_forces.loads %}
+  {{ loop.index }} {{"%11.2f"|format(load.force_at_sheet_pile_top)}} {{"%11.2f"|format(load.force_at_surface_level_left_side)}} {{"%11.2f"|format(load.force_at_surface_level_right_side)}} {{"%11.2f"|format(load.force_at_sheet_pile_toe)}} {{load.duration_type.value}} {{load.load_type.value}} {{load.name}}
+{% endfor %}
+{% else %}
+{{ normal_forces }}
+{% endif %}
+[END OF NORMAL FORCES]
+{% endif %}
 
 [WATER]
-{{ water }}
+ {{ water.unit_weight_of_water }} Unit weight of water
 [END OF WATER]
 
 [EARTH QUAKE]
@@ -220,7 +341,27 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
 [END OF EARTH QUAKE]
 
 [SOIL PROFILES]
+{% if soil_profiles is mapping %}
+  {{ soil_profiles.curve_number }} Number of spring characteristics curves
+  {{ soil_profiles.use_unloading_reloading_curve | int }} 1/0 : Yes/No Unloading curve
+  {{ soil_profiles.modulus_reaction_type }} 1/0 : Yes/No Use Cur values
+
+  {{ soil_profiles.soil_profiles | length }} Number of soil profiles
+{% for soil_profile in soil_profiles.soil_profiles %}
+{{ soil_profile.name }}
+       {{ "%5.3f"|format(soil_profile.coordinate.x) }} X coordinate
+       {{ "%5.3f"|format(soil_profile.coordinate.y) }} Y coordinate
+
+  {{ soil_profile.layers | length }} Number of soil layers per soil profile
+ Nr      Level   Wosp Top  Wosp Bott Material Name
+{% for layer in soil_profile.layers %}
+  {{ loop.index }}{{ "%11.2f"|format(layer.top_of_layer) }}{{ "%11.2f"|format(layer.water_pressure_top) }}{{ "%11.2f"|format(layer.water_pressure_bottom) }} {{ layer.soil }}
+{% endfor %}
+{% endfor %}
+{% else %}
 {{ soil_profiles }}
+{% endif %}
+
 [END OF SOIL PROFILES]
 
 [SURFACES]
@@ -228,32 +369,33 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
   {{ surfaces.surfaces | length }} Number of surfaces 
 {% for surface in surfaces.surfaces %}
   {{ loop.index }}     {{ surface.points | length }} {{ surface.name }}
-{{ surface.std | round(2)}}  Standard deviation
+{{ "%.2f"|format(surface.std) }}  Standard deviation
   {{ surface.distribution_type.value }}  Distribution type
  Nr     X-coord     Value
 {% for point in surface.points %}
-  {{ point.Nr }}       {{ point.X-coord | round(2)}}      {{ point.Value | round(2)}}
+   {{ point["Nr"] }}{{ "%11.2f"|format(point["X-coord"]) }}{{ "%11.2f"|format(point["Value"]) }}
 {% endfor %}
 {% endfor %}
 {% else %}
 {{ surfaces }}
 {% endif %}
+
 [END OF SURFACES]
 
 [WATERLEVELS]
 {% if waterlevels is mapping %}
   {{ waterlevels.levels | length }} Number of Waterlevels 
-{% for waterlevel in waterlevels.levels %}
   3 Number of Data per Waterlevel 
-Level {{ waterlevel.name }}
-    {{ waterlevel.level | round(2)}}
-      {{ waterlevel.standard_deviation | round(2)}}
-         {{ waterlevel.distribution_type.value }}
-
+{% for waterlevel in waterlevels.levels %}
+{{ waterlevel.name }}
+{{ "%10.2f"|format(waterlevel.level) }}
+{{ "%10.2f"|format(waterlevel.standard_deviation) }}
+{{ "%10d"|format(waterlevel.distribution_type.value) }}
 {% endfor %}
 {% else %}
 {{ waterlevels }}
 {% endif %}
+
 [END OF WATERLEVELS]
 
 [CONSTRUCTION STAGES]
@@ -268,25 +410,51 @@ Level {{ waterlevel.name }}
 {{ stage.water_level_right }}
 {{ stage.soil_profile_left }}
 {{ stage.soil_profile_right }}
-     {{ stage.displacement_top_sheet_piling }}             Displacement top sheet piling
+{{ "%10.3f"|format(stage.displacement_top_sheet_piling) }}             Displacement top sheet piling
          {{ 0 if stage.displacement_top_sheet_piling else 0 }}             Use top displacement
-         {{ stage.anchors | length }}              Anchors present in stage
-         {% for anchor in stage.anchors %}
-         {{ loop.index }}       {{ anchor.pre_stress }} {{ anchor.name }}
-         {% endfor %}
-         {{ stage.struts | length }}              Struts present in stage
-         {% for strut in stage.struts %}
-         {{ loop.index }}       {{ strut.pre_stress }} {{ strut.name }}
-         {% endfor %}
-         {{ stage.spring_supports | length }}              Spring supports present in stage
-         {{ stage.rigid_supports | length }}              Rigid supports present in stage
-         {{ stage.uniform_loads | length }}              Uniform loads in stage
-         {{ stage.surcharge_loadss_left + stage.surcharge_loadss_right | length }}          0   Surcharge loads in stage
-         {{ stage.horizontal_line_loads | length }}              Horizontal line loads in stage
-         {{ stage.moment_loads | length }}              Moments in stage
-         {{ stage.normal_forces | length }}              Normal forces in stage
-         {{ stage.passive_side.value }}              Passive side overrule
+{{ "%10d"|format(stage.anchors | length) }}              Anchors present in stage
+{% for anchor in stage.anchors %}
+{{ "%10d"|format(loop.index) }}       {{ anchor.pre_stress }} {{ anchor.name }}
 {% endfor %}
+{{ "%10d"|format(stage.struts | length) }}              Struts present in stage
+{% for strut in stage.struts %}
+{{ "%10d"|format(loop.index) }}       {{ strut.pre_stress }} {{ strut.name }}
+{% endfor %}
+{{ "%10d"|format(stage.spring_supports | length) }}              Spring supports present in stage
+{% for support in stage.spring_supports %}
+{{ "%10d"|format(loop.index) }} {{ support }}
+{% endfor %}
+{{ "%10d"|format(stage.rigid_supports | length) }}              Rigid supports present in stage
+{% for support in stage.rigid_supports %}
+{{ "%10d"|format(loop.index) }} {{ support }}
+{% endfor %}
+{{ "%10d"|format(stage.uniform_loads | length) }}              Uniform loads in stage
+{% for load in stage.uniform_loads %}
+{{ "%10d"|format(loop.index) }} {{ load }}
+{% endfor %}
+{{ "%10d"|format(stage.surcharge_loads_left | length) }}{{ "%11d"|format(stage.surcharge_loads_right | length) }}   Surcharge loads in stage
+{% for load in stage.surcharge_loads_left %}
+{{ "%10d"|format(loop.index) }} {{ load }}
+{% endfor %}
+{% for load in stage.surcharge_loads_right %}
+{{ "%10d"|format(loop.index) }} {{ load }}
+{% endfor %}
+{{ "%10d"|format(stage.horizontal_line_loads | length) }}              Horizontal line loads in stage
+{% for name in stage.horizontal_line_loads %}
+{{ "%10d"|format(loop.index) }} {{ name }}
+{% endfor %}
+{{ "%10d"|format(stage.moment_loads | length) }}              Moments in stage
+{% for name in stage.moment_loads %}
+{{ "%10d"|format(loop.index) }} {{ name }}
+{% endfor %}
+         {{ stage.normal_forces | length }}              Normal forces in stage
+{% for name in stage.normal_forces %}
+         {{ loop.index }} {{ name }}
+{% endfor %}
+         {{ stage.passive_side.value }}              Passive side overrule
+
+{% endfor %}
+
 {% else %}
 {{ construction_stages }}
 {% endif %}

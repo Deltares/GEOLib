@@ -319,6 +319,11 @@ class ExcavationType(IntEnum):
 
 
 class TimeOrderType(IntEnum):
+    """ Use this option to specify the execution time of CPTs relative to the pile installation.
+    This information is needed to determine whether the problem qualifies for certain exceptions made in NEN 9997-1:2016.
+
+   """
+
     CPT_EXCAVATION_INSTALL = 1
     INSTALL_CPT_EXCAVATION = 2
     EXCAVATION_CPT_INSTALL = 3
@@ -379,11 +384,11 @@ class CPT(DFoundationsEnumStructure):
     graph_borderwidth: int = 1
     graph_bordercolor: int = 0
     graph_frictioncolor: int = 16711680
-    graph_gccolor: int = 255
+    graph_qccolor: int = 255
     graph_plane_color: int = 0
     graph_fit_for_size: Bool = Bool.TRUE
     graph_fit_symbol_for_size: Bool = Bool.TRUE
-    graph_symbol_syze: float = 1.0
+    graph_symbol_size: float = 1.0
     void_value_depth: float = 987654321.000
     void_value_cone_resistance: float = 987654321.000
     void_value_pore_water_pressure: float = 987654321.000
@@ -395,6 +400,7 @@ class CPT(DFoundationsEnumStructure):
     class Config:
         arbitrary_types_allowed = True
         validate_assignment = True
+        extra: "forbid"
 
 
 class CPTList(DFoundationsCPTCollectionWrapper):
@@ -591,7 +597,7 @@ class Version(DSeriesInlineMappedProperties):
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
-    dgdsfoundationcalc____dll: str = "19.1.2.26122"
+    dgsfoundationcalc____dll: str = "19.1.2.26122"
 
 
 class DFoundationsInputStructure(DSeriesStructure):
@@ -814,6 +820,10 @@ class DFoundationsDumpfileOutputStructure(DSeriesStructure):
     verification_results_tp: Optional[DFoundationsVerificationResults]
 
     footnote_warnings: Optional[str]
+    preliminary_design_results: Optional[str]
+    verification_results_sf: Optional[str]
+    verification_results_tp_1b2: Optional[str]
+    verification_design_results: Optional[str]
 
 
 class DFoundationsStructure(DSeriesStructure):

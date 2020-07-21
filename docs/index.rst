@@ -14,25 +14,11 @@ Release v\ |version|.
 **Behold, the power of GEOLib**::
 
     >>> import geolib as gl
-    >>> m = gl.D-SettlementInput.parse("data/test.sli")
-    D-Settlement 2D Model with XX options
-    >>> m.set_metadata(project="test")
+    >>> m = gl.DSettlementModel()
+    >>> m.parse("test.sli")
     >>> m.execute()
-    Succesfully executed Model in 3 seconds
-    >>> m.output.to_dict()
-    {"verticals": [{"id": 1, "x": 50., "settlements": [[0.0, 0.0, ..]], ..}..}
-
-
-The Tutorials
--------------
-
-This part of the documentation, which is all prose, gives some examples
-of using GEOLib.
-
-.. toctree::
-   :maxdepth: 3
-
-   community/tutorial.rst
+    >>> m.output.dict()
+    {'verticals_count': 1, 'vertical': [{'id': 1, 'x': 0.0, 'z': 0.0, 'time__settlement_per_load': {'timesettlementperload': [[0.0, 0.0, 0.0], ...
 
 
 The User Guide
@@ -47,6 +33,19 @@ instructions for getting the most out of GEOLib.
 
    user/intro
    user/install
+   user/setup
+   user/server
+
+The Tutorials
+-------------
+
+This part of the documentation, which is all prose, gives some examples
+of using GEOLib.
+
+.. toctree::
+   :maxdepth: 3
+
+   community/tutorial
 
 
 The API Documentation / Guide
@@ -76,3 +75,11 @@ you. It includes in depth guide how to go about extending GEOLib.
 
 There are no more guides. You are now guideless.
 Good luck.
+
+Changelog
+---------
+
+.. toctree::
+   :maxdepth: 3
+
+   changelog

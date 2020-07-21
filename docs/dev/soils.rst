@@ -29,9 +29,10 @@ The Soil Class
     :members:
     :undoc-members:
 
-1D Profiles and layers
-----------------------
+.. commented out until unified
+.. 1D Profiles and layers
+.. ----------------------
 
-.. automodule:: geolib.soils.layers
-    :members:
-    :undoc-members:
+.. .. automodule:: geolib.soils.layers
+..     :members:
+..     :undoc-members:

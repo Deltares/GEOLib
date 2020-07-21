@@ -1,16 +1,16 @@
-DUMP FILE FOR D-SHEET PILING
+DUMP FILE FOR D-SHEET PILING CONSOLE
 ==============================================================================
-COMPANY    :    
+COMPANY    : Stichting Deltares 
 
-DATE       : 3/11/2019
-TIME       : 2:01:59 AM
-FILENAME   : E:\DSheetpiling\In Test\Benchmarks Branch\bm5-3b.shd
-CREATED BY : D-Sheet Piling version 19.1.1.23942
+DATE       : 7/7/2020
+TIME       : 5:41:33 PM
+FILENAME   : C:\Users\Smyrniou\Stichting Deltares\Maarten Pronk - D-Sheet Voorbeelden\D-Sheet - Benchmarks\bm5-3b.shd
+CREATED BY : D-Sheet Piling Console version 19.3.500.28970
 ==========================    BEGINNING OF DATA     ==========================
-[ECHO OF MSHEET INPUT]
+[DUMPFILE]
 [VERSION]
-Soil=1005
-D-Sheet Piling=1018
+Soil=1007
+D-Sheet Piling=1026
 [END OF VERSION]
 
 [VERSION EXTERNALS]
@@ -18,6 +18,7 @@ DGSCPTipCalc.dll=19.1.1.23469
 DGSCPTipUI.dll=19.1.1.23469
 [END OF VERSION EXTERNALS]
 
+[INPUT DATA]
 [SOIL COLLECTION]
     2 = number of items
 [SOIL]
@@ -174,8 +175,6 @@ SheetPilingElementMaxCharacteristicMoment=300.00
 SheetPilingElementMaxPlasticCharacteristicMoment=0.00
 SheetPilingElementKMod=1.00
 SheetPilingElementMaterialFactor=1.00
-SheetPilingElementMaxMoment=300.00
-SheetPilingElementMaxPlasticMoment=0.00
 sSheetPilingElementReductionFactorMaxMoment=1.00
 DiaphragmWallIsSymmetric=0
 DiaphragmWallPosEIElastoPlastic1=2.000000E+04
@@ -192,12 +191,14 @@ WoodenSheetPilingElementE=0.000000E+00
 WoodenSheetPilingElementEISLS=0.000000E+00
 WoodenSheetPilingElementEIULS=0.000000E+00
 WoodenSheetPilingElementCharacFlexuralStrength=0.00
-WoodenSheetPilingElementKDef=0.00
 WoodenSheetPilingElementKH=1.30
 WoodenSheetPilingElementKSys=1.15
 WoodenSheetPilingElementKDef=2.00
+WoodenSheetPilingElementPsi2Eff=1.00
 WoodenSheetPilingElementMaterialFactor=1.30
-WoodenSheetPilingElementKMod=0.50
+WoodenSheetPilingElementKModFShort=0.65
+WoodenSheetPilingElementKModFLong=0.50
+WoodenSheetPilingElementKModE=0.80
 [END OF SHEET PILING ELEMENT]
 [END OF SHEET PILING]
 
@@ -254,15 +255,23 @@ SurchargeLoadDistribution=2
 
 [SOIL DISPLACEMENTS]
   7 Number of soil displacements
- Nr        Level    Value
-  1      -0.50      0.000 Undefined
-  2      -2.50     -0.001 Undefined
-  3      -4.50     -0.043 Undefined
-  4      -6.50     -0.059 Undefined
-  5      -8.50     -0.045 Undefined
-  6     -10.50      0.000 Undefined
-  7     -12.50      0.000 Undefined
-
+[TABLE]
+[COLUMN INDICATION]
+Number
+Depth level
+Displacement value
+Name
+[END OF COLUMN INDICATION]
+[DATA]
+1   -0.50   0.000 Undefined
+2   -2.50  -0.001 Undefined
+3   -4.50  -0.043 Undefined
+4   -6.50  -0.059 Undefined
+5   -8.50  -0.045 Undefined
+6  -10.50   0.000 Undefined
+7  -12.50   0.000 Undefined
+[END OF DATA]
+[END OF TABLE]
 [END OF SOIL DISPLACEMENTS]
 
 [WATER]
@@ -357,6 +366,8 @@ CalcMinorNodesOn=0
 CalcReduceDeltas=1
 CalcEmpiricalFactorStressType=0
 InputCalculationType=0
+IsVibrationCalculation=0
+AllowableAnchorForceCalculationType=0
 CalcAutoLambdasOn=1
 DesignStage=0
 DesignPileLengthFrom=0.00
@@ -401,578 +412,578 @@ OverallStabilityDrained=1
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.35
-EffectFactorVarUnfav=1.10
-MaterialFactorCohesion=1.00
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.350
+EffectFactorVarUnfav=1.100
+MaterialFactorCohesion=1.000
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.00
-OverallStabilityFactorTgPhi=1.00
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.000
+OverallStabilityFactorTgPhi=1.000
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA1 SET1]
 [PARTIAL FACTORS EUROCODE DA1 SET2]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.30
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.25
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.300
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.250
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.00
-OverallStabilityFactorTgPhi=1.00
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.000
+OverallStabilityFactorTgPhi=1.000
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA1 SET2]
 [PARTIAL FACTORS EUROCODE DA2]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.35
-EffectFactorVarUnfav=1.10
-MaterialFactorCohesion=1.00
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.350
+EffectFactorVarUnfav=1.100
+MaterialFactorCohesion=1.000
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.40
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.400
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.00
-OverallStabilityFactorTgPhi=1.00
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.000
+OverallStabilityFactorTgPhi=1.000
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA2]
 [PARTIAL FACTORS EUROCODE DA3]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.30
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.25
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.300
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.350
+ConstructLoadFactorVarUnfavCalc=1.500
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.250
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.00
-OverallStabilityFactorTgPhi=1.00
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.000
+OverallStabilityFactorTgPhi=1.000
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA3]
 [PARTIAL FACTORS EC7 NL 0]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.00
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.000
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.050
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.15
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=0.90
-OverallStabilityFactorCohesion=1.30
-OverallStabilityFactorTgPhi=1.20
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.20
-VerticalBalanceGammaMb=1.20
+OverallStabilityFactorDrivingMoment=0.900
+OverallStabilityFactorCohesion=1.300
+OverallStabilityFactorTgPhi=1.200
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.200
+VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 NL 0]
 [PARTIAL FACTORS EC7 NL 1]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.15
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=0.900
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.215
+ConstructLoadFactorVarUnfavCalc=1.350
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.150
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.150
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.20
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.30
-OverallStabilityFactorTgPhi=1.20
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.20
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.300
+OverallStabilityFactorTgPhi=1.200
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.200
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EC7 NL 1]
 [PARTIAL FACTORS EC7 NL 2]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.25
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=0.900
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.350
+ConstructLoadFactorVarUnfavCalc=1.500
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.250
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.175
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.45
-OverallStabilityFactorTgPhi=1.25
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.20
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.450
+OverallStabilityFactorTgPhi=1.250
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.200
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EC7 NL 2]
 [PARTIAL FACTORS EC7 NL 3]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.25
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.40
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.250
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=0.900
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.485
+ConstructLoadFactorVarUnfavCalc=1.650
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.400
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.200
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.60
-OverallStabilityFactorTgPhi=1.30
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.35
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.600
+OverallStabilityFactorTgPhi=1.300
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.350
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EC7 NL 3]
 [PARTIAL FACTORS EC7 B SET1]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.35
-EffectFactorVarUnfav=1.10
-MaterialFactorCohesion=1.00
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.350
+EffectFactorVarUnfav=1.100
+MaterialFactorCohesion=1.000
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.00
-OverallStabilityFactorTgPhi=1.00
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.20
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.000
+OverallStabilityFactorTgPhi=1.000
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 B SET1]
 [PARTIAL FACTORS EC7 B SET2]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.10
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.25
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.100
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.250
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.25
-OverallStabilityFactorTgPhi=1.25
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.20
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.250
+OverallStabilityFactorTgPhi=1.250
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 B SET2]
 [PARTIAL FACTORS CUR I]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.00
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.000
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.050
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryDeltaPassiveSurfaceLevel=0.20
 GeometryDeltaPassivePhreaticLine=0.15
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=0.90
-OverallStabilityFactorCohesion=1.50
-OverallStabilityFactorTgPhi=1.20
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=0.900
+OverallStabilityFactorCohesion=1.500
+OverallStabilityFactorTgPhi=1.200
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS CUR I]
 [PARTIAL FACTORS CUR II]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.00
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.000
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.150
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryDeltaPassiveSurfaceLevel=0.30
 GeometryDeltaPassivePhreaticLine=0.20
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.50
-OverallStabilityFactorTgPhi=1.20
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.500
+OverallStabilityFactorTgPhi=1.200
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS CUR II]
 [PARTIAL FACTORS CUR III]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.25
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.00
-LoadFactorVarUnfavMultiply=1.00
-LoadFactorPermUnfavCalc=0.0000
-LoadFactorVarUnfavCalc=0.0000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=1.00
-ConstructLoadFactorPermUnfavMultiply=1.00
-ConstructLoadFactorVarUnfavMultiply=1.00
-ConstructLoadFactorPermUnfavCalc=1.0000
-ConstructLoadFactorVarUnfavCalc=1.0000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.10
-MaterialFactorUndrainedShearStrength=1.00
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.250
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.000
+LoadFactorVarUnfavMultiply=1.000
+LoadFactorPermUnfavCalc=0.000
+LoadFactorVarUnfavCalc=0.000
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.000
+ConstructLoadFactorVarUnfavMultiply=1.000
+ConstructLoadFactorPermUnfavCalc=1.000
+ConstructLoadFactorVarUnfavCalc=1.000
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.100
+MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.200
-MaterialFactorSubgradeReaction=1.30
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.300
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryDeltaPassiveSurfaceLevel=0.35
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.10
-OverallStabilityFactorCohesion=1.50
-OverallStabilityFactorTgPhi=1.20
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=0.00
-VerticalBalanceGammaMb=1.25
+OverallStabilityFactorDrivingMoment=1.100
+OverallStabilityFactorCohesion=1.500
+OverallStabilityFactorTgPhi=1.200
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=0.000
+VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS CUR III]
 [PARTIAL FACTORS EC7 SE VK1]
 SafetyFactorGammaD=0.83
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.10
-LoadFactorVarUnfavMultiply=1.40
-LoadFactorPermUnfavCalc=0.9130
-LoadFactorVarUnfavCalc=1.1620
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=0.00
-ConstructLoadFactorPermUnfavMultiply=1.35
-ConstructLoadFactorVarUnfavMultiply=1.50
-ConstructLoadFactorPermUnfavCalc=1.1205
-ConstructLoadFactorVarUnfavCalc=1.2450
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.30
-MaterialFactorUndrainedShearStrength=1.50
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.100
+LoadFactorVarUnfavMultiply=1.400
+LoadFactorPermUnfavCalc=0.913
+LoadFactorVarUnfavCalc=1.162
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.350
+ConstructLoadFactorVarUnfavMultiply=1.500
+ConstructLoadFactorPermUnfavCalc=1.120
+ConstructLoadFactorVarUnfavCalc=1.245
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.300
+MaterialFactorUndrainedShearStrength=1.500
 MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.30
-OverallStabilityFactorTgPhi=1.30
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.00
-VerticalBalanceGammaMb=1.30
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.300
+OverallStabilityFactorTgPhi=1.300
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.000
+VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 SE VK1]
 [PARTIAL FACTORS EC7 SE VK2]
 SafetyFactorGammaD=0.91
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.10
-LoadFactorVarUnfavMultiply=1.40
-LoadFactorPermUnfavCalc=1.0010
-LoadFactorVarUnfavCalc=1.2740
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=0.00
-ConstructLoadFactorPermUnfavMultiply=1.35
-ConstructLoadFactorVarUnfavMultiply=1.50
-ConstructLoadFactorPermUnfavCalc=1.2285
-ConstructLoadFactorVarUnfavCalc=1.3650
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.30
-MaterialFactorUndrainedShearStrength=1.50
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.100
+LoadFactorVarUnfavMultiply=1.400
+LoadFactorPermUnfavCalc=1.001
+LoadFactorVarUnfavCalc=1.274
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.350
+ConstructLoadFactorVarUnfavMultiply=1.500
+ConstructLoadFactorPermUnfavCalc=1.228
+ConstructLoadFactorVarUnfavCalc=1.365
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.300
+MaterialFactorUndrainedShearStrength=1.500
 MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.30
-OverallStabilityFactorTgPhi=1.30
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.00
-VerticalBalanceGammaMb=1.30
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.300
+OverallStabilityFactorTgPhi=1.300
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.000
+VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 SE VK2]
 [PARTIAL FACTORS EC7 SE VK3]
 SafetyFactorGammaD=1.00
 SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.00
-LoadFactorPermFav=1.00
-LoadFactorVarUnfav=1.00
-LoadFactorVarFav=0.00
-LoadFactorPermUnfavMultiply=1.10
-LoadFactorVarUnfavMultiply=1.40
-LoadFactorPermUnfavCalc=1.1000
-LoadFactorVarUnfavCalc=1.4000
-ConstructLoadFactorPermFav=1.00
-ConstructLoadFactorVarFav=0.00
-ConstructLoadFactorPermUnfavMultiply=1.35
-ConstructLoadFactorVarUnfavMultiply=1.50
-ConstructLoadFactorPermUnfavCalc=1.3500
-ConstructLoadFactorVarUnfavCalc=1.5000
-EffectFactor=1.00
-EffectFactorVarUnfav=1.00
-MaterialFactorCohesion=1.30
-MaterialFactorUndrainedShearStrength=1.50
+LoadFactorPermUnfav=1.000
+LoadFactorPermFav=1.000
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorPermUnfavMultiply=1.100
+LoadFactorVarUnfavMultiply=1.400
+LoadFactorPermUnfavCalc=1.100
+LoadFactorVarUnfavCalc=1.400
+ConstructLoadFactorPermFav=1.000
+ConstructLoadFactorVarFav=0.000
+ConstructLoadFactorPermUnfavMultiply=1.350
+ConstructLoadFactorVarUnfavMultiply=1.500
+ConstructLoadFactorPermUnfavCalc=1.350
+ConstructLoadFactorVarUnfavCalc=1.500
+EffectFactor=1.000
+EffectFactorVarUnfav=1.000
+MaterialFactorCohesion=1.300
+MaterialFactorUndrainedShearStrength=1.500
 MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.00
-ResistanceFactor=1.00
+MaterialFactorSubgradeReaction=1.000
+ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.00
 GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.00
-OverallStabilityFactorCohesion=1.30
-OverallStabilityFactorTgPhi=1.30
-OverallStabilityFactorUnitWeight=1.00
-FactorRepValuesMDPmax=1.00
-VerticalBalanceGammaMb=1.30
+OverallStabilityFactorDrivingMoment=1.000
+OverallStabilityFactorCohesion=1.300
+OverallStabilityFactorTgPhi=1.300
+OverallStabilityFactorUnitWeight=1.000
+FactorRepValuesMDPmax=1.000
+VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 SE VK3]
 [END OF CALCULATION OPTIONS]
 
@@ -992,36 +1003,41 @@ CriteriaLimit2=0.010000
 ReliabilityStage=0
 [END OF PROBABILISTIC CONTROL PARAMETERS]
 
-[End of Input Data]
+[END OF INPUT DATA]
 
+[OUTPUT DATA]
 [CALCULATION TYPE]
 Standard
 [END OF CALCULATION TYPE]
 
-[SHEETPILE ELEMENTS]
+[SHEET PILE ELEMENTS]
+1 : Number of elements
+[TABLE]
 [COLUMN INDICATION]
-EI element
+Elastic stiffness EI including reduction factor
 Stiffness EI 2nd branch positive of M-Kappa diagram
 Stiffness EI 2nd branch negative of M-Kappa diagram
 Stiffness EI 3rd branch positive of M-Kappa diagram
 Stiffness EI 3rd branch negative of M-Kappa diagram
-Maximum moment
-Maximum allowed plastic moment
-start co-ordinate
-end co-ordinate
-reduction factor on EI
-reduction factor on moment
-explanation of reduction
+Maximum allowed elastic moment including reduction factor
+Maximum allowed plastic moment including reduction factor
+Start co-ordinate
+End co-ordinate
+Reduction factor on EI
+Reduction factor on moment
+Maximum allowed moment short term wooden pile
+Maximum allowed moment long term wooden pile
+Explanation of reduction
 [END OF COLUMN INDICATION]
-
-[COLUMN DATA]
-    1  Number of elements
- 63900.00000  20000.00000  20000.00000  20000.00000  20000.00000    300.00000      0.00000   0.000 -10.000   1.000   1.000 - 
-[END OF COLUMN DATA]
-
-[END OF SHEETPILE ELEMENTS]
+[DATA]
+   63900.00000  20000.00000  20000.00000  20000.00000  20000.00000 300.000   0.000      0.00    -10.00  1.00  1.00   0.000   0.000 '-'
+[END OF DATA]
+[END OF TABLE]
+[END OF SHEET PILE ELEMENTS]
 
 [CALCULATED DISPLACEMENTS]
+9 : Number of points
+[TABLE]
 [COLUMN INDICATION]
 Depth
 Calculated deformation
@@ -1032,25 +1048,28 @@ Calculated lambda neutral
 Calculated lambda passive
 Calculated fictive cohesion
 [END OF COLUMN INDICATION]
-
-[COLUMN DATA]
-      9  Number of points
-  0.000  0.00913    0.548          179.967    0.000    0.000    3.287   15.538
- -0.100  0.00916    0.674          220.648    0.000    0.000    3.516   20.907
- -1.000  0.00975    2.517          774.411    0.000    0.000    5.035   42.570
- -2.000  0.00953    3.394         1068.374    0.000    0.000    6.052   49.664
- -3.000  0.00791    3.455         1309.730    0.000    0.000    6.717   52.653
- -4.000  0.00481    3.017         1880.721    0.000    0.000    7.185   54.229
- -4.900  0.00057    2.061        10913.382    0.000    0.000    7.503   55.099
- -5.000  0.00000    0.000       100000.000    0.000    0.000    7.533   27.588
--10.000  0.00000    0.000       100000.000    0.000    0.000    8.457   28.493
-[END OF COLUMN DATA]
-
+[DATA]
+  0.000 0.00913   0.548         179.967   0.000   0.000   3.287  15.538
+ -0.100 0.00916   0.674         220.648   0.000   0.000   3.516  20.907
+ -1.000 0.00975   2.517         774.411   0.000   0.000   5.035  42.570
+ -2.000 0.00953   3.394        1068.374   0.000   0.000   6.052  49.664
+ -3.000 0.00791   3.455        1309.730   0.000   0.000   6.717  52.653
+ -4.000 0.00481   3.017        1880.721   0.000   0.000   7.185  54.229
+ -4.900 0.00057   2.061       10913.382   0.000   0.000   7.503  55.099
+ -5.000 0.00000   0.000      100000.000   0.000   0.000   7.533  27.588
+-10.000 0.00000   0.000      100000.000   0.000   0.000   8.457  28.493
+[END OF DATA]
+[END OF TABLE]
 [END OF CALCULATED DISPLACEMENTS]
 
 [POINTS ON SHEETPILE]
-156  Number of nodes 
-    -0.00000
+156 : Number of nodes
+[TABLE]
+[COLUMN INDICATION]
+Depth
+[END OF COLUMN INDICATION]
+[DATA]
+     0.00000
     -0.02000
     -0.04000
     -0.06000
@@ -1206,695 +1225,735 @@ Calculated fictive cohesion
     -9.81818
     -9.90909
    -10.00000
+[END OF DATA]
+[END OF TABLE]
 [END OF POINTS ON SHEETPILE]
 
 [CONSTRUCTION STAGE]
-           1  Construction stage number
-           3  Number of iterations 
-[WLOAD DATA]
-1 : number of items
-0 0 : Index, Side
-2 : number of items
-      2.00      10.00  1  0 : Distance, Load, Is permanent, Is favorable (0=false, 1=true)
-     12.00      10.00  1  0 : Distance, Load, Is permanent, Is favorable (0=false, 1=true)
-[END OF WLOAD DATA]
+1 : Construction stage number
+3 : Number of iterations
+[SURCHARGE DATA]
+2 : Number of items
+[TABLE]
+[COLUMN INDICATION]
+Index
+Side (0=left, 1=right)
+Distance
+Load
+Is permanent (0=false, 1=true)
+Is favorable (0=false, 1=true)
+[END OF COLUMN INDICATION]
+[DATA]
+    0     0             2.00            10.00     1     0
+    0     0            12.00            10.00     1     0
+[END OF DATA]
+[END OF TABLE]
+[END OF SURCHARGE DATA]
 
 [BREUK DATA]
-        0.90           0.96   Percentage mobilized resistance 
-       20.07          20.18   Effective left and right 
-      180.50         180.50   Water pressure left and right 
-     2222.79        2100.80   Max passive effect. resistance l&r
-       -0.00          -0.00   Max passive moment l&r
-       -0.00          -0.00   Max mobilized passive moment l&r
-        0.00           0.00   Vertical force left and right
-        0.00   Level of single support 
-           1   Node of single support 
-           0   Moment present  
-           0   Active side    
+    0.96 : Percentage mobilized resistance left
+    0.96 : Percentage mobilized resistance right
+   20.07 : Effective left
+   20.18 : Effective right
+  180.50 : Water pressure left
+  180.50 : Water pressure right
+ 2100.80 : Max passive effect. resistance left
+ 2100.80 : Max passive effect. resistance right
+    0.00 : Max passive moment left
+    0.00 : Max passive moment right
+    0.00 : Max mobilized passive moment left
+    0.00 : Max mobilized passive moment right
+    0.00 : Vertical force left
+    0.00 : Vertical force right
+    0.00 : Level of single support
+    1 : Node of single support
+    0 : Moment present
+    0 : Active side
 [END OF BREUK DATA]
 
-[VERTICAL BALANCE DATA]
+[MOMENTS FORCES DISPLACEMENTS]
+[TABLE]
 [COLUMN INDICATION]
-Active force
-Passiveforce
-Plugged Active force
-Plugged Passiveforce
-Anchor force
-Normal force
-Factor on resistance
-Plugged resistance
-Vertical balance load factor
+Moment
+Shear force
+Displacements
 [END OF COLUMN INDICATION]
-
-[COLUMN DATA]
-   0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00    0.00 
-[END OF COLUMN DATA]
-
-[VERTICAL BALANCE DATA PER BAR]
-[COLUMN INDICATION]
-Left vertical force
-Right vertical force
-Non plugged Left 
-Non plugged Right 
-[END OF COLUMN INDICATION]
-
-[COLUMN DATA]
-           0   Number of Bars   
-[END OF COLUMN DATA]
-
-[END OF VERTICAL BALANCE DATA PER BAR]
-
-[END OF VERTICAL BALANCE DATA]
-
-[COLUMN INDICATION]
-moment
-shear force
-displacements
-[END OF COLUMN INDICATION]
-
-[COLUMN DATA]
-    -0.00000        0.00000        6.26268   
-    -0.00004       -0.00424        6.23850   
-    -0.00017       -0.00872        6.21432   
-    -0.00039       -0.01343        6.19014   
-    -0.00071       -0.01839        6.16596   
-    -0.00113       -0.02359        6.14178   
-    -0.00113       -0.02353        6.14178   
-    -0.00395       -0.04787        6.04505   
-    -0.00896       -0.07848        5.94833   
-    -0.01669       -0.11584        5.85160   
-    -0.02769       -0.16042        5.75488   
-    -0.04256       -0.21269        5.65816   
-    -0.04256       -0.21250        5.65816   
-    -0.06755       -0.28939        5.53727   
-    -0.10090       -0.37995        5.41639   
-    -0.14402       -0.48508        5.29552   
-    -0.19843       -0.60571        5.17468   
-    -0.26571       -0.74276        5.05387   
-    -0.26571       -0.74262        5.05387   
-    -0.31849       -0.84154        4.97335   
-    -0.37800       -0.94433        4.89285   
-    -0.44449       -1.05108        4.81238   
-    -0.51823       -1.16185        4.73194   
-    -0.59949       -1.27671        4.65154   
-    -0.59949       -1.27668        4.65154   
-    -0.68855       -1.39569        4.57118   
-    -0.78568       -1.51893        4.49087   
-    -0.89117       -1.64645        4.41061   
-    -1.00530       -1.77834        4.33041   
-    -1.12838       -1.91464        4.25028   
-    -1.12838       -1.91461        4.25028   
-    -1.26069       -2.05541        4.17024   
-    -1.40253       -2.20077        4.09027   
-    -1.55422       -2.35075        4.01041   
-    -1.71607       -2.50541        3.93066   
-    -1.88838       -2.66484        3.85102   
-    -1.88838       -2.66481        3.85102   
-    -2.07145       -2.82743        3.77152   
-    -2.26541       -2.99166        3.69216   
-    -2.47037       -3.15746        3.61296   
-    -2.68644       -3.32482        3.53393   
-    -2.91372       -3.49369        3.45508   
-    -2.91372       -3.49366        3.45508   
-    -3.15230       -3.66401        3.37644   
-    -3.40228       -3.83582        3.29802   
-    -3.66377       -4.00906        3.21984   
-    -3.93685       -4.18368        3.14191   
-    -4.22163       -4.35965        3.06425   
-    -4.22163       -4.35963        3.06425   
-    -4.51817       -4.53693        2.98689   
-    -4.82658       -4.71551        2.90984   
-    -5.14693       -4.89533        2.83313   
-    -5.47931       -5.07637        2.75677   
-    -5.82381       -5.25857        2.68080   
-    -5.82381       -5.25853        2.68080   
-    -6.18048       -5.44160        2.60523   
-    -6.54936       -5.62513        2.53010   
-    -6.93050       -5.80883        2.45541   
-    -7.32387       -5.99242        2.38121   
-    -7.72948       -6.17560        2.30752   
-    -7.72948       -6.17555        2.30752   
-    -8.14727       -6.35804        2.23437   
-    -8.57719       -6.53954        2.16178   
-    -9.01918       -6.71976        2.08980   
-    -9.47313       -6.89839        2.01843   
-    -9.93892       -7.07514        1.94773   
-    -9.93892       -7.07509        1.94773   
-   -10.41643       -7.24964        1.87772   
-   -10.90548       -7.42169        1.80843   
-   -11.40592       -7.59093        1.73990   
-   -11.91754       -7.75702        1.67217   
-   -12.44011       -7.91966        1.60526   
-   -12.44020       -7.91851        1.60526   
-   -13.16370       -8.17095        1.51632   
-   -13.91276       -8.48301        1.42904   
-   -14.69176       -8.83256        1.34353   
-   -15.50307       -9.19727        1.25988   
-   -16.34705       -9.55461        1.17820   
-   -16.34703       -9.55263        1.17820   
-   -17.22181       -9.87988        1.09859   
-   -18.12382      -10.15407        1.02116   
-   -19.04725      -10.35201        0.94603   
-   -19.98419      -10.45022        0.87332   
-   -20.92459      -10.42498        0.80314   
-   -20.92454      -10.42328        0.80314   
-   -21.13261      -10.37450        0.78790   
-   -21.33905      -10.25545        0.77279   
-   -21.54218      -10.03809        0.75781   
-   -21.73973       -9.69434        0.74298   
-   -21.92892       -9.19605        0.72827   
-   -21.92874       -9.25299        0.72827   
-   -22.65312       -6.72241        0.66355   
-   -23.15800       -4.42271        0.60129   
-   -23.46395       -2.34428        0.54184   
-   -23.59061       -0.47637        0.48551   
-   -23.55658        1.19298        0.43263   
-   -23.55660        1.10836        0.43263   
-   -23.38707        2.59108        0.38287   
-   -23.09083        3.89771        0.33578   
-   -22.68343        5.03828        0.29153   
-   -22.17949        6.02339        0.25028   
-   -21.59264        6.86424        0.21219   
-   -21.59267        6.82017        0.21219   
-   -20.93952        7.52768        0.17694   
-   -20.22774        8.11151        0.14416   
-   -19.46817        8.58070        0.11389   
-   -18.67081        8.94448        0.08618   
-   -17.84482        9.21224        0.06108   
-   -17.84485        9.19658        0.06108   
-   -16.99995        9.37734        0.03833   
-   -16.14227        9.47907        0.01762   
-   -15.27865        9.50917       -0.00107   
-   -14.41528        9.47495       -0.01775   
-   -13.55767        9.38365       -0.03246   
-   -13.55769        9.38608       -0.03246   
-   -12.71049        9.24454       -0.04539   
-   -11.87821        9.05882       -0.05676   
-   -11.06460        8.83447       -0.06663   
-   -10.27295        8.57686       -0.07506   
-    -9.50603        8.29111       -0.08210   
-    -9.50605        8.30360       -0.08210   
-    -8.76507        7.99452       -0.08790   
-    -8.05308        7.66635       -0.09260   
-    -7.37165        7.32295       -0.09627   
-    -6.72199        6.96792       -0.09899   
-    -6.10500        6.60463       -0.10082   
-    -6.10502        6.62138       -0.10082   
-    -5.51980        6.25288       -0.10186   
-    -4.96821        5.88190       -0.10218   
-    -4.45036        5.51091       -0.10187   
-    -3.96616        5.14211       -0.10098   
-    -3.51531        4.77746       -0.09958   
-    -3.51532        4.79466       -0.09958   
-    -3.09580        4.43591       -0.09773   
-    -2.70856        4.08465       -0.09546   
-    -2.35287        3.74229       -0.09284   
-    -2.02784        3.41001       -0.08992   
-    -1.73253        3.08879       -0.08675   
-    -1.73254        3.10411       -0.08675   
-    -1.46450        2.79480       -0.08337   
-    -1.22401        2.49820       -0.07976   
-    -1.00987        2.21500       -0.07600   
-    -0.82086        1.94573       -0.07210   
-    -0.65567        1.69077       -0.06813   
-    -0.65567        1.70298       -0.06813   
-    -0.51190        1.46260       -0.06408   
-    -0.38929        1.23715       -0.05993   
-    -0.28650        1.02689       -0.05571   
-    -0.20212        0.83201       -0.05147   
-    -0.13476        0.65254       -0.04724   
-    -0.13476        0.66109       -0.04724   
-    -0.08223        0.49705       -0.04298   
-    -0.04391        0.34856       -0.03869   
-    -0.01839        0.21570       -0.03438   
-    -0.00422        0.09852       -0.03007   
-    -0.00000       -0.00307       -0.02580   
-[END OF COLUMN DATA]
+[DATA]
+     0.00000      0.00000      6.26268
+    -0.00004     -0.00424      6.23850
+    -0.00017     -0.00872      6.21432
+    -0.00039     -0.01343      6.19014
+    -0.00071     -0.01839      6.16596
+    -0.00113     -0.02359      6.14178
+    -0.00113     -0.02353      6.14178
+    -0.00395     -0.04787      6.04505
+    -0.00896     -0.07848      5.94833
+    -0.01669     -0.11584      5.85160
+    -0.02769     -0.16042      5.75488
+    -0.04256     -0.21269      5.65816
+    -0.04256     -0.21250      5.65816
+    -0.06755     -0.28939      5.53727
+    -0.10090     -0.37995      5.41639
+    -0.14402     -0.48508      5.29552
+    -0.19843     -0.60571      5.17468
+    -0.26571     -0.74276      5.05387
+    -0.26571     -0.74262      5.05387
+    -0.31849     -0.84154      4.97335
+    -0.37800     -0.94433      4.89285
+    -0.44449     -1.05108      4.81238
+    -0.51823     -1.16185      4.73194
+    -0.59949     -1.27671      4.65154
+    -0.59949     -1.27668      4.65154
+    -0.68855     -1.39569      4.57118
+    -0.78568     -1.51893      4.49087
+    -0.89117     -1.64645      4.41061
+    -1.00530     -1.77834      4.33041
+    -1.12838     -1.91464      4.25028
+    -1.12838     -1.91461      4.25028
+    -1.26069     -2.05541      4.17024
+    -1.40253     -2.20077      4.09027
+    -1.55422     -2.35075      4.01041
+    -1.71607     -2.50541      3.93066
+    -1.88838     -2.66484      3.85102
+    -1.88838     -2.66481      3.85102
+    -2.07145     -2.82743      3.77152
+    -2.26541     -2.99166      3.69216
+    -2.47037     -3.15746      3.61296
+    -2.68644     -3.32482      3.53393
+    -2.91372     -3.49369      3.45508
+    -2.91372     -3.49366      3.45508
+    -3.15230     -3.66401      3.37644
+    -3.40228     -3.83582      3.29802
+    -3.66377     -4.00906      3.21984
+    -3.93685     -4.18368      3.14191
+    -4.22163     -4.35965      3.06425
+    -4.22163     -4.35963      3.06425
+    -4.51817     -4.53693      2.98689
+    -4.82658     -4.71551      2.90984
+    -5.14693     -4.89533      2.83313
+    -5.47931     -5.07637      2.75677
+    -5.82381     -5.25857      2.68080
+    -5.82381     -5.25853      2.68080
+    -6.18048     -5.44160      2.60523
+    -6.54936     -5.62513      2.53010
+    -6.93050     -5.80883      2.45541
+    -7.32387     -5.99242      2.38121
+    -7.72948     -6.17560      2.30752
+    -7.72948     -6.17555      2.30752
+    -8.14727     -6.35804      2.23437
+    -8.57719     -6.53954      2.16178
+    -9.01918     -6.71976      2.08980
+    -9.47313     -6.89839      2.01843
+    -9.93892     -7.07514      1.94773
+    -9.93892     -7.07509      1.94773
+   -10.41643     -7.24964      1.87772
+   -10.90548     -7.42169      1.80843
+   -11.40592     -7.59093      1.73990
+   -11.91754     -7.75702      1.67217
+   -12.44011     -7.91966      1.60526
+   -12.44020     -7.91851      1.60526
+   -13.16370     -8.17095      1.51632
+   -13.91276     -8.48301      1.42904
+   -14.69176     -8.83256      1.34353
+   -15.50307     -9.19727      1.25988
+   -16.34705     -9.55461      1.17820
+   -16.34703     -9.55263      1.17820
+   -17.22181     -9.87988      1.09859
+   -18.12382    -10.15407      1.02116
+   -19.04725    -10.35201      0.94603
+   -19.98419    -10.45022      0.87332
+   -20.92459    -10.42498      0.80314
+   -20.92454    -10.42328      0.80314
+   -21.13261    -10.37450      0.78790
+   -21.33905    -10.25545      0.77279
+   -21.54218    -10.03809      0.75781
+   -21.73973     -9.69434      0.74298
+   -21.92892     -9.19605      0.72827
+   -21.92874     -9.25299      0.72827
+   -22.65312     -6.72241      0.66355
+   -23.15800     -4.42271      0.60129
+   -23.46395     -2.34428      0.54184
+   -23.59061     -0.47637      0.48551
+   -23.55658      1.19298      0.43263
+   -23.55660      1.10836      0.43263
+   -23.38707      2.59108      0.38287
+   -23.09083      3.89771      0.33578
+   -22.68343      5.03828      0.29153
+   -22.17949      6.02339      0.25028
+   -21.59264      6.86424      0.21219
+   -21.59267      6.82017      0.21219
+   -20.93952      7.52768      0.17694
+   -20.22774      8.11151      0.14416
+   -19.46817      8.58070      0.11389
+   -18.67081      8.94448      0.08618
+   -17.84482      9.21224      0.06108
+   -17.84485      9.19658      0.06108
+   -16.99995      9.37734      0.03833
+   -16.14227      9.47907      0.01762
+   -15.27865      9.50917     -0.00107
+   -14.41528      9.47495     -0.01775
+   -13.55767      9.38365     -0.03246
+   -13.55769      9.38608     -0.03246
+   -12.71049      9.24454     -0.04539
+   -11.87821      9.05882     -0.05676
+   -11.06460      8.83447     -0.06663
+   -10.27295      8.57686     -0.07506
+    -9.50603      8.29111     -0.08210
+    -9.50605      8.30360     -0.08210
+    -8.76507      7.99452     -0.08790
+    -8.05308      7.66635     -0.09260
+    -7.37165      7.32295     -0.09627
+    -6.72199      6.96792     -0.09899
+    -6.10500      6.60463     -0.10082
+    -6.10502      6.62138     -0.10082
+    -5.51980      6.25288     -0.10186
+    -4.96821      5.88190     -0.10218
+    -4.45036      5.51091     -0.10187
+    -3.96616      5.14211     -0.10098
+    -3.51531      4.77746     -0.09958
+    -3.51532      4.79466     -0.09958
+    -3.09580      4.43591     -0.09773
+    -2.70856      4.08465     -0.09546
+    -2.35287      3.74229     -0.09284
+    -2.02784      3.41001     -0.08992
+    -1.73253      3.08879     -0.08675
+    -1.73254      3.10411     -0.08675
+    -1.46450      2.79480     -0.08337
+    -1.22401      2.49820     -0.07976
+    -1.00987      2.21500     -0.07600
+    -0.82086      1.94573     -0.07210
+    -0.65567      1.69077     -0.06813
+    -0.65567      1.70298     -0.06813
+    -0.51190      1.46260     -0.06408
+    -0.38929      1.23715     -0.05993
+    -0.28650      1.02689     -0.05571
+    -0.20212      0.83201     -0.05147
+    -0.13476      0.65254     -0.04724
+    -0.13476      0.66109     -0.04724
+    -0.08223      0.49705     -0.04298
+    -0.04391      0.34856     -0.03869
+    -0.01839      0.21570     -0.03438
+    -0.00422      0.09852     -0.03007
+     0.00000     -0.00307     -0.02580
+[END OF DATA]
+[END OF TABLE]
+[END OF MOMENTS FORCES DISPLACEMENTS]
 
 [SIDE]
 Rightside
 [CALCULATION METHOD]
-Methode lambda
+Method Ka,K0,Kp
 [END OF CALCULATION METHOD]
 
 [WATER LEVEL]
-    -0.50000
+       -0.50
 [END OF WATER LEVEL]
 
 [SURFACE]
-    1   Number of surface points 
-     0.00000         0.00000
+1 : Number of surface points
+        0.00         0.00
 [END OF SURFACE]
 
-[SOIL PROFILE]
+[SOIL PROFILE FOR SINGLE PILE MODEL]
 New Profile
+2 : Number of layers
+[TABLE]
 [COLUMN INDICATION]
-Level Top layer
+Level top layer
 Excess pore top
 Excess pore bottom
-Unit weigth dry
-Unit weigth saturated
+Unit weight dry
+Unit weight saturated
 Cohesion
 Youngs modulus Table de Leeuw
 Angle of internal friction
 Coeff. of active earth pressure
 Coeff. of neutral earth pressure
 Coeff. of passive earth pressure
-Undrained shear strength top (Su top)
-Undrained shear strength bottom (Su bottom)
-Bearing capacity factor for Su (Ncb)
-Soil behaviour (0=Undrained; 1=Drained)
 Layer name
 [END OF COLUMN INDICATION]
+[DATA]
+     0.00    0.00    0.00   18.00   18.00         10.00      1500.00   25.00    0.00    0.00    2.50 'Elastic layer'
+    -5.00    0.00    0.00   17.00   20.00          5.00      1383.16   25.00    0.00    0.00    2.50 'Foundation layer'
+[END OF DATA]
+[END OF TABLE]
 
-[COLUMN DATA]
-    2   Number of Layers 
-  0.000   0.000   0.000  18.000  18.000  10.000 1500.000  25.000   0.000   0.000   2.500   0.000   0.000   4.100     0 Elastic layer
- -5.000   0.000   0.000  17.000  20.000   5.000 1383.162  25.000   0.000   0.000   2.500   0.000   0.000   4.100     0 Foundation layer
-[END OF COLUMN DATA]
-
-[MULTILINEAIR BRANCHES]
-    1 Number of branches in multilin. spring caracteristics
-    1   3000.00000   3000.00000
-    1   1500.00000   1500.00000
-[END OF MULTILINEAIR BRANCHES]
-
-[END OF SOIL PROFILE]
-
+[MULTILINEAR BRANCHES]
+1 : Number of branches for spring characteristics
+2 : Number of layers
+[MODULUS OF SUBGRADE REACTION]
+[TABLE]
 [COLUMN INDICATION]
-horizontal pressure
-pore pressure
-passive pressure
-neutral pressure
-Status on branches
-percentage of mobilisation
-status character
+Layer
+Branch
+Modulus of subgrade reaction top
+Modulus of subgrade reaction bottom
 [END OF COLUMN INDICATION]
+[DATA]
+    1 1        3000.00000        3000.00000
+    2 1        1500.00000        1500.00000
+[END OF DATA]
+[END OF TABLE]
+[END OF MODULUS OF SUBGRADE REACTION]
+[PERCENTAGE OF PASSIVE SOIL PRESSURE]
+[TABLE]
+[COLUMN INDICATION]
+Layer
+Index
+Percentage
+[END OF COLUMN INDICATION]
+[DATA]
+[END OF DATA]
+[END OF TABLE]
+[END OF PERCENTAGE OF PASSIVE SOIL PRESSURE]
+[END OF MULTILINEAR BRANCHES]
 
-[COLUMN DATA]
-     0.00000      0.00000     56.33874      0.00000            1   0    A
-     0.00000      0.00000     57.52203      0.00000            1   0    A
-     0.00000      0.00000     58.70532      0.00000            1   0    A
-     0.00000      0.00000     59.88862      0.00000            1   0    A
-     0.00000      0.00000     61.07192      0.00000            1   0    A
-     0.00000      0.00000     62.25521      0.00000            1   0    A
-     0.00000      0.00000     84.74058      0.00000            1   0    A
-     0.00000      0.00000     89.80422      0.00000            1   0    A
-     0.00000      0.00000     94.86786      0.00000            1   0    A
-     0.00000      0.00000     99.93151      0.00000            1   0    A
-     0.00000      0.00000    104.99515      0.00000            1   0    A
-     0.00000      0.00000    110.05879      0.00000            1   0    A
-     0.00000      0.00000    110.05879      0.00000            1   0    A
-     0.00000      1.00000    112.87193      0.00000            1   0    A
-     0.00000      2.00000    115.68506      0.00000            1   0    A
-     0.00000      3.00000    118.49820      0.00000            1   0    A
-     0.00000      4.00000    121.31133      0.00000            1   0    A
-     0.00000      5.00000    124.12447      0.00000            1   0    A
-     0.00000      5.00000    256.50600      0.00000            1   0    A
-     0.00000      5.66667    259.19145      0.00000            1   0    A
-     0.00000      6.33333    261.87690      0.00000            1   0    A
-     0.00000      7.00000    264.56235      0.00000            1   0    A
-     0.00000      7.66667    267.24781      0.00000            1   0    A
-     0.00000      8.33333    269.93326      0.00000            1   0    A
-     0.00000      8.33333    269.93326      0.00000            1   0    A
-     0.00000      9.00000    272.61871      0.00000            1   0    A
-     0.00000      9.66667    275.30416      0.00000            1   0    A
-     0.00000     10.33333    277.98961      0.00000            1   0    A
-     0.00000     11.00000    280.67506      0.00000            1   0    A
-     0.00000     11.66667    283.36051      0.00000            1   0    A
-     0.00000     11.66667    283.36051      0.00000            1   0    A
-     0.00000     12.33333    286.04596      0.00000            1   0    A
-     0.00000     13.00000    288.73141      0.00000            1   0    A
-     0.00000     13.66667    291.41686      0.00000            1   0    A
-     0.00000     14.33333    294.10231      0.00000            1   0    A
-     0.00000     15.00000    296.78777      0.00000            1   0    A
-     0.00000     15.00000    371.43860      0.00000            1   0    A
-     0.00000     15.66667    374.66624      0.00000            1   0    A
-     0.00000     16.33333    377.89387      0.00000            1   0    A
-     0.00000     17.00000    381.12150      0.00000            1   0    A
-     0.00000     17.66667    384.34914      0.00000            1   0    A
-     0.00000     18.33333    387.57677      0.00000            1   0    A
-     0.00000     18.33333    387.57677      0.00000            1   0    A
-     0.00000     19.00000    390.80441      0.00000            1   0    A
-     0.00000     19.66667    394.03204      0.00000            1   0    A
-     0.00000     20.33333    397.25967      0.00000            1   0    A
-     0.00000     21.00000    400.48731      0.00000            1   0    A
-     0.00000     21.66667    403.71494      0.00000            1   0    A
-     0.00000     21.66667    403.71494      0.00000            1   0    A
-     0.00000     22.33333    406.94257      0.00000            1   0    A
-     0.00000     23.00000    410.17021      0.00000            1   0    A
-     0.00000     23.66667    413.39784      0.00000            1   0    A
-     0.00000     24.33333    416.62547      0.00000            1   0    A
-     0.00000     25.00000    419.85311      0.00000            1   0    A
-     0.00000     25.00000    467.69634      0.00000            1   0    A
-     0.00000     25.66667    471.27851      0.00000            1   0    A
-     0.00000     26.33333    474.86068      0.00000            1   0    A
-     0.00000     27.00000    478.44285      0.00000            1   0    A
-     0.00000     27.66667    482.02501      0.00000            1   0    A
-     0.00000     28.33333    485.60718      0.00000            1   0    A
-     0.00000     28.33333    485.60718      0.00000            1   0    A
-     0.00000     29.00000    489.18935      0.00000            1   0    A
-     0.00000     29.66667    492.77152      0.00000            1   0    A
-     0.00000     30.33333    496.35369      0.00000            1   0    A
-     0.00000     31.00000    499.93586      0.00000            1   0    A
-     0.00000     31.66667    503.51803      0.00000            1   0    A
-     0.00000     31.66667    503.51803      0.00000            1   0    A
-     0.00000     32.33333    507.10019      0.00000            1   0    A
-     0.00000     33.00000    510.68236      0.00000            1   0    A
-     0.00000     33.66667    514.26453      0.00000            1   0    A
-     0.00000     34.33333    517.84670      0.00000            1   0    A
-     0.00000     35.00000    521.42887      0.00000            1   0    A
-     0.00000     35.00000    556.57330      0.00000            1   0    A
-     0.00000     35.90000    561.74663      0.00000            1   0    A
-     0.00000     36.80000    566.91997      0.00000            1   0    A
-     0.00000     37.70000    572.09331      0.00000            1   0    A
-     0.00000     38.60000    577.26664      0.00000            1   0    A
-     0.00000     39.50000    582.43998      0.00000            1   0    A
-     0.00000     39.50000    582.43998      0.00000            1   0    A
-     0.00000     40.40000    587.61332      0.00000            1   0    A
-     0.00000     41.30000    592.78665      0.00000            1   0    A
-     0.00000     42.20000    597.95999      0.00000            1   0    A
-     0.00000     43.10000    603.13333      0.00000            1   0    A
-     2.58174     44.00000    608.30666      0.00000          110   0    -
-     2.58174     44.00000    633.45735      0.00000          110   0    -
-     9.61447     44.20000    634.65777      0.00000          110   2    -
-    20.14818     44.40000    635.85818      0.00000          110   3    -
-    34.19003     44.60000    637.05860      0.00000          110   5    -
-    51.74727     44.80000    638.25901      0.00000          110   8    -
-    72.82723     45.00000    639.45943      0.00000          110  11    -
-    72.82723     45.00000    490.44096      0.00000          110  15    -
-    66.35453     45.90909    497.28943      0.00000          110  13    -
-    60.12933     46.81818    504.13791      0.00000          110  12    -
-    54.18405     47.72727    510.98639      0.00000          110  11    -
-    48.55115     48.63636    517.83487      0.00000          110   9    -
-    43.26307     49.54545    524.68334      0.00000          110   8    -
-    43.26307     49.54545    524.68334      0.00000          110   8    -
-    38.28672     50.45455    531.53182      0.00000          110   7    -
-    33.57805     51.36364    538.38030      0.00000          110   6    -
-    29.15313     52.27273    545.22877      0.00000          110   5    -
-    25.02801     53.18182    552.07725      0.00000          110   5    -
-    21.21875     54.09091    558.92573      0.00000          110   4    -
-    21.21875     54.09091    558.92573      0.00000          110   4    -
-    17.69431     55.00000    565.77421      0.00000          110   3    -
-    14.41620     55.90909    572.62268      0.00000          110   3    -
-    11.38927     56.81818    579.47116      0.00000          110   2    -
-     8.61838     57.72727    586.31964      0.00000          110   1    -
-     6.10837     58.63636    593.16811      0.00000          110   1    -
-     6.10837     58.63636    593.16811      0.00000          110   1    -
-     3.83320     59.54545    600.01659      0.00000          110   1    -
-     1.76219     60.45455    606.86507      0.00000          110   0    -
-     0.00000     61.36364    613.71355      0.00000            1   0    A
-     0.00000     62.27273    620.56202      0.00000            1   0    A
-     0.00000     63.18182    627.41050      0.00000            1   0    A
-     0.00000     63.18182    627.41050      0.00000            1   0    A
-     0.00000     64.09091    634.25898      0.00000            1   0    A
-     0.00000     65.00000    641.10745      0.00000            1   0    A
-     0.00000     65.90909    647.95593      0.00000            1   0    A
-     0.00000     66.81818    654.80441      0.00000            1   0    A
-     0.00000     67.72727    661.65289      0.00000            1   0    A
-     0.00000     67.72727    661.65289      0.00000            1   0    A
-     0.00000     68.63636    668.50136      0.00000            1   0    A
-     0.00000     69.54545    675.34984      0.00000            1   0    A
-     0.00000     70.45455    682.19832      0.00000            1   0    A
-     0.00000     71.36364    689.04679      0.00000            1   0    A
-     0.00000     72.27273    695.89527      0.00000            1   0    A
-     0.00000     72.27273    695.89527      0.00000            1   0    A
-     0.00000     73.18182    702.74375      0.00000            1   0    A
-     0.00000     74.09091    709.59223      0.00000            1   0    A
-     0.00000     75.00000    716.44070      0.00000            1   0    A
-     0.00000     75.90909    723.28918      0.00000            1   0    A
-     0.00000     76.81818    730.13766      0.00000            1   0    A
-     0.00000     76.81818    730.13766      0.00000            1   0    A
-     0.00000     77.72727    736.98613      0.00000            1   0    A
-     0.00000     78.63636    743.83461      0.00000            1   0    A
-     0.00000     79.54545    750.68309      0.00000            1   0    A
-     0.00000     80.45455    757.53157      0.00000            1   0    A
-     0.00000     81.36364    764.38004      0.00000            1   0    A
-     0.00000     81.36364    764.38004      0.00000            1   0    A
-     0.00000     82.27273    771.22852      0.00000            1   0    A
-     0.00000     83.18182    778.07700      0.00000            1   0    A
-     0.00000     84.09091    784.92547      0.00000            1   0    A
-     0.00000     85.00000    791.77395      0.00000            1   0    A
-     0.00000     85.90909    798.62243      0.00000            1   0    A
-     0.00000     85.90909    798.62243      0.00000            1   0    A
-     0.00000     86.81818    805.47091      0.00000            1   0    A
-     0.00000     87.72727    812.31938      0.00000            1   0    A
-     0.00000     88.63636    819.16786      0.00000            1   0    A
-     0.00000     89.54545    826.01634      0.00000            1   0    A
-     0.00000     90.45455    832.86481      0.00000            1   0    A
-     0.00000     90.45455    832.86481      0.00000            1   0    A
-     0.00000     91.36364    839.71329      0.00000            1   0    A
-     0.00000     92.27273    846.56177      0.00000            1   0    A
-     0.00000     93.18182    853.41025      0.00000            1   0    A
-     0.00000     94.09091    860.25872      0.00000            1   0    A
-     0.00000     95.00000    867.10720      0.00000            1   0    A
-[END OF COLUMN DATA]
+[END OF SOIL PROFILE FOR SINGLE PILE MODEL]
+
+[PRESSURES]
+156 : Number of nodes
+[TABLE]
+[COLUMN INDICATION]
+Horizontal pressure
+Pore pressure
+Passive pressure
+Neutral pressure
+Status on branches
+Percentage of mobilisation
+Status character
+[END OF COLUMN INDICATION]
+[DATA]
+     0.00000      0.00000     56.33874      0.00000            1   0 A
+     0.00000      0.00000     57.52203      0.00000            1   0 A
+     0.00000      0.00000     58.70532      0.00000            1   0 A
+     0.00000      0.00000     59.88862      0.00000            1   0 A
+     0.00000      0.00000     61.07192      0.00000            1   0 A
+     0.00000      0.00000     62.25521      0.00000            1   0 A
+     0.00000      0.00000     84.74058      0.00000            1   0 A
+     0.00000      0.00000     89.80422      0.00000            1   0 A
+     0.00000      0.00000     94.86786      0.00000            1   0 A
+     0.00000      0.00000     99.93151      0.00000            1   0 A
+     0.00000      0.00000    104.99515      0.00000            1   0 A
+     0.00000      0.00000    110.05879      0.00000            1   0 A
+     0.00000      0.00000    110.05879      0.00000            1   0 A
+     0.00000      1.00000    112.87193      0.00000            1   0 A
+     0.00000      2.00000    115.68506      0.00000            1   0 A
+     0.00000      3.00000    118.49820      0.00000            1   0 A
+     0.00000      4.00000    121.31133      0.00000            1   0 A
+     0.00000      5.00000    124.12447      0.00000            1   0 A
+     0.00000      5.00000    256.50600      0.00000            1   0 A
+     0.00000      5.66667    259.19145      0.00000            1   0 A
+     0.00000      6.33333    261.87690      0.00000            1   0 A
+     0.00000      7.00000    264.56235      0.00000            1   0 A
+     0.00000      7.66667    267.24781      0.00000            1   0 A
+     0.00000      8.33333    269.93326      0.00000            1   0 A
+     0.00000      8.33333    269.93326      0.00000            1   0 A
+     0.00000      9.00000    272.61871      0.00000            1   0 A
+     0.00000      9.66667    275.30416      0.00000            1   0 A
+     0.00000     10.33333    277.98961      0.00000            1   0 A
+     0.00000     11.00000    280.67506      0.00000            1   0 A
+     0.00000     11.66667    283.36051      0.00000            1   0 A
+     0.00000     11.66667    283.36051      0.00000            1   0 A
+     0.00000     12.33333    286.04596      0.00000            1   0 A
+     0.00000     13.00000    288.73141      0.00000            1   0 A
+     0.00000     13.66667    291.41686      0.00000            1   0 A
+     0.00000     14.33333    294.10231      0.00000            1   0 A
+     0.00000     15.00000    296.78777      0.00000            1   0 A
+     0.00000     15.00000    371.43860      0.00000            1   0 A
+     0.00000     15.66667    374.66624      0.00000            1   0 A
+     0.00000     16.33333    377.89387      0.00000            1   0 A
+     0.00000     17.00000    381.12150      0.00000            1   0 A
+     0.00000     17.66667    384.34914      0.00000            1   0 A
+     0.00000     18.33333    387.57677      0.00000            1   0 A
+     0.00000     18.33333    387.57677      0.00000            1   0 A
+     0.00000     19.00000    390.80441      0.00000            1   0 A
+     0.00000     19.66667    394.03204      0.00000            1   0 A
+     0.00000     20.33333    397.25967      0.00000            1   0 A
+     0.00000     21.00000    400.48731      0.00000            1   0 A
+     0.00000     21.66667    403.71494      0.00000            1   0 A
+     0.00000     21.66667    403.71494      0.00000            1   0 A
+     0.00000     22.33333    406.94257      0.00000            1   0 A
+     0.00000     23.00000    410.17021      0.00000            1   0 A
+     0.00000     23.66667    413.39784      0.00000            1   0 A
+     0.00000     24.33333    416.62547      0.00000            1   0 A
+     0.00000     25.00000    419.85311      0.00000            1   0 A
+     0.00000     25.00000    467.69634      0.00000            1   0 A
+     0.00000     25.66667    471.27851      0.00000            1   0 A
+     0.00000     26.33333    474.86068      0.00000            1   0 A
+     0.00000     27.00000    478.44285      0.00000            1   0 A
+     0.00000     27.66667    482.02501      0.00000            1   0 A
+     0.00000     28.33333    485.60718      0.00000            1   0 A
+     0.00000     28.33333    485.60718      0.00000            1   0 A
+     0.00000     29.00000    489.18935      0.00000            1   0 A
+     0.00000     29.66667    492.77152      0.00000            1   0 A
+     0.00000     30.33333    496.35369      0.00000            1   0 A
+     0.00000     31.00000    499.93586      0.00000            1   0 A
+     0.00000     31.66667    503.51803      0.00000            1   0 A
+     0.00000     31.66667    503.51803      0.00000            1   0 A
+     0.00000     32.33333    507.10019      0.00000            1   0 A
+     0.00000     33.00000    510.68236      0.00000            1   0 A
+     0.00000     33.66667    514.26453      0.00000            1   0 A
+     0.00000     34.33333    517.84670      0.00000            1   0 A
+     0.00000     35.00000    521.42887      0.00000            1   0 A
+     0.00000     35.00000    556.57330      0.00000            1   0 A
+     0.00000     35.90000    561.74663      0.00000            1   0 A
+     0.00000     36.80000    566.91997      0.00000            1   0 A
+     0.00000     37.70000    572.09331      0.00000            1   0 A
+     0.00000     38.60000    577.26664      0.00000            1   0 A
+     0.00000     39.50000    582.43998      0.00000            1   0 A
+     0.00000     39.50000    582.43998      0.00000            1   0 A
+     0.00000     40.40000    587.61332      0.00000            1   0 A
+     0.00000     41.30000    592.78665      0.00000            1   0 A
+     0.00000     42.20000    597.95999      0.00000            1   0 A
+     0.00000     43.10000    603.13333      0.00000            1   0 A
+     2.58174     44.00000    608.30666      0.00000          110   0 -
+     2.58174     44.00000    633.45735      0.00000          110   0 -
+     9.61447     44.20000    634.65777      0.00000          110   2 -
+    20.14818     44.40000    635.85818      0.00000          110   3 -
+    34.19003     44.60000    637.05860      0.00000          110   5 -
+    51.74727     44.80000    638.25901      0.00000          110   8 -
+    72.82723     45.00000    639.45943      0.00000          110  11 -
+    72.82723     45.00000    490.44096      0.00000          110  15 -
+    66.35453     45.90909    497.28943      0.00000          110  13 -
+    60.12933     46.81818    504.13791      0.00000          110  12 -
+    54.18405     47.72727    510.98639      0.00000          110  11 -
+    48.55115     48.63636    517.83487      0.00000          110   9 -
+    43.26307     49.54545    524.68334      0.00000          110   8 -
+    43.26307     49.54545    524.68334      0.00000          110   8 -
+    38.28672     50.45455    531.53182      0.00000          110   7 -
+    33.57805     51.36364    538.38030      0.00000          110   6 -
+    29.15313     52.27273    545.22877      0.00000          110   5 -
+    25.02801     53.18182    552.07725      0.00000          110   5 -
+    21.21875     54.09091    558.92573      0.00000          110   4 -
+    21.21875     54.09091    558.92573      0.00000          110   4 -
+    17.69431     55.00000    565.77421      0.00000          110   3 -
+    14.41620     55.90909    572.62268      0.00000          110   3 -
+    11.38927     56.81818    579.47116      0.00000          110   2 -
+     8.61838     57.72727    586.31964      0.00000          110   1 -
+     6.10837     58.63636    593.16811      0.00000          110   1 -
+     6.10837     58.63636    593.16811      0.00000          110   1 -
+     3.83320     59.54545    600.01659      0.00000          110   1 -
+     1.76219     60.45455    606.86507      0.00000          110   0 -
+     0.00000     61.36364    613.71355      0.00000            1   0 A
+     0.00000     62.27273    620.56202      0.00000            1   0 A
+     0.00000     63.18182    627.41050      0.00000            1   0 A
+     0.00000     63.18182    627.41050      0.00000            1   0 A
+     0.00000     64.09091    634.25898      0.00000            1   0 A
+     0.00000     65.00000    641.10745      0.00000            1   0 A
+     0.00000     65.90909    647.95593      0.00000            1   0 A
+     0.00000     66.81818    654.80441      0.00000            1   0 A
+     0.00000     67.72727    661.65289      0.00000            1   0 A
+     0.00000     67.72727    661.65289      0.00000            1   0 A
+     0.00000     68.63636    668.50136      0.00000            1   0 A
+     0.00000     69.54545    675.34984      0.00000            1   0 A
+     0.00000     70.45455    682.19832      0.00000            1   0 A
+     0.00000     71.36364    689.04679      0.00000            1   0 A
+     0.00000     72.27273    695.89527      0.00000            1   0 A
+     0.00000     72.27273    695.89527      0.00000            1   0 A
+     0.00000     73.18182    702.74375      0.00000            1   0 A
+     0.00000     74.09091    709.59223      0.00000            1   0 A
+     0.00000     75.00000    716.44070      0.00000            1   0 A
+     0.00000     75.90909    723.28918      0.00000            1   0 A
+     0.00000     76.81818    730.13766      0.00000            1   0 A
+     0.00000     76.81818    730.13766      0.00000            1   0 A
+     0.00000     77.72727    736.98613      0.00000            1   0 A
+     0.00000     78.63636    743.83461      0.00000            1   0 A
+     0.00000     79.54545    750.68309      0.00000            1   0 A
+     0.00000     80.45455    757.53157      0.00000            1   0 A
+     0.00000     81.36364    764.38004      0.00000            1   0 A
+     0.00000     81.36364    764.38004      0.00000            1   0 A
+     0.00000     82.27273    771.22852      0.00000            1   0 A
+     0.00000     83.18182    778.07700      0.00000            1   0 A
+     0.00000     84.09091    784.92547      0.00000            1   0 A
+     0.00000     85.00000    791.77395      0.00000            1   0 A
+     0.00000     85.90909    798.62243      0.00000            1   0 A
+     0.00000     85.90909    798.62243      0.00000            1   0 A
+     0.00000     86.81818    805.47091      0.00000            1   0 A
+     0.00000     87.72727    812.31938      0.00000            1   0 A
+     0.00000     88.63636    819.16786      0.00000            1   0 A
+     0.00000     89.54545    826.01634      0.00000            1   0 A
+     0.00000     90.45455    832.86481      0.00000            1   0 A
+     0.00000     90.45455    832.86481      0.00000            1   0 A
+     0.00000     91.36364    839.71329      0.00000            1   0 A
+     0.00000     92.27273    846.56177      0.00000            1   0 A
+     0.00000     93.18182    853.41025      0.00000            1   0 A
+     0.00000     94.09091    860.25872      0.00000            1   0 A
+     0.00000     95.00000    867.10720      0.00000            1   0 A
+[END OF DATA]
+[END OF TABLE]
+[END OF PRESSURES]
 
 [END OF SIDE]
 
 [SIDE]
 Leftside
 [CALCULATION METHOD]
-Methode lambda
+Method Ka,K0,Kp
 [END OF CALCULATION METHOD]
 
 [WATER LEVEL]
-    -0.50000
+       -0.50
 [END OF WATER LEVEL]
 
 [SURFACE]
-    1   Number of surface points 
-     0.00000         0.00000
+1 : Number of surface points
+        0.00         0.00
 [END OF SURFACE]
 
-[SOIL PROFILE]
+[SOIL PROFILE FOR SINGLE PILE MODEL]
 New Profile
+2 : Number of layers
+[TABLE]
 [COLUMN INDICATION]
-Level Top layer
+Level top layer
 Excess pore top
 Excess pore bottom
-Unit weigth dry
-Unit weigth saturated
+Unit weight dry
+Unit weight saturated
 Cohesion
 Youngs modulus Table de Leeuw
 Angle of internal friction
 Coeff. of active earth pressure
 Coeff. of neutral earth pressure
 Coeff. of passive earth pressure
-Undrained shear strength top (Su top)
-Undrained shear strength bottom (Su bottom)
-Bearing capacity factor for Su (Ncb)
-Soil behaviour (0=Undrained; 1=Drained)
 Layer name
 [END OF COLUMN INDICATION]
+[DATA]
+     0.00    0.00    0.00   18.00   18.00         10.00      1500.00   25.00    0.00    0.00    2.50 'Elastic layer'
+    -5.00    0.00    0.00   17.00   20.00          5.00      1383.16   25.00    0.00    0.00    2.50 'Foundation layer'
+[END OF DATA]
+[END OF TABLE]
 
-[COLUMN DATA]
-    2   Number of Layers 
-  0.000   0.000   0.000  18.000  18.000  10.000 1500.000  25.000   0.000   0.000   2.500   0.000   0.000   4.100     0 Elastic layer
- -5.000   0.000   0.000  17.000  20.000   5.000 1383.162  25.000   0.000   0.000   2.500   0.000   0.000   4.100     0 Foundation layer
-[END OF COLUMN DATA]
-
-[MULTILINEAIR BRANCHES]
-    1 Number of branches in multilin. spring caracteristics
-    1   3000.00000   3000.00000
-    1   1500.00000   1500.00000
-[END OF MULTILINEAIR BRANCHES]
-
-[END OF SOIL PROFILE]
-
+[MULTILINEAR BRANCHES]
+1 : Number of branches for spring characteristics
+2 : Number of layers
+[MODULUS OF SUBGRADE REACTION]
+[TABLE]
 [COLUMN INDICATION]
-horizontal pressure
-pore pressure
-passive pressure
-neutral pressure
-Status on branches
-percentage of mobilisation
-status character
+Layer
+Branch
+Modulus of subgrade reaction top
+Modulus of subgrade reaction bottom
 [END OF COLUMN INDICATION]
+[DATA]
+    1 1        3000.00000        3000.00000
+    2 1        1500.00000        1500.00000
+[END OF DATA]
+[END OF TABLE]
+[END OF MODULUS OF SUBGRADE REACTION]
+[PERCENTAGE OF PASSIVE SOIL PRESSURE]
+[TABLE]
+[COLUMN INDICATION]
+Layer
+Index
+Percentage
+[END OF COLUMN INDICATION]
+[DATA]
+[END OF DATA]
+[END OF TABLE]
+[END OF PERCENTAGE OF PASSIVE SOIL PRESSURE]
+[END OF MULTILINEAR BRANCHES]
 
-[COLUMN DATA]
-     0.51566      0.00000     56.33874      0.00000          110   1    -
-     0.54475      0.00000     57.52204      0.00000          110   1    -
-     0.57433      0.00000     58.70544      0.00000          110   1    -
-     0.60441      0.00000     59.88899      0.00000          110   1    -
-     0.63499      0.00000     61.07280      0.00000          110   1    -
-     0.66607      0.00000     62.25694      0.00000          110   1    -
-     0.66607      0.00000     84.74243      0.00000          110   1    -
-     0.85492      0.00000     89.81494      0.00000          110   1    -
-     1.05846      0.00000     94.89985      0.00000          110   1    -
-     1.27667      0.00000    100.00202      0.00000          110   1    -
-     1.50958      0.00000    105.12574      0.00000          110   1    -
-     1.75717      0.00000    110.27451      0.00000          110   2    -
-     1.75717      0.00000    110.27451      0.00000          110   2    -
-     2.08730      1.00000    113.23334      0.00000          110   2    -
-     2.44037      2.00000    116.23887      0.00000          110   2    -
-     2.81637      3.00000    119.29251      0.00000          110   2    -
-     3.21530      4.00000    122.39380      0.00000          110   3    -
-     3.63714      5.00000    125.54073      0.00000          110   3    -
-     3.63714      5.00000    258.53397      0.00000          110   1    -
-     3.78148      5.66667    261.57215      0.00000          110   1    -
-     3.92839      6.33333    264.63562      0.00000          110   1    -
-     4.07785      7.00000    267.72249      0.00000          110   2    -
-     4.22986      7.66667    270.83073      0.00000          110   2    -
-     4.38443      8.33333    273.95821      0.00000          110   2    -
-     4.38443      8.33333    273.95821      0.00000          110   2    -
-     4.54153      9.00000    277.10277      0.00000          110   2    -
-     4.70116      9.66667    280.26228      0.00000          110   2    -
-     4.86332     10.33333    283.43462      0.00000          110   2    -
-     5.02799     11.00000    286.61774      0.00000          110   2    -
-     5.19516     11.66667    289.80968      0.00000          110   2    -
-     5.19516     11.66667    289.80968      0.00000          110   2    -
-     5.36481     12.33333    293.00857      0.00000          110   2    -
-     5.53695     13.00000    296.21268      0.00000          110   2    -
-     5.71154     13.66667    299.42036      0.00000          110   2    -
-     5.88857     14.33333    302.63010      0.00000          110   2    -
-     6.06803     15.00000    305.84053      0.00000          110   2    -
-     6.06803     15.00000    382.31909      0.00000          110   2    -
-     6.12876     15.66667    386.17699      0.00000          110   2    -
-     6.18842     16.33333    390.03282      0.00000          110   2    -
-     6.24698     17.00000    393.88534      0.00000          110   2    -
-     6.30443     17.66667    397.73345      0.00000          110   2    -
-     6.36075     18.33333    401.57615      0.00000          110   2    -
-     6.36075     18.33333    401.57615      0.00000          110   2    -
-     6.41589     19.00000    405.41258      0.00000          110   2    -
-     6.46984     19.66667    409.24199      0.00000          110   2    -
-     6.52256     20.33333    413.06371      0.00000          110   2    -
-     6.57402     21.00000    416.87718      0.00000          110   2    -
-     6.62418     21.66667    420.68190      0.00000          110   2    -
-     6.62418     21.66667    420.68190      0.00000          110   2    -
-     6.67301     22.33333    424.47747      0.00000          110   2    -
-     6.72046     23.00000    428.26356      0.00000          110   2    -
-     6.76650     23.66667    432.03989      0.00000          110   2    -
-     6.81107     24.33333    435.80623      0.00000          110   2    -
-     6.85413     25.00000    439.56241      0.00000          110   2    -
-     6.85413     25.00000    489.57059      0.00000          110   1    -
-     6.87647     25.66667    493.72796      0.00000          110   1    -
-     6.88823     26.33333    497.87383      0.00000          110   1    -
-     6.88931     27.00000    502.00814      0.00000          110   1    -
-     6.87963     27.66667    506.13088      0.00000          110   1    -
-     6.85909     28.33333    510.24205      0.00000          110   1    -
-     6.85909     28.33333    510.24205      0.00000          110   1    -
-     6.82759     29.00000    514.34170      0.00000          110   1    -
-     6.78502     29.66667    518.42989      0.00000          110   1    -
-     6.73127     30.33333    522.50670      0.00000          110   1    -
-     6.66622     31.00000    526.57223      0.00000          110   1    -
-     6.58975     31.66667    530.62659      0.00000          110   1    -
-     6.58975     31.66667    530.62659      0.00000          110   1    -
-     6.50172     32.33333    534.66992      0.00000          110   1    -
-     6.40200     33.00000    538.70236      0.00000          110   1    -
-     6.29044     33.66667    542.72404      0.00000          110   1    -
-     6.16689     34.33333    546.73513      0.00000          110   1    -
-     6.03119     35.00000    550.73580      0.00000          110   1    -
-     6.03119     35.00000    587.92501      0.00000          110   1    -
-     7.99351     35.90000    593.68536      0.00000          110   1    -
-     9.34338     36.80000    599.42615      0.00000          110   2    -
-    10.07585     37.70000    605.14784      0.00000          110   2    -
-    10.18556     38.60000    610.85091      0.00000          110   2    -
-     9.66685     39.50000    616.53582      0.00000          110   2    -
-     9.66685     39.50000    616.53582      0.00000          110   2    -
-     8.51362     40.40000    622.20303      0.00000          110   1    -
-     6.71934     41.30000    627.85301      0.00000          110   1    -
-     4.27702     42.20000    633.48623      0.00000          110   1    -
-     1.17926     43.10000    639.10313      0.00000          110   0    -
-     0.00000     44.00000    644.70416      0.00000            1   0    A
-     0.00000     44.00000    671.46270      0.00000            1   0    A
-     0.00000     44.20000    672.76015      0.00000            1   0    A
-     0.00000     44.40000    674.05681      0.00000            1   0    A
-     0.00000     44.60000    675.35269      0.00000            1   0    A
-     0.00000     44.80000    676.64778      0.00000            1   0    A
-     0.00000     45.00000    677.94210      0.00000            1   0    A
-     0.00000     45.00000    529.08127      0.00000            1   0    A
-     0.00000     45.90909    536.34865      0.00000            1   0    A
-     0.00000     46.81818    543.60048      0.00000            1   0    A
-     0.00000     47.72727    550.83722      0.00000            1   0    A
-     0.00000     48.63636    558.05928      0.00000            1   0    A
-     0.00000     49.54545    565.26708      0.00000            1   0    A
-     0.00000     49.54545    565.26708      0.00000            1   0    A
-     0.00000     50.45455    572.46105      0.00000            1   0    A
-     0.00000     51.36364    579.64156      0.00000            1   0    A
-     0.00000     52.27273    586.80901      0.00000            1   0    A
-     0.00000     53.18182    593.96378      0.00000            1   0    A
-     0.00000     54.09091    601.10622      0.00000            1   0    A
-     0.00000     54.09091    601.10622      0.00000            1   0    A
-     0.00000     55.00000    608.23669      0.00000            1   0    A
-     0.00000     55.90909    615.35554      0.00000            1   0    A
-     0.00000     56.81818    622.46309      0.00000            1   0    A
-     0.00000     57.72727    629.55967      0.00000            1   0    A
-     0.00000     58.63636    636.64559      0.00000            1   0    A
-     0.00000     58.63636    636.64559      0.00000            1   0    A
-     0.00000     59.54545    643.72115      0.00000            1   0    A
-     0.00000     60.45455    650.78666      0.00000            1   0    A
-     0.10668     61.36364    657.84239      0.00000          110   0    -
-     1.77544     62.27273    664.88862      0.00000          110   0    -
-     3.24613     63.18182    671.92562      0.00000          110   0    -
-     3.24613     63.18182    671.92562      0.00000          110   0    -
-     4.53879     64.09091    678.95365      0.00000          110   1    -
-     5.67589     65.00000    685.97297      0.00000          110   1    -
-     6.66304     65.90909    692.98382      0.00000          110   1    -
-     7.50588     66.81818    699.98644      0.00000          110   1    -
-     8.21002     67.72727    706.98106      0.00000          110   1    -
-     8.21002     67.72727    706.98106      0.00000          110   1    -
-     8.78964     68.63636    713.96790      0.00000          110   1    -
-     9.25975     69.54545    720.94719      0.00000          110   1    -
-     9.62727     70.45455    727.91913      0.00000          110   1    -
-     9.89912     71.36364    734.88394      0.00000          110   1    -
-    10.08221     72.27273    741.84180      0.00000          110   1    -
-    10.08221     72.27273    741.84180      0.00000          110   1    -
-    10.18556     73.18182    748.79292      0.00000          110   1    -
-    10.21808     74.09091    755.73748      0.00000          110   1    -
-    10.18651     75.00000    762.67568      0.00000          110   1    -
-    10.09760     75.90909    769.60768      0.00000          110   1    -
-     9.95811     76.81818    776.53365      0.00000          110   1    -
-     9.95811     76.81818    776.53365      0.00000          110   1    -
-     9.77291     77.72727    783.45378      0.00000          110   1    -
-     9.54623     78.63636    790.36822      0.00000          110   1    -
-     9.28388     79.54545    797.27713      0.00000          110   1    -
-     8.99163     80.45455    804.18066      0.00000          110   1    -
-     8.67529     81.36364    811.07898      0.00000          110   1    -
-     8.67529     81.36364    811.07898      0.00000          110   1    -
-     8.33661     82.27273    817.97222      0.00000          110   1    -
-     7.97650     83.18182    824.86053      0.00000          110   1    -
-     7.59950     84.09091    831.74404      0.00000          110   1    -
-     7.21016     85.00000    838.62290      0.00000          110   1    -
-     6.81301     85.90909    845.49723      0.00000          110   1    -
-     6.81301     85.90909    845.49723      0.00000          110   1    -
-     6.40757     86.81818    852.36717      0.00000          110   1    -
-     5.99258     87.72727    859.23283      0.00000          110   1    -
-     5.57135     88.63636    866.09435      0.00000          110   1    -
-     5.14724     89.54545    872.95183      0.00000          110   1    -
-     4.72356     90.45455    879.80539      0.00000          110   1    -
-     4.72356     90.45455    879.80539      0.00000          110   1    -
-     4.29834     91.36364    886.65516      0.00000          110   0    -
-     3.86899     92.27273    893.50123      0.00000          110   0    -
-     3.43788     93.18182    900.34371      0.00000          110   0    -
-     3.00743     94.09091    907.18271      0.00000          110   0    -
-     2.58003     95.00000    914.01833      0.00000          110   0    -
-[END OF COLUMN DATA]
+[END OF SOIL PROFILE FOR SINGLE PILE MODEL]
+
+[PRESSURES]
+156 : Number of nodes
+[TABLE]
+[COLUMN INDICATION]
+Horizontal pressure
+Pore pressure
+Passive pressure
+Neutral pressure
+Status on branches
+Percentage of mobilisation
+Status character
+[END OF COLUMN INDICATION]
+[DATA]
+     0.51566      0.00000     56.33874      0.00000          110   1 -
+     0.54475      0.00000     57.52203      0.00000          110   1 -
+     0.57433      0.00000     58.70532      0.00000          110   1 -
+     0.60441      0.00000     59.88862      0.00000          110   1 -
+     0.63499      0.00000     61.07192      0.00000          110   1 -
+     0.66607      0.00000     62.25521      0.00000          110   1 -
+     0.66607      0.00000     84.74058      0.00000          110   1 -
+     0.85492      0.00000     89.80422      0.00000          110   1 -
+     1.05846      0.00000     94.86786      0.00000          110   1 -
+     1.27667      0.00000     99.93151      0.00000          110   1 -
+     1.50958      0.00000    104.99515      0.00000          110   1 -
+     1.75717      0.00000    110.05879      0.00000          110   2 -
+     1.75717      0.00000    110.05879      0.00000          110   2 -
+     2.08730      1.00000    112.87193      0.00000          110   2 -
+     2.44037      2.00000    115.68506      0.00000          110   2 -
+     2.81637      3.00000    118.49820      0.00000          110   2 -
+     3.21530      4.00000    121.31133      0.00000          110   3 -
+     3.63714      5.00000    124.12447      0.00000          110   3 -
+     3.63714      5.00000    256.50600      0.00000          110   1 -
+     3.78148      5.66667    259.19145      0.00000          110   1 -
+     3.92839      6.33333    261.87690      0.00000          110   2 -
+     4.07785      7.00000    264.56235      0.00000          110   2 -
+     4.22986      7.66667    267.24781      0.00000          110   2 -
+     4.38443      8.33333    269.93326      0.00000          110   2 -
+     4.38443      8.33333    269.93326      0.00000          110   2 -
+     4.54153      9.00000    272.61871      0.00000          110   2 -
+     4.70116      9.66667    275.30416      0.00000          110   2 -
+     4.86332     10.33333    277.98961      0.00000          110   2 -
+     5.02799     11.00000    280.67506      0.00000          110   2 -
+     5.19516     11.66667    283.36051      0.00000          110   2 -
+     5.19516     11.66667    283.36051      0.00000          110   2 -
+     5.36481     12.33333    286.04596      0.00000          110   2 -
+     5.53695     13.00000    288.73141      0.00000          110   2 -
+     5.71154     13.66667    291.41686      0.00000          110   2 -
+     5.88857     14.33333    294.10231      0.00000          110   2 -
+     6.06803     15.00000    296.78777      0.00000          110   2 -
+     6.06803     15.00000    371.43860      0.00000          110   2 -
+     6.12876     15.66667    374.66624      0.00000          110   2 -
+     6.18842     16.33333    377.89387      0.00000          110   2 -
+     6.24698     17.00000    381.12150      0.00000          110   2 -
+     6.30443     17.66667    384.34914      0.00000          110   2 -
+     6.36075     18.33333    387.57677      0.00000          110   2 -
+     6.36075     18.33333    387.57677      0.00000          110   2 -
+     6.41589     19.00000    390.80441      0.00000          110   2 -
+     6.46984     19.66667    394.03204      0.00000          110   2 -
+     6.52256     20.33333    397.25967      0.00000          110   2 -
+     6.57402     21.00000    400.48731      0.00000          110   2 -
+     6.62418     21.66667    403.71494      0.00000          110   2 -
+     6.62418     21.66667    403.71494      0.00000          110   2 -
+     6.67301     22.33333    406.94257      0.00000          110   2 -
+     6.72046     23.00000    410.17021      0.00000          110   2 -
+     6.76650     23.66667    413.39784      0.00000          110   2 -
+     6.81107     24.33333    416.62547      0.00000          110   2 -
+     6.85413     25.00000    419.85311      0.00000          110   2 -
+     6.85413     25.00000    467.69634      0.00000          110   1 -
+     6.87647     25.66667    471.27851      0.00000          110   1 -
+     6.88823     26.33333    474.86068      0.00000          110   1 -
+     6.88931     27.00000    478.44285      0.00000          110   1 -
+     6.87963     27.66667    482.02501      0.00000          110   1 -
+     6.85909     28.33333    485.60718      0.00000          110   1 -
+     6.85909     28.33333    485.60718      0.00000          110   1 -
+     6.82759     29.00000    489.18935      0.00000          110   1 -
+     6.78502     29.66667    492.77152      0.00000          110   1 -
+     6.73127     30.33333    496.35369      0.00000          110   1 -
+     6.66622     31.00000    499.93586      0.00000          110   1 -
+     6.58975     31.66667    503.51803      0.00000          110   1 -
+     6.58975     31.66667    503.51803      0.00000          110   1 -
+     6.50172     32.33333    507.10019      0.00000          110   1 -
+     6.40200     33.00000    510.68236      0.00000          110   1 -
+     6.29044     33.66667    514.26453      0.00000          110   1 -
+     6.16689     34.33333    517.84670      0.00000          110   1 -
+     6.03119     35.00000    521.42887      0.00000          110   1 -
+     6.03119     35.00000    556.57330      0.00000          110   1 -
+     7.99351     35.90000    561.74663      0.00000          110   1 -
+     9.34338     36.80000    566.91997      0.00000          110   2 -
+    10.07585     37.70000    572.09331      0.00000          110   2 -
+    10.18556     38.60000    577.26664      0.00000          110   2 -
+     9.66685     39.50000    582.43998      0.00000          110   2 -
+     9.66685     39.50000    582.43998      0.00000          110   2 -
+     8.51362     40.40000    587.61332      0.00000          110   1 -
+     6.71934     41.30000    592.78665      0.00000          110   1 -
+     4.27702     42.20000    597.95999      0.00000          110   1 -
+     1.17926     43.10000    603.13333      0.00000          110   0 -
+     0.00000     44.00000    608.30666      0.00000            1   0 A
+     0.00000     44.00000    633.45735      0.00000            1   0 A
+     0.00000     44.20000    634.65777      0.00000            1   0 A
+     0.00000     44.40000    635.85818      0.00000            1   0 A
+     0.00000     44.60000    637.05860      0.00000            1   0 A
+     0.00000     44.80000    638.25901      0.00000            1   0 A
+     0.00000     45.00000    639.45943      0.00000            1   0 A
+     0.00000     45.00000    490.44096      0.00000            1   0 A
+     0.00000     45.90909    497.28943      0.00000            1   0 A
+     0.00000     46.81818    504.13791      0.00000            1   0 A
+     0.00000     47.72727    510.98639      0.00000            1   0 A
+     0.00000     48.63636    517.83487      0.00000            1   0 A
+     0.00000     49.54545    524.68334      0.00000            1   0 A
+     0.00000     49.54545    524.68334      0.00000            1   0 A
+     0.00000     50.45455    531.53182      0.00000            1   0 A
+     0.00000     51.36364    538.38030      0.00000            1   0 A
+     0.00000     52.27273    545.22877      0.00000            1   0 A
+     0.00000     53.18182    552.07725      0.00000            1   0 A
+     0.00000     54.09091    558.92573      0.00000            1   0 A
+     0.00000     54.09091    558.92573      0.00000            1   0 A
+     0.00000     55.00000    565.77421      0.00000            1   0 A
+     0.00000     55.90909    572.62268      0.00000            1   0 A
+     0.00000     56.81818    579.47116      0.00000            1   0 A
+     0.00000     57.72727    586.31964      0.00000            1   0 A
+     0.00000     58.63636    593.16811      0.00000            1   0 A
+     0.00000     58.63636    593.16811      0.00000            1   0 A
+     0.00000     59.54545    600.01659      0.00000            1   0 A
+     0.00000     60.45455    606.86507      0.00000            1   0 A
+     0.10668     61.36364    613.71355      0.00000          110   0 -
+     1.77544     62.27273    620.56202      0.00000          110   0 -
+     3.24613     63.18182    627.41050      0.00000          110   1 -
+     3.24613     63.18182    627.41050      0.00000          110   1 -
+     4.53879     64.09091    634.25898      0.00000          110   1 -
+     5.67589     65.00000    641.10745      0.00000          110   1 -
+     6.66304     65.90909    647.95593      0.00000          110   1 -
+     7.50588     66.81818    654.80441      0.00000          110   1 -
+     8.21002     67.72727    661.65289      0.00000          110   1 -
+     8.21002     67.72727    661.65289      0.00000          110   1 -
+     8.78964     68.63636    668.50136      0.00000          110   1 -
+     9.25975     69.54545    675.34984      0.00000          110   1 -
+     9.62727     70.45455    682.19832      0.00000          110   1 -
+     9.89912     71.36364    689.04679      0.00000          110   1 -
+    10.08221     72.27273    695.89527      0.00000          110   1 -
+    10.08221     72.27273    695.89527      0.00000          110   1 -
+    10.18556     73.18182    702.74375      0.00000          110   1 -
+    10.21808     74.09091    709.59223      0.00000          110   1 -
+    10.18651     75.00000    716.44070      0.00000          110   1 -
+    10.09760     75.90909    723.28918      0.00000          110   1 -
+     9.95811     76.81818    730.13766      0.00000          110   1 -
+     9.95811     76.81818    730.13766      0.00000          110   1 -
+     9.77291     77.72727    736.98613      0.00000          110   1 -
+     9.54623     78.63636    743.83461      0.00000          110   1 -
+     9.28388     79.54545    750.68309      0.00000          110   1 -
+     8.99163     80.45455    757.53157      0.00000          110   1 -
+     8.67529     81.36364    764.38004      0.00000          110   1 -
+     8.67529     81.36364    764.38004      0.00000          110   1 -
+     8.33661     82.27273    771.22852      0.00000          110   1 -
+     7.97650     83.18182    778.07700      0.00000          110   1 -
+     7.59950     84.09091    784.92547      0.00000          110   1 -
+     7.21016     85.00000    791.77395      0.00000          110   1 -
+     6.81301     85.90909    798.62243      0.00000          110   1 -
+     6.81301     85.90909    798.62243      0.00000          110   1 -
+     6.40757     86.81818    805.47091      0.00000          110   1 -
+     5.99258     87.72727    812.31938      0.00000          110   1 -
+     5.57135     88.63636    819.16786      0.00000          110   1 -
+     5.14724     89.54545    826.01634      0.00000          110   1 -
+     4.72356     90.45455    832.86481      0.00000          110   1 -
+     4.72356     90.45455    832.86481      0.00000          110   1 -
+     4.29834     91.36364    839.71329      0.00000          110   1 -
+     3.86899     92.27273    846.56177      0.00000          110   0 -
+     3.43788     93.18182    853.41025      0.00000          110   0 -
+     3.00743     94.09091    860.25872      0.00000          110   0 -
+     2.58003     95.00000    867.10720      0.00000          110   0 -
+[END OF DATA]
+[END OF TABLE]
+[END OF PRESSURES]
 
 [END OF SIDE]
 
 [END OF CONSTRUCTION STAGE]
 
 [RESUME]
+1 : Number of stages
+[TABLE]
 [COLUMN INDICATION]
-moment
-shear force
-displacements
-Perc. mob. moment
-Perc. mob. resistances
-Fase
+Moment
+Shear force
+Displacement
+Percentage mobilized moment
+Percentage mobilized resistance
+Stage
 Verification type
 Partial factor type
 Vertical balance result
 Vertical result direction
 Status
 [END OF COLUMN INDICATION]
-
-[COLUMN DATA]
-    1   Number of stages 
-   -23.59061      -10.45022        6.26268        0.00000        0.96069    1   15    4    0    0    0
-[END OF COLUMN DATA]
-
+[DATA]
+   -23.59061    -10.45022      6.26268      0.00000      0.96069     1    15     4 0 0     0
+[END OF DATA]
+[END OF TABLE]
 [END OF RESUME]
 
-[END OF DUMP]
+[END OF OUTPUT DATA]
+[END OF DUMPFILE]

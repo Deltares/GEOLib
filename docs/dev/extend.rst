@@ -31,7 +31,7 @@ Testing
 
 When developing a new feature it's a good practice to start with a simple test script
 that documents how you should use the new feature. The test will fail in the beginning
-because nothing is implemented or linekd yet, but should be fixed in the end. This is
+because nothing is implemented or linked yet, but should be fixed in the end. This is
 also the simplest way of navigating a large complex package, instead of trying to get 
 everything running in a separate script.
 

@@ -35,7 +35,11 @@ class MetaData(BaseSettings):
     project: str = ""
     remarks: str = f"Created by GEOLib {version}"
 
-    endpoint: AnyHttpUrl = "http://localhost:8000/"  # For remote execution
+    # For remote execution
+    endpoint: AnyHttpUrl = "http://localhost:8000/"
+    gl_username: str = "test"
+    gl_password: str = "test"
+
     console_folder: DirectoryPath = Path(".")
 
     class Config:

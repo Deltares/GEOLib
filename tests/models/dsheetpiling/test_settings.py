@@ -7,6 +7,12 @@ from geolib.models.dsheetpiling.dsheetpiling_model import (
     DiaphragmModelType,
 )
 from geolib.models.dsheetpiling.internal import Model
+from geolib.models.dsheetpiling.settings import (
+    LateralEarthPressureMethod,
+    LateralEarthPressureMethodStage,
+    LoadTypeFavourableUnfavourable,
+    LoadTypeFavourableUnfavourableMoment,
+)
 
 
 class TestSettings:
@@ -26,3 +32,25 @@ class TestSettings:
         kwargs = {k: v for k, v in dict(m, model=m.model).items() if v is not None}
         internal_model = Model(**kwargs)
         assert isinstance(internal_model, Model)
+
+    def test_type_favourable_unfavourable_have_similar_values(self):
+        """ This tests checks that these two different Enums have the same value."""
+        assert (
+            LoadTypeFavourableUnfavourable.FAVOURABLE.value
+            == LoadTypeFavourableUnfavourableMoment.FAVOURABLE.value
+        )
+        assert (
+            LoadTypeFavourableUnfavourable.UNFAVOURABLE.value
+            == LoadTypeFavourableUnfavourableMoment.UNFAVOURABLE.value
+        )
+
+    def test_lateral_earth_pressure_methods_have_similar_values(self):
+        """ This tests checks that these two different Enums have the same value."""
+        assert (
+            LateralEarthPressureMethod.KA_KO_KP.value
+            == LateralEarthPressureMethodStage.KA_KO_KP.value
+        )
+        assert (
+            LateralEarthPressureMethod.C_PHI_DELTA.value
+            == LateralEarthPressureMethodStage.C_PHI_DELTA.value
+        )

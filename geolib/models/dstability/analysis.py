@@ -25,7 +25,7 @@ from .internal import (
     NullablePersistablePoint,
     PersistableSearchArea,
     PersistableTangentArea,
-    OptionsType
+    OptionsType,
 )
 
 
@@ -34,7 +34,7 @@ class DStabilityObject(BaseModel, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def _to_internal_datastructure(self):
-        """Convert to internal datastructure"""    
+        """Convert to internal datastructure"""
         raise NotImplementedError
 
 
@@ -53,13 +53,13 @@ class DStabilityCircle(DStabilityObject):
         center (Point): Center of the circle.
         radius (float): Radius of the circle.    
     """
+
     center: Point
     radius: confloat(gt=0)
 
     def _to_internal_datastructure(self) -> PersistableCircle:
         return PersistableCircle(
-            Center=PersistablePoint(X=self.center.x, Z=self.center.z),
-            Radius=self.radius
+            Center=PersistablePoint(X=self.center.x, Z=self.center.z), Radius=self.radius
         )
 
 
@@ -72,6 +72,7 @@ class DStabilitySearchGrid(DStabilityObject):
         number_of_points_in_z (int): Number op points upwards
         space (float): Space between the points in x and z direction
     """
+
     bottom_left: Point
     number_of_points_in_x: PositiveInt
     number_of_points_in_z: PositiveInt
@@ -82,7 +83,7 @@ class DStabilitySearchGrid(DStabilityObject):
             BottomLeft=PersistablePoint(X=self.bottom_left.x, Z=self.bottom_left.z),
             NumberOfPointsInX=self.number_of_points_in_x,
             NumberOfPointsInZ=self.number_of_points_in_z,
-            Space=self.space
+            Space=self.space,
         )
 
 
@@ -94,6 +95,7 @@ class DStabilitySearchArea(DStabilityObject):
         top_left (Point): Top left position of the search area
         width (float): Width of the search area
     """
+
     height: confloat(gt=0)
     top_left: Point
     width: confloat(gt=0)
@@ -102,7 +104,7 @@ class DStabilitySearchArea(DStabilityObject):
         return PersistableSearchArea(
             Height=self.height,
             TopLeft=NullablePersistablePoint(X=self.top_left.x, Z=self.top_left.z),
-            Width=self.width
+            Width=self.width,
         )
 
 
@@ -120,6 +122,7 @@ class DStabilitySlipPlaneConstraints(DStabilityObject):
         x_left_zone_a (float): x coordinate of left point of zone A, defaults to 0.0
         x_left_zone_b (float): x coordinate of left point of zone B, defaults to 0.0
     """
+
     is_size_constraints_enabled: bool = False
     is_zone_a_constraints_enabled: bool = False
     is_zone_b_constraints_enabled: bool = False
@@ -131,9 +134,7 @@ class DStabilitySlipPlaneConstraints(DStabilityObject):
     x_left_zone_b: float = 0.0
 
     def _to_internal_datastructure(self) -> PersistableSlipPlaneConstraints:
-        data = {
-            **{snake_to_camel(name): value for name, value in self.dict().items()}
-        }
+        data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}
         return PersistableSlipPlaneConstraints(**data)
 
 
@@ -145,14 +146,13 @@ class DStabilityGeneticSlipPlaneConstraints(DStabilityObject):
         minimum_angle_between_slices (float): Minimum angle between slices, defaults to 0.
         minimum_thrust_line_percentage_inside_slices (float): Minimum thrustline percentage inside slices, defaults to 0.
     """
+
     is_enabled: bool = False
     minimum_angle_between_slices: float = 0.0
     minimum_thrust_line_percentage_inside_slices: float = 0.0
 
     def _to_internal_datastructure(self) -> PersistableGeneticSlipPlaneConstraints:
-        data = {
-            **{snake_to_camel(name): value for name, value in self.dict().items()}
-        }
+        data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}
         return PersistableGeneticSlipPlaneConstraints(**data)
 
 
@@ -162,13 +162,12 @@ class DStabilityBishopAnalysisMethod(DStabilityAnalysisMethod):
     Args:
         circle (DStabilityCircle): Bishop circle definition
     """
+
     _analysis_type: AnalysisType = AnalysisType.BISHOP
     circle: DStabilityCircle
 
     def _to_internal_datastructure(self) -> PersistableBishopSettings:
-        return PersistableBishopSettings(
-            Circle=self.circle._to_internal_datastructure()
-        )
+        return PersistableBishopSettings(Circle=self.circle._to_internal_datastructure())
 
 
 class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
@@ -182,6 +181,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
         number_of_tangent_lines (int):
         space_tangent_lines (float):
     """
+
     _analysis_type: AnalysisType = AnalysisType.BISHOP_BRUTE_FORCE
     extrapolate_search_space: bool = True
     search_grid: DStabilitySearchGrid
@@ -192,14 +192,16 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
 
     def _to_internal_datastructure(self) -> PersistableBishopBruteForceSettings:
         return PersistableBishopBruteForceSettings(
-            GridEnhancements=PersistableGridEnhancements(ExtrapolateSearchSpace=self.extrapolate_search_space),
+            GridEnhancements=PersistableGridEnhancements(
+                ExtrapolateSearchSpace=self.extrapolate_search_space
+            ),
             SearchGrid=self.search_grid._to_internal_datastructure(),
             SlipPlaneConstraints=self.slipe_plane_constraints._to_internal_datastructure(),
             TangentLines=PersistableTangentLines(
                 BottomTangentLineZ=self.bottom_tangent_line_z,
                 NumberOfTangentLines=self.number_of_tangent_lines,
-                Space=self.space_tangent_lines
-            )
+                Space=self.space_tangent_lines,
+            ),
         )
 
 
@@ -209,6 +211,7 @@ class DStabilitySpencerAnalysisMethod(DStabilityAnalysisMethod):
     Args:
         slipplane ([Point]): The points of the slipplane
     """
+
     _analysis_type: AnalysisType = AnalysisType.SPENCER
     slipplane: List[Point]
 
@@ -227,6 +230,7 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
         slip_plane_b (List[Point]): lower slip line boundary
         slipe_plane_constraints (DStabilityGeneticSlipPlaneConstraints): constraints for the slip plane
     """
+
     _analysis_type: AnalysisType = AnalysisType.SPENCER_GENETIC
     options_type: OptionsType = OptionsType.DEFAULT
     slip_plane_a: List[Point]
@@ -236,9 +240,13 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
     def _to_internal_datastructure(self) -> PersistableSpencerGeneticSettings:
         return PersistableSpencerGeneticSettings(
             OptionsType=self.options_type,
-            SlipPlaneA=[PersistablePoint(X=point.x, Z=point.z) for point in self.slip_plane_a],
-            SlipPlaneB=[PersistablePoint(X=point.x, Z=point.z) for point in self.slip_plane_b],
-            SlipPlaneConstraints=self.slipe_plane_constraints._to_internal_datastructure()
+            SlipPlaneA=[
+                PersistablePoint(X=point.x, Z=point.z) for point in self.slip_plane_a
+            ],
+            SlipPlaneB=[
+                PersistablePoint(X=point.x, Z=point.z) for point in self.slip_plane_b
+            ],
+            SlipPlaneConstraints=self.slipe_plane_constraints._to_internal_datastructure(),
         )
 
 
@@ -249,16 +257,21 @@ class DStabilityUpliftVanAnalysisMethod(DStabilityAnalysisMethod):
         first_circle (DStabilityCircle): The location of the left circle for the slipplane.
         second_circle_center (Point): The center of the circle on the right side of the slipplane
     """
+
     _analysis_type: AnalysisType = AnalysisType.UPLIFT_VAN
     first_circle: DStabilityCircle
     second_circle_center: Point
-    
+
     def _to_internal_datastructure(self) -> PersistableUpliftVanSettings:
         return PersistableUpliftVanSettings(
             SlipPlane=PersistableTwoCirclesOnTangentLine(
-                FirstCircleCenter=NullablePersistablePoint(X=self.first_circle.center.x, Z=self.first_circle.center.z),
+                FirstCircleCenter=NullablePersistablePoint(
+                    X=self.first_circle.center.x, Z=self.first_circle.center.z
+                ),
                 FirstCircleRadius=self.first_circle.radius,
-                SecondCircleCenter=NullablePersistablePoint(X=self.second_circle_center.x, Z=self.second_circle_center.z)
+                SecondCircleCenter=NullablePersistablePoint(
+                    X=self.second_circle_center.x, Z=self.second_circle_center.z
+                ),
             )
         )
 
@@ -274,6 +287,7 @@ class DStabilityUpliftVanParticleSwarmAnalysisMethod(DStabilityAnalysisMethod):
         tangent_area_height (float): height of the tangent lines search area
         tangent_area_top_z (float): top z coordinate of the tangent lines area
     """
+
     _analysis_type: AnalysisType = AnalysisType.UPLIFT_VAN_PARTICLE_SWARM
     options_type: OptionsType = OptionsType.DEFAULT
     search_area_a: DStabilitySearchArea
@@ -281,12 +295,15 @@ class DStabilityUpliftVanParticleSwarmAnalysisMethod(DStabilityAnalysisMethod):
     slip_plane_constraints: DStabilitySlipPlaneConstraints = DStabilitySlipPlaneConstraints()
     tangent_area_height: float
     tangent_area_top_z: float
-    
+
     def _to_internal_datastructure(self) -> PersistableUpliftVanParticleSwarmSettings:
         return PersistableUpliftVanParticleSwarmSettings(
             OptionsType=self.options_type,
             SearchAreaA=self.search_area_a._to_internal_datastructure(),
             SearchAreaB=self.search_area_b._to_internal_datastructure(),
             SlipPlaneConstraints=self.slip_plane_constraints._to_internal_datastructure(),
-            TangentArea=PersistableTangentArea(Height=self.tangent_area_height, TopZ=self.tangent_area_top_z)    
+            TangentArea=PersistableTangentArea(
+                Height=self.tangent_area_height, TopZ=self.tangent_area_top_z
+            ),
         )
+

@@ -12,7 +12,6 @@ from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,
     DFoundationsTableWrapper,
     DFoundationsEnumStructure,
-    DFoundationsInlineProperties,
 )
 
 
@@ -184,30 +183,3 @@ class TestDFoundationsTableWrapper:
             assert isinstance(value["yo"], int)
             assert isinstance(value["lo"], float)
             assert isinstance(value["man"], str)
-
-
-class TestDFoundationsInlineProperties:
-    @pytest.mark.integrationtest
-    @pytest.mark.parametrize(
-        "text_to_parse",
-        [
-            pytest.param("[property_1]\n[end of property_1]", id="Grouped"),
-            pytest.param(" = property_1", id="Inline equal"),
-            pytest.param(" : property_1", id="Inline two points"),
-        ],
-    )
-    def test_given_text_with_empty_properties_when_parse_text_then_returns_structure_with_default(
-        self, text_to_parse: str
-    ):
-        # 1. Define test data.
-        class with_defaults(DFoundationsInlineProperties):
-            property_1: int = 42
-
-        parsed_structure = None
-
-        # 2. Run test.
-        with pytest.raises(ValidationError):
-            parsed_structure = with_defaults.parse_text(text_to_parse)
-
-        # 3. Verify final expectations.
-        assert parsed_structure is None

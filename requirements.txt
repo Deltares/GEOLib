@@ -14,7 +14,9 @@ devtools==0.5.1
 docutils==0.16
 fastapi==0.58.1
 flake8==3.8.3
-hypothesis==5.19.0
+h11==0.9.0
+httptools==0.1.1; sys_platform != "win32" and sys_platform != "cygwin" and platform_python_implementation != "PyPy"
+hypothesis==5.20.1
 hypothesis-jsonschema==0.11.1
 idna==2.10
 imagesize==1.2.0
@@ -33,7 +35,7 @@ pillow==7.2.0
 pluggy==0.13.1
 py==1.9.0
 pycodestyle==2.6.0
-pydantic==1.5.1
+pydantic==1.6.1
 pyflakes==2.2.0
 pygments==2.6.1
 pyparsing==2.4.7
@@ -43,7 +45,7 @@ pytest-cov==2.10.0
 python-dotenv==0.12.0
 pytz==2020.1
 recommonmark==0.6.0
-regex==2020.6.8
+regex==2020.7.14
 reportlab==3.5.44
 requests==2.24.0
 rst2pdf==0.96
@@ -64,5 +66,8 @@ toml==0.10.1
 typed-ast==1.4.1
 typing-extensions==3.7.4.2
 urllib3==1.25.9
+uvicorn==0.11.6
+uvloop==0.14.0; sys_platform != "win32" and sys_platform != "cygwin" and platform_python_implementation != "PyPy"
 wcwidth==0.2.5
+websockets==8.1
 zipp==3.1.0

@@ -4,7 +4,11 @@ from typing import Callable, List
 from pydantic import ValidationError
 
 from geolib.geometry.one import Point
-from geolib.models.dsheetpiling.settings import Side
+from geolib.models.dsheetpiling.settings import (
+    LateralEarthPressureMethodStage,
+    PassiveSide,
+    Side
+)
 from geolib.models.dsheetpiling.surface import Surface
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import (
@@ -17,7 +21,12 @@ from geolib.models.dsheetpiling.internal import (
 @pytest.fixture
 def _model() -> DSheetPilingModel:
     model = DSheetPilingModel()
-    model.add_stage(name="Initial stage")
+    model.add_stage(
+        name="Initial stage",
+        passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+        method_left=LateralEarthPressureMethodStage.KA_KO_KP,
+        method_right=LateralEarthPressureMethodStage.KA_KO_KP,
+    )
     return model
 
 
@@ -51,6 +60,19 @@ class TestSurfaces:
             Surface(name=surface_name, points=points)
 
     @pytest.mark.integrationtest
+    def test_dsheetpilingmodel_add_surface_invalid_stage_id_raises_ValueError(
+        self,
+        _model: DSheetPilingModel,
+        make_surface: Callable
+    ):
+        surface = make_surface(name=_DEFAULT_SURFACE_NAME)
+        invalid_stage_id = len(_model.datastructure.input_data.construction_stages.stages) + 1
+
+        with pytest.raises(ValueError, match=r"Stage \d+ is not added to the internal datastructure"):
+            _model.add_surface(surface=surface, side=Side.BOTH, stage_id=invalid_stage_id)
+
+
+    @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "side",
         [
@@ -63,15 +85,16 @@ class TestSurfaces:
         """Validate if surface is refered in [SURFACES]"""
 
         surface_name = "Ground level -2m"
+        current_stage = _model.current_stage
         assert surface_name != _DEFAULT_SURFACE_NAME
         surface = make_surface(surface_name)
 
         # _model.add_surface(surface=surface, side=Side.LEFT, stage_id=0)
-        _model.add_surface(surface=surface, side=side, stage_id=0)
+        _model.add_surface(surface=surface, side=side, stage_id=current_stage)
 
         assert isinstance(_model.datastructure.input_data.surfaces, Surfaces)
         assert len(_model.datastructure.input_data.surfaces.surfaces) == 1
-        internal = _model.datastructure.input_data.surfaces.surfaces[0]
+        internal = _model.datastructure.input_data.surfaces.surfaces[current_stage]
         assert isinstance(internal, InternalSurface)
         assert internal.name == surface_name
         assert len(internal.points) == len(surface.points)
@@ -98,6 +121,8 @@ class TestSurfaces:
         right_surface_name: str,
     ):
         """Validate if surface is refered in [CONSTRUCTION STAGES]"""
+        current_stage = _model.current_stage
+
         if side == Side.LEFT:
             assert left_surface_name != _DEFAULT_SURFACE_NAME
             surface = make_surface(left_surface_name)
@@ -108,7 +133,7 @@ class TestSurfaces:
             assert left_surface_name == right_surface_name != _DEFAULT_SURFACE_NAME
             surface = make_surface(right_surface_name)
 
-        _model.add_surface(surface=surface, side=side, stage_id=0)
+        _model.add_surface(surface=surface, side=side, stage_id=current_stage)
 
-        assert _model.datastructure.input_data.construction_stages.stages[0].surface_left == left_surface_name
-        assert _model.datastructure.input_data.construction_stages.stages[0].surface_right == right_surface_name
+        assert _model.datastructure.input_data.construction_stages.stages[current_stage].surface_left == left_surface_name
+        assert _model.datastructure.input_data.construction_stages.stages[current_stage].surface_right == right_surface_name

@@ -7,14 +7,16 @@ import abc
 import logging
 import os
 from abc import abstractmethod, abstractproperty
-from pathlib import Path
-from subprocess import run
+from pathlib import Path, PosixPath, WindowsPath
+from subprocess import run, Popen
 from types import CoroutineType
 from typing import List, Optional, Type, Union
+from requests.auth import HTTPBasicAuth
 
 import requests
+import pydantic.json
 from pydantic import BaseModel as DataClass
-from pydantic import DirectoryPath, FilePath, HttpUrl
+from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
 
 from geolib.errors import CalculationError
 
@@ -24,12 +26,16 @@ from .parsers import BaseParserProvider
 
 
 class BaseModel(DataClass, abc.ABC):
-    filename: Union[FilePath, DirectoryPath, None]
-    datastructure: Optional[Type[BaseModelStructure]]
+    filename: Optional[Path]
+    datastructure: Optional[BaseModelStructure]
     meta: MetaData = MetaData()
 
     def execute(self, timeout_in_seconds: int = 5 * 60) -> "BaseModel":
-        """Execute a Model and wait for `timeout` seconds."""
+        """Execute a Model and wait for `timeout` seconds.
+
+        The model is modified in place if the calculation and parsing
+        is successfull.
+        """
         if self.filename is None:
             raise ValueError("Set filename or serialize first!")
         if not self.filename.exists():
@@ -40,7 +46,7 @@ class BaseModel(DataClass, abc.ABC):
             + self.console_flags
             + [str(self.filename)],
             timeout=timeout_in_seconds,
-            cwd=str(self.meta.console_folder),
+            cwd=str(self.filename.parent),
         )
 
         # Successfull run
@@ -58,16 +64,23 @@ class BaseModel(DataClass, abc.ABC):
             raise CalculationError(process.returncode, error)
 
     def execute_remote(self, endpoint: HttpUrl) -> "BaseModel":
-        """Execute a Model on a remote endpoint."""
-        r = requests.post(endpoint + "calculate", json={"model": self.json()})
-        if r.status_code == 200:
-            return self.__class__(**r.json())
+        """Execute a Model on a remote endpoint.
+
+        A new model instance is returned.
+        """
+        response = requests.post(
+            endpoint + f"calculate/{self.__class__.__name__.lower()}",
+            data=self.json(),
+            auth=HTTPBasicAuth(self.meta.gl_username, self.meta.gl_password),
+        )
+        if response.status_code == 200:
+            return self.__class__(**response.json())
         else:
-            raise CalculationError(r.status_code, r.text)
+            raise CalculationError(response.status_code, response.text)
 
     def get_error_context(self) -> str:
         err_fn = output_filename_from_input(self, extension=".err")
-        batch_fn = self.meta.console_folder / "Batchlog.txt"
+        batch_fn = self.filename.parent / "Batchlog.txt"
         error = ""
         if err_fn.exists():
             with open(err_fn) as f:
@@ -110,6 +123,7 @@ class BaseModel(DataClass, abc.ABC):
     def parse(self, filename: FilePath) -> BaseModelStructure:
         """Parse input or outputfile to Model, depending on extension."""
         self.filename = filename
+        # self.datastructure = None
         self.datastructure = self.parser_provider_type().parse(filename)
         return self.datastructure
 
@@ -135,28 +149,91 @@ class BaseModel(DataClass, abc.ABC):
     def output(self):
         """Access internal dict-like datastructure of the output.
 
-        Requires a succesful execute. Throws an error with error codes
-        and explanation from the error file if not.
+        Requires a successfull execute.
         """
         return self.datastructure.results
 
 
 class BaseModelList(DataClass):
-    """Hold multiple models that can be executed in parallel."""
+    """Hold multiple models that can be executed in parallel.
+    
+    Note that all models need to have a unique filename
+    otherwise they will overwrite eachother. This also helps with 
+    identifying them later."""
 
-    models: List[BaseModel]
+    models: conlist(BaseModel, min_items=1)
 
-    async def execute(
-        self, timeout: int = 10, nprocesses: Optional[int] = os.cpu_count()
-    ) -> CoroutineType:
+    def execute(
+        self,
+        calculation_folder: DirectoryPath,
+        timeout_in_seconds: int = 10 * 60,
+        nprocesses: Optional[int] = os.cpu_count(),
+    ) -> List[BaseModel]:
         """Execute all models in this class in parallel.
 
         We split the list to separate folders and call a batch processes on each folder.
+        Note that the order of models will change.
         """
+        lead_model = self.models[0]
+        processes = []
+        output_models = []
 
-    async def execute_remote(self, endpoint: HttpUrl) -> CoroutineType:
+        split_models = [self.models[i::nprocesses] for i in range(nprocesses)]
+        for i, models in enumerate(split_models):
+            if len(models) == 0:
+                continue
+            unique_folder = calculation_folder / str(i)
+            unique_folder.mkdir(parents=True, exist_ok=True)
+
+            for model in models:
+                fn = unique_folder / model.filename.name
+                model.serialize(fn)
+
+            process = Popen(
+                [str(lead_model.meta.console_folder / lead_model.console_path)]
+                + lead_model.console_flags
+                + [str(unique_folder)],
+                cwd=str(unique_folder),
+            )
+            processes.append(process)
+
+        # Wait for all processes to be done
+        for process in processes:
+            process.wait(timeout=timeout_in_seconds)
+
+        # Iterate over the models
+        for i, models in enumerate(split_models):
+            for model in models:
+                output_filename = output_filename_from_input(model)
+                if output_filename.exists():
+                    model.parse(output_filename)
+                    output_models.append(model)
+                else:
+                    logging.warning(
+                        f"Model @ {model.filename} failed. Please check the .err file and batchlog.txt in its folder."
+                    )
+
+        return self.__class__(models=output_models)
+
+    def execute_remote(self, endpoint: HttpUrl) -> "BaseModelList":
         """Execute all models in this class in parallel on a remote endpoint.
+
+        Note that the order of models will change.
         """
+        lead_model = self.models[0]
+
+        response = requests.post(
+            endpoint + f"calculate/{lead_model.__class__.__name__.lower()}s",
+            data="[" + ",".join((model.json() for model in self.models)) + "]",
+            auth=HTTPBasicAuth(lead_model.meta.gl_username, lead_model.meta.gl_password),
+        )
+        if response.status_code == 200:
+            models = response.json()["models"]
+            return self.__class__(
+                models=[lead_model.__class__(**model) for model in models]
+            )
+        else:
+            raise CalculationError(response.status_code, response.text)
 
 
 def output_filename_from_input(model: BaseModel, extension: str = None) -> Path:

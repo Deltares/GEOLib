@@ -72,6 +72,10 @@ class DStabilityModel(BaseModel):
     .stix files
     """
 
+    current_stage: int = 0
+    datastructure: DStabilityStructure = DStabilityStructure()
+    current_id: int = -1
+
     def __init__(self, *args, **data) -> None:
         super().__init__(*args, **data)
         self.current_id = self.datastructure.get_unique_id()
@@ -88,10 +92,6 @@ class DStabilityModel(BaseModel):
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
-
-    current_stage: int = 0
-    datastructure: DStabilityStructure = DStabilityStructure()
-    current_id: int = -1
 
     def _get_next_id(self) -> int:
         self.current_id += 1
@@ -236,9 +236,6 @@ class DStabilityModel(BaseModel):
 
     def add_point(self, point: Point, stage=None) -> int:
         """Add point, which should be unique in the model and return the created point id.
-
-        .. todo::
-            Determine a default axis order, the Z/Y axes are swapped in DStability compared to D-Settlement.
         """
 
     def add_soil(self, soil: Soil) -> int:
@@ -295,9 +292,6 @@ class DStabilityModel(BaseModel):
 
         Returns:
             int: id of the added layer
-
-        Todo:
-            * the initial geometry does not have an id
         """
         stage_id = stage_id if stage_id else self.current_stage
 
@@ -411,7 +405,7 @@ class DStabilityModel(BaseModel):
             int: id of the added add_state_point
 
         Todo:
-            * check if point lies within the given layer
+            Check if point lies within the given layer
         """
         stage_id = stage_id if stage_id else self.current_stage
 

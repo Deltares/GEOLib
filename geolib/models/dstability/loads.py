@@ -1,13 +1,15 @@
 """
 This module handles the four types of loads in DStability.
-
-.. todo::
-    Unify these loads with the older models
 """
 import abc
 from pydantic import BaseModel, NoneStr, confloat, validator
 from typing import List, Optional
-from .internal import PersistableUniformLoad, PersistableLineLoad, PersistableConsolidation, PersistablePoint
+from .internal import (
+    PersistableUniformLoad,
+    PersistableLineLoad,
+    PersistableConsolidation,
+    PersistablePoint,
+)
 from ...geometry.one import Point
 
 
@@ -15,7 +17,7 @@ class DStabilityLoad(BaseModel):
     """Base Class for Loads."""
 
     label: NoneStr
-    
+
     @abc.abstractmethod
     def to_internal_datastructure(self):
         raise NotImplementedError
@@ -37,9 +39,9 @@ class UniformLoad(DStabilityLoad):
     magnitude: confloat(ge=0)
     angle_of_distribution: confloat(ge=0, le=90)
 
-    @validator('end')
+    @validator("end")
     def end_greater_than_start(cls, v, values):
-        if v <= values['start']:
+        if v <= values["start"]:
             raise ValueError(f"End {v} should be greater than start ({values['start']})")
         return v
 
@@ -55,6 +57,7 @@ class UniformLoad(DStabilityLoad):
 
 class LineLoad(DStabilityLoad):
     """DStability Lineload."""
+
     location: Point
     angle: confloat(ge=-360, le=360)
     magnitude: confloat(ge=0)

@@ -3,6 +3,7 @@ from __future__ import annotations
 import inspect
 import logging
 import re
+import shlex
 from abc import abstractclassmethod, abstractmethod
 from itertools import groupby
 from typing import (
@@ -218,7 +219,7 @@ class DSerieListGroupNextStructure(DSeriesStructure):
         return cls(**{collection_property_name: elements})
 
 
-class DSerieTableStructure(DSeriesStructure):
+class DSeriesTableStructure(DSeriesStructure):
     @classmethod
     def parse_text(cls, text: str):
         """Creates a DSeriesStructure that can parse fields like
@@ -260,16 +261,43 @@ class DSerieTableStructure(DSeriesStructure):
                 lines = [
                     split_line_elements(line) for line in text.split("\n") if line != ""
                 ]
-                count = int(lines.pop(0)[0])
-                if not count == len(lines):
-                    raise ParserError(
-                        f"Error parsing for {cls}, header indicates {count} lines, while there are {len(lines)} lines."
-                    )
-
+                cls.validate_number_of_rows(lines)
         lines = [dict(zip(columns, parts)) for parts in lines]
 
         d = {cls.__name__.lower(): lines}
         return cls(**d)
+
+    @classmethod
+    def validate_number_of_rows(cls, lines: List[List[str]]):
+        """Validates whether the number of lines matched the expected rows to be read.
+
+        Args:
+            lines (List[List[str]]): Lines representing rows of data.
+        Raises:
+            ParserError: When the expectations are not met.
+        """
+        count = int(lines.pop(0)[0])
+        if not count == len(lines):
+            raise ParserError(
+                f"Error parsing for {cls}, header indicates {count} lines, while there are {len(lines)} lines."
+            )
+
+
+class DSeriesWrappedTableStructure(DSeriesTableStructure):
+    @classmethod
+    def validate_number_of_rows(cls, lines):
+        """These sort of tables do not contain information of the number of rows
+        contained in the file. Therefore they are not validated.
+
+        Args:
+            lines (List[str]): Parsed rows.
+        """
+        pass
+
+    @classmethod
+    def parse_text(cls, text):
+        unwrapped_text = DSerieParser.parse_group_as_dict(text)
+        return super().parse_text(list(unwrapped_text.values())[0])
 
 
 class DSerieOldTableStructure(DSeriesStructure):
@@ -536,6 +564,25 @@ class DSeriesInlineMappedProperties(DSeriesInlineProperties):
         if unformatted_key:
             key = make_key(unformatted_key)
         return key, value
+
+
+class DSeriesInlineReversedProperties(DSeriesInlineProperties):
+    @classmethod
+    def get_property_key_value(cls, text: str, expected_property: str) -> Tuple[str, str]:
+        """Returns the value content for a line of format:
+        value : key || value = key
+
+        Args:
+            text (str): Text line with value-key
+
+        Returns:
+            str: Filtered value.
+        """
+        if text:
+            # If the value is not empty, extract its value (assume it's on the first position)
+            _, value = get_line_property_key_value(text, reversed_key=True)
+            return expected_property, value
+        return expected_property, text
 
 
 class DSeriesUnmappedNameProperties(DSeriesInlineMappedProperties):
@@ -892,6 +939,60 @@ class DSeriesTreeStructure(DSeriesStructure):
         return parsed_tuple
 
 
+class DSeriesTreeStructurePropertiesInGroups(DSeriesTreeStructure):
+    # TODO Deprecate.
+    # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
+    # It should therefore only be responsible for generating a dictionary of field name - string values,
+    # but not object creation.
+    @classmethod
+    def parse_text(cls, text: str):
+        """Creates a DSeriesStructure which properties are divided in subgroups.
+        Example
+
+        [PROPERTY_1]
+        42
+        [END OF PROPERTY_1]
+        [PROPERTY_2]
+        24, 42
+        [END OF PROPERTY_2]
+        returns:
+        DSeriesTreeStructurePropertiesInGroups({
+            property_1: 42,
+            property_2: [24, 42]
+        })
+
+        Arguments:
+            data {str} -- Data to parse.
+        """
+        tuple_lines = [[value, key] for key, value in DSerieParser.parse_group(text)]
+        return cls.parse_text_lines(tuple_lines)[0]
+
+    @classmethod
+    def get_next_property_text_lines(cls, text_lines: list) -> list:
+        """Retrieves the first element of a list of Tuples[PropertyTextValue, PropertyName]
+        and splits it into further parseable lines.
+
+        Args:
+            text_lines (list): list of Tuples[PropertyTextValue, PropertyName].
+
+        Returns:
+            list: List of lines representing a property value (another structure).
+        """
+        filtered_property_lines = [
+            split_line_elements(line)
+            for line in text_lines[0][0].split("\n")
+            if line != ""
+        ]
+        return filtered_property_lines
+
+    @classmethod
+    def get_tree_structure_read_lines(
+        cls, parsed_tuple: Tuple[DSeriesStructure, int]
+    ) -> Tuple[DSeriesStructure, int]:
+        # Only one line is meant to be read as parsed_text_lines is mapped 1:1 lines-properties.
+        return parsed_tuple[0], 1
+
+
 class DSeriesTreeStructureCollection(DSeriesStructure):
     # TODO Deprecate.
     # This class is overdoing logic that is later on being handled by its parent (DSeriesStructure).
@@ -1223,6 +1324,7 @@ def make_key(key: str) -> str:
         key.strip()
         .replace("(", "")
         .replace(")", "")
+        .replace("/", "")
         .replace(" - ", "___")
         .replace(" ", "_")
         .replace("-", "__")
@@ -1244,7 +1346,8 @@ def split_line_elements(text: str) -> List[str]:
     Returns:
         List[str]: List of formatted values.
     """
-    parts = re.split(" |\t", text.strip())
+    # parts = re.split(" |\t", text.strip())
+    parts = shlex.split(text.strip())
     values = list(filter(lambda part: part != "", parts))
     return values
 

@@ -27,7 +27,7 @@ from geolib.models.dseries_parser import (
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
     DSeriesMatrixTreeStructureCollection,
-    DSerieTableStructure,
+    DSeriesTableStructure,
     DSerieOldTableStructure,
     DSeriesUnmappedNameProperties,
 )
@@ -421,7 +421,9 @@ class GeometryData(DSeriesStructure):
                     layer.boundary_bottom = i
 
             if boundary.id != i:
-                logging.warning(f"Boundary id {boundary.id} has changed to {i} in sorting process")
+                logging.warning(
+                    f"Boundary id {boundary.id} has changed to {i} in sorting process"
+                )
             boundary.id = i
 
     def sort_probabilistic_list_based_on_new_indexes(self):
@@ -495,6 +497,28 @@ class NonUniformLoads(DSeriesNoParseSubStructure):
             self.loads[name] = load
             self.loads = self.loads  # trigger validation
             return None
+
+
+class WaterLoad(DataClass):
+    name: str = ""
+    time: int = 0
+    phreatic_line: int = 1
+    headlines: List[List[int]] = [[]]
+
+
+class WaterLoads(DSeriesNoParseSubStructure):
+    """Representation of [WATER LOADS] group."""
+
+    waterloads: List[WaterLoad] = []
+
+    def add_waterload(
+        self, name: str, time: int, phreatic_line: int, headlines: List[List[int]]
+    ):
+        self.waterloads.append(
+            WaterLoad(
+                name=name, time=time, phreatic_line=phreatic_line, headlines=headlines
+            )
+        )
 
 
 class ResidualTimes(DSeriesNoParseSubStructure):
@@ -789,12 +813,13 @@ class DSettlementStructure(DSeriesStructure):
     version: Version = Version()
     soil_collection: SoilCollection = SoilCollection()
     geometry_data: GeometryData = GeometryData()
+    geometry_1d_data: Optional[str]
     run_identification: str = ""
     model: Union[Model, str] = Model()
     verticals: Union[Verticals, str] = Verticals()
     water: Union[float, str] = 9.81
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
-    water_loads: str = ZERO_ITEMS
+    water_loads: Union[WaterLoads, str] = WaterLoads()
     other_loads: Union[OtherLoads, str] = OtherLoads()
     calculation_options: Union[CalculationOptions, str] = CalculationOptions()
     residual_times: Union[ResidualTimes, str] = ResidualTimes()
@@ -911,12 +936,15 @@ class DSettlementStructure(DSeriesStructure):
                 f"The x-coordinate of point_of_vertical does not correspond to an existing vertical."
             )
 
+    def get_headlines_for_layers(self):
+        return [[l.piezo_top, l.piezo_bottom] for l in self.geometry_data.layers.layers]
 
-class Stresses(DSerieTableStructure):
+
+class Stresses(DSeriesTableStructure):
     stresses: List[Dict[str, float]]
 
 
-class KoppejanSettlements(DSerieTableStructure):
+class KoppejanSettlements(DSeriesTableStructure):
     koppejansettlements: List[Dict[str, float]]
 
 
@@ -974,6 +1002,7 @@ class Results(DSeriesRepeatedGroupedProperties):
     residual_settlements: List[ResidualSettlements]
     amounts_of_loads: Optional[str]
     dissipation_in_layers: Optional[str]
+    reliability_calculation_results: Optional[str]
 
 
 class DSettlementOutputStructure(DSeriesStructure):

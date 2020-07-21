@@ -13,10 +13,11 @@ class Settings(BaseSettings):
     as '_env_file' parameter.
     """
 
-    username: str = "test"
-    password: str = "test"
+    gl_username: str = "test"
+    gl_password: str = "test"
     console_folder: DirectoryPath = Path(".")
     calculation_folder: Path = Path("tests/test_output/calculations")
+    nprocesses: int = 1
 
     class Config:
         env_file = "geolib.env"

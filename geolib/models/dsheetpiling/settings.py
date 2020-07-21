@@ -1,4 +1,13 @@
+from pydantic import conint
+from pydantic import BaseModel as DataModel
 from enum import Enum, IntEnum
+
+
+class LateralEarthPressureMethodStage(IntEnum):
+    """The method for input of the lateral earth pressure ratio"""
+
+    KA_KO_KP = 1
+    C_PHI_DELTA = 2
 
 
 class LateralEarthPressureMethod(IntEnum):
@@ -150,8 +159,8 @@ class ModulusSubgradeReaction(IntEnum):
 
 
 class EarthPressureCoefficients(IntEnum):
-    BRINCHHANSEN = 0
-    MANUAL = 1
+    MANUAL = 0
+    BRINCHHANSEN = 1
 
 
 class LambdaType(IntEnum):
@@ -165,3 +174,38 @@ class HorizontalBehaviorType(IntEnum):
     ELASTIC = 2
     FOUNDATION = 3
 
+
+class ModulusReactionType(Enum):
+    """
+    The Secant definition is based on the stress-displacement diagram according to CUR 166 of subgrade reaction.
+    This diagram always uses three branches, with intersections at 50, 80 and 100 % of Ka−Kp
+    The slope of the different branches is defined indirectly, via the three secant moduli at the intersection points.
+
+    The Tangent (D-SHEETPILINGClassic) definition is based on a user-defined number of branches (number of curves),
+    with the slope  of  each  branch  defined  directly  by  the  tangent  modulus
+    """
+
+    TANGENT = 0
+    SECANT = 1
+
+
+class CurveSettings(DataModel):
+    modulus_reaction_type: ModulusReactionType = ModulusReactionType.SECANT
+    use_unloading_reloading_curve: bool = False
+    curve_number: conint(ge=1, le=4) = 3
+
+
+class LoadTypeFavourableUnfavourable(IntEnum):
+    DSHEETPILING_DETERMINED = 0
+    FAVOURABLE = 1
+    UNFAVOURABLE = 2
+
+
+class LoadTypeFavourableUnfavourableMoment(IntEnum):
+    FAVOURABLE = 1
+    UNFAVOURABLE = 2
+
+
+class LoadTypePermanentVariable(IntEnum):
+    PERMANENT = 0
+    VARIABLE = 1

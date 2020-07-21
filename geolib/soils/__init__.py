@@ -48,7 +48,9 @@ class MohrCoulombParameters(BaseModel):
     cohesion: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     dilatancy_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     friction_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    friction_angle_interface: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    friction_angle_interface: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     cohesion_and_friction_angle_correlated: Optional[bool] = None
 
 
@@ -57,9 +59,13 @@ class UndrainedParameters(BaseModel):
     Undrained shear strength parameters class
     """
 
-    shear_strength_ratio: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    shear_strength_ratio: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     shear_strength_ratio_and_shear_strength_exponent_correlated: Optional[bool] = None
-    strength_increase_exponent: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    strength_increase_exponent: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     s_and_m_correlated: Optional[bool] = None
     undrained_shear_strength: Optional[float] = None
     undrained_shear_strength_top: Optional[float] = None
@@ -74,21 +80,32 @@ class BjerrumParameters(BaseModel):
 
     compression_input_type: Optional[Enum] = None
     reloading_ratio: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    primary_compression_ratio: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    primary_compression_ratio: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     correlation_reload_primary_compression_ratio: Optional[float] = None
     reloading_index: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    primary_compression_index: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    coef_secondary_compression_Ca: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    reloading_swelling_RR: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    compression_ratio_CR: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    reloading_swelling_index_Cr: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    compression_index_Cc: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    primary_compression_index: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    coef_secondary_compression_Ca: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    reloading_swelling_RR: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    compression_ratio_CR: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    reloading_swelling_index_Cr: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    compression_index_Cc: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
 
 
 class StateType(Enum):
-    """
-    todo Decide if we want to keep state in soil class
-    """
     POP = "POP"
     OCR = "OCR"
     YIELD_STRESS = "yield_stress"
@@ -96,17 +113,22 @@ class StateType(Enum):
 
 class IsotacheParameters(BaseModel):
     precon_isotache_type: Optional[StateType] = None
-    reloading_swelling_constant_a: Optional[Union[float, StochasticParameter]]\
-        = StochasticParameter()  # SoilStdPriCompIndex
-    primary_compression_constant_b: Optional[Union[float, StochasticParameter]]\
-        = StochasticParameter()  # SoilStdSecCompIndex
-    secondary_compression_constant_c: Optional[Union[float, StochasticParameter]]\
-        = StochasticParameter()  # SoilStdSecCompRate
+    reloading_swelling_constant_a: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()  # SoilStdPriCompIndex
+    primary_compression_constant_b: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()  # SoilStdSecCompIndex
+    secondary_compression_constant_c: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()  # SoilStdSecCompRate
 
 
 class KoppejanParameters(BaseModel):
     precon_koppejan_type: Optional[StateType] = None
-    preconsolidation_pressure: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    preconsolidation_pressure: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     soil_ap_as_approximation_by_Cp_Cs: Optional[bool] = False
     primary_Cp: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     primary_Cp_point: Optional[Union[float, StochasticParameter]] = StochasticParameter()
@@ -123,19 +145,34 @@ class StorageTypes(IntEnum):
 
 
 class StorageParameters(BaseModel):
-    vertical_permeability: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    permeability_horizontal_factor: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    horizontal_permeability: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    vertical_permeability: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    permeability_horizontal_factor: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+    horizontal_permeability: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     storage_type: Optional[StorageTypes]
-    permeability_strain_type: Optional[Union[float, StochasticParameter]] = StochasticParameter(
-        mean=1e15
-    )
-    vertical_consolidation_coefficient: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    permeability_strain_type: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter(mean=1e15)
+    vertical_consolidation_coefficient: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
 
 
 class SoilWeightParameters(BaseModel):
     saturated_weight: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    unsaturated_weight: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    unsaturated_weight: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
+
+
+class GrainType(IntEnum):
+    FINE = 0
+    COARSE = 1
 
 
 class SoilClassificationParameters(BaseModel):
@@ -143,13 +180,17 @@ class SoilClassificationParameters(BaseModel):
     Soil classification class
     """
 
-    initial_void_ratio: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    initial_void_ratio: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     min_void_ratio: Optional[float] = None
     max_void_ratio: Optional[float] = None
     porosity: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     relative_density: Optional[float] = None
     d_50: Optional[float] = None
-    grain_type: Optional[Enum] = None
+    grain_type: Optional[
+        GrainType
+    ] = GrainType.FINE  # TODO this must refer to a intenum class
 
 
 class SoilStiffnessParameters(BaseModel):
@@ -191,8 +232,15 @@ class SubgradeReactionParameters(BaseModel):
     k_3_bottom_side: Optional[float] = None
 
 
+class EarthPressureCoefficientsType(IntEnum):
+    MANUAL = 0
+    BRINCHHANSEN = 1
+
+
 class EarthPressureCoefficients(BaseModel):
-    earth_pressure_coefficients_type: Optional[IntEnum] = None
+    earth_pressure_coefficients_type: Optional[
+        EarthPressureCoefficientsType
+    ] = EarthPressureCoefficientsType.BRINCHHANSEN
     active: Optional[float] = None
     neutral: Optional[float] = None
     passive: Optional[float] = None
@@ -224,10 +272,6 @@ class ConeResistance(BaseModel):
 
 
 class StatePoint(BaseModel):
-    """
-    todo Decide if we want to keep state in soil class
-    """
-
     state_point_id: Optional[str] = None
     state_layer_id: Optional[str] = None
     state_point_type: Optional[StateType] = None
@@ -244,18 +288,24 @@ class StateLine(BaseModel):
 
 
 class SoilState(BaseModel):
-    """
-    TODO Decide if we want to keep state in soil class
-    """
-
     use_equivalent_age: Optional[bool] = None
     equivalent_age: Optional[float] = None
     state_points: Optional[StatePoint] = None
     state_lines: Optional[StateLine] = None
 
-    yield_stress_layer: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    yield_stress_layer: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     ocr_layer: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     pop_layer: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+
+
+class SoilTypeSettlementByVibration(IntEnum):
+    GRAVEL = 0
+    SAND = 1
+    LOAM = 2
+    CLAY = 3
+    PEAT = 4
 
 
 class Soil(BaseModel):
@@ -284,6 +334,9 @@ class Soil(BaseModel):
     cone_resistance: Optional[ConeResistance] = ConeResistance()
     use_tension: Optional[bool] = None
     use_probabilistic_defaults: Optional[bool] = False
+    soil_type_settlement_by_vibrations: Optional[
+        SoilTypeSettlementByVibration
+    ] = SoilTypeSettlementByVibration.SAND
     soil_type_nl: Optional[str] = None
     soil_type_be: Optional[str] = None
     soil_state: Optional[SoilState] = SoilState()
@@ -296,10 +349,13 @@ class Soil(BaseModel):
     is_drained: Optional[bool] = None
     is_probabilistic: Optional[bool] = None
 
-    earth_pressure_coefficients: Optional[EarthPressureCoefficients] = EarthPressureCoefficients()
-    subgrade_reaction_parameters: Optional[SubgradeReactionParameters] = SubgradeReactionParameters()
+    earth_pressure_coefficients: Optional[
+        EarthPressureCoefficients
+    ] = EarthPressureCoefficients()
+    subgrade_reaction_parameters: Optional[
+        SubgradeReactionParameters
+    ] = SubgradeReactionParameters()
     shell_factor: Optional[float] = None
-
 
     @staticmethod
     def set_stochastic_parameters(input_class: object):
@@ -321,7 +377,9 @@ class Soil(BaseModel):
             parameter = input_class.__fields__[field]
             if isinstance(parameter.default, StochasticParameter):
                 if isinstance(class_dict[field], float):
-                    setattr(input_class, field, StochasticParameter(mean=class_dict[field]))
+                    setattr(
+                        input_class, field, StochasticParameter(mean=class_dict[field])
+                    )
 
         return input_class
 
@@ -353,12 +411,18 @@ class Soil(BaseModel):
                 setattr(model_soil, key, value)
         return model_soil
 
-    def __to_dstability_stochastic_parameter(self, stochastic_parameter: StochasticParameter):
-        from geolib.models.dstability.internal import PersistableStochasticParameter as DStabilityStochasticParameter
+    def __to_dstability_stochastic_parameter(
+        self, stochastic_parameter: StochasticParameter
+    ):
+        from geolib.models.dstability.internal import (
+            PersistableStochasticParameter as DStabilityStochasticParameter,
+        )
 
-        kwargs = {"IsProbabilistic": stochastic_parameter.is_probabilistic,
-                  "Mean": stochastic_parameter.mean,
-                  "StandardDeviation": stochastic_parameter.standard_deviation}
+        kwargs = {
+            "IsProbabilistic": stochastic_parameter.is_probabilistic,
+            "Mean": stochastic_parameter.mean,
+            "StandardDeviation": stochastic_parameter.standard_deviation,
+        }
 
         return self.__transfer_soil_dict_to_model(kwargs, DStabilityStochasticParameter())
 
@@ -392,8 +456,7 @@ class Soil(BaseModel):
             "StrengthIncreaseExponentStochasticParameter": self.__to_dstability_stochastic_parameter(
                 self.undrained_parameters.strength_increase_exponent
             ),
-            "ShearStrengthRatioAndShearStrengthExponentCorrelated":
-                self.undrained_parameters.shear_strength_ratio_and_shear_strength_exponent_correlated,
+            "ShearStrengthRatioAndShearStrengthExponentCorrelated": self.undrained_parameters.shear_strength_ratio_and_shear_strength_exponent_correlated,
             "VolumetricWeightAbovePhreaticLevel": self.soil_weight_parameters.unsaturated_weight.mean,
             "VolumetricWeightBelowPhreaticLevel": self.soil_weight_parameters.saturated_weight.mean,
             "IsProbabilistic": self.is_probabilistic,
@@ -431,14 +494,18 @@ class Soil(BaseModel):
 
     @staticmethod
     def __state_type_to_dsettlement(state_type: StateType):
-        from geolib.models.dsettlement.internal_soil import PreconType as DSettlementPreconsolidationType
+        from geolib.models.dsettlement.internal_soil import (
+            PreconType as DSettlementPreconsolidationType,
+        )
 
         if state_type is None:
             dsettlement_state_type = DSettlementPreconsolidationType.UNDEFINED
         elif state_type == state_type.OCR:
             dsettlement_state_type = DSettlementPreconsolidationType.OCR
-        elif state_type == state_type.yield_stress:
-            dsettlement_state_type = DSettlementPreconsolidationType.PRECONSOLIDATION_PRESSURE
+        elif state_type == state_type.YIELD_STRESS:
+            dsettlement_state_type = (
+                DSettlementPreconsolidationType.PRECONSOLIDATION_PRESSURE
+            )
         elif state_type == state_type.POP:
             dsettlement_state_type = DSettlementPreconsolidationType.POP
         else:
@@ -447,7 +514,10 @@ class Soil(BaseModel):
         return dsettlement_state_type
 
     def _to_dsettlement(self):
-        from geolib.models.dsettlement.internal_soil import SoilInternal as DSettlementSoil
+        from geolib.models.dsettlement.internal_soil import (
+            SoilInternal as DSettlementSoil,
+        )
+
         self.set_all_stochastic_parameters()
 
         kwargs = {
@@ -458,8 +528,12 @@ class Soil(BaseModel):
             "soilinitialvoidratio": self.soil_classification_parameters.initial_void_ratio.mean,
             "soilcohesion": self.mohr_coulomb_parameters.cohesion.mean,
             "soilphi": self.mohr_coulomb_parameters.friction_angle.mean,
-            "soilpreconisotachetype": self.__state_type_to_dsettlement(self.isotache_parameters.precon_isotache_type),
-            "soilpreconkoppejantype": self.__state_type_to_dsettlement(self.koppejan_parameters.precon_koppejan_type),
+            "soilpreconisotachetype": self.__state_type_to_dsettlement(
+                self.isotache_parameters.precon_isotache_type
+            ),
+            "soilpreconkoppejantype": self.__state_type_to_dsettlement(
+                self.koppejan_parameters.precon_koppejan_type
+            ),
             "soiluseequivalentage": self.soil_state.use_equivalent_age,
             "soilequivalentage": self.soil_state.equivalent_age,
             "soilpc": self.soil_state.yield_stress_layer.mean,
@@ -554,7 +628,7 @@ class Soil(BaseModel):
             "soilsratio": None,
             "soilcrindex": self.bjerrum_parameters.reloading_swelling_index_Cr.mean,
             "soilccindex": self.bjerrum_parameters.compression_index_Cc.mean,
-            "soilcswindexfixed": None,
+            "soilcswindex": None,
             "soilpricompindex": self.isotache_parameters.reloading_swelling_constant_a.mean,
             "soilseccompindex": self.isotache_parameters.primary_compression_constant_b.mean,
             "soilseccomprate": self.isotache_parameters.secondary_compression_constant_c.mean,
@@ -568,13 +642,19 @@ class Soil(BaseModel):
     def _to_dsheetpiling(self):
         # Only import it here to prevent circular import errors
         from geolib.models.dsheetpiling.internal import Soil as DSheetPilingSoil
+        from geolib.models.dsheetpiling.settings import (
+            SoilTypeModulusSubgradeReaction,
+            EarthPressureCoefficients,
+        )
 
         self.set_all_stochastic_parameters()
 
         return DSheetPilingSoil(
             name=self.name,
             soilcolor=self.color,
-            soilsoiltype=self.soil_type_nl,
+            soilsoiltype=SoilTypeModulusSubgradeReaction(
+                self.soil_type_settlement_by_vibrations.value
+            ),
             soilgraintype=self.soil_classification_parameters.grain_type,
             soilgamdry=self.soil_weight_parameters.unsaturated_weight.mean,
             soilgamwet=self.soil_weight_parameters.saturated_weight.mean,
@@ -593,7 +673,9 @@ class Soil(BaseModel):
             soilln=self.earth_pressure_coefficients.neutral,
             soillp=self.earth_pressure_coefficients.passive,
             soilusemenard=self.subgrade_reaction_parameters.modulus_subgrade_reaction_type,
-            soilusebrinchhansen=self.earth_pressure_coefficients.earth_pressure_coefficients_type,
+            soilusebrinchhansen=EarthPressureCoefficients(
+                self.earth_pressure_coefficients.earth_pressure_coefficients_type.value
+            ),
             soilshellfactor=self.shell_factor,
             soillambdatype=self.subgrade_reaction_parameters.lambda_type,
             soillam1=self.subgrade_reaction_parameters.tangent_secant_1,

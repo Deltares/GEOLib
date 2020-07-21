@@ -16,7 +16,7 @@ class TestInternal:
             elastic_stiffness_ei=100.05,
         )
         # Run the test
-        internal_sheet_pile = external_sheet_pile._to_internal()
+        internal_sheet_pile = external_sheet_pile.to_internal()
         # verify initial expectation
         internal_sheet_pile = dict(internal_sheet_pile)
         assert internal_sheet_pile

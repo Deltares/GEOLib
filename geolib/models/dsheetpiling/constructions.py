@@ -7,7 +7,7 @@ from geolib.models.dsheetpiling.internal import SheetPileElement
 class PileProperties(DataModel):
     """"
     Pile selected from the model window in D-Sheet Piling
-    
+
     Arguments:
      material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
      elastic_stiffness_ei  : Stiffness of the section per running meter.
@@ -78,7 +78,7 @@ class SheetPileProperties(DataModel):
     Pile selected from the model window in D-Sheet Piling
     ...
 
-    Arguments:
+    Arguments: Elastic Section
      material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
      acting_width : The acting width can be used when the effective width changes along the sheet piling. D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads, supports and reactions, except the normal force.
      elastic_stiffness_ei : Stiffness of the section per running meter.
@@ -96,11 +96,13 @@ class SheetPileProperties(DataModel):
      reduction_factor_on_maximum_moment : The reduction factor applied to the maximum allowable moment
      reduction_factor_on_ei : Reduction factor applied on the stiffness EI of the pile.
      coating_area : The area of coating of the sheet piling (> 1). This is defined as the
-     length of the perimeter of the sheet piling section per running meter of wall.
-     height : The thickness of the sheet piling profile.
+     length of the perimeter of the sheet piling section per running meter of wall [m2/m2 wall].
+
+    Arguments Plastic calculation
+     height : The thickness of the sheet piling profile [mm].
      elastic_section_modulus_w_el: The section modulus (also called resisting moment in the Netherlands) of the sheet piling, 
-     per running meter, used for a Feasibility control
-     section_area : The cross-sectional area of the sheet piling, per running meter.
+     [cm3/m], used for a Feasibility control
+     section_area : The cross-sectional area of the sheet piling, [cm3/m].
 
     """
 
@@ -109,7 +111,9 @@ class SheetPileProperties(DataModel):
     ] = SheetPilingElementMaterialType.Steel
     elastic_stiffness_ei: Optional[float] = None
     acting_width: Optional[float] = None
-    section_bottom_level: Optional[float] = None
+    section_bottom_level: Optional[
+        float
+    ] = None  # TODO important paramter, shouldn't be default
     height: Optional[int] = 400  # value is defined in mm
     coating_area: Optional[float] = None
     width_of_sheet_piles: Optional[float] = None
@@ -247,7 +251,7 @@ class DiaphragmWall(DataModel):
         FullPlasticCalculationProperties
     ] = FullPlasticCalculationProperties()
 
-    def _to_internal(self) -> SheetPileElement:
+    def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
             name=self.name,
             sheetpilingelementmaterialtype=self.diaphragm_wall_properties.material_type,
@@ -295,7 +299,7 @@ class Sheet(DataModel):
         WoodenSheetPileProperties
     ] = WoodenSheetPileProperties()
 
-    def _to_internal(self) -> SheetPileElement:
+    def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
             name=self.name,
             sheetpilingelementmaterialtype=self.sheet_pile_properties.material_type,
@@ -346,7 +350,7 @@ class Pile(DataModel):
         FullPlasticCalculationProperties
     ] = FullPlasticCalculationProperties()
 
-    def _to_internal(self) -> SheetPileElement:
+    def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
             name=self.name,
             sheetpilingelementmaterialtype=self.pile_properties.material_type,

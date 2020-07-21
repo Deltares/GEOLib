@@ -2,9 +2,11 @@ import os
 
 import pytest
 
-from geolib.models.base_model import BaseModel
+from geolib.models.base_model import BaseModel, BaseModelList
 from geolib.models.base_model import MetaData
+from geolib.models import DSettlementModel
 
+from tests.utils import TestUtils, only_teamcity
 from pathlib import Path
 from teamcity import is_running_under_teamcity
 
@@ -59,3 +61,26 @@ class TestBaseModel:
             + "Expected exception message {},".format(expected_error)
             + "retrieved {}".format(error_message)
         )
+
+    @pytest.mark.acceptance
+    @only_teamcity
+    def test_basemodellist_execute(self):
+        # Setup models
+        a = DSettlementModel()
+        b = DSettlementModel()
+        input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
+        benchmark_fn = input_folder / "bm1-1.sli"
+
+        output_folder = (
+            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "multiple"
+        )
+
+        ml = BaseModelList(models=[a, b])
+        for i, model in enumerate(ml.models):
+            model.parse(benchmark_fn)
+
+        # Execute
+        output = ml.execute(output_folder, nprocesses=1)
+        assert len(output.models) == 2
+        for model in output.models:
+            assert model.datastructure

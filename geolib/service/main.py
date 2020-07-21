@@ -1,20 +1,31 @@
 import secrets
 import shutil
-from pathlib import Path
-from typing import Union
 import uuid
+from pathlib import Path, PosixPath, WindowsPath
+from typing import Dict, List, Union, Type
 
-# TODO Make sure that fastapi is installed
+import pydantic.json
+from pydantic import conlist
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
-from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from starlette import status
+from starlette.responses import JSONResponse
 
-from geolib import models
+from geolib.models import (
+    DFoundationsModel,
+    DSheetPilingModel,
+    DStabilityModel,
+    DSettlementModel,
+)
 from geolib.errors import CalculationError
-from geolib.models import BaseModel
+from geolib.models import BaseModel, BaseModelList
 
 from .settings import Settings
+
+# Fixes for custom serialization
+pydantic.json.ENCODERS_BY_TYPE[Path] = str
+pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
+pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
 
 settings = Settings()
 app = FastAPI()
@@ -22,8 +33,8 @@ security = HTTPBasic()
 
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, settings.username)
-    correct_password = secrets.compare_digest(credentials.password, settings.password)
+    correct_username = secrets.compare_digest(credentials.username, settings.gl_username)
+    correct_password = secrets.compare_digest(credentials.password, settings.gl_password)
     if not (correct_username and correct_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -38,14 +49,6 @@ def read_current_user(username: str = Depends(get_current_username)):
     return {"username": username}
 
 
-umodels = Union[
-    models.DFoundationsModel,
-    models.DSheetPilingModel,
-    models.DStabilityModel,
-    models.DSettlementModel,
-]
-
-
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -56,12 +59,7 @@ def cleanup(path: Path):
     shutil.rmtree(path)
 
 
-@app.post("/calculate")
-async def calculate(
-    model: umodels,
-    background_tasks: BackgroundTasks,
-    # _: str = Depends(get_current_username),
-) -> Union[umodels, CalculationError]:
+def execute(model, background_tasks: BackgroundTasks):
     unique_id = str(uuid.uuid4())
     unique_folder = Path(settings.calculation_folder / unique_id).absolute()
     unique_folder.mkdir(parents=True, exist_ok=True)
@@ -70,6 +68,99 @@ async def calculate(
 
     try:
         output = model.execute()
+    except CalculationError as e:
+        print(e)
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=e.__dict__
+        )
+    else:
+        return output
+    finally:
+        background_tasks.add_task(cleanup, unique_folder)
+
+
+@app.post("/calculate/dsettlementmodel")
+async def calculate_dsettlementmodel(
+    model: DSettlementModel,
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> DSettlementModel:
+    return execute(model, background_tasks)
+
+
+@app.post("/calculate/dfoundationsmodel")
+async def calculate_dfoundationsmodel(
+    model: DFoundationsModel,
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> DFoundationsModel:
+    return execute(model, background_tasks)
+
+
+@app.post("/calculate/dsheetpilingmodel")
+async def calculate_dsheetpilingmodel(
+    model: DSheetPilingModel,
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> DSheetPilingModel:
+    return execute(model, background_tasks)
+
+
+@app.post("/calculate/dstabilitymodel")
+async def calculate_dstabilitymodel(
+    model: DStabilityModel,
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> DStabilityModel:
+    return execute(model, background_tasks)
+
+
+@app.post("/calculate/dsettlementmodels")
+async def calculate_many_dsettlementmodels(
+    models: conlist(DSettlementModel, min_items=2),
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> List[DSettlementModel]:
+    return execute_many(models, background_tasks)
+
+
+@app.post("/calculate/dfoundationsmodels")
+async def calculate_many_dfoundationsmodel(
+    models: conlist(DFoundationsModel, min_items=2),
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> List[DFoundationsModel]:
+    return execute_many(models, background_tasks)
+
+
+@app.post("/calculate/dsheetpilingmodels")
+async def calculate_many_dsheetpilingmodel(
+    models: conlist(DSheetPilingModel, min_items=2),
+    background_tasks: BackgroundTasks,
+    _: str = Depends(get_current_username),
+) -> List[DSheetPilingModel]:
+    return execute_many(models, background_tasks)
+
+
+@app.post("/calculate/dstabilitymodels")
+async def calculate_many_dstabilitymodel(
+    models: conlist(DStabilityModel, min_items=2),
+    background_tasks: BackgroundTasks,
+    type: Type = DStabilityModel,
+    _: str = Depends(get_current_username),
+) -> List[DStabilityModel]:
+    return execute_many(models, background_tasks)
+
+
+def execute_many(models, background_tasks: BackgroundTasks):
+    unique_id = str(uuid.uuid4())
+    unique_folder = Path(settings.calculation_folder / unique_id).absolute()
+    unique_folder.mkdir(parents=True, exist_ok=True)
+
+    bm = BaseModelList(models=models)
+
+    try:
+        output = bm.execute(unique_folder, nprocesses=settings.nprocesses)
     except CalculationError as e:
         print(e)
         return JSONResponse(

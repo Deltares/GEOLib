@@ -17,14 +17,14 @@ import logging
 class DStabilityParser(BaseParser):
     @property
     def suffix_list(self) -> List[str]:
-        return [".json"]
+        return [".json", ""]
 
     @property
     def structure(self) -> Type[DStabilityStructure]:
         return DStabilityStructure
 
     def can_parse(self, filename: FilePath) -> bool:
-        return super().can_parse(filename) or path.isdir(filename)
+        return super().can_parse(filename) or filename.is_dir()
 
     def parse(self, filepath: DirectoryPath) -> BaseModelStructure:
         ds = {}
@@ -76,7 +76,7 @@ class DStabilityZipParser(DStabilityParser):
         return [".stix"]
 
     def can_parse(self, filename: FilePath) -> bool:
-        return super().can_parse(filename)
+        return filename.suffix in self.suffix_list
 
     def parse(self, filepath: FilePath) -> BaseModelStructure:
         with ZipFile(filepath) as zip:
@@ -93,7 +93,7 @@ class DStabilityParserProvider(BaseParserProvider):
     @property
     def input_parsers(self) -> Tuple[DStabilityParser, DStabilityZipParser]:
         if not self._input_parsers:
-            self._input_parsers = (DStabilityParser(), DStabilityZipParser())
+            self._input_parsers = (DStabilityZipParser(), DStabilityParser())
         return self._input_parsers
 
     @property

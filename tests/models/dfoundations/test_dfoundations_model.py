@@ -142,7 +142,7 @@ class TestDFoundationsModel:
             print(errors)
             pytest.fail(f"Failed with the following {errors}")
 
-    @pytest.mark.systemtest
+    @pytest.mark.acceptance
     @only_teamcity
     def test_execute_console_successfully(self):
         # 1. Set up test data.
@@ -180,7 +180,11 @@ class TestDFoundationsModel:
         ds = DFoundationsModel()
 
         mohr_coulomb_parameters = MohrCoulombParameters(friction_angle=0.01)
-        soil = Soil(name="Test Soil", soil_type_nl=3, mohr_coulomb_parameters=mohr_coulomb_parameters)
+        soil = Soil(
+            name="Test Soil",
+            soil_type_nl=3,
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
+        )
         soil.undrained_parameters.undrained_shear_strength = 1000
         output_test_folder = Path(
             TestUtils.get_output_test_data_dir("dfoundations/serialize/")
@@ -282,7 +286,6 @@ class TestDFoundationsModel:
             df.add_profile(setup_profile)
 
     @pytest.mark.acceptance
-    # @pytest.mark.xfail(reason="Can't work yet.")
     @only_teamcity
     def test_run_model_from_scratch(self, setup_profile):
         # 1. Set up test data.
@@ -582,8 +585,8 @@ class TestDFoundationsModel:
         assert positions[1].pile_name == "'Pos(2)'"
         assert output_test_file.is_file()
 
+    @pytest.mark.acceptance
     @only_teamcity
-    @pytest.mark.systemtest
     def test_bearing_pile(self, create_bearing_pile, create_bearing_pile_shape):
 
         # 1. Get test information
@@ -628,8 +631,8 @@ class TestDFoundationsModel:
 
         assert "Number of CPTs (0 ) is outside its limits" in e.value.message
 
+    @pytest.mark.acceptance
     @only_teamcity
-    @pytest.mark.systemtest
     def test_tension_pile(self, create_tension_pile, create_tension_pile_shape):
 
         # 1. Get test information
