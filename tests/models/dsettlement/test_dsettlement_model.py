@@ -1608,6 +1608,7 @@ class TestDSettlementModel:
         ds.serialize(test_output_filepath)
 
     @pytest.mark.acceptance
+    @only_teamcity
     def test_dsettlement_acceptance_probabilistic(self):
         """Setup base structure from parsed file while
         we can't initialize one from scratch yet."""
