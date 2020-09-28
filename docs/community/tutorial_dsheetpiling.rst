@@ -371,7 +371,8 @@ output file name and call the function :meth:`geolib.models.dsheetpiling.dsheetp
 
 .. code-block:: python
 
-    input_test_file = "Tutorial.shi"
+    from pathlib import Path
+    input_test_file = Path("Tutorial.shi")
     model.serialize(input_test_file)
 
 12. Finally the execute function can be called to run the model in D-SheetPiling

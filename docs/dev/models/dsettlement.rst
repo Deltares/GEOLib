@@ -10,6 +10,15 @@ D-Settlement model
     :members:
     :undoc-members:
 
+.. autoclass:: geolib.models.dsettlement.internal.SoilModel
+    :members:
+    :undoc-members:
+
+.. autoclass:: geolib.models.dsettlement.internal.ConsolidationModel
+    :members:
+    :undoc-members:
+
+
 Loads
 -----
 

@@ -14,8 +14,9 @@ Release v\ |version|.
 **Behold, the power of GEOLib**::
 
     >>> import geolib as gl
+    >>> from pathlib import Path
     >>> m = gl.DSettlementModel()
-    >>> m.parse("test.sli")
+    >>> m.parse(Path("test.sli"))
     >>> m.execute()
     >>> m.output.dict()
     {'verticals_count': 1, 'vertical': [{'id': 1, 'x': 0.0, 'z': 0.0, 'time__settlement_per_load': {'timesettlementperload': [[0.0, 0.0, 0.0], ...

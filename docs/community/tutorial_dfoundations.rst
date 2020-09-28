@@ -160,16 +160,17 @@ The pile can be finally added to the model using the function  :func:`~geolib.mo
 
 
 6. To run the model first the model needs to be serialised. To do that define a 
-output file name and call the function :meth:`geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.serialize`.
+output file name and call the function :meth:`geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize`.
 
 .. code-block::python
 
-    input_test_file = "Tutorial.shi"
-    model.serialize(input_test_file)
+    from pathlib import Path
+    input_test_file = Path("Tutorial.foi")
+    df.serialize(input_test_file)
 
-7. Finally the ``execute`` function can be called to run the model in D-SheetPiling
+7. Finally the ``execute`` function can be called to run the model in D-Foundations
 
 .. code-block::python
 
-    model.filename = input_test_file
-    model.execute()
+    df.filename = input_test_file
+    df.execute()

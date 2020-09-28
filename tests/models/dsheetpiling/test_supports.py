@@ -58,7 +58,6 @@ class TestAnchor:
             pytest.param("cross_section", -1, id="Negative cross section area"),
             pytest.param("wall_height_kranz", -1, id="Negative wall height"),
             pytest.param("length", -1, id="Negative length"),
-            pytest.param("angle", -1, id="Negative angle"),
             pytest.param("yield_force", -1, id="Negative yield force"),
             pytest.param("side", "Not a side", id="None Side"),
         ],

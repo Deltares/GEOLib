@@ -8,17 +8,15 @@ import logging
 import os
 from abc import abstractmethod, abstractproperty
 from pathlib import Path, PosixPath, WindowsPath
-from subprocess import run, Popen
+from subprocess import Popen, run
 from types import CoroutineType
 from typing import List, Optional, Type, Union
-from requests.auth import HTTPBasicAuth
 
 import requests
-import pydantic.json
+from geolib.errors import CalculationError
 from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
-
-from geolib.errors import CalculationError
+from requests.auth import HTTPBasicAuth
 
 from .base_model_structure import BaseModelStructure
 from .meta import MetaData
@@ -41,13 +39,20 @@ class BaseModel(DataClass, abc.ABC):
         if not self.filename.exists():
             logging.warning("Serializing before executing.")
             self.serialize(self.filename)
+
+        executable = self.meta.console_folder / self.console_path
+        if not executable.exists():
+            logging.error(
+                f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
+            )
+            raise CalculationError(-1, "Console executable not found.")
+
         process = run(
-            [str(self.meta.console_folder / self.console_path)]
-            + self.console_flags
-            + [str(self.filename)],
+            [str(executable)] + self.console_flags + [str(self.filename.resolve())],
             timeout=timeout_in_seconds,
-            cwd=str(self.filename.parent),
+            cwd=str(self.filename.resolve().parent),
         )
+        logging.debug(f"Executed with {process.args}")
 
         # Successfull run
         output_filename = output_filename_from_input(self)
@@ -156,7 +161,7 @@ class BaseModel(DataClass, abc.ABC):
 
 class BaseModelList(DataClass):
     """Hold multiple models that can be executed in parallel.
-    
+
     Note that all models need to have a unique filename
     otherwise they will overwrite eachother. This also helps with 
     identifying them later."""
@@ -187,18 +192,24 @@ class BaseModelList(DataClass):
 
             for model in models:
                 fn = unique_folder / model.filename.name
-                model.serialize(fn)
+                model.serialize(fn.resolve())
+
+            executable = lead_model.meta.console_folder / lead_model.console_path
+            if not executable.exists():
+                logging.error(
+                    f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
+                )
+                raise CalculationError(-1, "Console executable not found.")
 
             process = Popen(
-                [str(lead_model.meta.console_folder / lead_model.console_path)]
-                + lead_model.console_flags
-                + [str(unique_folder)],
-                cwd=str(unique_folder),
+                [str(executable)] + lead_model.console_flags + [str(i)],
+                cwd=str(calculation_folder.resolve()),
             )
             processes.append(process)
 
         # Wait for all processes to be done
         for process in processes:
+            logging.debug(f"Executed with {process.args}")
             process.wait(timeout=timeout_in_seconds)
 
         # Iterate over the models

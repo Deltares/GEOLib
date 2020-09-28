@@ -11,7 +11,7 @@ from .internal import (
 
 
 class Anchor(DataModel):
-    """Anchor. This option is not available for SignlePileModelType.
+    """Anchor. This option is not available for SinglePileModelType.
 
     Args:
         name: Name of the anchor
@@ -23,7 +23,6 @@ class Anchor(DataModel):
         angle: Angle [deg]
         yield_force: Yield force [kN/m']
         side: Side of the anchor [Side]
-        pre_tension: Pre-tensioning forces [kN/m']
     """
 
     name: constr(min_length=1, max_length=50)
@@ -32,7 +31,7 @@ class Anchor(DataModel):
     cross_section: Optional[PositiveFloat] = None
     wall_height_kranz: Optional[PositiveFloat] = None
     length: Optional[PositiveFloat] = None
-    angle: Optional[PositiveFloat] = None
+    angle: Optional[float] = None
     side: Side = Side.RIGHT
     yield_force: Optional[PositiveFloat] = None
 

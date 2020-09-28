@@ -232,9 +232,9 @@ SoilCcIndex={{ soil.soilccindex }}
 {% for row in cpt.measured_data.data %}
 {% for value in row.values() %}
 {% if loop.last %}
-{{ "{}".format(value).rjust(6) }}
+{{ "{} ".format(value).rjust(5) }}
 {% else %}
-{{ "{}".format(value).rjust(6) -}}
+{{ "{} ".format(value).rjust(5) -}}
 {% endif %}
 {% endfor %}
 {% endfor %}

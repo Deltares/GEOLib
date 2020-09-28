@@ -42,7 +42,7 @@ Tutorial D-Settlement
     p9 = Point(x=-50, z=-10)
     p10 = Point(x=50, z=-10)
     p11 = Point(x=-50, z=-20)
-    p12 = Point(x=50, z=-20
+    p12 = Point(x=50, z=-20)
     p15 = Point(x=-50, z=-30)
     p16 = Point(x=-20, z=-30)
     p17 = Point(x=-10, z=-30)
@@ -191,7 +191,7 @@ In this case a non uniform load is added to the model.
     point4 = Point(label="2", x=-50, y=0, z=2)
     point5 = Point(label="3", x=-10, y=0, z=2)
     point6 = Point(label="4", x=-10, y=0, z=0)
-    pointlist = [point3, point4, point5, point6
+    pointlist = [point3, point4, point5, point6]
     # Add first uniform load
     dm.add_non_uniform_load(
         name="My First Load",
@@ -207,13 +207,14 @@ output file name and call the function :meth:`geolib.models.dsettlement.dsettlem
 
 .. code-block:: python
 
-    input_test_file = "Tutorial.shi"
-    model.serialize(input_test_file)
+    from pathlib import Path
+    input_test_file = Path("Tutorial.sli")
+    dm.serialize(input_test_file)
 
 8. Finally the execute function can be called to run the model in D-Settlement console.
 
 .. code-block:: python
 
-    model.filename = input_test_file
-    model.execute()
+    dm.filename = input_test_file
+    dm.execute()
 

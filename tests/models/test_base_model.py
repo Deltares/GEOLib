@@ -83,4 +83,4 @@ class TestBaseModel:
         output = ml.execute(output_folder, nprocesses=1)
         assert len(output.models) == 2
         for model in output.models:
-            assert model.datastructure
+            assert model.output

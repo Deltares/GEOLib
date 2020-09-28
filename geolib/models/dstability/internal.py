@@ -780,6 +780,8 @@ class ProjectInfo(DStabilitySubStructure):
     """projectinfo.json."""
 
     Analyst: Optional[str] = ""
+    ApplicationCreated: Optional[str] = ""
+    ApplicationModified: Optional[str] = ""
     ContentVersion: Optional[str] = "1"
     Created: Optional[date] = datetime.now().date()
     CrossSection: Optional[str] = ""

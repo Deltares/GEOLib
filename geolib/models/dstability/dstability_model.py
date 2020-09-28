@@ -1,13 +1,3 @@
-"""
-
-Usage::
-
-    >>> dstab = DStabilityModel.parse("test.stix")
-    >>> dstab.execute()
-    >>> dstab.output
-    <dict>
-
-"""
 import abc
 import re
 from enum import Enum

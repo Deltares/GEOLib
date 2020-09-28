@@ -268,10 +268,11 @@ output file name and call the function :meth:`~geolib.models.dstability.dstabili
 
 .. code-block:: python
 
-    model.serialize(input_test_file)
+    from pathlib import Path
+    dm.serialize(Path("tutorial.stix")
 
 Finally the execute function can be called to run the model in D-Stability.
 
 .. code-block:: python
 
-    model.execute()
+    dm.execute()
