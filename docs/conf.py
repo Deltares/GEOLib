@@ -33,6 +33,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
+    "sphinx_autodoc_typehints",
     "rst2pdf.pdfbuilder",
     "releases",
 ]
@@ -118,3 +119,15 @@ todo_include_todos = True
 releases_release_uri = "https://publicwiki.deltares.nl/download/attachments/166462065/geolib-%s-py3-none-any.whl?api=v2"
 releases_issue_uri = "https://issuetracker.deltares.nl/browse/%s"
 releases_unstable_prehistory = True
+
+# Type hinting config
+set_type_checking_flag = True
+typehints_fully_qualified = False
+always_document_param_types = True
+
+# Autodoc options
+autodoc_default_options = {
+    "undoc-members": True,
+    "members": True,
+    "exclude-members": "__weakref__, parse_text, get_list_field_names,to_internal,structure_group",
+}

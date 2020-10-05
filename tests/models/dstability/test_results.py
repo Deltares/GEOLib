@@ -215,7 +215,20 @@ class TestDStabilityResults:
         for i, _ in enumerate(model.datastructure.stages):
             result = model.get_result(stage_id=i)
 
-            assert isinstance(result, dict)
+            assert isinstance(
+                result,
+                (
+                    UpliftVanParticleSwarmResult,
+                    UpliftVanReliabilityResult,
+                    UpliftVanResult,
+                    SpencerResult,
+                    SpencerReliabilityResult,
+                    SpencerGeneticAlgorithmResult,
+                    BishopResult,
+                    BishopReliabilityResult,
+                    BishopBruteForceResult,
+                ),
+            )
 
     @pytest.mark.unittest
     def test_get_slipcircle_result(self, _get_dstability_model):

@@ -34,6 +34,7 @@ from .internal import (
     Verticals,
     PiezoLines,
     Dimension,
+    Results,
     StrainType,
     SoilModel,
     ConsolidationModel,
@@ -485,3 +486,11 @@ class DSettlementModel(BaseModel):
             raise ValueError(
                 "If you wish to add a vertical drain then value is_vertical_drains for the model should be True"
             )
+
+    @property
+    def output(self) -> Results:
+        """Access internal dict-like datastructure of the output.
+
+        Requires a successful execute.
+        """
+        return self.datastructure.results

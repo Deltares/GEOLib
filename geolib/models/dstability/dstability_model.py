@@ -96,7 +96,7 @@ class DStabilityModel(BaseModel):
         return self.datastructure.waternets
 
     @property
-    def output(self):
+    def output(self) -> DStabilityResult:
         # TODO Make something that works for all stages
         return self.get_result(self.current_stage)
 
@@ -114,7 +114,7 @@ class DStabilityModel(BaseModel):
             ValueError: No results or calculationsettings available
         """
         result = self._get_result_substructure(stage_id)
-        return result.dict()  # TODO snake_case keys?
+        return result  # TODO snake_case keys?
 
     def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
         if self.datastructure.has_result(stage_id):

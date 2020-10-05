@@ -32,7 +32,7 @@ class BaseModel(DataClass, abc.ABC):
         """Execute a Model and wait for `timeout` seconds.
 
         The model is modified in place if the calculation and parsing
-        is successfull.
+        is successful.
         """
         if self.filename is None:
             raise ValueError("Set filename or serialize first!")
@@ -63,7 +63,7 @@ class BaseModel(DataClass, abc.ABC):
             self.parse(output_filename)
             return self  # TODO Figure out whether we should instantiate a new model (parse is a classmethod)
 
-        # Unsuccessfull run
+        # Unsuccessful run
         else:
             error = self.get_error_context()
             raise CalculationError(process.returncode, error)
@@ -154,7 +154,7 @@ class BaseModel(DataClass, abc.ABC):
     def output(self):
         """Access internal dict-like datastructure of the output.
 
-        Requires a successfull execute.
+        Requires a successful execute.
         """
         return self.datastructure.results
 

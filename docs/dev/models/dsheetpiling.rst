@@ -7,49 +7,64 @@ D-Sheetpiling model
 -------------------
 
 .. automodule:: geolib.models.dsheetpiling.dsheetpiling_model
-    :members:
-    :undoc-members:
+
 
 .. automodule:: geolib.models.dsheetpiling.settings
-    :members:
-    :undoc-members:
+
 
 .. automodule:: geolib.models.dsheetpiling.calculation_options
-    :members:
-    :undoc-members:
+
 
 Constructions
 -------------
 
 .. automodule:: geolib.models.dsheetpiling.constructions
-    :members:
-    :undoc-members:
+
 
 Loads
 -------------
 
 .. automodule:: geolib.models.dsheetpiling.loads
-    :members:
-    :undoc-members:
+
 
 Supports
 -------------
 
 .. automodule:: geolib.models.dsheetpiling.supports
-    :members:
-    :undoc-members:
+
 
 Geometry
 --------
 
 .. automodule:: geolib.models.dsheetpiling.profiles
-    :members:
-    :undoc-members:
+
 
 .. automodule:: geolib.models.dsheetpiling.surface
-    :members:
-    :undoc-members:
+
 
 .. automodule:: geolib.models.dsheetpiling.water_level
-    :members:
-    :undoc-members:
+
+
+Output
+------
+
+.. autoclass:: geolib.models.dsheetpiling.internal.DSheetPilingOutputStructure
+.. autoclass:: geolib.models.dsheetpiling.internal.OutputConstructionStage
+.. autoclass:: geolib.models.dsheetpiling.internal.CurAnchorForceResults
+.. autoclass:: geolib.models.dsheetpiling.internal.DesignSheetpileLength
+.. autoclass:: geolib.models.dsheetpiling.internal.PointsOnSheetpile
+.. autoclass:: geolib.models.dsheetpiling.internal.BaseVerificationStructureProperties
+.. autoclass:: geolib.models.dsheetpiling.internal.VerifySheetpileData
+.. autoclass:: geolib.models.dsheetpiling.internal.Resume
+.. autoclass:: geolib.models.dsheetpiling.internal.VerifyAnchorForce
+.. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthInfo
+.. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthCalculation
+.. autoclass:: geolib.models.dsheetpiling.internal.SideOutput
+.. autoclass:: geolib.models.dsheetpiling.internal.BreukData
+.. autoclass:: geolib.models.dsheetpiling.internal.AnchorData
+.. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthCalculation
+.. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthInfo
+.. autoclass:: geolib.models.dsheetpiling.internal.MomentsForcesDisplacements
+.. autoclass:: geolib.models.dsheetpiling.internal.Pressures
+
+

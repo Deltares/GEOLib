@@ -7,35 +7,29 @@ D-Settlement model
 ------------------
 
 .. automodule:: geolib.models.dsettlement.dsettlement_model
-    :members:
-    :undoc-members:
+
 
 .. autoclass:: geolib.models.dsettlement.internal.SoilModel
-    :members:
-    :undoc-members:
+
 
 .. autoclass:: geolib.models.dsettlement.internal.ConsolidationModel
-    :members:
-    :undoc-members:
+
 
 
 Loads
 -----
 
 .. automodule:: geolib.models.dsettlement.loads
-    :members:
-    :undoc-members:
+
 
 Drains
 ------
 
 .. automodule:: geolib.models.dsettlement.drains
-    :members:
-    :undoc-members:
+
 
 .. automodule:: geolib.models.dsettlement.drain_types
-    :members:
-    :undoc-members:
+
 
 Geometry
 --------
@@ -129,3 +123,17 @@ Below example code is is shown on how to add boundaries in the geolib code to cr
     b3 = dm.add_boundary(points=[points[0], points[4], points[3], points[7]])   # points (1, 2, 5, 6)
     b4 = dm.add_boundary(points=[points[5], points[6]])                         # points (7, 8)
 
+Output
+------
+
+.. autoclass:: geolib.models.dsettlement.internal.Results
+.. autoclass:: geolib.models.dsettlement.internal.ResidualSettlements
+.. autoclass:: geolib.models.dsettlement.internal.Vertical
+.. autoclass:: geolib.models.dsettlement.internal.Depths
+.. autoclass:: geolib.models.dsettlement.internal.DrainedLayers
+.. autoclass:: geolib.models.dsettlement.internal.HorizontalDisplacements
+.. autoclass:: geolib.models.dsettlement.internal.KoppejanSettlements
+.. autoclass:: geolib.models.dsettlement.internal.Leakages
+.. autoclass:: geolib.models.dsettlement.internal.Stresses
+.. autoclass:: geolib.models.dsettlement.internal.TimeDependentData
+.. autoclass:: geolib.models.dsettlement.internal.TimeSettlementPerLoad

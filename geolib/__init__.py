@@ -2,7 +2,7 @@
 GEOLib Library
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 # Set default logging handler to avoid "No handler found" warnings.
 import logging

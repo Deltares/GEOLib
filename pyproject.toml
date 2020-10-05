@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "geolib"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["Maarten Pronk <maarten.pronk@deltares.nl>", "Deltares"]
 license = "LGPLv3" 
@@ -9,8 +9,7 @@ readme = "README.rst"
 [tool.poetry.dependencies]
 python = "^3.7"
 jsonschema = "^3.2"
-pydantic = {extras = ["all"], version = "^1.4"}
-python-dotenv = "^0.12.0"
+pydantic = {extras = ["dotenv"], version = "^1.6.1"}
 zipp = "^3.1.0"
 fastapi = {version = "^0.58.1", optional = true}
 uvicorn = {version = "^0.11.5", optional = true}
@@ -26,11 +25,12 @@ coverage = "^5.0.4"
 pytest = "^5.4.1"
 teamcity_messages = "^1.27"
 pytest-cov = "^2.8.1"
-rst2pdf = "^0.96"
+rst2pdf = "^0.98"
 hypothesis-jsonschema = "^0.11.1"
 mypy = "^0.761.0"
-sphinx = "^2.4"
+sphinx = "^3.2.1"
 recommonmark = "^0.6.0"
+sphinx-autodoc-typehints = "^1.11.0"
 releases = "^1.6.3"
 
 [tool.poetry.extras]

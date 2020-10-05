@@ -17,6 +17,7 @@ from .dfoundations_parserprovider import DFoundationsParserProvider
 from .internal import (
     DFoundationsStructure,
     DFoundationsDumpStructure,
+    DFoundationsDumpfileOutputStructure,
     CPTList,
     PreliminaryDesign,
     SoilCollection,
@@ -152,7 +153,7 @@ class DFoundationsModel(BaseModel):
         return [CONSOLE_RUN_BATCH_FLAG]
 
     @property
-    def output(self):
+    def output(self) -> DFoundationsDumpfileOutputStructure:
         return self.datastructure.dumpfile.dumpfile_output
 
     @property
