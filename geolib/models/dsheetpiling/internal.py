@@ -431,7 +431,7 @@ class Anchor(DSheetpilingTableEntry):
 
 
 class Anchors(DSheetpilingUnwrappedTable):
-    """Container for Anchor"""
+    """Container for Anchor."""
 
     anchors: List[Anchor] = []
 
@@ -441,7 +441,8 @@ class Anchors(DSheetpilingUnwrappedTable):
 
 
 class AnchorOrStrutPresstressReference(DataClass):
-    """Used in the ConstructionStage to identify anchor and assign a prestress"""
+    """Used in the ConstructionStage to identify anchor and assign a
+    prestress."""
 
     name: str
     pre_stress: confloat(ge=0) = _DEFAULT_PRE_STRESS
@@ -459,7 +460,7 @@ class Strut(DSheetpilingTableEntry):
 
 
 class Struts(DSheetpilingUnwrappedTable):
-    """Container for Strut"""
+    """Container for Strut."""
 
     struts: List[Strut] = []
 
@@ -516,7 +517,7 @@ class WaterLevels(DSeriesNoParseSubStructure):
 
 
 class StageOptions(DSeriesInlineMappedProperties):
-    """ Representation of [STAGE] block."""
+    """Representation of [STAGE] block."""
 
     stagepartialfactorsetcur: DesignPartialFactorSet = DesignPartialFactorSet.UNKNOWN
     stageverify: int = 0
@@ -530,7 +531,7 @@ class StageOptions(DSeriesInlineMappedProperties):
 
 
 class CalculationOptionsPerStage(DSeriesStructureCollection):
-    """ Representation of [CALCULATION OPTIONS PER STAGE] block."""
+    """Representation of [CALCULATION OPTIONS PER STAGE] block."""
 
     stageoptions: List[StageOptions] = []
 
@@ -632,7 +633,7 @@ class NormalForces(DSeriesNoParseSubStructure):
 
 
 class Support(DSeriesNoParseSubStructure):
-    """Internal structure for spring and rigid supports"""
+    """Internal structure for spring and rigid supports."""
 
     name: constr(min_length=1, max_length=50)
     level: float
@@ -858,9 +859,12 @@ class DSheetPilingInputStructure(DSeriesStructure):
     def _get_validated_lateral_earth_pressure_method(
         self, stage_method: Optional[LateralEarthPressureMethodStage]
     ) -> LateralEarthPressureMethodStage:
+        """When no stage_method is provided, returns the method set in the
+        model options.
+
+        Raises ValueError if method is not compatible with method set on
+        model.
         """
-        When no stage_method is provided, returns the method set in the model options.
-        Raises ValueError if method is not compatible with method set on model."""
         if not isinstance(self.model, Model):
             raise ValueError(f"Model is a string; set model first")
         if stage_method is None:
@@ -1027,7 +1031,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 or self.horizontal_line_loads is None
             ):
                 self.horizontal_line_loads = HorizontalLineLoads()
-            self.horizontal_line_loads.loads.append(load)
+            if load not in self.horizontal_line_loads.loads:
+                self.horizontal_line_loads.loads.append(load)
             self.construction_stages.stages[stage_id].horizontal_line_loads.append(
                 load.name
             )
@@ -1038,7 +1043,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
             )
             if isinstance(self.moments, str) or self.moments is None:
                 self.moments = Moments()
-            self.moments.loads.append(load)
+            if load not in self.moments.loads:
+                self.moments.loads.append(load)
             self.construction_stages.stages[stage_id].moment_loads.append(load.name)
         elif isinstance(load, NormalForce):
             self.is_valid_unique_load_names(
@@ -1047,7 +1053,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
             )
             if isinstance(self.normal_forces, str) or self.normal_forces is None:
                 self.normal_forces = NormalForces()
-            self.normal_forces.loads.append(load)
+            if load not in self.normal_forces.loads:
+                self.normal_forces.loads.append(load)
             self.construction_stages.stages[stage_id].normal_forces.append(load.name)
         elif isinstance(load, UniformLoad):
             self.add_uniform_load(load=load, stage_id=stage_id)
@@ -1061,14 +1068,14 @@ class DSheetPilingInputStructure(DSeriesStructure):
         )
         if not isinstance(self.uniform_loads, UniformLoads):
             self.uniform_loads = UniformLoads()
-        if load.name not in self.uniform_loads.loads:
+        if load not in self.uniform_loads.loads:
             self.uniform_loads.loads.append(load)
         self.construction_stages.stages[stage_id].uniform_loads.append(load.name)
 
     def add_surcharge_load(self, stage_id: int, load: SurchargeLoad, side: Side) -> None:
         if not isinstance(self.surcharge_loads, SurchargeLoads):
             self.surcharge_loads = SurchargeLoads()
-        if load.name not in self.surcharge_loads.loads:
+        if load not in self.surcharge_loads.loads:
             self.surcharge_loads.loads.append(load)
         # Add load to stages.
         stage = self.construction_stages.stages[stage_id]
@@ -1095,7 +1102,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
             raise ValueError(f"Provide a Side, received {side}")
 
     def is_valid_unique_load_names(self, load_list: List[str], name: str) -> bool:
-        """Load list should have unique names in list of loads"""
+        """Load list should have unique names in list of loads."""
         if name in load_list:
             raise ValueError(
                 f"{name} load name is duplicated. Please change the name of the load."

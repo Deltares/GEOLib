@@ -209,3 +209,4 @@ class LoadTypeFavourableUnfavourableMoment(IntEnum):
 class LoadTypePermanentVariable(IntEnum):
     PERMANENT = 0
     VARIABLE = 1
+
