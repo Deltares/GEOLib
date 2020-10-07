@@ -617,7 +617,7 @@ class TestInternalParseInputStructure:
         self, output_construction_stage: OutputConstructionStage
     ):
         # 3. Validate final expectations.
-        assert output_construction_stage
+        assert isinstance(output_construction_stage, OutputConstructionStage)
         self.validate_breuk_data_structure(output_construction_stage.breuk_data)
         self.validate_anchor_data_structure(output_construction_stage.anchor_data)
         self.validate_moment_force_displacements_structure(
@@ -1018,7 +1018,7 @@ class TestInternalParseOutputStructure:
 
     # region validations
     def validate_verify_anchor_force(self, verify_anchor_force: VerifyAnchorForce):
-        assert verify_anchor_force
+        assert isinstance(verify_anchor_force, VerifyAnchorForce)
         assert verify_anchor_force.anchor_number == 1
         assert verify_anchor_force.points_on_sheetpile
         self.validate_points_on_sheetpile(verify_anchor_force.points_on_sheetpile[0])
@@ -1026,7 +1026,7 @@ class TestInternalParseOutputStructure:
         self.validate_output_construction_stage(verify_anchor_force.construction_stage[0])
 
     def validate_points_on_sheetpile(self, points_on_sheetpile: PointsOnSheetpile):
-        assert points_on_sheetpile
+        assert isinstance(points_on_sheetpile, PointsOnSheetpile)
         assert len(points_on_sheetpile.pointsonsheetpile) == 6
         expected_values = [0.42, 4.2, 42, 24, 2.4, 0.24]
         for pos, point in enumerate(points_on_sheetpile.pointsonsheetpile):
@@ -1053,9 +1053,9 @@ class TestInternalParseOutputStructure:
     ):
         assert output_structure
         assert output_structure.calculation_type == self.text_calculation_type
-        self.validate_points_on_sheetpile(output_structure.points_on_sheetpile)
+        self.validate_points_on_sheetpile(output_structure.points_on_sheetpile[-1])
         self.validate_resume_structure(output_structure.resume)
-        self.validate_output_construction_stage(output_structure.construction_stage)
+        self.validate_output_construction_stage(output_structure.construction_stage[-1])
         self.validate_design_sheetpile_length(output_structure.design_sheetpile_length)
         assert len(output_structure.verify_sheetpile_data) == 2
 
@@ -1167,7 +1167,7 @@ class TestInternalParseOutputStructure:
         self, output_construction_stage: OutputConstructionStage
     ):
         # 3. Validate final expectations.
-        assert output_construction_stage
+        assert isinstance(output_construction_stage, OutputConstructionStage)
         self.validate_breuk_data_structure(output_construction_stage.breuk_data)
         self.validate_anchor_data_structure(output_construction_stage.anchor_data)
         self.validate_moment_force_displacements_structure(

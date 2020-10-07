@@ -1265,21 +1265,20 @@ class VerifySheetpileData(DSeriesStructure):
 class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     @classmethod
     def get_list_field_names(cls) -> List[str]:
-        return ["verify_sheetpile_data"]
+        return ["verify_sheetpile_data", "points_on_sheetpile", "construction_stage"]
 
     @classmethod
     def parse_text(cls, text):
         return super().parse_text(text)
 
     calculation_type: str
-    resume: Optional[Resume]
 
     # Sheetpile calculation
     sheet_pile_elements: Optional[str]
     design_sheetpile_length: Optional[DesignSheetpileLength]
     verify_sheetpile_data: Optional[List[VerifySheetpileData]]
-    points_on_sheetpile: Optional[PointsOnSheetpile]
-    construction_stage: Optional[OutputConstructionStage]
+    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
+    construction_stage: Optional[List[OutputConstructionStage]]
 
     # Vibration calculation
     settlement_by_vibration: Optional[str]

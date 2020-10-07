@@ -712,7 +712,10 @@ class DSeriesRepeatedGroupedProperties(DSeriesStructure):
                 no_key_group_values.extend(filtered_values)
                 continue
             if cls.group_value_is_list(group_key):
-                generated_dict[group_key] = filtered_values
+                if group_key in generated_dict:
+                    generated_dict[group_key].extend(filtered_values)
+                else:
+                    generated_dict[group_key] = filtered_values
             else:
                 generated_dict[group_key] = filtered_values[0]
 
