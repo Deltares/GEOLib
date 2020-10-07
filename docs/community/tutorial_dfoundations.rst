@@ -8,7 +8,28 @@ Tutorial D-Foundations
 
     df = gl.models.dfoundations.DFoundationsModel()
 
-2. A CPT must be initialised using the class :class:`~geolib.models.dfoundations.profiles.CPT`. 
+
+2. When using the python API for D-Foundations, it is very important to start the project with setting the calculation
+options and the model. If this is not done, certain project data can be unintentionally overwritten.
+
+In this tutorial model options are set for bearing piles. The calculation model is in this case
+:class:`~geolib.models.dfoundations.dfoundations_model.BearingPilesModel`.
+
+.. code-block:: python
+
+    model_options = gl.models.dfoundations.dfoundations_model.BearingPilesModel(
+        is_rigid=False, factor_xi3=9
+    )
+    calculation_options = gl.models.dfoundations.dfoundations_model.CalculationOptions(
+        calculationtype=gl.models.dfoundations.dfoundations_model.CalculationType.VERIFICATION_DESIGN,
+        cpt_test_level=-19.0,
+    )
+    df.set_model(model_options, calculation_options)
+
+
+
+
+3. A CPT must be initialised using the class :class:`~geolib.models.dfoundations.profiles.CPT`.
 
 .. code-block:: python
 
@@ -83,7 +104,7 @@ The layers can be input as a list of dicts.
     )
         df.add_profile(profile)
 
-3. The soil can be intialised with the :class:`~geolib.soils.Soil` and can be added to the model by using the function
+4. The soil can be intialised with the :class:`~geolib.soils.Soil` and can be added to the model by using the function
 :func:`~geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil`.
 
 .. code-block:: python
@@ -95,7 +116,7 @@ The layers can be input as a list of dicts.
 
     df.add_soil(soil)
 
-4. The type(s) of pile and its location(s) needs to be defined. The possible combinations for these options can be found in :class:`~geolib.models.dfoundations.piles`.
+5. The type(s) of pile and its location(s) needs to be defined. The possible combinations for these options can be found in :class:`~geolib.models.dfoundations.piles`.
 In this case the class :class:`~geolib.models.dfoundations.piles.BearingRectangularPile` is initialised. In the following code block the location
 of the pile is first initialised by calling the class :class:`~geolib.models.dfoundations.piles.BearingPileLocation`.
 
@@ -143,21 +164,6 @@ The pile can be finally added to the model using the function  :func:`~geolib.mo
 .. code-block:: python
 
     df.add_pile_if_unique(pile, location)
-
-5. The calculation options of the model need to be defined. In relation to the type of pile selected the calculation model is in this case
-:class:`~geolib.models.dfoundations.dfoundations_model.BearingPilesModel`. 
-
-.. code-block:: python
-
-    model_options = gl.models.dfoundations.dfoundations_model.BearingPilesModel(
-        is_rigid=False, factor_xi3=9
-    )
-    calculation_options = gl.models.dfoundations.dfoundations_model.CalculationOptions(
-        calculationtype=gl.models.dfoundations.dfoundations_model.CalculationType.VERIFICATION_DESIGN,
-        cpt_test_level=-19.0,
-    )
-    df.set_model(model_options, calculation_options)
-
 
 6. To run the model first the model needs to be serialised. To do that define a 
 output file name and call the function :meth:`geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize`.

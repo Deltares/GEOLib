@@ -183,7 +183,8 @@ class DFoundationsModel(BaseModel):
 
         It is advised to only use this method once at the beginning of your workflow.
         """
-
+        logging.warning("Setting model, "
+                        "prior made modifications in the current D-Foundations model might be overwritten.")
         self.datastructure.input_data.model.model = model.model_type()
         self.datastructure.input_data.calculation_options = model._to_internal()
         self.datastructure.input_data.calculationtype = InternalCalculationType(
@@ -193,7 +194,6 @@ class DFoundationsModel(BaseModel):
         self.datastructure.input_data.preliminary_design.profiles = list(
             range(len(self.profiles.profiles))
         )
-        logging.warning("Overwriting currently defined soils with default.")
         self.datastructure.input_data.soil_collection.soil = InternalSoil.default_soils(
             model=model.model_type().name
         )

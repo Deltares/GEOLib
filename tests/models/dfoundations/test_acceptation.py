@@ -18,6 +18,17 @@ def test_run_model_from_scratch_expanded():
 
     df = gl.models.dfoundations.DFoundationsModel()
 
+    # Model options are required to be set before setting additional parameters
+    model_options = gl.models.dfoundations.dfoundations_model.BearingPilesModel(
+        is_rigid=False, factor_xi3=9
+    )
+    calculation_options = gl.models.dfoundations.dfoundations_model.CalculationOptions(
+        calculationtype=gl.models.dfoundations.dfoundations_model.CalculationType.VERIFICATION_DESIGN,
+        cpt_test_level=-19.0,
+    )
+
+    df.set_model(model_options, calculation_options)
+
     cpt = profiles.CPT(
         cptname="DELFT1",
         groundlevel=0.5,
@@ -108,15 +119,6 @@ def test_run_model_from_scratch_expanded():
     )
     pile = piles.BearingRectangularPile(**parent_pile, **geometry_pile)
 
-    model_options = gl.models.dfoundations.dfoundations_model.BearingPilesModel(
-        is_rigid=False, factor_xi3=9
-    )
-    calculation_options = gl.models.dfoundations.dfoundations_model.CalculationOptions(
-        calculationtype=gl.models.dfoundations.dfoundations_model.CalculationType.VERIFICATION_DESIGN,
-        cpt_test_level=-19.0,
-    )
-    # Model needs to be set prior to pile
-    df.set_model(model_options, calculation_options)
     df.add_pile_if_unique(pile, location)
 
     # 2. Verify initial expectations.
