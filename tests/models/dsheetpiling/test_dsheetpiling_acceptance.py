@@ -4,6 +4,8 @@ from teamcity import is_running_under_teamcity
 import random
 import json
 
+from pydantic.color import Color
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -191,7 +193,7 @@ class TestDsheetPilingAcceptance:
 
         # Add soil
         # Set clay material
-        soil_clay = Soil(name="Clay")
+        soil_clay = Soil(name="Clay", color=Color("green"))
         soil_clay.soil_weight_parameters.unsaturated_weight = 10
         soil_clay.soil_weight_parameters.saturated_weight = 11
         soil_clay.mohr_coulomb_parameters.cohesion = 10
@@ -207,7 +209,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.storage_parameters.horizontal_permeability = 8e-11
         soil_clay.soil_type_settlement_by_vibrations = SoilType.CLAY
         # set peat material
-        soil_peat = Soil(name="Peat")
+        soil_peat = Soil(name="Peat", color=Color("red"))
         soil_peat.soil_weight_parameters.unsaturated_weight = 10
         soil_peat.soil_weight_parameters.saturated_weight = 11
         soil_peat.mohr_coulomb_parameters.cohesion = 2
@@ -223,7 +225,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.storage_parameters.horizontal_permeability = 8e-10
         soil_peat.soil_type_settlement_by_vibrations = SoilType.PEAT
         # set sand material
-        soil_sand = Soil(name="Sand")
+        soil_sand = Soil(name="Sand", color=Color("yellow"))
         soil_sand.soil_weight_parameters.unsaturated_weight = 17
         soil_sand.soil_weight_parameters.saturated_weight = 19
         soil_sand.mohr_coulomb_parameters.cohesion = 0

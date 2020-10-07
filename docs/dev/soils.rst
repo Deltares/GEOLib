@@ -25,9 +25,8 @@ There is a :class:`geolib.soils.layers.CPT` class however, to load from D-Founda
 The Soil Class
 -------------------------
 
-.. automodule:: geolib.soils
-    :members:
-    :undoc-members:
+.. automodule:: geolib.soils.soil
+.. autoclass:: geolib.soils.soil_utils.Color
 
 .. commented out until unified
 .. 1D Profiles and layers

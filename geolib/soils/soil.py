@@ -2,9 +2,9 @@ from enum import Enum, IntEnum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel
-from pydantic.color import Color
 
 from geolib.geometry.one import Point
+from .soil_utils import Color
 
 
 class DistributionType(IntEnum):
@@ -310,12 +310,12 @@ class SoilType(IntEnum):
 
 
 class Soil(BaseModel):
-    """Soil Material class."""
+    """Soil Material."""
 
     id: Optional[str] = None
     name: Optional[str] = None
     code: Optional[str] = None
-    color: Optional[Color] = None
+    color: Color = Color("grey")
 
     mohr_coulomb_parameters: Optional[MohrCoulombParameters] = MohrCoulombParameters()
     undrained_parameters: Optional[UndrainedParameters] = UndrainedParameters()
@@ -474,7 +474,7 @@ class Soil(BaseModel):
 
         return DFoundationSoil(
             name=self.name,
-            soilcolor=self.color,
+            soilcolor=self.color.to_internal(),
             soilsoiltype=self.soil_type_nl,
             soilbelgiansoiltype=self.soil_type_be,
             soilgamdry=self.soil_weight_parameters.unsaturated_weight.mean,
@@ -523,7 +523,7 @@ class Soil(BaseModel):
 
         kwargs = {
             "name": self.name,
-            "soilcolor": self.color,
+            "soilcolor": self.color.to_internal(),
             "soilgamdry": self.soil_weight_parameters.unsaturated_weight.mean,
             "soilgamwet": self.soil_weight_parameters.saturated_weight.mean,
             "soilinitialvoidratio": self.soil_classification_parameters.initial_void_ratio.mean,
@@ -652,7 +652,7 @@ class Soil(BaseModel):
 
         return DSheetPilingSoil(
             name=self.name,
-            soilcolor=self.color,
+            soilcolor=self.color.to_internal(),
             soilsoiltype=SoilTypeModulusSubgradeReaction(
                 self.soil_type_settlement_by_vibrations.value
             ),
