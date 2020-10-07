@@ -51,6 +51,11 @@ class ModelOptions(DataClass):
     max_allowed_settlement_lim_state_serv: confloat(ge=0, le=100000) = 0
     max_allowed_rel_rotation_lim_state_serv: confloat(ge=0.0001, le=10000) = 0.0001
 
+    # Factors
+    factor_xi3: Optional[confloat(ge=0.01, le=10)] = None
+    factor_xi4: Optional[confloat(ge=0.01, le=10)] = None
+    ea_gem: Optional[confloat(ge=1)] = None
+
     # Combined Model Options
     is_suppress_qc_reduction: Bool = False
     is_overrule_excavation: Bool = False
@@ -69,13 +74,11 @@ class ModelOptions(DataClass):
 
 
 class BearingPilesModel(ModelOptions):
-    factor_xi3: Optional[confloat(ge=0.01, le=10)] = None
-    factor_xi4: Optional[confloat(ge=0.01, le=10)] = None
+
     factor_gamma_b: Optional[confloat(ge=1, le=100)] = None
     factor_gamma_s: Optional[confloat(ge=1, le=100)] = None
     factor_gamma_fnk: Optional[confloat(ge=-100, le=100)] = None
     area: Optional[confloat(ge=0, le=100000)] = None
-    ea_gem: Optional[confloat(ge=1)] = None
 
     @classmethod
     def model_type(cls):
@@ -183,8 +186,10 @@ class DFoundationsModel(BaseModel):
 
         It is advised to only use this method once at the beginning of your workflow.
         """
-        logging.warning("Setting model, "
-                        "prior made modifications in the current D-Foundations model might be overwritten.")
+        logging.warning(
+            "Setting model, "
+            "prior made modifications in the current D-Foundations model might be overwritten."
+        )
         self.datastructure.input_data.model.model = model.model_type()
         self.datastructure.input_data.calculation_options = model._to_internal()
         self.datastructure.input_data.calculationtype = InternalCalculationType(

@@ -519,7 +519,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
                 continue  # Nones will be passed by default settings
             toggle_field = self.find_toggle(field)
             if toggle_field in self.__fields__:
-                toggles[toggle_field] = True
+                toggles[toggle_field] = Bool.TRUE
         kwargs.update(toggles)
         super().__init__(*args, **kwargs)
 

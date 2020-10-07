@@ -139,7 +139,7 @@ class Soil(DSeriesUnmappedNameProperties):
     soilemodmenard: confloat(ge=0.01, le=1000000) = 0.01
     soilcohesion: confloat(ge=0, le=1000000000) = 0
     soilphi: confloat(ge=-89, le=89) = 0
-    soildelta: confloat(ge=0, le=89) = 0.00
+    soildelta: confloat(ge=-80, le=89) = 0.00
     soilcutop: float = 0  # fixed value
     soilcubottom: float = 0  # fixed value
     soilcubearingcapacityfactor: float = 4.10  # fixed value
