@@ -1,10 +1,15 @@
 import pytest
 from teamcity import is_running_under_teamcity
-from geolib.soils import Soil, MohrCoulombParameters, StochasticParameter, SoilClassificationParameters
+from geolib.soils import (
+    Soil,
+    MohrCoulombParameters,
+    StochasticParameter,
+    SoilClassificationParameters,
+)
+from pydantic import ValidationError
 
 
 class TestSoils:
-
     @pytest.mark.unittest
     def test_set_stochastic_parameters_from_float(self):
 
@@ -35,10 +40,19 @@ class TestSoils:
     def test_set_all_stochastic_parameters(self):
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=2, friction_angle=30)
         soil_classification_parameters = SoilClassificationParameters(min_void_ratio=0.3)
-        soil = Soil(mohr_coulomb_parameters=mohr_coulomb_parameters,
-                    soil_classification_parameters=soil_classification_parameters)
+        soil = Soil(
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
+            soil_classification_parameters=soil_classification_parameters,
+        )
 
         soil.set_all_stochastic_parameters()
         assert isinstance(soil.mohr_coulomb_parameters.cohesion, StochasticParameter)
-        assert isinstance(soil.mohr_coulomb_parameters.friction_angle, StochasticParameter)
+        assert isinstance(
+            soil.mohr_coulomb_parameters.friction_angle, StochasticParameter
+        )
         assert isinstance(soil.soil_classification_parameters.min_void_ratio, float)
+
+    @pytest.mark.unittest
+    def test_error_raised_when_value_not_part_of_soil(self):
+        with pytest.raises(ValidationError):
+            Soil(wrong_name="Peat")

@@ -324,6 +324,9 @@ class SoilType(IntEnum):
 class Soil(BaseModel):
     """Soil Material."""
 
+    class Config:
+        extra = "forbid"
+
     id: Optional[str] = None
     name: Optional[str] = None
     code: Optional[str] = None
@@ -347,9 +350,7 @@ class Soil(BaseModel):
     cone_resistance: Optional[ConeResistance] = ConeResistance()
     use_tension: Optional[bool] = None
     use_probabilistic_defaults: Optional[bool] = False
-    soil_type_settlement_by_vibrations: Optional[
-        SoilType
-    ] = SoilType.SAND
+    soil_type_settlement_by_vibrations: Optional[SoilType] = SoilType.SAND
     soil_type_nl: Optional[SoilType] = SoilType.SAND
     soil_type_be: Optional[SoilType] = SoilType.SAND
     soil_state: Optional[SoilState] = SoilState()

@@ -20,6 +20,7 @@ from geolib.soils import (
     StateType,
     IsotacheParameters,
     SoilClassificationParameters,
+    SoilWeightParameters,
 )
 import geolib.soils as soil_external
 from geolib.models import BaseModel
@@ -55,24 +56,27 @@ class TestDSettlementAcceptance:
         self.soils = [
             Soil(
                 name="Sand",
-                # TODO Fix usage as color=Color("#00ffff"),
-                volumetric_weight_above_phreatic_level=17.0,
-                volumetric_weight_below_phreatic_level=19.0,
+                soil_weight_parameters=SoilWeightParameters(
+                    saturated_weight=19.0, unsaturated_weight=17.0
+                ),
             ),
             Soil(
                 name="Peat",
-                volumetric_weight_above_phreatic_level=10.0,
-                volumetric_weight_below_phreatic_level=10.0,
+                soil_weight_parameters=SoilWeightParameters(
+                    saturated_weight=10.0, unsaturated_weight=10.0
+                ),
             ),
             Soil(
                 name="Clay",
-                volumetric_weight_above_phreatic_level=14.0,
-                volumetric_weight_below_phreatic_level=14.0,
+                soil_weight_parameters=SoilWeightParameters(
+                    saturated_weight=14.0, unsaturated_weight=14.0
+                ),
             ),
             Soil(
                 name="Embankement",
-                volumetric_weight_above_phreatic_level=16.0,
-                volumetric_weight_below_phreatic_level=16.0,
+                soil_weight_parameters=SoilWeightParameters(
+                    saturated_weight=16.0, unsaturated_weight=16.0
+                ),
             ),
         ]
 

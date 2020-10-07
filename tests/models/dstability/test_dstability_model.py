@@ -285,16 +285,14 @@ class TestDStabilityModel:
         )
 
         # add soil
-        soil_peat_id = dm.add_soil(
-            Soil(
-                name="Peat (weak)",
-                code="HV",
-                cohesion=0.5,
-                friction_angle=15.0,
-                volumetric_weight_above_phreatic_level=10.2,
-                volumetric_weight_below_phreatic_level=10.2,
-            )
-        )
+        soil_peat_id = Soil()
+        soil_peat_id.name = "Peat (weak)"
+        soil_peat_id.code = "HV"
+        soil_peat_id.soil_weight_parameters.unsaturated_weight.mean = 10.2
+        soil_peat_id.soil_weight_parameters.saturated_weight.mean = 10.2
+        soil_peat_id.mohr_coulomb_parameters.friction_angle.mean = 15
+        soil_peat_id.mohr_coulomb_parameters.cohesion.mean = 0.5
+        soil_peat_id = dm.add_soil(soil_peat_id)
 
         # add layers
         layer_1 = [

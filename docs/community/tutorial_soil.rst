@@ -44,6 +44,18 @@ Lastly, the parameters can be passed as a dictionary, for example:
               "friction_angle": 25}
     soil = Soil(mohr_coulomb_parameters=kwargs)
 
+When initialising the Soil class all values parsed should be parameters of the class itself.
+Otherwise an error is thrown, for example:
+
+.. code-block:: python
+
+    from geolib.soils import Soil
+    soil = Soil( name="Peat", cohesion=0.5)
+
+This piece of code will throw a pydantic.ValidationError.
+That is because the cohesion value should be set through the mohr_coulomb_parameters parameter.
+Note that when the Soil class is intialised without the user defining the parameters, it will be populated with default values.
+
 Many parameters can be initialised as either a stochastic variable or a float. When the parameter
 is filled in as a floating value, the value is automatically translated to a stochastic variable with
 a mean of the input float and a standard deviation of 0. This step is required to stay
