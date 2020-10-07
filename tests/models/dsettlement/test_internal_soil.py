@@ -42,6 +42,8 @@ class TestSoil_Internal:
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
+        soil_input.bjerrum_parameters = soil_external.BjerrumParameters(input_type_is_comp_ratio=False)
+
         assert (
             soil_input.soil_weight_parameters.saturated_weight.mean == 14
         )
@@ -58,6 +60,11 @@ class TestSoil_Internal:
             == StateType.OCR
         )
         assert soil_input.soil_state.use_equivalent_age
+        assert (
+                soil_input.bjerrum_parameters.input_type_is_comp_ratio
+                == False
+        )
+
         # 4. Verify expectations.
         return soil_input
 
@@ -77,3 +84,4 @@ class TestSoil_Internal:
         assert test_soil.soilinitialvoidratio == 0.1
         assert test_soil.soilpreconkoppejantype == PreconType.OCR
         assert test_soil.soiluseequivalentage
+        assert test_soil.soilcompratio == False

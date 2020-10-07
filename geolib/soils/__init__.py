@@ -3,6 +3,7 @@ from .soil import (
     EarthPressureCoefficientsType,
     GrainType,
     HorizontalBehaviourType,
+    BjerrumParameters,
     IsotacheParameters,
     KoppejanParameters,
     LambdaType,

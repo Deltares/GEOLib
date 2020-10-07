@@ -114,7 +114,7 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soilasec: float = 1
     soilcar: float = 10
     soilca: float = 1
-    soilcompratio: float = 0  # fixed value
+    soilcompratio: Bool = Bool.TRUE
     soilrratio: float = 1
     soilcratio: float = 1
     soilsratio: float = 0  # fixed value

@@ -76,9 +76,21 @@ class UndrainedParameters(BaseModel):
 class BjerrumParameters(BaseModel):
     """
     Bjerrum parameters class
+
+    input_type_is_comp_ratio: [bool] is true when compression input mode is "compression ratio", false when compression
+                                     input mode is "Compression index"
+    If input_type_is_comp_ratio is true, the following parameters are used as input:
+            reloading_swelling_RR
+            compression_ratio_CR
+            coef_secondary_compression_Ca
+
+    If input_type_is_comp_ratio is false, the following parameters are used as input:
+            reloading_swelling_index_Cr
+            compression_index_Cc
+            coef_secondary_compression_Ca
     """
 
-    compression_input_type: Optional[Enum] = None
+    input_type_is_comp_ratio: Optional[bool] = None
     reloading_ratio: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     primary_compression_ratio: Optional[
         Union[float, StochasticParameter]
@@ -623,7 +635,7 @@ class Soil(BaseModel):
             "soilasec": self.koppejan_parameters.primary_Asec.mean,
             "soilcar": None,
             "soilca": self.bjerrum_parameters.coef_secondary_compression_Ca.mean,
-            "soilcompratio": None,
+            "soilcompratio": self.bjerrum_parameters.input_type_is_comp_ratio,
             "soilrratio": self.bjerrum_parameters.reloading_swelling_RR.mean,
             "soilcratio": self.bjerrum_parameters.compression_ratio_CR.mean,
             "soilsratio": None,
