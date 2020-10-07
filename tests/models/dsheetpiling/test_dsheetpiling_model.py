@@ -78,7 +78,7 @@ from geolib.models.dsheetpiling.supports import (
 )
 from geolib.models.dsheetpiling.surface import Surface
 from geolib.models.dsheetpiling.water_level import WaterLevel
-from geolib.soils import MohrCoulombParameters, Soil
+from geolib.soils import MohrCoulombParameters, Soil, SoilType
 
 
 @pytest.fixture
@@ -484,6 +484,26 @@ class TestDsheetPilingModel:
         assert new_soil2 == "Test Soil 2"
         assert ds.datastructure.input_data.soil_collection.soil[0].name == "Test Soil"
         assert ds.datastructure.input_data.soil_collection.soil[-1].name == "Test Soil 2"
+
+    @pytest.mark.integrationtest
+    def test_add_soil_with_soil_type(self):
+        # 1. Set up test data
+        ds = DSheetPilingModel()
+
+        gravel = Soil(name="Gravel")
+        gravel.soil_type_settlement_by_vibrations = SoilType.GRAVEL
+
+        sandy_loam = Soil(name="Sandy loam")
+        sandy_loam.soil_type_settlement_by_vibrations = SoilType.SANDY_LOAM
+
+        # 3. Run test
+        ds.add_soil(gravel)
+        with pytest.raises(ValueError):
+            ds.add_soil(sandy_loam)
+
+        # 4. Verify final expectations.
+        assert len(ds.datastructure.input_data.soil_collection.soil) == 1
+        assert ds.datastructure.input_data.soil_collection.soil[0].soilsoiltype == SoilType.GRAVEL
 
     @pytest.mark.parametrize(
         "testload",

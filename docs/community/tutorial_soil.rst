@@ -92,4 +92,15 @@ for each model, see the other :ref:`tutorial`.
     dset_model = DSettlementModel()
     dset_model.add_soil(soil)
 
+Certain soil input are enumerations. For example, "soil_type_nl" which is an input for D-Foundations. Below an example
+is shown on how to set an enumeration for the soil.
 
+.. code-block:: python
+
+    from geolib.soils import Soil, SoilType
+
+    soil = Soil()
+    soil.soil_type_nl = SoilType.CLAY
+
+Note that this "SoilType" enumeration is reused for three different soil parameters: "soil_type_nl", "soil_type_be" and
+"soil_type_settlement_by_vibrations". However only "soil_type_nl" accepts SoilType.SANDY_LOAM.

@@ -54,7 +54,7 @@ from geolib.models.dfoundations.piles import (
     TensionPileLocation,
 )
 from geolib.models.dfoundations.profiles import CPT, Profile, Excavation
-from geolib.soils import Soil, MohrCoulombParameters
+from geolib.soils import Soil, MohrCoulombParameters, SoilType
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -182,7 +182,7 @@ class TestDFoundationsModel:
         mohr_coulomb_parameters = MohrCoulombParameters(friction_angle=0.01)
         soil = Soil(
             name="Test Soil",
-            soil_type_nl=3,
+            soil_type_nl=SoilType.CLAY,
             mohr_coulomb_parameters=mohr_coulomb_parameters,
         )
         soil.undrained_parameters.undrained_shear_strength = 1000
@@ -202,6 +202,44 @@ class TestDFoundationsModel:
 
         # 5. Serialize result to check manually
         ds.serialize(output_test_file)
+
+    @pytest.mark.integrationtest
+    def test_add_soil_with_soil_type(self):
+        # 1. Set up test data
+        df = DFoundationsModel()
+
+        mohr_coulomb_parameters = MohrCoulombParameters(friction_angle=0.01)
+
+        gravel = Soil(name="Gravel")
+        gravel.soil_type_nl = SoilType.GRAVEL
+        gravel.soil_type_be = SoilType.GRAVEL
+        gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
+        gravel.undrained_parameters.undrained_shear_strength = 1000
+
+        sandy_loam = Soil(name="Sandy loam")
+        sandy_loam.soil_type_nl = SoilType.SANDY_LOAM
+        sandy_loam.soil_type_be = SoilType.SANDY_LOAM
+        sandy_loam.mohr_coulomb_parameters = mohr_coulomb_parameters
+        sandy_loam.undrained_parameters.undrained_shear_strength = 1000
+
+        sandy_loam_and_gravel = Soil(name="Sandy loam")
+        sandy_loam_and_gravel.soil_type_nl = SoilType.SANDY_LOAM
+        sandy_loam_and_gravel.soil_type_be = SoilType.GRAVEL
+        sandy_loam_and_gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
+        sandy_loam_and_gravel.undrained_parameters.undrained_shear_strength = 1000
+
+        # 3. Run test
+        df.add_soil(gravel)
+        with pytest.raises(ValueError):
+            df.add_soil(sandy_loam)
+        df.add_soil(sandy_loam_and_gravel)
+
+        # 4. Verify final expectations.
+        assert df.datastructure.input_data.soil_collection.soil[-2].soilsoiltype == SoilType.GRAVEL
+        assert df.datastructure.input_data.soil_collection.soil[-2].soilbelgiansoiltype == SoilType.GRAVEL
+
+        assert df.datastructure.input_data.soil_collection.soil[-1].soilsoiltype == SoilType.SANDY_LOAM
+        assert df.datastructure.input_data.soil_collection.soil[-1].soilbelgiansoiltype == SoilType.GRAVEL
 
     @pytest.fixture
     def setup_profile(self):

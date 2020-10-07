@@ -10,7 +10,7 @@ from .soil import (
     Soil,
     SoilClassificationParameters,
     SoilState,
-    SoilTypeSettlementByVibration,
+    SoilType,
     SoilWeightParameters,
     StateType,
     StochasticParameter,

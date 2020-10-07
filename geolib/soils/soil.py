@@ -300,12 +300,13 @@ class SoilState(BaseModel):
     pop_layer: Optional[Union[float, StochasticParameter]] = StochasticParameter()
 
 
-class SoilTypeSettlementByVibration(IntEnum):
+class SoilType(IntEnum):
     GRAVEL = 0
     SAND = 1
     LOAM = 2
     CLAY = 3
     PEAT = 4
+    SANDY_LOAM = 5
 
 
 class Soil(BaseModel):
@@ -335,10 +336,10 @@ class Soil(BaseModel):
     use_tension: Optional[bool] = None
     use_probabilistic_defaults: Optional[bool] = False
     soil_type_settlement_by_vibrations: Optional[
-        SoilTypeSettlementByVibration
-    ] = SoilTypeSettlementByVibration.SAND
-    soil_type_nl: Optional[str] = None
-    soil_type_be: Optional[str] = None
+        SoilType
+    ] = SoilType.SAND
+    soil_type_nl: Optional[SoilType] = SoilType.SAND
+    soil_type_be: Optional[SoilType] = SoilType.SAND
     soil_state: Optional[SoilState] = SoilState()
     shear_strength_model_above_phreatic_level: Optional[
         ShearStrengthModelTypePhreaticLevel

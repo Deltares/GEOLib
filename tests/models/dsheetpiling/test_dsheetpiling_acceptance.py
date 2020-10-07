@@ -77,7 +77,7 @@ from geolib.soils import (
     Soil,
     LambdaType,
     GrainType,
-    SoilTypeSettlementByVibration,
+    SoilType,
     EarthPressureCoefficientsType,
     HorizontalBehaviourType,
 )
@@ -205,7 +205,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.subgrade_reaction_parameters.k_1_bottom = 2000
         soil_clay.soil_classification_parameters.relative_density = 72
         soil_clay.storage_parameters.horizontal_permeability = 8e-11
-        soil_clay.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.CLAY
+        soil_clay.soil_type_settlement_by_vibrations = SoilType.CLAY
         # set peat material
         soil_peat = Soil(name="Peat")
         soil_peat.soil_weight_parameters.unsaturated_weight = 10
@@ -221,7 +221,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.subgrade_reaction_parameters.k_1_bottom = 800
         soil_peat.soil_classification_parameters.relative_density = 72
         soil_peat.storage_parameters.horizontal_permeability = 8e-10
-        soil_peat.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.PEAT
+        soil_peat.soil_type_settlement_by_vibrations = SoilType.PEAT
         # set sand material
         soil_sand = Soil(name="Sand")
         soil_sand.soil_weight_parameters.unsaturated_weight = 17
@@ -237,7 +237,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.subgrade_reaction_parameters.k_1_bottom = 10000
         soil_sand.soil_classification_parameters.relative_density = 72
         soil_sand.storage_parameters.horizontal_permeability = 8e-9
-        soil_sand.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.SAND
+        soil_sand.soil_type_settlement_by_vibrations = SoilType.SAND
         # add soils in model
         for soil in (soil_clay, soil_peat, soil_sand):
             model.add_soil(soil)
@@ -458,7 +458,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.subgrade_reaction_parameters.k_1_bottom = 2000
         soil_clay.soil_classification_parameters.relative_density = 72
         soil_clay.storage_parameters.horizontal_permeability = 8e-11
-        soil_clay.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.CLAY
+        soil_clay.soil_type_settlement_by_vibrations = SoilType.CLAY
         # set peat material
         soil_peat = Soil(name="Peat")
         soil_peat.soil_weight_parameters.unsaturated_weight = 10
@@ -474,7 +474,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.subgrade_reaction_parameters.k_1_bottom = 800
         soil_peat.soil_classification_parameters.relative_density = 72
         soil_peat.storage_parameters.horizontal_permeability = 8e-10
-        soil_peat.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.PEAT
+        soil_peat.soil_type_settlement_by_vibrations = SoilType.PEAT
         # set sand material
         soil_sand = Soil(name="Sand")
         soil_sand.soil_weight_parameters.unsaturated_weight = 17
@@ -490,7 +490,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.subgrade_reaction_parameters.k_1_bottom = 10000
         soil_sand.soil_classification_parameters.relative_density = 72
         soil_sand.storage_parameters.horizontal_permeability = 8e-9
-        soil_sand.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.SAND
+        soil_sand.soil_type_settlement_by_vibrations = SoilType.SAND
         # add soils in model
         for soil in (soil_clay, soil_peat, soil_sand):
             model.add_soil(soil)
@@ -978,7 +978,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.subgrade_reaction_parameters.k_1_bottom = 2000
         soil_clay.soil_classification_parameters.relative_density = 72
         soil_clay.storage_parameters.horizontal_permeability = 8e-11
-        soil_clay.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.CLAY
+        soil_clay.soil_type_settlement_by_vibrations = SoilType.CLAY
         # set peat material
         soil_peat = Soil(name="Peat")
         soil_peat.soil_weight_parameters.unsaturated_weight = 10
@@ -994,7 +994,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.subgrade_reaction_parameters.k_1_bottom = 800
         soil_peat.soil_classification_parameters.relative_density = 72
         soil_peat.storage_parameters.horizontal_permeability = 8e-10
-        soil_peat.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.PEAT
+        soil_peat.soil_type_settlement_by_vibrations = SoilType.PEAT
         # set sand material
         soil_sand = Soil(name="Sand")
         soil_sand.soil_weight_parameters.unsaturated_weight = 17
@@ -1010,7 +1010,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.subgrade_reaction_parameters.k_1_bottom = 10000
         soil_sand.soil_classification_parameters.relative_density = 72
         soil_sand.storage_parameters.horizontal_permeability = 8e-9
-        soil_sand.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.SAND
+        soil_sand.soil_type_settlement_by_vibrations = SoilType.SAND
         # add soils in model
         for soil in (soil_clay, soil_peat, soil_sand):
             model.add_soil(soil)
@@ -1289,7 +1289,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.subgrade_reaction_parameters.k_1_bottom = 2000
         soil_clay.soil_classification_parameters.relative_density = 72
         soil_clay.storage_parameters.horizontal_permeability = 8e-11
-        soil_clay.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.CLAY
+        soil_clay.soil_type_settlement_by_vibrations = SoilType.CLAY
         # set peat material
         soil_peat = Soil(name="Peat")
         soil_peat.soil_weight_parameters.unsaturated_weight = 10
@@ -1305,7 +1305,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.subgrade_reaction_parameters.k_1_bottom = 800
         soil_peat.soil_classification_parameters.relative_density = 72
         soil_peat.storage_parameters.horizontal_permeability = 8e-10
-        soil_peat.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.PEAT
+        soil_peat.soil_type_settlement_by_vibrations = SoilType.PEAT
         # set sand material
         soil_sand = Soil(name="Sand")
         soil_sand.soil_weight_parameters.unsaturated_weight = 17
@@ -1321,7 +1321,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.subgrade_reaction_parameters.k_1_bottom = 10000
         soil_sand.soil_classification_parameters.relative_density = 72
         soil_sand.storage_parameters.horizontal_permeability = 8e-9
-        soil_sand.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.SAND
+        soil_sand.soil_type_settlement_by_vibrations = SoilType.SAND
         # add soils in model
         for soil in (soil_clay, soil_peat, soil_sand):
             model.add_soil(soil)
@@ -1584,7 +1584,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.subgrade_reaction_parameters.k_1_bottom = 2000
         soil_clay.soil_classification_parameters.relative_density = 72
         soil_clay.storage_parameters.horizontal_permeability = 8e-11
-        soil_clay.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.CLAY
+        soil_clay.soil_type_settlement_by_vibrations = SoilType.CLAY
         # set peat material
         soil_peat = Soil(name="Peat")
         soil_peat.soil_weight_parameters.unsaturated_weight = 10
@@ -1600,7 +1600,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.subgrade_reaction_parameters.k_1_bottom = 800
         soil_peat.soil_classification_parameters.relative_density = 72
         soil_peat.storage_parameters.horizontal_permeability = 8e-10
-        soil_peat.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.PEAT
+        soil_peat.soil_type_settlement_by_vibrations = SoilType.PEAT
         # set sand material
         soil_sand = Soil(name="Sand")
         soil_sand.soil_weight_parameters.unsaturated_weight = 17
@@ -1616,7 +1616,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.subgrade_reaction_parameters.k_1_bottom = 10000
         soil_sand.soil_classification_parameters.relative_density = 72
         soil_sand.storage_parameters.horizontal_permeability = 8e-9
-        soil_sand.soil_type_settlement_by_vibrations = SoilTypeSettlementByVibration.SAND
+        soil_sand.soil_type_settlement_by_vibrations = SoilType.SAND
         # add soils in model
         for soil in (soil_clay, soil_peat, soil_sand):
             model.add_soil(soil)
