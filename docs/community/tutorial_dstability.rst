@@ -100,16 +100,14 @@ For completeness, here follow examples for all possible models.
 .. code-block:: python
 
     # add soil
-    soil_peat_id = dm.add_soil(
-        Soil(
-            name="Peat (weak)",
-            code="HV",
-            cohesion=0.5,
-            friction_angle=15.0,
-            volumetric_weight_above_phreatic_level=10.2,
-            volumetric_weight_below_phreatic_level=10.2,
-        )
-    )
+    soil = Soil()
+    soil.name = "Soil test"
+    soil.code = "HV"
+    soil.soil_weight_parameters.saturated_weight.mean = 10.2
+    soil.soil_weight_parameters.unsaturated_weight.mean = 10.2
+    soil.mohr_coulomb_parameters.cohesion.mean = 0.5
+    soil.mohr_coulomb_parameters.friction_angle.mean = 15.0      
+    soil_peat_id = dm.add_soil(soil)
 
 4. Afterwards we create several layers and choose a soil for them.
 
