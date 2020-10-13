@@ -10,7 +10,7 @@ from geolib import __version__ as version
 from geolib.models.base_model_structure import BaseModelStructure
 from .utils import children
 from geolib.geometry import Point
-from geolib.soils import Soil
+from geolib.soils import Soil, ShearStrengthModelTypePhreaticLevel
 
 from .dstability_validator import DStabilityValidator
 from geolib.utils import snake_to_camel, camel_to_snake
@@ -419,12 +419,6 @@ class SoilCorrelation(DStabilitySubStructure):
     @classmethod
     def structure_name(cls) -> str:
         return "soilcorrelations"
-
-
-class ShearStrengthModelTypePhreaticLevel(Enum):
-    C_PHI = "CPhi"
-    NONE = "None"
-    SU = "Su"
 
 
 class PersistableSoil(DataClass):

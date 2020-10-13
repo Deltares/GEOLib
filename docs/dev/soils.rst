@@ -27,6 +27,7 @@ The Soil Class
 
 .. automodule:: geolib.soils.soil
 .. autoclass:: geolib.soils.soil_utils.Color
+.. autoclass:: geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel
 
 .. commented out until unified
 .. 1D Profiles and layers
