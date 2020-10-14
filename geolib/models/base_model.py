@@ -11,6 +11,7 @@ from pathlib import Path, PosixPath, WindowsPath
 from subprocess import Popen, run
 from types import CoroutineType
 from typing import List, Optional, Type, Union
+from pydantic.error_wrappers import ValidationError
 
 import requests
 from geolib.errors import CalculationError
@@ -59,9 +60,16 @@ class BaseModel(DataClass, abc.ABC):
         logging.info(
             f"Checking for {output_filename}, while process exited with {process.returncode}"
         )
-        if process.returncode == 0 and output_filename.exists():
-            self.parse(output_filename)
-            return self  # TODO Figure out whether we should instantiate a new model (parse is a classmethod)
+        if output_filename.exists():
+            try:
+                self.parse(output_filename)
+                return self  # TODO Figure out whether we should instantiate a new model (parse is a classmethod)
+            except ValidationError:
+                logging.warning(
+                    f"Ouput file generated but parsing of {output_filename} failed."
+                )
+                error = self.get_error_context()
+                raise CalculationError(process.returncode, error)
 
         # Unsuccessful run
         else:
@@ -74,7 +82,9 @@ class BaseModel(DataClass, abc.ABC):
         A new model instance is returned.
         """
         response = requests.post(
-            endpoint + f"calculate/{self.__class__.__name__.lower()}",
+            requests.compat.urljoin(
+                endpoint + f"calculate/{self.__class__.__name__.lower()}"
+            ),
             data=self.json(),
             auth=HTTPBasicAuth(self.meta.gl_username, self.meta.gl_password),
         )
@@ -167,6 +177,7 @@ class BaseModelList(DataClass):
     identifying them later."""
 
     models: conlist(BaseModel, min_items=1)
+    meta: MetaData = MetaData()
 
     def execute(
         self,
@@ -194,7 +205,7 @@ class BaseModelList(DataClass):
                 fn = unique_folder / model.filename.name
                 model.serialize(fn.resolve())
 
-            executable = lead_model.meta.console_folder / lead_model.console_path
+            executable = self.meta.console_folder / lead_model.console_path
             if not executable.exists():
                 logging.error(
                     f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
@@ -234,7 +245,9 @@ class BaseModelList(DataClass):
         lead_model = self.models[0]
 
         response = requests.post(
-            endpoint + f"calculate/{lead_model.__class__.__name__.lower()}s",
+            requests.compat.urljoin(
+                endpoint + f"calculate/{lead_model.__class__.__name__.lower()}s"
+            ),
             data="[" + ",".join((model.json() for model in self.models)) + "]",
             auth=HTTPBasicAuth(lead_model.meta.gl_username, lead_model.meta.gl_password),
         )

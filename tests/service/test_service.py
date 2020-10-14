@@ -32,7 +32,7 @@ def test_post_calculate_empty_model_fails():
         auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 500
-    assert "status_code" in response.text
+    assert "message" in response.text
 
 
 @pytest.mark.acceptance

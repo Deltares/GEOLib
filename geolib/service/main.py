@@ -5,7 +5,7 @@ from pathlib import Path, PosixPath, WindowsPath
 from typing import Dict, List, Union, Type
 
 import pydantic.json
-from pydantic import conlist
+from pydantic import conlist, ValidationError
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from starlette import status
@@ -66,12 +66,15 @@ def execute(model, background_tasks: BackgroundTasks):
     ext = model.parser_provider_type().input_parsers[0].suffix_list[0]
     model.serialize(unique_folder / f"{unique_id}{ext}")
 
+    # Override console folder from client
+    model.meta.console_folder = settings.console_folder
+
     try:
         output = model.execute()
-    except CalculationError as e:
-        print(e)
+    except (CalculationError, ValidationError) as e:
         return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=e.__dict__
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"message": str(e), "traceback": unique_id},
         )
     else:
         return output
@@ -146,13 +149,14 @@ async def calculate_many_dsheetpilingmodel(
 async def calculate_many_dstabilitymodel(
     models: conlist(DStabilityModel, min_items=2),
     background_tasks: BackgroundTasks,
-    type: Type = DStabilityModel,
     _: str = Depends(get_current_username),
 ) -> List[DStabilityModel]:
     return execute_many(models, background_tasks)
 
 
-def execute_many(models, background_tasks: BackgroundTasks):
+def execute_many(
+    models: BaseModelList, background_tasks: BackgroundTasks
+) -> BaseModelList:
     unique_id = str(uuid.uuid4())
     unique_folder = Path(settings.calculation_folder / unique_id).absolute()
     unique_folder.mkdir(parents=True, exist_ok=True)
@@ -161,10 +165,10 @@ def execute_many(models, background_tasks: BackgroundTasks):
 
     try:
         output = bm.execute(unique_folder, nprocesses=settings.nprocesses)
-    except CalculationError as e:
-        print(e)
+    except (CalculationError, ValidationError) as e:
         return JSONResponse(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=e.__dict__
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"message": str(e), "traceback": unique_id},
         )
     else:
         return output
