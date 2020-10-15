@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+from math import isfinite
 import inspect
 import logging
 import re
@@ -163,6 +163,15 @@ class DSeriesStructure(BaseModelStructure):
             List[Tuple[str, Type]]: List of Tuples[FieldName, FieldType]
         """
         return get_filtered_type_hints(cls)
+
+    def dict(_, *args, **kwargs):
+        data = super().dict(*args, **kwargs)
+        for __, value in data.items():
+            if isinstance(value, float) and not isfinite(value):
+                raise ValueError(
+                    "Only finite values are supported, don't use nan, -inf or inf."
+                )
+        return data
 
 
 class DSerieListGroupNextStructure(DSeriesStructure):

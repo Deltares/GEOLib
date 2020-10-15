@@ -42,6 +42,7 @@ geolib_server = "geolib.service.main:app"
 [tool.black]
 line-length = 90
 target-version = ['py37']
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
@@ -50,8 +51,8 @@ build-backend = "poetry.masonry.api"
 isolated_build = true
 envlist = "py37, py38"
 
-[pytest]
-testpaths = "tests"
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [isort]
 multi_line_output=3

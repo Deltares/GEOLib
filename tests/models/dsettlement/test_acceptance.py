@@ -148,7 +148,7 @@ class TestDSettlementAcceptance:
         )
 
         soil_input.koppejan_parameters = soil_external.KoppejanParameters(
-            preconkoppejantype=StateType.YIELD_STRESS
+            precon_koppejan_type=StateType.YIELD_STRESS
         )
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2

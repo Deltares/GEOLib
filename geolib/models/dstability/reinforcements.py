@@ -6,7 +6,13 @@ import abc
 from pydantic import BaseModel, NoneStr, confloat
 from typing import List, Tuple
 
-from .internal import PersistableNail, PersistableForbiddenLine, PersistableGeotextile, PersistablePoint, PersistableStressAtDistance
+from .internal import (
+    PersistableNail,
+    PersistableForbiddenLine,
+    PersistableGeotextile,
+    PersistablePoint,
+    PersistableStressAtDistance,
+)
 from ...utils import snake_to_camel
 from ...geometry.one import Point
 
@@ -42,10 +48,20 @@ class Nail(DStabilityReinforcement):
 
     def _to_internal_datastructure(self) -> PersistableNail:
         data = {
-            **{snake_to_camel(name): value for name, value in self.dict().items() if name not in {'x', 'z', 'lateral_stresses', 'shear_stresses'}},
-            'Location': PersistablePoint(X=self.location.x, Z=self.location.z),
-            'LaterStresses': [PersistableStressAtDistance(Distance=distance, Stress=stress) for distance, stress in self.lateral_stresses],
-            'ShearStresses': [PersistableStressAtDistance(Distance=distance, Stress=stress) for distance, stress in self.shear_stresses],
+            **{
+                snake_to_camel(name): value
+                for name, value in self.dict().items()
+                if name not in {"x", "z", "lateral_stresses", "shear_stresses"}
+            },
+            "Location": PersistablePoint(X=self.location.x, Z=self.location.z),
+            "LateralStresses": [
+                PersistableStressAtDistance(Distance=distance, Stress=stress)
+                for distance, stress in self.lateral_stresses
+            ],
+            "ShearStresses": [
+                PersistableStressAtDistance(Distance=distance, Stress=stress)
+                for distance, stress in self.shear_stresses
+            ],
         }
         return PersistableNail(**data)
 
@@ -78,5 +94,5 @@ class Geotextile(DStabilityReinforcement):
             Start=PersistablePoint(X=self.start.x, Z=self.start.z),
             End=PersistablePoint(X=self.end.x, Z=self.end.z),
             TensileStrength=self.effective_tensile_strength,
-            ReductionArea=self.reduction_area
+            ReductionArea=self.reduction_area,
         )

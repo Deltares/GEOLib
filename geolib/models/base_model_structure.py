@@ -3,6 +3,7 @@ import abc
 from pydantic import BaseModel as DataClass
 
 from .validators import BaseValidator
+from math import isfinite
 
 
 class BaseModelStructure(DataClass, abc.ABC):
@@ -17,4 +18,5 @@ class BaseModelStructure(DataClass, abc.ABC):
 
     class Config:
         extra = "forbid"
-
+        arbitrary_types_allowed = False
+        validate_on_assignment = True

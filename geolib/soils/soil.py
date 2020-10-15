@@ -1,10 +1,27 @@
 from enum import Enum, IntEnum
 from typing import List, Optional, Union
+from math import isfinite
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
+from pydantic.error_wrappers import ValidationError
 
 from geolib.geometry.one import Point
 from .soil_utils import Color
+
+
+class SoilBaseModel(BaseModel):
+    class Config:
+        extra = "forbid"
+        arbitrary_types_allowed = False
+        validate_on_assignment = True
+
+    @validator("*")
+    def fail_on_infinite(cls, v, values, field):
+        if isinstance(v, float) and not isfinite(v):
+            raise ValueError(
+                "Only finite values are supported, don't use nan, -inf or inf."
+            )
+        return v
 
 
 class DistributionType(IntEnum):
@@ -14,7 +31,7 @@ class DistributionType(IntEnum):
     Deterministic = 4
 
 
-class StochasticParameter(BaseModel):
+class StochasticParameter(SoilBaseModel):
     """
     Stochastic parameters class
     """
@@ -40,7 +57,7 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
     SU = "Su"
 
 
-class MohrCoulombParameters(BaseModel):
+class MohrCoulombParameters(SoilBaseModel):
     """
     Mohr Coulomb parameters class
     """
@@ -54,7 +71,7 @@ class MohrCoulombParameters(BaseModel):
     cohesion_and_friction_angle_correlated: Optional[bool] = None
 
 
-class UndrainedParameters(BaseModel):
+class UndrainedParameters(SoilBaseModel):
     """
     Undrained shear strength parameters class
     """
@@ -73,7 +90,7 @@ class UndrainedParameters(BaseModel):
     undrained_shear_strength_bearing_capacity_factor: Optional[float] = None
 
 
-class BjerrumParameters(BaseModel):
+class BjerrumParameters(SoilBaseModel):
     """
     Bjerrum parameters class
 
@@ -123,7 +140,7 @@ class StateType(Enum):
     YIELD_STRESS = "yield_stress"
 
 
-class IsotacheParameters(BaseModel):
+class IsotacheParameters(SoilBaseModel):
     precon_isotache_type: Optional[StateType] = None
     reloading_swelling_constant_a: Optional[
         Union[float, StochasticParameter]
@@ -136,7 +153,7 @@ class IsotacheParameters(BaseModel):
     ] = StochasticParameter()  # SoilStdSecCompRate
 
 
-class KoppejanParameters(BaseModel):
+class KoppejanParameters(SoilBaseModel):
     precon_koppejan_type: Optional[StateType] = None
     preconsolidation_pressure: Optional[
         Union[float, StochasticParameter]
@@ -156,7 +173,7 @@ class StorageTypes(IntEnum):
     strain_dependent_permeability = 2
 
 
-class StorageParameters(BaseModel):
+class StorageParameters(SoilBaseModel):
     vertical_permeability: Optional[
         Union[float, StochasticParameter]
     ] = StochasticParameter()
@@ -175,7 +192,7 @@ class StorageParameters(BaseModel):
     ] = StochasticParameter()
 
 
-class SoilWeightParameters(BaseModel):
+class SoilWeightParameters(SoilBaseModel):
     saturated_weight: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     unsaturated_weight: Optional[
         Union[float, StochasticParameter]
@@ -187,7 +204,7 @@ class GrainType(IntEnum):
     COARSE = 1
 
 
-class SoilClassificationParameters(BaseModel):
+class SoilClassificationParameters(SoilBaseModel):
     """
     Soil classification class
     """
@@ -205,7 +222,7 @@ class SoilClassificationParameters(BaseModel):
     ] = GrainType.FINE  # TODO this must refer to a intenum class
 
 
-class SoilStiffnessParameters(BaseModel):
+class SoilStiffnessParameters(SoilBaseModel):
     emod_menard: Optional[float] = None
 
 
@@ -220,7 +237,7 @@ class LambdaType(IntEnum):
     KOTTER = 2
 
 
-class SubgradeReactionParameters(BaseModel):
+class SubgradeReactionParameters(SoilBaseModel):
     modulus_subgrade_reaction_type: Optional[ModulusSubgradeReaction] = None
     lambda_type: Optional[LambdaType] = None
     tangent_secant_1: Optional[float] = None
@@ -249,7 +266,7 @@ class EarthPressureCoefficientsType(IntEnum):
     BRINCHHANSEN = 1
 
 
-class EarthPressureCoefficients(BaseModel):
+class EarthPressureCoefficients(SoilBaseModel):
     earth_pressure_coefficients_type: Optional[
         EarthPressureCoefficientsType
     ] = EarthPressureCoefficientsType.BRINCHHANSEN
@@ -264,7 +281,7 @@ class HorizontalBehaviourType(IntEnum):
     Foundation = 3
 
 
-class HorizontalBehaviour(BaseModel):
+class HorizontalBehaviour(SoilBaseModel):
     """
     Horizontal behaviour class
     """
@@ -274,7 +291,7 @@ class HorizontalBehaviour(BaseModel):
     soil_default_elasticity: Optional[bool] = None
 
 
-class ConeResistance(BaseModel):
+class ConeResistance(SoilBaseModel):
     """
     Cone resistance class
     """
@@ -283,14 +300,14 @@ class ConeResistance(BaseModel):
     max_cone_resistance: Optional[float] = None
 
 
-class StatePoint(BaseModel):
+class StatePoint(SoilBaseModel):
     state_point_id: Optional[str] = None
     state_layer_id: Optional[str] = None
     state_point_type: Optional[StateType] = None
     state_point_is_probabilistic: Optional[bool] = None
 
 
-class StateLine(BaseModel):
+class StateLine(SoilBaseModel):
     """
     TODO Decide if we want to keep state in soil class
     TODO decide if we want cross-dependency to geometry class
@@ -299,7 +316,7 @@ class StateLine(BaseModel):
     state_line_points: Optional[List[Point]]
 
 
-class SoilState(BaseModel):
+class SoilState(SoilBaseModel):
     use_equivalent_age: Optional[bool] = None
     equivalent_age: Optional[float] = None
     state_points: Optional[StatePoint] = None
@@ -321,11 +338,8 @@ class SoilType(IntEnum):
     SANDY_LOAM = 5
 
 
-class Soil(BaseModel):
+class Soil(SoilBaseModel):
     """Soil Material."""
-
-    class Config:
-        extra = "forbid"
 
     id: Optional[str] = None
     name: Optional[str] = None

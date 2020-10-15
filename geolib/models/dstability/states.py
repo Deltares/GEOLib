@@ -40,7 +40,12 @@ class DStabilityStress(DStabilityObject):
     state_type: StateType = StateType.POP
 
     def _to_internal_datastructure(self) -> PersistableStress:
-        data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}
+        data = {
+            **{
+                snake_to_camel(name): value
+                for name, value in self.dict(exclude={"stochastic_parameter"}).items()
+            }
+        }
         return PersistableStress(**data)
 
 
