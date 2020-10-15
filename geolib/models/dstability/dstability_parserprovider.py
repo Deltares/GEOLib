@@ -1,17 +1,15 @@
-from os import scandir, path
-from typing import List, _GenericAlias
-from typing import get_type_hints, Type, Tuple
+from os import path, scandir
+from typing import List, Tuple, Type, _GenericAlias, get_type_hints
+from zipfile import ZipFile
 
 from pydantic import DirectoryPath, FilePath
+from zipp import Path
 
+from geolib.logger import logger
 from geolib.models.parsers import BaseParser, BaseParserProvider
-
-from .internal import BaseModelStructure, DStabilityStructure
 from geolib.models.utils import get_filtered_type_hints
 
-from zipp import Path
-from zipfile import ZipFile
-import logging
+from .internal import BaseModelStructure, DStabilityStructure
 
 
 class DStabilityParser(BaseParser):
@@ -62,10 +60,10 @@ class DStabilityParser(BaseParser):
             if fieldtype.structure_name() in file.name:
                 out.append(fieldtype.parse_raw(file.open().read()))
             else:
-                logging.warning(f"Didn't match {fieldtype} for {file}")
+                logger.debug(f"Didn't match {fieldtype} for {file}")
 
         if len(out) == 0:
-            logging.warning(f"Couldn't find {fieldtype} file(s) at {folder}")
+            logger.debug(f"Couldn't find {fieldtype} file(s) at {folder}")
 
         return out
 

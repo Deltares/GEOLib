@@ -7,54 +7,55 @@ import pytest
 from teamcity import is_running_under_teamcity
 
 from geolib.errors import CalculationError
-from geolib.models import BaseModel
-from geolib.models import DFoundationsModel
+from geolib.geometry.one import Point
+from geolib.models import BaseModel, DFoundationsModel
+from geolib.models.dfoundations.dfoundations_model import (
+    BearingPilesModel,
+    CalculationOptions,
+    TensionPilesModel,
+)
+from geolib.models.dfoundations.internal import (
+    CalculationOptions as InternalCalculationOptions,
+)
 from geolib.models.dfoundations.internal import (
     DFoundationsDumpStructure,
     DFoundationsStructure,
     LoadSettlementCurve,
-    SubCalculationType,
-    ModelTypeEnum,
     MainCalculationType,
-    CalculationOptions as InternalCalculationOptions,
+    ModelTypeEnum,
+    SubCalculationType,
 )
-from geolib.models.dfoundations.dfoundations_model import (
-    BearingPilesModel,
-    TensionPilesModel,
-    CalculationOptions,
-)
-from geolib.models.internal import Bool
-from geolib.geometry.one import Point
 from geolib.models.dfoundations.piles import (
-    BearingRoundPile,
-    BearingRectangularPile,
-    BearingRoundPileWithEnlargedBase,
-    BearingRectangularPileWithEnlargedBase,
-    BearingRoundTaperedPile,
-    BearingRoundHollowPileWithClosedBase,
-    BearingRoundPileWithLostTip,
-    BearingRoundPileWithInSituFormedBase,
-    BearingSection,
-    BearingRoundOpenEndedHollowPile,
-    BearingHShapedPile,
     BasePileType,
     BasePileTypeForClayLoamPeat,
+    BearingHShapedPile,
     BearingPileLocation,
-    TensionRoundPile,
-    TensionRectangularPile,
-    TensionRoundPileWithEnlargedBase,
-    TensionRectangularPileWithEnlargedBase,
-    TensionRoundTaperedPile,
-    TensionRoundHollowPileWithClosedBase,
-    TensionRoundPileWithLostTip,
-    TensionRoundPileWithInSituFormedBase,
-    TensionSection,
-    TensionRoundOpenEndedHollowPile,
+    BearingRectangularPile,
+    BearingRectangularPileWithEnlargedBase,
+    BearingRoundHollowPileWithClosedBase,
+    BearingRoundOpenEndedHollowPile,
+    BearingRoundPile,
+    BearingRoundPileWithEnlargedBase,
+    BearingRoundPileWithInSituFormedBase,
+    BearingRoundPileWithLostTip,
+    BearingRoundTaperedPile,
+    BearingSection,
     TensionHShapedPile,
     TensionPileLocation,
+    TensionRectangularPile,
+    TensionRectangularPileWithEnlargedBase,
+    TensionRoundHollowPileWithClosedBase,
+    TensionRoundOpenEndedHollowPile,
+    TensionRoundPile,
+    TensionRoundPileWithEnlargedBase,
+    TensionRoundPileWithInSituFormedBase,
+    TensionRoundPileWithLostTip,
+    TensionRoundTaperedPile,
+    TensionSection,
 )
-from geolib.models.dfoundations.profiles import CPT, Profile, Excavation
-from geolib.soils import Soil, MohrCoulombParameters, SoilType
+from geolib.models.dfoundations.profiles import CPT, Excavation, Profile
+from geolib.models.internal import Bool
+from geolib.soils import MohrCoulombParameters, Soil, SoilType
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -235,11 +236,23 @@ class TestDFoundationsModel:
         df.add_soil(sandy_loam_and_gravel)
 
         # 4. Verify final expectations.
-        assert df.datastructure.input_data.soil_collection.soil[-2].soilsoiltype == SoilType.GRAVEL
-        assert df.datastructure.input_data.soil_collection.soil[-2].soilbelgiansoiltype == SoilType.GRAVEL
+        assert (
+            df.datastructure.input_data.soil_collection.soil[-2].soilsoiltype
+            == SoilType.GRAVEL
+        )
+        assert (
+            df.datastructure.input_data.soil_collection.soil[-2].soilbelgiansoiltype
+            == SoilType.GRAVEL
+        )
 
-        assert df.datastructure.input_data.soil_collection.soil[-1].soilsoiltype == SoilType.SANDY_LOAM
-        assert df.datastructure.input_data.soil_collection.soil[-1].soilbelgiansoiltype == SoilType.GRAVEL
+        assert (
+            df.datastructure.input_data.soil_collection.soil[-1].soilsoiltype
+            == SoilType.SANDY_LOAM
+        )
+        assert (
+            df.datastructure.input_data.soil_collection.soil[-1].soilbelgiansoiltype
+            == SoilType.GRAVEL
+        )
 
     @pytest.fixture
     def setup_profile(self):

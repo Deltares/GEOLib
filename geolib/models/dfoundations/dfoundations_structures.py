@@ -1,11 +1,13 @@
 from __future__ import annotations
-from typing import Dict, Any, Tuple, List
+
 import re
+from typing import Any, Dict, List, Tuple
+
 from geolib.models.dseries_parser import (
-    DSerieParser,
-    DSeriesStructure,
-    DSeriesInlineProperties,
     DSerieListGroupNextStructure,
+    DSerieParser,
+    DSeriesInlineProperties,
+    DSeriesStructure,
     get_line_property_key_value,
     get_line_property_value,
 )

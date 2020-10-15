@@ -1,7 +1,9 @@
 from typing import Optional
+
 from pydantic import BaseModel as DataModel
-from .settings import DistributionType
+
 from .internal import WaterLevel as InternalWaterLevel
+from .settings import DistributionType
 
 
 class WaterLevel(DataModel):

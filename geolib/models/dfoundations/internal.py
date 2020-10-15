@@ -1,32 +1,33 @@
-import logging
 from enum import Enum, IntEnum
 from inspect import cleandoc
-from typing import Any, Dict, List, Optional, Tuple, Union, Type
+from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import BaseModel as DataClass
-from pydantic.types import PositiveInt, confloat, constr, confloat, conint
+from pydantic.types import PositiveInt, confloat, conint, constr
 
+from geolib.logger import logger
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
     DSerieListStructure,
     DSerieMatrixStructure,
     DSerieOldTableStructure,
-    DSeriesTreeStructure,
-    DSeriesTreeStructureCollection,
+    DSeriesInlineMappedProperties,
+    DSeriesInlineProperties,
     DSeriesNoParseSubStructure,
     DSeriesStructure,
     DSeriesStructureCollection,
-    DSeriesInlineProperties,
-    DSeriesInlineMappedProperties,
+    DSeriesTreeStructure,
+    DSeriesTreeStructureCollection,
 )
-from .internal_soil import Soil
+from geolib.models.internal import Bool
+
 from .dfoundations_structures import (
-    DFoundationsTableWrapper,
-    DFoundationsInlineProperties,
     DFoundationsCPTCollectionWrapper,
     DFoundationsEnumStructure,
+    DFoundationsInlineProperties,
+    DFoundationsTableWrapper,
 )
+from .internal_soil import Soil
 
 DataClass.Config.arbitrary_types_allowed = True
 DataClass.Config.validate_assignment = True
@@ -545,7 +546,7 @@ class ModelType(DFoundationsInlineProperties):
         super().__init__(*args, **kwargs)
         # We only support Bearing & Tension Piles (NL)
         if self.model >= 2:
-            logging.error(f"Model Type {self.model} is unsupported!")
+            logger.error(f"Model Type {self.model} is unsupported!")
 
 
 class MainCalculationType(IntEnum):
@@ -594,6 +595,16 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 class Version(DSeriesInlineMappedProperties):
     soil: int = 1005
     d__foundations: int = 1015
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k, v in kwargs.items():
+            if self.__field_defaults__.get(k) != v:
+                logger.warning(
+                    """The version of the input file is unsupported.
+                Check the documentation on how to prevent this warning in the future."""
+                )
+                break
 
 
 class VersionExternal(DSeriesInlineMappedProperties):

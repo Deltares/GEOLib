@@ -1,10 +1,8 @@
 import pytest
-from teamcity import is_running_under_teamcity
-from geolib.soils import (
-    Soil,
-    MohrCoulombParameters,
-)
 from pydantic import ValidationError
+from teamcity import is_running_under_teamcity
+
+from geolib.soils import MohrCoulombParameters, Soil
 
 
 class TestNaNSoils:

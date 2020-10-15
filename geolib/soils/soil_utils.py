@@ -1,4 +1,5 @@
 from struct import pack, unpack_from
+
 from pydantic.color import Color as PydanticColor
 
 

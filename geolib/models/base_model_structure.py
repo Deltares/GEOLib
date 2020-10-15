@@ -1,9 +1,9 @@
 import abc
+from math import isfinite
 
 from pydantic import BaseModel as DataClass
 
 from .validators import BaseValidator
-from math import isfinite
 
 
 class BaseModelStructure(DataClass, abc.ABC):

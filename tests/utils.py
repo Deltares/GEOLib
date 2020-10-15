@@ -1,9 +1,10 @@
 import os
 import sys
-from typing import List
-from teamcity import is_running_under_teamcity
 from pathlib import Path
+from typing import List
+
 import pytest
+from teamcity import is_running_under_teamcity
 
 try:
     from pip import main as pipmain

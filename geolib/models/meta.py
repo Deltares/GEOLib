@@ -11,9 +11,11 @@ such as an compute endpoint.
 
 """
 from datetime import datetime
-from geolib import __version__ as version
-from pydantic import BaseSettings, AnyHttpUrl, DirectoryPath
 from pathlib import Path
+
+from pydantic import AnyHttpUrl, BaseSettings, DirectoryPath
+
+from geolib import __version__ as version
 
 CONSOLE_RUN_BATCH_FLAG = "/b"
 

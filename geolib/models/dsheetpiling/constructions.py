@@ -1,7 +1,9 @@
-from pydantic import BaseModel as DataModel
 from typing import Optional
-from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
+
+from pydantic import BaseModel as DataModel
+
 from geolib.models.dsheetpiling.internal import SheetPileElement
+from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
 
 class PileProperties(DataModel):

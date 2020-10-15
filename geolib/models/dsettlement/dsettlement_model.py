@@ -1,4 +1,3 @@
-import logging
 from datetime import timedelta
 from operator import attrgetter
 from pathlib import Path
@@ -7,41 +6,12 @@ from typing import List, Optional, Type, Union
 
 from pydantic import BaseModel as DataClass
 from pydantic import FilePath
-from pydantic.types import confloat, constr, PositiveInt, conint
+from pydantic.types import PositiveInt, confloat, conint, constr
 
 from geolib.geometry import Point
-from geolib.models import BaseModel, MetaData, BaseModelStructure
-from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
-from geolib.soils import Soil as Soil_Input
-from geolib.soils import DistributionType
-
-from .drains import VerticalDrain
-from .dsettlement_parserprovider import DSettlementParserProvider
-from .internal import (
-    Boundary,
-    Curve,
-    DSeriePoint,
-    DSettlementStructure,
-    DSettlementOutputStructure,
-    Layer,
-    Layers,
-    NonUniformLoad,
-    NonUniformLoads,
-    OtherLoads,
-    PointForLoad,
-    Points,
-    ResidualTimes,
-    Verticals,
-    PiezoLines,
-    Dimension,
-    Results,
-    StrainType,
-    SoilModel,
-    ConsolidationModel,
-    CalculationOptions,
-    Model,
-    WaterLoads,
-)
+from geolib.logger import logger
+from geolib.models.meta import MetaData
+from geolib.models import BaseModel, BaseModelStructure
 from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.loads import (
     CircularLoad,
@@ -50,9 +20,40 @@ from geolib.models.dsettlement.loads import (
     TrapeziformLoad,
     UniformLoad,
 )
-from geolib.models.dsettlement.serializer import DSettlementInputSerializer
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
+)
+from geolib.models.dsettlement.serializer import DSettlementInputSerializer
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
+from geolib.soils import DistributionType
+from geolib.soils import Soil as Soil_Input
+
+from .drains import VerticalDrain
+from .dsettlement_parserprovider import DSettlementParserProvider
+from .internal import (
+    Boundary,
+    CalculationOptions,
+    ConsolidationModel,
+    Curve,
+    Dimension,
+    DSeriePoint,
+    DSettlementOutputStructure,
+    DSettlementStructure,
+    Layer,
+    Layers,
+    Model,
+    NonUniformLoad,
+    NonUniformLoads,
+    OtherLoads,
+    PiezoLines,
+    PointForLoad,
+    Points,
+    ResidualTimes,
+    Results,
+    SoilModel,
+    StrainType,
+    Verticals,
+    WaterLoads,
 )
 
 DataClass.Config.validate_assignment = True
@@ -133,11 +134,11 @@ class DSettlementModel(BaseModel):
             Model
         """
         if isinstance(self.datastructure.calculation_options, str):
-            logging.warning("Calculation options are overwritten")
+            logger.warning("Calculation options are overwritten")
             self.datastructure.calculation_options = CalculationOptions()
 
         if isinstance(self.datastructure.model, str):
-            logging.warning("Model options are overwritten")
+            logger.warning("Model options are overwritten")
             self.datastructure.model = Model()
 
         model_options = self.datastructure.model
@@ -196,11 +197,11 @@ class DSettlementModel(BaseModel):
             calculation options
         """
         if isinstance(self.datastructure.calculation_options, str):
-            logging.warning("Calculation options are overwritten")
+            logger.warning("Calculation options are overwritten")
             self.datastructure.calculation_options = CalculationOptions()
 
         if isinstance(self.datastructure.model, str):
-            logging.warning("Model options are overwritten")
+            logger.warning("Model options are overwritten")
             self.datastructure.model = Model()
 
         calculation_options = self.datastructure.calculation_options.dict()
@@ -391,7 +392,7 @@ class DSettlementModel(BaseModel):
     ) -> None:
         internal_other_load = other_load._to_internal(time, point)
         if isinstance(self.other_loads, str):
-            logging.warning("Replacing unparsed OtherLoads!")
+            logger.warning("Replacing unparsed OtherLoads!")
             self.datastructure.other_loads = OtherLoads()
         self.other_loads.add_load(name, internal_other_load)
 
@@ -433,7 +434,7 @@ class DSettlementModel(BaseModel):
         )
 
         if isinstance(self.non_uniform_loads, str):
-            logging.warning("Replacing unparsed NonUniformLoads!")
+            logger.warning("Replacing unparsed NonUniformLoads!")
             self.datastructure.non__uniform_loads = NonUniformLoads()
         self.non_uniform_loads.add_load(name, non_uniform_load)
 
@@ -443,7 +444,7 @@ class DSettlementModel(BaseModel):
         Edit the head lines for each layer with `create layer`.
         """
         if isinstance(self.datastructure.water_loads, str):
-            logging.warning("Replacing unparsed [WATER LOADS]!")
+            logger.warning("Replacing unparsed [WATER LOADS]!")
             self.datastructure.water_loads = WaterLoads()
         headlines = self.datastructure.get_headlines_for_layers()
         self.datastructure.water_loads.add_waterload(

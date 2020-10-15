@@ -1,27 +1,23 @@
+from abc import ABCMeta, abstractmethod
+from typing import Optional
+
 from pydantic import BaseModel as DataModel
-from pydantic import constr, conlist, validator
+from pydantic import conlist, constr, validator
 
 from geolib.geometry import Point
 
-from .internal import (
-    Moment as InternalMoment,
-    HorizontalLineLoad as InternalHorizontalLineLoad,
-    SurchargeLoad as InternalSurchargeLoad,
-    SurchargePoint as InternalSurchargePoint,
-    UniformLoad as InternalUniformLoad,
-)
+from .internal import HorizontalLineLoad as HorizontalLineLoadInternal
+from .internal import Moment as MomentInternal
+from .internal import NormalForce as NormalForceInternal
+from .internal import SurchargeLoad as InternalSurchargeLoad
+from .internal import SurchargePoint as InternalSurchargePoint
+from .internal import UniformLoad as InternalUniformLoad
 from .settings import (
     DistributionType,
     LoadTypeFavourableUnfavourable,
     LoadTypeFavourableUnfavourableMoment,
     LoadTypePermanentVariable,
 )
-from typing import Optional
-from abc import ABCMeta, abstractmethod
-from .internal import NormalForce as NormalForceInternal
-from .internal import HorizontalLineLoad as HorizontalLineLoadInternal
-from .internal import Moment as MomentInternal
-from pydantic import constr
 
 
 class VerificationLoadSettingsHorizontalLineLoad(DataModel):

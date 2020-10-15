@@ -1,10 +1,12 @@
+from typing import Any, Dict, List
+
 import pytest
-from typing import List, Any, Dict
-from geolib.models.dsettlement.dsettlement_structures import (
-    DSerieRepeatedTableStructure,
-    ComplexVerticalSubstructure,
-)
+
 from geolib.models.dseries_parser import DSeriesRepeatedGroupedProperties
+from geolib.models.dsettlement.dsettlement_structures import (
+    ComplexVerticalSubstructure,
+    DSerieRepeatedTableStructure,
+)
 
 
 class TestDSerieRepeatedTableStructure:

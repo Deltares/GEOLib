@@ -7,13 +7,13 @@ from itertools import chain
 from math import isfinite
 from typing import Dict, Generator, List, Optional, Tuple, Union
 
+from pydantic import ValidationError, confloat, conlist, root_validator, validator
+
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.soils import Soil, ShearStrengthModelTypePhreaticLevel
+from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil
 from geolib.utils import camel_to_snake, snake_to_camel
-
-from pydantic import ValidationError, confloat, conlist, root_validator, validator
 
 from .dstability_validator import DStabilityValidator
 from .utils import children

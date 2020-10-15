@@ -5,7 +5,6 @@ from typing import List, Type
 
 import pytest
 from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils, only_teamcity
 
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
@@ -79,6 +78,7 @@ from geolib.models.dsheetpiling.supports import (
 from geolib.models.dsheetpiling.surface import Surface
 from geolib.models.dsheetpiling.water_level import WaterLevel
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
+from tests.utils import TestUtils, only_teamcity
 
 
 @pytest.fixture
@@ -503,7 +503,10 @@ class TestDsheetPilingModel:
 
         # 4. Verify final expectations.
         assert len(ds.datastructure.input_data.soil_collection.soil) == 1
-        assert ds.datastructure.input_data.soil_collection.soil[0].soilsoiltype == SoilType.GRAVEL
+        assert (
+            ds.datastructure.input_data.soil_collection.soil[0].soilsoiltype
+            == SoilType.GRAVEL
+        )
 
     @pytest.mark.parametrize(
         "testload",

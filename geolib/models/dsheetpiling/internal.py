@@ -1,4 +1,3 @@
-import logging
 import warnings
 from abc import ABCMeta
 from enum import Enum, IntEnum
@@ -6,21 +5,22 @@ from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 from pydantic import BaseModel as DataClass
-from pydantic import PositiveFloat, confloat, conint, constr, conlist
+from pydantic import PositiveFloat, confloat, conint, conlist, constr
 
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
+from geolib.logger import logger
 from geolib.models.dseries_parser import (
-    DSeriesStructure,
-    DSeriesStructureCollection,
-    DSeriesNoParseSubStructure,
     DSerieListStructure,
     DSeriesInlineMappedProperties,
     DSeriesInlineReversedProperties,
-    DSeriesUnmappedNameProperties,
-    DSeriesTableStructure,
-    DSeriesWrappedTableStructure,
+    DSeriesNoParseSubStructure,
     DSeriesRepeatedGroupedProperties,
+    DSeriesStructure,
+    DSeriesStructureCollection,
+    DSeriesTableStructure,
+    DSeriesUnmappedNameProperties,
+    DSeriesWrappedTableStructure,
 )
 
 from .calculation_options import (
@@ -30,9 +30,9 @@ from .dsheetpiling_structures import (
     DSeriesPilingDumpParserStructure,
     DSeriesPilingParserStructure,
     DSheetpilingSurchargeLoad,
-    DSheetpilingWithNumberOfRowsTable,
     DSheetpilingTableEntry,
     DSheetpilingUnwrappedTable,
+    DSheetpilingWithNumberOfRowsTable,
 )
 from .dsheetpiling_validator import DSheetPilingValidator
 from .internal_partial_factors import (
@@ -59,29 +59,29 @@ from .settings import (
     DesignPartialFactorSet,
     DesignType,
     DistributionType,
+    EarthPressureCoefficients,
     EuroCodePartialFactorSet,
+    GrainType,
+    HorizontalBehaviorType,
+    LambdaType,
     LateralEarthPressureMethod,
     LateralEarthPressureMethodStage,
+    LoadTypeFavourableUnfavourable,
+    LoadTypeFavourableUnfavourableMoment,
+    LoadTypePermanentVariable,
     ModelType,
+    ModulusReactionType,
+    ModulusSubgradeReaction,
     PartialFactorCalculationType,
     PartialFactorSetEC7NADB,
     PartialFactorSetEC7NADNL,
     PassiveSide,
     SheetPilingElementMaterialType,
     Side,
-    SoilTypeModulusSubgradeReaction,
-    GrainType,
-    ModulusSubgradeReaction,
-    EarthPressureCoefficients,
     SinglePileLoadOptions,
+    SoilTypeModulusSubgradeReaction,
     VerifyEurocodePartialFactorSet,
     VerifyType,
-    LambdaType,
-    HorizontalBehaviorType,
-    ModulusReactionType,
-    LoadTypeFavourableUnfavourable,
-    LoadTypePermanentVariable,
-    LoadTypeFavourableUnfavourableMoment,
 )
 
 _DEFAULT_WATER_LEVEL_NAME: str = "New Water Level"
@@ -116,11 +116,13 @@ class Version(DSeriesInlineMappedProperties):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if (
-            self.soil < _DEFAULT_SOIL_VERSION
-            or self.d__sheet_piling < _DEFAULT_SHEETPILING_VERSION
-        ):
-            logging.warning(f"This version of input files are unsupported.")
+        for k, v in kwargs.items():
+            if self.__field_defaults__.get(k) != v:
+                logger.warning(
+                    """The version of the input file is unsupported.
+                Check the documentation on how to prevent this warning in the future."""
+                )
+                break
 
 
 class VersionExternals(DSeriesInlineMappedProperties):

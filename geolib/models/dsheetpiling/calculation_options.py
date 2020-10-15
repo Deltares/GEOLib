@@ -1,18 +1,20 @@
-from .settings import (
-    CalculationType,
-    DesignType,
-    EuroCodePartialFactorSet,
-    PartialFactorSetEC7NADNL,
-    PartialFactorCalculationType,
-    PartialFactorSetEC7NADB,
-    DesignPartialFactorSet,
-    VerifyType,
-    VerifyEurocodePartialFactorSet,
-)
+from abc import ABCMeta, abstractmethod
+from typing import Optional, Union
+
 from pydantic import BaseModel as DataModel
 from pydantic.types import confloat, conint
-from typing import Union, Optional
-from abc import ABCMeta, abstractmethod
+
+from .settings import (
+    CalculationType,
+    DesignPartialFactorSet,
+    DesignType,
+    EuroCodePartialFactorSet,
+    PartialFactorCalculationType,
+    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADNL,
+    VerifyEurocodePartialFactorSet,
+    VerifyType,
+)
 
 
 class CalculationOptionsPerStage(DataModel):

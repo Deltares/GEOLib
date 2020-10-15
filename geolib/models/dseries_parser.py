@@ -1,11 +1,11 @@
 from __future__ import annotations
-from math import isfinite
+
 import inspect
-import logging
 import re
 import shlex
 from abc import abstractclassmethod, abstractmethod
 from itertools import groupby
+from math import isfinite
 from typing import (
     Dict,
     Iterable,
@@ -22,6 +22,7 @@ from pydantic import BaseModel as DataClass
 from pydantic import FilePath
 
 from geolib.errors import ParserError
+from geolib.logger import logger
 from geolib.models.base_model_structure import BaseModelStructure
 
 from .parsers import BaseParser
@@ -91,11 +92,11 @@ class DSeriesStructure(BaseModelStructure):
                     fieldtype, *_ = get_args(fieldtype)
 
                 if hasattr(fieldtype, "is_parseable") and fieldtype.is_parseable():
-                    logging.warning(f"Changed {field} to {fieldtype}")
+                    logger.debug(f"Changed {field} to {fieldtype}")
                     kwargs[field] = fieldtype.parse_text(body)
                 else:
                     if DataClass in fieldtype.__mro__:
-                        logging.warning(f"Can't parse {fieldtype} for {field} yet")
+                        logger.debug(f"Can't parse {fieldtype} for {field} yet")
 
             # If the body is a List[string], we should check
             # whether we can parse it further.
@@ -117,22 +118,22 @@ class DSeriesStructure(BaseModelStructure):
 
                     # Check whether we can parse and if so, parse the strings
                     if hasattr(fieldtype, "is_parseable") and fieldtype.is_parseable():
-                        logging.warning(f"Changed {field} to multiple {fieldtype}")
+                        logger.debug(f"Changed {field} to multiple {fieldtype}")
                         kwargs[field] = [fieldtype.parse_text(item) for item in body]
                     else:
                         if DataClass in fieldtype.__mro__:
-                            logging.warning(f"Can't parse {fieldtype} for {field} yet")
+                            logger.debug(f"Can't parse {fieldtype} for {field} yet")
 
                 else:
                     # Check whether we can parse and if so, parse the strings
                     if hasattr(fieldtype, "is_parseable") and fieldtype.is_parseable():
-                        logging.warning(
+                        logger.debug(
                             f"Changed {field} to single {fieldtype} for list of str."
                         )
                         kwargs[field] = fieldtype.parse_text(body)
                     else:
                         if DataClass in fieldtype.__mro__:
-                            logging.warning(f"Can't parse {fieldtype} for {field} yet")
+                            logger.debug(f"Can't parse {fieldtype} for {field} yet")
 
             else:
                 # Ignore other fields
@@ -767,7 +768,7 @@ class DSeriesRepeatedGroupedProperties(DSeriesStructure):
         Returns:
             Dict[str, str]: Returns a dictionary of inline properties.
         """
-        logging.warning(
+        logger.debug(
             "The following properties were not mapped because no key was found for them:"
             + "\n".join(inline_properties)
         )
@@ -811,7 +812,7 @@ class DSeriesRepeatedGroupsWithInlineMappedProperties(DSeriesRepeatedGroupedProp
                 value = unmapped.strip()
 
             if key in result_dict:
-                logging.warning(
+                logger.debug(
                     f"Key {key} already mapped, value {value} will not be mapped."
                 )
                 continue
@@ -1124,7 +1125,7 @@ class DSerieParser(BaseParser):
         raise NotImplementedError("Implement in derived classes.")
 
     def parse(self, filename: FilePath) -> DSeriesStructure:
-        logging.warning(f"Parsing {filename}")
+        logger.debug(f"Parsing {filename}")
 
         with open(filename) as io:
             datastructure = self.dserie_structure.parse_text(io.read())

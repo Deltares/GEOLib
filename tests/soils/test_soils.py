@@ -1,12 +1,13 @@
 import pytest
-from teamcity import is_running_under_teamcity
-from geolib.soils import (
-    Soil,
-    MohrCoulombParameters,
-    StochasticParameter,
-    SoilClassificationParameters,
-)
 from pydantic import ValidationError
+from teamcity import is_running_under_teamcity
+
+from geolib.soils import (
+    MohrCoulombParameters,
+    Soil,
+    SoilClassificationParameters,
+    StochasticParameter,
+)
 
 
 class TestSoils:

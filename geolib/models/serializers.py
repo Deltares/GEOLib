@@ -1,6 +1,7 @@
+from typing import Any, Dict
+
 from pydantic import BaseModel as DataClass
 from pydantic import FilePath
-from typing import Dict, Any
 
 
 class BaseSerializer(DataClass):

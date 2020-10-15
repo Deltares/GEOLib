@@ -1,10 +1,9 @@
-from typing import Optional
 from enum import Enum, IntEnum
+from typing import Optional
+
 from geolib.models.dseries_parser import DSeriesUnmappedNameProperties
 from geolib.models.internal import Bool
-from geolib.soils import DistributionType, HorizontalBehaviourType
-from geolib.soils import StorageTypes
-from enum import IntEnum
+from geolib.soils import DistributionType, HorizontalBehaviourType, StorageTypes
 
 
 class PreconType(IntEnum):
@@ -127,4 +126,3 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soilhorizontalbehaviourtype: HorizontalBehaviourType = HorizontalBehaviourType.Elastic
     soilelasticity: float = 1000
     soildefaultelasticity: Bool = Bool.TRUE
-

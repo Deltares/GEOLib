@@ -1,17 +1,19 @@
 from __future__ import annotations
-import logging
-from typing import Dict, Any, Tuple, List
+
+from typing import Any, Dict, List, Tuple
+
+from geolib.logger import logger
 from geolib.models.dseries_parser import (
-    DSerieParser,
-    DSeriesStructure,
-    DSeriesInlineProperties,
     DSerieListGroupNextStructure,
+    DSerieParser,
+    DSeriesInlineProperties,
     DSeriesRepeatedGroupedProperties,
-    strip_line_first_element,
-    split_line_elements,
+    DSeriesStructure,
     get_line_property_key_value,
     get_line_property_value,
     make_key,
+    split_line_elements,
+    strip_line_first_element,
 )
 
 
@@ -34,7 +36,7 @@ class ComplexVerticalSubstructure(DSeriesStructure):
                 continue
             else:
                 value = strip_line_first_element(largs.pop(0))
-                logging.warning(f"Setting {field}: {fieldtype} to {value}")
+                logger.debug(f"Setting {field}: {fieldtype} to {value}")
                 kwargs[field] = value
 
         if len(largs) > 0:
@@ -69,7 +71,7 @@ class ComplexVerticalSubstructure(DSeriesStructure):
 
                 # new group
                 if currentkey == "":
-                    logging.warning(f"Found new {key}")
+                    logger.debug(f"Found new {key}")
                     currentkey = key
                     if len(data) > 0:
                         args.extend(data)
@@ -90,13 +92,13 @@ class ComplexVerticalSubstructure(DSeriesStructure):
 
                     data = []
 
-                    logging.warning(
+                    logger.debug(
                         f"Duplicate key {key} at line {i} without first encountered and END OF."
                     )
 
                 # end of current group
                 elif key == "end_of_" + currentkey:
-                    logging.warning(f"Found {key}")
+                    logger.debug(f"Found {key}")
                     # If key already exists, this is a group -> List
                     if currentkey in parsed_dict:
                         parsed_dict[currentkey] = parsed_dict[currentkey] + [

@@ -1,12 +1,13 @@
-import pydantic.json
-from geolib import DFoundationsModel, DSettlementModel, BaseModelList
-from geolib.service.main import app
-from fastapi.testclient import TestClient
-from requests.auth import HTTPBasicAuth
-import pytest
-from tests.utils import only_teamcity, TestUtils
 from pathlib import Path, PosixPath, WindowsPath
 
+import pydantic.json
+import pytest
+from fastapi.testclient import TestClient
+from requests.auth import HTTPBasicAuth
+
+from geolib import BaseModelList, DFoundationsModel, DSettlementModel
+from geolib.service.main import app
+from tests.utils import TestUtils, only_teamcity
 
 pydantic.json.ENCODERS_BY_TYPE[Path] = str
 pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str

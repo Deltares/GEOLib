@@ -1,6 +1,7 @@
-from pydantic import conint
-from pydantic import BaseModel as DataModel
 from enum import Enum, IntEnum
+
+from pydantic import BaseModel as DataModel
+from pydantic import conint
 
 
 class LateralEarthPressureMethodStage(IntEnum):
@@ -209,4 +210,3 @@ class LoadTypeFavourableUnfavourableMoment(IntEnum):
 class LoadTypePermanentVariable(IntEnum):
     PERMANENT = 0
     VARIABLE = 1
-

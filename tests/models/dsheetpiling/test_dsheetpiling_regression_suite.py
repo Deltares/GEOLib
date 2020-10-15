@@ -1,8 +1,10 @@
+from pathlib import Path
+
 import pytest
 from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils, only_teamcity
+
 from geolib.models import DSheetPilingModel
-from pathlib import Path
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestDSheetPilingRegressionSuite:

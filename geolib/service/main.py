@@ -2,23 +2,24 @@ import secrets
 import shutil
 import uuid
 from pathlib import Path, PosixPath, WindowsPath
-from typing import Dict, List, Union, Type
+from typing import Dict, List, Type, Union
 
 import pydantic.json
-from pydantic import conlist, ValidationError
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from pydantic import ValidationError, conlist
 from starlette import status
 from starlette.responses import JSONResponse
 
+from geolib.errors import CalculationError
 from geolib.models import (
+    BaseModel,
+    BaseModelList,
     DFoundationsModel,
+    DSettlementModel,
     DSheetPilingModel,
     DStabilityModel,
-    DSettlementModel,
 )
-from geolib.errors import CalculationError
-from geolib.models import BaseModel, BaseModelList
 
 from .settings import Settings
 

@@ -2,18 +2,13 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel as DataClass
 
-from geolib.models.internal import Bool
 from geolib.geometry.one import Point
+from geolib.models.internal import Bool
 
-from .internal import (
-    ReductionCoreResistanceEnum,
-    Profile as InternalProfile,
-    CPT as InternalCPT,
-    Layer,
-    ExcavationType,
-    TimeOrderType,
-    InterpretationType,
-)
+from .internal import CPT as InternalCPT
+from .internal import ExcavationType, InterpretationType, Layer
+from .internal import Profile as InternalProfile
+from .internal import ReductionCoreResistanceEnum, TimeOrderType
 
 
 class CPT(DataClass):

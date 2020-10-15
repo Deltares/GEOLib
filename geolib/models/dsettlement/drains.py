@@ -1,9 +1,11 @@
-from datetime import timedelta
 from abc import ABCMeta, abstractmethod
+from datetime import timedelta
+from typing import List, Optional, Union
+
 from pydantic import BaseModel
-from typing import Optional, List, Union
+
+from .drain_types import DrainGridType, DrainSchedule, DrainType
 from .internal import VerticalDrain as vd
-from .drain_types import DrainType, DrainGridType, DrainSchedule
 
 
 class ScheduleValues(BaseModel, metaclass=ABCMeta):
@@ -132,4 +134,3 @@ class VerticalDrain(BaseModel):
         )
         internal_vertical_drains = self.schedule._to_internal(internal_vertical_drains)
         return internal_vertical_drains
-

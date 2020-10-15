@@ -1,13 +1,15 @@
+from typing import Any, Dict, List
+
 import pytest
-from typing import List, Any, Dict
+
+from geolib.errors import ParserError
+from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.dsheetpiling_structures import (
     DSheetpilingSurchargeLoad,
-    DSheetpilingWithNumberOfRowsTable,
     DSheetpilingTableEntry,
     DSheetpilingUnwrappedTable,
+    DSheetpilingWithNumberOfRowsTable,
 )
-from geolib.models.dseries_parser import DSeriesStructure
-from geolib.errors import ParserError
 
 
 class TestDSheetpilingSurchargeLoad:

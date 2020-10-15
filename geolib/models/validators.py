@@ -1,6 +1,3 @@
-import logging
-
-
 class BaseValidator:
     def __init__(self, ds):
         self.ds = ds

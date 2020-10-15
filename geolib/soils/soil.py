@@ -1,11 +1,12 @@
 from enum import Enum, IntEnum
-from typing import List, Optional, Union
 from math import isfinite
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, validator
 from pydantic.error_wrappers import ValidationError
 
 from geolib.geometry.one import Point
+
 from .soil_utils import Color
 
 

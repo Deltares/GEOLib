@@ -5,7 +5,6 @@ from pathlib import Path
 
 import pytest
 from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils, only_teamcity
 
 from geolib.geometry.one import Point
 from geolib.models import BaseModel, BaseModelStructure
@@ -35,6 +34,7 @@ from geolib.models.dstability.states import (
     DStabilityStress,
 )
 from geolib.soils import Soil
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestDStabilityModel:

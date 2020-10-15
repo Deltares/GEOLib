@@ -1,31 +1,32 @@
-import pytest
 from random import randint
 from typing import _GenericAlias
 
-from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementStructure
+import pytest
+
+from geolib.geometry.one import Point
 from geolib.models.dseries_parser import (
-    DSeriesTreeStructureCollection,
     DSeriesTreeStructure,
+    DSeriesTreeStructureCollection,
 )
+from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementStructure
 from geolib.models.dsettlement.internal import (
-    Curves,
-    Curve,
-    PiezoLines,
-    PiezoLine,
     Boundaries,
     Boundary,
-    Layers,
-    Layer,
-    GeometryData,
+    Curve,
+    Curves,
     DSeriePoint,
-    ProbabilisticData,
     DSettlementStructure,
+    GeometryData,
+    Layer,
+    Layers,
+    PiezoLine,
+    PiezoLines,
+    ProbabilisticData,
 )
-from geolib.models.utils import get_filtered_type_hints
-from geolib.geometry.one import Point
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
+from geolib.models.utils import get_filtered_type_hints
 
 
 def generate_structure_text(struct_id: int, properties: list) -> str:

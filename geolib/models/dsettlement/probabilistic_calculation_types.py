@@ -6,4 +6,3 @@ class ProbabilisticCalculationType(IntEnum):
     BandWidthOfSettlementsFOSM = 0
     ProbabilityOfFailureFORM = 1
     BandWidthAndProbabilityOfFailureMonteCarlo = 2
-

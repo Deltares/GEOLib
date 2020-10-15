@@ -1,11 +1,12 @@
-import pytest
 from typing import Dict, Optional
+
+import pytest
 
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.settings import (
-    PassiveSide,
     LateralEarthPressureMethod,
-    LateralEarthPressureMethodStage
+    LateralEarthPressureMethodStage,
+    PassiveSide,
 )
 
 
@@ -42,7 +43,7 @@ class TestStage:
             passive_side=PassiveSide.DSHEETPILING_DETERMINED,
             method_left=LateralEarthPressureMethodStage.KA_KO_KP,
             method_right=LateralEarthPressureMethodStage.KA_KO_KP,
-            pile_top_displacement=pile_top_displacement
+            pile_top_displacement=pile_top_displacement,
         )
 
         assert (
@@ -212,5 +213,5 @@ class TestStage:
                 passive_side=PassiveSide.DSHEETPILING_DETERMINED,
                 method_left=LateralEarthPressureMethodStage.KA_KO_KP,
                 method_right=LateralEarthPressureMethodStage.KA_KO_KP,
-                copy=True
+                copy=True,
             )

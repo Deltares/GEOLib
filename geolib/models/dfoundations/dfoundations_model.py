@@ -1,44 +1,44 @@
-import logging
 from enum import Enum
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import Type, Union, Optional, List
+from typing import List, Optional, Type, Union
 
-from pydantic import BaseModel as DataClass, confloat
-from pydantic import FilePath
+from pydantic import BaseModel as DataClass
+from pydantic import FilePath, confloat
 
 from geolib.geometry import Point
+from geolib.logger import logger
 from geolib.models import BaseModel, BaseModelStructure
 from geolib.models.internal import Bool
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 
 from .dfoundations_parserprovider import DFoundationsParserProvider
+from .internal import CalculationOptions as InternalModelOptions
+from .internal import CalculationType as InternalCalculationType
 from .internal import (
-    DFoundationsStructure,
-    DFoundationsDumpStructure,
-    DFoundationsDumpfileOutputStructure,
     CPTList,
-    PreliminaryDesign,
-    SoilCollection,
+    DFoundationsDumpfileOutputStructure,
+    DFoundationsDumpStructure,
+    DFoundationsStructure,
+    ModelTypeEnum,
     PositionsBearingPiles,
     PositionsTensionPiles,
-    CalculationOptions as InternalModelOptions,
-    ModelTypeEnum,
-    SubCalculationType as CalculationType,
-    CalculationType as InternalCalculationType,
+    PreliminaryDesign,
+    SoilCollection,
 )
-from .profiles import Profile
+from .internal import SubCalculationType as CalculationType
+from .internal_soil import Soil as InternalSoil
 from .piles import (
+    BearingPile,
+    BearingPileLocation,
     Pile,
     PileLocation,
-    BearingPile,
     TensionPile,
-    BearingPileLocation,
     TensionPileLocation,
 )
+from .profiles import Profile
 from .serializer import DFoundationsInputSerializer
-from .internal_soil import Soil as InternalSoil
 
 
 class ModelOptions(DataClass):
@@ -186,7 +186,7 @@ class DFoundationsModel(BaseModel):
 
         It is advised to only use this method once at the beginning of your workflow.
         """
-        logging.warning(
+        logger.warning(
             "Setting model, "
             "prior made modifications in the current D-Foundations model might be overwritten."
         )
@@ -236,7 +236,7 @@ class DFoundationsModel(BaseModel):
 
         # Automatically select all profiles for calculation
         if isinstance(self.datastructure.input_data.preliminary_design, str):
-            logging.warning("Overwriting unparsed calculation settings.")
+            logger.warning("Overwriting unparsed calculation settings.")
             self.datastructure.input_data.preliminary_design = PreliminaryDesign()
         self.datastructure.input_data.preliminary_design.profiles = list(
             range(len(self.profiles.profiles))
@@ -253,7 +253,7 @@ class DFoundationsModel(BaseModel):
             piles = self.tension_piles
             locations = self.tension_pile_locations
         else:
-            logging.warning(
+            logger.warning(
                 "Pile and Pile Location are mixed tension an bearing pile/location, "
                 "the pile and location is not added."
             )
@@ -272,7 +272,7 @@ class DFoundationsModel(BaseModel):
 
         # Enable Pile in calculation
         if isinstance(self.datastructure.input_data.preliminary_design, str):
-            logging.warning("Overwriting unparsed calculation settings.")
+            logger.warning("Overwriting unparsed calculation settings.")
             self.datastructure.input_data.preliminary_design = PreliminaryDesign()
         self.datastructure.input_data.preliminary_design.pile_types = list(
             range(len(piles))

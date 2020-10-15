@@ -3,18 +3,19 @@ This module handles the three types of reinforcements in DStability.
 """
 
 import abc
-from pydantic import BaseModel, NoneStr, confloat
 from typing import List, Tuple
 
+from pydantic import BaseModel, NoneStr, confloat
+
+from ...geometry.one import Point
+from ...utils import snake_to_camel
 from .internal import (
-    PersistableNail,
     PersistableForbiddenLine,
     PersistableGeotextile,
+    PersistableNail,
     PersistablePoint,
     PersistableStressAtDistance,
 )
-from ...utils import snake_to_camel
-from ...geometry.one import Point
 
 
 class DStabilityReinforcement(BaseModel, metaclass=abc.ABCMeta):

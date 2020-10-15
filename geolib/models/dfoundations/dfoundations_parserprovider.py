@@ -6,9 +6,9 @@ from geolib.models.dseries_parser import DSerieParser, DSeriesStructure
 from geolib.models.parsers import BaseParserProvider
 
 from .internal import (
+    DFoundationsDumpfileOutputStructure,
     DFoundationsDumpStructure,
     DFoundationsInputStructure,
-    DFoundationsDumpfileOutputStructure,
     DFoundationsStructure,
 )
 

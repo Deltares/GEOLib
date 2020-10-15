@@ -1,6 +1,6 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
-from typing import _GenericAlias, _SpecialForm, List, Type, Dict, Tuple, get_type_hints
 import collections
+from typing import Dict, List, Tuple, Type, _GenericAlias, _SpecialForm, get_type_hints
 
 
 def get_args(tp):

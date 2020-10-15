@@ -1,47 +1,46 @@
-import pytest
+import warnings
 from typing import Callable, List
+
+import pytest
+
+import geolib.models.dsheetpiling.settings as settings
+from geolib.geometry import Point
 from geolib.models.dseries_parser import DSeriesStructure
+from geolib.models.dsheetpiling.calculation_options import CalculationOptionsPerStage
+from geolib.models.dsheetpiling.constructions import Sheet, SheetPileProperties
 from geolib.models.dsheetpiling.internal import (
-    SheetPileElement,
-    SheetPiling,
-    DSheetPilingInputStructure,
-    CalculationOptions,
-    StageOptions,
-    UniformLoad,
-    UniformLoads,
-    SurchargePoint,
-    SurchargeLoad,
-    SurchargeLoads,
-    Resume,
-    BreukData,
+    Anchor,
     AnchorData,
-    Pressures,
-    SideOutput,
-    MomentsForcesDisplacements,
+    Anchors,
+    BaseVerificationStructureProperties,
+    BreukData,
+    CalculationOptions,
     DesignLengthCalculation,
     DesignLengthInfo,
     DesignSheetpileLength,
-    PointsOnSheetpile,
-    OutputConstructionStage,
+    DSheetPilingInputStructure,
     DSheetPilingOutputStructure,
-    VerifySheetpileData,
-    BaseVerificationStructureProperties,
-    VerifyAnchorForce,
     Model,
-    Anchor,
-    Anchors,
+    MomentsForcesDisplacements,
+    OutputConstructionStage,
+    PointsOnSheetpile,
+    Pressures,
+    Resume,
+    SheetPileElement,
+    SheetPiling,
+    SideOutput,
+    StageOptions,
     Strut,
     Struts,
+    SurchargeLoad,
+    SurchargeLoads,
+    SurchargePoint,
+    UniformLoad,
+    UniformLoads,
+    VerifyAnchorForce,
+    VerifySheetpileData,
 )
-from geolib.geometry import Point
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
-import warnings
-from geolib.models.dsheetpiling.constructions import (
-    Sheet,
-    SheetPileProperties,
-)
-import geolib.models.dsheetpiling.settings as settings
-from geolib.models.dsheetpiling.calculation_options import CalculationOptionsPerStage
 
 
 @pytest.fixture

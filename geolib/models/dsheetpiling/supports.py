@@ -1,13 +1,13 @@
-from pydantic import BaseModel as DataModel
 from enum import IntEnum
-from pydantic import PositiveFloat, constr, confloat
 from typing import Optional
+
+from pydantic import BaseModel as DataModel
+from pydantic import PositiveFloat, confloat, constr
+
+from .internal import Anchor as InternalAnchor
+from .internal import Strut as InternalStrut
+from .internal import Support as InternalSupport
 from .settings import Side
-from .internal import (
-    Anchor as InternalAnchor,
-    Strut as InternalStrut,
-    Support as InternalSupport,
-)
 
 
 class Anchor(DataModel):

@@ -1,14 +1,12 @@
 import os
+from pathlib import Path
 
 import pytest
-
-from geolib.models.base_model import BaseModel, BaseModelList
-from geolib.models.base_model import MetaData
-from geolib.models import DSettlementModel
-
-from tests.utils import TestUtils, only_teamcity
-from pathlib import Path
 from teamcity import is_running_under_teamcity
+
+from geolib.models import DSettlementModel
+from geolib.models.base_model import BaseModel, BaseModelList, MetaData
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestBaseModel:

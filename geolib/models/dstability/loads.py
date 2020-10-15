@@ -2,15 +2,17 @@
 This module handles the four types of loads in DStability.
 """
 import abc
-from pydantic import BaseModel, NoneStr, confloat, validator
 from typing import List, Optional
-from .internal import (
-    PersistableUniformLoad,
-    PersistableLineLoad,
-    PersistableConsolidation,
-    PersistablePoint,
-)
+
+from pydantic import BaseModel, NoneStr, confloat, validator
+
 from ...geometry.one import Point
+from .internal import (
+    PersistableConsolidation,
+    PersistableLineLoad,
+    PersistablePoint,
+    PersistableUniformLoad,
+)
 
 
 class DStabilityLoad(BaseModel):

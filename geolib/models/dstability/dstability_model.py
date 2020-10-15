@@ -2,7 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Type, Union, Dict, Set
+from typing import Dict, List, Optional, Set, Type, Union
 
 from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath, FilePath
@@ -11,27 +11,26 @@ from geolib.geometry import Point
 from geolib.models import BaseModel
 from geolib.soils import Soil
 
+from ...utils import camel_to_snake, snake_to_camel
+from .analysis import DStabilityAnalysisMethod
 from .dstability_parserprovider import DStabilityParserProvider
 from .internal import (
     AnalysisType,
     BishopSlipCircleResult,
     CalculationType,
-    DStabilityStructure,
     DStabilityResult,
+    DStabilityStructure,
+    PersistablePoint,
     SoilCollection,
     SpencerSlipPlaneResult,
+    Stage,
     UpliftVanSlipCircleResult,
     Waternet,
-    PersistablePoint,
-    Stage,
 )
-
-from .states import DStabilityStatePoint, DStabilityStateLinePoint
-from .loads import DStabilityLoad, Consolidation
+from .loads import Consolidation, DStabilityLoad
 from .reinforcements import DStabilityReinforcement
 from .serializer import DStabilityInputSerializer, DStabilityInputZipSerializer
-from .analysis import DStabilityAnalysisMethod
-from ...utils import snake_to_camel, camel_to_snake
+from .states import DStabilityStateLinePoint, DStabilityStatePoint
 
 
 class DStabilityCalculationType(Enum):

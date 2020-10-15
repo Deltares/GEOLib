@@ -6,11 +6,13 @@ D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 from typing import List
 
-from pydantic import BaseModel as DataModel, conlist, validator
-from .internal import SoilProfile as InternalSoilProfile
+from pydantic import BaseModel as DataModel
+from pydantic import conlist, validator
 
 from geolib.geometry.one import Point
 from geolib.soils import Soil
+
+from .internal import SoilProfile as InternalSoilProfile
 
 
 class CPT(DataModel):

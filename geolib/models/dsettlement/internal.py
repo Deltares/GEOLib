@@ -1,43 +1,44 @@
-import logging
 from enum import Enum, IntEnum
 from inspect import cleandoc
 from math import isclose
 from operator import attrgetter
-from typing import Dict, List, Optional, Union, Tuple, Any, Type
+from typing import Any, Dict, List, Optional, Tuple, Type, Union
+
 from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 
-from geolib.models.utils import get_required_class_field
-
-from geolib.soils import Soil, DistributionType, HorizontalBehaviourType
-from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.geometry.one import Point
+from geolib.logger import logger
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.models.dsettlement.internal_soil import SoilInternal
-from .drain_types import DrainType, DrainGridType, DrainSchedule
-from geolib.models.internal import Bool
 from geolib.models.dseries_parser import (
-    DSeriesInlineMappedProperties,
     DSerieListStructure,
     DSerieMatrixStructure,
+    DSerieOldTableStructure,
+    DSeriesInlineMappedProperties,
+    DSeriesMatrixTreeStructureCollection,
     DSeriesNoParseSubStructure,
-    DSeriesStructure,
     DSeriesRepeatedGroupedProperties,
+    DSeriesStructure,
     DSeriesStructureCollection,
+    DSeriesTableStructure,
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
-    DSeriesMatrixTreeStructureCollection,
-    DSeriesTableStructure,
-    DSerieOldTableStructure,
     DSeriesUnmappedNameProperties,
 )
 from geolib.models.dsettlement.dsettlement_structures import (
     ComplexVerticalSubstructure,
     DSerieRepeatedTableStructure,
 )
+from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
+from geolib.models.internal import Bool
+from geolib.models.utils import get_required_class_field
+from geolib.soils import DistributionType, HorizontalBehaviourType, Soil
+from geolib.soils import StorageTypes as StorageTypes_external
+
+from .drain_types import DrainGridType, DrainSchedule, DrainType
 
 DataClass.Config.arbitrary_types_allowed = True
 
@@ -99,6 +100,16 @@ class Version(DSeriesInlineMappedProperties):
     soil: int = 1005
     geometry: int = 1000
     d__settlement: int = 1007
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k, v in kwargs.items():
+            if self.__field_defaults__.get(k) != v:
+                logger.warning(
+                    """The version of the input file is unsupported.
+                Check the documentation on how to prevent this warning in the future."""
+                )
+                break
 
 
 class Points(DSeriesMatrixTreeStructureCollection):
@@ -269,7 +280,7 @@ class Layers(DSeriesTreeStructureCollection):
 
         if layer in self.layers:
             existing_layer = self.layers[self.layers.index(layer)]
-            logging.warning(
+            logger.warning(
                 f"It's not possible to replace existing layers: {existing_layer}"
             )
             return existing_layer
@@ -421,7 +432,7 @@ class GeometryData(DSeriesStructure):
                     layer.boundary_bottom = i
 
             if boundary.id != i:
-                logging.warning(
+                logger.warning(
                     f"Boundary id {boundary.id} has changed to {i} in sorting process"
                 )
             boundary.id = i

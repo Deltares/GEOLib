@@ -1,31 +1,31 @@
 import abc
 from enum import Enum
-from typing import List, Optional, Type, Union, Dict
-from pydantic import BaseModel, confloat, PositiveInt
+from typing import Dict, List, Optional, Type, Union
+
+from pydantic import BaseModel, PositiveInt, confloat
 
 from ...geometry.one import Point
 from ...utils import snake_to_camel
-
 from .internal import (
     AnalysisType,
-    PersistablePoint,
-    PersistableCircle,
-    PersistableBishopSettings,
-    PersistableBishopBruteForceSettings,
-    PersistableTangentLines,
-    PersistableGridEnhancements,
-    PersistableSlipPlaneConstraints,
-    PersistableGeneticSlipPlaneConstraints,
-    PersistableSearchGrid,
-    PersistableSpencerSettings,
-    PersistableSpencerGeneticSettings,
-    PersistableUpliftVanSettings,
-    PersistableUpliftVanParticleSwarmSettings,
-    PersistableTwoCirclesOnTangentLine,
     NullablePersistablePoint,
-    PersistableSearchArea,
-    PersistableTangentArea,
     OptionsType,
+    PersistableBishopBruteForceSettings,
+    PersistableBishopSettings,
+    PersistableCircle,
+    PersistableGeneticSlipPlaneConstraints,
+    PersistableGridEnhancements,
+    PersistablePoint,
+    PersistableSearchArea,
+    PersistableSearchGrid,
+    PersistableSlipPlaneConstraints,
+    PersistableSpencerGeneticSettings,
+    PersistableSpencerSettings,
+    PersistableTangentArea,
+    PersistableTangentLines,
+    PersistableTwoCirclesOnTangentLine,
+    PersistableUpliftVanParticleSwarmSettings,
+    PersistableUpliftVanSettings,
 )
 
 
@@ -306,4 +306,3 @@ class DStabilityUpliftVanParticleSwarmAnalysisMethod(DStabilityAnalysisMethod):
                 Height=self.tangent_area_height, TopZ=self.tangent_area_top_z
             ),
         )
-

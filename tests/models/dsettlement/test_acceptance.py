@@ -8,47 +8,46 @@ from warnings import warn
 
 import pydantic
 import pytest
-from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils, only_teamcity
-
 from pydantic.color import Color
+from teamcity import is_running_under_teamcity
 
 import geolib.models.dsettlement.loads as loads
-from geolib.geometry.one import Point
-from geolib.soils import (
-    Soil,
-    StateType,
-    IsotacheParameters,
-    SoilClassificationParameters,
-    SoilWeightParameters,
-)
 import geolib.soils as soil_external
+from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
-    Boundary,
     Boundaries,
+    Boundary,
+    ConsolidationModel,
     Curve,
     Curves,
+    Dimension,
+    DispersionConditionLayerBoundary,
     DSeriePoint,
     DSettlementStructure,
     GeometryData,
     Layer,
     Layers,
-    Points,
-    Version,
-    SoilModel,
-    ConsolidationModel,
     Model,
-    Dimension,
     ModelBool,
-    DispersionConditionLayerBoundary,
-    StrainType,
+    Points,
     PreconPressureWithinLayer,
-    StressDistributionSoil,
+    SoilModel,
+    StrainType,
     StressDistributionLoads,
+    StressDistributionSoil,
+    Version,
 )
 from geolib.models.dsettlement.loads import RectangularLoad
+from geolib.soils import (
+    IsotacheParameters,
+    Soil,
+    SoilClassificationParameters,
+    SoilWeightParameters,
+    StateType,
+)
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestDSettlementAcceptance:

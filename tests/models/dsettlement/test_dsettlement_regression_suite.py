@@ -1,8 +1,10 @@
+from pathlib import Path
+
 import pytest
 from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils, only_teamcity
+
 from geolib.models import DSettlementModel
-from pathlib import Path
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestDSettlementRegressionSuite:

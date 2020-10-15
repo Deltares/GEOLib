@@ -1,6 +1,5 @@
-from geolib.models import BaseValidator
-import logging
-from typing import Set
+from geolib.logger import logger
+from geolib.models.validators import BaseValidator
 
 
 class DSheetPilingValidator(BaseValidator):
@@ -60,7 +59,7 @@ class DSheetPilingValidator(BaseValidator):
             self.ds.calculation_options_per_stage.stageoptions
         ):
             error = f"Number of stages defined is {len(self.ds.construction_stages.stages)} which is not the same as {len(self.ds.calculation_options_per_stage.stageoptions)}"
-            logging.warning(error)
+            logger.warning(error)
             raise ValueError(error)
 
         return True

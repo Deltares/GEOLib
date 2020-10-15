@@ -1,11 +1,11 @@
-from typing import List, Type, Tuple
+from typing import List, Tuple, Type
 
 from pydantic import FilePath
 
 from geolib.models.dseries_parser import DSerieParser, DSeriesStructure
 from geolib.models.parsers import BaseParserProvider
 
-from .internal import DSettlementStructure, DSettlementOutputStructure
+from .internal import DSettlementOutputStructure, DSettlementStructure
 
 
 class DSettlementInputParser(DSerieParser):

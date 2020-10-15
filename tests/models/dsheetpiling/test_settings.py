@@ -1,10 +1,10 @@
 import pytest
 
 from geolib.models.dsheetpiling.dsheetpiling_model import (
-    SheetModelType,
-    WoodenSheetPileModelType,
-    SinglePileModelType,
     DiaphragmModelType,
+    SheetModelType,
+    SinglePileModelType,
+    WoodenSheetPileModelType,
 )
 from geolib.models.dsheetpiling.internal import Model
 from geolib.models.dsheetpiling.settings import (

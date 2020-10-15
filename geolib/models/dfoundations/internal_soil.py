@@ -1,11 +1,13 @@
-from typing import List
 from enum import IntEnum
-from pydantic import constr, confloat
+from pathlib import Path
+from typing import List
+
+from pydantic import confloat, constr
+
+from geolib.logger import logger
 from geolib.models.dseries_parser import DSeriesUnmappedNameProperties
 from geolib.models.internal import Bool
 from geolib.utils import csv_as_namedtuples
-import logging
-from pathlib import Path
 
 
 class SoilTypeNl(IntEnum):
@@ -16,12 +18,14 @@ class SoilTypeNl(IntEnum):
     PEAT = 4
     SANDYLOAM = 5
 
+
 class SoilTypeBe(IntEnum):
     GRAVEL = 0
     SAND = 1
     LOAM = 2
     CLAY = 3
     PEAT = 4
+
 
 class MaxConeResistType(IntEnum):
     STANDARD = 0
@@ -71,7 +75,7 @@ class Soil(DSeriesUnmappedNameProperties):
         name = model.lower()
         filename = currentfolder / f"soil_csv/{name}_soils.csv"
         if not filename.exists():
-            logging.warning(f"No default soils supported for {model}")
+            logger.warning(f"No default soils supported for {model}")
             return []
 
         soils = [

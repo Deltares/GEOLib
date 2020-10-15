@@ -1,27 +1,28 @@
 import os
 from random import randint
-from typing import List, get_type_hints, _GenericAlias, Type, Tuple, Dict
-from pydantic.error_wrappers import ValidationError
+from typing import Dict, List, Tuple, Type, _GenericAlias, get_type_hints
+
 import pytest
+from pydantic.error_wrappers import ValidationError
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
-    DSeriesStructure,
-    DSeriesStructureCollection,
-    DSeriesTreeStructure,
-    DSeriesTreeStructureCollection,
-    DSeriesMatrixTreeStructureCollection,
-    DSeriesWrappedTableStructure,
-    DSeriesTableStructure,
+    DSeriesInlineMappedProperties,
     DSeriesInlineProperties,
     DSeriesInlineReversedProperties,
-    DSeriesInlineMappedProperties,
-    DSeriesUnmappedNameProperties,
+    DSeriesMatrixTreeStructureCollection,
     DSeriesRepeatedGroupedProperties,
     DSeriesRepeatedGroupsWithInlineMappedProperties,
-    make_key,
-    get_line_property_value,
+    DSeriesStructure,
+    DSeriesStructureCollection,
+    DSeriesTableStructure,
+    DSeriesTreeStructure,
+    DSeriesTreeStructureCollection,
+    DSeriesUnmappedNameProperties,
+    DSeriesWrappedTableStructure,
     get_line_property_key_value,
+    get_line_property_value,
+    make_key,
 )
 
 

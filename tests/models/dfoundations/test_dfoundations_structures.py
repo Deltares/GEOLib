@@ -1,18 +1,17 @@
-import pytest
-from random import randint, choice
-from string import ascii_lowercase
-from typing import List, _GenericAlias, Dict, Union, Type
-
-from typing import List, _GenericAlias, Dict
-from geolib.models.dseries_parser import DSeriesTreeStructure
-from pydantic.error_wrappers import ValidationError
 from contextlib import nullcontext as does_not_raise
-from geolib.models.dseries_parser import DSeriesTreeStructure
+from random import choice, randint
+from string import ascii_lowercase
+from typing import Dict, List, Type, Union, _GenericAlias
+
+import pytest
+from pydantic.error_wrappers import ValidationError
+
 from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,
-    DFoundationsTableWrapper,
     DFoundationsEnumStructure,
+    DFoundationsTableWrapper,
 )
+from geolib.models.dseries_parser import DSeriesTreeStructure
 
 
 class TestDFoundationsEnumStructure:

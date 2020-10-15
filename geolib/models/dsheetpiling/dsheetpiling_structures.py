@@ -1,16 +1,17 @@
-import logging
 import re
-from typing import Tuple, List, Dict, Any, get_type_hints
+from typing import Any, Dict, List, Tuple, get_type_hints
+
 from geolib.errors import ParserError
+from geolib.logger import logger
 from geolib.models.dseries_parser import (
-    DSeriesStructure,
-    DSeriesInlineProperties,
-    DSeriesUnmappedNameProperties,
-    DSeriesRepeatedGroupsWithInlineMappedProperties,
-    DSeriesWrappedTableStructure,
-    DSerieParser,
-    get_line_property_value,
     DSerieListStructure,
+    DSerieParser,
+    DSeriesInlineProperties,
+    DSeriesRepeatedGroupsWithInlineMappedProperties,
+    DSeriesStructure,
+    DSeriesUnmappedNameProperties,
+    DSeriesWrappedTableStructure,
+    get_line_property_value,
 )
 
 
@@ -18,7 +19,7 @@ class DSeriesPilingDumpParserStructure(DSeriesStructure):
     @classmethod
     def parse_text(cls, text: str):
         if "[ECHO OF MSHEET INPUT]" in text:
-            logging.warning("Replacing headers to create [DUMPFILE]")
+            logger.warning("Replacing headers to create [DUMPFILE]")
             text = text.replace("[ECHO OF MSHEET INPUT]", "[DUMPFILE]").replace(
                 "[END OF DUMP]", "[END OF OUTPUT DATA]\n[END OF DUMPFILE]"
             )
@@ -31,12 +32,12 @@ class DSeriesPilingParserStructure(DSeriesStructure):
     @classmethod
     def parse_text(cls, text: str):
         if "[INPUT DATA]" not in text:
-            logging.warning("Putting [INPUT DATA]")
+            logger.warning("Putting [INPUT DATA]")
             text = text.replace("[SOIL COLLECTION]", "[INPUT DATA]\n[SOIL COLLECTION]")
         if "[END OF INPUT FILE]" in text:
             text = text.replace("[END OF INPUT FILE]", "[END OF INPUT DATA]")
         if "[End of Input Data]" in text:
-            logging.warning("Putting [OUTPUT DATA]")
+            logger.warning("Putting [OUTPUT DATA]")
             text = text.replace(
                 "[End of Input Data]", "[End of Input Data]\n[OUTPUT DATA]"
             )

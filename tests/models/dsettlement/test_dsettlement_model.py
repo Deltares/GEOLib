@@ -10,7 +10,6 @@ import pydantic
 import pytest
 from pydantic.color import Color
 from teamcity import is_running_under_teamcity
-from tests.utils import TestUtils, only_teamcity
 
 import geolib.models.dsettlement.loads as loads
 import geolib.soils as soil_external
@@ -55,16 +54,15 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
 from geolib.soils import (
+    DistributionType,
     IsotacheParameters,
-    StateType,
     Soil,
     SoilClassificationParameters,
     SoilWeightParameters,
-    DistributionType,
-    Soil,
-    SoilClassificationParameters,
+    StateType,
     StochasticParameter,
 )
+from tests.utils import TestUtils, only_teamcity
 
 
 class TestDSettlementModel:

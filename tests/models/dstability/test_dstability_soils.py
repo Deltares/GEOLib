@@ -1,6 +1,7 @@
 import pytest
+
 from geolib.models.dstability.dstability_model import DStabilityModel
-from geolib.soils import Soil, MohrCoulombParameters, ShearStrengthModelTypePhreaticLevel
+from geolib.soils import MohrCoulombParameters, ShearStrengthModelTypePhreaticLevel, Soil
 
 
 class TestDStabilitySoil:
@@ -23,12 +24,20 @@ class TestDStabilitySoil:
         soil_1 = Soil(name="Test1", code="Test1")
 
         soil_2 = Soil(name="Test2", code="Test2")
-        soil_2.shear_strength_model_below_phreatic_level = ShearStrengthModelTypePhreaticLevel.C_PHI
-        soil_2.shear_strength_model_above_phreatic_level = ShearStrengthModelTypePhreaticLevel.SU
+        soil_2.shear_strength_model_below_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.C_PHI
+        )
+        soil_2.shear_strength_model_above_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.SU
+        )
 
         soil_3 = Soil(name="Test3", code="Test3")
-        soil_3.shear_strength_model_below_phreatic_level = ShearStrengthModelTypePhreaticLevel.NONE
-        soil_3.shear_strength_model_above_phreatic_level = ShearStrengthModelTypePhreaticLevel.NONE
+        soil_3.shear_strength_model_below_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.NONE
+        )
+        soil_3.shear_strength_model_above_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.NONE
+        )
 
         # Add soils
         dstability_model.add_soil(soil_1)
@@ -36,32 +45,60 @@ class TestDStabilitySoil:
         dstability_model.add_soil(soil_3)
 
         # assert defaults
-        assert dstability_model.datastructure.soils.get_soil('Test1').shear_strength_model_above_phreatic_level.value \
-               == ShearStrengthModelTypePhreaticLevel.C_PHI.value
-        assert dstability_model.datastructure.soils.get_soil('Test1').shear_strength_model_below_phreatic_level.value \
-               == ShearStrengthModelTypePhreaticLevel.SU.value
+        assert (
+            dstability_model.datastructure.soils.get_soil(
+                "Test1"
+            ).shear_strength_model_above_phreatic_level.value
+            == ShearStrengthModelTypePhreaticLevel.C_PHI.value
+        )
+        assert (
+            dstability_model.datastructure.soils.get_soil(
+                "Test1"
+            ).shear_strength_model_below_phreatic_level.value
+            == ShearStrengthModelTypePhreaticLevel.SU.value
+        )
 
         # assert changed values
-        assert dstability_model.datastructure.soils.get_soil('Test2').shear_strength_model_below_phreatic_level.value \
-               == ShearStrengthModelTypePhreaticLevel.C_PHI.value
-        assert dstability_model.datastructure.soils.get_soil('Test2').shear_strength_model_above_phreatic_level.value \
-               == ShearStrengthModelTypePhreaticLevel.SU.value
+        assert (
+            dstability_model.datastructure.soils.get_soil(
+                "Test2"
+            ).shear_strength_model_below_phreatic_level.value
+            == ShearStrengthModelTypePhreaticLevel.C_PHI.value
+        )
+        assert (
+            dstability_model.datastructure.soils.get_soil(
+                "Test2"
+            ).shear_strength_model_above_phreatic_level.value
+            == ShearStrengthModelTypePhreaticLevel.SU.value
+        )
 
         # assert changed values
-        assert dstability_model.datastructure.soils.get_soil('Test3').shear_strength_model_below_phreatic_level.value \
-               == ShearStrengthModelTypePhreaticLevel.NONE.value
-        assert dstability_model.datastructure.soils.get_soil('Test3').shear_strength_model_above_phreatic_level.value \
-               == ShearStrengthModelTypePhreaticLevel.NONE.value
-
+        assert (
+            dstability_model.datastructure.soils.get_soil(
+                "Test3"
+            ).shear_strength_model_below_phreatic_level.value
+            == ShearStrengthModelTypePhreaticLevel.NONE.value
+        )
+        assert (
+            dstability_model.datastructure.soils.get_soil(
+                "Test3"
+            ).shear_strength_model_above_phreatic_level.value
+            == ShearStrengthModelTypePhreaticLevel.NONE.value
+        )
 
     def test_dstability_edit_soil(self):
         dstability_model = DStabilityModel(filename=None)
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0)
-        soil_1 = Soil(name="Test", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters)
+        soil_1 = Soil(
+            name="Test", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+        )
         code = dstability_model.add_soil(soil_1)
 
         dstability_model.edit_soil(code=code, cohesion=2.0, friction_angle=35)
-        assert pytest.approx(dstability_model.soils.get_soil("Test").mohr_coulomb_parameters.cohesion.mean, 2.0)
+        assert pytest.approx(
+            dstability_model.soils.get_soil("Test").mohr_coulomb_parameters.cohesion.mean,
+            2.0,
+        )
 
     def test_has_10_default_soils(self):
         dstability_model = DStabilityModel(filename=None)

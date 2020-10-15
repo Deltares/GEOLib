@@ -1,22 +1,24 @@
-import pytest
-from typing import Type, Callable
 from random import randint
+from typing import Callable, Type
+
+import pytest
+
 from geolib.models.dfoundations.dfoundations_structures import DFoundationsTableWrapper
 from geolib.models.dfoundations.internal import (
+    CPT,
+    CPTList,
+    CPTMeasureData,
+    DFoundationsCalculationParametersBearingPilesEC7,
+    DFoundationsCalculationWarnings,
+    DFoundationsDumpfileOutputStructure,
+    DFoundationsGlobalNenResults,
+    DFoundationsNenPileResults,
+    DFoundationsNenPileResultsTable,
+    DFoundationsStructure,
+    DFoundationsVerificationResults,
     Layer,
     Profile,
     Profiles,
-    CPTMeasureData,
-    CPT,
-    CPTList,
-    DFoundationsGlobalNenResults,
-    DFoundationsVerificationResults,
-    DFoundationsCalculationParametersBearingPilesEC7,
-    DFoundationsNenPileResultsTable,
-    DFoundationsNenPileResults,
-    DFoundationsCalculationWarnings,
-    DFoundationsDumpfileOutputStructure,
-    DFoundationsStructure,
 )
 
 

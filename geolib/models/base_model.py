@@ -4,20 +4,21 @@
 This module contains the primary objects that power GEOLib.
 """
 import abc
-import logging
 import os
 from abc import abstractmethod, abstractproperty
 from pathlib import Path, PosixPath, WindowsPath
 from subprocess import Popen, run
 from types import CoroutineType
 from typing import List, Optional, Type, Union
-from pydantic.error_wrappers import ValidationError
 
 import requests
-from geolib.errors import CalculationError
 from pydantic import BaseModel as DataClass
 from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
+from pydantic.error_wrappers import ValidationError
 from requests.auth import HTTPBasicAuth
+
+from geolib.errors import CalculationError
+from geolib.logger import logger
 
 from .base_model_structure import BaseModelStructure
 from .meta import MetaData
@@ -38,12 +39,12 @@ class BaseModel(DataClass, abc.ABC):
         if self.filename is None:
             raise ValueError("Set filename or serialize first!")
         if not self.filename.exists():
-            logging.warning("Serializing before executing.")
+            logger.warning("Serializing before executing.")
             self.serialize(self.filename)
 
         executable = self.meta.console_folder / self.console_path
         if not executable.exists():
-            logging.error(
+            logger.error(
                 f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
             )
             raise CalculationError(-1, "Console executable not found.")
@@ -53,11 +54,11 @@ class BaseModel(DataClass, abc.ABC):
             timeout=timeout_in_seconds,
             cwd=str(self.filename.resolve().parent),
         )
-        logging.debug(f"Executed with {process.args}")
+        logger.debug(f"Executed with {process.args}")
 
         # Successfull run
         output_filename = output_filename_from_input(self)
-        logging.info(
+        logger.info(
             f"Checking for {output_filename}, while process exited with {process.returncode}"
         )
         if output_filename.exists():
@@ -65,7 +66,7 @@ class BaseModel(DataClass, abc.ABC):
                 self.parse(output_filename)
                 return self  # TODO Figure out whether we should instantiate a new model (parse is a classmethod)
             except ValidationError:
-                logging.warning(
+                logger.warning(
                     f"Ouput file generated but parsing of {output_filename} failed."
                 )
                 error = self.get_error_context()
@@ -148,7 +149,7 @@ class BaseModel(DataClass, abc.ABC):
         if self.datastructure is not None:
             return self.datastructure.is_valid
         else:
-            logging.warning("No datastructured parsed yet!")
+            logger.warning("No datastructured parsed yet!")
             return False
 
     def set_metadata(self, meta: MetaData):
@@ -207,7 +208,7 @@ class BaseModelList(DataClass):
 
             executable = self.meta.console_folder / lead_model.console_path
             if not executable.exists():
-                logging.error(
+                logger.error(
                     f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
                 )
                 raise CalculationError(-1, "Console executable not found.")
@@ -220,7 +221,7 @@ class BaseModelList(DataClass):
 
         # Wait for all processes to be done
         for process in processes:
-            logging.debug(f"Executed with {process.args}")
+            logger.debug(f"Executed with {process.args}")
             process.wait(timeout=timeout_in_seconds)
 
         # Iterate over the models
@@ -231,7 +232,7 @@ class BaseModelList(DataClass):
                     model.parse(output_filename)
                     output_models.append(model)
                 else:
-                    logging.warning(
+                    logger.warning(
                         f"Model @ {model.filename} failed. Please check the .err file and batchlog.txt in its folder."
                     )
 

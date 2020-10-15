@@ -1,12 +1,13 @@
-import pytest
 from random import randint
-from typing import get_type_hints, _GenericAlias, Type
+from typing import Type, _GenericAlias, get_type_hints
 
-from geolib.models.utils import get_filtered_type_hints, get_required_class_field
+import pytest
 from pydantic import BaseModel as DataClass
 
-class TestGetFields:
+from geolib.models.utils import get_filtered_type_hints, get_required_class_field
 
+
+class TestGetFields:
     class DummyClass(DataClass):
         regular_field: int
         optional_field: int = 42
@@ -20,8 +21,12 @@ class TestGetFields:
         "class_type",
         [
             pytest.param(DummyClass, id="Without underscores"),
-            pytest.param(DummyClassUnderscored, id="With underscore")])
-    def test_given_class_when_get_required_class_field_then_only_valid_fields_returned(self, class_type: Type):
+            pytest.param(DummyClassUnderscored, id="With underscore"),
+        ],
+    )
+    def test_given_class_when_get_required_class_field_then_only_valid_fields_returned(
+        self, class_type: Type
+    ):
         filtered_types = get_required_class_field(class_type)
         assert isinstance(filtered_types, list)
         assert len(filtered_types) == 1
@@ -34,8 +39,12 @@ class TestGetFields:
         "class_type",
         [
             pytest.param(DummyClass, id="Without underscores"),
-            pytest.param(DummyClassUnderscored, id="With underscore")])
-    def test_given_class_when_get_filtered_type_hints_then_only_valid_fields_returned(self, class_type: Type):
+            pytest.param(DummyClassUnderscored, id="With underscore"),
+        ],
+    )
+    def test_given_class_when_get_filtered_type_hints_then_only_valid_fields_returned(
+        self, class_type: Type
+    ):
         filtered_types = get_filtered_type_hints(class_type)
         assert isinstance(filtered_types, list)
         assert len(filtered_types) == 2

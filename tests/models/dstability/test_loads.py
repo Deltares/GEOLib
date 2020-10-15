@@ -1,17 +1,17 @@
-import pytest
-
-from pydantic import ValidationError
 from typing import List
 
-from geolib.models.dstability.loads import UniformLoad, LineLoad, Consolidation
+import pytest
+from pydantic import ValidationError
+
+from geolib.geometry.one import Point
+from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import (
-    PersistableUniformLoad,
+    PersistableLayerLoad,
     PersistableLineLoad,
     PersistableSoilLayer,
-    PersistableLayerLoad,
+    PersistableUniformLoad,
 )
-from geolib.models.dstability.dstability_model import DStabilityModel
-from geolib.geometry.one import Point
+from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
 
 
 @pytest.fixture

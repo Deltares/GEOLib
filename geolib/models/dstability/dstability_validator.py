@@ -1,6 +1,7 @@
-from geolib.models import BaseValidator
-import logging
 from typing import Set
+
+from geolib.logger import logger
+from geolib.models.validators import BaseValidator
 
 
 class DStabilityValidator(BaseValidator):
@@ -13,11 +14,13 @@ class DStabilityValidator(BaseValidator):
         """Number of stages should be the same:"""
         lengths_set = set()
         valid = True
-        for key, value in ((k, v) for k, v in self.ds.dict().items() if 'result' not in k):  # Results not required for stage validity.
+        for key, value in (
+            (k, v) for k, v in self.ds.dict().items() if "result" not in k
+        ):  # Results not required for stage validity.
             if isinstance(value, list):
                 lengths_set.add(len(value))
                 if len(lengths_set) > 1:
-                    logging.error(
+                    logger.error(
                         f"{self.is_valid_stages.__doc__} {key} has different number of stages: {len(value)}."
                     )
                     valid = False
@@ -28,7 +31,9 @@ class DStabilityValidator(BaseValidator):
     def is_valid_layer_loads(self) -> bool:
         """Each layer load must have a consolidation degree for each soil layer"""
         for stage_id, _ in enumerate(self.ds.stages):
-            soil_layer_ids: Set[str] = {layer.LayerId for layer in self.ds.soillayers[stage_id].SoilLayers}
+            soil_layer_ids: Set[str] = {
+                layer.LayerId for layer in self.ds.soillayers[stage_id].SoilLayers
+            }
 
             layer_load_layer_ids: Set[str] = set()
             for layer_load in self.ds.loads[stage_id].LayerLoads:
@@ -39,7 +44,9 @@ class DStabilityValidator(BaseValidator):
                     consolidation_layer_id_references.add(consolidation.LayerId)
                     if consolidation.LayerId is None:
                         return False
-                if soil_layer_ids - consolidation_layer_id_references != set([layer_load.LayerId]):  # All other soillayer ids are included except the soillayers own id.
+                if soil_layer_ids - consolidation_layer_id_references != set(
+                    [layer_load.LayerId]
+                ):  # All other soillayer ids are included except the soillayers own id.
                     return False
             if layer_load_layer_ids != soil_layer_ids:
                 return False

@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+
 from geolib.geometry import Point
 from geolib.models import DStabilityModel
 from geolib.models.dstability.analysis import (
@@ -30,4 +31,3 @@ class TestDStabilityNaNFields:
         # Using `in` was very slow, hence the find
         assert data.find('"NaN"') != -1  # Assert that quoted NaNs are found
         assert data.find(" NaN") == -1  # Assert that an unquoted NaN isn't found
-

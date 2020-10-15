@@ -1,28 +1,28 @@
-import pytest
 from typing import List
+
+import pytest
 
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import (
-    Stage,
-    CalculationSettings,
     AnalysisType,
-    CalculationType,
-    UpliftVanResult,
-    UpliftVanParticleSwarmResult,
-    UpliftVanReliabilityResult,
-    SpencerGeneticAlgorithmResult,
-    SpencerReliabilityResult,
-    SpencerResult,
     BishopBruteForceResult,
     BishopReliabilityResult,
     BishopResult,
+    BishopSlipCircleResult,
+    CalculationSettings,
+    CalculationType,
     PersistableCircle,
     PersistablePoint,
-    BishopSlipCircleResult,
-    UpliftVanSlipCircleResult,
+    SpencerGeneticAlgorithmResult,
+    SpencerReliabilityResult,
+    SpencerResult,
     SpencerSlipPlaneResult,
+    Stage,
+    UpliftVanParticleSwarmResult,
+    UpliftVanReliabilityResult,
+    UpliftVanResult,
+    UpliftVanSlipCircleResult,
 )
-
 
 _valid_safety_factor = 1.2
 _failure_probability = 0.8

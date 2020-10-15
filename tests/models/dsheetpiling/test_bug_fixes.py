@@ -1,14 +1,16 @@
-import geolib as gl
-import pytest
 from pathlib import Path
-from tests.utils import TestUtils
+
+import pytest
+
+import geolib as gl
+from geolib.models.dsheetpiling.calculation_options import *
+from geolib.models.dsheetpiling.constructions import *
 from geolib.models.dsheetpiling.dsheetpiling_model import *
 from geolib.models.dsheetpiling.loads import *
-from geolib.models.dsheetpiling.settings import *
-from geolib.models.dsheetpiling.constructions import *
-from geolib.models.dsheetpiling.calculation_options import *
-from geolib.soils import *
 from geolib.models.dsheetpiling.profiles import *
+from geolib.models.dsheetpiling.settings import *
+from geolib.soils import *
+from tests.utils import TestUtils
 
 
 class TestDsheetPilingBugFixes:

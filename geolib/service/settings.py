@@ -1,5 +1,6 @@
-from pydantic import BaseSettings, DirectoryPath
 from pathlib import Path
+
+from pydantic import BaseSettings, DirectoryPath
 
 
 class Settings(BaseSettings):
