@@ -1,13 +1,15 @@
+import logging
 from enum import IntEnum
 from pathlib import Path
 from typing import List
 
 from pydantic import confloat, constr
 
-from geolib.logger import logger
 from geolib.models.dseries_parser import DSeriesUnmappedNameProperties
 from geolib.models.internal import Bool
 from geolib.utils import csv_as_namedtuples
+
+logger = logging.getLogger(__name__)
 
 
 class SoilTypeNl(IntEnum):

@@ -1,8 +1,8 @@
+import logging
 import re
 from typing import Any, Dict, List, Tuple, get_type_hints
 
 from geolib.errors import ParserError
-from geolib.logger import logger
 from geolib.models.dseries_parser import (
     DSerieListStructure,
     DSerieParser,
@@ -13,6 +13,8 @@ from geolib.models.dseries_parser import (
     DSeriesWrappedTableStructure,
     get_line_property_value,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class DSeriesPilingDumpParserStructure(DSeriesStructure):

@@ -1,3 +1,4 @@
+import logging
 import warnings
 from abc import ABCMeta
 from enum import Enum, IntEnum
@@ -9,7 +10,6 @@ from pydantic import PositiveFloat, confloat, conint, conlist, constr
 
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
-from geolib.logger import logger
 from geolib.models.dseries_parser import (
     DSerieListStructure,
     DSeriesInlineMappedProperties,
@@ -83,6 +83,9 @@ from .settings import (
     VerifyEurocodePartialFactorSet,
     VerifyType,
 )
+
+logger = logging.getLogger(__name__)
+
 
 _DEFAULT_WATER_LEVEL_NAME: str = "New Water Level"
 _DEFAULT_SOIL_PROFILE_NAME: str = "New Profile"

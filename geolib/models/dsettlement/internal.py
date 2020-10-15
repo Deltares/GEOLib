@@ -1,3 +1,4 @@
+import logging
 from enum import Enum, IntEnum
 from inspect import cleandoc
 from math import isclose
@@ -8,7 +9,6 @@ from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 
 from geolib.geometry.one import Point
-from geolib.logger import logger
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSerieListStructure,
@@ -39,6 +39,9 @@ from geolib.soils import DistributionType, HorizontalBehaviourType, Soil
 from geolib.soils import StorageTypes as StorageTypes_external
 
 from .drain_types import DrainGridType, DrainSchedule, DrainType
+
+logger = logging.getLogger(__name__)
+
 
 DataClass.Config.arbitrary_types_allowed = True
 

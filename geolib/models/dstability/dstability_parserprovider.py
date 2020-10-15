@@ -1,3 +1,4 @@
+import logging
 from os import path, scandir
 from typing import List, Tuple, Type, _GenericAlias, get_type_hints
 from zipfile import ZipFile
@@ -5,11 +6,12 @@ from zipfile import ZipFile
 from pydantic import DirectoryPath, FilePath
 from zipp import Path
 
-from geolib.logger import logger
 from geolib.models.parsers import BaseParser, BaseParserProvider
 from geolib.models.utils import get_filtered_type_hints
 
 from .internal import BaseModelStructure, DStabilityStructure
+
+logger = logging.getLogger(__name__)
 
 
 class DStabilityParser(BaseParser):

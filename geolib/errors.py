@@ -1,4 +1,8 @@
+import logging
 from pydantic import BaseModel as DataClass
+
+logger = logging.getLogger(__name__)
+print(logger)
 
 
 class GEOLibError(Exception):

@@ -1,5 +1,8 @@
-from geolib.logger import logger
+import logging
+
 from geolib.models.validators import BaseValidator
+
+logger = logging.getLogger(__name__)
 
 
 class DSheetPilingValidator(BaseValidator):

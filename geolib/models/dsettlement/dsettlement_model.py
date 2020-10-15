@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 from operator import attrgetter
 from pathlib import Path
@@ -9,8 +10,6 @@ from pydantic import FilePath
 from pydantic.types import PositiveInt, confloat, conint, constr
 
 from geolib.geometry import Point
-from geolib.logger import logger
-from geolib.models.meta import MetaData
 from geolib.models import BaseModel, BaseModelStructure
 from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.loads import (
@@ -24,7 +23,7 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
 from geolib.models.dsettlement.serializer import DSettlementInputSerializer
-from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG, MetaData
 from geolib.soils import DistributionType
 from geolib.soils import Soil as Soil_Input
 
@@ -55,6 +54,9 @@ from .internal import (
     Verticals,
     WaterLoads,
 )
+
+logger = logging.getLogger(__name__)
+
 
 DataClass.Config.validate_assignment = True
 

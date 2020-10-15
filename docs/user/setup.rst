@@ -63,6 +63,17 @@ in Python itself, using the *meta* attribute of a model. For example, to overrid
     PosixPath('tests')
     >>> dm.meta.console_folder = Path("other_location")  # has to exist!
 
+Logging
+-------
+
+GEOLib makes use of the built-in logging library. If you need to control the level of logging, you can do the following::
+
+    >>> import logging
+    >>> logging.getLogger("geolib").setLevel(logging.ERROR)
+
+In this example, logging has been set to the ERROR level.
+Note that for setting lower levels than the default warning level, you have to configure your own root logger as well.
+
 Consoles
 --------
 

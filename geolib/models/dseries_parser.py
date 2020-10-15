@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import inspect
+import logging
 import re
 import shlex
 from abc import abstractclassmethod, abstractmethod
@@ -22,7 +23,6 @@ from pydantic import BaseModel as DataClass
 from pydantic import FilePath
 
 from geolib.errors import ParserError
-from geolib.logger import logger
 from geolib.models.base_model_structure import BaseModelStructure
 
 from .parsers import BaseParser
@@ -34,6 +34,8 @@ from .utils import (
     is_union,
     unpack_if_union,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class DSeriesStructure(BaseModelStructure):

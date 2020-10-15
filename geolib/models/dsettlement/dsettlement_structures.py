@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import logging
 from typing import Any, Dict, List, Tuple
 
-from geolib.logger import logger
 from geolib.models.dseries_parser import (
     DSerieListGroupNextStructure,
     DSerieParser,
@@ -15,6 +15,8 @@ from geolib.models.dseries_parser import (
     split_line_elements,
     strip_line_first_element,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class ComplexVerticalSubstructure(DSeriesStructure):

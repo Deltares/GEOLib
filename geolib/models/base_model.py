@@ -4,6 +4,7 @@
 This module contains the primary objects that power GEOLib.
 """
 import abc
+import logging
 import os
 from abc import abstractmethod, abstractproperty
 from pathlib import Path, PosixPath, WindowsPath
@@ -18,11 +19,12 @@ from pydantic.error_wrappers import ValidationError
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError
-from geolib.logger import logger
 
 from .base_model_structure import BaseModelStructure
 from .meta import MetaData
 from .parsers import BaseParserProvider
+
+logger = logging.getLogger(__name__)
 
 
 class BaseModel(DataClass, abc.ABC):

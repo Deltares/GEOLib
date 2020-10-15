@@ -1,3 +1,4 @@
+import logging
 from enum import Enum
 from pathlib import Path
 from subprocess import CompletedProcess, run
@@ -7,7 +8,6 @@ from pydantic import BaseModel as DataClass
 from pydantic import FilePath, confloat
 
 from geolib.geometry import Point
-from geolib.logger import logger
 from geolib.models import BaseModel, BaseModelStructure
 from geolib.models.internal import Bool
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
@@ -39,6 +39,8 @@ from .piles import (
 )
 from .profiles import Profile
 from .serializer import DFoundationsInputSerializer
+
+logger = logging.getLogger(__name__)
 
 
 class ModelOptions(DataClass):

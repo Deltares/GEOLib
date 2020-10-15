@@ -1,7 +1,9 @@
+import logging
 from typing import Set
 
-from geolib.logger import logger
 from geolib.models.validators import BaseValidator
+
+logger = logging.getLogger(__name__)
 
 
 class DStabilityValidator(BaseValidator):

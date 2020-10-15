@@ -1,3 +1,4 @@
+import logging
 from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
@@ -5,7 +6,6 @@ from typing import Any, Dict, List, Optional, Tuple, Type, Union
 from pydantic import BaseModel as DataClass
 from pydantic.types import PositiveInt, confloat, conint, constr
 
-from geolib.logger import logger
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSerieListStructure,
@@ -28,6 +28,9 @@ from .dfoundations_structures import (
     DFoundationsTableWrapper,
 )
 from .internal_soil import Soil
+
+logger = logging.getLogger(__name__)
+
 
 DataClass.Config.arbitrary_types_allowed = True
 DataClass.Config.validate_assignment = True
