@@ -13,3 +13,4 @@ These tutorials give you the best introduction of working with GEOLib.
    tutorial_dsettlement.rst
    tutorial_dsheetpiling.rst
    tutorial_dstability.rst
+   tutorial_multi.rst

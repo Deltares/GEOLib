@@ -1,8 +1,9 @@
 Changelog
 =========
 
-- :release:`0.1.2 <2020-10-14>` 
-- :feature:`-` First release candidate. Thanks to all those who tested and reported their findings.
+- :release:`1.0.0 <2020-10-16>`
+- :feature:`-` First release. Thanks to all those who tested and reported their findings.
+- :support:`-` Dialed down the logging levels and documented how to change the logging levels.
 - :support:`GEOLIB-177` Clarified that `set_model` should be called as early as possible and added warning if called later.
 - :support:`GEOLIB-182` Documented output structure of all models and improved documentation with type hints.
 - :support:`GEOLIB-200` Moved Soils to it's own file as not to leak the code in compiled versions.
@@ -29,14 +30,6 @@ Changelog
 - :bug:`GEOLIB-206` Xi3, Xi4 and other options can now be set on TensionPilesModel as well.
 - :bug:`GEOLIB-203` DStability files containing NaNs failed to serialize after execution in the webservice.
 - :bug:`GEOLIB-204` On remote execution, console folder was derived from the given model, not the geolib.env file.
-
-
-
-
-
-
-
-
 
 
 - :release:`0.1.1 <2020-09-27>` 

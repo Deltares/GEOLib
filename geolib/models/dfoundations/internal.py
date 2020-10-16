@@ -601,7 +601,7 @@ class Version(DSeriesInlineMappedProperties):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for k, v in kwargs.items():
+        for k, v in self.dict().items():
             if self.__field_defaults__.get(k) != v:
                 logger.warning(
                     """The version of the input file is unsupported.

@@ -86,7 +86,7 @@ class BaseModel(DataClass, abc.ABC):
         """
         response = requests.post(
             requests.compat.urljoin(
-                endpoint + f"calculate/{self.__class__.__name__.lower()}"
+                endpoint, f"calculate/{self.__class__.__name__.lower()}"
             ),
             data=self.json(),
             auth=HTTPBasicAuth(self.meta.gl_username, self.meta.gl_password),
@@ -197,7 +197,9 @@ class BaseModelList(DataClass):
         processes = []
         output_models = []
 
-        split_models = [self.models[i::nprocesses] for i in range(nprocesses)]
+        split_models = [
+            self.models[i::nprocesses].copy(deep=True) for i in range(nprocesses)
+        ]
         for i, models in enumerate(split_models):
             if len(models) == 0:
                 continue
@@ -249,7 +251,7 @@ class BaseModelList(DataClass):
 
         response = requests.post(
             requests.compat.urljoin(
-                endpoint + f"calculate/{lead_model.__class__.__name__.lower()}s"
+                endpoint, f"calculate/{lead_model.__class__.__name__.lower()}s"
             ),
             data="[" + ",".join((model.json() for model in self.models)) + "]",
             auth=HTTPBasicAuth(lead_model.meta.gl_username, lead_model.meta.gl_password),
