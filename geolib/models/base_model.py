@@ -25,6 +25,7 @@ from .meta import MetaData
 from .parsers import BaseParserProvider
 
 logger = logging.getLogger(__name__)
+meta = MetaData()
 
 
 class BaseModel(DataClass, abc.ABC):
@@ -32,7 +33,7 @@ class BaseModel(DataClass, abc.ABC):
     datastructure: Optional[BaseModelStructure]
     meta: MetaData = MetaData()
 
-    def execute(self, timeout_in_seconds: int = 5 * 60) -> "BaseModel":
+    def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.
 
         The model is modified in place if the calculation and parsing
@@ -99,7 +100,7 @@ class BaseModel(DataClass, abc.ABC):
     def get_error_context(self) -> str:
         err_fn = output_filename_from_input(self, extension=".err")
         batch_fn = self.filename.parent / "Batchlog.txt"
-        error = ""
+        error = f"{self.filename.name}\n"
         if err_fn.exists():
             with open(err_fn) as f:
                 error += f"### {err_fn} ###\n"
@@ -109,7 +110,7 @@ class BaseModel(DataClass, abc.ABC):
                 error += f"### {batch_fn} ###\n"
                 error += f.read()
         else:
-            error = "Couldn't determine source of error."
+            error = f"Couldn't determine source of error for {self.filename.name}."
         return error
 
     @abstractmethod
@@ -179,27 +180,33 @@ class BaseModelList(DataClass):
     otherwise they will overwrite eachother. This also helps with 
     identifying them later."""
 
-    models: conlist(BaseModel, min_items=1)
+    models: List[BaseModel]
     meta: MetaData = MetaData()
+    errors: List[str] = []
 
     def execute(
         self,
         calculation_folder: DirectoryPath,
-        timeout_in_seconds: int = 10 * 60,
+        timeout_in_seconds: int = meta.timeout,
         nprocesses: Optional[int] = os.cpu_count(),
-    ) -> List[BaseModel]:
+    ) -> "BaseModelList":
         """Execute all models in this class in parallel.
 
         We split the list to separate folders and call a batch processes on each folder.
         Note that the order of models will change.
         """
+
+        # manual check as remote execution could result in zero models
+        if len(self.models) == 0:
+            raise ValueError("Can't execute with zero models.")
+
         lead_model = self.models[0]
         processes = []
         output_models = []
+        errors = []
 
-        split_models = [
-            self.models[i::nprocesses].copy(deep=True) for i in range(nprocesses)
-        ]
+        # Divide the models over n processes and make sure to copy them to prevent aliasing
+        split_models = [self.models[i::nprocesses] for i in range(nprocesses)]
         for i, models in enumerate(split_models):
             if len(models) == 0:
                 continue
@@ -231,16 +238,27 @@ class BaseModelList(DataClass):
         # Iterate over the models
         for i, models in enumerate(split_models):
             for model in models:
+                model = model.copy(deep=True)  # prevent aliasing
                 output_filename = output_filename_from_input(model)
                 if output_filename.exists():
-                    model.parse(output_filename)
-                    output_models.append(model)
+                    try:
+                        model.parse(output_filename)
+                        output_models.append(model)
+
+                    except ValidationError:
+                        logger.warning(
+                            f"Ouput file generated but parsing of {output_filename.name} failed."
+                        )
+                        error = model.get_error_context()
+                        errors.append(error)
                 else:
                     logger.warning(
-                        f"Model @ {model.filename} failed. Please check the .err file and batchlog.txt in its folder."
+                        f"Model @ {output_filename.name} failed. Please check the .err file and batchlog.txt in its folder."
                     )
+                    error = model.get_error_context()
+                    errors.append(error)
 
-        return self.__class__(models=output_models)
+        return self.__class__(models=output_models, errors=errors)
 
     def execute_remote(self, endpoint: HttpUrl) -> "BaseModelList":
         """Execute all models in this class in parallel on a remote endpoint.
@@ -258,8 +276,9 @@ class BaseModelList(DataClass):
         )
         if response.status_code == 200:
             models = response.json()["models"]
+            errors = response.json()["errors"]
             return self.__class__(
-                models=[lead_model.__class__(**model) for model in models]
+                models=[lead_model.__class__(**model) for model in models], errors=errrors
             )
         else:
             raise CalculationError(response.status_code, response.text)

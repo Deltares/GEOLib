@@ -24,7 +24,7 @@ from .internal import (
 
 
 class PileLocation(DataModel):
-    """"Base Class for Pile location."""
+    """Base Class for Pile location."""
 
     pile_name: constr(min_length=0, max_length=10) = ""
     point: Point
@@ -72,14 +72,14 @@ class TensionPileLocation(PileLocation):
 
 
 class BasePileType(Enum):
-    """"Supported pile types enum"""
+    """Supported pile types enum"""
 
     USER_DEFINED_VIBRATING = PileType.USER_DEFINED_VIBRATING.value
     USER_DEFINED_LOW_VIBRATING = PileType.USER_DEFINED_LOW_VIBRATING.value
 
 
 class BasePileTypeForClayLoamPeat(Enum):
-    """"Pile types for clay loam and peat enum"""
+    """Pile types for clay loam and peat enum"""
 
     STANDARD = PileTypeForClayLoamPeat.STANDARD.value
     USER_DEFINED = PileTypeForClayLoamPeat.USER_DEFINED.value
@@ -90,16 +90,16 @@ class Pile(DataModel):
 
     pile_name: str
     pile_type: BasePileType
-    execution_factor_sand_gravel: confloat(ge=0, le=9)
-    pile_type_for_execution_factor_clay_loam_peat: BasePileTypeForClayLoamPeat
-    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)]
+    pile_class_factor_shaft_sand_gravel: confloat(ge=0, le=9)
+    pile_class_factor_shaft_clay_loam_peat: Optional[confloat(ge=0, le=9)]
+    preset_pile_class_factor_shaft_clay_loam_peat: BasePileTypeForClayLoamPeat
     elasticity_modulus: confloat(ge=0, le=1e25)
 
 
 class BearingPile(Pile):
     """Inherits :class:`~geolib.models.dfoundations.piles.Pile`."""
 
-    pile_class_factor: confloat(ge=0, le=9)
+    pile_class_factor_tip: confloat(ge=0, le=9)
     load_settlement_curve: LoadSettlementCurve
     user_defined_pile_type_as_prefab: bool
     use_manual_reduction_for_qc: bool
@@ -116,13 +116,13 @@ class BearingPile(Pile):
             pile_name=self.pile_name,
             pile_type=self.pile_type.value,
             pile_type_for_execution_factor_sand_gravel=PileType.USER_DEFINED,
-            execution_factor_sand_gravel=self.execution_factor_sand_gravel,
+            execution_factor_sand_gravel=self.pile_class_factor_shaft_sand_gravel,
             pile_type_for_execution_factor_clay_loam_peat=(
-                self.pile_type_for_execution_factor_clay_loam_peat.value
+                self.preset_pile_class_factor_shaft_clay_loam_peat.value
             ),
-            execution_factor_clay_loam_peat=self.execution_factor_clay_loam_peat,
+            execution_factor_clay_loam_peat=self.pile_class_factor_shaft_clay_loam_peat,
             pile_type_for_pile_class_factor=PileType.USER_DEFINED,
-            pile_class_factor=self.pile_class_factor,
+            pile_class_factor=self.pile_class_factor_tip,
             pile_type_for_load_settlement_curve=self.load_settlement_curve,
             user_defined_pile_type_as_prefab=self.user_defined_pile_type_as_prefab,
             use_manual_reduction_for_qc=self.use_manual_reduction_for_qc,
@@ -151,11 +151,11 @@ class TensionPile(Pile):
         return TypesTensionPiles(
             pile_name=self.pile_name,
             pile_type_for_execution_factor_sand_gravel=self.pile_type.value,
-            execution_factor_sand_gravel=self.execution_factor_sand_gravel,
+            execution_factor_sand_gravel=self.pile_class_factor_shaft_sand_gravel,
             pile_type_for_execution_factor_clay_loam_peat=(
-                self.pile_type_for_execution_factor_clay_loam_peat.value
+                self.preset_pile_class_factor_shaft_clay_loam_peat.value
             ),
-            execution_factor_clay_loam_peat=self.execution_factor_clay_loam_peat,
+            execution_factor_clay_loam_peat=self.pile_class_factor_shaft_clay_loam_peat,
             material=PileMaterial.USER_DEFINED,
             unit_weight_pile=self.unit_weight_pile,
             elasticity_modulus=self.elasticity_modulus,

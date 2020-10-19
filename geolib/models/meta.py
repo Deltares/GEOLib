@@ -42,7 +42,13 @@ class MetaData(BaseSettings):
     gl_username: str = "test"
     gl_password: str = "test"
 
+    # For calculations
     console_folder: DirectoryPath = Path(".")
+    timeout: int = 10 * 60  # in seconds, so 10 minutes
+
+    # For multiple calculations
+    calculation_folder: Path = Path("tests/test_output/calculations")
+    nprocesses: int = 1
 
     class Config:
         env_file = "geolib.env"

@@ -7,10 +7,6 @@ from typing import Dict, List, Type, Union
 import pydantic.json
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from pydantic import ValidationError, conlist
-from starlette import status
-from starlette.responses import JSONResponse
-
 from geolib.errors import CalculationError
 from geolib.models import (
     BaseModel,
@@ -20,15 +16,17 @@ from geolib.models import (
     DSheetPilingModel,
     DStabilityModel,
 )
-
-from .settings import Settings
+from geolib.models.meta import MetaData
+from pydantic import ValidationError, conlist
+from starlette import status
+from starlette.responses import JSONResponse
 
 # Fixes for custom serialization
 pydantic.json.ENCODERS_BY_TYPE[Path] = str
 pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
 pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
 
-settings = Settings()
+settings = MetaData()
 app = FastAPI()
 security = HTTPBasic()
 
@@ -121,7 +119,7 @@ async def calculate_dstabilitymodel(
 
 @app.post("/calculate/dsettlementmodels")
 async def calculate_many_dsettlementmodels(
-    models: conlist(DSettlementModel, min_items=2),
+    models: conlist(DSettlementModel, min_items=1),
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DSettlementModel]:
@@ -130,7 +128,7 @@ async def calculate_many_dsettlementmodels(
 
 @app.post("/calculate/dfoundationsmodels")
 async def calculate_many_dfoundationsmodel(
-    models: conlist(DFoundationsModel, min_items=2),
+    models: conlist(DFoundationsModel, min_items=1),
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DFoundationsModel]:
@@ -139,7 +137,7 @@ async def calculate_many_dfoundationsmodel(
 
 @app.post("/calculate/dsheetpilingmodels")
 async def calculate_many_dsheetpilingmodel(
-    models: conlist(DSheetPilingModel, min_items=2),
+    models: conlist(DSheetPilingModel, min_items=1),
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DSheetPilingModel]:
@@ -148,7 +146,7 @@ async def calculate_many_dsheetpilingmodel(
 
 @app.post("/calculate/dstabilitymodels")
 async def calculate_many_dstabilitymodel(
-    models: conlist(DStabilityModel, min_items=2),
+    models: conlist(DStabilityModel, min_items=1),
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DStabilityModel]:

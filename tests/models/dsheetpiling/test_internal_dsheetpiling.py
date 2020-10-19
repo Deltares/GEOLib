@@ -112,7 +112,7 @@ class TestInternal:
     ):
         # set inputs
         calc_options_per_stage = CalculationOptionsPerStage(
-            anchor_factor=1.5, partial_factor_set=settings.DesignPartialFactorSet.CLASSIII
+            anchor_factor=1.5, partial_factor_set=settings.PartialFactorSetCUR.CLASSIII
         )
         # test initial expectations
         assert model
@@ -126,7 +126,7 @@ class TestInternal:
         assert len(model.calculation_options_per_stage.stageoptions) == 1
         assert (
             model.calculation_options_per_stage.stageoptions[0].stagepartialfactorsetcur
-            == settings.DesignPartialFactorSet.CLASSIII
+            == settings.PartialFactorSetCUR.CLASSIII
         )
         assert model.calculation_options_per_stage.stageoptions[0].stageverify == 1
         assert (

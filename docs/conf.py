@@ -129,5 +129,5 @@ always_document_param_types = True
 autodoc_default_options = {
     "undoc-members": True,
     "members": True,
-    "exclude-members": "__weakref__, parse_text, get_list_field_names,to_internal,structure_group",
+    "exclude-members": "__weakref__, parse_text, get_list_field_names,to_internal,structure_group,header_lines",
 }

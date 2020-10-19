@@ -87,7 +87,7 @@ class SheetPilingElementMaterialType(IntEnum):
 
 
 class CalculationType(IntEnum):
-    """" Calculation type for D-SheetPiling"""
+    """ Calculation type for D-SheetPiling"""
 
     STANDARD = 0
     DESIGN_SHEETPILING_LENGTH = 1
@@ -106,7 +106,7 @@ class DesignType(IntEnum):
     UNKNOWN = 5  # option is not available for the latest version of D-Sheet piling
 
 
-class EuroCodePartialFactorSet(IntEnum):
+class PartialFactorSetEC(IntEnum):
     DA1SET1 = 0
     DA1SET2 = 1
     DA2 = 2
@@ -125,7 +125,7 @@ class PartialFactorSetEC7NADB(IntEnum):
     SET2 = 1
 
 
-class DesignPartialFactorSet(IntEnum):
+class PartialFactorSetCUR(IntEnum):
     UNKNOWN = -1
     CLASSI = 0
     CLASSII = 1
@@ -145,7 +145,7 @@ class VerifyType(IntEnum):
     UNKNOWN = 4
 
 
-class VerifyEurocodePartialFactorSet(IntEnum):
+class PartialFactorSetVerifyEC(IntEnum):
     DA1 = 0
     DA2 = 1
     DA3 = 2
@@ -192,7 +192,7 @@ class ModulusReactionType(Enum):
     This diagram always uses three branches, with intersections at 50, 80 and 100 % of Ka−Kp
     The slope of the different branches is defined indirectly, via the three secant moduli at the intersection points.
 
-    The Tangent (D-SHEETPILINGClassic) definition is based on a user-defined number of branches (number of curves),
+    The Tangent (D-SheetPiling Classic) definition is based on a user-defined number of branches (number of curves),
     with the slope  of  each  branch  defined  directly  by  the  tangent  modulus
     """
 

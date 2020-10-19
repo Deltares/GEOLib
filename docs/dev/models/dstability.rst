@@ -49,6 +49,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
 
     import geolib
     from geolib.geometry import Point
+    from pathlib import Path
 
     ds = geolib.DStabilityModel()
 
@@ -75,7 +76,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
     ds.add_layer(clay_points, soil_clay.code)
     ds.add_layer(dike_points, soil_dike.code)
 
-    ds.filename = 'geometry_example.stix'
+    ds.filename = Path('geometry_example.stix')
     ds.serialize(ds.filename)
 
 ..  image:: /figures/dstability/geometry_example.png

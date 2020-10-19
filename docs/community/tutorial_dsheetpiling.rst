@@ -266,7 +266,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     calc_options = OverallStabilityCalculationOptions(
         cur_stability_stage=1,
         overall_stability_type=DesignType.CUR,
-        stability_cur_partial_factor_set=DesignPartialFactorSet.CLASSII,
+        stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
     )
     model.set_calculation_options(calculation_options=calc_options)   
 

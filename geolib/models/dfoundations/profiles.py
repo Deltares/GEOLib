@@ -14,11 +14,12 @@ from .internal import ReductionCoreResistanceEnum, TimeOrderType
 class CPT(DataClass):
     """TODO To be expanded/generalized in GEOLib+
 
-    measure_data need to be provided as a list of dicts:
-    [{
-        "z": float,  # negative
-        "qc": float,
-    }]
+    measure_data need to be provided as a list of dicts::
+
+        [{
+            "z": float,  # negative
+            "qc": float,
+        }]
 
     Note that `timeorder_type` will force all other
     CPTs in the same model to the same `timeorder_type`.
@@ -70,16 +71,18 @@ class Excavation(DataClass):
 class Profile(DataClass):
     """Generic profile class.
 
-    Layers need to be provided as a list of dicts:
-    [{
-        "name": str,
-        "material": str,
-        "top_level": float  # [m]
-        "excess_pore_pressure_top": float = 0.0  # [kN/m3]
-        "excess_pore_pressure_bottom": float = 0.0  # [kN/m3]
-        "ocr_value": float = 1.0  # [-]
-        "reduction_core_resistance": int = 0  # [%]
-    },]
+    Layers need to be provided as a list of dicts::
+
+        [{
+            "name": str,
+            "material": str,
+            "top_level": float  # [m]
+            "excess_pore_pressure_top": float = 0.0  # [kN/m3]
+            "excess_pore_pressure_bottom": float = 0.0  # [kN/m3]
+            "ocr_value": float = 1.0  # [-]
+            "reduction_core_resistance": int = 0  # [%]
+        },]
+
     """
 
     name: str

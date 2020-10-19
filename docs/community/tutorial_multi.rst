@@ -54,9 +54,11 @@ Similarly, you could execute this remotely, resulting in the same output:
     newbm = bm.execute_remote("http://localhost:8000/")
 
 Finally, check your output files and make sure to check how many models you've got back and their individual names.
+If you have missing models, check the errors attribute for more information.
 
 .. code-block:: python
 
     len(newmb.models)
     newbm.models[0].filename
     newbm.models[0].output
+    newbm.errors

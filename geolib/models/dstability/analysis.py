@@ -225,7 +225,7 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
     """Generates the input for the genetic spencer algorithm
 
     Args:
-        options_type (OptionsType): DEFAULT or THORUGH, defaults to DEFAULT
+        options_type (OptionsType): DEFAULT or THOROUGH, defaults to DEFAULT
         slip_plane_a (List[Point]): upper slip plane boundary
         slip_plane_b (List[Point]): lower slip line boundary
         slipe_plane_constraints (DStabilityGeneticSlipPlaneConstraints): constraints for the slip plane
@@ -280,7 +280,7 @@ class DStabilityUpliftVanParticleSwarmAnalysisMethod(DStabilityAnalysisMethod):
     """Generates the input for the uplift van analysis
 
     Args:
-        options_type (OptionsType): DEFAULT or THORUGH, defaults to DEFAULT
+        options_type (OptionsType): DEFAULT or THOROUGH, defaults to DEFAULT
         search_area_a (DStabilitySearchArea): The search area for the circle on the left side of the slip plane
         search_area_b (DStabilitySearchArea): The search area for the circle on the right side of the slip plane
         slip_plane_constraints (DStabilitySlipPlaneConstraints): Slip plane constraints

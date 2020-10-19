@@ -30,7 +30,7 @@ class VerificationLoadSettingsHorizontalLineLoad(DataModel):
             load_type: Select the type of load, Favorable, Unfavorable or leave it D-Sheet Piling determined.
     """
 
-    load_type: LoadTypeFavourableUnfavourable = LoadTypeFavourableUnfavourable.FAVOURABLE
+    load_type: LoadTypeFavourableUnfavourable = LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 

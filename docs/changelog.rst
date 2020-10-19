@@ -1,7 +1,7 @@
 Changelog
 =========
 
-- :release:`1.0.0 <2020-10-16>`
+- :release:`0.1.2 <2020-10-16>`
 - :feature:`-` First release. Thanks to all those who tested and reported their findings.
 - :support:`-` Dialed down the logging levels and documented how to change the logging levels.
 - :support:`GEOLIB-177` Clarified that `set_model` should be called as early as possible and added warning if called later.
@@ -11,9 +11,15 @@ Changelog
 - :support:`GEOLIB-172` Documented how moments, forces displacements can be accessed dependent on the calculation type.
 - :support:`GEOLIB-186` Documented soil_type_nl for DFoundations.
 - :support:`GEOLIB-196` Fixed erroneous documentation about Soil for DStability.
-- :support:`GEOLIB-198` Clarified Soil construction in documentation and made usage of extra fields an error.
+- :support:`GEOLIB-198` Clarified Soil construction in documentation and made usage of extra fields an error (**breaking**).
 - :support:`GEOLIB-205` Improved error handling on the webservice so it's easier to debug.
 - :support:`GEOLIB-208` Improved handling of urls without trailing / for remote execution.
+- :support:`GEOLIB-190` Set the load_type of VerificationLoadSettingsHorizontalLineLoad to DSheetPiling Determined.
+- :support:`GEOLIB-184` Renamed the pile factors in a Pile for clarity in DFoundations (**breaking**).
+- :support:`GEOLIB-194` Renamed some PartialFactorSets Enums for clarity in DSheetPiling (**breaking**).
+- :support:`-` Added errors attribute to BaseModelList for failed models.
+- :support:`-` Added tutorial about multiple calculations using BaseModelList.
+- :support:`-` Unified settings into metadata for both local and remote models. Added timeout for execution to metadata.
 - :bug:`GEOLIB-173` All output stages of DSheetPiling are now accessible.
 - :bug:`GEOLIB-187` Setting a color for a soil won't error and will now be converted for the older D-Serie models.
 - :bug:`GEOLIB-206` `Xi3`, `xi4`, and `ea_gem` can now be also set on TensionPilesModel in DSheetPiling.

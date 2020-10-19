@@ -140,10 +140,10 @@ the inputs that are related to the factors concerning the pile.
     parent_pile = dict(
         pile_name="test",
         pile_type=piles.BasePileType.USER_DEFINED_VIBRATING,
-        execution_factor_sand_gravel=1,
-        pile_type_for_execution_factor_clay_loam_peat=piles.BasePileTypeForClayLoamPeat.STANDARD,
-        execution_factor_clay_loam_peat=1,
-        pile_class_factor=1,
+        pile_class_factor_shaft_sand_gravel=1,  # alpha_s
+        preset_pile_class_factor_shaft_clay_loam_peat=piles.BasePileTypeForClayLoamPeat.STANDARD,
+        pile_class_factor_shaft_clay_loam_peat=1,  # alpha_s
+        pile_class_factor_tip=1,  # alpha_p
         load_settlement_curve=piles.LoadSettlementCurve.ONE,
         user_defined_pile_type_as_prefab=False,
         use_manual_reduction_for_qc=False,

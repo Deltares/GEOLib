@@ -56,11 +56,11 @@ from .internal_partial_factors import (
 from .settings import (
     CalculationType,
     CurveSettings,
-    DesignPartialFactorSet,
+    PartialFactorSetCUR,
     DesignType,
     DistributionType,
     EarthPressureCoefficients,
-    EuroCodePartialFactorSet,
+    PartialFactorSetEC,
     GrainType,
     HorizontalBehaviorType,
     LambdaType,
@@ -80,7 +80,7 @@ from .settings import (
     Side,
     SinglePileLoadOptions,
     SoilTypeModulusSubgradeReaction,
-    VerifyEurocodePartialFactorSet,
+    PartialFactorSetVerifyEC,
     VerifyType,
 )
 
@@ -262,24 +262,18 @@ class CalculationOptions(DSeriesStructure):
     designpilelengthdecrement: confloat(ge=0.01, le=10) = 0.01
     designpilelengthnew: int = 1  # fixed value
     designtype: DesignType = DesignType.REPRESENTATIVE
-    designeurocodepartialfactorset: EuroCodePartialFactorSet = (
-        EuroCodePartialFactorSet.DA1SET1
-    )
-    designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = (
-        PartialFactorSetEC7NADNL.RC0
-    )
+    designeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
+    designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorset: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
+    designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorsetec7nadse: int = 0  # fixed value
     designec7semethod: int = 0  # fixed value
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.CUR
-    eurocodepartialfactorset: VerifyEurocodePartialFactorSet = (
-        VerifyEurocodePartialFactorSet.DA1
-    )
+    eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocodeoverallstability: bool = False
     ec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
@@ -288,7 +282,7 @@ class CalculationOptions(DSeriesStructure):
     ec7boverallstability: bool = False
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    curoverallpartialfactorset: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
+    curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     curoverallstability: bool = False
     ec7semethod: int = 0  # fixed value
@@ -299,14 +293,10 @@ class CalculationOptions(DSeriesStructure):
     # Overall stability calculation
     curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
-    stabilityeurocodepartialfactorset: EuroCodePartialFactorSet = (
-        EuroCodePartialFactorSet.DA1SET1
-    )
-    stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
-        PartialFactorSetEC7NADNL.RC0
-    )
+    stabilityeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
+    stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
-    stabilitycurpartialfactorset: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
+    stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     stabilityec7separtialfactorset: int = 0  # fixed value
     overallstabilitydrained: int = 1  # fixed value
 
@@ -544,7 +534,7 @@ class WaterLevels(DSeriesNoParseSubStructure):
 class StageOptions(DSeriesInlineMappedProperties):
     """Representation of [STAGE] block."""
 
-    stagepartialfactorsetcur: DesignPartialFactorSet = DesignPartialFactorSet.UNKNOWN
+    stagepartialfactorsetcur: PartialFactorSetCUR = PartialFactorSetCUR.UNKNOWN
     stageverify: int = 0
     stageanchorfactor: confloat(ge=0.001, le=1000) = 1
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
@@ -820,15 +810,11 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         if self.model.method != LateralEarthPressureMethod.MIXED:
             for stage in self.construction_stages.stages:
-                stage.method_left = (
-                    LateralEarthPressureMethodStage.get_stage_type_from_method(
-                        self.model.method
-                    )
+                stage.method_left = LateralEarthPressureMethodStage.get_stage_type_from_method(
+                    self.model.method
                 )
-                stage.method_right = (
-                    LateralEarthPressureMethodStage.get_stage_type_from_method(
-                        self.model.method
-                    )
+                stage.method_right = LateralEarthPressureMethodStage.get_stage_type_from_method(
+                    self.model.method
                 )
 
     def set_calculation_options(self, **kwargs) -> None:
@@ -838,9 +824,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.calculation_options = CalculationOptions(**kwargs)
 
     def add_calculation_options_per_stage(
-        self,
-        input_calc_options: CalculationOptionsPerStageExternal,
-        stage_id: int,
+        self, input_calc_options: CalculationOptionsPerStageExternal, stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
             VerifyType.CUR: {
@@ -1031,9 +1015,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         )
 
     def add_element_in_sheet_piling(
-        self,
-        sheet: Any,
-        location_top: Optional[Point] = None,
+        self, sheet: Any, location_top: Optional[Point] = None,
     ) -> None:
         self.sheet_piling.update_level_top_sheet_pile(location_top)
         try:
@@ -1161,8 +1143,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         return True
 
     def validate_load_for_verification_calculation(
-        self,
-        load: Union[HorizontalLineLoad, Moment, NormalForce, UniformLoad],
+        self, load: Union[HorizontalLineLoad, Moment, NormalForce, UniformLoad],
     ):
         # TODO Check whether the or in both_set should be set to an and
         if isinstance(load, UniformLoad):

@@ -66,6 +66,7 @@ def test_post_calculate_many():
     ml = BaseModelList(models=[a, b])
     for i, model in enumerate(ml.models):
         model.parse(benchmark_fn)
+    ml.models.append(DSettlementModel(filename=Path("c.sli")))
 
     response = client.post(
         "/calculate/dsettlementmodels",
@@ -74,6 +75,11 @@ def test_post_calculate_many():
     )
     assert response.status_code == 200
     assert "models" in response.json()
+    assert "errors" in response.json()
+
+    # Empty model yields errors
+    assert len(response.json()["errors"]) == 1
+    assert "c.sli" in response.json()["errors"][-1]
 
 
 @pytest.mark.unittest
@@ -82,4 +88,4 @@ def test_auth():
         "/calculate/dsettlementmodels", json=[], auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 422
-    assert "ensure this value has at least 2 items" in response.text
+    assert "ensure this value has at least 1 items" in response.text

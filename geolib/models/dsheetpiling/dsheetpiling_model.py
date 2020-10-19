@@ -36,9 +36,9 @@ from .serializer import DSheetPilingInputSerializer
 from .settings import (
     CalculationType,
     CurveSettings,
-    DesignPartialFactorSet,
+    PartialFactorSetCUR,
     DesignType,
-    EuroCodePartialFactorSet,
+    PartialFactorSetEC,
     LateralEarthPressureMethod,
     LateralEarthPressureMethodStage,
     ModelType,
@@ -48,7 +48,7 @@ from .settings import (
     PassiveSide,
     Side,
     SinglePileLoadOptions,
-    VerifyEurocodePartialFactorSet,
+    PartialFactorSetVerifyEC,
     VerifyType,
 )
 from .supports import Anchor, RigidSupport, SpringSupport, Strut

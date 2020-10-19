@@ -7,7 +7,7 @@ from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
 
 class PileProperties(DataModel):
-    """"
+    """
     Pile selected from the model window in D-Sheet Piling
 
     Arguments:
@@ -47,9 +47,9 @@ class PileProperties(DataModel):
 
 
 class WoodenSheetPileProperties(DataModel):
-    """"
+    """
     Wooden pile selected from the model window in D-Sheet Piling
-    ...
+
 
     Arguments:
      elasticity_modulus_e_m_0_mean : The mean modulus of elasticity per running meter.
@@ -76,31 +76,34 @@ class WoodenSheetPileProperties(DataModel):
 
 
 class SheetPileProperties(DataModel):
-    """"
+    """
     Pile selected from the model window in D-Sheet Piling
-    ...
 
-    Arguments: Elastic Section
+
+    Arguments:
      material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
      acting_width : The acting width can be used when the effective width changes along the sheet piling. D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads, supports and reactions, except the normal force.
      elastic_stiffness_ei : Stiffness of the section per running meter.
      section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
      mr_char_el: Characterictic elastic moment without safety factors.
      material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type is selected. Otherwise, the program will automatically apply the following factors (acc. to the corresponding Eurocode) to calculate the design allowable moment:
-     * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
-     * Concrete: \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6
-     * Wood: \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)
-     * Synthetic: \u03B3m = 1.2
+
+        * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
+        * Concrete: \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6
+        * Wood: \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)
+        * Synthetic: \u03B3m = 1.2
+
      modification_factor_k_mod :  The modification factor kmod should be defined, only if the User defined and synthetic material type is selected. Otherwise, the program will automatically apply the following factors:
-     * Steel: kmod = 1
-     * Concrete: kmod = 1
-     * Wood: kmod= 1
+
+        * Steel: kmod = 1
+        * Concrete: kmod = 1
+        * Wood: kmod= 1
+
      reduction_factor_on_maximum_moment : The reduction factor applied to the maximum allowable moment
      reduction_factor_on_ei : Reduction factor applied on the stiffness EI of the pile.
      coating_area : The area of coating of the sheet piling (> 1). This is defined as the
      length of the perimeter of the sheet piling section per running meter of wall [m2/m2 wall].
 
-    Arguments Plastic calculation
      height : The thickness of the sheet piling profile [mm].
      elastic_section_modulus_w_el: The section modulus (also called resisting moment in the Netherlands) of the sheet piling, 
      [cm3/m], used for a Feasibility control
@@ -133,7 +136,7 @@ class SheetPileProperties(DataModel):
 class SheetPileModelPlasticCalculationProperties(DataModel):
     """
     Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI
-    ...
+
 
     Arguments:
      plastic_moment_positive : The plastic moment of the positive part of the moment-curvature diagram (in compression).
@@ -154,7 +157,7 @@ class SheetPileModelPlasticCalculationProperties(DataModel):
 class FullPlasticCalculationProperties(DataModel):
     """
     Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI
-    ...
+
 
     Arguments:
      symmetrical : This option is True in case of a symmetric moment-curvature diagram.
@@ -190,32 +193,35 @@ class FullPlasticCalculationProperties(DataModel):
 
 
 class DiaphragmWallProperties(DataModel):
-    """"
+    """
     Pile selected from the model window in D-Sheet Piling
-    ...
 
     Arguments:
-     material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
-     acting_width : The acting width can be used when the effective width changes along the sheet piling.
-     D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads,
-     supports and reactions, except the normal force.
-     elastic_stiffness_ei : Stiffness of the section per running meter.
-     section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
-     mr_char_el:: Characterictic elastic moment without safety factors.
-     material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type
-     is selected. Otherwise, the program will automatically apply the following factors
-     (acc. to the corresponding Eurocode) to calculate the design allowable moment:
-     * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4) ;
-     * Concrete: \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6;
-     * Wood: \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1);
-     * Synthetic: \u03B3m = 1.2
-     modification_factor_k_mod :  The modification factor kmod should be defined, only if the User defined
-     and synthetic material type is selected.
-     Otherwise, the program will automatically apply the following factors:
-     * Steel: kmod = 1 ;
-     * Concrete: kmod = 1 ;
-     * Wood: kmod= 1 ;
-     reduction_factor_on_ei : Reduction factor applied on the stiffness EI of the pile.
+        material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
+        acting_width : The acting width can be used when the effective width changes along the sheet piling.
+            D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads,
+            supports and reactions, except the normal force.
+        elastic_stiffness_ei : Stiffness of the section per running meter.
+        section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
+        mr_char_el:: Characterictic elastic moment without safety factors.
+        material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type
+            is selected. Otherwise, the program will automatically apply the following factors
+            (acc. to the corresponding Eurocode) to calculate the design allowable moment:
+
+            * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4) ;
+            * Concrete: \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6;
+            * Wood: \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1);
+            * Synthetic: \u03B3m = 1.2
+
+        modification_factor_k_mod :  The modification factor kmod should be defined, only if the User defined
+            and synthetic material type is selected.
+            Otherwise, the program will automatically apply the following factors:
+
+            * Steel: kmod = 1 ;
+            * Concrete: kmod = 1 ;
+            * Wood: kmod= 1 ;
+
+        reduction_factor_on_ei : Reduction factor applied on the stiffness EI of the pile.
 
     """
 
@@ -235,11 +241,11 @@ class DiaphragmWallProperties(DataModel):
 
 
 class DiaphragmWall(DataModel):
-    """"
+    """
     Diaphragm Wall selected from the model window in D-Sheet Piling
-    ...
 
-    Arguements:
+
+    Arguments:
      name : Name of the element inputted
      diaphragm_wall_properties : properties specifically used for the Diaphragm Wall element.
      plastic_properties : plastic calculation properties. For the Diaphragm Wall option, these are always present.  
@@ -282,14 +288,13 @@ class DiaphragmWall(DataModel):
 
 
 class Sheet(DataModel):
-    """"
+    """
     Sheet Piling selected from the model window in D-Sheet Piling
-    ...
 
-    Arguements:
-     name :: Name of the element inputted
-     sheet_pile_properties :: properties specifically used for the Sheet pile element.
-     plastic_properties :: plastic calculation properties. If Elastic calculation checkbox is not selected.
+    Arguments:
+     name : Name of the element inputted
+     sheet_pile_properties : properties specifically used for the Sheet pile element.
+     plastic_properties : plastic calculation properties. If Elastic calculation checkbox is not selected.
     """
 
     name: str = ""
@@ -336,14 +341,13 @@ class Sheet(DataModel):
 
 
 class Pile(DataModel):
-    """"
+    """
     Pile selected from the model window in D-Sheet Piling
-    ...
 
-    Arguements:
-     name :: Name of the element inputted
-     pile_properties :: properties specifically used for the Pile element.
-     plastic_properties :: plastic calculation properties. If Elastic calculation checkbox is not selected.
+    Arguments:
+     name: Name of the element inputted
+     pile_properties: properties specifically used for the Pile element.
+     plastic_properties: plastic calculation properties. If Elastic calculation checkbox is not selected.
     """
 
     name: str = ""

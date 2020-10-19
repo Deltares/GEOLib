@@ -6,13 +6,13 @@ from pydantic.types import confloat, conint
 
 from .settings import (
     CalculationType,
-    DesignPartialFactorSet,
+    PartialFactorSetCUR,
     DesignType,
-    EuroCodePartialFactorSet,
+    PartialFactorSetEC,
     PartialFactorCalculationType,
     PartialFactorSetEC7NADB,
     PartialFactorSetEC7NADNL,
-    VerifyEurocodePartialFactorSet,
+    PartialFactorSetVerifyEC,
     VerifyType,
 )
 
@@ -28,7 +28,7 @@ class CalculationOptionsPerStage(DataModel):
 
     anchor_factor: float = 1
     partial_factor_set: Optional[
-        Union[PartialFactorSetEC7NADB, DesignPartialFactorSet, PartialFactorSetEC7NADNL]
+        Union[PartialFactorSetEC7NADB, PartialFactorSetCUR, PartialFactorSetEC7NADNL]
     ] = None
 
 
@@ -93,10 +93,10 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     input_calculation_type: CalculationType = CalculationType.OVERALL_STABILITY
     cur_stability_stage: conint(ge=0) = 0
     overall_stability_type: DesignType = DesignType.REPRESENTATIVE
-    stability_eurocode_partial_factor_set: EuroCodePartialFactorSet = EuroCodePartialFactorSet.DA1SET1
+    stability_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stability_ec7_b_partial_factor_set: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
-    stability_cur_partial_factor_set: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
+    stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
 
 
 class KranzAnchorStrengthCalculationOptions(CalculationOptions):
@@ -143,7 +143,7 @@ class VerifyCalculationOptions(CalculationOptions):
 
     input_calculation_type: CalculationType = CalculationType.VERIFY_SHEETPILING
     verify_type: VerifyType = VerifyType.CUR
-    eurocode_partial_factor_set: VerifyEurocodePartialFactorSet = VerifyEurocodePartialFactorSet.DA1
+    eurocode_partial_factor_set: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocode_overall_stability: bool = False
     ec7_nl_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7_nl_overall_partial_factor_set: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
@@ -152,7 +152,7 @@ class VerifyCalculationOptions(CalculationOptions):
     ec7_b_overall_stability: bool = False
     nb_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    cur_overall_partial_factor_set: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
+    cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     cur_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     cur_overall_stability: bool = False
 
@@ -190,10 +190,10 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     design_pile_length_to: confloat(ge=1, le=100) = 1
     design_pile_length_decrement: confloat(ge=0.01, le=10) = 0.01
     design_type: DesignType = DesignType.REPRESENTATIVE
-    design_eurocode_partial_factor_set: EuroCodePartialFactorSet = EuroCodePartialFactorSet.DA1SET1
+    design_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     design_partial_factor_set_ec7_nad_nl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     design_ec7_nl_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     design_partial_factor_set_ec7_nad_b: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     design_ec7_b_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    design_partial_factor_set: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
+    design_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     design_cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
