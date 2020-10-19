@@ -175,6 +175,11 @@ class StorageTypes(IntEnum):
 
 
 class StorageParameters(SoilBaseModel):
+    """
+    In this case vertical_permeability has a unit of [m/day]. In GUI
+    of the D-Settlement this value is displayed as [m/s].
+    """
+
     vertical_permeability: Optional[
         Union[float, StochasticParameter]
     ] = StochasticParameter()
