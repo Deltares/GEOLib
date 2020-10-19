@@ -22,30 +22,34 @@ from .settings import (
 
 class VerificationLoadSettingsHorizontalLineLoad(DataModel):
     """
-        These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
-        For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
+    These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
+    For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
 
-        Args:
-            duration_type: Select the duration of load application, Permanent or Variable.
-            load_type: Select the type of load, Favorable, Unfavorable or leave it D-Sheet Piling determined.
+    Args:
+        duration_type: Select the duration of load application, Permanent or Variable.
+        load_type: Select the type of load, Favorable, Unfavorable or leave it D-Sheet Piling determined.
     """
 
-    load_type: LoadTypeFavourableUnfavourable = LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    load_type: LoadTypeFavourableUnfavourable = (
+        LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    )
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
 class VerificationLoadSettings(DataModel):
     """
-        Load class for moment loads
-        These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
-        For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
+    Load class for moment loads
+    These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
+    For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
 
-        Args:
-            duration_type: Select the duration of load application, Permanent or Variable.
-            load_type: Select the type of load, Favorable or Unfavorable.
+    Args:
+        duration_type: Select the duration of load application, Permanent or Variable.
+        load_type: Select the type of load, Favorable or Unfavorable.
     """
 
-    load_type: LoadTypeFavourableUnfavourableMoment = LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    load_type: LoadTypeFavourableUnfavourableMoment = (
+        LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    )
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
@@ -80,12 +84,8 @@ class UniformLoad(DataModel):
             uniformloadstandarddeviationleft=self.standard_deviation_left,
             uniformloadstandarddeviationright=self.standard_deviation_right,
         )
-        if self.verification_load_settings.duration_type:
-            uniformload.uniformloadpermanent = (
-                self.verification_load_settings.duration_type
-            )
-        if self.verification_load_settings.load_type:
-            uniformload.uniformloadfavourable = self.verification_load_settings.load_type
+        uniformload.uniformloadpermanent = self.verification_load_settings.duration_type
+        uniformload.uniformloadfavourable = self.verification_load_settings.load_type
         if self.distribution_type_left:
             uniformload.uniformloaddistleft = self.distribution_type_left
         if self.distribution_type_right:
@@ -105,10 +105,8 @@ class Moment(DataModel):
         moment = MomentInternal(
             **self.dict(exclude_none=True, exclude={"verification_load_settings"})
         )
-        if self.verification_load_settings.load_type:
-            moment.load_type = self.verification_load_settings.load_type
-        if self.verification_load_settings.duration_type:
-            moment.duration_type = self.verification_load_settings.duration_type
+        moment.load_type = self.verification_load_settings.load_type
+        moment.duration_type = self.verification_load_settings.duration_type
         return moment
 
 
@@ -150,14 +148,10 @@ class SurchargeLoad(DataModel):
                 for point in self.points
             ],
         )
-        if self.verification_load_settings.duration_type:
-            surchargeload.surchargeloadpermanent = (
-                self.verification_load_settings.duration_type
-            )
-        if self.verification_load_settings.load_type:
-            surchargeload.surchargeloadfavourable = (
-                self.verification_load_settings.load_type
-            )
+        surchargeload.surchargeloadpermanent = (
+            self.verification_load_settings.duration_type
+        )
+        surchargeload.surchargeloadfavourable = self.verification_load_settings.load_type
         if self.standard_deviation:
             surchargeload.surchargeloadstandarddeviation = self.standard_deviation
         if self.distribution_type:
@@ -171,18 +165,16 @@ class HorizontalLineLoad(DataModel):
     name: constr(min_length=1, max_length=50)
     level: float
     load: float
-    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = VerificationLoadSettingsHorizontalLineLoad()
+    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = (
+        VerificationLoadSettingsHorizontalLineLoad()
+    )
 
     def to_internal(self) -> HorizontalLineLoadInternal:
         horizontallineload = HorizontalLineLoadInternal(
             **self.dict(exclude_none=True, exclude={"verification_load_settings"})
         )
-        if self.verification_load_settings.load_type:
-            horizontallineload.load_type = self.verification_load_settings.load_type
-        if self.verification_load_settings.duration_type:
-            horizontallineload.duration_type = (
-                self.verification_load_settings.duration_type
-            )
+        horizontallineload.load_type = self.verification_load_settings.load_type
+        horizontallineload.duration_type = self.verification_load_settings.duration_type
         return horizontallineload
 
 
@@ -200,10 +192,8 @@ class NormalForce(DataModel):
         normalforce = NormalForceInternal(
             **self.dict(exclude_none=True, exclude={"verification_load_settings"})
         )
-        if self.verification_load_settings.load_type:
-            normalforce.load_type = self.verification_load_settings.load_type
-        if self.verification_load_settings.duration_type:
-            normalforce.duration_type = self.verification_load_settings.duration_type
+        normalforce.load_type = self.verification_load_settings.load_type
+        normalforce.duration_type = self.verification_load_settings.duration_type
         return normalforce
 
 

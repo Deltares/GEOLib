@@ -263,7 +263,9 @@ class CalculationOptions(DSeriesStructure):
     designpilelengthnew: int = 1  # fixed value
     designtype: DesignType = DesignType.REPRESENTATIVE
     designeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
-    designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -294,7 +296,9 @@ class CalculationOptions(DSeriesStructure):
     curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
     stabilityeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
-    stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     stabilityec7separtialfactorset: int = 0  # fixed value
@@ -810,11 +814,15 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         if self.model.method != LateralEarthPressureMethod.MIXED:
             for stage in self.construction_stages.stages:
-                stage.method_left = LateralEarthPressureMethodStage.get_stage_type_from_method(
-                    self.model.method
+                stage.method_left = (
+                    LateralEarthPressureMethodStage.get_stage_type_from_method(
+                        self.model.method
+                    )
                 )
-                stage.method_right = LateralEarthPressureMethodStage.get_stage_type_from_method(
-                    self.model.method
+                stage.method_right = (
+                    LateralEarthPressureMethodStage.get_stage_type_from_method(
+                        self.model.method
+                    )
                 )
 
     def set_calculation_options(self, **kwargs) -> None:
@@ -824,7 +832,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.calculation_options = CalculationOptions(**kwargs)
 
     def add_calculation_options_per_stage(
-        self, input_calc_options: CalculationOptionsPerStageExternal, stage_id: int,
+        self,
+        input_calc_options: CalculationOptionsPerStageExternal,
+        stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
             VerifyType.CUR: {
@@ -1015,7 +1025,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         )
 
     def add_element_in_sheet_piling(
-        self, sheet: Any, location_top: Optional[Point] = None,
+        self,
+        sheet: Any,
+        location_top: Optional[Point] = None,
     ) -> None:
         self.sheet_piling.update_level_top_sheet_pile(location_top)
         try:
@@ -1053,7 +1065,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
     def add_load(
         self, load: Union[HorizontalLineLoad, Moment, NormalForce], stage_id: int
     ):
-        self.validate_load_for_verification_calculation(load=load)
         if isinstance(load, HorizontalLineLoad):
             self.is_valid_unique_load_names(
                 load_list=self.construction_stages.stages[stage_id].horizontal_line_loads,
@@ -1141,20 +1152,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 f"{name} load name is duplicated. Please change the name of the load."
             )
         return True
-
-    def validate_load_for_verification_calculation(
-        self, load: Union[HorizontalLineLoad, Moment, NormalForce, UniformLoad],
-    ):
-        # TODO Check whether the or in both_set should be set to an and
-        if isinstance(load, UniformLoad):
-            both_set = load.uniformloadfavourable or load.uniformloadpermanent
-        else:
-            both_set = load.load_type or load.duration_type
-
-        if self.model.verification and (not both_set):
-            raise ValueError(
-                "Both the duration_type and load_type should be selected when the setting for the verification calculation is True"
-            )
 
     def add_spring_support(self, stage_id: int, support: Support) -> None:
         if not isinstance(self.spring_supports, SupportContainer):
