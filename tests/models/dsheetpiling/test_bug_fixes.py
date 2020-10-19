@@ -15,6 +15,40 @@ from tests.utils import TestUtils
 
 class TestDsheetPilingBugFixes:
     @pytest.mark.acceptance
+    def test_consistent_model_setting(self):
+        # In this case the method set in the set_model function
+        # should be consistent with what is written in the input file
+
+        # 1. Build model.
+        model = gl.DSheetPilingModel()
+        test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_file = test_folder / Path("test_consistent_model_setting.shi")
+
+        # 1. Build model.
+        modeltype = SheetModelType(
+            method=LateralEarthPressureMethod.MIXED,
+            check_vertical_balance=False,
+            trildens_calculation=True,
+            verification=True,
+        )
+        model.set_model(modeltype)
+
+        # Add stage 1.
+        stage_id = model.add_stage(
+            name="Stage 1",
+            passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+            method_left=LateralEarthPressureMethodStage.C_PHI_DELTA,
+            method_right=LateralEarthPressureMethodStage.C_PHI_DELTA,
+            pile_top_displacement=0.01,
+        )
+
+        # 2. Verify initial expectations.
+        model.serialize(output_test_file)
+        assert output_test_file.is_file()
+        # 3. test final expectations
+        assert model.input.input_data.model.method.value == 2
+
+    @pytest.mark.acceptance
     def test_geolib191(self):
         # In this case the same load is added in multiple stages.
         # The load should not be duplicated if applied to multiple stages
@@ -50,7 +84,11 @@ class TestDsheetPilingBugFixes:
         model.add_load(load=uniform_load, stage_id=stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=stage_id - 1)
         model.add_load(load=moment_load, stage_id=stage_id)
 

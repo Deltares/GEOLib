@@ -4,19 +4,29 @@ from pydantic import BaseModel as DataModel
 from pydantic import conint
 
 
+class LateralEarthPressureMethod(IntEnum):
+    """The method for input of the lateral earth pressure ratio"""
+
+    MIXED = 2
+    KA_KO_KP = 0
+    C_PHI_DELTA = 1
+
+
 class LateralEarthPressureMethodStage(IntEnum):
     """The method for input of the lateral earth pressure ratio"""
 
     KA_KO_KP = 1
     C_PHI_DELTA = 2
 
-
-class LateralEarthPressureMethod(IntEnum):
-    """The method for input of the lateral earth pressure ratio"""
-
-    MIXED = 0
-    KA_KO_KP = 1
-    C_PHI_DELTA = 2
+    @staticmethod
+    def get_stage_type_from_method(
+        method_value: LateralEarthPressureMethod,
+    ):
+        pair_dictionary = {
+            LateralEarthPressureMethod.KA_KO_KP: LateralEarthPressureMethodStage.KA_KO_KP,
+            LateralEarthPressureMethod.C_PHI_DELTA: LateralEarthPressureMethodStage.C_PHI_DELTA,
+        }
+        return pair_dictionary.get(method_value)
 
 
 class ModelType(IntEnum):

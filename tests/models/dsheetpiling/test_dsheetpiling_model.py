@@ -130,7 +130,8 @@ class TestDsheetPilingModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "filename", [pytest.param(Path("bm1-1.shi"), id="Input file")],
+        "filename",
+        [pytest.param(Path("bm1-1.shi"), id="Input file")],
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
@@ -405,11 +406,17 @@ class TestDsheetPilingModel:
             if (
                 model_method == LateralEarthPressureMethod.MIXED
             ):  # Should not affect set methods.
-                assert stage.method_left == stage_method_left
-                assert stage.method_right == stage_method_right
+                assert stage.method_left.name == stage_method_left.name
+                assert stage.method_right.name == stage_method_right.name
             else:
-                assert stage.method_left == model.datastructure.input_data.model.method
-                assert stage.method_right == model.datastructure.input_data.model.method
+                assert (
+                    stage.method_left.name
+                    == model.datastructure.input_data.model.method.name
+                )
+                assert (
+                    stage.method_right.name
+                    == model.datastructure.input_data.model.method.name
+                )
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(

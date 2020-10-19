@@ -44,13 +44,13 @@ class TestSettings:
             == LoadTypeFavourableUnfavourableMoment.UNFAVOURABLE.value
         )
 
-    def test_lateral_earth_pressure_methods_have_similar_values(self):
-        """ This tests checks that these two different Enums have the same value."""
+    def test_lateral_earth_pressure_methods_have_similar_names(self):
+        """ This tests checks that these two different Enums have the same name."""
         assert (
-            LateralEarthPressureMethod.KA_KO_KP.value
-            == LateralEarthPressureMethodStage.KA_KO_KP.value
+            LateralEarthPressureMethod.KA_KO_KP.name
+            == LateralEarthPressureMethodStage.KA_KO_KP.name
         )
         assert (
-            LateralEarthPressureMethod.C_PHI_DELTA.value
-            == LateralEarthPressureMethodStage.C_PHI_DELTA.value
+            LateralEarthPressureMethod.C_PHI_DELTA.name
+            == LateralEarthPressureMethodStage.C_PHI_DELTA.name
         )

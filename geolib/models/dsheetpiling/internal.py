@@ -262,8 +262,12 @@ class CalculationOptions(DSeriesStructure):
     designpilelengthdecrement: confloat(ge=0.01, le=10) = 0.01
     designpilelengthnew: int = 1  # fixed value
     designtype: DesignType = DesignType.REPRESENTATIVE
-    designeurocodepartialfactorset: EuroCodePartialFactorSet = EuroCodePartialFactorSet.DA1SET1
-    designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    designeurocodepartialfactorset: EuroCodePartialFactorSet = (
+        EuroCodePartialFactorSet.DA1SET1
+    )
+    designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -273,7 +277,9 @@ class CalculationOptions(DSeriesStructure):
     designec7semethod: int = 0  # fixed value
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.CUR
-    eurocodepartialfactorset: VerifyEurocodePartialFactorSet = VerifyEurocodePartialFactorSet.DA1
+    eurocodepartialfactorset: VerifyEurocodePartialFactorSet = (
+        VerifyEurocodePartialFactorSet.DA1
+    )
     eurocodeoverallstability: bool = False
     ec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
@@ -293,16 +299,24 @@ class CalculationOptions(DSeriesStructure):
     # Overall stability calculation
     curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
-    stabilityeurocodepartialfactorset: EuroCodePartialFactorSet = EuroCodePartialFactorSet.DA1SET1
-    stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    stabilityeurocodepartialfactorset: EuroCodePartialFactorSet = (
+        EuroCodePartialFactorSet.DA1SET1
+    )
+    stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     stabilitycurpartialfactorset: DesignPartialFactorSet = DesignPartialFactorSet.CLASSI
     stabilityec7separtialfactorset: int = 0  # fixed value
     overallstabilitydrained: int = 1  # fixed value
 
     # These are all subgroups (key=value)
-    partial_factors_eurocode_da1_set1: PartialFactorsEurocodeDa1Set1 = PartialFactorsEurocodeDa1Set1()
-    partial_factors_eurocode_da1_set2: PartialFactorsEurocodeDa1Set2 = PartialFactorsEurocodeDa1Set2()
+    partial_factors_eurocode_da1_set1: PartialFactorsEurocodeDa1Set1 = (
+        PartialFactorsEurocodeDa1Set1()
+    )
+    partial_factors_eurocode_da1_set2: PartialFactorsEurocodeDa1Set2 = (
+        PartialFactorsEurocodeDa1Set2()
+    )
     partial_factors_eurocode_da2: PartialFactorsEurocodeDa2 = PartialFactorsEurocodeDa2()
     partial_factors_eurocode_da3: PartialFactorsEurocodeDa3 = PartialFactorsEurocodeDa3()
     partial_factors_ec7_nl_0: PartialFactorsEc7Nl0 = PartialFactorsEc7Nl0()
@@ -321,7 +335,9 @@ class CalculationOptions(DSeriesStructure):
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
     name: constr(min_length=1, max_length=50) = _DEFAULT_SHEET_PILING_ELEMENT_NAME
-    sheetpilingelementmaterialtype: SheetPilingElementMaterialType = SheetPilingElementMaterialType.Steel
+    sheetpilingelementmaterialtype: SheetPilingElementMaterialType = (
+        SheetPilingElementMaterialType.Steel
+    )
     sheetpilingelementei: confloat(ge=0.001, le=1e12) = 100000
     sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
     sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
@@ -478,8 +494,12 @@ class ConstructionStage(DSeriesUnmappedNameProperties):
     name: constr(min_length=1, max_length=50)
     displacement_top_sheet_piling: float = 0
     passive_side: PassiveSide = PassiveSide.DSHEETPILING_DETERMINED
-    method_left: LateralEarthPressureMethodStage = LateralEarthPressureMethodStage.KA_KO_KP
-    method_right: LateralEarthPressureMethodStage = LateralEarthPressureMethodStage.KA_KO_KP
+    method_left: LateralEarthPressureMethodStage = (
+        LateralEarthPressureMethodStage.KA_KO_KP
+    )
+    method_right: LateralEarthPressureMethodStage = (
+        LateralEarthPressureMethodStage.KA_KO_KP
+    )
     water_level_left: str = _DEFAULT_WATER_LEVEL_NAME
     water_level_right: str = _DEFAULT_WATER_LEVEL_NAME
     surface_left: str = _DEFAULT_SURFACE_NAME
@@ -546,7 +566,9 @@ class UniformLoad(DSeriesUnmappedNameProperties):
     uniformloadleft: float
     uniformloadright: float
     uniformloadpermanent: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
-    uniformloadfavourable: LoadTypeFavourableUnfavourable = LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    uniformloadfavourable: LoadTypeFavourableUnfavourable = (
+        LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    )
     uniformloadstandarddeviationleft: float
     uniformloadstandarddeviationright: float
     uniformloaddistleft: DistributionType = DistributionType.NORMAL
@@ -569,8 +591,12 @@ class SurchargePoint(DSeriesInlineMappedProperties):
 class SurchargeLoad(DSheetpilingSurchargeLoad):
     name: constr(min_length=1, max_length=50)
     points: List[SurchargePoint] = []
-    surchargeloadpermanent: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
-    surchargeloadfavourable: LoadTypeFavourableUnfavourable = LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    surchargeloadpermanent: LoadTypePermanentVariable = (
+        LoadTypePermanentVariable.PERMANENT
+    )
+    surchargeloadfavourable: LoadTypeFavourableUnfavourable = (
+        LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    )
     surchargeloadstandarddeviation: float = 0.00
     surchargeloaddistribution: DistributionType = DistributionType.NORMAL
 
@@ -603,7 +629,9 @@ class HorizontalLineLoad(DSeriesNoParseSubStructure):
     name: constr(min_length=1, max_length=50)
     level: confloat(ge=-1e12, le=1e12) = 0
     load: confloat(ge=-1e12, le=1e12) = 100
-    load_type: LoadTypeFavourableUnfavourable = LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    load_type: LoadTypeFavourableUnfavourable = (
+        LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    )
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
@@ -615,7 +643,9 @@ class Moment(DSeriesNoParseSubStructure):
     name: constr(min_length=1, max_length=50)
     level: confloat(ge=-1e12, le=1e12) = 0
     load: confloat(ge=-1e12, le=1e12) = 100
-    load_type: LoadTypeFavourableUnfavourableMoment = LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    load_type: LoadTypeFavourableUnfavourableMoment = (
+        LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    )
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
@@ -629,7 +659,9 @@ class NormalForce(DSeriesNoParseSubStructure):
     force_at_surface_level_left_side: confloat(ge=-1e12, le=1e12)
     force_at_surface_level_right_side: confloat(ge=-1e12, le=1e12)
     force_at_sheet_pile_toe: confloat(ge=-1e12, le=1e12)
-    load_type: LoadTypeFavourableUnfavourableMoment = LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    load_type: LoadTypeFavourableUnfavourableMoment = (
+        LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    )
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
@@ -731,7 +763,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         """
     )
     construction_stages: Union[str, ConstrutionStages] = ConstrutionStages()
-    calculation_options_per_stage: CalculationOptionsPerStage = CalculationOptionsPerStage()
+    calculation_options_per_stage: CalculationOptionsPerStage = (
+        CalculationOptionsPerStage()
+    )
     calculation_options: CalculationOptions = CalculationOptions()
     probabilistic_calculation_options: str = cleandoc(
         """
@@ -786,8 +820,16 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         if self.model.method != LateralEarthPressureMethod.MIXED:
             for stage in self.construction_stages.stages:
-                stage.method_left = self.model.method
-                stage.method_right = self.model.method
+                stage.method_left = (
+                    LateralEarthPressureMethodStage.get_stage_type_from_method(
+                        self.model.method
+                    )
+                )
+                stage.method_right = (
+                    LateralEarthPressureMethodStage.get_stage_type_from_method(
+                        self.model.method
+                    )
+                )
 
     def set_calculation_options(self, **kwargs) -> None:
         kwargs = self._filter_none_values_from_key_value_dict(kwargs)
@@ -796,7 +838,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.calculation_options = CalculationOptions(**kwargs)
 
     def add_calculation_options_per_stage(
-        self, input_calc_options: CalculationOptionsPerStageExternal, stage_id: int,
+        self,
+        input_calc_options: CalculationOptionsPerStageExternal,
+        stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
             VerifyType.CUR: {
@@ -878,13 +922,13 @@ class DSheetPilingInputStructure(DSeriesStructure):
             f"stage_method {stage_method} is not compatible with method on model {self.model.method}"
         )
         if (
-            self.model.method == LateralEarthPressureMethodStage.KA_KO_KP
-            and stage_method == LateralEarthPressureMethodStage.C_PHI_DELTA
+            self.model.method.name == LateralEarthPressureMethodStage.KA_KO_KP.name
+            and stage_method.name == LateralEarthPressureMethodStage.C_PHI_DELTA.name
         ):
             raise error
         if (
-            self.model.method == LateralEarthPressureMethodStage.C_PHI_DELTA
-            and stage_method == LateralEarthPressureMethodStage.KA_KO_KP
+            self.model.method.name == LateralEarthPressureMethodStage.C_PHI_DELTA.name
+            and stage_method.name == LateralEarthPressureMethodStage.KA_KO_KP.name
         ):
             raise error
         return stage_method
@@ -987,7 +1031,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         )
 
     def add_element_in_sheet_piling(
-        self, sheet: Any, location_top: Optional[Point] = None,
+        self,
+        sheet: Any,
+        location_top: Optional[Point] = None,
     ) -> None:
         self.sheet_piling.update_level_top_sheet_pile(location_top)
         try:
@@ -1115,7 +1161,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
         return True
 
     def validate_load_for_verification_calculation(
-        self, load: Union[HorizontalLineLoad, Moment, NormalForce, UniformLoad],
+        self,
+        load: Union[HorizontalLineLoad, Moment, NormalForce, UniformLoad],
     ):
         # TODO Check whether the or in both_set should be set to an and
         if isinstance(load, UniformLoad):
