@@ -10,4 +10,5 @@ You should install GEOLib with pip install geolib[server]. That enables you to r
 uvicorn main:app --reload
 ```
 
-For a more production ready environment see the documentation at https://fastapi.tiangolo.com/deployment/#alternatively-deploy-fastapi-without-docker, specifically https://www.uvicorn.org/#running-with-gunicorn.
+For hosting a more production ready environment, such as services, see the documentation at https://www.uvicorn.org/deployment/. 
+Note that not all options work on the Windows platform, but Circus will.

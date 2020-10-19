@@ -17,6 +17,7 @@ Changelog
 - :support:`GEOLIB-190` Set the load_type of VerificationLoadSettingsHorizontalLineLoad to DSheetPiling Determined.
 - :support:`GEOLIB-184` Renamed the pile factors in a Pile for clarity in DFoundations (**breaking**).
 - :support:`GEOLIB-194` Renamed some PartialFactorSets Enums for clarity in DSheetPiling (**breaking**).
+- :support:`GEOLIB-211` Clarified vertical_permeability in Soil should be in [m/day].
 - :support:`-` Added errors attribute to BaseModelList for failed models.
 - :support:`-` Added tutorial about multiple calculations using BaseModelList.
 - :support:`-` Unified settings into metadata for both local and remote models. Added timeout for execution to metadata.
@@ -36,7 +37,7 @@ Changelog
 - :bug:`GEOLIB-206` Xi3, Xi4 and other options can now be set on TensionPilesModel as well.
 - :bug:`GEOLIB-203` DStability files containing NaNs failed to serialize after execution in the webservice.
 - :bug:`GEOLIB-204` On remote execution, console folder was derived from the given model, not the geolib.env file.
-
+- :bug:`GEOLIB-192` LateralEarthPressureMethodStage in SheetPileMethod appeared as mixed when it should be C_PHI_DELTA.
 
 - :release:`0.1.1 <2020-09-27>` 
 - :feature:`-` Second beta release for testing. Thanks to all those who tested and reported their findings.
