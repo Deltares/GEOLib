@@ -278,7 +278,7 @@ class BaseModelList(DataClass):
             models = response.json()["models"]
             errors = response.json()["errors"]
             return self.__class__(
-                models=[lead_model.__class__(**model) for model in models], errors=errrors
+                models=[lead_model.__class__(**model) for model in models], errors=errors
             )
         else:
             raise CalculationError(response.status_code, response.text)
