@@ -1,12 +1,20 @@
+from geolib.models.dstability.dstability_model import DStabilityModel
+from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
+from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 import os
 from pathlib import Path
+from unittest import mock
 
 import pytest
+from fastapi.testclient import TestClient
 from teamcity import is_running_under_teamcity
 
 from geolib.models import DSettlementModel
 from geolib.models.base_model import BaseModel, BaseModelList, MetaData
+from geolib.service.main import app
 from tests.utils import TestUtils, only_teamcity
+
+client = TestClient(app)
 
 
 class TestBaseModel:
@@ -62,23 +70,73 @@ class TestBaseModel:
 
     @pytest.mark.acceptance
     @only_teamcity
-    def test_basemodellist_execute(self):
+    @pytest.mark.parametrize(
+        "model,filename,modelname",
+        [
+            (DSettlementModel, "bm1-1.sli", "dsettlement"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
+        ],
+    )
+    def test_basemodellist_execute(self, model, filename, modelname):
         # Setup models
-        a = DSettlementModel()
-        b = DSettlementModel()
-        input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
-        benchmark_fn = input_folder / "bm1-1.sli"
+        a = model()
+        b = model()
+        input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
+        benchmark_fn = input_folder / filename
 
-        output_folder = (
-            Path(TestUtils.get_output_test_data_dir("dsettlement")) / "multiple"
-        )
+        output_folder = Path(TestUtils.get_output_test_data_dir(modelname)) / "multiple"
 
         ml = BaseModelList(models=[a, b])
-        for i, model in enumerate(ml.models):
-            model.parse(benchmark_fn)
+        for i, modelinstance in enumerate(ml.models):
+            modelinstance.parse(benchmark_fn)
+        fn = "test"
+        ml.models.append(model(filename=Path(fn)))
 
         # Execute
         output = ml.execute(output_folder, nprocesses=1)
         assert len(output.models) == 2
         for model in output.models:
             assert model.output
+
+        assert len(output.errors) == 1
+        assert fn in output.errors[-1]
+
+    @pytest.mark.acceptance
+    @only_teamcity
+    @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
+    @mock.patch(
+        "geolib.models.base_model.requests.compat.urljoin",
+        side_effect=lambda *x: "".join(x),  # override urljoin to work without http://x
+    )
+    @pytest.mark.parametrize(
+        "model,filename,modelname",
+        [
+            (DSettlementModel, "bm1-1.sli", "dsettlement"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
+        ],
+    )
+    def test_basemodellist_execute_remote(self, _, __, model, filename, modelname):
+        # Setup models
+        a = model()
+        b = model()
+        input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
+        benchmark_fn = input_folder / filename
+
+        ml = BaseModelList(models=[a, b])
+        for i, modelinstance in enumerate(ml.models):
+            modelinstance.parse(benchmark_fn)
+        fn = "test"
+        ml.models.append(model(filename=Path(fn)))
+
+        # Execute
+        output = ml.execute_remote("/")  # no url is needed with the TestClient
+        assert len(output.models) == 2
+        for model in output.models:
+            assert model.output
+
+        assert len(output.errors) == 1
+        assert fn in output.errors[-1]

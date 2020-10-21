@@ -61,7 +61,7 @@ class DStabilityModel(BaseModel):
     .stix files
     """
 
-    current_stage: int = 0
+    current_stage: int = -1
     datastructure: DStabilityStructure = DStabilityStructure()
     current_id: int = -1
 
