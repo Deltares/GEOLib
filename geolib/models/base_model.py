@@ -93,7 +93,10 @@ class BaseModel(DataClass, abc.ABC):
             auth=HTTPBasicAuth(self.meta.gl_username, self.meta.gl_password),
         )
         if response.status_code == 200:
-            return self.__class__(**response.json())
+            data = response.json()
+            # remove possibly invalid external metadata
+            data.get("meta", {}).pop("console_folder", None)
+            return self.__class__(**data)
         else:
             raise CalculationError(response.status_code, response.text)
 
@@ -277,9 +280,12 @@ class BaseModelList(DataClass):
         if response.status_code == 200:
             models = response.json()["models"]
             errors = response.json()["errors"]
-            return self.__class__(
-                models=[lead_model.__class__(**model) for model in models], errors=errors
-            )
+            stripped_models = []
+            for model in models:
+                # remove possibly invalid external metadata
+                model.get("meta", {}).pop("console_folder", None)
+                stripped_models.append(lead_model.__class__(**model))
+            return self.__class__(models=stripped_models, errors=errors)
         else:
             raise CalculationError(response.status_code, response.text)
 

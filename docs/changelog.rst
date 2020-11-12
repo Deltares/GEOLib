@@ -1,6 +1,11 @@
 Changelog
 =========
 
+- :release:`0.1.3 <2020-11-9>`
+- :feature:`-` Hotfix release.
+- :support:`-` Limits Pydantic version, as the new 1.7 release broke GEOLib (`Version` object has no attribute `__field__defaults__`)
+- :bug:`-` Fixed ValidationError on console folder when doing a remote execution. Bug was created in the fix for GEOLIB-204 in `0.1.2`.
+
 - :release:`0.1.2 <2020-10-16>`
 - :feature:`-` First release. Thanks to all those who tested and reported their findings.
 - :support:`-` Dialed down the logging levels and documented how to change the logging levels.

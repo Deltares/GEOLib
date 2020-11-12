@@ -129,14 +129,54 @@ class TestBaseModel:
         ml = BaseModelList(models=[a, b])
         for i, modelinstance in enumerate(ml.models):
             modelinstance.parse(benchmark_fn)
+            modelinstance.meta.company = "Foo"
+            modelinstance.meta.console_folder = Path("/")
         fn = "test"
         ml.models.append(model(filename=Path(fn)))
 
-        # Execute
+        # Execute and make sure output is available
         output = ml.execute_remote("/")  # no url is needed with the TestClient
         assert len(output.models) == 2
         for model in output.models:
             assert model.output
+            # Metadata is kept intact
+            assert model.meta.company == "Foo"
+            # But the console_folder meta variable is reset to default
+            assert model.meta.console_folder == MetaData().console_folder
 
         assert len(output.errors) == 1
         assert fn in output.errors[-1]
+
+    @pytest.mark.acceptance
+    @only_teamcity
+    @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
+    @mock.patch(
+        "geolib.models.base_model.requests.compat.urljoin",
+        side_effect=lambda *x: "".join(x),  # override urljoin to work without http://x
+    )
+    @pytest.mark.parametrize(
+        "model,filename,modelname",
+        [
+            (DSettlementModel, "bm1-1.sli", "dsettlement"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
+        ],
+    )
+    def test_basemodel_execute_remote(self, _, __, model, filename, modelname):
+        # Setup models
+        modelinstance = model()
+        input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
+        benchmark_fn = input_folder / filename
+        modelinstance.parse(benchmark_fn)
+        modelinstance.meta.company = "Foo"
+        modelinstance.meta.console_folder = Path("/")
+
+        # Execute and make sure there's output
+        model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
+        assert model.output
+
+        # Metadata is kept intact
+        assert model.meta.company == "Foo"
+        # But the console_folder meta variable is reset to default
+        assert model.meta.console_folder == MetaData().console_folder
