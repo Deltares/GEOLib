@@ -5,7 +5,7 @@ from enum import Enum
 from functools import partial
 from itertools import chain
 from math import isfinite
-from typing import Dict, Generator, List, Optional, Tuple, Union
+from typing import Dict, Generator, List, Optional, Tuple, Union, Set
 
 from pydantic import ValidationError, confloat, conlist, root_validator, validator
 
@@ -411,6 +411,15 @@ class SoilLayerCollection(DStabilitySubStructure):
         psl = PersistableSoilLayer(LayerId=layer_id, SoilId=soil_id)
         self.SoilLayers.append(psl)
         return psl
+
+    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
+        if exclude_soil_layer_id is not None:
+            exclude_soil_layer_id = str(exclude_soil_layer_id)
+        return {
+            layer.LayerId
+            for layer in self.SoilLayers
+            if layer.LayerId != exclude_soil_layer_id
+        }
 
 
 class PersistableSoilCorrelation(DStabilityBaseModelStructure):
@@ -889,9 +898,16 @@ class Loads(DStabilitySubStructure):
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
 
     def add_load(
-        self, load: "DStabilityLoad"
+        self, load: "DStabilityLoad", consolidations: List["Consolidation"]
     ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
         internal_datastructure = load.to_internal_datastructure()
+
+        # Add consolidations if the load supports it
+        if hasattr(internal_datastructure, "Consolidations"):
+            internal_datastructure.Consolidations = [
+                c.to_internal_datastructure() for c in consolidations
+            ]
+
         target = load.__class__.__name__
         if target == "Earthquake":
             setattr(self, target, internal_datastructure)

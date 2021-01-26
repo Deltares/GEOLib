@@ -325,11 +325,12 @@ class TestDStabilityModelAddLoad:
             load=uniform_load, consolidations=consolidations, stage_id=stage_id
         )
 
-        assert len(dstability_model.datastructure.loads[stage_id].UniformLoads) == 1
-        assert isinstance(
-            dstability_model.datastructure.loads[stage_id].UniformLoads[0],
-            PersistableUniformLoad,
-        )
+        uniformloads = dstability_model.datastructure.loads[stage_id].UniformLoads
+        assert len(uniformloads) == 1
+        assert isinstance(uniformloads[0], PersistableUniformLoad,)
+        if use_consolidations:
+            assert len(uniformloads[0].Consolidations) == 1
+            assert uniformloads[0].Consolidations[0].LayerId == str(soil_layer_id)
 
     @pytest.mark.integrationtest
     def test_add_valid_line_load(self):
@@ -366,7 +367,8 @@ class TestDStabilityModelAddSoilLayerConsolidations:
         dstability_model = DStabilityModel(inputfn=None)
         stage_id = stage_id or 0
         loads_id = 10
-        soil_layer_id = 15
+        soil_layer_id_a = 15
+        soil_layer_id_b = 16
         soil_layers_id = 20
 
         dstability_model.datastructure.stages[stage_id].LoadsId = str(loads_id)
@@ -374,12 +376,17 @@ class TestDStabilityModelAddSoilLayerConsolidations:
         dstability_model.datastructure.loads[stage_id].Id = str(loads_id)
         dstability_model.datastructure.soillayers[stage_id].Id = str(soil_layers_id)
         dstability_model.datastructure.soillayers[stage_id].SoilLayers.append(
-            PersistableSoilLayer(LayerId=str(soil_layer_id))
+            PersistableSoilLayer(LayerId=str(soil_layer_id_a))
+        )
+        dstability_model.datastructure.soillayers[stage_id].SoilLayers.append(
+            PersistableSoilLayer(LayerId=str(soil_layer_id_b))
         )
 
         consolidations = _get_consolidations if use_consolidations else None
         dstability_model.add_soil_layer_consolidations(
-            soil_layer_id=soil_layer_id, consolidations=consolidations, stage_id=stage_id
+            soil_layer_id=soil_layer_id_b,
+            consolidations=consolidations,
+            stage_id=stage_id,
         )
 
         assert len(dstability_model.datastructure.loads[stage_id].LayerLoads) == 1

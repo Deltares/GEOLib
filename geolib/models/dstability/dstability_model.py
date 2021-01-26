@@ -143,7 +143,7 @@ class DStabilityModel(BaseModel):
 
         Returns:
             Dict: dictionary of the available slipcircles per model for the given stage
-        
+
         Raises:
             ValueError: Result is not available for provided stage id
             AttributeError: When the result has no slipcircle. Try get the slipplane
@@ -490,11 +490,10 @@ class DStabilityModel(BaseModel):
             stage_id
         ):
             if consolidations is None:
-                # TODO This is never used. Probably bugged.
                 consolidations = self._get_default_consolidations(stage_id)
             else:
                 self._verify_consolidations(consolidations, stage_id)
-            self.datastructure.loads[stage_id].add_load(load)
+            self.datastructure.loads[stage_id].add_load(load, consolidations)
         else:
             raise ValueError(f"No loads found for stage id {stage_id}")
 
@@ -526,7 +525,7 @@ class DStabilityModel(BaseModel):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id, soil_layer_id)
             else:
-                self._verify_consolidations(consolidations, stage_id)
+                self._verify_consolidations(consolidations, stage_id, soil_layer_id)
 
             self.datastructure.loads[stage_id].add_layer_load(
                 soil_layer_id, consolidations
@@ -538,31 +537,31 @@ class DStabilityModel(BaseModel):
         self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
     ) -> List[Consolidation]:
         """Length of the consolidations is equal to the amount of soil layers.
-        
+
         If exclude_soil_layer_id is provided, that specific soil layer id is not included in the consolidations.
         """
         if self.datastructure.has_soil_layers(stage_id):
-            soil_layer_ids: Set[str] = {
-                layer.LayerId
-                for layer in self.datastructure.soillayers[stage_id].SoilLayers
-            }
-            if exclude_soil_layer_id:
-                soil_layer_ids.remove(str(exclude_soil_layer_id))
+            soil_layer_ids = self.datastructure.soillayers[stage_id].get_ids(
+                exclude_soil_layer_id
+            )
             return [Consolidation(layer_id=layer_id) for layer_id in soil_layer_ids]
 
         raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def _verify_consolidations(
-        self, consolidations: List[Consolidation], stage_id: int
+        self,
+        consolidations: List[Consolidation],
+        stage_id: int,
+        exclude_soil_layer_id: Optional[int] = None,
     ) -> None:
         if self.datastructure.has_soil_layers(stage_id):
             consolidation_soil_layer_ids: Set[str] = {
                 str(c.layer_id) for c in consolidations
             }
-            soil_layer_ids: Set[str] = {
-                layer.LayerId
-                for layer in self.datastructure.soillayers[stage_id].SoilLayers
-            }
+            soil_layer_ids = self.datastructure.soillayers[stage_id].get_ids(
+                exclude_soil_layer_id
+            )
+
             if consolidation_soil_layer_ids != soil_layer_ids:
                 raise ValueError(
                     f"Received consolidations ({consolidation_soil_layer_ids}) should contain all soil layer ids ({soil_layer_ids})"
@@ -605,9 +604,9 @@ class DStabilityModel(BaseModel):
         Args:
             analysis_method (DStabilityAnalysisMethod): A subclass of DStabilityAnalysisMethod.
             stage_id: Id used to identify the stage to which the analysis method is linked.
-        
+
         Raises:
-            ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod, 
+            ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod,
             an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
         """
         stage_id = stage_id if stage_id else self.current_stage
