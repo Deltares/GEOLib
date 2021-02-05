@@ -36,17 +36,19 @@
         "ShearStrengthModelTypeAbovePhreaticLevel": {
           "type": "string",
           "enum": [
+            "None",
             "CPhi",
             "Su",
-            "None"
+            "SuTable"
           ]
         },
         "ShearStrengthModelTypeBelowPhreaticLevel": {
           "type": "string",
           "enum": [
+            "None",
             "CPhi",
             "Su",
-            "None"
+            "SuTable"
           ]
         },
         "Cohesion": {
@@ -84,6 +86,9 @@
         },
         "ShearStrengthRatioAndShearStrengthExponentCorrelated": {
           "type": "boolean"
+        },
+        "SuTable": {
+          "$ref": "#/definitions/PersistableSuTable"
         }
       }
     },
@@ -97,12 +102,53 @@
           "type": "boolean"
         },
         "Mean": {
-          "type": "number",
-		  "exclusiveMinimum": 0
+          "type": "number"
         },
         "StandardDeviation": {
-          "type": "number",
-		  "minimum": 0
+          "type": "number"
+        }
+      }
+    },
+    "PersistableSuTable": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "StrengthIncreaseExponent": {
+          "type": "number"
+        },
+        "StrengthIncreaseExponentStochasticParameter": {
+          "$ref": "#/definitions/PersistableStochasticParameter"
+        },
+        "SuTablePoints": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "$ref": "#/definitions/PersistableSuTablePoint"
+          }
+        },
+        "IsSuTableProbabilistic": {
+          "type": "boolean"
+        },
+        "SuTableVariationCoefficient": {
+          "type": "number"
+        }
+      }
+    },
+    "PersistableSuTablePoint": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "EffectiveStress": {
+          "type": "number"
+        },
+        "Su": {
+          "type": "number"
         }
       }
     }

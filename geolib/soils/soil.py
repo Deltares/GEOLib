@@ -50,12 +50,28 @@ class StochasticParameter(SoilBaseModel):
 
 class ShearStrengthModelTypePhreaticLevel(Enum):
     """
-    Shear Strength Model Type
+    Shear Strength Model Type. These types represent the
+    shear strength model that can be found in the UI of
+    the D-Stability program.
     """
 
-    C_PHI = "CPhi"
+    MOHR_COULOMB = "Mohr_Coulomb"
     NONE = "None"
-    SU = "Su"
+    SHANSEP = "SHANSEP"
+    SUTABLE = "SuTable"
+
+    def transform_shear_strength_model_type_to_internal(self):
+        from geolib.models.dstability.internal import (
+            ShearStrengthModelTypePhreaticLevelInternal,
+        )
+
+        transformation_dict = {
+            "Mohr_Coulomb": ShearStrengthModelTypePhreaticLevelInternal.C_PHI,
+            "None": ShearStrengthModelTypePhreaticLevelInternal.NONE,
+            "SHANSEP": ShearStrengthModelTypePhreaticLevelInternal.SU,
+            "SuTable": ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
+        }
+        return transformation_dict[self.value]
 
 
 class MohrCoulombParameters(SoilBaseModel):
@@ -72,9 +88,14 @@ class MohrCoulombParameters(SoilBaseModel):
     cohesion_and_friction_angle_correlated: Optional[bool] = None
 
 
+class SuTablePoint(SoilBaseModel):
+    su: float = None
+    stress: float = None
+
+
 class UndrainedParameters(SoilBaseModel):
     """
-    Undrained shear strength parameters class
+    Undrained shear strength parameters class. This class includes the SU Table and SHANSEP model variables included in D-Stability.
     """
 
     shear_strength_ratio: Optional[
@@ -89,6 +110,25 @@ class UndrainedParameters(SoilBaseModel):
     undrained_shear_strength_top: Optional[float] = None
     undrained_shear_strength_bottom: Optional[float] = None
     undrained_shear_strength_bearing_capacity_factor: Optional[float] = None
+    su_table: Optional[List[SuTablePoint]] = None
+    probabilistic_su_table: Optional[bool] = None
+    su_table_variation_coefficient: Optional[float] = None
+
+    def to_su_table_points(self):
+        from geolib.models.dstability.internal import (
+            PersistableSuTablePoint,
+        )
+
+        su_table = None
+        if self.su_table is not None:
+            su_table = []
+            for su_point in self.su_table:
+                su_table.append(
+                    PersistableSuTablePoint(
+                        EffectiveStress=su_point.stress, Su=su_point.su
+                    )
+                )
+        return su_table
 
 
 class BjerrumParameters(SoilBaseModel):
@@ -460,10 +500,43 @@ class Soil(SoilBaseModel):
 
         return self.__transfer_soil_dict_to_model(kwargs, DStabilityStochasticParameter())
 
+    def __to_su_table(self):
+        from geolib.models.dstability.internal import (
+            PersistableSuTable,
+        )
+
+        kwargs = {
+            "StrengthIncreaseExponent": self.undrained_parameters.strength_increase_exponent.mean,
+            "StrengthIncreaseExponentStochasticParameter": self.__to_dstability_stochastic_parameter(
+                stochastic_parameter=self.undrained_parameters.strength_increase_exponent
+            ),
+            "IsSuTableProbabilistic": self.undrained_parameters.probabilistic_su_table,
+            "SuTableVariationCoefficient": self.undrained_parameters.su_table_variation_coefficient,
+            "SuTablePoints": self.undrained_parameters.to_su_table_points(),
+        }
+        return self.__transfer_soil_dict_to_model(kwargs, PersistableSuTable())
+
     def _to_dstability(self):
         from geolib.models.dstability.internal import PersistableSoil as DStabilitySoil
 
         self.set_all_stochastic_parameters()
+
+        if self.shear_strength_model_above_phreatic_level is not None:
+            shear_strength_model_above_phreatic_level = (
+                self.shear_strength_model_above_phreatic_level.transform_shear_strength_model_type_to_internal()
+            )
+        else:
+            shear_strength_model_above_phreatic_level = (
+                self.shear_strength_model_above_phreatic_level
+            )
+        if self.shear_strength_model_below_phreatic_level is not None:
+            shear_strength_model_below_phreatic_level = (
+                self.shear_strength_model_below_phreatic_level.transform_shear_strength_model_type_to_internal()
+            )
+        else:
+            shear_strength_model_below_phreatic_level = (
+                self.shear_strength_model_below_phreatic_level
+            )
 
         kwargs = {
             "Id": self.id,
@@ -494,8 +567,9 @@ class Soil(SoilBaseModel):
             "VolumetricWeightAbovePhreaticLevel": self.soil_weight_parameters.unsaturated_weight.mean,
             "VolumetricWeightBelowPhreaticLevel": self.soil_weight_parameters.saturated_weight.mean,
             "IsProbabilistic": self.is_probabilistic,
-            "ShearStrengthModelTypeAbovePhreaticLevel": self.shear_strength_model_above_phreatic_level,
-            "ShearStrengthModelTypeBelowPhreaticLevel": self.shear_strength_model_below_phreatic_level,
+            "ShearStrengthModelTypeAbovePhreaticLevel": shear_strength_model_above_phreatic_level,
+            "ShearStrengthModelTypeBelowPhreaticLevel": shear_strength_model_below_phreatic_level,
+            "SuTable": self.__to_su_table(),
         }
 
         return self.__transfer_soil_dict_to_model(kwargs, DStabilitySoil())

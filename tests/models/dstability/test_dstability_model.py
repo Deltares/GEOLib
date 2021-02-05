@@ -33,7 +33,7 @@ from geolib.models.dstability.states import (
     DStabilityStatePoint,
     DStabilityStress,
 )
-from geolib.soils import Soil
+from geolib.soils import Soil, SuTablePoint, ShearStrengthModelTypePhreaticLevel
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -546,3 +546,83 @@ class TestDStabilityModel:
         # 3. Verify model output has been parsed
         model = dm.execute()
         assert model
+
+    @pytest.mark.integrationtest
+    def test_su_table_version_parsing(self):
+        # initialize model
+        dm = DStabilityModel()
+        # stix input file path
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
+        # stix output file path
+        test_output_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_serialized_new.stix")
+        )
+        # parse existing files
+        dm.parse(test_filepath)
+        # test that the file was read correctly
+        soil_su_table = dm.input.soils.get_soil("H_Aa_ht_old")
+        assert soil_su_table.shear_strength_model_below_phreatic_level.value == "SuTable"
+        assert (
+            soil_su_table.shear_strength_model_above_phreatic_level.value
+            == "Mohr_Coulomb"
+        )
+        assert soil_su_table.undrained_parameters.su_table
+
+    @pytest.mark.integrationtest
+    def test_su_table_version_input(self):
+        # initialize model
+        dm = DStabilityModel()
+        # stix input file path
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
+        # stix output file path
+        test_output_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_serialized_new.stix")
+        )
+        # parse existing files
+        dm.parse(test_filepath)
+        # change waterlevels
+        # add su table values for soil
+        # add soil
+        soil = Soil()
+        soil.name = "Soil test"
+        soil.code = "su soil"
+        soil.soil_weight_parameters.saturated_weight.mean = 10.2
+        soil.soil_weight_parameters.unsaturated_weight.mean = 10.2
+        soil.undrained_parameters.strength_increase_exponent = 1.1
+        soil.undrained_parameters.su_table = [
+            SuTablePoint(su=0, stress=0),
+            SuTablePoint(su=100, stress=200),
+            SuTablePoint(su=200, stress=300),
+        ]
+        soil.shear_strength_model_below_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.SUTABLE
+        )
+        new_layer = [
+            Point(x=66, z=0),
+            Point(x=89.95, z=-0.06),
+            Point(x=90, z=-8.7),
+            Point(x=88.6, z=-5.9),
+            Point(x=85.9, z=-4.7),
+            Point(x=83.6, z=-3.6),
+            Point(x=81, z=-3),
+            Point(x=79.2, z=-2),
+            Point(x=77.1, z=-1.7),
+            Point(x=74.2, z=-1),
+            Point(x=71, z=-0.4),
+        ]
+        soil_undrained_id = dm.add_soil(soil)
+        layer_id = dm.add_layer(points=new_layer, soil_code=soil.code)
+
+        # output changed file
+        dm.serialize(test_output_filepath)
+        # test that the file was written correctly
+        soil_su_table = dm.input.soils.get_soil("su soil")
+        assert soil_su_table.shear_strength_model_below_phreatic_level.value == "SuTable"
+        assert (
+            soil_su_table.shear_strength_model_above_phreatic_level.value
+            == "Mohr_Coulomb"
+        )
+        assert (
+            soil_su_table.undrained_parameters.su_table
+            == soil.undrained_parameters.su_table
+        )

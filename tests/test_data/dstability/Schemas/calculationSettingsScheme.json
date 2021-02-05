@@ -56,8 +56,7 @@
           "$ref": "#/definitions/PersistablePoint"
         },
         "Radius": {
-          "type": "number",
-		  "minimum": 0
+          "type": "number"
         }
       }
     },
@@ -77,17 +76,13 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0,
-		  "maximum": 180
+          ]
         },
         "MinimumThrustLinePercentageInsideSlices": {
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0,
-		  "maximum": 100
+          ]
         }
       }
     },
@@ -133,15 +128,13 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         },
         "Height": {
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         }
       }
     },
@@ -158,25 +151,19 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0.01,
-		  "maximum": 100
+          ]
         },
         "NumberOfPointsInX": {
           "type": [
             "integer",
             "null"
-          ],
-		  "minimum": 1,
-		  "maximum": 100
+          ]
         },
         "NumberOfPointsInZ": {
           "type": [
             "integer",
             "null"
-          ],
-		  "minimum": 1,
-		  "maximum": 100
+          ]
         }
       }
     },
@@ -196,15 +183,13 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         },
         "MinimumSlipPlaneLength": {
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         },
         "IsZoneAConstraintsEnabled": {
           "type": [
@@ -222,8 +207,7 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         },
         "IsZoneBConstraintsEnabled": {
           "type": [
@@ -241,8 +225,7 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         }
       }
     },
@@ -319,8 +302,7 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         }
       }
     },
@@ -340,17 +322,13 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0.01,
-		  "maximum": 100
+          ]
         },
         "NumberOfTangentLines": {
           "type": [
             "integer",
             "null"
-          ],
-		  "minimum": 1,
-		  "maximum": 100,
+          ]
         }
       }
     },
@@ -367,8 +345,7 @@
           "type": [
             "number",
             "null"
-          ],
-		  "minimum": 0
+          ]
         },
         "SecondCircleCenter": {
           "$ref": "#/definitions/Nullable<PersistablePoint>"
@@ -455,12 +432,10 @@
       ]
     },
     "ModelFactorMean": {
-      "type": "number",
-	  "exclusiveMinimum": 0
+      "type": "number"
     },
     "ModelFactorStandardDeviation": {
-      "type": "number",
-	  "minimum": 0
+      "type": "number"
     },
     "Bishop": {
       "$ref": "#/definitions/PersistableBishopSettings"

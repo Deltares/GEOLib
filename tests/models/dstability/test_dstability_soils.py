@@ -25,10 +25,10 @@ class TestDStabilitySoil:
 
         soil_2 = Soil(name="Test2", code="Test2")
         soil_2.shear_strength_model_below_phreatic_level = (
-            ShearStrengthModelTypePhreaticLevel.C_PHI
+            ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB
         )
         soil_2.shear_strength_model_above_phreatic_level = (
-            ShearStrengthModelTypePhreaticLevel.SU
+            ShearStrengthModelTypePhreaticLevel.SHANSEP
         )
 
         soil_3 = Soil(name="Test3", code="Test3")
@@ -49,13 +49,13 @@ class TestDStabilitySoil:
             dstability_model.datastructure.soils.get_soil(
                 "Test1"
             ).shear_strength_model_above_phreatic_level.value
-            == ShearStrengthModelTypePhreaticLevel.C_PHI.value
+            == ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB.value
         )
         assert (
             dstability_model.datastructure.soils.get_soil(
                 "Test1"
             ).shear_strength_model_below_phreatic_level.value
-            == ShearStrengthModelTypePhreaticLevel.SU.value
+            == ShearStrengthModelTypePhreaticLevel.SHANSEP.value
         )
 
         # assert changed values
@@ -63,13 +63,13 @@ class TestDStabilitySoil:
             dstability_model.datastructure.soils.get_soil(
                 "Test2"
             ).shear_strength_model_below_phreatic_level.value
-            == ShearStrengthModelTypePhreaticLevel.C_PHI.value
+            == ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB.value
         )
         assert (
             dstability_model.datastructure.soils.get_soil(
                 "Test2"
             ).shear_strength_model_above_phreatic_level.value
-            == ShearStrengthModelTypePhreaticLevel.SU.value
+            == ShearStrengthModelTypePhreaticLevel.SHANSEP.value
         )
 
         # assert changed values

@@ -253,7 +253,9 @@ class StateType(Enum):
 class PersistableStress(DStabilityBaseModelStructure):
     Ocr: float = 1.0
     Pop: float = 0.0
-    PopStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    PopStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     StateType: Optional[StateType]
     YieldStress: float = 0.0
 
@@ -437,27 +439,88 @@ class SoilCorrelation(DStabilitySubStructure):
         return "soilcorrelations"
 
 
+class ShearStrengthModelTypePhreaticLevelInternal(Enum):
+    """
+    Shear Strength Model Type. These types represent the types that
+    are internally defined in the json files of D-Stability.
+    """
+
+    C_PHI = "CPhi"
+    NONE = "None"
+    SU = "Su"
+    SUTABLE = "SuTable"
+
+    def to_global_shear_strength_model(self):
+        transform_dictionary = {
+            "CPhi": "Mohr_Coulomb",
+            "None": "None",
+            "Su": "SHANSEP",
+            "SuTable": "SuTable",
+        }
+        return transform_dictionary[self.value]
+
+
+class PersistableSuTablePoint(DStabilitySubStructure):
+    EffectiveStress: float = 0.0
+    Su: float = 0.0
+
+
+class PersistableSuTable(DStabilityBaseModelStructure):
+    StrengthIncreaseExponent: float = 1.0
+    StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
+    SuTablePoints: List[PersistableSuTablePoint] = []
+    IsSuTableProbabilistic: bool = False
+    SuTableVariationCoefficient: float = 0.0
+
+    def to_global_su_table(self):
+        from geolib.soils import SuTablePoint
+
+        su_table = []
+        for su_table_point in self.SuTablePoints:
+            su_table.append(
+                SuTablePoint(su=su_table_point.Su, stress=su_table_point.EffectiveStress)
+            )
+        return su_table
+
+
 class PersistableSoil(DStabilityBaseModelStructure):
     Code: str = ""
     Cohesion: confloat(ge=0) = 0.0
     CohesionAndFrictionAngleCorrelated: bool = False
-    CohesionStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    CohesionStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     Dilatancy: confloat(ge=0) = 0.0
-    DilatancyStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    DilatancyStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     FrictionAngle: confloat(ge=0) = 0.0
-    FrictionAngleStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    FrictionAngleStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     Id: str = ""
     IsProbabilistic: bool = False
     Name: str = ""
-    ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevel = ShearStrengthModelTypePhreaticLevel.C_PHI
-    ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevel = ShearStrengthModelTypePhreaticLevel.SU
+    ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
+        ShearStrengthModelTypePhreaticLevelInternal.C_PHI
+    )
+    ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
+        ShearStrengthModelTypePhreaticLevelInternal.SU
+    )
     ShearStrengthRatio: confloat(ge=0) = 0.0
     ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
-    ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     StrengthIncreaseExponent: confloat(ge=0) = 1.0
-    StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     VolumetricWeightAbovePhreaticLevel: confloat(ge=0) = 0.0
     VolumetricWeightBelowPhreaticLevel: confloat(ge=0) = 0.0
+    SuTable: PersistableSuTable = PersistableSuTable()
 
 
 class SoilCollection(DStabilitySubStructure):
@@ -497,7 +560,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.23,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=14.8,
             VolumetricWeightBelowPhreaticLevel=14.8,
@@ -510,7 +573,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.23,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=15.6,
             VolumetricWeightBelowPhreaticLevel=15.6,
@@ -523,7 +586,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.24,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.85,
             VolumetricWeightAbovePhreaticLevel=13.9,
             VolumetricWeightBelowPhreaticLevel=13.9,
@@ -536,7 +599,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.3,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=10.1,
             VolumetricWeightBelowPhreaticLevel=10.1,
@@ -549,7 +612,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.27,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=11.0,
             VolumetricWeightBelowPhreaticLevel=11.0,
@@ -562,7 +625,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=30.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.0,
-            ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevel.C_PHI,
+            ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.C_PHI,
             StrengthIncreaseExponent=0.0,
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=20.0,
@@ -575,7 +638,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.22,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
@@ -588,7 +651,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=0.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.22,
-            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevel.SU,
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
@@ -638,6 +701,28 @@ class SoilCollection(DStabilitySubStructure):
             standard_deviation=persistable_stochastic_parameter.StandardDeviation,
         )
 
+    def __determine_strength_increase_exponent(self, persistable_soil: PersistableSoil):
+        # shear increase exponent taken from persistable_soil.SuTable or just from persistable_soil
+        if (
+            persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
+            or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
+        ):
+            # SHANSEP model is selected so the StrengthIncreaseExponentStochasticParameter from persistable_soil should be used
+            return self.__to_global_stochastic_parameter(
+                persistable_soil.StrengthIncreaseExponentStochasticParameter
+            )
+        elif (
+            persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
+            or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value
+            == "SuTable"
+        ):
+            # SU table is selected so the StrengthIncreaseExponentStochasticParameter from SuTable should be used
+            return self.__to_global_stochastic_parameter(
+                persistable_soil.SuTable.StrengthIncreaseExponentStochasticParameter
+            )
+        else:
+            return None
+
     def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
         from geolib.soils import (
             MohrCoulombParameters,
@@ -658,14 +743,18 @@ class SoilCollection(DStabilitySubStructure):
             cohesion_and_friction_angle_correlated=persistable_soil.CohesionAndFrictionAngleCorrelated,
         )
 
+        strength_increase_exponent = self.__determine_strength_increase_exponent(
+            persistable_soil
+        )
         undrained_parameters = UndrainedParameters(
             shear_strength_ratio=self.__to_global_stochastic_parameter(
                 persistable_soil.ShearStrengthRatioStochasticParameter
             ),
-            strength_increase_exponent=self.__to_global_stochastic_parameter(
-                persistable_soil.StrengthIncreaseExponentStochasticParameter
-            ),
+            strength_increase_exponent=strength_increase_exponent,
             shear_strength_ratio_and_shear_strength_exponent_correlated=persistable_soil.ShearStrengthRatioAndShearStrengthExponentCorrelated,
+            su_table=persistable_soil.SuTable.to_global_su_table(),
+            probabilistic_su_table=persistable_soil.SuTable.IsSuTableProbabilistic,
+            su_table_variation_coefficient=persistable_soil.SuTable.SuTableVariationCoefficient,
         )
 
         soil_weight_parameters = SoilWeightParameters()
@@ -681,9 +770,10 @@ class SoilCollection(DStabilitySubStructure):
             name=persistable_soil.Name,
             code=persistable_soil.Code,
             is_probabilistic=persistable_soil.IsProbabilistic,
-            shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value,
-            shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value,
+            shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.to_global_shear_strength_model(),
+            shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.to_global_shear_strength_model(),
             mohr_coulomb_parameters=mohr_coulomb_parameters,
+            soil_weight_parameters=soil_weight_parameters,
             undrained_parameters=undrained_parameters,
         )
 
@@ -1261,6 +1351,7 @@ class PersistableSlice(DStabilityBaseModelStructure):
     Weight: Optional[float] = None
     Width: Optional[float] = None
     YieldStress: Optional[float] = None
+    ShearStrengthModelType: Optional[ShearStrengthModelTypePhreaticLevelInternal] = None
 
 
 class BishopBruteForceResult(DStabilitySubStructure):
@@ -1414,6 +1505,7 @@ class PersistableSpencerSlice(DStabilityBaseModelStructure):
     Weight: Optional[float] = None
     Width: Optional[float] = None
     YieldStress: Optional[float] = None
+    ShearStrengthModelType: Optional[ShearStrengthModelTypePhreaticLevelInternal] = None
 
 
 class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
@@ -1723,7 +1815,9 @@ class DStabilityStructure(BaseModelStructure):
             value = getattr(instance, fkfield)
             if isinstance(value, (list, set, tuple)):
                 setattr(
-                    instance, fkfield, [get_correct_key(x, mapping) for x in value],
+                    instance,
+                    fkfield,
+                    [get_correct_key(x, mapping) for x in value],
                 )
             if isinstance(value, (int, float, str)):
                 setattr(instance, fkfield, get_correct_key(value, mapping))
@@ -1734,7 +1828,7 @@ class DStabilityStructure(BaseModelStructure):
         self, current_stage: int, label: str, notes: str, unique_start_id: int
     ):
         """Duplicates an existing stage.
-        Copies the specific stage fields for a stage and renumbers all Ids, 
+        Copies the specific stage fields for a stage and renumbers all Ids,
         taking into account foreign keys by using the same renumbering.
         """
 
@@ -1958,7 +2052,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
     @property
     def class_fields(self) -> Dict[str, List[str]]:
         """Return a mapping in the form:
-            classname: [fields]
+        classname: [fields]
         """
         id_keys = chain(*((k, *v) for k, v in self.mapping.items()))
         class_fields = defaultdict(list)
