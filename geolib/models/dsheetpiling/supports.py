@@ -29,11 +29,11 @@ class Anchor(DataModel):
     level: float
     e_modulus: Optional[PositiveFloat] = None
     cross_section: Optional[PositiveFloat] = None
-    wall_height_kranz: Optional[PositiveFloat] = None
+    wall_height_kranz: Optional[confloat(ge=0)] = None
     length: Optional[PositiveFloat] = None
     angle: Optional[float] = None
     side: Side = Side.RIGHT
-    yield_force: Optional[PositiveFloat] = None
+    yield_force: Optional[confloat(ge=0)] = None
 
     def to_internal(self) -> InternalAnchor:
         return InternalAnchor(**self.dict(exclude_none=True))
@@ -59,8 +59,8 @@ class Strut(DataModel):
     e_modulus: Optional[PositiveFloat] = None
     cross_section: Optional[PositiveFloat] = None
     length: Optional[PositiveFloat] = None
-    angle: Optional[PositiveFloat] = None
-    buckling_force: Optional[PositiveFloat] = None
+    angle: Optional[float] = None
+    buckling_force: Optional[confloat(ge=0)] = None
     side: Side = Side.RIGHT
     pre_compression: Optional[PositiveFloat] = None
 

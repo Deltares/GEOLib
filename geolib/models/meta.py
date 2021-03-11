@@ -26,7 +26,7 @@ class MetaData(BaseSettings):
     Could be specified by default or in advance to make
     model generation easier.
 
-    Also can read these settings automatically from a 
+    Also can read these settings automatically from a
     'geolib.env' file in the working directory, or give
     as '_env_file' parameter.
     """
@@ -49,6 +49,10 @@ class MetaData(BaseSettings):
     # For multiple calculations
     calculation_folder: Path = Path("tests/test_output/calculations")
     nprocesses: int = 1
+
+    # For ignoring extra fields that could come with newer/older versions
+    # of input/output fields. We don't support any other value than "forbid"!
+    extra_fields = "forbid"  # can be "ignore", "allow" or "forbid"
 
     class Config:
         env_file = "geolib.env"

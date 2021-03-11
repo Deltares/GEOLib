@@ -4,6 +4,9 @@ from math import isfinite
 from pydantic import BaseModel as DataClass
 
 from .validators import BaseValidator
+from .meta import MetaData
+
+settings = MetaData()
 
 
 class BaseModelStructure(DataClass, abc.ABC):
@@ -17,6 +20,7 @@ class BaseModelStructure(DataClass, abc.ABC):
         return BaseValidator(self)
 
     class Config:
-        extra = "forbid"
+        extra = settings.extra_fields
         arbitrary_types_allowed = False
         validate_on_assignment = True
+        validate_all = True

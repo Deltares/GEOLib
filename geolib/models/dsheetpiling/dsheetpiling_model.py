@@ -206,7 +206,7 @@ class DSheetPilingModel(BaseModel):
     ) -> int:
         """Add a new stage to the model.
 
-        When using a Single Pile model, the lateral earth pressure method left and right need to be the same. 
+        When using a Single Pile model, the lateral earth pressure method left and right need to be the same.
         Their inputs however do not effect the outcome of the calculation.
 
         Args:
@@ -246,7 +246,8 @@ class DSheetPilingModel(BaseModel):
         if self._is_calculation_per_stage_required():
             self._check_if_stage_id_exists(stage_id)
             self.datastructure.input_data.add_calculation_options_per_stage(
-                input_calc_options=calculation_options_per_stage, stage_id=stage_id,
+                input_calc_options=calculation_options_per_stage,
+                stage_id=stage_id,
             )
         else:
             raise ValueError(
@@ -290,7 +291,8 @@ class DSheetPilingModel(BaseModel):
         self.datastructure.input_data.set_calculation_options(**dict(calculation_options))
 
     def set_curve_settings(
-        self, curve_settings: CurveSettings,
+        self,
+        curve_settings: CurveSettings,
     ):
         """Set curve settings for soil profiles.
 
@@ -301,7 +303,12 @@ class DSheetPilingModel(BaseModel):
         """
         self.datastructure.input_data.set_curve_settings(curve_settings)
 
-    def add_head_line(self, water_level: WaterLevel, side: Side, stage_id: int,) -> None:
+    def add_head_line(
+        self,
+        water_level: WaterLevel,
+        side: Side,
+        stage_id: int,
+    ) -> None:
         """Set water level for a stage.
 
         If a water level already exists, it is refered to that water level.
@@ -321,7 +328,12 @@ class DSheetPilingModel(BaseModel):
             stage_id, water_level.to_internal(), side=side
         )
 
-    def add_surface(self, surface: Surface, side: Side, stage_id: int,) -> None:
+    def add_surface(
+        self,
+        surface: Surface,
+        side: Side,
+        stage_id: int,
+    ) -> None:
         """Set surface for a stage.
 
         Surface is added to [SURFACES] if not yet added; reference is done by name.
@@ -340,7 +352,12 @@ class DSheetPilingModel(BaseModel):
             stage_id, surface.to_internal(), side=side
         )
 
-    def add_profile(self, profile: SoilProfile, side: Side, stage_id: int,) -> None:
+    def add_profile(
+        self,
+        profile: SoilProfile,
+        side: Side,
+        stage_id: int,
+    ) -> None:
         """Add a Profile on the left or right side of a stage.
 
         Profile is added to [SOIL PROFILES] if not yet added; reference is done by name.
@@ -390,7 +407,7 @@ class DSheetPilingModel(BaseModel):
     ):
         """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake
 
-        Args:       
+        Args:
             load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake.
             Note that SoilDisplacement and Earthquake are only valid for a Pile construction.
             stage_id: Load is added to this stage.
@@ -419,7 +436,10 @@ class DSheetPilingModel(BaseModel):
         )
 
     def add_anchor_or_strut(
-        self, support: Union[Anchor, Strut], stage_id: int, pre_stress: PositiveFloat = 0,
+        self,
+        support: Union[Anchor, Strut],
+        stage_id: int,
+        pre_stress: PositiveFloat = 0.1,
     ) -> None:
         """Add anchor or strut to a stage.
 
@@ -452,7 +472,9 @@ class DSheetPilingModel(BaseModel):
             raise ValueError(f"support should be Anchor or Strut, received {support}")
 
     def add_support(
-        self, support: Union[SpringSupport, RigidSupport], stage_id: int,
+        self,
+        support: Union[SpringSupport, RigidSupport],
+        stage_id: int,
     ) -> None:
         """Add spring or rigid support to a stage.
 
@@ -463,11 +485,13 @@ class DSheetPilingModel(BaseModel):
         self._check_if_stage_id_exists(stage_id)
         if isinstance(support, SpringSupport):
             self.datastructure.input_data.add_spring_support(
-                stage_id, support.to_internal(),
+                stage_id,
+                support.to_internal(),
             )
         elif isinstance(support, RigidSupport):
             self.datastructure.input_data.add_rigid_support(
-                stage_id, support.to_internal(),
+                stage_id,
+                support.to_internal(),
             )
         else:
             raise ValueError(

@@ -2007,7 +2007,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
     as (implicit) foreign keys.
     """
 
-    mapping: Dict[str, Tuple[str]] = {
+    mapping: Dict[str, Tuple[str, ...]] = {
         "Waternet.Id": ("Stage.WaternetId",),
         "PersistableHeadLine.Id": (
             "PersistableReferenceLine.BottomHeadLineId",

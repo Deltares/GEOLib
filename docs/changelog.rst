@@ -1,5 +1,17 @@
 Changelog
 =========
+- :release:`0.1.5 <unreleased, planned for Q2 2021>`
+- :bug:`-` Set correct number of lines in [RUN IDENTIFICATION] in DSettlement and DSheetPiling. By Maarten Betman of Boskalis. 👍
+
+- :release:`0.1.4 <2021-03-10>`
+- :feature:`-` Add support for D-Stability **20.3**. 🎉
+- :bug:`-` Fix consolidation validation for layer loads in DStability model. By Joost Dobken of van Oord. 👍
+- :bug:`-` Aligned and relaxed constraints of Anchor and Strut fields with the internal models used in DSheetPiling.
+- :bug:`-` Fix unused consolidations in DStability.
+- :bug:`-` Always parse Model settings in DSheetPiling.
+- :support:`-` Clarified documentation about [moments_forces_displacements] in the DSheetPiling output.
+- :support:`-` Add env option to ignore extra_fields instead of raising a ValidationError.
+- :bug:`-` Allow negative angle of Anchor.
 
 - :release:`0.1.3 <2020-11-9>`
 - :feature:`-` Hotfix release.

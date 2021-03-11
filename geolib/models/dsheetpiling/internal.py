@@ -440,7 +440,7 @@ class Anchor(DSheetpilingTableEntry):
     cross_section: Optional[confloat(gt=0)] = 1e-3
     wall_height_kranz: Optional[confloat(ge=0)] = 0.00
     length: Optional[confloat(gt=0)] = 1
-    angle: Optional[confloat(ge=0)] = 0.00
+    angle: Optional[float] = 0.00
     yield_force: Optional[confloat(ge=0)] = 0.00
     side: Side = Side.RIGHT
 
@@ -469,7 +469,7 @@ class Strut(DSheetpilingTableEntry):
     e_modulus: confloat(gt=0) = 2.1e8
     cross_section: Optional[confloat(gt=0)] = 1e-4
     length: Optional[confloat(gt=0)] = 1
-    angle: Optional[confloat(ge=0)] = 0.00
+    angle: Optional[float] = 0.00
     buckling_force: Optional[confloat(ge=0)] = 0.00
     side: Side = Side.RIGHT
 
@@ -512,7 +512,7 @@ class ConstructionStage(DSeriesUnmappedNameProperties):
     normal_forces: List[str] = []
 
 
-class ConstrutionStages(DSeriesStructureCollection):
+class ConstructionStages(DSeriesStructureCollection):
     stages: List[ConstructionStage] = []
 
     @property
@@ -689,7 +689,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
     soil_collection: SoilCollection = SoilCollection()
     run_identification: str = ""
-    model: Union[str, Model] = Model()
+    model: Model = Model()
     cpt_list: str = cleandoc(
         """
         Count=0
@@ -756,7 +756,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         """
     )
-    construction_stages: Union[str, ConstrutionStages] = ConstrutionStages()
+    construction_stages: Union[str, ConstructionStages] = ConstructionStages()
     calculation_options_per_stage: CalculationOptionsPerStage = (
         CalculationOptionsPerStage()
     )
@@ -874,7 +874,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         pile_top_displacement: Optional[float],
     ) -> None:
         if isinstance(self.construction_stages, str):
-            self.construction_stages = ConstrutionStages()
+            self.construction_stages = ConstructionStages()
         if name in self.construction_stages.stage_names:
             raise ValueError(
                 f"Stage name {name} already present: all stage names must be unique"
@@ -1339,6 +1339,7 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     cur_anchor_force_results: Optional[CurAnchorForceResults]
     warning_list: Optional[str]
     warning: Optional[str]
+    error: Optional[str]
 
     calculated_displacements: Optional[str]
     angles_kranz_calculation: Optional[str]
