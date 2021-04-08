@@ -7,4 +7,4 @@ from .context import geolib
 
 @pytest.mark.systemtest
 def test_version():
-    assert __version__ == "0.1.4"
+    assert __version__ == "0.1.5"

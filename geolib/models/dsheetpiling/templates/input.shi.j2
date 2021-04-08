@@ -184,7 +184,7 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
   {{ anchors.anchors | length }} Number of anchors
  Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
 {% for anchor in anchors.anchors %}
-  {{ loop.index }}{{ "%7.2f"|format(anchor.level) }}{{ "%11.4E"|format(anchor.e_modulus) }}{{ "%11.4E"|format(anchor.cross_section) }}{{ "%9.2f"|format(anchor.length) }}{{ "%8.2f"|format(anchor.yield_force) }}{{ "%9.2f"|format(anchor.angle) }}{{ "%9.2f"|format(anchor.wall_height_kranz) }}{{ "%7d"|format(anchor.side.value) }} {{ anchor.name }}
+  {{ loop.index }} {{ "%7.2f"|format(anchor.level) }} {{ "%11.4E"|format(anchor.e_modulus) }} {{ "%11.4E"|format(anchor.cross_section) }} {{ "%9.2f"|format(anchor.length) }} {{ "%8.2f"|format(anchor.yield_force) }} {{ "%9.2f"|format(anchor.angle) }} {{ "%9.2f"|format(anchor.wall_height_kranz) }} {{ "%7d"|format(anchor.side.value) }} {{ anchor.name }}
 
 {% endfor %}
 
@@ -215,7 +215,7 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
   {{ spring_supports.supports | length }} Number of spring supports
  Nr        Level    Rot stiff.    Tr stiff.
 {% for support in spring_supports.supports %}
-  {{ loop.index }}{{ "%11.2f"|format(support.level) }}{{ "%13.5f"|format(support.rotational_stiffness) }}  {{ "%11.5f"|format(support.translational_stiffness) }} {{ support.name }}
+  {{ loop.index }} {{ "%11.2f"|format(support.level) }} {{ "%13.5f"|format(support.rotational_stiffness) }} {{ "%11.5f"|format(support.translational_stiffness) }} {{ support.name }}
 {% endfor %}
 
 {% else %}
@@ -230,7 +230,7 @@ WoodenSheetPilingElementKModE={{ element.woodensheetpilingelementkmode }}
   {{ rigid_supports.supports | length }} Number of rigid supports
  Nr        Level    Rot stiff.    Tr stiff.
 {% for support in rigid_supports.supports %}
-  {{ loop.index }}{{ "%11.2f"|format(support.level) }} {{ support.rotational_stiffness | int }} {{ support.translational_stiffness | int }} {{ support.name }}
+  {{ loop.index }} {{ "%11.2f"|format(support.level) }} {{ support.rotational_stiffness | int }} {{ support.translational_stiffness | int }} {{ support.name }}
 {% endfor %}
 
 {% else %}
@@ -355,7 +355,7 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
   {{ soil_profile.layers | length }} Number of soil layers per soil profile
  Nr      Level   Wosp Top  Wosp Bott Material Name
 {% for layer in soil_profile.layers %}
-  {{ loop.index }}{{ "%11.2f"|format(layer.top_of_layer) }}{{ "%11.2f"|format(layer.water_pressure_top) }}{{ "%11.2f"|format(layer.water_pressure_bottom) }} {{ layer.soil }}
+  {{ loop.index }} {{ "%11.2f"|format(layer.top_of_layer) }} {{ "%11.2f"|format(layer.water_pressure_top) }} {{ "%11.2f"|format(layer.water_pressure_bottom) }} {{ layer.soil }}
 {% endfor %}
 {% endfor %}
 {% else %}
@@ -373,7 +373,7 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
   {{ surface.distribution_type.value }}  Distribution type
  Nr     X-coord     Value
 {% for point in surface.points %}
-   {{ point["Nr"] }}{{ "%11.2f"|format(point["X-coord"]) }}{{ "%11.2f"|format(point["Value"]) }}
+   {{ point["Nr"] }} {{ "%11.2f"|format(point["X-coord"]) }} {{ "%11.2f"|format(point["Value"]) }}
 {% endfor %}
 {% endfor %}
 {% else %}
@@ -432,7 +432,7 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
 {% for load in stage.uniform_loads %}
 {{ "%10d"|format(loop.index) }} {{ load }}
 {% endfor %}
-{{ "%10d"|format(stage.surcharge_loads_left | length) }}{{ "%11d"|format(stage.surcharge_loads_right | length) }}   Surcharge loads in stage
+{{ "%10d"|format(stage.surcharge_loads_left | length) }} {{ "%11d"|format(stage.surcharge_loads_right | length) }}   Surcharge loads in stage
 {% for load in stage.surcharge_loads_left %}
 {{ "%10d"|format(loop.index) }} {{ load }}
 {% endfor %}

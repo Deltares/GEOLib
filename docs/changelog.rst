@@ -1,10 +1,15 @@
 Changelog
 =========
-- :release:`0.1.5 <unreleased, planned for Q2 2021>`
+- :release:`0.1.6 <unreleased, planned for Q2 2021>`
 - :bug:`-` Set correct number of lines in [RUN IDENTIFICATION] in DSettlement and DSheetPiling. By Maarten Betman of Boskalis. 👍
 
+- :release:`0.1.5 <2021-04-10>`
+- :bug:`-` Large values in DSheetPiling input, such as Anchor, could fuse together, producing invalid files.
+- :bug:`-` Removed monkeypatching of Pydantic Config, resulting in odd bugs with other packages such as GEOLib+
+- :bug:`-` Now parses names with spaces of layers, materials.
+
 - :release:`0.1.4 <2021-03-10>`
-- :feature:`-` Add support for D-Stability **20.3**. 🎉
+- :feature:`-` Add support for D-Stability **20.3**. 🎉 Note that this drops support for older DStability releases, the console release should follow soon.
 - :bug:`-` Fix consolidation validation for layer loads in DStability model. By Joost Dobken of van Oord. 👍
 - :bug:`-` Aligned and relaxed constraints of Anchor and Strut fields with the internal models used in DSheetPiling.
 - :bug:`-` Fix unused consolidations in DStability.

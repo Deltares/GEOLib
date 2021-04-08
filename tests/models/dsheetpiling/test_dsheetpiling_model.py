@@ -177,6 +177,50 @@ class TestDsheetPilingModel:
         if errors:
             pytest.fail(f"Failed with the following {errors}")
 
+    @pytest.mark.systemtest
+    @pytest.mark.parametrize(
+        "filename",
+        [pytest.param(Path("bm1-1.shi"), id="Input file")],
+    )
+    def test_writing_anchors_large_values(self, filename: Path):
+        """Test for bug in which very large values overlapped eachother
+        in the .shi output, resulting in an invalid file.
+        """
+
+        # 1. Set up test data
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_file = test_folder / filename
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_file = output_test_folder / filename
+        ds = DSheetPilingModel()
+
+        # 2. Verify initial expectations
+        assert test_file.is_file()
+        if output_test_file.is_file():
+            os.remove(output_test_file)
+
+        # 3. Run test.
+        ds.parse(test_file)
+        stage_id = ds.add_stage(
+            name="New Stage",
+            passive_side=PassiveSide.DSHEETPILING_DETERMINED,
+            method_left=LateralEarthPressureMethodStage.KA_KO_KP,
+            method_right=LateralEarthPressureMethodStage.KA_KO_KP,
+            pile_top_displacement=0.01,
+        )
+        anchor = Anchor(name="Test", level="-1", yield_force=1e10)
+        ds.add_anchor_or_strut(anchor, stage_id)
+        ds.serialize(output_test_file)
+
+        # 4.2. Read the generated data and make sure we can read
+        # the large values.
+        assert output_test_file.is_file()
+        output_datastructure = DSheetPilingModel().parse(output_test_file).input_data
+        print(output_datastructure.anchors)
+        anchorline = output_datastructure.anchors.split("\n")[2].strip()  # dataline
+        values = list(filter(lambda x: (len(x) != 0), anchorline.split(" ")))
+        assert len(values) == 10
+
     @pytest.mark.acceptance
     @only_teamcity
     def test_execute_console_successfully(self):
