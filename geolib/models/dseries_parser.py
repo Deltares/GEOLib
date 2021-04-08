@@ -916,6 +916,8 @@ class DSeriesTreeStructure(DSeriesStructure):
                     properties[field_name],
                     iteration_lines,
                 ) = cls.get_tree_structure_read_lines(parsed_tuple)
+            elif field == str:  # for names in structures
+                properties[field_name] = " ".join(text_lines[lines_read]).strip()
             else:
                 properties[field_name] = get_line_property_value(
                     text_lines[lines_read][0], reversed_key=True

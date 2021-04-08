@@ -193,7 +193,9 @@ class TestInternalDSeriesListStructureCollections:
         collection_type: DSeriesTreeStructureCollection,
         structure_type: DSeriesTreeStructure,
     ):
-        # 1. Define test data.
+        # TODO Refactor test to test more relevant use cases (such as names)
+        # than self generated ones that are always string.
+        # 1. Define test data
         parsed_collection: DSettlementStructure = None
         structure_content = get_structure_collection_content(structure_type, 4)
         text = generate_collection_text(structure_content)
@@ -226,9 +228,10 @@ class TestInternalDSeriesListStructureCollections:
                     parsed_values = [str(value) for value in property_value]
                 else:
                     parsed_values = str(property_value)
-                assert parsed_values == structure_content[structure_id][prop_idx], (
-                    ""
-                    + f"Structure {structure_id}, "
-                    + f"parsed values {parsed_values} "
-                    + f"do not match expected {structure_content[structure_id]}."
-                )
+                for a, b in zip(parsed_values, structure_content[structure_id][prop_idx]):
+                    assert b.startswith(a), (
+                        ""
+                        + f"Structure {structure_id}, "
+                        + f"parsed values {parsed_values} "
+                        + f"do not match expected {structure_content[structure_id]}."
+                    )

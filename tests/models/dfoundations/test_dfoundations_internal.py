@@ -49,7 +49,7 @@ class TestInternalInputDFoundations:
 
         # 3. Verify final expectations.
         assert parsed_layer
-        assert parsed_layer.name == "Layer"
+        assert parsed_layer.name == layer_name
         assert parsed_layer.material == material
         assert parsed_layer.top_level == top_level
         assert parsed_layer.excess_pore_pressure_top == excess_top
@@ -62,8 +62,8 @@ class TestInternalInputDFoundations:
         # 1. Define test data.
         text_to_parse = (
             ""
-            + "FUGBEN1\n"
-            + "0 : Matching CPT = FUGBEN1\n"
+            + "FUGBEN 1\n"
+            + "0 : Matching CPT = FUGBEN 1\n"
             + "2.50 : X coordinate [m]\n"
             + "15.00 : Y coordinate [m]\n"
             + "-1.00 : Phreatic level [m]\n"
@@ -95,6 +95,7 @@ class TestInternalInputDFoundations:
 
         # 3. Verify final expectations.
         assert parsed_profile
+        assert parsed_profile.name == "FUGBEN 1"
         assert len(parsed_profile.layers) == 1
 
     @pytest.mark.integrationtest
@@ -151,8 +152,16 @@ class TestInternalInputDFoundations:
     @pytest.mark.parametrize(
         "model, soilgamdryvalue",
         [
-            pytest.param("TENSION_PILES", 17, id="Tension default soils",),
-            pytest.param("BEARING_PILES", 18, id="Bearing default soils",),
+            pytest.param(
+                "TENSION_PILES",
+                17,
+                id="Tension default soils",
+            ),
+            pytest.param(
+                "BEARING_PILES",
+                18,
+                id="Bearing default soils",
+            ),
         ],
     )
     def test_default_soils_generated_model_specific(self, model, soilgamdryvalue):

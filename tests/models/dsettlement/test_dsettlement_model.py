@@ -649,6 +649,18 @@ class TestDSettlementModel:
         )
         assert id_a == id_b
 
+    @pytest.mark.integrationtest
+    def test_parse_soil_name_spaces(self):
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        ds = DSettlementModel()
+        ds.parse(test_filepath)
+
+        # Assert correct parsing of soil name with spaces
+        assert (
+            ds.datastructure.soil_collection.soil[0].name
+            == ds.datastructure.geometry_data.layers.layers[0].material
+        )
+
     @pytest.mark.systemtest
     def test_add_layer_serialize(self):
         # setup data

@@ -115,7 +115,7 @@ class TestParserUtil:
 
 
 class DummyTreeStructure(DSeriesTreeStructure):
-    simple_property: str
+    simple_property: int
     list_property: List[int]
 
 
@@ -202,7 +202,7 @@ class TestDSeriesTreeStructure:
     def test_given_linesofproperties_when_parse_then_creates_class_with_properties(self):
         # 1. Set up test data.
         text_lines = [["2"], ["2"], ["4", "2"]]
-        expected_id = "2"
+        expected_id = 2
         expected_values = [4, 2]
 
         # 2. Run test.
@@ -227,7 +227,7 @@ class TestDSeriesTreeStructure:
         self, list_size: int
     ):
         # 1. Set up test data
-        single_property_value = "dummy_id"
+        single_property_value = "123"
         max_line_elements = 10
         values = [randint(0, 100) for idx in range(1, list_size)]
         text_to_parse = (
@@ -248,7 +248,7 @@ class TestDSeriesTreeStructure:
 
         # 3. Verify final expectation
         assert isinstance(parsed_structure, DSeriesTreeStructure)
-        assert parsed_structure.simple_property == single_property_value
+        assert str(parsed_structure.simple_property) == single_property_value
         assert (
             parsed_structure.list_property == values
         ), "Parsed values don't match expectations."
@@ -266,7 +266,7 @@ class TestDSeriesTreeStructure:
         self, list_size: int
     ):
         # 1. Set up test data
-        single_property_value = "dummy_id"
+        single_property_value = "123"
         max_line_elements = 10
         values = [randint(0, 100) for idx in range(1, list_size)]
         step_values = [
@@ -286,7 +286,7 @@ class TestDSeriesTreeStructure:
         # 3. Verify final expectation
         assert isinstance(parsed_structure, DSeriesTreeStructure)
         assert read_lines == len(text_lines_to_parse)
-        assert parsed_structure.simple_property == single_property_value
+        assert str(parsed_structure.simple_property) == single_property_value
         assert (
             parsed_structure.list_property == values
         ), "Parsed values don't match expectations."
@@ -384,9 +384,9 @@ class TestDSeriesTreeStructureCollection:
         for parsed_structure in parsed_dict_collection["tabbedtreestructures"]:
             parsed_as_dict = dict(parsed_structure)
             structure_id = parsed_as_dict["simple_property"]
-            assert structure_content[structure_id] == parsed_as_dict["list_property"], (
-                "" + f"Structure {structure_id} has not been parsed correctly."
-            )
+            assert (
+                structure_content[str(structure_id)] == parsed_as_dict["list_property"]
+            ), ("" + f"Structure {structure_id} has not been parsed correctly.")
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
