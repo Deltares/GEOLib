@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import Optional, Union
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic.types import confloat, conint
 
 from .settings import (
@@ -17,8 +17,8 @@ from .settings import (
 )
 
 
-class CalculationOptionsPerStage(DataModel):
-    """ Calculation options are needed when a verification calculation is performed with method B.
+class CalculationOptionsPerStage(BaseDataClass):
+    """Calculation options are needed when a verification calculation is performed with method B.
     The user can specify a different partial factor set for each of the stages. This input is optional
     when another type of calculation is performed.
     Arguments:
@@ -32,9 +32,9 @@ class CalculationOptionsPerStage(DataModel):
     ] = None
 
 
-class CalculationOptions(DataModel, metaclass=ABCMeta):
+class CalculationOptions(BaseDataClass, metaclass=ABCMeta):
     """Base class for all calculation options.
-    
+
     Arguments:
      calc_first_stage_initial: This option determines equal neutral stresses at both sides, for initially non-horizontal surfaces or initial surcharges.
      calc_minor_nodes_on: Select either the faster, classic, coarse element determination (False) of active and passive pressures, or the more accurate fine element determination(True).
@@ -94,26 +94,32 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     cur_stability_stage: conint(ge=0) = 0
     overall_stability_type: DesignType = DesignType.REPRESENTATIVE
     stability_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
-    stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
-    stability_ec7_b_partial_factor_set: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
+    stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
+    stability_ec7_b_partial_factor_set: PartialFactorSetEC7NADB = (
+        PartialFactorSetEC7NADB.SET1
+    )
     stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
 
 
 class KranzAnchorStrengthCalculationOptions(CalculationOptions):
     """Kranz anchor strength calculation selected in Start Calculation
     window.
-    
+
     Arguments:
      cur_anchor_force_stage: Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.
     """
 
-    input_calculation_type: CalculationType = CalculationType.CHARACTERISTIC_KRANZ_ANCHOR_STRENGTH
+    input_calculation_type: CalculationType = (
+        CalculationType.CHARACTERISTIC_KRANZ_ANCHOR_STRENGTH
+    )
     cur_anchor_force_stage: conint(ge=0) = 0
 
 
 class StandardCalculationOptions(CalculationOptions):
     """Standard calculation selected in Start Calculation window.
-    
+
     Arguments:
      calc_auto_lambdas_on: When True Automatic leaves the values of the lateral earth pressure ratios that are calculated by the Culmann (c, phi, delta) method as they are.
     """
@@ -124,7 +130,7 @@ class StandardCalculationOptions(CalculationOptions):
 
 class VerifyCalculationOptions(CalculationOptions):
     """Verify sheet pile calculation selected in Start Calculation window.
-    
+
     Arguments:
      verify_type: Select partial factor set
      eurocode_partial_factor_set: Select partial factor set
@@ -146,7 +152,9 @@ class VerifyCalculationOptions(CalculationOptions):
     eurocode_partial_factor_set: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocode_overall_stability: bool = False
     ec7_nl_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    ec7_nl_overall_partial_factor_set: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    ec7_nl_overall_partial_factor_set: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     ec7_nl_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     ec7_nad_nl_overall_stability: bool = False
     ec7_b_overall_stability: bool = False
@@ -191,9 +199,17 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     design_pile_length_decrement: confloat(ge=0.01, le=10) = 0.01
     design_type: DesignType = DesignType.REPRESENTATIVE
     design_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
-    design_partial_factor_set_ec7_nad_nl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
-    design_ec7_nl_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    design_partial_factor_set_ec7_nad_b: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
-    design_ec7_b_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    design_partial_factor_set_ec7_nad_nl: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
+    design_ec7_nl_method: PartialFactorCalculationType = (
+        PartialFactorCalculationType.METHODA
+    )
+    design_partial_factor_set_ec7_nad_b: PartialFactorSetEC7NADB = (
+        PartialFactorSetEC7NADB.SET1
+    )
+    design_ec7_b_method: PartialFactorCalculationType = (
+        PartialFactorCalculationType.METHODA
+    )
     design_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     design_cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic import confloat, conlist, constr, validator
 
 from geolib.geometry import Point
@@ -9,7 +9,7 @@ from .internal import Surface as InternalSurface
 from .settings import DistributionType
 
 
-class Surface(DataModel):
+class Surface(BaseDataClass):
     """Surface.
 
     Args:

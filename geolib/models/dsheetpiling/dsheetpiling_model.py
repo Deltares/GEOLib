@@ -3,7 +3,7 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import Any, List, Optional, Type, Union
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic import FilePath, PositiveFloat
 from pydantic.types import confloat, conint
 
@@ -56,7 +56,7 @@ from .surface import Surface
 from .water_level import WaterLevel
 
 
-class BaseModelType(DataModel, metaclass=ABCMeta):
+class BaseModelType(BaseDataClass, metaclass=ABCMeta):
     """Base Class for Model types (Pile, Sheet, Wall)."""
 
     @property

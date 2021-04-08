@@ -13,7 +13,7 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
 from pydantic.error_wrappers import ValidationError
 from requests.auth import HTTPBasicAuth
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 meta = MetaData()
 
 
-class BaseModel(DataClass, abc.ABC):
+class BaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path]
     datastructure: Optional[BaseModelStructure]
     meta: MetaData = MetaData()
@@ -176,11 +176,11 @@ class BaseModel(DataClass, abc.ABC):
         return self.datastructure.results
 
 
-class BaseModelList(DataClass):
+class BaseModelList(BaseDataClass):
     """Hold multiple models that can be executed in parallel.
 
     Note that all models need to have a unique filename
-    otherwise they will overwrite eachother. This also helps with 
+    otherwise they will overwrite eachother. This also helps with
     identifying them later."""
 
     models: List[BaseModel]

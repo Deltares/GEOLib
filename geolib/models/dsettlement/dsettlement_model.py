@@ -5,8 +5,8 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import List, Optional, Type, Union
 
-from pydantic import BaseModel as DataClass
-from pydantic import FilePath
+from geolib.models import BaseDataClass
+from pydantic import FilePath, validate_arguments
 from pydantic.types import PositiveInt, confloat, conint, constr
 
 from geolib.geometry import Point
@@ -56,9 +56,6 @@ from .internal import (
 )
 
 logger = logging.getLogger(__name__)
-
-
-DataClass.Config.validate_assignment = True
 
 
 class DSettlementModel(BaseModel):
@@ -258,7 +255,7 @@ class DSettlementModel(BaseModel):
             reliability_type : Select one of the following methods
 
                 - SettlementsDeterministic: a regular deterministic settlement analysis along all verticals, based on fixed mean values of the parameters.
-                - BandWidthOfSettlementsFOSM: Quick and approximate determination of the bandwidth and the influencing factors (parameter 
+                - BandWidthOfSettlementsFOSM: Quick and approximate determination of the bandwidth and the influencing factors (parameter
                     sensitivity) for the total settlements along one vertical. The determination is executed at user defined time points and at the time points
                     of measurements. Calculation time will increase with an increasing number of stochastic parameters.
                 - ProbabilityOfFailureFORM: Iterative determination of the reliability index, bandwidth and influencing factors for the residual
@@ -274,13 +271,15 @@ class DSettlementModel(BaseModel):
 
         """
         self.datastructure.check_x_in_vertical(point_of_vertical=point_of_vertical)
-        self.datastructure.probabilistic_data = self.datastructure.probabilistic_data.set_probabilistic_data(
-            point_of_vertical=point_of_vertical,
-            residual_settlement=residual_settlement,
-            maximum_number_of_samples=maximum_number_of_samples,
-            maximum_iterations=maximum_iterations,
-            reliability_type=reliability_type,
-            is_reliability_calculation=is_reliability_calculation,
+        self.datastructure.probabilistic_data = (
+            self.datastructure.probabilistic_data.set_probabilistic_data(
+                point_of_vertical=point_of_vertical,
+                residual_settlement=residual_settlement,
+                maximum_number_of_samples=maximum_number_of_samples,
+                maximum_iterations=maximum_iterations,
+                reliability_type=reliability_type,
+                is_reliability_calculation=is_reliability_calculation,
+            )
         )
 
     # 1.2.1 Soil profile

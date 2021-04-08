@@ -1,7 +1,7 @@
 from enum import IntEnum
 from typing import Optional
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic import PositiveFloat, confloat, constr
 
 from .internal import Anchor as InternalAnchor
@@ -10,7 +10,7 @@ from .internal import Support as InternalSupport
 from .settings import Side
 
 
-class Anchor(DataModel):
+class Anchor(BaseDataClass):
     """Anchor. This option is not available for SinglePileModelType.
 
     Args:
@@ -39,7 +39,7 @@ class Anchor(DataModel):
         return InternalAnchor(**self.dict(exclude_none=True))
 
 
-class Strut(DataModel):
+class Strut(BaseDataClass):
     """Strut. This option is not available for SinglePileModelType.
 
     Args:
@@ -74,7 +74,7 @@ class SupportType(IntEnum):
     TRANSLATION_AND_ROTATION = 3
 
 
-class SpringSupport(DataModel):
+class SpringSupport(BaseDataClass):
     """Spring support."""
 
     name: constr(min_length=1, max_length=50)
@@ -86,7 +86,7 @@ class SpringSupport(DataModel):
         return InternalSupport(**self.dict())
 
 
-class RigidSupport(DataModel):
+class RigidSupport(BaseDataClass):
     """Rigid support."""
 
     name: constr(min_length=1, max_length=50)

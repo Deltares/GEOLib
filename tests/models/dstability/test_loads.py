@@ -274,7 +274,7 @@ class TestLineLoad:
 class TestDStabilityModelAddLoad:
     @pytest.mark.unittest
     def test_add_invalid_load_raises_value_error(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
 
         class NotaDStabilityLoad:
             pass
@@ -302,7 +302,7 @@ class TestDStabilityModelAddLoad:
     def test_add_valid_uniform_load(
         self, _get_uniform_load, _get_consolidations, use_consolidations, stage_id
     ):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         if stage_id is None:
             # TODO Fix this logic in the model itself?
             stage_id = dstability_model.current_stage
@@ -364,7 +364,7 @@ class TestDStabilityModelAddSoilLayerConsolidations:
     def test_add_valid_layer_load(
         self, _get_consolidations, use_consolidations, stage_id
     ):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         stage_id = stage_id or 0
         loads_id = 10
         soil_layer_id_a = 15

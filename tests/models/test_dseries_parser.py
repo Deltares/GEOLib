@@ -1,4 +1,5 @@
 import os
+import logging
 from random import randint
 from typing import Dict, List, Tuple, Type, _GenericAlias, get_type_hints
 
@@ -7,6 +8,7 @@ from pydantic.error_wrappers import ValidationError
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
+    DSerieVersion,
     DSeriesInlineMappedProperties,
     DSeriesInlineProperties,
     DSeriesInlineReversedProperties,
@@ -891,8 +893,10 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         expected_dict = {"property_1": "42", "property_2": "Lorem"}
         input_properties = [" Property 1 = 42 ", "Property 2: Lorem ipsum  "]
         # 2. Run test
-        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
-            input_properties
+        output_dict = (
+            DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+                input_properties
+            )
         )
 
         # 3. Verify final expectations
@@ -906,8 +910,10 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         expected_dict = {"property_1": "42"}
         input_properties = [" Property 1 = 42 ", "Property 1: 24"]
         # 2. Run test
-        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
-            input_properties
+        output_dict = (
+            DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+                input_properties
+            )
         )
 
         # 3. Verify final expectations
@@ -990,7 +996,9 @@ class TestDSeriesStructureCollection:
         assert str(e_info.value) == expected_error
 
     @pytest.mark.unittest
-    def test_given_valid_collection_text_when_parse_text_then_returns_structure(self,):
+    def test_given_valid_collection_text_when_parse_text_then_returns_structure(
+        self,
+    ):
         class inline_properties_structure(DSeriesInlineProperties):
             property_dummy: int
 
@@ -1016,3 +1024,18 @@ class TestDSeriesStructureCollection:
         assert len(parsed_collection.data) == 2
         assert parsed_collection.data[0].property_dummy == 42
         assert parsed_collection.data[1].property_dummy == 24
+
+
+class TestDSeriesVersion:
+    @pytest.mark.unittest
+    def test_dserie_version(self, caplog):
+        class Version(DSerieVersion):
+            a: int = 1001
+
+        # When we parse a file with a default version, no warning is given
+        Version(a=1001)
+        assert "The version of the input file is unsupported" not in caplog.text
+
+        # But when we parse a version other than we support, we give a warning.
+        Version(a=1000)
+        assert "The version of the input file is unsupported" in caplog.text

@@ -3,7 +3,7 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 from pydantic.types import PositiveInt, confloat, conint, constr
 
 from geolib.models.base_model_structure import BaseModelStructure
@@ -18,6 +18,7 @@ from geolib.models.dseries_parser import (
     DSeriesStructureCollection,
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
+    DSerieVersion,
 )
 from geolib.models.internal import Bool
 
@@ -31,9 +32,6 @@ from .internal_soil import Soil
 
 logger = logging.getLogger(__name__)
 
-
-DataClass.Config.arbitrary_types_allowed = True
-DataClass.Config.validate_assignment = True
 
 UNKNOWN = "Unknown"
 
@@ -244,7 +242,9 @@ class Profile(DSeriesTreeStructure):
     top_tension_zone: float = 0.0
 
     # Excavation part
-    reduction_of_core_resistance: ReductionCoreResistanceEnum = ReductionCoreResistanceEnum.SAFE
+    reduction_of_core_resistance: ReductionCoreResistanceEnum = (
+        ReductionCoreResistanceEnum.SAFE
+    )
     excavation_level: float
     excavation_width_infinite: Bool = Bool.TRUE
     excavation_length_infinite: Bool = Bool.TRUE
@@ -265,7 +265,7 @@ class Profiles(DSeriesTreeStructureCollection):
         return profile
 
 
-class InternalPile(DataClass):
+class InternalPile(BaseDataClass):
     # Only share method here, as shared properties
     # will not be picked up by parsers/pydantic
     def __eq__(self, other):
@@ -323,10 +323,10 @@ class ExcavationType(IntEnum):
 
 
 class TimeOrderType(IntEnum):
-    """ Use this option to specify the execution time of CPTs relative to the pile installation.
+    """Use this option to specify the execution time of CPTs relative to the pile installation.
     This information is needed to determine whether the problem qualifies for certain exceptions made in NEN 9997-1:2016.
 
-   """
+    """
 
     CPT_EXCAVATION_INSTALL = 1
     INSTALL_CPT_EXCAVATION = 2
@@ -529,7 +529,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
 
     @staticmethod
     def find_toggle(field):
-        """Transform given field like `factor_gamma_s_bpb` 
+        """Transform given field like `factor_gamma_s_bpb`
         into `is_gamma_s_bpb_overruled`.
         """
         return "is_" + field.replace("factor_", "") + "_overruled"
@@ -568,7 +568,9 @@ class SubCalculationType(IntEnum):
 
 class CalculationType(DFoundationsInlineProperties):
     main_calculationtype: MainCalculationType = MainCalculationType.PRELIMINARY_DESIGN
-    sub_calculationtype: SubCalculationType = SubCalculationType.INDICATION_BEARING_CAPACITY
+    sub_calculationtype: SubCalculationType = (
+        SubCalculationType.INDICATION_BEARING_CAPACITY
+    )
 
     def __init__(self, *args, **kwargs):
         # Set maintype automatically based on subtype
@@ -595,19 +597,9 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
     net_bearing_capacity: Optional[int] = 0  # [kN]
 
 
-class Version(DSeriesInlineMappedProperties):
+class Version(DSerieVersion):
     soil: int = 1005
     d__foundations: int = 1015
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for k, v in self.dict().items():
-            if self.__field_defaults__.get(k) != v:
-                logger.warning(
-                    """The version of the input file is unsupported.
-                Check the documentation on how to prevent this warning in the future."""
-                )
-                break
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
@@ -779,7 +771,7 @@ class DFoundationsNenPileResults(DFoundationsInlineProperties):
 
     @classmethod
     def header_lines(cls) -> int:
-        """ Tells to the parent class that this structure text comes
+        """Tells to the parent class that this structure text comes
         with three lines of header text that can be skipped.
 
         Returns:

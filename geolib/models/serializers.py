@@ -1,10 +1,10 @@
 from typing import Any, Dict
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 from pydantic import FilePath
 
 
-class BaseSerializer(DataClass):
+class BaseSerializer(BaseDataClass):
     """Basic class for serializers."""
 
     ds: Dict[str, Any]

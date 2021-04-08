@@ -19,7 +19,7 @@ from typing import (
     get_type_hints,
 )
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass as DataClass
 from pydantic import FilePath
 
 from geolib.errors import ParserError
@@ -56,14 +56,14 @@ class DSeriesStructure(BaseModelStructure):
         ```
         and we receive field_a as a `str`, we check the attributes
         of `OtherClass` to see if it (also) has a `is_parseable` method.
-        If so, we convert it from `str` to `OtherClass` using its 
+        If so, we convert it from `str` to `OtherClass` using its
         `parse_text` method.
 
         If `OtherClass` is a child of `DSeriesStructure`, this process
         is recursive.
 
-        Note that the heuristics of checking type hints such as 
-        `Optional` and `List` or `Union` are still archaic. 
+        Note that the heuristics of checking type hints such as
+        `Optional` and `List` or `Union` are still archaic.
         In later versions of Python this is improved.
         """
         # Remove fields that are None so defaults will be used
@@ -414,7 +414,7 @@ class DSerieMatrixStructure(DSeriesStructure):
         [GROUP]
         3
         1 2
-        1 2 
+        1 2
         1 2
         [END OF GROUP]
 
@@ -576,6 +576,18 @@ class DSeriesInlineMappedProperties(DSeriesInlineProperties):
         if unformatted_key:
             key = make_key(unformatted_key)
         return key, value
+
+
+class DSerieVersion(DSeriesInlineMappedProperties):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k, v in self.dict().items():
+            if self.__fields__.get(k).get_default() != v:
+                logger.warning(
+                    """The version of the input file is unsupported.
+                Check the documentation on how to prevent this warning in the future."""
+                )
+                break
 
 
 class DSeriesInlineReversedProperties(DSeriesInlineProperties):
@@ -1042,7 +1054,7 @@ class DSeriesTreeStructureCollection(DSeriesStructure):
 
     @classmethod
     def get_number_of_structures(cls, lines: List[List[str]]) -> int:
-        """Provides an overridable method that retrieves the number of 
+        """Provides an overridable method that retrieves the number of
         structures contained in the tree collection.
 
         Args:
@@ -1138,7 +1150,7 @@ class DSerieParser(BaseParser):
 
     @staticmethod
     def parse_group_as_dict(text_lines: str) -> Dict[str, str]:
-        """Parses a text with headers such as 
+        """Parses a text with headers such as
         [GROUP] and [END OF GROUP] into a dict.
 
         Arguments:
@@ -1169,7 +1181,7 @@ class DSerieParser(BaseParser):
     ) -> Iterable[Tuple[str, str]]:
         """Parses a text with headers such as [GROUP] and [END OF GROUP] and
         yields each property of the group as a Tuple[property name, value].
-        Because it is an iterable it may contain repeated elements. 
+        Because it is an iterable it may contain repeated elements.
         Delegating responsibility on what to do with such elements to the caller.
 
         Example:

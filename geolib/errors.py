@@ -1,6 +1,3 @@
-from pydantic import BaseModel as DataClass
-
-
 class GEOLibError(Exception):
     """Base GEOLib Exception class."""
 

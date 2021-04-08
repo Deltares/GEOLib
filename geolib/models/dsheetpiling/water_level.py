@@ -1,12 +1,12 @@
 from typing import Optional
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 
 from .internal import WaterLevel as InternalWaterLevel
 from .settings import DistributionType
 
 
-class WaterLevel(DataModel):
+class WaterLevel(BaseDataClass):
     name: str
     level: float
     distribution_type: DistributionType = DistributionType.NONE

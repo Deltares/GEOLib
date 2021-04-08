@@ -2,19 +2,17 @@ from enum import Enum, IntEnum
 from math import isfinite
 from typing import List, Optional, Union
 
-from pydantic import BaseModel, validator
-from pydantic.error_wrappers import ValidationError
+from pydantic import validator
 
 from geolib.geometry.one import Point
+from geolib.models import BaseDataClass
 
 from .soil_utils import Color
 
 
-class SoilBaseModel(BaseModel):
+class SoilBaseModel(BaseDataClass):
     class Config:
         extra = "forbid"
-        arbitrary_types_allowed = False
-        validate_on_assignment = True
 
     @validator("*")
     def fail_on_infinite(cls, v, values, field):

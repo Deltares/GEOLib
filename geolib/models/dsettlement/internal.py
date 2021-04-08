@@ -5,7 +5,7 @@ from math import isclose
 from operator import attrgetter
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 
 from geolib.geometry.one import Point
@@ -24,6 +24,7 @@ from geolib.models.dseries_parser import (
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
     DSeriesUnmappedNameProperties,
+    DSerieVersion,
 )
 from geolib.models.dsettlement.dsettlement_structures import (
     ComplexVerticalSubstructure,
@@ -43,18 +44,16 @@ from .drain_types import DrainGridType, DrainSchedule, DrainType
 logger = logging.getLogger(__name__)
 
 
-DataClass.Config.arbitrary_types_allowed = True
-
 TOLERANCE = 1e-10
 ZERO_ITEMS = "    0 = number of items"
 
 
 class DSeriePoint(DSeriesTreeStructure):
     """
-        Converting points from geolib co-ordinate system to the d-settlement UI
-        Internal setting of the geometry differs from API.
-        Here co-ordinate system is the same as in the the d-settlement UI.
-        So axis z of the geolib needs to be modified to y axis, which represents the depth.
+    Converting points from geolib co-ordinate system to the d-settlement UI
+    Internal setting of the geometry differs from API.
+    Here co-ordinate system is the same as in the the d-settlement UI.
+    So axis z of the geolib needs to be modified to y axis, which represents the depth.
     """
 
     id: PositiveInt
@@ -99,20 +98,10 @@ class SoilCollection(DSeriesStructureCollection):
         self.soil.append(soil)
 
 
-class Version(DSeriesInlineMappedProperties):
+class Version(DSerieVersion):
     soil: int = 1005
     geometry: int = 1000
     d__settlement: int = 1007
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for k, v in self.dict().items():
-            if self.__field_defaults__.get(k) != v:
-                logger.warning(
-                    """The version of the input file is unsupported.
-                Check the documentation on how to prevent this warning in the future."""
-                )
-                break
 
 
 class Points(DSeriesMatrixTreeStructureCollection):
@@ -389,7 +378,9 @@ class GeometryData(DSeriesStructure):
     points: Points = Points()
     curves: Curves = Curves()
     boundaries: Boundaries = Boundaries()
-    use_probabilistic_defaults_boundaries: UseProbabilisticDefaultsBoundaries = UseProbabilisticDefaultsBoundaries()
+    use_probabilistic_defaults_boundaries: UseProbabilisticDefaultsBoundaries = (
+        UseProbabilisticDefaultsBoundaries()
+    )
     stdv_boundaries: StdvBoundaries = StdvBoundaries()
     distribution_boundaries: DistributionBoundaries = DistributionBoundaries()
     piezo_lines: PiezoLines = PiezoLines()
@@ -447,10 +438,14 @@ class GeometryData(DSeriesStructure):
             self.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries,
         )
         self.stdv_boundaries.stdvboundaries = self.sort_based_on_new_indexes(
-            new_indexes, self.stdv_boundaries.stdvboundaries,
+            new_indexes,
+            self.stdv_boundaries.stdvboundaries,
         )
-        self.distribution_boundaries.distributionboundaries = self.sort_based_on_new_indexes(
-            new_indexes, self.distribution_boundaries.distributionboundaries,
+        self.distribution_boundaries.distributionboundaries = (
+            self.sort_based_on_new_indexes(
+                new_indexes,
+                self.distribution_boundaries.distributionboundaries,
+            )
         )
 
     def pre_process(self):
@@ -476,7 +471,7 @@ class GeometryData(DSeriesStructure):
         return self.layers[layer_id]
 
 
-class PointForLoad(DataClass):
+class PointForLoad(BaseDataClass):
     """Different from DSeriePoint as it does not
     belong in [POINTS]."""
 
@@ -488,7 +483,7 @@ class PointForLoad(DataClass):
         return cls(X=p.x, Y=p.z)
 
 
-class NonUniformLoad(DataClass):
+class NonUniformLoad(BaseDataClass):
     time: int = 0
     gammadry: float = 10
     gammawet: float = 10
@@ -513,7 +508,7 @@ class NonUniformLoads(DSeriesNoParseSubStructure):
             return None
 
 
-class WaterLoad(DataClass):
+class WaterLoad(BaseDataClass):
     name: str = ""
     time: int = 0
     phreatic_line: int = 1
@@ -557,7 +552,7 @@ class TypeOtherLoads(IntEnum):
     Tank = 4
 
 
-class LoadValuesTrapeziform(DataClass):
+class LoadValuesTrapeziform(BaseDataClass):
     gamma: float = 0
     height: float = 0
     xl: float = 0
@@ -567,7 +562,7 @@ class LoadValuesTrapeziform(DataClass):
     Yp: float = 0
 
 
-class LoadValuesCircular(DataClass):
+class LoadValuesCircular(BaseDataClass):
     weight: float = 0
     alpha: float = 0
     Xcp: float = 0
@@ -576,7 +571,7 @@ class LoadValuesCircular(DataClass):
     R: float = 0.01
 
 
-class LoadValuesRectangular(DataClass):
+class LoadValuesRectangular(BaseDataClass):
     weight: float = 0
     alpha: float = 0
     Xcp: float = 0
@@ -586,14 +581,14 @@ class LoadValuesRectangular(DataClass):
     zwidth: float = 0.01
 
 
-class LoadValuesUniform(DataClass):
+class LoadValuesUniform(BaseDataClass):
     unit_weight: float = 0
     gamma: float = 0
     height: float = 0
     y_application: float = 0
 
 
-class LoadValuesTank(DataClass):
+class LoadValuesTank(BaseDataClass):
     wallweight: float = 0
     internalweight: float = 0
     alpha: float = 0
@@ -604,7 +599,7 @@ class LoadValuesTank(DataClass):
     dWall: float = 0.01
 
 
-class OtherLoad(DataClass):
+class OtherLoad(BaseDataClass):
     load_type: TypeOtherLoads
     time: int = 0
     load_values_trapeziform: Optional[LoadValuesTrapeziform]
@@ -650,22 +645,17 @@ class StrainType(Enum):
     NATURAL = 1
 
 
-class ModelBool(Enum):
-    FALSE = 0
-    TRUE = 1
-
-
 class Model(DSeriesNoParseSubStructure):
     dimension: Dimension = Dimension.TWO_D
     consolidation_model: ConsolidationModel = ConsolidationModel.DARCY
     soil_model: SoilModel = SoilModel.NEN_KOPPEJAN
     strain_type: StrainType = StrainType.LINEAR
-    is_vertical_drains: ModelBool = ModelBool.FALSE
-    is_fit_for_settlement_plate: ModelBool = ModelBool.FALSE
-    is_probabilistic: ModelBool = ModelBool.FALSE
-    is_horizontal_displacements: ModelBool = ModelBool.FALSE
-    is_secondary_swelling: ModelBool = ModelBool.FALSE
-    is_waspan: ModelBool = ModelBool.FALSE
+    is_vertical_drains: Bool = Bool.FALSE
+    is_fit_for_settlement_plate: Bool = Bool.FALSE
+    is_probabilistic: Bool = Bool.FALSE
+    is_horizontal_displacements: Bool = Bool.FALSE
+    is_secondary_swelling: Bool = Bool.FALSE
+    is_waspan: Bool = Bool.FALSE
 
 
 class PreconPressureWithinLayer(Enum):
@@ -683,8 +673,12 @@ class DispersionConditionLayerBoundary(Enum):
 
 
 class DispersionConditionsLayerBoundaries(DSeriesNoParseSubStructure):
-    dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
-    dispersion_conditions_layer_boundaries_bottom: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
+    dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = (
+        DispersionConditionLayerBoundary.DRAINED
+    )
+    dispersion_conditions_layer_boundaries_bottom: DispersionConditionLayerBoundary = (
+        DispersionConditionLayerBoundary.DRAINED
+    )
 
 
 class StressDistributionSoil(Enum):
@@ -698,18 +692,24 @@ class StressDistributionLoads(Enum):
 
 
 class CalculationOptions(DSeriesNoParseSubStructure):
-    precon_pressure_within_layer: PreconPressureWithinLayer = PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
-    is_imaginary_surface: ModelBool = ModelBool.FALSE
+    precon_pressure_within_layer: PreconPressureWithinLayer = (
+        PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
+    )
+    is_imaginary_surface: Bool = Bool.FALSE
     imaginary_surface_layer: Optional[PositiveInt]
-    is_submerging: ModelBool = ModelBool.FALSE
-    use_end_time_for_fit: ModelBool = ModelBool.FALSE
-    is_maintain_profile: ModelBool = ModelBool.FALSE
+    is_submerging: Bool = Bool.FALSE
+    use_end_time_for_fit: Bool = Bool.FALSE
+    is_maintain_profile: Bool = Bool.FALSE
     maintain_profile_material_name: str = "Superelevation"
     maintain_profile_time: conint(ge=0, le=100000) = 0
     maintain_profile_gamma_dry: confloat(ge=-100, le=100) = 10
     maintain_profile_gamma_wet: confloat(ge=-100, le=100) = 10
-    dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
-    dispersion_conditions_layer_boundaries_bottom: DispersionConditionLayerBoundary = DispersionConditionLayerBoundary.DRAINED
+    dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = (
+        DispersionConditionLayerBoundary.DRAINED
+    )
+    dispersion_conditions_layer_boundaries_bottom: DispersionConditionLayerBoundary = (
+        DispersionConditionLayerBoundary.DRAINED
+    )
     stress_distribution_soil: StressDistributionSoil = StressDistributionSoil.BUISMAN
     stress_distribution_loads: StressDistributionLoads = StressDistributionLoads.SIMULATE
     iteration_stop_criteria_submerging: confloat(ge=0.0, le=1.0) = 0.0
@@ -722,16 +722,16 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     end_of_consolidation: conint(ge=1, le=100000) = 100000
     number_of_subtime_steps: conint(ge=1, le=100) = 2
     reference_time: confloat(ge=0.001, le=1000000) = 1
-    dissipation: ModelBool = ModelBool.FALSE
+    dissipation: Bool = Bool.FALSE
     x_coord_dissipation: float = 0.0
-    use_fit_factors: ModelBool = ModelBool.FALSE
+    use_fit_factors: Bool = Bool.FALSE
     x_coord_fit: float = 0.0
-    is_predict_settlements_omitting_additional_load_steps: ModelBool = ModelBool.FALSE
+    is_predict_settlements_omitting_additional_load_steps: Bool = Bool.FALSE
 
     @classmethod
     def set_options(cls, **kwargs):
         cls_instance = cls(**kwargs)
-        if cls_instance.is_imaginary_surface == ModelBool.FALSE:
+        if cls_instance.is_imaginary_surface == Bool.FALSE:
             cls_instance.imaginary_surface_layer = None
         elif cls_instance.imaginary_surface_layer is None:
             cls_instance.imaginary_surface_layer = 1
@@ -779,7 +779,9 @@ class ProbabilisticData(DSeriesInlineMappedProperties):
     residual_settlement: confloat(ge=0, le=1000) = 1
     maximum_drawings: conint(ge=0, le=999999999) = 100
     maximum_iterations: conint(ge=1, le=50) = 15
-    reliability_type: InternalProbabilisticCalculationType = InternalProbabilisticCalculationType.FOSMOrDeterministic
+    reliability_type: InternalProbabilisticCalculationType = (
+        InternalProbabilisticCalculationType.FOSMOrDeterministic
+    )
     is_reliability_calculation: Bool = Bool.FALSE
 
     def set_probabilistic_data(

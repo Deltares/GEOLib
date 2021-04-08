@@ -13,7 +13,7 @@ from tests.utils import TestUtils
 class TestDStabilityGeometry:
     @pytest.mark.unittest
     def test_dstability_add_layer_without_soil_raises(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         points = [
             Point(x=-20.0, z=2.0),
             Point(x=50.0, z=2.0),
@@ -26,7 +26,7 @@ class TestDStabilityGeometry:
 
     @pytest.mark.unittest
     def test_dstability_add_layer_with_soil(self):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         points = [
             Point(x=-20.0, z=2.0),
             Point(x=50.0, z=2.0),
@@ -45,7 +45,7 @@ class TestDStabilityGeometry:
     def test_given_data_contains_num_soillayers(self, dir_path: str):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
@@ -62,7 +62,7 @@ class TestDStabilityGeometry:
     def test_given_data_soillayer_polygon_points_equal(self, dir_path: str):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)

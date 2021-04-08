@@ -2,7 +2,8 @@ import abc
 from enum import Enum
 from typing import Dict, List, Optional, Type, Union
 
-from pydantic import BaseModel, PositiveInt, confloat
+from pydantic import PositiveInt, confloat
+from geolib.models import BaseDataClass
 
 from ...geometry.one import Point
 from ...utils import snake_to_camel
@@ -29,7 +30,7 @@ from .internal import (
 )
 
 
-class DStabilityObject(BaseModel, metaclass=abc.ABCMeta):
+class DStabilityObject(BaseDataClass, metaclass=abc.ABCMeta):
     """Base Class for objects in the analysis module."""
 
     @abc.abstractmethod
@@ -51,7 +52,7 @@ class DStabilityCircle(DStabilityObject):
 
     Args:
         center (Point): Center of the circle.
-        radius (float): Radius of the circle.    
+        radius (float): Radius of the circle.
     """
 
     center: Point
@@ -175,7 +176,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
 
     Args:
         extrapolate_search_space (bool): Extrapolate the search space, defaults to True
-        search_grid (DStabilitySearchGrid): 
+        search_grid (DStabilitySearchGrid):
         slipe_plane_constraints (DStabilitySlipPlaneConstraints):
         bottom_tangent_line_z (float):
         number_of_tangent_lines (int):
@@ -185,7 +186,9 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
     _analysis_type: AnalysisType = AnalysisType.BISHOP_BRUTE_FORCE
     extrapolate_search_space: bool = True
     search_grid: DStabilitySearchGrid
-    slipe_plane_constraints: DStabilitySlipPlaneConstraints = DStabilitySlipPlaneConstraints()
+    slipe_plane_constraints: DStabilitySlipPlaneConstraints = (
+        DStabilitySlipPlaneConstraints()
+    )
     bottom_tangent_line_z: float
     number_of_tangent_lines: PositiveInt
     space_tangent_lines: confloat(gt=0)
@@ -235,7 +238,9 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
     options_type: OptionsType = OptionsType.DEFAULT
     slip_plane_a: List[Point]
     slip_plane_b: List[Point]
-    slipe_plane_constraints: DStabilityGeneticSlipPlaneConstraints = DStabilityGeneticSlipPlaneConstraints()
+    slipe_plane_constraints: DStabilityGeneticSlipPlaneConstraints = (
+        DStabilityGeneticSlipPlaneConstraints()
+    )
 
     def _to_internal_datastructure(self) -> PersistableSpencerGeneticSettings:
         return PersistableSpencerGeneticSettings(
@@ -292,7 +297,9 @@ class DStabilityUpliftVanParticleSwarmAnalysisMethod(DStabilityAnalysisMethod):
     options_type: OptionsType = OptionsType.DEFAULT
     search_area_a: DStabilitySearchArea
     search_area_b: DStabilitySearchArea
-    slip_plane_constraints: DStabilitySlipPlaneConstraints = DStabilitySlipPlaneConstraints()
+    slip_plane_constraints: DStabilitySlipPlaneConstraints = (
+        DStabilitySlipPlaneConstraints()
+    )
     tangent_area_height: float
     tangent_area_top_z: float
 

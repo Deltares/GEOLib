@@ -5,8 +5,9 @@ This module handles the three types of reinforcements in DStability.
 import abc
 from typing import List, Tuple
 
-from pydantic import BaseModel, NoneStr, confloat
+from pydantic import NoneStr, confloat
 
+from geolib.models import BaseDataClass
 from ...geometry.one import Point
 from ...utils import snake_to_camel
 from .internal import (
@@ -18,7 +19,7 @@ from .internal import (
 )
 
 
-class DStabilityReinforcement(BaseModel, metaclass=abc.ABCMeta):
+class DStabilityReinforcement(BaseDataClass, metaclass=abc.ABCMeta):
     """Base Class for Reinforcements."""
 
     label: NoneStr = None
@@ -36,14 +37,18 @@ class Nail(DStabilityReinforcement):
     horizontal_spacing: float = 0.0
     length: confloat(gt=0) = 3.0
     diameter: confloat(gt=0) = 0.1
-    grout_diameter: confloat(gt=0) = 0.0
+    grout_diameter: confloat(gt=0) = 0.1
     critical_angle: float = 0.0
     max_pull_force: float = 0.0
     plastic_moment: float = 0.0
-    bending_stiffness: confloat(gt=0) = 0.0
+    bending_stiffness: confloat(gt=0) = 0.1
     use_facing: bool = False
-    use_lateral_stress: bool = False  # TODO set on wether or not lateralstresses are provided?
-    use_shear_stress: bool = False  # TODO set on wether or not shearstresses are provided?
+    use_lateral_stress: bool = (
+        False  # TODO set on wether or not lateralstresses are provided?
+    )
+    use_shear_stress: bool = (
+        False  # TODO set on wether or not shearstresses are provided?
+    )
     lateral_stresses: List[Tuple[float, float]] = []
     shear_stresses: List[Tuple[float, float]] = []
 

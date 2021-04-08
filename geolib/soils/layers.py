@@ -6,13 +6,13 @@ D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 from typing import List
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 
 from geolib.geometry.one import Point
 from geolib.soils import Soil
 
 
-class CPT(DataModel):
+class CPT(BaseDataClass):
     """Internal Placeholder CPT measurements as used in D-Foundations/D-Sheetpiling.
 
     It is here because input files can contain CPTs coupled to a Profile.
@@ -25,11 +25,11 @@ class CPT(DataModel):
     qc: List[float]
 
 
-class CPTRule(DataModel):
+class CPTRule(BaseDataClass):
     """Placeholder class for CPT interpretation options."""
 
 
-class ProfileLayer(DataModel):
+class ProfileLayer(BaseDataClass):
     """Layer in a Profile. Note that we add the vertical location of
     the layer with a Point class.
 
@@ -46,7 +46,7 @@ class ProfileLayer(DataModel):
     reduction_cone_resistance: float
 
 
-class Profile(DataModel):
+class Profile(BaseDataClass):
     """D-Foundations Profile.
 
     .. todo::

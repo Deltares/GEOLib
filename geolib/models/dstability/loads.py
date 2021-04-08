@@ -4,7 +4,8 @@ This module handles the four types of loads in DStability.
 import abc
 from typing import List, Optional
 
-from pydantic import BaseModel, NoneStr, confloat, validator
+from pydantic import NoneStr, confloat, validator
+from geolib.models import BaseDataClass
 
 from ...geometry.one import Point
 from .internal import (
@@ -15,7 +16,7 @@ from .internal import (
 )
 
 
-class DStabilityLoad(BaseModel):
+class DStabilityLoad(BaseDataClass):
     """Base Class for Loads."""
 
     label: NoneStr
@@ -25,7 +26,7 @@ class DStabilityLoad(BaseModel):
         raise NotImplementedError
 
 
-class Consolidation(BaseModel):
+class Consolidation(BaseDataClass):
     degree: confloat(ge=0, le=100) = 100
     layer_id: int
 

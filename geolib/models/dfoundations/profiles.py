@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 
 from geolib.geometry.one import Point
 from geolib.models.internal import Bool
@@ -11,7 +11,7 @@ from .internal import Profile as InternalProfile
 from .internal import ReductionCoreResistanceEnum, TimeOrderType
 
 
-class CPT(DataClass):
+class CPT(BaseDataClass):
     """TODO To be expanded/generalized in GEOLib+
 
     measure_data need to be provided as a list of dicts::
@@ -55,20 +55,22 @@ class CPT(DataClass):
         return InternalCPT(**kwargs)
 
 
-class Excavation(DataClass):
+class Excavation(BaseDataClass):
     """Excavation class.
 
     Note that using an excavation level will
     override all previous set excavation levels in the same model."""
 
-    reduction_of_core_resistance: ReductionCoreResistanceEnum = ReductionCoreResistanceEnum.SAFE
+    reduction_of_core_resistance: ReductionCoreResistanceEnum = (
+        ReductionCoreResistanceEnum.SAFE
+    )
     excavation_level: float
     excavation_width_infinite: Bool = Bool.TRUE
     excavation_length_infinite: Bool = Bool.TRUE
     distance_edge_pile_to_excavation_boundary: float = 0.0  # only valid for BEGEMANN
 
 
-class Profile(DataClass):
+class Profile(BaseDataClass):
     """Generic profile class.
 
     Layers need to be provided as a list of dicts::

@@ -41,7 +41,7 @@ from geolib.models.dsettlement.internal import (
     Layer,
     Layers,
     Model,
-    ModelBool,
+    Bool,
     Points,
     PreconPressureWithinLayer,
     SoilModel,
@@ -835,9 +835,7 @@ class TestDSettlementModel:
         name = "Load 1"
         time = timedelta(days=1)
         point = Point(x=0.2, z=0.3, y=0.4)
-        olr = loads.RectangularLoad(
-            weight=10.1, alpha=0.1, Xcp=0.2, Ycp=0.3, Zcp=0.4, xwidth=0.5, zwidth=0.6,
-        )
+        olr = loads.RectangularLoad(weight=10.1, alpha=0.1, xwidth=0.5, zwidth=0.6,)
         ds.add_other_load(name, time, point, olr)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
         assert list(ds.other_loads.loads.values())[0].time == 1
@@ -1019,11 +1017,11 @@ class TestDSettlementModel:
         assert ds.datastructure.model.consolidation_model == ConsolidationModel.TERZAGHI
         assert ds.datastructure.model.dimension == Dimension.TWO_D
         assert ds.datastructure.model.strain_type == StrainType.LINEAR
-        assert ds.datastructure.model.is_vertical_drains == ModelBool.TRUE
-        assert ds.datastructure.model.is_probabilistic == ModelBool.TRUE
-        assert ds.datastructure.model.is_horizontal_displacements == ModelBool.TRUE
-        assert ds.datastructure.model.is_secondary_swelling == ModelBool.TRUE
-        assert ds.datastructure.model.is_waspan == ModelBool.TRUE
+        assert ds.datastructure.model.is_vertical_drains == Bool.TRUE
+        assert ds.datastructure.model.is_probabilistic == Bool.TRUE
+        assert ds.datastructure.model.is_horizontal_displacements == Bool.TRUE
+        assert ds.datastructure.model.is_secondary_swelling == Bool.TRUE
+        assert ds.datastructure.model.is_waspan == Bool.TRUE
 
     @pytest.mark.systemtest
     def test_serialize_model(self):
@@ -1047,11 +1045,11 @@ class TestDSettlementModel:
             calculation_options.precon_pressure_within_layer
             == PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
         )
-        assert calculation_options.is_imaginary_surface == ModelBool.FALSE
+        assert calculation_options.is_imaginary_surface == Bool.FALSE
         assert calculation_options.imaginary_surface_layer is None
-        assert calculation_options.is_submerging == ModelBool.FALSE
-        assert calculation_options.use_end_time_for_fit == ModelBool.FALSE
-        assert calculation_options.is_maintain_profile == ModelBool.FALSE
+        assert calculation_options.is_submerging == Bool.FALSE
+        assert calculation_options.use_end_time_for_fit == Bool.FALSE
+        assert calculation_options.is_maintain_profile == Bool.FALSE
         assert calculation_options.maintain_profile_material_name == "Superelevation"
         assert calculation_options.maintain_profile_time == 0
         assert calculation_options.maintain_profile_gamma_dry == 10
@@ -1081,13 +1079,13 @@ class TestDSettlementModel:
         assert calculation_options.end_of_consolidation == 100000
         assert calculation_options.number_of_subtime_steps == 2
         assert calculation_options.reference_time == 1
-        assert calculation_options.dissipation == ModelBool.FALSE
+        assert calculation_options.dissipation == Bool.FALSE
         assert calculation_options.x_coord_dissipation == 0.0
-        assert calculation_options.use_fit_factors == ModelBool.FALSE
+        assert calculation_options.use_fit_factors == Bool.FALSE
         assert calculation_options.x_coord_fit == 0.0
         assert (
             calculation_options.is_predict_settlements_omitting_additional_load_steps
-            == ModelBool.FALSE
+            == Bool.FALSE
         )
 
     @pytest.mark.integrationtest
@@ -1096,11 +1094,11 @@ class TestDSettlementModel:
 
         ds.set_any_calculation_options(
             precon_pressure_within_layer=PreconPressureWithinLayer.CONSTANT_CORRECTION_ALL_T,
-            is_imaginary_surface=ModelBool.TRUE,
+            is_imaginary_surface=Bool.TRUE,
             imaginary_surface_layer=1,
-            is_submerging=ModelBool.TRUE,
-            use_end_time_for_fit=ModelBool.TRUE,
-            is_maintain_profile=ModelBool.TRUE,
+            is_submerging=Bool.TRUE,
+            use_end_time_for_fit=Bool.TRUE,
+            is_maintain_profile=Bool.TRUE,
             maintain_profile_material_name="test",
             maintain_profile_time=1,
             maintain_profile_gamma_dry=20,
@@ -1119,11 +1117,11 @@ class TestDSettlementModel:
             end_of_consolidation=1000,
             number_of_subtime_steps=3,
             reference_time=2,
-            dissipation=ModelBool.TRUE,
+            dissipation=Bool.TRUE,
             x_coord_dissipation=1.0,
-            use_fit_factors=ModelBool.TRUE,
+            use_fit_factors=Bool.TRUE,
             x_coord_fit=1.0,
-            is_predict_settlements_omitting_additional_load_steps=ModelBool.TRUE,
+            is_predict_settlements_omitting_additional_load_steps=Bool.TRUE,
         )
 
         calculation_options = ds.datastructure.calculation_options
@@ -1132,11 +1130,11 @@ class TestDSettlementModel:
             calculation_options.precon_pressure_within_layer
             == PreconPressureWithinLayer.CONSTANT_CORRECTION_ALL_T
         )
-        assert calculation_options.is_imaginary_surface == ModelBool.TRUE
+        assert calculation_options.is_imaginary_surface == Bool.TRUE
         assert calculation_options.imaginary_surface_layer == 1
-        assert calculation_options.is_submerging == ModelBool.TRUE
-        assert calculation_options.use_end_time_for_fit == ModelBool.TRUE
-        assert calculation_options.is_maintain_profile == ModelBool.TRUE
+        assert calculation_options.is_submerging == Bool.TRUE
+        assert calculation_options.use_end_time_for_fit == Bool.TRUE
+        assert calculation_options.is_maintain_profile == Bool.TRUE
         assert calculation_options.maintain_profile_material_name == "test"
         assert calculation_options.maintain_profile_time == 1
         assert calculation_options.maintain_profile_gamma_dry == 20
@@ -1166,13 +1164,13 @@ class TestDSettlementModel:
         assert calculation_options.end_of_consolidation == 1000
         assert calculation_options.number_of_subtime_steps == 3
         assert calculation_options.reference_time == 2
-        assert calculation_options.dissipation == ModelBool.TRUE
+        assert calculation_options.dissipation == Bool.TRUE
         assert calculation_options.x_coord_dissipation == 1.0
-        assert calculation_options.use_fit_factors == ModelBool.TRUE
+        assert calculation_options.use_fit_factors == Bool.TRUE
         assert calculation_options.x_coord_fit == 1.0
         assert (
             calculation_options.is_predict_settlements_omitting_additional_load_steps
-            == ModelBool.TRUE
+            == Bool.TRUE
         )
 
     @pytest.mark.integrationtest
@@ -1182,7 +1180,7 @@ class TestDSettlementModel:
         # Check if imaginary surface layer is initialized
         ds.set_any_calculation_options(is_imaginary_surface=True)
 
-        assert ds.datastructure.calculation_options.is_imaginary_surface == ModelBool.TRUE
+        assert ds.datastructure.calculation_options.is_imaginary_surface == Bool.TRUE
         assert ds.datastructure.calculation_options.imaginary_surface_layer == 1
 
         # Check if imaginary surface layer is not overwritten with default value
@@ -1193,9 +1191,7 @@ class TestDSettlementModel:
         # Check if imaginary surface layer is removed
         ds.set_any_calculation_options(is_imaginary_surface=False)
 
-        assert (
-            ds.datastructure.calculation_options.is_imaginary_surface == ModelBool.FALSE
-        )
+        assert ds.datastructure.calculation_options.is_imaginary_surface == Bool.FALSE
         assert ds.datastructure.calculation_options.imaginary_surface_layer is None
 
     @pytest.mark.systemtest
@@ -1292,7 +1288,9 @@ class TestDSettlementModel:
                 mean=1.000e-01, standard_deviation=2.500e-03
             )
             soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
-                mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
+                mean=5.000e-03,
+                standard_deviation=1.250e-03,
+                correlation_coefficient=0.01,
             )
             s1 = dm.add_soil(soil)
 

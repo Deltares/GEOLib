@@ -1,12 +1,12 @@
 from typing import Optional
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 
 from geolib.models.dsheetpiling.internal import SheetPileElement
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
 
-class PileProperties(DataModel):
+class PileProperties(BaseDataClass):
     """
     Pile selected from the model window in D-Sheet Piling
 
@@ -25,9 +25,9 @@ class PileProperties(DataModel):
      modification_factor_k_mod  :  The modification factor kmod should be defined, only if the User defined
      and synthetic material type is selected.
      Otherwise, the program will automatically apply the following factors
-     * Steel : kmod = 1 
-     * Concrete : kmod = 1 
-     * Wood : kmod= 1 
+     * Steel : kmod = 1
+     * Concrete : kmod = 1
+     * Wood : kmod= 1
      reduction_factor_on_maximum_moment  : The reduction factor applied to the maximum allowable moment
     """
 
@@ -46,7 +46,7 @@ class PileProperties(DataModel):
     note_on_reduction_factor: Optional[str] = None
 
 
-class WoodenSheetPileProperties(DataModel):
+class WoodenSheetPileProperties(BaseDataClass):
     """
     Wooden pile selected from the model window in D-Sheet Piling
 
@@ -75,7 +75,7 @@ class WoodenSheetPileProperties(DataModel):
     modification_factor_on_e_m_0_d_k_mod_e: Optional[float] = None
 
 
-class SheetPileProperties(DataModel):
+class SheetPileProperties(BaseDataClass):
     """
     Pile selected from the model window in D-Sheet Piling
 
@@ -105,7 +105,7 @@ class SheetPileProperties(DataModel):
      length of the perimeter of the sheet piling section per running meter of wall [m2/m2 wall].
 
      height : The thickness of the sheet piling profile [mm].
-     elastic_section_modulus_w_el: The section modulus (also called resisting moment in the Netherlands) of the sheet piling, 
+     elastic_section_modulus_w_el: The section modulus (also called resisting moment in the Netherlands) of the sheet piling,
      [cm3/m], used for a Feasibility control
      section_area : The cross-sectional area of the sheet piling, [cm3/m].
 
@@ -133,7 +133,7 @@ class SheetPileProperties(DataModel):
     reduction_factor_on_maximum_moment: Optional[float] = None
 
 
-class SheetPileModelPlasticCalculationProperties(DataModel):
+class SheetPileModelPlasticCalculationProperties(BaseDataClass):
     """
     Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI
 
@@ -154,7 +154,7 @@ class SheetPileModelPlasticCalculationProperties(DataModel):
     plastic_moment_negative: Optional[float] = None
 
 
-class FullPlasticCalculationProperties(DataModel):
+class FullPlasticCalculationProperties(BaseDataClass):
     """
     Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI
 
@@ -192,7 +192,7 @@ class FullPlasticCalculationProperties(DataModel):
     moment_point_2_negative: Optional[float] = None
 
 
-class DiaphragmWallProperties(DataModel):
+class DiaphragmWallProperties(BaseDataClass):
     """
     Pile selected from the model window in D-Sheet Piling
 
@@ -240,7 +240,7 @@ class DiaphragmWallProperties(DataModel):
     reduction_factor_on_maximum_moment: Optional[float] = None
 
 
-class DiaphragmWall(DataModel):
+class DiaphragmWall(BaseDataClass):
     """
     Diaphragm Wall selected from the model window in D-Sheet Piling
 
@@ -248,7 +248,7 @@ class DiaphragmWall(DataModel):
     Arguments:
      name : Name of the element inputted
      diaphragm_wall_properties : properties specifically used for the Diaphragm Wall element.
-     plastic_properties : plastic calculation properties. For the Diaphragm Wall option, these are always present.  
+     plastic_properties : plastic calculation properties. For the Diaphragm Wall option, these are always present.
     """
 
     name: str = ""
@@ -287,7 +287,7 @@ class DiaphragmWall(DataModel):
         )
 
 
-class Sheet(DataModel):
+class Sheet(BaseDataClass):
     """
     Sheet Piling selected from the model window in D-Sheet Piling
 
@@ -340,7 +340,7 @@ class Sheet(DataModel):
         )
 
 
-class Pile(DataModel):
+class Pile(BaseDataClass):
     """
     Pile selected from the model window in D-Sheet Piling
 

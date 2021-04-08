@@ -89,7 +89,7 @@ class TestForbiddenLine:
         ],
     )
     def test_add_reinforcement_forbiddenline(self, _get_forbidden_line, stage_id):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         stage_id = stage_id or 0
         reinforcements_id = 10
 
@@ -158,7 +158,7 @@ class TestGeotextile:
         ],
     )
     def test_add_reinforcement_geotextile(self, _get_geotextile, stage_id):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         stage_id = stage_id or 0
         reinforcements_id = 10
 
@@ -238,7 +238,7 @@ class TestNail:
         ],
     )
     def test_add_reinforcement_nail(self, _get_nail, stage_id):
-        dstability_model = DStabilityModel(inputfn=None)
+        dstability_model = DStabilityModel()
         stage_id = stage_id or 0
         reinforcements_id = 10
 

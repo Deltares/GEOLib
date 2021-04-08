@@ -1,6 +1,6 @@
 from enum import Enum, IntEnum
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic import conint
 
 
@@ -200,7 +200,7 @@ class ModulusReactionType(Enum):
     SECANT = 1
 
 
-class CurveSettings(DataModel):
+class CurveSettings(BaseDataClass):
     modulus_reaction_type: ModulusReactionType = ModulusReactionType.SECANT
     use_unloading_reloading_curve: bool = False
     curve_number: conint(ge=1, le=4) = 3

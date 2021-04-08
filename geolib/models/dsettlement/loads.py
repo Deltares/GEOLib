@@ -2,8 +2,8 @@ from abc import ABCMeta, abstractmethod
 from datetime import timedelta
 from typing import Optional
 
-from pydantic import BaseModel, constr
-
+from pydantic import constr
+from geolib.models import BaseDataClass
 from geolib.geometry import Point
 
 from .internal import (
@@ -17,7 +17,7 @@ from .internal import OtherLoad as _OtherLoad
 from .internal import TypeOtherLoads
 
 
-class OtherLoad(BaseModel, metaclass=ABCMeta):
+class OtherLoad(BaseDataClass, metaclass=ABCMeta):
     """Other Load Class to inherit from."""
 
     load_type: Optional[TypeOtherLoads]
@@ -69,7 +69,7 @@ class TrapeziformLoad(OtherLoad):
 
 class CircularLoad(OtherLoad):
     """Create a circular load with the given name and properties.
-       
+
     Arguments:
         weight: The mangitude of the load.
         alpha: The shape factor alpha is used to specify the shape of the contact pressure.
@@ -88,7 +88,12 @@ class CircularLoad(OtherLoad):
 
     def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
         load_values = LoadValuesCircular(
-            weight=self.weight, alpha=self.alpha, Xcp=p.x, Ycp=p.z, Zcp=p.y, R=self.R,
+            weight=self.weight,
+            alpha=self.alpha,
+            Xcp=p.x,
+            Ycp=p.z,
+            Zcp=p.y,
+            R=self.R,
         )
         other_load = _OtherLoad(
             time=time.days,
@@ -100,7 +105,7 @@ class CircularLoad(OtherLoad):
 
 class RectangularLoad(OtherLoad):
     """Create a rectangular load with the given name and properties
-       
+
     Arguments:
         weight: The mangitude of the load.
         alpha: The shape factor alpha is used to specify the shape of the contact pressure
@@ -139,7 +144,7 @@ class RectangularLoad(OtherLoad):
 # TODO This is a 1D Load and should not be other load?
 class UniformLoad(OtherLoad):
     """Create a uniform load with the given name and properties.
-       
+
     Arguments:
         unit_weight: The weight of the load per m\ :sup:`3`
 
@@ -173,11 +178,11 @@ class UniformLoad(OtherLoad):
 
 class TankLoad(OtherLoad):
     """Create a tank load with the given name and properties.
-       
+
     Arguments:
         wallweight: The magnitude of the load induced by the weight of the material in which the tank is made.
         alpha: The shape factor alpha is used to specify the shape of the contact pressure.
-        internalweight: The magnitude of the load induced by the weight of the material stored in the tank.          
+        internalweight: The magnitude of the load induced by the weight of the material stored in the tank.
 
     .. image:: /figures/dsettlement/tank.png
         :height: 200px
@@ -205,6 +210,8 @@ class TankLoad(OtherLoad):
             dWall=self.dWall,
         )
         other_load = _OtherLoad(
-            time=time.days, load_type=TypeOtherLoads.Tank, load_values_tank=load_values,
+            time=time.days,
+            load_type=TypeOtherLoads.Tank,
+            load_values_tank=load_values,
         )
         return other_load

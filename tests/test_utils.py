@@ -2,17 +2,17 @@ from random import randint
 from typing import Type, _GenericAlias, get_type_hints
 
 import pytest
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 
 from geolib.models.utils import get_filtered_type_hints, get_required_class_field
 
 
 class TestGetFields:
-    class DummyClass(DataClass):
+    class DummyClass(BaseDataClass):
         regular_field: int
         optional_field: int = 42
 
-    class DummyClassUnderscored(DataClass):
+    class DummyClassUnderscored(BaseDataClass):
         regular_field: int
         __underscored_field: int
 

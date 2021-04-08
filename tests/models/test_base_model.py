@@ -9,9 +9,10 @@ import pytest
 from fastapi.testclient import TestClient
 from teamcity import is_running_under_teamcity
 
-from geolib.models import DSettlementModel
+from geolib.models import DSettlementModel, BaseDataClass
 from geolib.models.base_model import BaseModel, BaseModelList, MetaData
 from geolib.service.main import app
+from geolib.models.internal import Bool
 from tests.utils import TestUtils, only_teamcity
 
 client = TestClient(app)
@@ -180,3 +181,29 @@ class TestBaseModel:
         assert model.meta.company == "Foo"
         # But the console_folder meta variable is reset to default
         assert model.meta.console_folder == MetaData().console_folder
+
+
+class TestBool:
+    @pytest.mark.unittest
+    def test_init(self):
+        assert Bool(1) == Bool.TRUE
+        assert Bool(0) == Bool.FALSE
+        assert Bool(True) == Bool.TRUE
+        assert Bool(False) == Bool.FALSE
+        assert bool(Bool(True)) is True
+        assert bool(Bool(False)) is False
+
+    @pytest.mark.unittest
+    def test_class(self):
+        class A(BaseDataClass):
+            a: Bool = True
+
+        assert A().a == Bool.TRUE
+        assert A(a="1").a == Bool.TRUE
+        assert A(a="0").a == Bool.FALSE
+        assert A(a=True).a == Bool.TRUE
+        assert A(a=False).a == Bool.FALSE
+        assert A(a=Bool.TRUE).a == Bool.TRUE
+        assert A(a=Bool.FALSE).a == Bool.FALSE
+        assert bool(A(a=Bool.FALSE).a) is False
+        assert bool(A(a=Bool.TRUE).a) is True

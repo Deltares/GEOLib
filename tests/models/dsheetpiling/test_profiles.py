@@ -47,7 +47,7 @@ def _model() -> DSheetPilingModel:
 def make_profile() -> SoilProfile:
     def _make_profile(name: str):
         return SoilProfile(
-            name=name, layers=_TEST_LAYERS, coordinates=_PROFILE_TEST_COORDINATES
+            name=name, layers=_TEST_LAYERS, coordinate=_PROFILE_TEST_COORDINATES
         )
 
     return _make_profile

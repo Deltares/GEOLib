@@ -4,7 +4,7 @@
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic.types import PositiveInt, confloat, constr
 
 from geolib.geometry import Point
@@ -23,7 +23,7 @@ from .internal import (
 )
 
 
-class PileLocation(DataModel):
+class PileLocation(BaseDataClass):
     """Base Class for Pile location."""
 
     pile_name: constr(min_length=0, max_length=10) = ""
@@ -85,7 +85,7 @@ class BasePileTypeForClayLoamPeat(Enum):
     USER_DEFINED = PileTypeForClayLoamPeat.USER_DEFINED.value
 
 
-class Pile(DataModel):
+class Pile(BaseDataClass):
     """Base Class for Piles."""
 
     pile_name: str

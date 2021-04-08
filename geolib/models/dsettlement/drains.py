@@ -2,13 +2,13 @@ from abc import ABCMeta, abstractmethod
 from datetime import timedelta
 from typing import List, Optional, Union
 
-from pydantic import BaseModel
+from geolib.models import BaseDataClass
 
 from .drain_types import DrainGridType, DrainSchedule, DrainType
 from .internal import VerticalDrain as vd
 
 
-class ScheduleValues(BaseModel, metaclass=ABCMeta):
+class ScheduleValues(BaseDataClass, metaclass=ABCMeta):
     """ ScheduleValues to inherit from """
 
     schedule: Optional[DrainSchedule]
@@ -20,12 +20,12 @@ class ScheduleValues(BaseModel, metaclass=ABCMeta):
 
 
 class ScheduleValuesOff(ScheduleValues):
-    """ Drainage Schedule with strips or columns is Off
-        
-        Arguments:
-            Start of drainage -- The time t at which the drain becomes active. D-SETTLEMENT assumes
-                that the water head in the drain equals the phreatic level.
-            Phreatic level in drain -- The water head in the drain during drainage.                  
+    """Drainage Schedule with strips or columns is Off
+
+    Arguments:
+        Start of drainage -- The time t at which the drain becomes active. D-SETTLEMENT assumes
+            that the water head in the drain equals the phreatic level.
+        Phreatic level in drain -- The water head in the drain during drainage.
     """
 
     start_of_drainage: timedelta
@@ -39,16 +39,16 @@ class ScheduleValuesOff(ScheduleValues):
 
 
 class ScheduleValuesSimpleInput(ScheduleValues):
-    """ Drainage Schedule with strips or columns: Simple Input
-        
-        Arguments:
-            Start of drainage -- The time t at which the drain becomes active. D-SETTLEMENT assumes
-                that the water head in the drain equals the phreatic level.
-            Begin time -- The time at which dewatering (i.e. a certain water level and air pressure) starts.
-            End time -- The time at which dewatering stops.
-            Underpressure -- The enforced underpressure during dewatering.
-            Water head during dewatering -- The vertical level where the negative pore pressure equals the enforced underpressure during dewatering.
-            Phreatic level in drain -- The water head in the drain during drainage.  
+    """Drainage Schedule with strips or columns: Simple Input
+
+    Arguments:
+        Start of drainage -- The time t at which the drain becomes active. D-SETTLEMENT assumes
+            that the water head in the drain equals the phreatic level.
+        Begin time -- The time at which dewatering (i.e. a certain water level and air pressure) starts.
+        End time -- The time at which dewatering stops.
+        Underpressure -- The enforced underpressure during dewatering.
+        Water head during dewatering -- The vertical level where the negative pore pressure equals the enforced underpressure during dewatering.
+        Phreatic level in drain -- The water head in the drain during drainage.
     """
 
     start_of_drainage: timedelta
@@ -75,12 +75,12 @@ class ScheduleValuesSimpleInput(ScheduleValues):
 
 
 class ScheduleValuesDetailedInput(ScheduleValues):
-    """ Drainage Schedule with strips or columns: Detailed Input
-        
-        Arguments:
-            Time -- The time at which dewatering is active.
-            Underpressure -- This value is zero for vertical drains without enforced underpressure.
-            Water head -- The vertical level where the negative pore pressure equals the enforced underpressure during dewatering.
+    """Drainage Schedule with strips or columns: Detailed Input
+
+    Arguments:
+        Time -- The time at which dewatering is active.
+        Underpressure -- This value is zero for vertical drains without enforced underpressure.
+        Water head -- The vertical level where the negative pore pressure equals the enforced underpressure during dewatering.
     """
 
     time: List[timedelta] = []
@@ -95,10 +95,10 @@ class ScheduleValuesDetailedInput(ScheduleValues):
         return verticaldrains
 
 
-class VerticalDrain(BaseModel):
+class VerticalDrain(BaseDataClass):
     """Vertical Drain Class to inherit from.
-    This class refers to the input window "Vertical Drains" of the D-Settlement program.   
-    
+    This class refers to the input window "Vertical Drains" of the D-Settlement program.
+
     Arguments:
         range_from -- left limit to the drained area
         range_to -- right limit to the drained area

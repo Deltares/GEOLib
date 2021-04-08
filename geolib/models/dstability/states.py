@@ -5,8 +5,7 @@ This module handles the three types of state types in DStability.
 import abc
 from typing import List, Tuple
 
-from pydantic import BaseModel, NoneStr, confloat
-
+from geolib.models import BaseDataClass
 from ...geometry.one import Point
 from ...utils import snake_to_camel
 from .internal import (
@@ -19,7 +18,7 @@ from .internal import (
 )
 
 
-class DStabilityObject(BaseModel, metaclass=abc.ABCMeta):
+class DStabilityObject(BaseDataClass, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def _to_internal_datastructure(self):
         raise NotImplementedError
@@ -37,7 +36,9 @@ class DStabilityStress(DStabilityObject):
 
     ocr: float = 1.0
     pop: float = 0.0
-    stochastic_parameter: PersistableStochasticParameter = PersistableStochasticParameter()
+    stochastic_parameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
     state_type: StateType = StateType.POP
 
     def _to_internal_datastructure(self) -> PersistableStress:
@@ -85,8 +86,7 @@ class DStabilityStatePoint(DStabilityObject):
 
 
 class DStabilityStateLinePoint(DStabilityObject):
-    """
-    """
+    """"""
 
     id: int = -1
     above: DStabilityStress

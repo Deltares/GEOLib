@@ -1,4 +1,4 @@
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 
 from geolib.models.dseries_parser import DSeriesInlineMappedProperties
 

@@ -131,7 +131,7 @@ class TestInternalDSeriesListStructureCollections:
     @pytest.mark.integrationtest
     def test_set_probabilistic_data_raises_error(self):
         # Set inputs
-        point_of_vertical = Point(X=1, Y=1, Z=1)
+        point_of_vertical = Point(x=1, y=1, z=1)
         residual_settlement = 0.01
         maximum_number_of_samples = 15
         maximum_iterations = 100

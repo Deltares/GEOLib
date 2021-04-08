@@ -1,7 +1,7 @@
 import abc
 from math import isfinite
 
-from pydantic import BaseModel as DataClass
+from pydantic import BaseModel
 
 from .validators import BaseValidator
 from .meta import MetaData
@@ -9,7 +9,17 @@ from .meta import MetaData
 settings = MetaData()
 
 
-class BaseModelStructure(DataClass, abc.ABC):
+class BaseDataClass(BaseModel):
+    """Base class for *all* pydantic classes in GEOLib."""
+
+    class Config:
+        validate_assignment = True
+        arbitrary_types_allowed = True
+        validate_all = True
+        extra = settings.extra_fields
+
+
+class BaseModelStructure(BaseDataClass, abc.ABC):
     @property
     def is_valid(self) -> bool:
         """ Validates the current model structure. """
@@ -18,9 +28,3 @@ class BaseModelStructure(DataClass, abc.ABC):
     def validator(self) -> BaseValidator:
         """Set the Validator class."""
         return BaseValidator(self)
-
-    class Config:
-        extra = settings.extra_fields
-        arbitrary_types_allowed = False
-        validate_on_assignment = True
-        validate_all = True

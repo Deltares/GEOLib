@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
-from pydantic import BaseModel as DataModel
+from geolib.models import BaseDataClass
 from pydantic import conlist, constr, validator
 
 from geolib.geometry import Point
@@ -20,7 +20,7 @@ from .settings import (
 )
 
 
-class VerificationLoadSettingsHorizontalLineLoad(DataModel):
+class VerificationLoadSettingsHorizontalLineLoad(BaseDataClass):
     """
     These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
     For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
@@ -36,7 +36,7 @@ class VerificationLoadSettingsHorizontalLineLoad(DataModel):
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
-class VerificationLoadSettings(DataModel):
+class VerificationLoadSettings(BaseDataClass):
     """
     Load class for moment loads
     These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
@@ -53,7 +53,7 @@ class VerificationLoadSettings(DataModel):
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
-class UniformLoad(DataModel):
+class UniformLoad(BaseDataClass):
     """Uniform Load. This option is not available for SignlePileModelType.
 
     Args:
@@ -93,7 +93,7 @@ class UniformLoad(DataModel):
         return uniformload
 
 
-class Moment(DataModel):
+class Moment(BaseDataClass):
     """Moment Load. """
 
     name: constr(min_length=1, max_length=50)
@@ -110,7 +110,7 @@ class Moment(DataModel):
         return moment
 
 
-class SurchargeLoad(DataModel):
+class SurchargeLoad(BaseDataClass):
     """Surcharge Load.
 
     Args:
@@ -159,7 +159,7 @@ class SurchargeLoad(DataModel):
         return surchargeload
 
 
-class HorizontalLineLoad(DataModel):
+class HorizontalLineLoad(BaseDataClass):
     """Horizontal Line Load."""
 
     name: constr(min_length=1, max_length=50)
@@ -178,7 +178,7 @@ class HorizontalLineLoad(DataModel):
         return horizontallineload
 
 
-class NormalForce(DataModel):
+class NormalForce(BaseDataClass):
     """Normal Force Load."""
 
     name: constr(min_length=1, max_length=50)
@@ -197,11 +197,11 @@ class NormalForce(DataModel):
         return normalforce
 
 
-class SoilDisplacement(DataModel):
+class SoilDisplacement(BaseDataClass):
     """Non Uniform Load."""
 
 
-class Earthquake(DataModel):
+class Earthquake(BaseDataClass):
     """Non Uniform Load."""
 
     force: float  # g

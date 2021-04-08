@@ -5,7 +5,7 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 from pydantic import PositiveFloat, confloat, conint, conlist, constr
 
 import geolib.models.dsheetpiling.constructions as constructions
@@ -17,6 +17,7 @@ from geolib.models.dseries_parser import (
     DSeriesNoParseSubStructure,
     DSeriesRepeatedGroupedProperties,
     DSeriesStructure,
+    DSerieVersion,
     DSeriesStructureCollection,
     DSeriesTableStructure,
     DSeriesUnmappedNameProperties,
@@ -113,19 +114,9 @@ class Model(DSeriesInlineReversedProperties):
     wooden_sheetpiling: bool = False
 
 
-class Version(DSeriesInlineMappedProperties):
+class Version(DSerieVersion):
     soil: int = _DEFAULT_SOIL_VERSION
     d__sheet_piling: int = _DEFAULT_SHEETPILING_VERSION
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for k, v in self.dict().items():
-            if self.__field_defaults__.get(k) != v:
-                logger.warning(
-                    """The version of the input file is unsupported.
-                Check the documentation on how to prevent this warning in the future."""
-                )
-                break
 
 
 class VersionExternals(DSeriesInlineMappedProperties):
@@ -455,7 +446,7 @@ class Anchors(DSheetpilingUnwrappedTable):
         return {anchor.name for anchor in self.anchors}
 
 
-class AnchorOrStrutPresstressReference(DataClass):
+class AnchorOrStrutPresstressReference(BaseDataClass):
     """Used in the ConstructionStage to identify anchor and assign a
     prestress."""
 

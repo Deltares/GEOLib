@@ -4,7 +4,7 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import List, Optional, Type, Union
 
-from pydantic import BaseModel as DataClass
+from geolib.models import BaseDataClass
 from pydantic import FilePath, confloat
 
 from geolib.geometry import Point
@@ -43,7 +43,7 @@ from .serializer import DFoundationsInputSerializer
 logger = logging.getLogger(__name__)
 
 
-class ModelOptions(DataClass):
+class ModelOptions(BaseDataClass):
     # Rigidity of superstructure
     is_rigid: Bool = True
 
@@ -102,7 +102,7 @@ class TensionPilesModel(ModelOptions):
         return ModelTypeEnum.TENSION_PILES
 
 
-class CalculationOptions(DataClass):
+class CalculationOptions(BaseDataClass):
     """
     Set calculation type:
 
@@ -135,14 +135,15 @@ class CalculationOptions(DataClass):
 
 
 class DFoundationsModel(BaseModel):
-    r"""D-Foundations enables the user to calculate piles (bearing and tension) 
+    r"""D-Foundations enables the user to calculate piles (bearing and tension)
     and shallow foundation in accordance with the Dutch (and Belgian) standards.
 
     This model can read, modify and create \*.foi files, read \*.fod and \*.err files.
     """
 
     datastructure: Union[
-        DFoundationsDumpStructure, DFoundationsStructure,
+        DFoundationsDumpStructure,
+        DFoundationsStructure,
     ] = DFoundationsStructure()
 
     @property
