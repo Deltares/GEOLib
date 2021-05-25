@@ -177,7 +177,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
     Args:
         extrapolate_search_space (bool): Extrapolate the search space, defaults to True
         search_grid (DStabilitySearchGrid):
-        slipe_plane_constraints (DStabilitySlipPlaneConstraints):
+        slip_plane_constraints (DStabilitySlipPlaneConstraints):
         bottom_tangent_line_z (float):
         number_of_tangent_lines (int):
         space_tangent_lines (float):
@@ -186,7 +186,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
     _analysis_type: AnalysisType = AnalysisType.BISHOP_BRUTE_FORCE
     extrapolate_search_space: bool = True
     search_grid: DStabilitySearchGrid
-    slipe_plane_constraints: DStabilitySlipPlaneConstraints = (
+    slip_plane_constraints: DStabilitySlipPlaneConstraints = (
         DStabilitySlipPlaneConstraints()
     )
     bottom_tangent_line_z: float
@@ -199,7 +199,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
                 ExtrapolateSearchSpace=self.extrapolate_search_space
             ),
             SearchGrid=self.search_grid._to_internal_datastructure(),
-            SlipPlaneConstraints=self.slipe_plane_constraints._to_internal_datastructure(),
+            SlipPlaneConstraints=self.slip_plane_constraints._to_internal_datastructure(),
             TangentLines=PersistableTangentLines(
                 BottomTangentLineZ=self.bottom_tangent_line_z,
                 NumberOfTangentLines=self.number_of_tangent_lines,
@@ -231,14 +231,14 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
         options_type (OptionsType): DEFAULT or THOROUGH, defaults to DEFAULT
         slip_plane_a (List[Point]): upper slip plane boundary
         slip_plane_b (List[Point]): lower slip line boundary
-        slipe_plane_constraints (DStabilityGeneticSlipPlaneConstraints): constraints for the slip plane
+        slip_plane_constraints (DStabilityGeneticSlipPlaneConstraints): constraints for the slip plane
     """
 
     _analysis_type: AnalysisType = AnalysisType.SPENCER_GENETIC
     options_type: OptionsType = OptionsType.DEFAULT
     slip_plane_a: List[Point]
     slip_plane_b: List[Point]
-    slipe_plane_constraints: DStabilityGeneticSlipPlaneConstraints = (
+    slip_plane_constraints: DStabilityGeneticSlipPlaneConstraints = (
         DStabilityGeneticSlipPlaneConstraints()
     )
 
@@ -251,7 +251,7 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
             SlipPlaneB=[
                 PersistablePoint(X=point.x, Z=point.z) for point in self.slip_plane_b
             ],
-            SlipPlaneConstraints=self.slipe_plane_constraints._to_internal_datastructure(),
+            SlipPlaneConstraints=self.slip_plane_constraints._to_internal_datastructure(),
         )
 
 
