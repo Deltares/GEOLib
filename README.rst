@@ -19,8 +19,14 @@ Or, when having poetry installed (you should):
     $ poetry install
 
 
-Testing
+Testing & Development
 -------
+
+Make sure to have the server dependencies installed: 
+
+.. code-block:: bash
+
+    $ poetry install -E server
 
 In order to run the testcode, from the root of the repository, run:
 
