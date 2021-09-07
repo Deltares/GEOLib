@@ -6,7 +6,7 @@ from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 from geolib.models import BaseDataClass
-from pydantic import PositiveFloat, confloat, conint, conlist, constr
+from pydantic import confloat, conint, conlist, constr
 
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
@@ -125,7 +125,7 @@ class VersionExternals(DSeriesInlineMappedProperties):
 
 
 class Soil(DSeriesUnmappedNameProperties):
-    name: str = "default soil"
+    name: constr(min_length=1, max_length=25) = "default soil"
     soilcolor: int = 9764853
     soilsoiltype: SoilTypeModulusSubgradeReaction = SoilTypeModulusSubgradeReaction.SAND
     soilgraintype: GrainType = GrainType.FINE
@@ -215,7 +215,7 @@ class SoilLayer(DSeriesNoParseSubStructure):
 
 
 class SoilProfile(DSeriesNoParseSubStructure):
-    name: str
+    name: constr(min_length=1, max_length=25)
     layers: List[SoilLayer]
     coordinate: Point
 
@@ -547,7 +547,7 @@ class CalculationOptionsPerStage(DSeriesStructureCollection):
 
 
 class UniformLoad(DSeriesUnmappedNameProperties):
-    name: str
+    name: constr(min_length=1, max_length=50)
     uniformloadleft: float
     uniformloadright: float
     uniformloadpermanent: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
