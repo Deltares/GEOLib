@@ -4,6 +4,7 @@ from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
 from geolib.models import BaseDataClass
+from geolib.utils import make_newline_validator
 from pydantic.types import PositiveInt, confloat, conint, constr
 
 from geolib.models.base_model_structure import BaseModelStructure
@@ -34,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 UNKNOWN = "Unknown"
+REQ_RUN_LINES = 6
 
 
 class PileType(IntEnum):
@@ -713,6 +715,11 @@ class DFoundationsInputStructure(DSeriesStructure):
                 0.0000
                 0.0000
         """
+    )
+
+    # Custom validator
+    _validate_run_identification = make_newline_validator(
+        "run_identification", req_newlines=REQ_RUN_LINES
     )
 
 

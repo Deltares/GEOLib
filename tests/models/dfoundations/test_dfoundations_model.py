@@ -69,6 +69,25 @@ class TestDFoundationsModel:
             "" + "DFoundationsModel does not instanciate BaseModel"
         )
 
+    @pytest.mark.unittest
+    def test_ensure_newlines_run_identification(self):
+        dfoundation_model = DFoundationsModel()
+        assert dfoundation_model is not None
+        # Default is 6
+        assert (
+            dfoundation_model.datastructure.input_data.run_identification.count("\n") == 6
+        )
+        # Less than that should be set to 6 again
+        dfoundation_model.datastructure.input_data.run_identification = ""
+        assert (
+            dfoundation_model.datastructure.input_data.run_identification.count("\n") == 6
+        )
+        # More than that should be left as is
+        dfoundation_model.datastructure.input_data.run_identification = 8 * "\n"
+        assert (
+            dfoundation_model.datastructure.input_data.run_identification.count("\n") == 8
+        )
+
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "filename,structure",

@@ -5,11 +5,9 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from geolib.models import BaseDataClass
-from pydantic import confloat, conint, conlist, constr
-
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
+from geolib.models import BaseDataClass
 from geolib.models.dseries_parser import (
     DSerieListStructure,
     DSeriesInlineMappedProperties,
@@ -17,12 +15,14 @@ from geolib.models.dseries_parser import (
     DSeriesNoParseSubStructure,
     DSeriesRepeatedGroupedProperties,
     DSeriesStructure,
-    DSerieVersion,
     DSeriesStructureCollection,
     DSeriesTableStructure,
     DSeriesUnmappedNameProperties,
     DSeriesWrappedTableStructure,
+    DSerieVersion,
 )
+from geolib.utils import make_newline_validator
+from pydantic import confloat, conint, conlist, constr
 
 from .calculation_options import (
     CalculationOptionsPerStage as CalculationOptionsPerStageExternal,
@@ -57,11 +57,9 @@ from .internal_partial_factors import (
 from .settings import (
     CalculationType,
     CurveSettings,
-    PartialFactorSetCUR,
     DesignType,
     DistributionType,
     EarthPressureCoefficients,
-    PartialFactorSetEC,
     GrainType,
     HorizontalBehaviorType,
     LambdaType,
@@ -74,14 +72,16 @@ from .settings import (
     ModulusReactionType,
     ModulusSubgradeReaction,
     PartialFactorCalculationType,
+    PartialFactorSetCUR,
+    PartialFactorSetEC,
     PartialFactorSetEC7NADB,
     PartialFactorSetEC7NADNL,
+    PartialFactorSetVerifyEC,
     PassiveSide,
     SheetPilingElementMaterialType,
     Side,
     SinglePileLoadOptions,
     SoilTypeModulusSubgradeReaction,
-    PartialFactorSetVerifyEC,
     VerifyType,
 )
 
@@ -97,6 +97,8 @@ _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1007
 _DEFAULT_SHEETPILING_VERSION: int = 1026
+
+REQ_RUN_LINES = 2
 
 
 class Model(DSeriesInlineReversedProperties):
@@ -679,7 +681,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
     """Representation of complete .shi file."""
 
     soil_collection: SoilCollection = SoilCollection()
-    run_identification: str = ""
+    run_identification: str = 2 * "\n"
     model: Model = Model()
     cpt_list: str = cleandoc(
         """
@@ -783,6 +785,11 @@ class DSheetPilingInputStructure(DSeriesStructure):
     anchors: Union[str, Anchors, None] = None
     struts: Union[str, Struts, None] = None
 
+    # Custom validator
+    _validate_run_identification = make_newline_validator(
+        "run_identification", req_newlines=REQ_RUN_LINES
+    )
+
     @property
     def is_valid(self) -> bool:
         return self._validator().is_valid
@@ -805,15 +812,11 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         if self.model.method != LateralEarthPressureMethod.MIXED:
             for stage in self.construction_stages.stages:
-                stage.method_left = (
-                    LateralEarthPressureMethodStage.get_stage_type_from_method(
-                        self.model.method
-                    )
+                stage.method_left = LateralEarthPressureMethodStage.get_stage_type_from_method(
+                    self.model.method
                 )
-                stage.method_right = (
-                    LateralEarthPressureMethodStage.get_stage_type_from_method(
-                        self.model.method
-                    )
+                stage.method_right = LateralEarthPressureMethodStage.get_stage_type_from_method(
+                    self.model.method
                 )
 
     def set_calculation_options(self, **kwargs) -> None:
@@ -823,9 +826,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.calculation_options = CalculationOptions(**kwargs)
 
     def add_calculation_options_per_stage(
-        self,
-        input_calc_options: CalculationOptionsPerStageExternal,
-        stage_id: int,
+        self, input_calc_options: CalculationOptionsPerStageExternal, stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
             VerifyType.CUR: {
@@ -1016,9 +1017,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         )
 
     def add_element_in_sheet_piling(
-        self,
-        sheet: Any,
-        location_top: Optional[Point] = None,
+        self, sheet: Any, location_top: Optional[Point] = None,
     ) -> None:
         self.sheet_piling.update_level_top_sheet_pile(location_top)
         try:

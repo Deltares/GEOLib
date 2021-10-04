@@ -38,6 +38,7 @@ from geolib.models.internal import Bool
 from geolib.models.utils import get_required_class_field
 from geolib.soils import DistributionType, HorizontalBehaviourType, Soil
 from geolib.soils import StorageTypes as StorageTypes_external
+from geolib.utils import make_newline_validator
 
 from .drain_types import DrainGridType, DrainSchedule, DrainType
 
@@ -46,6 +47,7 @@ logger = logging.getLogger(__name__)
 
 TOLERANCE = 1e-10
 ZERO_ITEMS = "    0 = number of items"
+REQ_RUN_LINES = 2
 
 
 class DSeriePoint(DSeriesTreeStructure):
@@ -438,14 +440,10 @@ class GeometryData(DSeriesStructure):
             self.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries,
         )
         self.stdv_boundaries.stdvboundaries = self.sort_based_on_new_indexes(
-            new_indexes,
-            self.stdv_boundaries.stdvboundaries,
+            new_indexes, self.stdv_boundaries.stdvboundaries,
         )
-        self.distribution_boundaries.distributionboundaries = (
-            self.sort_based_on_new_indexes(
-                new_indexes,
-                self.distribution_boundaries.distributionboundaries,
-            )
+        self.distribution_boundaries.distributionboundaries = self.sort_based_on_new_indexes(
+            new_indexes, self.distribution_boundaries.distributionboundaries,
         )
 
     def pre_process(self):
@@ -830,7 +828,7 @@ class DSettlementStructure(DSeriesStructure):
     soil_collection: SoilCollection = SoilCollection()
     geometry_data: GeometryData = GeometryData()
     geometry_1d_data: Optional[str]
-    run_identification: str = ""
+    run_identification: str = 2 * "\n"
     model: Union[Model, str] = Model()
     verticals: Union[Verticals, str] = Verticals()
     water: Union[float, str] = 9.81
@@ -933,6 +931,11 @@ class DSettlementStructure(DSeriesStructure):
         """
     )
     fit: str = ZERO_ITEMS
+
+    # Custom validator
+    _validate_run_identification = make_newline_validator(
+        "run_identification", req_newlines=REQ_RUN_LINES
+    )
 
     def validate_options(self):
         """
