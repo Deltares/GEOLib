@@ -403,7 +403,7 @@ class GeometryData(DSeriesStructure):
         for curve_id in boundary.curves:
             curve = self.get_curve(curve_id)
             points = [self.get_point(pid) for pid in curve.points]
-            _y = points[0].Y + points[1].Y / 2 - y
+            _y = (points[0].Y + points[1].Y) / 2 - y
             area += (points[1].X - points[0].X) * _y
 
         return area
