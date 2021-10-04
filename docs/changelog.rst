@@ -1,7 +1,13 @@
 Changelog
 =========
-- :release:`0.1.6 <unreleased, planned for Q2 2021>`
+- :release:`0.1.7 <unreleased>`
+
+- :release:`0.1.6 <2021-10-5>`
 - :bug:`-` Set correct number of lines in [RUN IDENTIFICATION] in DSettlement and DSheetPiling. By Maarten Betman of Boskalis. 👍
+- :bug:`-` Constrain the length of the `name` field in DSheetPiling structures. Reported by Martina Pippi of CEMS. 👍
+- :bug:`-` Fixed an edge case in the sorting of boundaries in DSettlement. By Thijs Damsma of van Oord. 👍
+- :feature:`-` Enable (unsupported) soilvisualizations field for DStability. By Thijs Damsma of van Oord. 👍
+- :support:`-` Extra installation instructions and typo fix. By Thijs Damsma of van Oord. 👍
 
 - :release:`0.1.5 <2021-04-10>`
 - :bug:`-` Large values in DSheetPiling input, such as Anchor, could fuse together, producing invalid files.

@@ -104,7 +104,7 @@ Each D-Serie release can slightly change the structure of the input files. New f
 GEOLib only supports the files used by the D-Serie consoles and thus the consoles specific version number.
 At the moment that version number is:
 
-* D-Settlement **19.3**
+* D-Settlement **19.1**
 * D-Foundations **19.1**
 * D-SheetPiling **19.1**
 * D-Stability **20.3**
