@@ -388,6 +388,10 @@ class SoilVisualisation(DStabilityBaseModelStructure):
     ContentVersion: Optional[str] = "1"
     SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
 
+    @classmethod
+    def structure_name(cls) -> str:
+        return "soilvisualizations"
+
 
 class PersistableSoilLayer(DStabilityBaseModelStructure):
     LayerId: Optional[str]
@@ -1738,6 +1742,7 @@ class DStabilityStructure(BaseModelStructure):
     ]  # soillayers/soillayers_x.json
     soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
     soils: SoilCollection = SoilCollection()  # soils.json
+    soilvisualizations: SoilVisualisation = SoilVisualisation()  # soilvisualizations.json
     reinforcements: List[Reinforcements] = [
         Reinforcements(Id="19")
     ]  # reinforcements/reinforcements_x.json
