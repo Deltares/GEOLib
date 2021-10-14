@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Soils &#8212; geolib 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="D-Foundations" href="models/dfoundations.html" />
+    <link rel="prev" title="Geometry" href="geometry.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geometry.html" title="Previous document">Geometry</a>
+        </li>
+        <li>
+          <a href="models/dfoundations.html" title="Next document">D-Foundations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="soils">
+<span id="soilsdev"></span><h1>Soils<a class="headerlink" href="#soils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="soil-libraries">
+<h2>Soil Libraries<a class="headerlink" href="#soil-libraries" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to import various input files which will automatically generate <cite>Soil</cite> objects from them.
+Several pre-existing soil materials as used in D-Foundations based on the NEN 9997-1 norm are defined here as well.
+The Belgian Annex Soils will be added later.</p>
+<p>Using Soil Library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">soils</span><span class="p">)</span>
+<span class="go">&lt;Soil A with code a&gt;, &lt;Soil B with code b&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cpt-interpretation">
+<h2>CPT interpretation<a class="headerlink" href="#cpt-interpretation" title="Permalink to this headline">¶</a></h2>
+<p>This package won’t interpret CPTs. This will follow in the GEOLib+ package.
+There is a <code class="xref py py-class docutils literal notranslate"><span class="pre">geolib.soils.layers.CPT</span></code> class however, to load from D-Foundations and DSheetPiling input files.</p>
+</div>
+<div class="section" id="module-geolib.soils">
+<span id="the-soil-class"></span><h2>The Soil Class<a class="headerlink" href="#module-geolib.soils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geometry.html" title="Previous document">Geometry</a>
+        </li>
+        <li>
+          <a href="models/dfoundations.html" title="Next document">D-Foundations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">Developer Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.html">Geometry</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Soils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#soil-libraries">Soil Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpt-interpretation">CPT interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.soils">The Soil Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models/dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsheetpiling.html">D-Sheetpiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dstability.html">D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="api.html">Developer Interface</a><ul>
+      <li>Previous: <a href="geometry.html" title="previous chapter">Geometry</a></li>
+      <li>Next: <a href="models/dfoundations.html" title="next chapter">D-Foundations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="soils.html">v0.1</a></li>
+    <li><a href="../../v0.1.1/dev/soils.html">v0.1.1</a></li>
+    <li><a href="../../v0.1.2/dev/soils.html">v0.1.2</a></li>
+    <li><a href="../../v0.1.3/dev/soils.html">v0.1.3</a></li>
+    <li><a href="../../v0.1.4/dev/soils.html">v0.1.4</a></li>
+    <li><a href="../../v0.1.5/dev/soils.html">v0.1.5</a></li>
+    <li><a href="../../v0.1.6/dev/soils.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

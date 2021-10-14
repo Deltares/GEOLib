@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installation &#8212; geolib 0.1.4 documentation</title>
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Setup" href="setup.html" />
+    <link rel="prev" title="Introduction" href="intro.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="intro.html" title="Previous document">Introduction</a>
+        </li>
+        <li>
+          <a href="setup.html" title="Next document">Setup</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="installation">
+<span id="install"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation covers the installation of GEOLib.
+The first step to using any software package is getting it properly installed.</p>
+<div class="section" id="geolib-installation">
+<h2>GEOLib installation<a class="headerlink" href="#geolib-installation" title="Permalink to this headline">¶</a></h2>
+<p>GEOLib releases are available from publicwiki.deltares.nl as .whl files. You can
+download these and install such files with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install geolib-0.1.0-py3-none-any.whl
+</pre></div>
+</div>
+<p>To install the latest GEOLib simply the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install git+git@bitbucket.org:DeltaresGEO/geolib.git
+</pre></div>
+</div>
+<p>Note that both locations are private and require authentication.</p>
+</div>
+<div class="section" id="geolib-service">
+<h2>GEOLib service<a class="headerlink" href="#geolib-service" title="Permalink to this headline">¶</a></h2>
+<p>If you also want to host your own calculation service, you should also
+install some extra packages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install &#39;geolib-0.1.0-py3-none-any.whl[server]&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="packages-used">
+<h2>Packages used<a class="headerlink" href="#packages-used" title="Permalink to this headline">¶</a></h2>
+<p>This package, unlike GEOLib+, tries to limit the number of
+<em>heavy</em> depedencies. The main packages used are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://python-poetry.org/docs/">Poetry</a> for package management (replacing setuptools) see also <a class="reference external" href="https://www.python.org/dev/peps/pep-0518/">PEP 518</a>.</p></li>
+<li><p><a class="reference external" href="https://pydantic-docs.helpmanual.io/">Pydantic</a> for validation of types and some parameters (min/max/defaults).</p></li>
+</ul>
+<p>You don’t need to install anything manually, as the pip installation should take care of it.</p>
+</div>
+<div class="section" id="get-the-source-code">
+<h2>Get the Source Code<a class="headerlink" href="#get-the-source-code" title="Permalink to this headline">¶</a></h2>
+<p>GEOLib is actively developed on BitBucket, where the code is
+<a class="reference external" href="https://bitbucket.org/DeltaresGEO/geolib/src">always available</a>.</p>
+<p>You can either clone the public repository:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@bitbucket.org:DeltaresGEO/geolib.git
+</pre></div>
+</div>
+<p>Once you have a copy of the source, you can embed it in your own Python
+package, or install it into your site-packages easily:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd geolib
+$ pip install poetry
+$ poetry install
+</pre></div>
+</div>
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="intro.html" title="Previous document">Introduction</a>
+        </li>
+        <li>
+          <a href="setup.html" title="Next document">Setup</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#geolib-installation">GEOLib installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#geolib-service">GEOLib service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#packages-used">Packages used</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-the-source-code">Get the Source Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="intro.html" title="previous chapter">Introduction</a></li>
+      <li>Next: <a href="setup.html" title="next chapter">Setup</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="../../v0.1/user/install.html">v0.1</a></li>
+    <li><a href="../../v0.1.1/user/install.html">v0.1.1</a></li>
+    <li><a href="../../v0.1.2/user/install.html">v0.1.2</a></li>
+    <li><a href="../../v0.1.3/user/install.html">v0.1.3</a></li>
+    <li><a href="install.html">v0.1.4</a></li>
+    <li><a href="../../v0.1.5/user/install.html">v0.1.5</a></li>
+    <li><a href="../../v0.1.6/user/install.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

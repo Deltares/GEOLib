@@ -1,0 +1,1657 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D-Stability &#8212; geolib 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Contributing" href="../extend.html" />
+    <link rel="prev" title="D-Sheetpiling" href="dsheetpiling.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dsheetpiling.html" title="Previous document">D-Sheetpiling</a>
+        </li>
+        <li>
+          <a href="../extend.html" title="Next document">Contributing</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="d-stability">
+<span id="dstability"></span><h1>D-Stability<a class="headerlink" href="#d-stability" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-geolib.models.dstability.dstability_model">
+<span id="d-stability-model"></span><h2>D-Stability model<a class="headerlink" href="#module-geolib.models.dstability.dstability_model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationModel">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.dstability_model.</code><code class="sig-name descname">DStabilityCalculationModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set Type of Calculation.</p>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationModel.Bishop">
+<code class="sig-name descname">Bishop</code><em class="property"> = 1</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationModel.Bishop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationModel.Spencer">
+<code class="sig-name descname">Spencer</code><em class="property"> = 3</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationModel.Spencer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationModel.UpliftVan">
+<code class="sig-name descname">UpliftVan</code><em class="property"> = 2</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationModel.UpliftVan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationType">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.dstability_model.</code><code class="sig-name descname">DStabilityCalculationType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set Type of Calculation.</p>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationType.BoundarySearch">
+<code class="sig-name descname">BoundarySearch</code><em class="property"> = 1</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationType.BoundarySearch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityCalculationType.SingleCalc">
+<code class="sig-name descname">SingleCalc</code><em class="property"> = 2</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityCalculationType.SingleCalc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.dstability_model.</code><code class="sig-name descname">DStabilityModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>D-Stability is software for soft soil slope stability.</p>
+<p>This model can read, modify and create
+.stix files</p>
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_head_line">
+<code class="sig-name descname">add_head_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">notes</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">is_phreatic_line</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_head_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add head line to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
+<li><p><strong>is_phreatic_line</strong> (<em>bool</em>) – set as phreatic line, defaults to False</p></li>
+<li><p><strong>stage_id</strong> (<em>int</em>) – stage to add to, defaults to current stage</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added headline</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_layer">
+<code class="sig-name descname">add_layer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">soil_code</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">notes</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a soil layer to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes, in clockwise order (non closed simple polygon)</p></li>
+<li><p><strong>soil_code</strong> (<em>str</em>) – code of the soil for this layer</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
+<li><p><strong>stage_id</strong> (<em>int</em>) – stage to add to, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added layer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_load">
+<code class="sig-name descname">add_load</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">load</span></em>, <em class="sig-param"><span class="n">consolidations</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a load to the object.</p>
+<p>The geometry should be defined before adding loads.</p>
+<p>If no consolidations are provided, a Consolidation with default values will be made for each SoilLayer.
+It is not possible to set consolidation degrees of loads afterwards since they don’t have an id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>load</strong> (<a class="reference internal" href="#geolib.models.dstability.loads.DStabilityLoad" title="geolib.models.dstability.loads.DStabilityLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityLoad</span></code></a>) – A subclass of DStabilityLoad.</p></li>
+<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.</p></li>
+<li><p><strong>consolidations</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_point">
+<code class="sig-name descname">add_point</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">point</span></em>, <em class="sig-param"><span class="n">stage</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add point, which should be unique in the model and return the created point id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_reference_line">
+<code class="sig-name descname">add_reference_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">bottom_headline_id</span></em>, <em class="sig-param"><span class="n">top_head_line_id</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">notes</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_reference_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add reference line to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes</p></li>
+<li><p><strong>bottom_headline_id</strong> (<em>int</em>) – id of the headline to use as the bottom headline</p></li>
+<li><p><strong>top_head_line_id</strong> (<em>int</em>) – id of the headline to use as the top headline</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
+<li><p><strong>stage_id</strong> (<em>int</em>) – stage to add to, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added reference line</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_reinforcement">
+<code class="sig-name descname">add_reinforcement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reinforcement</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_reinforcement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a reinforcement to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reinforcement</strong> (<a class="reference internal" href="#geolib.models.dstability.reinforcements.DStabilityReinforcement" title="geolib.models.dstability.reinforcements.DStabilityReinforcement"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityReinforcement</span></code></a>) – A subclass of DStabilityReinforcement.</p></li>
+<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Id used to identify the stage to which the reinforcement is linked.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Assigned id of the reinforcements (collection object of all reinforcements for a stage).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_id is provided, or the datastructure is no longer valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_soil">
+<code class="sig-name descname">add_soil</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soil</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new soil to the model. The code must be unique, the id will be generated</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>soil</strong> (<em>Soil</em>) – a new soil</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added soil</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations">
+<code class="sig-name descname">add_soil_layer_consolidations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soil_layer_id</span></em>, <em class="sig-param"><span class="n">consolidations</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add consolidations for a layer (layerload).</p>
+<p>Consolidations cannot be added when adding soil layers since in the consolidations, all other soil layers need to be referred.
+Therefore, all soillayers in a stage should be defined before setting consolidation and
+the number of consolidations given should equal the amount of layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>soil_layer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Consolidation is set for this soil layer id.</p></li>
+<li><p><strong>consolidations</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]) – List of Consolidation. Must contain a Consolidation for every other layer.</p></li>
+<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_stage">
+<code class="sig-name descname">add_stage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">notes</span></em>, <em class="sig-param"><span class="n">set_current</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new stage to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the stage</p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the stage</p></li>
+<li><p><strong>set_current</strong> – Whether to make the new stage the current stage.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the id of the new stage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_state_line">
+<code class="sig-name descname">add_state_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span></em>, <em class="sig-param"><span class="n">state_points</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add state line. From the Soils, only the state parameters are used.</p>
+<p>points are a list of points with x,z
+state_point are a list of DStabilit.. where ONLY the x is used, the Z will be calculated</p>
+<p>No result PersistableStateLine has no Id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]) – </p></li>
+<li><p><strong>state_points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#geolib.models.dstability.states.DStabilityStateLinePoint" title="geolib.models.dstability.states.DStabilityStateLinePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityStateLinePoint</span></code></a>]) – </p></li>
+<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.add_state_point">
+<code class="sig-name descname">add_state_point</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state_point</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add state point to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state_point</strong> (<a class="reference internal" href="#geolib.models.dstability.states.DStabilityStatePoint" title="geolib.models.dstability.states.DStabilityStatePoint"><em>DStabilityStatePoint</em></a>) – DStabilityStatePoint class</p></li>
+<li><p><strong>stage_id</strong> (<em>int</em>) – stage_id (int): stage to add to, defaults to the current stage</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added add_state_point</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Check if point lies within the given layer</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.console_path">
+<em class="property">property </em><code class="sig-name descname">console_path</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.console_path" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.copy_stage">
+<code class="sig-name descname">copy_stage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">notes</span></em>, <em class="sig-param"><span class="n">set_current</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.copy_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy an existing stage and add it to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the stage</p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the stage</p></li>
+<li><p><strong>set_current</strong> – Whether to make the new stage the current stage.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the id of the new stage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.current_id">
+<code class="sig-name descname">current_id</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.current_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.current_stage">
+<code class="sig-name descname">current_stage</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.current_stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.datastructure">
+<code class="sig-name descname">datastructure</code><em class="property">: geolib.models.dstability.internal.DStabilityStructure</em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.datastructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.edit_soil">
+<code class="sig-name descname">edit_soil</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">code</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.edit_soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an existing soil with parameter names based on the soil class members</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<em>str</em>) – the code of the soil</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angel=25.0’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True for succes, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.get_result">
+<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stage_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the results of a stage. Calculation results are based on analysis type and calculation type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – Id of a stage.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the analysis results of the stage.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – No results or calculationsettings available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.get_slipcircle_result">
+<code class="sig-name descname">get_slipcircle_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stage_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_slipcircle_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the slipcircle(s) of the calculation result of a given stage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – stage for which to get the available results</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary of the available slipcircles per model for the given stage</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Result is not available for provided stage id</p></li>
+<li><p><strong>AttributeError</strong> – When the result has no slipcircle. Try get the slipplane</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.get_slipplane_result">
+<code class="sig-name descname">get_slipplane_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_slipplane_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the slipplanes of the calculations result of a stage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – stage for which to get the available results</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary of the available slip planes per model for the given stage</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Result is not available for provided stage id</p></li>
+<li><p><strong>AttributeError</strong> – When the result has no slipplane. Try get the slipcircle</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.output">
+<em class="property">property </em><code class="sig-name descname">output</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the output.</p>
+<p>Requires a successful execute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">UpliftVanResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UpliftVanParticleSwarmResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">UpliftVanReliabilityResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">SpencerGeneticAlgorithmResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">SpencerReliabilityResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">SpencerResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BishopBruteForceResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BishopReliabilityResult</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BishopResult</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse input or outputfile to Model, depending on extension.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type">
+<em class="property">property </em><code class="sig-name descname">parser_provider_type</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parser provider type of the current concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityParserProvider</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.points">
+<em class="property">property </em><code class="sig-name descname">points</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.serialize">
+<code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Support serializing to directory while developing for debugging purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>location</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DirectoryPath</span></code>]) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.set_model">
+<code class="sig-name descname">set_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">analysis_method</span></em>, <em class="sig-param"><span class="n">stage_id</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.set_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the model and applies the given parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>analysis_method</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityAnalysisMethod" title="geolib.models.dstability.analysis.DStabilityAnalysisMethod"><em>DStabilityAnalysisMethod</em></a>) – A subclass of DStabilityAnalysisMethod.</p></li>
+<li><p><strong>stage_id</strong> – Id used to identify the stage to which the analysis method is linked.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – When the provided analysismethod is no subclass of DStabilityAnalysisMethod,</p></li>
+<li><p><strong>an invalid stage_id is provided</strong><strong>, </strong><strong>the analysis method is not known</strong><strong> or </strong><strong>the datastructure is no longer valid.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.soils">
+<em class="property">property </em><code class="sig-name descname">soils</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCollection</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.stages">
+<em class="property">property </em><code class="sig-name descname">stages</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.stages" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stage</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.dstability_model.DStabilityModel.waternets">
+<em class="property">property </em><code class="sig-name descname">waternets</code><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.waternets" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Waternet</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.dstability_model.DStabilityObject">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.dstability_model.</code><code class="sig-name descname">DStabilityObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityObject.datastructure">
+<code class="sig-name descname">datastructure</code><em class="property">: Optional<span class="p">[</span>geolib.models.base_model_structure.BaseModelStructure<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityObject.datastructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityObject.filename">
+<code class="sig-name descname">filename</code><em class="property">: Optional<span class="p">[</span>pathlib.Path<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityObject.filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.dstability_model.DStabilityObject.meta">
+<code class="sig-name descname">meta</code><em class="property">: <a class="reference internal" href="../model.html#geolib.models.meta.MetaData" title="geolib.models.meta.MetaData">geolib.models.meta.MetaData</a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityObject.meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-geolib.models.dstability.analysis"></span><dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="geolib.models.dstability.analysis.DStabilityAnalysisMethod.analysis_type">
+<em class="property">property </em><code class="sig-name descname">analysis_type</code><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityAnalysisMethod.analysis_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalysisTypeEnum</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityBishopAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates slip plane constraints object for the Bishop method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>circle</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityCircle" title="geolib.models.dstability.analysis.DStabilityCircle"><em>DStabilityCircle</em></a>) – Bishop circle definition</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopAnalysisMethod.circle">
+<code class="sig-name descname">circle</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityCircle" title="geolib.models.dstability.analysis.DStabilityCircle">geolib.models.dstability.analysis.DStabilityCircle</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopAnalysisMethod.circle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityBishopBruteForceAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates slip plane constraints object for the Bishop Brute Force method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>extrapolate_search_space</strong> (<em>bool</em>) – Extrapolate the search space, defaults to True</p></li>
+<li><p><strong>search_grid</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySearchGrid" title="geolib.models.dstability.analysis.DStabilitySearchGrid"><em>DStabilitySearchGrid</em></a>) – </p></li>
+<li><p><strong>slip_plane_constraints</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints" title="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints"><em>DStabilitySlipPlaneConstraints</em></a>) – </p></li>
+<li><p><strong>bottom_tangent_line_z</strong> (<em>float</em>) – </p></li>
+<li><p><strong>number_of_tangent_lines</strong> (<em>int</em>) – </p></li>
+<li><p><strong>space_tangent_lines</strong> (<em>float</em>) – </p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.bottom_tangent_line_z">
+<code class="sig-name descname">bottom_tangent_line_z</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.bottom_tangent_line_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.extrapolate_search_space">
+<code class="sig-name descname">extrapolate_search_space</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.extrapolate_search_space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.number_of_tangent_lines">
+<code class="sig-name descname">number_of_tangent_lines</code><em class="property">: pydantic.types.PositiveInt</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.number_of_tangent_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.search_grid">
+<code class="sig-name descname">search_grid</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySearchGrid" title="geolib.models.dstability.analysis.DStabilitySearchGrid">geolib.models.dstability.analysis.DStabilitySearchGrid</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.search_grid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.slip_plane_constraints">
+<code class="sig-name descname">slip_plane_constraints</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints" title="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints">geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.slip_plane_constraints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.space_tangent_lines">
+<code class="sig-name descname">space_tangent_lines</code><em class="property">: geolib.models.dstability.analysis.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityBishopBruteForceAnalysisMethod.space_tangent_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityCircle">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityCircle</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityCircle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a circle object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>center</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a>) – Center of the circle.</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – Radius of the circle.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityCircle.center">
+<code class="sig-name descname">center</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityCircle.center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityCircle.radius">
+<code class="sig-name descname">radius</code><em class="property">: geolib.models.dstability.analysis.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityCircle.radius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityGeneticSlipPlaneConstraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates slip plane constraints object for the Spencer method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_enabled</strong> (<em>bool</em>) – Height of the search area.</p></li>
+<li><p><strong>minimum_angle_between_slices</strong> (<em>float</em>) – Minimum angle between slices, defaults to 0.</p></li>
+<li><p><strong>minimum_thrust_line_percentage_inside_slices</strong> (<em>float</em>) – Minimum thrustline percentage inside slices, defaults to 0.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints.is_enabled">
+<code class="sig-name descname">is_enabled</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints.is_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints.minimum_angle_between_slices">
+<code class="sig-name descname">minimum_angle_between_slices</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints.minimum_angle_between_slices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints.minimum_thrust_line_percentage_inside_slices">
+<code class="sig-name descname">minimum_thrust_line_percentage_inside_slices</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints.minimum_thrust_line_percentage_inside_slices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityObject">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class for objects in the analysis module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchArea">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilitySearchArea</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a search area object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>height</strong> (<em>float</em>) – Height of the search area.</p></li>
+<li><p><strong>top_left</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a>) – Top left position of the search area</p></li>
+<li><p><strong>width</strong> (<em>float</em>) – Width of the search area</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchArea.height">
+<code class="sig-name descname">height</code><em class="property">: geolib.models.dstability.analysis.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchArea.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchArea.top_left">
+<code class="sig-name descname">top_left</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchArea.top_left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchArea.width">
+<code class="sig-name descname">width</code><em class="property">: geolib.models.dstability.analysis.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchArea.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchGrid">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilitySearchGrid</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a search grid object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bottom_left</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a>) – Bottom left position of the search grid.</p></li>
+<li><p><strong>number_of_points_in_x</strong> (<em>int</em>) – Number of points to the right</p></li>
+<li><p><strong>number_of_points_in_z</strong> (<em>int</em>) – Number op points upwards</p></li>
+<li><p><strong>space</strong> (<em>float</em>) – Space between the points in x and z direction</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchGrid.bottom_left">
+<code class="sig-name descname">bottom_left</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchGrid.bottom_left" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchGrid.number_of_points_in_x">
+<code class="sig-name descname">number_of_points_in_x</code><em class="property">: pydantic.types.PositiveInt</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchGrid.number_of_points_in_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchGrid.number_of_points_in_z">
+<code class="sig-name descname">number_of_points_in_z</code><em class="property">: pydantic.types.PositiveInt</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchGrid.number_of_points_in_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySearchGrid.space">
+<code class="sig-name descname">space</code><em class="property">: geolib.models.dstability.analysis.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySearchGrid.space" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilitySlipPlaneConstraints</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a slip plane constraints object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_size_constraints_enabled</strong> (<em>bool</em>) – enabel size constraints, defaults to False</p></li>
+<li><p><strong>is_zone_a_constraints_enabled</strong> (<em>bool</em>) – enable constraints for zone A, defaults to False</p></li>
+<li><p><strong>is_zone_b_constraints_enabled</strong> (<em>bool</em>) – enable constraints for zone B, defaults to False</p></li>
+<li><p><strong>minimum_slip_plane_depth</strong> (<em>float</em>) – minimum slip plane depth, defaults to 0.0</p></li>
+<li><p><strong>minimum_slip_plane_length</strong> (<em>float</em>) – minimum slip plane length, defaults to 0.0</p></li>
+<li><p><strong>width_zone_a</strong> (<em>float</em>) – width of zone A, defaults to 0.0</p></li>
+<li><p><strong>width_zone_b</strong> (<em>float</em>) – width of zone B, defaults to 0.0</p></li>
+<li><p><strong>x_left_zone_a</strong> (<em>float</em>) – x coordinate of left point of zone A, defaults to 0.0</p></li>
+<li><p><strong>x_left_zone_b</strong> (<em>float</em>) – x coordinate of left point of zone B, defaults to 0.0</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.is_size_constraints_enabled">
+<code class="sig-name descname">is_size_constraints_enabled</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.is_size_constraints_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.is_zone_a_constraints_enabled">
+<code class="sig-name descname">is_zone_a_constraints_enabled</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.is_zone_a_constraints_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.is_zone_b_constraints_enabled">
+<code class="sig-name descname">is_zone_b_constraints_enabled</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.is_zone_b_constraints_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.minimum_slip_plane_depth">
+<code class="sig-name descname">minimum_slip_plane_depth</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.minimum_slip_plane_depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.minimum_slip_plane_length">
+<code class="sig-name descname">minimum_slip_plane_length</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.minimum_slip_plane_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.width_zone_a">
+<code class="sig-name descname">width_zone_a</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.width_zone_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.width_zone_b">
+<code class="sig-name descname">width_zone_b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.width_zone_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.x_left_zone_a">
+<code class="sig-name descname">x_left_zone_a</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.x_left_zone_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.x_left_zone_b">
+<code class="sig-name descname">x_left_zone_b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints.x_left_zone_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilitySpencerAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates slip plane for the Spencer method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>slipplane</strong> (<em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – The points of the slipplane</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerAnalysisMethod.slipplane">
+<code class="sig-name descname">slipplane</code><em class="property">: List<span class="p">[</span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerAnalysisMethod.slipplane" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilitySpencerGeneticAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the input for the genetic spencer algorithm</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>options_type</strong> (<em>OptionsType</em>) – DEFAULT or THOROUGH, defaults to DEFAULT</p></li>
+<li><p><strong>slip_plane_a</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – upper slip plane boundary</p></li>
+<li><p><strong>slip_plane_b</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – lower slip line boundary</p></li>
+<li><p><strong>slip_plane_constraints</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints" title="geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints"><em>DStabilityGeneticSlipPlaneConstraints</em></a>) – constraints for the slip plane</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.options_type">
+<code class="sig-name descname">options_type</code><em class="property">: geolib.models.dstability.internal.OptionsTypeEnum</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.options_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.slip_plane_a">
+<code class="sig-name descname">slip_plane_a</code><em class="property">: List<span class="p">[</span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.slip_plane_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.slip_plane_b">
+<code class="sig-name descname">slip_plane_b</code><em class="property">: List<span class="p">[</span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.slip_plane_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.slip_plane_constraints">
+<code class="sig-name descname">slip_plane_constraints</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints" title="geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints">geolib.models.dstability.analysis.DStabilityGeneticSlipPlaneConstraints</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.slip_plane_constraints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityUpliftVanAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the input for the uplift van analysis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>first_circle</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityCircle" title="geolib.models.dstability.analysis.DStabilityCircle"><em>DStabilityCircle</em></a>) – The location of the left circle for the slipplane.</p></li>
+<li><p><strong>second_circle_center</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a>) – The center of the circle on the right side of the slipplane</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanAnalysisMethod.first_circle">
+<code class="sig-name descname">first_circle</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilityCircle" title="geolib.models.dstability.analysis.DStabilityCircle">geolib.models.dstability.analysis.DStabilityCircle</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanAnalysisMethod.first_circle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanAnalysisMethod.second_circle_center">
+<code class="sig-name descname">second_circle_center</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanAnalysisMethod.second_circle_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.analysis.</code><code class="sig-name descname">DStabilityUpliftVanParticleSwarmAnalysisMethod</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the input for the uplift van analysis</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>options_type</strong> (<em>OptionsType</em>) – DEFAULT or THOROUGH, defaults to DEFAULT</p></li>
+<li><p><strong>search_area_a</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySearchArea" title="geolib.models.dstability.analysis.DStabilitySearchArea"><em>DStabilitySearchArea</em></a>) – The search area for the circle on the left side of the slip plane</p></li>
+<li><p><strong>search_area_b</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySearchArea" title="geolib.models.dstability.analysis.DStabilitySearchArea"><em>DStabilitySearchArea</em></a>) – The search area for the circle on the right side of the slip plane</p></li>
+<li><p><strong>slip_plane_constraints</strong> (<a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints" title="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints"><em>DStabilitySlipPlaneConstraints</em></a>) – Slip plane constraints</p></li>
+<li><p><strong>tangent_area_height</strong> (<em>float</em>) – height of the tangent lines search area</p></li>
+<li><p><strong>tangent_area_top_z</strong> (<em>float</em>) – top z coordinate of the tangent lines area</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.options_type">
+<code class="sig-name descname">options_type</code><em class="property">: geolib.models.dstability.internal.OptionsTypeEnum</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.options_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.search_area_a">
+<code class="sig-name descname">search_area_a</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySearchArea" title="geolib.models.dstability.analysis.DStabilitySearchArea">geolib.models.dstability.analysis.DStabilitySearchArea</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.search_area_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.search_area_b">
+<code class="sig-name descname">search_area_b</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySearchArea" title="geolib.models.dstability.analysis.DStabilitySearchArea">geolib.models.dstability.analysis.DStabilitySearchArea</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.search_area_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.slip_plane_constraints">
+<code class="sig-name descname">slip_plane_constraints</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints" title="geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints">geolib.models.dstability.analysis.DStabilitySlipPlaneConstraints</a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.slip_plane_constraints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.tangent_area_height">
+<code class="sig-name descname">tangent_area_height</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.tangent_area_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.tangent_area_top_z">
+<code class="sig-name descname">tangent_area_top_z</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.tangent_area_top_z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geolib.models.dstability.loads">
+<span id="loads"></span><h2>Loads<a class="headerlink" href="#module-geolib.models.dstability.loads" title="Permalink to this headline">¶</a></h2>
+<p>This module handles the four types of loads in DStability.</p>
+<dl class="py class">
+<dt id="geolib.models.dstability.loads.Consolidation">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.loads.</code><code class="sig-name descname">Consolidation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.Consolidation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.Consolidation.degree">
+<code class="sig-name descname">degree</code><em class="property">: geolib.models.dstability.loads.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.loads.Consolidation.degree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.Consolidation.layer_id">
+<code class="sig-name descname">layer_id</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dstability.loads.Consolidation.layer_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.loads.Consolidation.to_internal_datastructure">
+<code class="sig-name descname">to_internal_datastructure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.Consolidation.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableConsolidation</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.loads.DStabilityLoad">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.loads.</code><code class="sig-name descname">DStabilityLoad</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.DStabilityLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class for Loads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.DStabilityLoad.label">
+<code class="sig-name descname">label</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.loads.DStabilityLoad.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.loads.DStabilityLoad.to_internal_datastructure">
+<em class="property">abstract </em><code class="sig-name descname">to_internal_datastructure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.DStabilityLoad.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.loads.Earthquake">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.loads.</code><code class="sig-name descname">Earthquake</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.Earthquake" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dstability.loads.DStabilityLoad" title="geolib.models.dstability.loads.DStabilityLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityLoad</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.Earthquake.free_water_factor">
+<code class="sig-name descname">free_water_factor</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.Earthquake.free_water_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.Earthquake.horizontal_factor">
+<code class="sig-name descname">horizontal_factor</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.Earthquake.horizontal_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.Earthquake.vertical_factor">
+<code class="sig-name descname">vertical_factor</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.Earthquake.vertical_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.loads.LineLoad">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.loads.</code><code class="sig-name descname">LineLoad</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>DStability Lineload.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.LineLoad.angle">
+<code class="sig-name descname">angle</code><em class="property">: geolib.models.dstability.loads.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.LineLoad.angle_of_distribution">
+<code class="sig-name descname">angle_of_distribution</code><em class="property">: geolib.models.dstability.loads.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.angle_of_distribution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.LineLoad.location">
+<code class="sig-name descname">location</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.LineLoad.magnitude">
+<code class="sig-name descname">magnitude</code><em class="property">: geolib.models.dstability.loads.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.magnitude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.loads.LineLoad.to_internal_datastructure">
+<code class="sig-name descname">to_internal_datastructure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLineLoad</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.loads.TreeLoad">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.loads.</code><code class="sig-name descname">TreeLoad</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dstability.loads.DStabilityLoad" title="geolib.models.dstability.loads.DStabilityLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityLoad</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.TreeLoad.angle_of_distribution">
+<code class="sig-name descname">angle_of_distribution</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad.angle_of_distribution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.TreeLoad.height">
+<code class="sig-name descname">height</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.TreeLoad.width_of_root_zone">
+<code class="sig-name descname">width_of_root_zone</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad.width_of_root_zone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.TreeLoad.wind_force">
+<code class="sig-name descname">wind_force</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad.wind_force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.loads.UniformLoad">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.loads.</code><code class="sig-name descname">UniformLoad</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>UniformLoad.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.UniformLoad.angle_of_distribution">
+<code class="sig-name descname">angle_of_distribution</code><em class="property">: geolib.models.dstability.loads.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.angle_of_distribution" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.UniformLoad.end">
+<code class="sig-name descname">end</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.loads.UniformLoad.end_greater_than_start">
+<em class="property">classmethod </em><code class="sig-name descname">end_greater_than_start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">values</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.end_greater_than_start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.UniformLoad.magnitude">
+<code class="sig-name descname">magnitude</code><em class="property">: geolib.models.dstability.loads.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.magnitude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.loads.UniformLoad.start">
+<code class="sig-name descname">start</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dstability.loads.UniformLoad.to_internal_datastructure">
+<code class="sig-name descname">to_internal_datastructure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableUniformLoad</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geolib.models.dstability.reinforcements">
+<span id="reinforcements"></span><h2>Reinforcements<a class="headerlink" href="#module-geolib.models.dstability.reinforcements" title="Permalink to this headline">¶</a></h2>
+<p>This module handles the three types of reinforcements in DStability.</p>
+<dl class="py class">
+<dt id="geolib.models.dstability.reinforcements.DStabilityReinforcement">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.reinforcements.</code><code class="sig-name descname">DStabilityReinforcement</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.reinforcements.DStabilityReinforcement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class for Reinforcements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.DStabilityReinforcement.label">
+<code class="sig-name descname">label</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.DStabilityReinforcement.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.reinforcements.ForbiddenLine">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.reinforcements.</code><code class="sig-name descname">ForbiddenLine</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.reinforcements.ForbiddenLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dstability.reinforcements.DStabilityReinforcement" title="geolib.models.dstability.reinforcements.DStabilityReinforcement"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityReinforcement</span></code></a>. Needs to be further defined.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.ForbiddenLine.end">
+<code class="sig-name descname">end</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.ForbiddenLine.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.ForbiddenLine.start">
+<code class="sig-name descname">start</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.ForbiddenLine.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.reinforcements.Geotextile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.reinforcements.</code><code class="sig-name descname">Geotextile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Geotextile.effective_tensile_strength">
+<code class="sig-name descname">effective_tensile_strength</code><em class="property">: geolib.models.dstability.reinforcements.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile.effective_tensile_strength" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Geotextile.end">
+<code class="sig-name descname">end</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Geotextile.reduction_area">
+<code class="sig-name descname">reduction_area</code><em class="property">: geolib.models.dstability.reinforcements.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile.reduction_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Geotextile.start">
+<code class="sig-name descname">start</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.reinforcements.Nail">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.reinforcements.</code><code class="sig-name descname">Nail</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail" title="Permalink to this definition">¶</a></dt>
+<dd><p>DStability Nail, used for soil nailing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.bending_stiffness">
+<code class="sig-name descname">bending_stiffness</code><em class="property">: geolib.models.dstability.reinforcements.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.bending_stiffness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.critical_angle">
+<code class="sig-name descname">critical_angle</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.critical_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.diameter">
+<code class="sig-name descname">diameter</code><em class="property">: geolib.models.dstability.reinforcements.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.direction">
+<code class="sig-name descname">direction</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.direction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.grout_diameter">
+<code class="sig-name descname">grout_diameter</code><em class="property">: geolib.models.dstability.reinforcements.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.grout_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.horizontal_spacing">
+<code class="sig-name descname">horizontal_spacing</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.horizontal_spacing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.lateral_stresses">
+<code class="sig-name descname">lateral_stresses</code><em class="property">: List<span class="p">[</span>Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">]</span><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.lateral_stresses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.length">
+<code class="sig-name descname">length</code><em class="property">: geolib.models.dstability.reinforcements.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.location">
+<code class="sig-name descname">location</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.max_pull_force">
+<code class="sig-name descname">max_pull_force</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.max_pull_force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.plastic_moment">
+<code class="sig-name descname">plastic_moment</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.plastic_moment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.shear_stresses">
+<code class="sig-name descname">shear_stresses</code><em class="property">: List<span class="p">[</span>Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">]</span><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.shear_stresses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.use_facing">
+<code class="sig-name descname">use_facing</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.use_facing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.use_lateral_stress">
+<code class="sig-name descname">use_lateral_stress</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.use_lateral_stress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.reinforcements.Nail.use_shear_stress">
+<code class="sig-name descname">use_shear_stress</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.use_shear_stress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geolib.models.dstability.states">
+<span id="states"></span><h2>States<a class="headerlink" href="#module-geolib.models.dstability.states" title="Permalink to this headline">¶</a></h2>
+<p>This module handles the three types of state types in DStability.</p>
+<dl class="py class">
+<dt id="geolib.models.dstability.states.DStabilityObject">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.states.</code><code class="sig-name descname">DStabilityObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.states.DStabilityObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.states.</code><code class="sig-name descname">DStabilityStateLinePoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.above">
+<code class="sig-name descname">above</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.states.DStabilityStress" title="geolib.models.dstability.states.DStabilityStress">geolib.models.dstability.states.DStabilityStress</a></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.above" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.below">
+<code class="sig-name descname">below</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.states.DStabilityStress" title="geolib.models.dstability.states.DStabilityStress">geolib.models.dstability.states.DStabilityStress</a></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.below" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.id">
+<code class="sig-name descname">id</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.is_above_and_below_correlated">
+<code class="sig-name descname">is_above_and_below_correlated</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.is_above_and_below_correlated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.is_probabilistic">
+<code class="sig-name descname">is_probabilistic</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.is_probabilistic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.label">
+<code class="sig-name descname">label</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStateLinePoint.x">
+<code class="sig-name descname">x</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStateLinePoint.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.states.</code><code class="sig-name descname">DStabilityStatePoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>DStability StatePoint</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>int</em>) – id of the statepoint</p></li>
+<li><p><strong>layer_id</strong> (<em>int</em>) – id of the layer to add the statepoint, note that the API does not check if this point is within the layer</p></li>
+<li><p><strong>pop</strong> (<em>float</em>) – POP value, defaults to 0.0</p></li>
+<li><p><strong>point</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a>) – location of the statepoint</p></li>
+<li><p><strong>stress</strong> (<a class="reference internal" href="#geolib.models.dstability.states.DStabilityStress" title="geolib.models.dstability.states.DStabilityStress"><em>DStabilityStress</em></a>) – DStabilityStress object</p></li>
+<li><p><strong>is_probabilistic</strong> (<em>bool</em>) – is probabilistic, default to false</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label of the statepoint</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint.id">
+<code class="sig-name descname">id</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint.is_probabilistic">
+<code class="sig-name descname">is_probabilistic</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint.is_probabilistic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint.label">
+<code class="sig-name descname">label</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint.layer_id">
+<code class="sig-name descname">layer_id</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint.layer_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint.point">
+<code class="sig-name descname">point</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint.point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStatePoint.stress">
+<code class="sig-name descname">stress</code><em class="property">: <a class="reference internal" href="#geolib.models.dstability.states.DStabilityStress" title="geolib.models.dstability.states.DStabilityStress">geolib.models.dstability.states.DStabilityStress</a></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStatePoint.stress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dstability.states.DStabilityStress">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dstability.states.</code><code class="sig-name descname">DStabilityStress</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress" title="Permalink to this definition">¶</a></dt>
+<dd><p>DStability Stress</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ocr</strong> (<em>float</em>) – OCR value, defaults to 1.0</p></li>
+<li><p><strong>pop</strong> (<em>float</em>) – POP value, defaults to 0.0</p></li>
+<li><p><strong>stochastic_parameter</strong> (<em>PersistableStochasticParameter</em>) – </p></li>
+<li><p><strong>state_type</strong> (<em>StateType</em>) – type of state</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStress.ocr">
+<code class="sig-name descname">ocr</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.ocr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStress.pop">
+<code class="sig-name descname">pop</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.pop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStress.state_type">
+<code class="sig-name descname">state_type</code><em class="property">: geolib.models.dstability.internal.StateType</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.state_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dstability.states.DStabilityStress.stochastic_parameter">
+<code class="sig-name descname">stochastic_parameter</code><em class="property">: geolib.models.dstability.internal.PersistableStochasticParameter</em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.stochastic_parameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dsheetpiling.html" title="Previous document">D-Sheetpiling</a>
+        </li>
+        <li>
+          <a href="../extend.html" title="Next document">Contributing</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Developer Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../model.html">Model Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../geometry.html">Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../soils.html">Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsheetpiling.html">D-Sheetpiling</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">D-Stability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.dstability_model">D-Stability model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.loads">Loads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.reinforcements">Reinforcements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.states">States</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">Developer Interface</a><ul>
+      <li>Previous: <a href="dsheetpiling.html" title="previous chapter">D-Sheetpiling</a></li>
+      <li>Next: <a href="../extend.html" title="next chapter">Contributing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="dstability.html">v0.1</a></li>
+    <li><a href="../../../v0.1.1/dev/models/dstability.html">v0.1.1</a></li>
+    <li><a href="../../../v0.1.2/dev/models/dstability.html">v0.1.2</a></li>
+    <li><a href="../../../v0.1.3/dev/models/dstability.html">v0.1.3</a></li>
+    <li><a href="../../../v0.1.4/dev/models/dstability.html">v0.1.4</a></li>
+    <li><a href="../../../v0.1.5/dev/models/dstability.html">v0.1.5</a></li>
+    <li><a href="../../../v0.1.6/dev/models/dstability.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

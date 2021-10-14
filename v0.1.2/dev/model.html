@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Model Interface &#8212; geolib 0.1.2 documentation</title>
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Geometry" href="geometry.html" />
+    <link rel="prev" title="Developer Interface" href="api.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="api.html" title="Previous document">Developer Interface</a>
+        </li>
+        <li>
+          <a href="geometry.html" title="Next document">Geometry</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="model-interface">
+<span id="model"></span><h1>Model Interface<a class="headerlink" href="#model-interface" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-geolib.models.base_model">
+<span id="base-model"></span><h2>Base Model<a class="headerlink" href="#module-geolib.models.base_model" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the primary objects that power GEOLib.</p>
+<dl class="py class">
+<dt id="geolib.models.base_model.BaseModel">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.base_model.</code><code class="sig-name descname">BaseModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.console_flags">
+<em class="property">property </em><code class="sig-name descname">console_flags</code><a class="headerlink" href="#geolib.models.base_model.BaseModel.console_flags" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.console_path">
+<em class="property">property </em><code class="sig-name descname">console_path</code><a class="headerlink" href="#geolib.models.base_model.BaseModel.console_path" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.base_model.BaseModel.datastructure">
+<code class="sig-name descname">datastructure</code><em class="property">: Optional<span class="p">[</span>geolib.models.base_model_structure.BaseModelStructure<span class="p">]</span></em><a class="headerlink" href="#geolib.models.base_model.BaseModel.datastructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.execute">
+<code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timeout_in_seconds</span><span class="o">=</span><span class="default_value">600</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a Model and wait for <cite>timeout</cite> seconds.</p>
+<p>The model is modified in place if the calculation and parsing
+is successful.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>timeout_in_seconds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.base_model.BaseModel" title="geolib.models.base_model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.execute_remote">
+<code class="sig-name descname">execute_remote</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">endpoint</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel.execute_remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a Model on a remote endpoint.</p>
+<p>A new model instance is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>endpoint</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">HttpUrl</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.base_model.BaseModel" title="geolib.models.base_model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.base_model.BaseModel.filename">
+<code class="sig-name descname">filename</code><em class="property">: Optional<span class="p">[</span>pathlib.Path<span class="p">]</span></em><a class="headerlink" href="#geolib.models.base_model.BaseModel.filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.get_error_context">
+<code class="sig-name descname">get_error_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel.get_error_context" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.input">
+<em class="property">property </em><code class="sig-name descname">input</code><a class="headerlink" href="#geolib.models.base_model.BaseModel.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.is_valid">
+<em class="property">property </em><code class="sig-name descname">is_valid</code><a class="headerlink" href="#geolib.models.base_model.BaseModel.is_valid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks validity and integrity of structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.base_model.BaseModel.meta">
+<code class="sig-name descname">meta</code><em class="property">: <a class="reference internal" href="#geolib.models.meta.MetaData" title="geolib.models.meta.MetaData">geolib.models.meta.MetaData</a></em><a class="headerlink" href="#geolib.models.base_model.BaseModel.meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.output">
+<em class="property">property </em><code class="sig-name descname">output</code><a class="headerlink" href="#geolib.models.base_model.BaseModel.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the output.</p>
+<p>Requires a successful execute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse input or outputfile to Model, depending on extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelStructure</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.parser_provider_type">
+<em class="property">abstract property </em><code class="sig-name descname">parser_provider_type</code><a class="headerlink" href="#geolib.models.base_model.BaseModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parser provider type of the current concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseParserProvider</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.serialize">
+<em class="property">abstract </em><code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize model to input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DirectoryPath</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DirectoryPath</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModel.set_metadata">
+<code class="sig-name descname">set_metadata</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">meta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModel.set_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set custom metadata for input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>meta</strong> (<a class="reference internal" href="#geolib.models.meta.MetaData" title="geolib.models.meta.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.base_model.BaseModelList">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.base_model.</code><code class="sig-name descname">BaseModelList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModelList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hold multiple models that can be executed in parallel.</p>
+<p>Note that all models need to have a unique filename
+otherwise they will overwrite eachother. This also helps with
+identifying them later.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.base_model.BaseModelList.errors">
+<code class="sig-name descname">errors</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.base_model.BaseModelList.errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModelList.execute">
+<code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">calculation_folder</span></em>, <em class="sig-param"><span class="n">timeout_in_seconds</span><span class="o">=</span><span class="default_value">600</span></em>, <em class="sig-param"><span class="n">nprocesses</span><span class="o">=</span><span class="default_value">8</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModelList.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute all models in this class in parallel.</p>
+<p>We split the list to separate folders and call a batch processes on each folder.
+Note that the order of models will change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>calculation_folder</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DirectoryPath</span></code>) – </p></li>
+<li><p><strong>timeout_in_seconds</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+<li><p><strong>nprocesses</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.base_model.BaseModelList" title="geolib.models.base_model.BaseModelList"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelList</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.base_model.BaseModelList.execute_remote">
+<code class="sig-name descname">execute_remote</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">endpoint</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.BaseModelList.execute_remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute all models in this class in parallel on a remote endpoint.</p>
+<p>Note that the order of models will change.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>endpoint</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">HttpUrl</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.base_model.BaseModelList" title="geolib.models.base_model.BaseModelList"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelList</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.base_model.BaseModelList.meta">
+<code class="sig-name descname">meta</code><em class="property">: <a class="reference internal" href="#geolib.models.meta.MetaData" title="geolib.models.meta.MetaData">geolib.models.meta.MetaData</a></em><a class="headerlink" href="#geolib.models.base_model.BaseModelList.meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.base_model.BaseModelList.models">
+<code class="sig-name descname">models</code><em class="property">: List<span class="p">[</span><a class="reference internal" href="#geolib.models.base_model.BaseModel" title="geolib.models.base_model.BaseModel">geolib.models.base_model.BaseModel</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.base_model.BaseModelList.models" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="geolib.models.base_model.output_filename_from_input">
+<code class="sig-prename descclassname">geolib.models.base_model.</code><code class="sig-name descname">output_filename_from_input</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">extension</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model.output_filename_from_input" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference internal" href="#geolib.models.base_model.BaseModel" title="geolib.models.base_model.BaseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a>) – </p></li>
+<li><p><strong>extension</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-geolib.models.meta">
+<span id="metadata"></span><h2>Metadata<a class="headerlink" href="#module-geolib.models.meta" title="Permalink to this headline">¶</a></h2>
+<p>All D-Serie models store some metadata in the input files. These include
+projectnames, dates and times, remarks etc. All of these options are
+available via the <cite>Metadata</cite> class.</p>
+<p>The <cite>Metadata</cite> class can also hold other properties for your project
+such as an compute endpoint.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Make a mapping between the possible metadata options and names for each model.</p>
+</div>
+<dl class="py class">
+<dt id="geolib.models.meta.MetaData">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.meta.</code><code class="sig-name descname">MetaData</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">_env_file</span><span class="o">=</span><span class="default_value">'&lt;object object&gt;'</span></em>, <em class="sig-param"><span class="n">_env_file_encoding</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">values</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.meta.MetaData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds all metadata found in the header of model files.</p>
+<p>Could be specified by default or in advance to make
+model generation easier.</p>
+<p>Also can read these settings automatically from a
+‘geolib.env’ file in the working directory, or give
+as ‘_env_file’ parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_env_file</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code>]) – </p></li>
+<li><p><strong>_env_file_encoding</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – </p></li>
+<li><p><strong>values</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py class">
+<dt id="geolib.models.meta.MetaData.Config">
+<em class="property">class </em><code class="sig-name descname">Config</code><a class="headerlink" href="#geolib.models.meta.MetaData.Config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.Config.env_file">
+<code class="sig-name descname">env_file</code><em class="property"> = 'geolib.env'</em><a class="headerlink" href="#geolib.models.meta.MetaData.Config.env_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.analyst">
+<code class="sig-name descname">analyst</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.meta.MetaData.analyst" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.calculation_folder">
+<code class="sig-name descname">calculation_folder</code><em class="property">: pathlib.Path</em><a class="headerlink" href="#geolib.models.meta.MetaData.calculation_folder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.company">
+<code class="sig-name descname">company</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.meta.MetaData.company" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.console_folder">
+<code class="sig-name descname">console_folder</code><em class="property">: pydantic.types.DirectoryPath</em><a class="headerlink" href="#geolib.models.meta.MetaData.console_folder" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.endpoint">
+<code class="sig-name descname">endpoint</code><em class="property">: pydantic.networks.AnyHttpUrl</em><a class="headerlink" href="#geolib.models.meta.MetaData.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.gl_password">
+<code class="sig-name descname">gl_password</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.meta.MetaData.gl_password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.gl_username">
+<code class="sig-name descname">gl_username</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.meta.MetaData.gl_username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.nprocesses">
+<code class="sig-name descname">nprocesses</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.meta.MetaData.nprocesses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.project">
+<code class="sig-name descname">project</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.meta.MetaData.project" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.remarks">
+<code class="sig-name descname">remarks</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.meta.MetaData.remarks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.startdate">
+<code class="sig-name descname">startdate</code><em class="property">: datetime.datetime</em><a class="headerlink" href="#geolib.models.meta.MetaData.startdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.meta.MetaData.timeout">
+<code class="sig-name descname">timeout</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.meta.MetaData.timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="api.html" title="Previous document">Developer Interface</a>
+        </li>
+        <li>
+          <a href="geometry.html" title="Next document">Geometry</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">Developer Interface</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Model Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.base_model">Base Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.meta">Metadata</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.html">Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="soils.html">Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsheetpiling.html">D-Sheetpiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dstability.html">D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="api.html">Developer Interface</a><ul>
+      <li>Previous: <a href="api.html" title="previous chapter">Developer Interface</a></li>
+      <li>Next: <a href="geometry.html" title="next chapter">Geometry</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="../../v0.1/dev/model.html">v0.1</a></li>
+    <li><a href="../../v0.1.1/dev/model.html">v0.1.1</a></li>
+    <li><a href="model.html">v0.1.2</a></li>
+    <li><a href="../../v0.1.3/dev/model.html">v0.1.3</a></li>
+    <li><a href="../../v0.1.4/dev/model.html">v0.1.4</a></li>
+    <li><a href="../../v0.1.5/dev/model.html">v0.1.5</a></li>
+    <li><a href="../../v0.1.6/dev/model.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

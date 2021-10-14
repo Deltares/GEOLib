@@ -1,0 +1,1965 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D-Foundations &#8212; geolib 0.1.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="D-Settlement" href="dsettlement.html" />
+    <link rel="prev" title="Soils" href="../soils.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="../soils.html" title="Previous document">Soils</a>
+        </li>
+        <li>
+          <a href="dsettlement.html" title="Next document">D-Settlement</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="d-foundations">
+<span id="dfoundations"></span><h1>D-Foundations<a class="headerlink" href="#d-foundations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-geolib.models.dfoundations.dfoundations_model">
+<span id="d-foundations-model"></span><h2>D-Foundations model<a class="headerlink" href="#module-geolib.models.dfoundations.dfoundations_model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="geolib.models.dfoundations.dfoundations_model.BearingPilesModel">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.dfoundations_model.</code><code class="sig-name descname">BearingPilesModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.BearingPilesModel.area">
+<code class="sig-name descname">area</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel.area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.BearingPilesModel.factor_gamma_b">
+<code class="sig-name descname">factor_gamma_b</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel.factor_gamma_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.BearingPilesModel.factor_gamma_fnk">
+<code class="sig-name descname">factor_gamma_fnk</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel.factor_gamma_fnk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.BearingPilesModel.factor_gamma_s">
+<code class="sig-name descname">factor_gamma_s</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel.factor_gamma_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.BearingPilesModel.model_type">
+<em class="property">classmethod </em><code class="sig-name descname">model_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel.model_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.dfoundations_model.</code><code class="sig-name descname">CalculationOptions</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set calculation type:</p>
+<p># Verification
+VERIFICATION_DESIGN = 0  # Only valid for Bearing Piles
+VERIFICATION_COMPLETE = 1</p>
+<p># Preliminary Design
+INDICATION_BEARING_CAPACITY = 2
+BEARING_CAPACITY_AT_FIXED_PILETIP_LEVELS = 3
+PILETIP_LEVELS_AND_NET_BEARING_CAPACITY = 4</p>
+<p>Note that cpt_test_level is related to the
+chosen CPTs for the calculation. The GUI will
+override the display of an invalid value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions.calculationtype">
+<code class="sig-name descname">calculationtype</code><em class="property">: geolib.models.dfoundations.internal.SubCalculationType</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions.calculationtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions.cpt_test_level">
+<code class="sig-name descname">cpt_test_level</code><em class="property">: Optional<span class="p">[</span>float<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions.cpt_test_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions.net_bearing_capacity">
+<code class="sig-name descname">net_bearing_capacity</code><em class="property">: Optional<span class="p">[</span>float<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions.net_bearing_capacity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions.trajectory_begin">
+<code class="sig-name descname">trajectory_begin</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions.trajectory_begin" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions.trajectory_end">
+<code class="sig-name descname">trajectory_end</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions.trajectory_end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.CalculationOptions.trajectory_interval">
+<code class="sig-name descname">trajectory_interval</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions.trajectory_interval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.dfoundations_model.</code><code class="sig-name descname">DFoundationsModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>D-Foundations enables the user to calculate piles (bearing and tension)
+and shallow foundation in accordance with the Dutch (and Belgian) standards.</p>
+<p>This model can read, modify and create *.foi files, read *.fod and *.err files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique">
+<code class="sig-name descname">add_pile_if_unique</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pile</span></em>, <em class="sig-param"><span class="n">location</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add pile on location to the model. Requires setup of the Pile and Location first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pile</strong> (<a class="reference internal" href="#geolib.models.dfoundations.piles.Pile" title="geolib.models.dfoundations.piles.Pile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pile</span></code></a>) – </p></li>
+<li><p><strong>location</strong> (<a class="reference internal" href="#geolib.models.dfoundations.piles.PileLocation" title="geolib.models.dfoundations.piles.PileLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PileLocation</span></code></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_profile">
+<code class="sig-name descname">add_profile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profile</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add profile on location to the model. Requires setup of the Profile and Location first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>profile</strong> (<a class="reference internal" href="#geolib.models.dfoundations.profiles.Profile" title="geolib.models.dfoundations.profiles.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil">
+<code class="sig-name descname">add_soil</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">soil</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Soil is converted in the internal structure and added in soil_collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>soil</strong> (<a class="reference internal" href="../soils.html#geolib.soils.soil.Soil" title="geolib.soils.soil.Soil"><code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.bearing_pile_locations">
+<em class="property">property </em><code class="sig-name descname">bearing_pile_locations</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.bearing_pile_locations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the bearing piles location in the internal dict-like datastructure.
+Also enables edit/delete for individual bearing pile locations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.bearing_piles">
+<em class="property">property </em><code class="sig-name descname">bearing_piles</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.bearing_piles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the bearing piles in the internal dict-like datastructure.
+Also enables edit/delete for individual Piles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.console_flags">
+<em class="property">property </em><code class="sig-name descname">console_flags</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.console_flags" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.console_path">
+<em class="property">property </em><code class="sig-name descname">console_path</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.console_path" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.cpts">
+<em class="property">property </em><code class="sig-name descname">cpts</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.cpts" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CPTList</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.datastructure">
+<code class="sig-name descname">datastructure</code><em class="property">: Union<span class="p">[</span>geolib.models.dfoundations.internal.DFoundationsDumpStructure<span class="p">, </span>geolib.models.dfoundations.internal.DFoundationsStructure<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.datastructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.input">
+<em class="property">property </em><code class="sig-name descname">input</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the input.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.output">
+<em class="property">property </em><code class="sig-name descname">output</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the output.</p>
+<p>Requires a successful execute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure" title="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsDumpfileOutputStructure</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.parser_provider_type">
+<em class="property">property </em><code class="sig-name descname">parser_provider_type</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parser provider type of the current concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsParserProvider</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.profiles">
+<em class="property">property </em><code class="sig-name descname">profiles</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.profiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the profiles in the internal dict-like datastructure. Also enables edit/delete for individual Piles.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize">
+<code class="sig-name descname">serialize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize model to input file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.set_model">
+<code class="sig-name descname">set_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">calculation</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.set_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Re)Set ModelType (Bearing/Tension) and ConstructionType for model.</p>
+<p>Please note:</p>
+<ul>
+<li><p>All profiles will be automatically selected for calculation</p></li>
+<li><p>Only the relevant pile types will be used (bearing/tension):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Only the first one added will be used in the case of verification calculation</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>On model change (bearing to tensions and reverse) the soils will be replaced by defaults</p></li>
+</ul>
+<p>It is advised to only use this method once at the beginning of your workflow.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dfoundations.dfoundations_model.BearingPilesModel" title="geolib.models.dfoundations.dfoundations_model.BearingPilesModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPilesModel</span></code></a>, <a class="reference internal" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel" title="geolib.models.dfoundations.dfoundations_model.TensionPilesModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPilesModel</span></code></a>]) – </p></li>
+<li><p><strong>calculation</strong> (<a class="reference internal" href="#geolib.models.dfoundations.dfoundations_model.CalculationOptions" title="geolib.models.dfoundations.dfoundations_model.CalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationOptions</span></code></a>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.soils">
+<em class="property">property </em><code class="sig-name descname">soils</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.soils" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCollection</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.tension_pile_locations">
+<em class="property">property </em><code class="sig-name descname">tension_pile_locations</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.tension_pile_locations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the tension piles location in the internal dict-like datastructure.
+Also enables edit/delete for individual tension pile locations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.tension_piles">
+<em class="property">property </em><code class="sig-name descname">tension_piles</code><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.tension_piles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the tension piles in the internal dict-like datastructure.
+Also enables edit/delete for individual Piles.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.dfoundations_model.</code><code class="sig-name descname">ModelOptions</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.ea_gem">
+<code class="sig-name descname">ea_gem</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.ea_gem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.factor_xi3">
+<code class="sig-name descname">factor_xi3</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.factor_xi3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.factor_xi4">
+<code class="sig-name descname">factor_xi4</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.factor_xi4" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.is_overrule_excavation">
+<code class="sig-name descname">is_overrule_excavation</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.is_overrule_excavation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.is_rigid">
+<code class="sig-name descname">is_rigid</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.is_rigid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.is_suppress_qc_reduction">
+<code class="sig-name descname">is_suppress_qc_reduction</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.is_suppress_qc_reduction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.is_write_intermediate_results">
+<code class="sig-name descname">is_write_intermediate_results</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.is_write_intermediate_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_rel_rotation_lim_state_serv">
+<code class="sig-name descname">max_allowed_rel_rotation_lim_state_serv</code><em class="property">: geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_rel_rotation_lim_state_serv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_rel_rotation_lim_state_str">
+<code class="sig-name descname">max_allowed_rel_rotation_lim_state_str</code><em class="property">: geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_rel_rotation_lim_state_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_settlement_lim_state_serv">
+<code class="sig-name descname">max_allowed_settlement_lim_state_serv</code><em class="property">: geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_settlement_lim_state_serv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_settlement_lim_state_str">
+<code class="sig-name descname">max_allowed_settlement_lim_state_str</code><em class="property">: geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.max_allowed_settlement_lim_state_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.model_type">
+<em class="property">classmethod </em><code class="sig-name descname">model_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.model_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.use_almere_rules">
+<code class="sig-name descname">use_almere_rules</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.use_almere_rules" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.use_extra_almere_rules">
+<code class="sig-name descname">use_extra_almere_rules</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.use_extra_almere_rules" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.use_interaction_model">
+<code class="sig-name descname">use_interaction_model</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.use_interaction_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.ModelOptions.use_pile_group">
+<code class="sig-name descname">use_pile_group</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.ModelOptions.use_pile_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.dfoundations_model.</code><code class="sig-name descname">TensionPilesModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.factor_gamma_gamma">
+<code class="sig-name descname">factor_gamma_gamma</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.factor_gamma_gamma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.factor_gamma_st">
+<code class="sig-name descname">factor_gamma_st</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.factor_gamma_st" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.factor_gamma_var">
+<code class="sig-name descname">factor_gamma_var</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.factor_gamma_var" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.model_type">
+<em class="property">classmethod </em><code class="sig-name descname">model_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.model_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.surcharge">
+<code class="sig-name descname">surcharge</code><em class="property">: geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.surcharge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.unit_weight_water">
+<code class="sig-name descname">unit_weight_water</code><em class="property">: geolib.models.dfoundations.dfoundations_model.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.unit_weight_water" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.use_compaction">
+<code class="sig-name descname">use_compaction</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.use_compaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.dfoundations_model.TensionPilesModel.use_piezometric_levels">
+<code class="sig-name descname">use_piezometric_levels</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.dfoundations_model.TensionPilesModel.use_piezometric_levels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geolib.models.dfoundations.piles">
+<span id="piles"></span><h2>Piles<a class="headerlink" href="#module-geolib.models.dfoundations.piles" title="Permalink to this headline">¶</a></h2>
+<p>Pile Library for D-Foundations.</p>
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BasePileType">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BasePileType</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BasePileType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supported pile types enum</p>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BasePileType.USER_DEFINED_LOW_VIBRATING">
+<code class="sig-name descname">USER_DEFINED_LOW_VIBRATING</code><em class="property"> = 26</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BasePileType.USER_DEFINED_LOW_VIBRATING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BasePileType.USER_DEFINED_VIBRATING">
+<code class="sig-name descname">USER_DEFINED_VIBRATING</code><em class="property"> = 25</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BasePileType.USER_DEFINED_VIBRATING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BasePileTypeForClayLoamPeat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pile types for clay loam and peat enum</p>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat.STANDARD">
+<code class="sig-name descname">STANDARD</code><em class="property"> = 0</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat.STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat.USER_DEFINED">
+<code class="sig-name descname">USER_DEFINED</code><em class="property"> = 1</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat.USER_DEFINED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingHShapedPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingHShapedPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingHShapedPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingHShapedPile.height_h_shape">
+<code class="sig-name descname">height_h_shape</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingHShapedPile.height_h_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingHShapedPile.thickness_flange">
+<code class="sig-name descname">thickness_flange</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingHShapedPile.thickness_flange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingHShapedPile.thickness_web">
+<code class="sig-name descname">thickness_web</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingHShapedPile.thickness_web" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingHShapedPile.width_h_shape">
+<code class="sig-name descname">width_h_shape</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingHShapedPile.width_h_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.Pile" title="geolib.models.dfoundations.piles.Pile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.characteristic_adhesion">
+<code class="sig-name descname">characteristic_adhesion</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.characteristic_adhesion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.load_settlement_curve">
+<code class="sig-name descname">load_settlement_curve</code><em class="property">: geolib.models.dfoundations.internal.LoadSettlementCurve</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.load_settlement_curve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.overrule_pile_tip_cross_section_factors">
+<code class="sig-name descname">overrule_pile_tip_cross_section_factors</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.overrule_pile_tip_cross_section_factors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.overrule_pile_tip_shape_factor">
+<code class="sig-name descname">overrule_pile_tip_shape_factor</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.overrule_pile_tip_shape_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.pile_class_factor_tip">
+<code class="sig-name descname">pile_class_factor_tip</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.pile_class_factor_tip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.pile_tip_cross_section_factor">
+<code class="sig-name descname">pile_tip_cross_section_factor</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.piles.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.pile_tip_cross_section_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.pile_tip_shape_factor">
+<code class="sig-name descname">pile_tip_shape_factor</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.piles.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.pile_tip_shape_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.reduction_percentage_qc">
+<code class="sig-name descname">reduction_percentage_qc</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.reduction_percentage_qc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.use_manual_reduction_for_qc">
+<code class="sig-name descname">use_manual_reduction_for_qc</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.use_manual_reduction_for_qc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPile.user_defined_pile_type_as_prefab">
+<code class="sig-name descname">user_defined_pile_type_as_prefab</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPile.user_defined_pile_type_as_prefab" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingPileLocation">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingPileLocation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPileLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.PileLocation" title="geolib.models.dfoundations.piles.PileLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PileLocation</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingPileLocation.surcharge">
+<code class="sig-name descname">surcharge</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingPileLocation.surcharge" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRectangularPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPile.base_length">
+<code class="sig-name descname">base_length</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPile.base_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPile.base_width">
+<code class="sig-name descname">base_width</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPile.base_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRectangularPileWithEnlargedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.base_height">
+<code class="sig-name descname">base_height</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.base_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.base_length_v">
+<code class="sig-name descname">base_length_v</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.base_length_v" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.base_width_v">
+<code class="sig-name descname">base_width_v</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.base_width_v" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.shaft_length">
+<code class="sig-name descname">shaft_length</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.shaft_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.shaft_width">
+<code class="sig-name descname">shaft_width</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRectangularPileWithEnlargedBase.shaft_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundHollowPileWithClosedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundHollowPileWithClosedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundHollowPileWithClosedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundHollowPileWithClosedBase.external_diameter">
+<code class="sig-name descname">external_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundHollowPileWithClosedBase.external_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundHollowPileWithClosedBase.wall_thickness">
+<code class="sig-name descname">wall_thickness</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundHollowPileWithClosedBase.wall_thickness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundOpenEndedHollowPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundOpenEndedHollowPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundOpenEndedHollowPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundOpenEndedHollowPile.external_diameter">
+<code class="sig-name descname">external_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundOpenEndedHollowPile.external_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundOpenEndedHollowPile.wall_thickness">
+<code class="sig-name descname">wall_thickness</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundOpenEndedHollowPile.wall_thickness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPile.diameter">
+<code class="sig-name descname">diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPile.diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundPileWithEnlargedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase.base_diameter">
+<code class="sig-name descname">base_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase.base_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase.base_height">
+<code class="sig-name descname">base_height</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase.base_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase.pile_diameter">
+<code class="sig-name descname">pile_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithEnlargedBase.pile_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundPileWithInSituFormedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase.base_diameter">
+<code class="sig-name descname">base_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase.base_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase.base_height">
+<code class="sig-name descname">base_height</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase.base_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase.pile_diameter">
+<code class="sig-name descname">pile_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithInSituFormedBase.pile_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithLostTip">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundPileWithLostTip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithLostTip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithLostTip.base_diameter">
+<code class="sig-name descname">base_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithLostTip.base_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundPileWithLostTip.pile_diameter">
+<code class="sig-name descname">pile_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundPileWithLostTip.pile_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingRoundTaperedPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingRoundTaperedPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundTaperedPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundTaperedPile.diameter_at_pile_tip">
+<code class="sig-name descname">diameter_at_pile_tip</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundTaperedPile.diameter_at_pile_tip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingRoundTaperedPile.increase_in_diameter">
+<code class="sig-name descname">increase_in_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingRoundTaperedPile.increase_in_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.BearingSection">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">BearingSection</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingSection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.BearingPile" title="geolib.models.dfoundations.piles.BearingPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingSection.base_length">
+<code class="sig-name descname">base_length</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingSection.base_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.BearingSection.base_width">
+<code class="sig-name descname">base_width</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.BearingSection.base_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.Pile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">Pile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class for Piles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.Pile.elasticity_modulus">
+<code class="sig-name descname">elasticity_modulus</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile.elasticity_modulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.Pile.pile_class_factor_shaft_clay_loam_peat">
+<code class="sig-name descname">pile_class_factor_shaft_clay_loam_peat</code><em class="property">: Optional<span class="p">[</span>geolib.models.dfoundations.piles.ConstrainedFloatValue<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile.pile_class_factor_shaft_clay_loam_peat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.Pile.pile_class_factor_shaft_sand_gravel">
+<code class="sig-name descname">pile_class_factor_shaft_sand_gravel</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile.pile_class_factor_shaft_sand_gravel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.Pile.pile_name">
+<code class="sig-name descname">pile_name</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile.pile_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.Pile.pile_type">
+<code class="sig-name descname">pile_type</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.piles.BasePileType" title="geolib.models.dfoundations.piles.BasePileType">geolib.models.dfoundations.piles.BasePileType</a></em><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile.pile_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.Pile.preset_pile_class_factor_shaft_clay_loam_peat">
+<code class="sig-name descname">preset_pile_class_factor_shaft_clay_loam_peat</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat" title="geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat">geolib.models.dfoundations.piles.BasePileTypeForClayLoamPeat</a></em><a class="headerlink" href="#geolib.models.dfoundations.piles.Pile.preset_pile_class_factor_shaft_clay_loam_peat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.PileLocation">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">PileLocation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.PileLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class for Pile location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.PileLocation.limit_state_service">
+<code class="sig-name descname">limit_state_service</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.PileLocation.limit_state_service" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.PileLocation.limit_state_str">
+<code class="sig-name descname">limit_state_str</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.PileLocation.limit_state_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.PileLocation.pile_head_level">
+<code class="sig-name descname">pile_head_level</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.PileLocation.pile_head_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.PileLocation.pile_name">
+<code class="sig-name descname">pile_name</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedStrValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.PileLocation.pile_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.PileLocation.point">
+<code class="sig-name descname">point</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dfoundations.piles.PileLocation.point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionHShapedPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionHShapedPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionHShapedPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionHShapedPile.height_h_shape">
+<code class="sig-name descname">height_h_shape</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionHShapedPile.height_h_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionHShapedPile.thickness_flange">
+<code class="sig-name descname">thickness_flange</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionHShapedPile.thickness_flange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionHShapedPile.thickness_web">
+<code class="sig-name descname">thickness_web</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionHShapedPile.thickness_web" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionHShapedPile.width_h_shape">
+<code class="sig-name descname">width_h_shape</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionHShapedPile.width_h_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.Pile" title="geolib.models.dfoundations.piles.Pile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionPile.unit_weight_pile">
+<code class="sig-name descname">unit_weight_pile</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionPile.unit_weight_pile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionPileLocation">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionPileLocation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionPileLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.PileLocation" title="geolib.models.dfoundations.piles.PileLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PileLocation</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionPileLocation.max_force">
+<code class="sig-name descname">max_force</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionPileLocation.max_force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionPileLocation.min_force">
+<code class="sig-name descname">min_force</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionPileLocation.min_force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionPileLocation.use_alternating_loads">
+<code class="sig-name descname">use_alternating_loads</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionPileLocation.use_alternating_loads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRectangularPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPile.base_length">
+<code class="sig-name descname">base_length</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPile.base_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPile.base_width">
+<code class="sig-name descname">base_width</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPile.base_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRectangularPileWithEnlargedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.base_height">
+<code class="sig-name descname">base_height</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.base_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.base_length_v">
+<code class="sig-name descname">base_length_v</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.base_length_v" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.base_width_v">
+<code class="sig-name descname">base_width_v</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.base_width_v" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.shaft_length">
+<code class="sig-name descname">shaft_length</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.shaft_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.shaft_width">
+<code class="sig-name descname">shaft_width</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRectangularPileWithEnlargedBase.shaft_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundHollowPileWithClosedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundHollowPileWithClosedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundHollowPileWithClosedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundHollowPileWithClosedBase.external_diameter">
+<code class="sig-name descname">external_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundHollowPileWithClosedBase.external_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundHollowPileWithClosedBase.wall_thickness">
+<code class="sig-name descname">wall_thickness</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundHollowPileWithClosedBase.wall_thickness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundOpenEndedHollowPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundOpenEndedHollowPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundOpenEndedHollowPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundOpenEndedHollowPile.external_diameter">
+<code class="sig-name descname">external_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundOpenEndedHollowPile.external_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundOpenEndedHollowPile.wall_thickness">
+<code class="sig-name descname">wall_thickness</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundOpenEndedHollowPile.wall_thickness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPile.diameter">
+<code class="sig-name descname">diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPile.diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundPileWithEnlargedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase.base_diameter">
+<code class="sig-name descname">base_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase.base_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase.base_height">
+<code class="sig-name descname">base_height</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase.base_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase.pile_diameter">
+<code class="sig-name descname">pile_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithEnlargedBase.pile_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundPileWithInSituFormedBase</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase.base_diameter">
+<code class="sig-name descname">base_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase.base_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase.base_height">
+<code class="sig-name descname">base_height</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase.base_height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase.pile_diameter">
+<code class="sig-name descname">pile_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithInSituFormedBase.pile_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithLostTip">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundPileWithLostTip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithLostTip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithLostTip.base_diameter">
+<code class="sig-name descname">base_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithLostTip.base_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundPileWithLostTip.pile_diameter">
+<code class="sig-name descname">pile_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundPileWithLostTip.pile_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionRoundTaperedPile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionRoundTaperedPile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundTaperedPile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundTaperedPile.diameter_at_pile_tip">
+<code class="sig-name descname">diameter_at_pile_tip</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundTaperedPile.diameter_at_pile_tip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionRoundTaperedPile.increase_in_diameter">
+<code class="sig-name descname">increase_in_diameter</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionRoundTaperedPile.increase_in_diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.piles.TensionSection">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.piles.</code><code class="sig-name descname">TensionSection</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionSection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherits <a class="reference internal" href="#geolib.models.dfoundations.piles.TensionPile" title="geolib.models.dfoundations.piles.TensionPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TensionPile</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionSection.circumference">
+<code class="sig-name descname">circumference</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionSection.circumference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.piles.TensionSection.cross_section">
+<code class="sig-name descname">cross_section</code><em class="property">: geolib.models.dfoundations.piles.ConstrainedFloatValue</em><a class="headerlink" href="#geolib.models.dfoundations.piles.TensionSection.cross_section" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-geolib.models.dfoundations.profiles">
+<span id="profiles"></span><h2>Profiles<a class="headerlink" href="#module-geolib.models.dfoundations.profiles" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="geolib.models.dfoundations.profiles.CPT">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.profiles.</code><code class="sig-name descname">CPT</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO To be expanded/generalized in GEOLib+</p>
+<p>measure_data need to be provided as a list of dicts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span>
+    <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>  <span class="c1"># negative</span>
+    <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">}]</span>
+</pre></div>
+</div>
+<p>Note that <cite>timeorder_type</cite> will force all other
+CPTs in the same model to the same <cite>timeorder_type</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.cptname">
+<code class="sig-name descname">cptname</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.cptname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.depthrange">
+<code class="sig-name descname">depthrange</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.depthrange" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.excavation_type">
+<code class="sig-name descname">excavation_type</code><em class="property">: geolib.models.dfoundations.internal.ExcavationType</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.excavation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.groundlevel">
+<code class="sig-name descname">groundlevel</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.groundlevel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.interpretation_model">
+<code class="sig-name descname">interpretation_model</code><em class="property">: geolib.models.dfoundations.internal.InterpretationType</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.interpretation_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.interpretation_model_stressdependent">
+<code class="sig-name descname">interpretation_model_stressdependent</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.interpretation_model_stressdependent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.measured_data">
+<code class="sig-name descname">measured_data</code><em class="property">: List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>float<span class="p">]</span><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.measured_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.pre_excavation">
+<code class="sig-name descname">pre_excavation</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.pre_excavation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.timeorder_type">
+<code class="sig-name descname">timeorder_type</code><em class="property">: geolib.models.dfoundations.internal.TimeOrderType</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.timeorder_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="geolib.models.dfoundations.profiles.CPT.to_profile">
+<code class="sig-name descname">to_profile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">method</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.to_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO GEOLib+ Interpret CPT by <cite>method</cite> to generate a Profile.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#geolib.models.dfoundations.profiles.Profile" title="geolib.models.dfoundations.profiles.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.void_value_cone_resistance">
+<code class="sig-name descname">void_value_cone_resistance</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.void_value_cone_resistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.void_value_depth">
+<code class="sig-name descname">void_value_depth</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.void_value_depth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.void_value_equivalent_electronic_qc">
+<code class="sig-name descname">void_value_equivalent_electronic_qc</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.void_value_equivalent_electronic_qc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.void_value_friction_number">
+<code class="sig-name descname">void_value_friction_number</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.void_value_friction_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.void_value_pore_water_pressure">
+<code class="sig-name descname">void_value_pore_water_pressure</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.void_value_pore_water_pressure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.CPT.void_value_sleeve_friction">
+<code class="sig-name descname">void_value_sleeve_friction</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.CPT.void_value_sleeve_friction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.profiles.Excavation">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.profiles.</code><code class="sig-name descname">Excavation</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.profiles.Excavation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Excavation class.</p>
+<p>Note that using an excavation level will
+override all previous set excavation levels in the same model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Excavation.distance_edge_pile_to_excavation_boundary">
+<code class="sig-name descname">distance_edge_pile_to_excavation_boundary</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Excavation.distance_edge_pile_to_excavation_boundary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Excavation.excavation_length_infinite">
+<code class="sig-name descname">excavation_length_infinite</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Excavation.excavation_length_infinite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Excavation.excavation_level">
+<code class="sig-name descname">excavation_level</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Excavation.excavation_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Excavation.excavation_width_infinite">
+<code class="sig-name descname">excavation_width_infinite</code><em class="property">: geolib.models.internal.Bool</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Excavation.excavation_width_infinite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Excavation.reduction_of_cone_resistance">
+<code class="sig-name descname">reduction_of_cone_resistance</code><em class="property">: geolib.models.dfoundations.internal.ReductionConeResistanceEnum</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Excavation.reduction_of_cone_resistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.profiles.Profile">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.profiles.</code><code class="sig-name descname">Profile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic profile class.</p>
+<p>Layers need to be provided as a list of dicts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;top_level&quot;</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># [m]</span>
+    <span class="s2">&quot;excess_pore_pressure_top&quot;</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># [kN/m3]</span>
+    <span class="s2">&quot;excess_pore_pressure_bottom&quot;</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># [kN/m3]</span>
+    <span class="s2">&quot;ocr_value&quot;</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># [-]</span>
+    <span class="s2">&quot;reduction_core_resistance&quot;</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># [%]</span>
+<span class="p">},]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.bottom_of_negative_skin_friction">
+<code class="sig-name descname">bottom_of_negative_skin_friction</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.bottom_of_negative_skin_friction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.concentration_value_frohlich">
+<code class="sig-name descname">concentration_value_frohlich</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.concentration_value_frohlich" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.cpt">
+<code class="sig-name descname">cpt</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.profiles.CPT" title="geolib.models.dfoundations.profiles.CPT">geolib.models.dfoundations.profiles.CPT</a></em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.cpt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.excavation">
+<code class="sig-name descname">excavation</code><em class="property">: Optional<span class="p">[</span><a class="reference internal" href="#geolib.models.dfoundations.profiles.Excavation" title="geolib.models.dfoundations.profiles.Excavation">geolib.models.dfoundations.profiles.Excavation</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.excavation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.expected_ground_level_settlement">
+<code class="sig-name descname">expected_ground_level_settlement</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.expected_ground_level_settlement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.layers">
+<code class="sig-name descname">layers</code><em class="property">: List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.location">
+<code class="sig-name descname">location</code><em class="property">: <a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point">geolib.geometry.one.Point</a></em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.location" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.name">
+<code class="sig-name descname">name</code><em class="property">: str</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.overconsolidation_ratio">
+<code class="sig-name descname">overconsolidation_ratio</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.overconsolidation_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.phreatic_level">
+<code class="sig-name descname">phreatic_level</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.phreatic_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.pile_tip_level">
+<code class="sig-name descname">pile_tip_level</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.pile_tip_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.placement_depth_of_foundation">
+<code class="sig-name descname">placement_depth_of_foundation</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.placement_depth_of_foundation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.top_of_positive_skin_friction">
+<code class="sig-name descname">top_of_positive_skin_friction</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.top_of_positive_skin_friction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.profiles.Profile.top_tension_zone">
+<code class="sig-name descname">top_tension_zone</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.profiles.Profile.top_tension_zone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.internal.</code><code class="sig-name descname">DFoundationsDumpfileOutputStructure</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.calculation_parameters_tension_piles">
+<code class="sig-name descname">calculation_parameters_tension_piles</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.calculation_parameters_tension_piles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.footnote_warnings">
+<code class="sig-name descname">footnote_warnings</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.footnote_warnings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.preliminary_design_results">
+<code class="sig-name descname">preliminary_design_results</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.preliminary_design_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.results_at_cpt_test_level">
+<code class="sig-name descname">results_at_cpt_test_level</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.results_at_cpt_test_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_design_results">
+<code class="sig-name descname">verification_design_results</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_design_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results">
+<code class="sig-name descname">verification_results</code><em class="property">: Optional<span class="p">[</span><a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults" title="geolib.models.dfoundations.internal.DFoundationsVerificationResults">geolib.models.dfoundations.internal.DFoundationsVerificationResults</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results_sf">
+<code class="sig-name descname">verification_results_sf</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results_sf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results_tp">
+<code class="sig-name descname">verification_results_tp</code><em class="property">: Optional<span class="p">[</span><a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults" title="geolib.models.dfoundations.internal.DFoundationsVerificationResults">geolib.models.dfoundations.internal.DFoundationsVerificationResults</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results_tp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results_tp_1b2">
+<code class="sig-name descname">verification_results_tp_1b2</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsDumpfileOutputStructure.verification_results_tp_1b2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.internal.</code><code class="sig-name descname">DFoundationsVerificationResults</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.demands_nen__en">
+<code class="sig-name descname">demands_nen__en</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.demands_nen__en" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.global_nen_results">
+<code class="sig-name descname">global_nen_results</code><em class="property">: Optional<span class="p">[</span><a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsGlobalNenResults" title="geolib.models.dfoundations.internal.DFoundationsGlobalNenResults">geolib.models.dfoundations.internal.DFoundationsGlobalNenResults</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.global_nen_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.nen_pile_results">
+<code class="sig-name descname">nen_pile_results</code><em class="property">: Optional<span class="p">[</span><a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults" title="geolib.models.dfoundations.internal.DFoundationsNenPileResults">geolib.models.dfoundations.internal.DFoundationsNenPileResults</a><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.nen_pile_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_1a">
+<code class="sig-name descname">verification_results_tp_1a</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_1a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_1b2">
+<code class="sig-name descname">verification_results_tp_1b2</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_1b2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_load__settlement_curve_1b">
+<code class="sig-name descname">verification_results_tp_load__settlement_curve_1b</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_load__settlement_curve_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_load__settlement_curve_2">
+<code class="sig-name descname">verification_results_tp_load__settlement_curve_2</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsVerificationResults.verification_results_tp_load__settlement_curve_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.internal.DFoundationsGlobalNenResults">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.internal.</code><code class="sig-name descname">DFoundationsGlobalNenResults</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsGlobalNenResults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.betad1b">
+<code class="sig-name descname">betad1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.betad1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.betad2">
+<code class="sig-name descname">betad2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.betad2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.w2d">
+<code class="sig-name descname">w2d</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.w2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.wd1b">
+<code class="sig-name descname">wd1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsGlobalNenResults.wd1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.internal.</code><code class="sig-name descname">DFoundationsNenPileResults</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.calculation_parameters_bearing_piles_ec_7">
+<code class="sig-name descname">calculation_parameters_bearing_piles_ec_7</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7" title="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7">geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7</a></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.calculation_parameters_bearing_piles_ec_7" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.cpts">
+<code class="sig-name descname">cpts</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable" title="geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable">geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable</a></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.cpts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_cpt_nr_for_settlement_in_gt1b">
+<code class="sig-name descname">critical_cpt_nr_for_settlement_in_gt1b</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_cpt_nr_for_settlement_in_gt1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_cpt_nr_for_settlement_in_gt2">
+<code class="sig-name descname">critical_cpt_nr_for_settlement_in_gt2</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_cpt_nr_for_settlement_in_gt2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_pile_nr_for_settlement_in_gt1b">
+<code class="sig-name descname">critical_pile_nr_for_settlement_in_gt1b</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_pile_nr_for_settlement_in_gt1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_pile_nr_for_settlement_in_gt2">
+<code class="sig-name descname">critical_pile_nr_for_settlement_in_gt2</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.critical_pile_nr_for_settlement_in_gt2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.factor_influence_crosssection_of_pile_point_s">
+<code class="sig-name descname">factor_influence_crosssection_of_pile_point_s</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.factor_influence_crosssection_of_pile_point_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.first_pile_nr_for_critical_rotation_in_gt1b">
+<code class="sig-name descname">first_pile_nr_for_critical_rotation_in_gt1b</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.first_pile_nr_for_critical_rotation_in_gt1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.first_pile_nr_for_critical_rotation_in_gt2">
+<code class="sig-name descname">first_pile_nr_for_critical_rotation_in_gt2</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.first_pile_nr_for_critical_rotation_in_gt2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_punt_d2">
+<code class="sig-name descname">fr_max_punt_d2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_punt_d2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_punt_d_1b">
+<code class="sig-name descname">fr_max_punt_d_1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_punt_d_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_schacht_d_1b">
+<code class="sig-name descname">fr_max_schacht_d_1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_schacht_d_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_schacht_d_2">
+<code class="sig-name descname">fr_max_schacht_d_2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_max_schacht_d_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_punt_d_1b">
+<code class="sig-name descname">fr_punt_d_1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_punt_d_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_punt_d_2">
+<code class="sig-name descname">fr_punt_d_2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fr_punt_d_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fs_tot_d_1b">
+<code class="sig-name descname">fs_tot_d_1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fs_tot_d_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.fs_tot_d_2">
+<code class="sig-name descname">fs_tot_d_2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.fs_tot_d_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_bearing_capacity_foundation">
+<code class="sig-name descname">max_bearing_capacity_foundation</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_bearing_capacity_foundation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_load_on_foundation">
+<code class="sig-name descname">max_load_on_foundation</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_load_on_foundation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_shaft_and_point">
+<code class="sig-name descname">max_shaft_and_point</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable" title="geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable">geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable</a></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_shaft_and_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_value">
+<code class="sig-name descname">max_value</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.max_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.min_value">
+<code class="sig-name descname">min_value</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.min_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.nen_average_pile_factors">
+<code class="sig-name descname">nen_average_pile_factors</code><em class="property">: <a class="reference internal" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable" title="geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable">geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable</a></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.nen_average_pile_factors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.pile_point_shape_factor">
+<code class="sig-name descname">pile_point_shape_factor</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.pile_point_shape_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.s2_d1b">
+<code class="sig-name descname">s2_d1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.s2_d1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.s2_d2">
+<code class="sig-name descname">s2_d2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.s2_d2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.second_pile_nr_for_critical_rotation_in_gt1b">
+<code class="sig-name descname">second_pile_nr_for_critical_rotation_in_gt1b</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.second_pile_nr_for_critical_rotation_in_gt1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.second_pile_nr_for_critical_rotation_ingt2">
+<code class="sig-name descname">second_pile_nr_for_critical_rotation_ingt2</code><em class="property">: int</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.second_pile_nr_for_critical_rotation_ingt2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.sel_d1b">
+<code class="sig-name descname">sel_d1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.sel_d1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.sel_d2">
+<code class="sig-name descname">sel_d2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.sel_d2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.sigma_max_schacht_1b">
+<code class="sig-name descname">sigma_max_schacht_1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.sigma_max_schacht_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.sigma_max_schacht_2">
+<code class="sig-name descname">sigma_max_schacht_2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.sigma_max_schacht_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.sneg1b">
+<code class="sig-name descname">sneg1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.sneg1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.sneg2">
+<code class="sig-name descname">sneg2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.sneg2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.spunt_d_1b">
+<code class="sig-name descname">spunt_d_1b</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.spunt_d_1b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResults.spunt_d_2">
+<code class="sig-name descname">spunt_d_2</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResults.spunt_d_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.internal.</code><code class="sig-name descname">DFoundationsCalculationParametersBearingPilesEC7</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.gammabused">
+<code class="sig-name descname">gammabused</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.gammabused" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.gammasused">
+<code class="sig-name descname">gammasused</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.gammasused" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.isksi3used">
+<code class="sig-name descname">isksi3used</code><em class="property">: bool</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.isksi3used" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.ksi3used">
+<code class="sig-name descname">ksi3used</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.ksi3used" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.ksi4used">
+<code class="sig-name descname">ksi4used</code><em class="property">: float</em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsCalculationParametersBearingPilesEC7.ksi4used" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.models.dfoundations.internal.</code><code class="sig-name descname">DFoundationsNenPileResultsTable</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable.data">
+<code class="sig-name descname">data</code><em class="property">: List<span class="p">[</span>Dict<span class="p">[</span>str<span class="p">, </span>Union<span class="p">[</span>int<span class="p">, </span>float<span class="p">, </span>str<span class="p">]</span><span class="p">]</span><span class="p">]</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal.DFoundationsNenPileResultsTable.data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="../soils.html" title="Previous document">Soils</a>
+        </li>
+        <li>
+          <a href="dsettlement.html" title="Next document">D-Settlement</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Developer Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../model.html">Model Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../geometry.html">Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../soils.html">Soils</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">D-Foundations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dfoundations.dfoundations_model">D-Foundations model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dfoundations.piles">Piles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dfoundations.profiles">Profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsheetpiling.html">D-Sheetpiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dstability.html">D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">Developer Interface</a><ul>
+      <li>Previous: <a href="../soils.html" title="previous chapter">Soils</a></li>
+      <li>Next: <a href="dsettlement.html" title="next chapter">D-Settlement</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="../../../v0.1/dev/models/dfoundations.html">v0.1</a></li>
+    <li><a href="../../../v0.1.1/dev/models/dfoundations.html">v0.1.1</a></li>
+    <li><a href="dfoundations.html">v0.1.2</a></li>
+    <li><a href="../../../v0.1.3/dev/models/dfoundations.html">v0.1.3</a></li>
+    <li><a href="../../../v0.1.4/dev/models/dfoundations.html">v0.1.4</a></li>
+    <li><a href="../../../v0.1.5/dev/models/dfoundations.html">v0.1.5</a></li>
+    <li><a href="../../../v0.1.6/dev/models/dfoundations.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

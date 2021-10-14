@@ -1,0 +1,236 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog &#8212; geolib 0.1.2 documentation</title>
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="To Do" href="dev/todo.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dev/todo.html" title="Previous document">To Do</a>
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="0.1.2">
+<h2 style="margin-bottom: 0.3em;"><a class="reference external" href="https://publicwiki.deltares.nl/download/attachments/166462065/geolib-0.1.2-py3-none-any.whl?api=v2">0.1.2</a> <span style="font-size: 75%;">2020-10-16</span></h2><ul class="simple">
+<li><p>[<span style="color: #40A056;">Feature</span>]<span>:</span><span> </span> First release. Thanks to all those who tested and reported their findings.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-192">#GEOLIB-192</a><span>:</span> LateralEarthPressureMethodStage in SheetPileMethod appeared as mixed when it should be C_PHI_DELTA.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-204">#GEOLIB-204</a><span>:</span> On remote execution, console folder was derived from the given model, not the geolib.env file.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-203">#GEOLIB-203</a><span>:</span> DStability files containing NaNs failed to serialize after execution in the webservice.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-206">#GEOLIB-206</a><span>:</span> Xi3, Xi4 and other options can now be set on TensionPilesModel as well.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-202">#GEOLIB-202</a><span>:</span> Soildelta can now be negative as well.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-197">#GEOLIB-197</a><span>:</span> compression_input_type is now defined and documented.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-210">#GEOLIB-210</a><span>:</span> We now always try to parse output after execution, even if the return code is non-zero.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-209">#GEOLIB-209</a><span>:</span> ShearStrengthModelTypePhreaticLevel is now only defined once.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-207">#GEOLIB-207</a><span>:</span> Usage of NaNs in the older D-Serie models will now yield an error.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-187">#GEOLIB-187</a><span>:</span> Added actual conversion of Soil colors for the older D-Serie models.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-166">#GEOLIB-166</a><span>:</span> Clarified how to generate geometry in order to have a correct surface line.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-191">#GEOLIB-191</a><span>:</span> Loads were repeated if added to multiple stages.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-193">#GEOLIB-193</a><span>:</span> User defined partial factors were sometimes non-default.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-202">#GEOLIB-202</a><span>:</span> <cite>Soildelta</cite> can now be negative.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-206">#GEOLIB-206</a><span>:</span> <cite>Xi3</cite>, <cite>xi4</cite>, and <cite>ea_gem</cite> can now be also set on TensionPilesModel in DSheetPiling.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-187">#GEOLIB-187</a><span>:</span> Setting a color for a soil won’t error and will now be converted for the older D-Serie models.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-173">#GEOLIB-173</a><span>:</span> All output stages of DSheetPiling are now accessible.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Unified settings into metadata for both local and remote models. Added timeout for execution to metadata.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Added tutorial about multiple calculations using BaseModelList.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Added errors attribute to BaseModelList for failed models.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-211">#GEOLIB-211</a><span>:</span> Clarified vertical_permeability in Soil should be in [m/day].</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-194">#GEOLIB-194</a><span>:</span> Renamed some PartialFactorSets Enums for clarity in DSheetPiling (<strong>breaking</strong>).</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-184">#GEOLIB-184</a><span>:</span> Renamed the pile factors in a Pile for clarity in DFoundations (<strong>breaking</strong>).</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-190">#GEOLIB-190</a><span>:</span> Set the load_type of VerificationLoadSettingsHorizontalLineLoad to DSheetPiling Determined.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-208">#GEOLIB-208</a><span>:</span> Improved handling of urls without trailing / for remote execution.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-205">#GEOLIB-205</a><span>:</span> Improved error handling on the webservice so it’s easier to debug.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-198">#GEOLIB-198</a><span>:</span> Clarified Soil construction in documentation and made usage of extra fields an error (<strong>breaking</strong>).</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-196">#GEOLIB-196</a><span>:</span> Fixed erroneous documentation about Soil for DStability.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-186">#GEOLIB-186</a><span>:</span> Documented soil_type_nl for DFoundations.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-172">#GEOLIB-172</a><span>:</span> Documented how moments, forces displacements can be accessed dependent on the calculation type.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-180">#GEOLIB-180</a><span>:</span> Document console flags, installation procedures, licenses for consoles.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-200">#GEOLIB-200</a><span>:</span> Moved Soils to it’s own file as not to leak the code in compiled versions.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-182">#GEOLIB-182</a><span>:</span> Documented output structure of all models and improved documentation with type hints.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span> </span><a class="reference external" href="https://issuetracker.deltares.nl/browse/GEOLIB-177">#GEOLIB-177</a><span>:</span> Clarified that <cite>set_model</cite> should be called as early as possible and added warning if called later.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Dialed down the logging levels and documented how to change the logging levels.</p></li>
+</ul>
+</div>
+<div class="section" id="0.1.1">
+<h2 style="margin-bottom: 0.3em;"><a class="reference external" href="https://publicwiki.deltares.nl/download/attachments/166462065/geolib-0.1.1-py3-none-any.whl?api=v2">0.1.1</a> <span style="font-size: 75%;">2020-09-27</span></h2><ul>
+<li><p>[<span style="color: #40A056;">Feature</span>]<span>:</span><span> </span> Second beta release for testing. Thanks to all those who tested and reported their findings.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this release some quick fixes have been made. This is still a <em>beta</em> release.</p>
+</div>
+</li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span>:</span><span> </span> <cite>BaseModelList.execute()</cite> should now work.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span>:</span><span> </span> The <cite>angle</cite> of an <cite>Anchor</cite> in DSheetPiling can now be negative.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span>:</span><span> </span> Examples and tutorials now use <cite>Path</cite> from <cite>pathlib</cite> instead of strings for filepaths.</p></li>
+<li><p>[<span style="color: #A04040;">Bug</span>]<span>:</span><span> </span> CPT data in DFoundations will not fuse to a single value anymore.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Added error message if console wasn’t found, instead of a vague process error.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Several typos and missing brackets have been fixed in the tutorials.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Documented <cite>SoilModel</cite> and <cite>ConsolidationModel</cite> enums for the <cite>set_model</cite> of DSettlement.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Added <cite>Application</cite> fields to DStability in order to support the latest release.</p></li>
+<li><p>[<span style="color: #4070A0;">Support</span>]<span>:</span><span> </span> Both <cite>jinja2</cite> and <cite>requests</cite> have been added as dependencies.</p></li>
+</ul>
+</div>
+<div class="section" id="0.1.0">
+<h2 style="margin-bottom: 0.3em;"><a class="reference external" href="https://publicwiki.deltares.nl/download/attachments/166462065/geolib-0.1.0-py3-none-any.whl?api=v2">0.1.0</a> <span style="font-size: 75%;">2020-07-20</span></h2><ul>
+<li><p>[<span style="color: #40A056;">Feature</span>]<span>:</span><span> </span> First beta release for testing. Works with the following models:</p>
+<ul class="simple">
+<li><p>DFoundations</p></li>
+<li><p>DSheetPiling</p></li>
+<li><p>DSettlement</p></li>
+<li><p>DStability</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a <em>beta</em> release, not meant for production.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dev/todo.html" title="Previous document">To Do</a>
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/todo.html">To Do</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="dev/todo.html" title="previous chapter">To Do</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="../v0.1/changelog.html">v0.1</a></li>
+    <li><a href="../v0.1.1/changelog.html">v0.1.1</a></li>
+    <li><a href="changelog.html">v0.1.2</a></li>
+    <li><a href="../v0.1.3/changelog.html">v0.1.3</a></li>
+    <li><a href="../v0.1.4/changelog.html">v0.1.4</a></li>
+    <li><a href="../v0.1.5/changelog.html">v0.1.5</a></li>
+    <li><a href="../v0.1.6/changelog.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

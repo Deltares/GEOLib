@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geometry &#8212; geolib 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Soils" href="soils.html" />
+    <link rel="prev" title="Model Interface" href="model.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="model.html" title="Previous document">Model Interface</a>
+        </li>
+        <li>
+          <a href="soils.html" title="Next document">Soils</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="geometry">
+<span id="geomdev"></span><h1>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-geolib.geometry.one">
+<span id="d-geometry"></span><h2>1D Geometry<a class="headerlink" href="#module-geolib.geometry.one" title="Permalink to this headline">¶</a></h2>
+<p>For all geometries and locations we try to use
+a single Point class.</p>
+<p>In 1D applications it’s only used to
+specify, for example height, other fields left None.</p>
+<p>For profiles used in 1D applications, see <code class="xref py py-class docutils literal notranslate"><span class="pre">ProfileLayer</span></code></p>
+<dl class="py class">
+<dt id="geolib.geometry.one.Point">
+<em class="property">class </em><code class="sig-prename descclassname">geolib.geometry.one.</code><code class="sig-name descname">Point</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.geometry.one.Point" title="Permalink to this definition">¶</a></dt>
+<dd><p>A single Point Class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="geolib.geometry.one.Point.id">
+<code class="sig-name descname">id</code><em class="property">: Optional<span class="p">[</span>int<span class="p">]</span></em><a class="headerlink" href="#geolib.geometry.one.Point.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.geometry.one.Point.label">
+<code class="sig-name descname">label</code><em class="property">: Optional<span class="p">[</span>str<span class="p">]</span></em><a class="headerlink" href="#geolib.geometry.one.Point.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.geometry.one.Point.tolerance">
+<code class="sig-name descname">tolerance</code><em class="property">: float</em><a class="headerlink" href="#geolib.geometry.one.Point.tolerance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.geometry.one.Point.x">
+<code class="sig-name descname">x</code><em class="property">: float</em><a class="headerlink" href="#geolib.geometry.one.Point.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.geometry.one.Point.y">
+<code class="sig-name descname">y</code><em class="property">: float</em><a class="headerlink" href="#geolib.geometry.one.Point.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="geolib.geometry.one.Point.z">
+<code class="sig-name descname">z</code><em class="property">: float</em><a class="headerlink" href="#geolib.geometry.one.Point.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h2>2D Geometry<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Two-dimensional geometry is handled differently by the two programs
+using this geometry, namely D-Settlement and D-Stability.</p>
+<dl class="simple">
+<dt>In our API we use the D-Settlement approach::</dt><dd><ul class="simple">
+<li><p>add_point(Point) -&gt; point_id:int</p></li>
+<li><p>add_layer(List[point_id]) -&gt; layer_id:int</p></li>
+</ul>
+</dd>
+</dl>
+<p>Where we use references to previously added points to ensure
+topological consistency. This is why we have not introduced a LineString
+object as of yet.</p>
+<p>Note however that for D-Settlement this List of points should
+form a LineString (ordered in X), while for D-Stability they should
+form an ordered Ring (Polygon).</p>
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="model.html" title="Previous document">Model Interface</a>
+        </li>
+        <li>
+          <a href="soils.html" title="Next document">Soils</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">Developer Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model Interface</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Geometry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.geometry.one">1D Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2D Geometry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="soils.html">Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsheetpiling.html">D-Sheetpiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dstability.html">D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="api.html">Developer Interface</a><ul>
+      <li>Previous: <a href="model.html" title="previous chapter">Model Interface</a></li>
+      <li>Next: <a href="soils.html" title="next chapter">Soils</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="geometry.html">v0.1</a></li>
+    <li><a href="../../v0.1.1/dev/geometry.html">v0.1.1</a></li>
+    <li><a href="../../v0.1.2/dev/geometry.html">v0.1.2</a></li>
+    <li><a href="../../v0.1.3/dev/geometry.html">v0.1.3</a></li>
+    <li><a href="../../v0.1.4/dev/geometry.html">v0.1.4</a></li>
+    <li><a href="../../v0.1.5/dev/geometry.html">v0.1.5</a></li>
+    <li><a href="../../v0.1.6/dev/geometry.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Setup &#8212; geolib 0.1.6 documentation</title>
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Server" href="server.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="install.html" title="Previous document">Installation</a>
+        </li>
+        <li>
+          <a href="server.html" title="Next document">Server</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="setup">
+<span id="id1"></span><h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<p>GEOLib should work out of the box as a Python module. However, it needs
+setting up of a configuration for calculations to work. The configuration
+is also used for the metadata used in the model input files, such as your
+company name.</p>
+<p>You can specify the configuration in two ways. One is to create a geolib.env
+file in your working directory. The second is to specify environment variables.</p>
+<p>The <em>geolib.env</em> file is a simple text file, which can contain any number of parameters:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONSOLE_FOLDER</span><span class="o">=</span><span class="s2">&quot;tests&quot;</span>  <span class="c1"># path has to exist!</span>
+</pre></div>
+</div>
+<p>This configuration variable points to the folder in which the consoles are placed (each in its own subfolder).
+It can also be set by a <strong>CONSOLE_FOLDER</strong> environment variable. The enviroment variable will
+overrule the .env file, which in its turn, overrides the defaults set in Python.</p>
+<p>The defaults are as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">analyst</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">startdate</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">project</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">remarks</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Created by GEOLib </span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">console_folder</span><span class="p">:</span> <span class="n">DirectoryPath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Used for remote calculation client side</span>
+<span class="n">endpoint</span><span class="p">:</span> <span class="n">AnyHttpUrl</span> <span class="o">=</span> <span class="s2">&quot;http://localhost:8000/&quot;</span>
+
+<span class="c1"># User for both client/server</span>
+<span class="n">gl_username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
+<span class="n">gl_password</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
+
+<span class="c1"># Used by server</span>
+<span class="n">calculation_folder</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tests/test_output/calculations&quot;</span><span class="p">)</span>
+<span class="n">nprocesses</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># For ignoring extra fields that could come with newer/older versions</span>
+<span class="c1"># of input/output fields. We don&#39;t support any other value than &quot;forbid&quot;!</span>
+<span class="n">extra_fields</span> <span class="o">=</span> <span class="s2">&quot;forbid&quot;</span>  <span class="c1"># can be &quot;ignore&quot;, &quot;allow&quot; or &quot;forbid&quot;</span>
+</pre></div>
+</div>
+<p>Note that the <em>console_folder</em> variable has to point to an existing path,
+otherwise GEOLib will not start. The executables are expected in the following locations
+in the <em>console_folder</em>.</p>
+<ul class="simple">
+<li><p>“DFoundationsConsole/DFoundationsConsole.exe”</p></li>
+<li><p>“DSettlementConsole/DSettlementConsole.exe”</p></li>
+<li><p>“DSheetPilingConsole/DSheetPilingConsole.exe”</p></li>
+<li><p>“DStabilityConsole/D-GEO Suite Stability GEOLIB Console.exe”</p></li>
+</ul>
+<div class="section" id="dynamic-settings">
+<h2>Dynamic settings<a class="headerlink" href="#dynamic-settings" title="Permalink to this headline">¶</a></h2>
+<p>If you don’t wish to use <em>geolib.env</em> files or wish to override them, you can change the final settings
+in Python itself, using the <em>meta</em> attribute of a model. For example, to override the <em>console_folder</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">DSettlementModel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">meta</span>
+<span class="go">MetaData(company=&#39;Deltares&#39;, analyst=&#39;&#39;, startdate=datetime.datetime(2020, 10, 7, 15, 44, 9, 174187), project=&#39;&#39;, remarks=&#39;Created by GEOLib 0.1.2&#39;, endpoint=AnyHttpUrl(&#39;http://localhost:8000/&#39;, scheme=&#39;http&#39;, host=&#39;localhost&#39;, host_type=&#39;int_domain&#39;, port=&#39;8000&#39;, path=&#39;/&#39;), gl_username=&#39;test&#39;, gl_password=&#39;test&#39;, console_folder=PosixPath(&#39;tests&#39;))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">console_folder</span>
+<span class="go">PosixPath(&#39;tests&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">console_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;other_location&quot;</span><span class="p">)</span>  <span class="c1"># has to exist!</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging">
+<h2>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h2>
+<p>GEOLib makes use of the built-in logging library. If you need to control the level of logging, you can do the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;geolib&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, logging has been set to the ERROR level.
+Note that for setting lower levels than the default warning level, you have to configure your own root logger as well.</p>
+</div>
+<div class="section" id="consoles">
+<h2>Consoles<a class="headerlink" href="#consoles" title="Permalink to this headline">¶</a></h2>
+<p>You can download the consoles <a class="reference external" href="https://download.deltares.nl/en/download/geolib-robust-consoles-beta-versions/">here</a>,
+with the given password. You also need to download the license manager
+from <a class="reference external" href="https://download.deltares.nl/en/lmadmin/">here</a> and install the given license using the “Add License File” program.</p>
+</div>
+<div class="section" id="console-usage">
+<h2>Console usage<a class="headerlink" href="#console-usage" title="Permalink to this headline">¶</a></h2>
+<p>If you wish to use these consoles without Python on the command line,
+note that all except for the DStability console require the “/b” flag, i.e.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ DFoundationsConsole/DFoundationsConsole.exe /b &quot;folder_or_file&quot;
+</pre></div>
+</div>
+<p>Note that you can only execute these files from the commandline, double clicking on them in Explorer won’t work.</p>
+</div>
+<div class="section" id="version-differences">
+<h2>Version differences<a class="headerlink" href="#version-differences" title="Permalink to this headline">¶</a></h2>
+<p>Each D-Serie release can slightly change the structure of the input files. New fields are added and some fields are changed or deleted.</p>
+<p>GEOLib only supports the files used by the D-Serie consoles and thus the consoles specific version number.
+At the moment that version number is:</p>
+<ul class="simple">
+<li><p>D-Settlement <strong>19.1</strong></p></li>
+<li><p>D-Foundations <strong>19.1</strong></p></li>
+<li><p>D-SheetPiling <strong>19.1</strong></p></li>
+<li><p>D-Stability <strong>20.3</strong></p></li>
+</ul>
+<p>Loading files generated by either older or newer versions isn’t guaranteed to work and will likely result in an error message such as ValidationError(extra fields not permitted).
+You could disable this by changing the extra_fields setting described above, but we don’t support this.</p>
+<p>You can however easily fix this by resaving the file with the correct version of the console or GUI:</p>
+<ul class="simple">
+<li><p>Open one file at a time with the correct D-Serie GUI version and save it again.</p></li>
+<li><p>Run the correct D-Serie console on a file or complete folder of files. This will generate output files, but also save overwrite the input files in the correct version format.</p></li>
+</ul>
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="install.html" title="Previous document">Installation</a>
+        </li>
+        <li>
+          <a href="server.html" title="Next document">Server</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dynamic-settings">Dynamic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#consoles">Consoles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#console-usage">Console usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-differences">Version differences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="server.html" title="next chapter">Server</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="../../v0.1/user/setup.html">v0.1</a></li>
+    <li><a href="../../v0.1.1/user/setup.html">v0.1.1</a></li>
+    <li><a href="../../v0.1.2/user/setup.html">v0.1.2</a></li>
+    <li><a href="../../v0.1.3/user/setup.html">v0.1.3</a></li>
+    <li><a href="../../v0.1.4/user/setup.html">v0.1.4</a></li>
+    <li><a href="../../v0.1.5/user/setup.html">v0.1.5</a></li>
+    <li><a href="setup.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

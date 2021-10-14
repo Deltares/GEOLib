@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to GEOLib’s documentation! &#8212; geolib 0.1.6 documentation</title>
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="user/intro.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          <a href="user/intro.html" title="Next document">Introduction</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+
+
+  <div class="section" id="welcome-to-geolib-s-documentation">
+<h1>Welcome to GEOLib’s documentation!<a class="headerlink" href="#welcome-to-geolib-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>GEOLib is a Python package to generate input, execute and parse output for several D-Serie numerical models.
+Release v0.1.6.</p>
+<hr class="docutils" />
+<p><strong>Behold, the power of GEOLib</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">DSettlementModel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;test.sli&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+<span class="go">{&#39;verticals_count&#39;: 1, &#39;vertical&#39;: [{&#39;id&#39;: 1, &#39;x&#39;: 0.0, &#39;z&#39;: 0.0, &#39;time__settlement_per_load&#39;: {&#39;timesettlementperload&#39;: [[0.0, 0.0, 0.0], ...</span>
+</pre></div>
+</div>
+<div class="section" id="the-user-guide">
+<h2>The User Guide<a class="headerlink" href="#the-user-guide" title="Permalink to this headline">¶</a></h2>
+<p>This part of the documentation, which is mostly prose, begins with some
+background information about GEOLib, then focuses on step-by-step
+instructions for getting the most out of GEOLib.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/intro.html#philosophy">Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/intro.html#architecture">Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/intro.html#requirements">Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/install.html#geolib-installation">GEOLib installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/install.html#geolib-service">GEOLib service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/install.html#packages-used">Packages used</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/install.html#get-the-source-code">Get the Source Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/setup.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/setup.html#dynamic-settings">Dynamic settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/setup.html#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/setup.html#consoles">Consoles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/setup.html#console-usage">Console usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/setup.html#version-differences">Version differences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user/server.html">Server</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user/server.html#authentication">Authentication</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-tutorials">
+<h2>The Tutorials<a class="headerlink" href="#the-tutorials" title="Permalink to this headline">¶</a></h2>
+<p>This part of the documentation, which is all prose, gives some examples
+of using GEOLib.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="community/tutorial.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="community/tutorial_soil.html">Tutorial Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/tutorial_dfoundations.html">Tutorial D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/tutorial_dsettlement.html">Tutorial D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/tutorial_dsheetpiling.html">Tutorial D-Sheet Piling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/tutorial_dstability.html">Tutorial D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="community/tutorial_multi.html">Tutorial Multiple Calculations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-api-documentation-guide">
+<h2>The API Documentation / Guide<a class="headerlink" href="#the-api-documentation-guide" title="Permalink to this headline">¶</a></h2>
+<p>If you are looking for information on a specific function, class, or method,
+this part of the documentation is for you.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/api.html">Developer Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev/model.html">Model Interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/model.html#module-geolib.models.base_model">Base Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/model.html#module-geolib.models.meta">Metadata</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/geometry.html">Geometry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/geometry.html#module-geolib.geometry.one">1D Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/geometry.html#id1">2D Geometry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/soils.html">Soils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/soils.html#soil-libraries">Soil Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/soils.html#cpt-interpretation">CPT interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/soils.html#module-geolib.soils.soil">The Soil Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/models/dfoundations.html">D-Foundations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dfoundations.html#module-geolib.models.dfoundations.dfoundations_model">D-Foundations model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dfoundations.html#module-geolib.models.dfoundations.piles">Piles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dfoundations.html#module-geolib.models.dfoundations.profiles">Profiles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dfoundations.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/models/dsettlement.html">D-Settlement</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsettlement.html#module-geolib.models.dsettlement.dsettlement_model">D-Settlement model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsettlement.html#module-geolib.models.dsettlement.loads">Loads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsettlement.html#module-geolib.models.dsettlement.drains">Drains</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsettlement.html#geometry">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsettlement.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/models/dsheetpiling.html">D-Sheetpiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsheetpiling.html#module-geolib.models.dsheetpiling.dsheetpiling_model">D-Sheetpiling model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsheetpiling.html#module-geolib.models.dsheetpiling.constructions">Constructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsheetpiling.html#module-geolib.models.dsheetpiling.loads">Loads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsheetpiling.html#module-geolib.models.dsheetpiling.supports">Supports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsheetpiling.html#module-geolib.models.dsheetpiling.profiles">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dsheetpiling.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/models/dstability.html">D-Stability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dstability.html#module-geolib.models.dstability.dstability_model">D-Stability model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dstability.html#module-geolib.models.dstability.loads">Loads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dstability.html#module-geolib.models.dstability.reinforcements">Reinforcements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dstability.html#module-geolib.models.dstability.states">States</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dstability.html#geometry">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dev/models/dstability.html#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dev/api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-contributor-guide">
+<h2>The Contributor Guide<a class="headerlink" href="#the-contributor-guide" title="Permalink to this headline">¶</a></h2>
+<p>If you want to contribute to the project, this part of the documentation is for
+you. It includes in depth guide how to go about extending GEOLib.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/extend.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev/extend.html#structure">Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/extend.html#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/extend.html#documenting">Documenting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/extend.html#inheritance">Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/extend.html#type-hinting">Type hinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev/extend.html#adding-requirements">Adding requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev/todo.html">To Do</a></li>
+</ul>
+</div>
+<p>There are no more guides. You are now guideless.
+Good luck.</p>
+</div>
+<div class="section" id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          <a href="user/intro.html" title="Next document">Introduction</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="#">
+    <img class="logo" src="_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://bitbucket.org/DeltaresGEO/geolib/src">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://issuetracker.deltares.nl/secure/RapidBoard.jspa?projectKey=GEOLIB">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="user/intro.html" title="next chapter">Introduction</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+<h3>Versions</h3>
+<ul>
+    <li><a href="../v0.1/index.html">v0.1</a></li>
+    <li><a href="../v0.1.1/index.html">v0.1.1</a></li>
+    <li><a href="../v0.1.2/index.html">v0.1.2</a></li>
+    <li><a href="../v0.1.3/index.html">v0.1.3</a></li>
+    <li><a href="../v0.1.4/index.html">v0.1.4</a></li>
+    <li><a href="../v0.1.5/index.html">v0.1.5</a></li>
+    <li><a href="index.html">v0.1.6</a></li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
