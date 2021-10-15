@@ -19,7 +19,7 @@ import geolib  # isort:skip
 # -- Project information -----------------------------------------------------
 
 project = "geolib"
-copyright = "2020, Deltares"
+copyright = "2021, Deltares"
 author = "Deltares"
 
 
@@ -34,6 +34,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
     "sphinx_autodoc_typehints",
+    "sphinx_multiversion",
     "rst2pdf.pdfbuilder",
     "releases",
 ]
@@ -91,18 +92,17 @@ html_theme_options = {
         "@Project documentation": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLIB+Home",
         "@Releases": "https://publicwiki.deltares.nl/display/GEOLIB/GEOLib+releases",
     },
-    "show_related": False,
     "show_relbars": True,
 }
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars: {
+html_sidebars = {
     "**": [
         "about.html",
         "navigation.html",
         "relations.html",
         "searchbox.html",
-        "donate.html",
+        "versioning.html",
     ]
 }
 
@@ -131,3 +131,9 @@ autodoc_default_options = {
     "members": True,
     "exclude-members": "__weakref__, parse_text, get_list_field_names,to_internal,structure_group,header_lines",
 }
+
+# Multiversion
+smv_remote_whitelist = None
+smv_tag_whitelist = r"^.*$"
+smv_released_pattern = r"^tags/.*$"
+smv_branch_whitelist = r"^tada"
