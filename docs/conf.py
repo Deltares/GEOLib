@@ -136,4 +136,4 @@ autodoc_default_options = {
 smv_remote_whitelist = None
 smv_tag_whitelist = r"^.*$"
 smv_released_pattern = r"^tags/.*$"
-smv_branch_whitelist = r"^tada"
+smv_branch_whitelist = r"^nomatchesatall"
