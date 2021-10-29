@@ -5,7 +5,7 @@ from enum import Enum
 from functools import partial
 from itertools import chain
 from math import isfinite
-from typing import Dict, Generator, List, Optional, Tuple, Union, Set
+from typing import Dict, Generator, List, Optional, Set, Tuple, Union
 
 from pydantic import ValidationError, confloat, conlist, root_validator, validator
 
@@ -1820,9 +1820,7 @@ class DStabilityStructure(BaseModelStructure):
             value = getattr(instance, fkfield)
             if isinstance(value, (list, set, tuple)):
                 setattr(
-                    instance,
-                    fkfield,
-                    [get_correct_key(x, mapping) for x in value],
+                    instance, fkfield, [get_correct_key(x, mapping) for x in value],
                 )
             if isinstance(value, (int, float, str)):
                 setattr(instance, fkfield, get_correct_key(value, mapping))

@@ -1,8 +1,9 @@
 from enum import IntEnum
 from typing import Optional
 
-from geolib.models import BaseDataClass
 from pydantic import PositiveFloat, confloat, constr
+
+from geolib.models import BaseDataClass
 
 from .internal import Anchor as InternalAnchor
 from .internal import Strut as InternalStrut

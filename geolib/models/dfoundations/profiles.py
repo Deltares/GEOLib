@@ -1,8 +1,7 @@
 from typing import Any, Dict, List, Optional
 
-from geolib.models import BaseDataClass
-
 from geolib.geometry.one import Point
+from geolib.models import BaseDataClass
 from geolib.models.internal import Bool
 
 from .internal import CPT as InternalCPT

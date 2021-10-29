@@ -1,15 +1,16 @@
 from abc import ABCMeta, abstractmethod
 from typing import Optional, Union
 
-from geolib.models import BaseDataClass
 from pydantic.types import confloat, conint
+
+from geolib.models import BaseDataClass
 
 from .settings import (
     CalculationType,
-    PartialFactorSetCUR,
     DesignType,
-    PartialFactorSetEC,
     PartialFactorCalculationType,
+    PartialFactorSetCUR,
+    PartialFactorSetEC,
     PartialFactorSetEC7NADB,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,

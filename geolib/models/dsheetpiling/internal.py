@@ -5,6 +5,8 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
+from pydantic import confloat, conint, conlist, constr
+
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -22,7 +24,6 @@ from geolib.models.dseries_parser import (
     DSerieVersion,
 )
 from geolib.utils import make_newline_validator
-from pydantic import confloat, conint, conlist, constr
 
 from .calculation_options import (
     CalculationOptionsPerStage as CalculationOptionsPerStageExternal,

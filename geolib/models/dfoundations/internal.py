@@ -3,10 +3,9 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from geolib.models import BaseDataClass
-from geolib.utils import make_newline_validator
 from pydantic.types import PositiveInt, confloat, conint, constr
 
+from geolib.models import BaseDataClass
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSerieListStructure,
@@ -22,6 +21,7 @@ from geolib.models.dseries_parser import (
     DSerieVersion,
 )
 from geolib.models.internal import Bool
+from geolib.utils import make_newline_validator
 
 from .dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,

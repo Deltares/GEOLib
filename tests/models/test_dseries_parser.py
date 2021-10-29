@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 from random import randint
 from typing import Dict, List, Tuple, Type, _GenericAlias, get_type_hints
 
@@ -8,7 +8,6 @@ from pydantic.error_wrappers import ValidationError
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
-    DSerieVersion,
     DSeriesInlineMappedProperties,
     DSeriesInlineProperties,
     DSeriesInlineReversedProperties,
@@ -22,6 +21,7 @@ from geolib.models.dseries_parser import (
     DSeriesTreeStructureCollection,
     DSeriesUnmappedNameProperties,
     DSeriesWrappedTableStructure,
+    DSerieVersion,
     get_line_property_key_value,
     get_line_property_value,
     make_key,
@@ -893,10 +893,8 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         expected_dict = {"property_1": "42", "property_2": "Lorem"}
         input_properties = [" Property 1 = 42 ", "Property 2: Lorem ipsum  "]
         # 2. Run test
-        output_dict = (
-            DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
-                input_properties
-            )
+        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+            input_properties
         )
 
         # 3. Verify final expectations
@@ -910,10 +908,8 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         expected_dict = {"property_1": "42"}
         input_properties = [" Property 1 = 42 ", "Property 1: 24"]
         # 2. Run test
-        output_dict = (
-            DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
-                input_properties
-            )
+        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+            input_properties
         )
 
         # 3. Verify final expectations
@@ -996,9 +992,7 @@ class TestDSeriesStructureCollection:
         assert str(e_info.value) == expected_error
 
     @pytest.mark.unittest
-    def test_given_valid_collection_text_when_parse_text_then_returns_structure(
-        self,
-    ):
+    def test_given_valid_collection_text_when_parse_text_then_returns_structure(self,):
         class inline_properties_structure(DSeriesInlineProperties):
             property_dummy: int
 

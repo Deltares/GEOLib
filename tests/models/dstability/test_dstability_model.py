@@ -33,7 +33,7 @@ from geolib.models.dstability.states import (
     DStabilityStatePoint,
     DStabilityStress,
 )
-from geolib.soils import Soil, SuTablePoint, ShearStrengthModelTypePhreaticLevel
+from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil, SuTablePoint
 from tests.utils import TestUtils, only_teamcity
 
 

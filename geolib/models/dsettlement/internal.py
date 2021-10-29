@@ -5,10 +5,10 @@ from math import isclose
 from operator import attrgetter
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from geolib.models import BaseDataClass
 from pydantic.types import PositiveInt, confloat, conint, conlist, constr
 
 from geolib.geometry.one import Point
+from geolib.models import BaseDataClass
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSerieListStructure,

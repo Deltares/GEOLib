@@ -1,4 +1,4 @@
-from .base_model_structure import BaseModelStructure, BaseDataClass
+from .base_model_structure import BaseDataClass, BaseModelStructure  # isort:skip
 from .base_model import BaseModel, BaseModelList
 from .dfoundations import DFoundationsModel
 from .dsettlement import DSettlementModel

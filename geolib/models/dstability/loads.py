@@ -5,6 +5,7 @@ import abc
 from typing import List, Optional
 
 from pydantic import NoneStr, confloat, validator
+
 from geolib.models import BaseDataClass
 
 from ...geometry.one import Point

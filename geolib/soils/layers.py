@@ -6,9 +6,8 @@ D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 from typing import List
 
-from geolib.models import BaseDataClass
-
 from geolib.geometry.one import Point
+from geolib.models import BaseDataClass
 from geolib.soils import Soil
 
 

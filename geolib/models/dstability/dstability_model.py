@@ -4,11 +4,10 @@ from enum import Enum
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Type, Union
 
-from geolib.models import BaseDataClass
 from pydantic import DirectoryPath, FilePath
 
 from geolib.geometry import Point
-from geolib.models import BaseModel
+from geolib.models import BaseDataClass, BaseModel
 from geolib.soils import Soil
 
 from ...utils import camel_to_snake, snake_to_camel
@@ -380,9 +379,7 @@ class DStabilityModel(BaseModel):
         return int(persistable_referenceline.Id)
 
     def add_state_point(
-        self,
-        state_point: DStabilityStatePoint,
-        stage_id: int = None,
+        self, state_point: DStabilityStatePoint, stage_id: int = None,
     ) -> int:
         """
         Add state point to the model
@@ -571,9 +568,7 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def add_reinforcement(
-        self,
-        reinforcement: DStabilityReinforcement,
-        stage_id: Optional[int] = None,
+        self, reinforcement: DStabilityReinforcement, stage_id: Optional[int] = None,
     ) -> None:
         """Add a reinforcement to the model.
 

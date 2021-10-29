@@ -58,7 +58,6 @@ from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
     CalculationType,
     CurveSettings,
-    PartialFactorSetCUR,
     DesignType,
     DistributionType,
     LateralEarthPressureMethod,
@@ -67,6 +66,7 @@ from geolib.models.dsheetpiling.settings import (
     ModulusReactionType,
     ModulusSubgradeReaction,
     PartialFactorCalculationType,
+    PartialFactorSetCUR,
     PartialFactorSetEC7NADNL,
     PassiveSide,
     SheetPilingElementMaterialType,
