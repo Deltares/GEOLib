@@ -3,6 +3,16 @@ GEOLib
 
 GEOLib is a Python package to generate, execute and parse several D-Serie numerical models.
 
+Installation
+------------
+
+Install GEOLib with:
+
+.. code-block:: bash
+
+    $ pip install d-geolib
+
+
 Requirements
 ------------
 
@@ -20,7 +30,7 @@ Or, when having poetry installed (you should):
 
 
 Testing & Development
--------
+---------------------
 
 Make sure to have the server dependencies installed: 
 

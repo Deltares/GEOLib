@@ -8,14 +8,14 @@ The first step to using any software package is getting it properly installed.
 
 GEOLib installation
 -------------------
-GEOLib releases are available from publicwiki.deltares.nl as .whl files. You can
-download these and install such files with::
 
-    $ pip install geolib-0.1.0-py3-none-any.whl
+GEOLib releases are available from PyPI::
+
+    $ pip install d-geolib
 
 To install the latest GEOLib simply the following command::
 
-    $ pip install git+git@bitbucket.org:DeltaresGEO/geolib.git
+    $ pip install git+git@github.com:Deltares/GEOLib.git
 
 Note that both locations are private and require authentication.
 
@@ -45,12 +45,12 @@ You don't need to install anything manually, as the pip installation should take
 Get the Source Code
 -------------------
 
-GEOLib is actively developed on BitBucket, where the code is
-`always available <https://bitbucket.org/DeltaresGEO/geolib/src>`_.
+GEOLib is actively developed on Github, where the code is
+`always available <https://github.com/Deltares/GEOLib>`_.
 
 You can either clone the public repository::
 
-    $ git clone git@bitbucket.org:DeltaresGEO/geolib.git
+    $ git clone git@github.com:Deltares/GEOLib.git
 
 Once you have a copy of the source, you can embed it in your own Python
 package, or install it into your site-packages easily::

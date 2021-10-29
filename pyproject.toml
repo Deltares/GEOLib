@@ -1,10 +1,16 @@
 [tool.poetry]
-name = "geolib"
+name = "d-geolib"
 version = "0.1.6"
-description = ""
+description = "Python wrappers around the input and output files of the Deltares D-Serie models"
 authors = ["Maarten Pronk <maarten.pronk@deltares.nl>", "Deltares"]
-license = "LGPLv3"
+license = "MIT"
+homepage = "https://deltares.github.io/geolib/"
+documentation = "https://deltares.github.io/geolib/"
+repository = "https://github.com/Deltares/GEOLib"
 readme = "README.rst"
+packages = [
+    {include = "geolib"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
