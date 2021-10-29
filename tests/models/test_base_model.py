@@ -1,6 +1,3 @@
-from geolib.models.dstability.dstability_model import DStabilityModel
-from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
-from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 import os
 from pathlib import Path
 from unittest import mock
@@ -9,10 +6,13 @@ import pytest
 from fastapi.testclient import TestClient
 from teamcity import is_running_under_teamcity
 
-from geolib.models import DSettlementModel, BaseDataClass
+from geolib.models import BaseDataClass, DSettlementModel
 from geolib.models.base_model import BaseModel, BaseModelList, MetaData
-from geolib.service.main import app
+from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
+from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
+from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.internal import Bool
+from geolib.service.main import app
 from tests.utils import TestUtils, only_teamcity
 
 client = TestClient(app)

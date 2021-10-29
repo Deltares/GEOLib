@@ -1,10 +1,10 @@
 from abc import ABCMeta, abstractmethod
 from typing import Optional
 
-from geolib.models import BaseDataClass
 from pydantic import conlist, constr, validator
 
 from geolib.geometry import Point
+from geolib.models import BaseDataClass
 
 from .internal import HorizontalLineLoad as HorizontalLineLoadInternal
 from .internal import Moment as MomentInternal

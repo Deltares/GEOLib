@@ -3,6 +3,7 @@ from enum import Enum
 from typing import Dict, List, Optional, Type, Union
 
 from pydantic import PositiveInt, confloat
+
 from geolib.models import BaseDataClass
 
 from ...geometry.one import Point

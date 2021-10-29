@@ -8,6 +8,7 @@ from typing import List, Tuple
 from pydantic import NoneStr, confloat
 
 from geolib.models import BaseDataClass
+
 from ...geometry.one import Point
 from ...utils import snake_to_camel
 from .internal import (

@@ -7,6 +7,10 @@ from typing import Dict, List, Type, Union
 import pydantic.json
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from pydantic import ValidationError, conlist
+from starlette import status
+from starlette.responses import JSONResponse
+
 from geolib.errors import CalculationError
 from geolib.models import (
     BaseModel,
@@ -17,9 +21,6 @@ from geolib.models import (
     DStabilityModel,
 )
 from geolib.models.meta import MetaData
-from pydantic import ValidationError, conlist
-from starlette import status
-from starlette.responses import JSONResponse
 
 # Fixes for custom serialization
 pydantic.json.ENCODERS_BY_TYPE[Path] = str

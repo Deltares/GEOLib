@@ -3,8 +3,9 @@ from datetime import timedelta
 from typing import Optional
 
 from pydantic import constr
-from geolib.models import BaseDataClass
+
 from geolib.geometry import Point
+from geolib.models import BaseDataClass
 
 from .internal import (
     LoadValuesCircular,
@@ -88,12 +89,7 @@ class CircularLoad(OtherLoad):
 
     def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
         load_values = LoadValuesCircular(
-            weight=self.weight,
-            alpha=self.alpha,
-            Xcp=p.x,
-            Ycp=p.z,
-            Zcp=p.y,
-            R=self.R,
+            weight=self.weight, alpha=self.alpha, Xcp=p.x, Ycp=p.z, Zcp=p.y, R=self.R,
         )
         other_load = _OtherLoad(
             time=time.days,
@@ -210,8 +206,6 @@ class TankLoad(OtherLoad):
             dWall=self.dWall,
         )
         other_load = _OtherLoad(
-            time=time.days,
-            load_type=TypeOtherLoads.Tank,
-            load_values_tank=load_values,
+            time=time.days, load_type=TypeOtherLoads.Tank, load_values_tank=load_values,
         )
         return other_load

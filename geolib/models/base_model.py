@@ -13,12 +13,12 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from geolib.models import BaseDataClass
 from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
 from pydantic.error_wrappers import ValidationError
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError
+from geolib.models import BaseDataClass
 
 from .base_model_structure import BaseModelStructure
 from .meta import MetaData

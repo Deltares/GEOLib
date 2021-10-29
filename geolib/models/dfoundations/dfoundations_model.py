@@ -4,11 +4,10 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import List, Optional, Type, Union
 
-from geolib.models import BaseDataClass
 from pydantic import FilePath, confloat
 
 from geolib.geometry import Point
-from geolib.models import BaseModel, BaseModelStructure
+from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
 from geolib.models.internal import Bool
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
@@ -142,8 +141,7 @@ class DFoundationsModel(BaseModel):
     """
 
     datastructure: Union[
-        DFoundationsDumpStructure,
-        DFoundationsStructure,
+        DFoundationsDumpStructure, DFoundationsStructure,
     ] = DFoundationsStructure()
 
     @property

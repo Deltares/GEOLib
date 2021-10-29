@@ -26,6 +26,7 @@ from geolib.models.dsettlement.drains import (
 )
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import (
+    Bool,
     Boundaries,
     Boundary,
     ConsolidationModel,
@@ -41,7 +42,6 @@ from geolib.models.dsettlement.internal import (
     Layer,
     Layers,
     Model,
-    Bool,
     Points,
     PreconPressureWithinLayer,
     SoilModel,

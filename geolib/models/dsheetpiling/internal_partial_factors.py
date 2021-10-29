@@ -1,5 +1,4 @@
 from geolib.models import BaseDataClass
-
 from geolib.models.dseries_parser import DSeriesInlineMappedProperties
 
 

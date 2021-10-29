@@ -4,10 +4,10 @@
 from enum import Enum
 from typing import Optional
 
-from geolib.models import BaseDataClass
 from pydantic.types import PositiveInt, confloat, constr
 
 from geolib.geometry import Point
+from geolib.models import BaseDataClass
 
 from .internal import (
     BearingPileSlipLayer,

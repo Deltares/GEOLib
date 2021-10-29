@@ -1,7 +1,6 @@
 from typing import Optional
 
 from geolib.models import BaseDataClass
-
 from geolib.models.dsheetpiling.internal import SheetPileElement
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 

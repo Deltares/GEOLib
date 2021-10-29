@@ -1,7 +1,8 @@
 from typing import Any, Dict
 
-from geolib.models import BaseDataClass
 from pydantic import FilePath
+
+from geolib.models import BaseDataClass
 
 
 class BaseSerializer(BaseDataClass):

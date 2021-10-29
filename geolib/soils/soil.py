@@ -113,9 +113,7 @@ class UndrainedParameters(SoilBaseModel):
     su_table_variation_coefficient: Optional[float] = None
 
     def to_su_table_points(self):
-        from geolib.models.dstability.internal import (
-            PersistableSuTablePoint,
-        )
+        from geolib.models.dstability.internal import PersistableSuTablePoint
 
         su_table = None
         if self.su_table is not None:
@@ -499,9 +497,7 @@ class Soil(SoilBaseModel):
         return self.__transfer_soil_dict_to_model(kwargs, DStabilityStochasticParameter())
 
     def __to_su_table(self):
-        from geolib.models.dstability.internal import (
-            PersistableSuTable,
-        )
+        from geolib.models.dstability.internal import PersistableSuTable
 
         kwargs = {
             "StrengthIncreaseExponent": self.undrained_parameters.strength_increase_exponent.mean,
@@ -749,8 +745,8 @@ class Soil(SoilBaseModel):
         # Only import it here to prevent circular import errors
         from geolib.models.dsheetpiling.internal import Soil as DSheetPilingSoil
         from geolib.models.dsheetpiling.settings import (
-            SoilTypeModulusSubgradeReaction,
             EarthPressureCoefficients,
+            SoilTypeModulusSubgradeReaction,
         )
 
         self.set_all_stochastic_parameters()

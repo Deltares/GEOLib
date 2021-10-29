@@ -1,7 +1,8 @@
 from enum import Enum, IntEnum
 
-from geolib.models import BaseDataClass
 from pydantic import conint
+
+from geolib.models import BaseDataClass
 
 
 class LateralEarthPressureMethod(IntEnum):
@@ -19,9 +20,7 @@ class LateralEarthPressureMethodStage(IntEnum):
     C_PHI_DELTA = 2
 
     @staticmethod
-    def get_stage_type_from_method(
-        method_value: LateralEarthPressureMethod,
-    ):
+    def get_stage_type_from_method(method_value: LateralEarthPressureMethod,):
         pair_dictionary = {
             LateralEarthPressureMethod.KA_KO_KP: LateralEarthPressureMethodStage.KA_KO_KP,
             LateralEarthPressureMethod.C_PHI_DELTA: LateralEarthPressureMethodStage.C_PHI_DELTA,

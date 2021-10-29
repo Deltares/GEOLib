@@ -3,8 +3,8 @@ from math import isfinite
 
 from pydantic import BaseModel
 
-from .validators import BaseValidator
 from .meta import MetaData
+from .validators import BaseValidator
 
 settings = MetaData()
 
