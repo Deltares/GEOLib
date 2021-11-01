@@ -19,11 +19,10 @@ from typing import (
     get_type_hints,
 )
 
-from pydantic import FilePath
-
 from geolib.errors import ParserError
 from geolib.models import BaseDataClass as DataClass
 from geolib.models.base_model_structure import BaseModelStructure
+from pydantic import FilePath
 
 from .parsers import BaseParser
 from .utils import (
