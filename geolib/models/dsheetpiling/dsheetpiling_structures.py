@@ -102,7 +102,7 @@ class DSheetpilingUnwrappedTable(DSeriesStructure):
 class DSheetpilingTableEntry(DSeriesStructure):
     """Parses a table entry where the latest column is actually a name (which can be composed by a few strings.)
     E.g.:
-        Nr        Level        E-mod     Cross sect.    Length     YieldF   Side 
+        Nr        Level        E-mod     Cross sect.    Length     YieldF   Side
         1 -10.00  2.100E+0008  1.000E-0004  10.00 500.00 -30  0.00 2 Strut
     """
 
@@ -111,11 +111,17 @@ class DSheetpilingTableEntry(DSeriesStructure):
         values = [value for value in text.split() if value]
         # Remove the first value (it's just the line number)
         values.pop(0)
-        number_of_fields = len(get_type_hints(cls))
+
+        # In later versions __slots__ is a type hint too, function below is to ignore this key
+        type_hints = get_type_hints(cls)
+        if "__slots__" in type_hints:
+            type_hints.pop("__slots__")
+
+        number_of_fields = len(type_hints)
         name_field = " ".join(
             name_value for name_value in values[number_of_fields - 1 :] if name_value
         )
         rest_fields = values[0 : number_of_fields - 1]
         rest_fields.insert(0, name_field)
 
-        return cls(**dict(zip(get_type_hints(cls).keys(), rest_fields)))
+        return cls(**dict(zip(type_hints.keys(), rest_fields)))
