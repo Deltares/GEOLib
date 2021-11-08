@@ -1768,17 +1768,45 @@ class DStabilityStructure(BaseModelStructure):
     bishop_reliability_results: List[BishopReliabilityResult] = []
     bishop_results: List[BishopResult] = []
 
-    class Config:
-        arbitrary_types_allowed = True
-        validate_assignment = True
-        extra: "forbid"
-
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validaty_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
         for i, stage in enumerate(values.get("stages")):
+            if (
+                not values.get("stages")[i].CalculationSettingsId
+                == values.get("calculationsettings")[i].Id
+            ):
+                raise ValueError("CalculationSettingsIds not linked!")
+            if (
+                not values.get("stages")[i].DecorationsId
+                == values.get("decorations")[i].Id
+            ):
+                raise ValueError("DecorationsIds not linked!")
             if not values.get("stages")[i].GeometryId == values.get("geometries")[i].Id:
-                raise ValueError("Ids not linked!")
+                raise ValueError("GeometryIds not linked!")
+            if not values.get("stages")[i].LoadsId == values.get("loads")[i].Id:
+                raise ValueError("LoadsIds not linked!")
+            if (
+                not values.get("stages")[i].ReinforcementsId
+                == values.get("reinforcements")[i].Id
+            ):
+                raise ValueError("ReinforcementsIds not linked!")
+            if not values.get("stages")[i].SoilLayersId == values.get("soillayers")[i].Id:
+                raise ValueError("SoilLayersIds not linked!")
+            if not values.get("stages")[i].StateId == values.get("states")[i].Id:
+                raise ValueError("StateIds not linked!")
+            if (
+                not values.get("stages")[i].StateCorrelationsId
+                == values.get("statecorrelations")[i].Id
+            ):
+                raise ValueError("StateCorrelationsIds not linked!")
+            if (
+                not values.get("stages")[i].WaternetCreatorSettingsId
+                == values.get("waternetcreatorsettings")[i].Id
+            ):
+                raise ValueError("WaternetCreatorSettingsIds not linked!")
+            if not values.get("stages")[i].WaternetId == values.get("waternets")[i].Id:
+                raise ValueError("WaternetIds not linked!")
         return values
 
     @property
@@ -1866,6 +1894,13 @@ class DStabilityStructure(BaseModelStructure):
         ]
         self.states += [State(Id=str(unique_start_id + 3))]
         self.statecorrelations += [StateCorrelation(Id=str(unique_start_id + 4))]
+        self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
+        self.soilcorrelation: SoilCorrelation = SoilCorrelation()
+        self.reinforcements += [Reinforcements(Id=str(unique_start_id + 6))]
+        self.loads += [Loads(Id=str(unique_start_id + 7))]
+        self.decorations += [Decorations(Id=str(unique_start_id + 9))]
+        self.calculationsettings += [CalculationSettings(Id=str(unique_start_id + 10))]
+        self.geometries += [Geometry(Id=str(unique_start_id + 8))]
         self.stages += [
             Stage(
                 CalculationSettingsId=str(unique_start_id + 10),
@@ -1883,13 +1918,6 @@ class DStabilityStructure(BaseModelStructure):
                 WaternetId=str(unique_start_id + 1),
             )
         ]
-        self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
-        self.soilcorrelation: SoilCorrelation = SoilCorrelation()
-        self.reinforcements += [Reinforcements(Id=str(unique_start_id + 6))]
-        self.loads += [Loads(Id=str(unique_start_id + 7))]
-        self.decorations += [Decorations(Id=str(unique_start_id + 9))]
-        self.calculationsettings += [CalculationSettings(Id=str(unique_start_id + 10))]
-        self.geometries += [Geometry(Id=str(unique_start_id + 8))]
 
         return len(self.stages) - 1, unique_start_id + 11
 

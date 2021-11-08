@@ -403,11 +403,6 @@ class CPT(DFoundationsEnumStructure):
     void_value_equivalent_electronic_qc: float = 987000000.000000
     measured_data: CPTMeasureData
 
-    class Config:
-        arbitrary_types_allowed = True
-        validate_assignment = True
-        extra: "forbid"
-
 
 class CPTList(DFoundationsCPTCollectionWrapper):
     cpt_collection: List[CPT] = []
