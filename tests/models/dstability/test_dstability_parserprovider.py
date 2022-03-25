@@ -113,8 +113,8 @@ class TestDStabilityInputParser:
     def test_dstability_parse_serialize_stix_model(self):
         dsm = DStabilityModel()
         test_filepath = (
-            Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
-            / "Tutorial.stix"
+            Path(TestUtils.get_local_test_data_dir("dstability"))
+            / "Tutorial_v20_2_1.stix"
         )
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dstability"))
@@ -122,6 +122,9 @@ class TestDStabilityInputParser:
         )
 
         dsm.parse(test_filepath)
+        assert (
+            len(dsm.datastructure.stages) > 1
+        ), "Didn't correctly parse multiple stages."
         assert dsm.datastructure.is_valid
         dsm.serialize(test_output_filepath)
         assert test_output_filepath.exists()
