@@ -80,6 +80,17 @@ class DStabilityZipParser(DStabilityParser):
 
     def parse(self, filepath: FilePath) -> BaseModelStructure:
         with ZipFile(filepath) as zip:
+
+            # Fix backslashes in zipfile (untill fixed in DStability)
+            for file in zip.filelist:
+                new_filename = file.filename.replace("\\", "/")
+                if new_filename != file.filename:
+                    file.filename = new_filename
+            for key in list(zip.NameToInfo.keys()):
+                new_key = key.replace("\\", "/")
+                if new_key != key:
+                    zip.NameToInfo[new_key] = zip.NameToInfo.pop(key)
+
             path = Path(zip)
             ds = super().parse(path)
         return ds
