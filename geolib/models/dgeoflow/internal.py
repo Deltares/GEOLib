@@ -490,6 +490,18 @@ class Scenario(DGeoflowSubStructure):
     Calculations: List[Calculation]
 
 
+class PersistentMeshProperties(DGeoflowBaseModelStructure):
+    LayerId: int
+    Label: Optional[str]
+    ElementSize: float
+
+
+class MeshProperty(DGeoflowSubStructure):
+    ContentVersion: Optional[str] = "2"
+    Id: Optional[str]
+    MeshProperties: List[PersistentMeshProperties]
+
+
 class DGeoflowStructure(BaseModelStructure):
     """Highest level DStability class that should be parsed to and serialized from.
 
@@ -512,12 +524,11 @@ class DGeoflowStructure(BaseModelStructure):
     geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
 
     # TODO: LAYERACTIVATIONS
-    # TODO: MESHPROPERTIES
 
     boundary_conditions: List[BoundaryCondition] = [BoundaryCondition(Id="39")]
 
     scenarios: List[Scenario] = [Scenario(Id="0")]
-    mesh_properties: List[MeshProperties] = [MeshProperties]
+    mesh_properties: List[MeshProperty] = [MeshProperty(Id="23")]
 
     # # Output parts
     # uplift_van_results: List[UpliftVanResult] = []
