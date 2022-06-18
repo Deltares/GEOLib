@@ -21,21 +21,6 @@ from .internal import (
 from .serializer import DGeoflowInputSerializer, DGeoflowInputZipSerializer
 
 
-class DGeoflowCalculationType(Enum):
-    """Set Type of Calculation."""
-
-    BoundarySearch = 1
-    SingleCalc = 2
-
-
-class DGeoflowCalculationModel(Enum):
-    """Set Type of Calculation."""
-
-    Bishop = 1
-    UpliftVan = 2
-    Spencer = 3
-
-
 class DGeoflowObject(BaseModel, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def _to_DGeoflow_sub_structure(self):

@@ -327,9 +327,11 @@ class ProjectInfo(DGeoflowSubStructure):
                 date = datetime.strptime(datestring, "%Y-%M-%d").date()
             return date
 
+
 class PersistablePoint(DGeoflowBaseModelStructure):
     X: Optional[float] = "NaN"
     Z: Optional[float] = "NaN"
+
 
 class PersistableLayer(DGeoflowBaseModelStructure):
     Id: Optional[str]
@@ -349,6 +351,7 @@ class PersistableLayer(DGeoflowBaseModelStructure):
         # 3. is it a non closed polygon
         # 4. does it intersect other polygons
         return points
+
 
 class Geometry(DGeoflowSubStructure):
     """geometries/geometry_x.json"""
@@ -389,7 +392,7 @@ class Geometry(DGeoflowSubStructure):
         raise ValueError(f"Layer id {id} not found in this geometry")
 
     def add_layer(
-        self, id: str, label: str, notes: str, points: List[Point]
+            self, id: str, label: str, notes: str, points: List[Point]
     ) -> PersistableLayer:
         """
         Add a new layer to the model. Layers are expected;
@@ -417,6 +420,47 @@ class Geometry(DGeoflowSubStructure):
         return layer
 
 
+class PersistableFixedHeadBoundaryConditionProperties(DGeoflowBaseModelStructure):
+    HeadLevel: float
+
+
+class PersistableBoundaryCondition(DGeoflowBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
+    Points: conlist(PersistablePoint, min_items=3)
+    FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
+
+
+class BoundaryCondition(DGeoflowSubStructure):
+    """boundaryconditions/boundaryconditions_x.json"""
+
+    ContentVersion: Optional[str] = "2"
+    Id: Optional[str]
+    BoundaryConditions: List[PersistableBoundaryCondition] = []
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "boundaryconditions"
+
+    def contains_point(self, point: Point) -> bool:
+        """
+        Check if the given point is on one of the points of the layers
+
+        Args:
+            point (Point): A point type
+
+        Returns:
+            bool: True if this point is found on a layer, False otherwise
+
+        Todo:
+            Take x, z accuracy into account
+        """
+        for layer in self.Layers:
+            for p in layer.Points:
+                if point.x == p.X and point.z == p.Z:  # not nice
+                    return True
+
+        return False
 
 
 class DGeoflowStructure(BaseModelStructure):
@@ -440,11 +484,12 @@ class DGeoflowStructure(BaseModelStructure):
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
 
+    # TODO: SCENARIOS
+    # TODO: BOUNDARYCONDITIOMS
+    # TODO: LAYERACTIVATIONS
+    # TODO: MESHPROPERTIES
 
-    #TODO: SCENARIOS
-    #TODO: BOUNDARYCONDITIOMS
-    #TODO: LAYERACTIVATIONS
-    #TODO: MESHPROPERTIES
+    boundary_conditions: List[BoundaryCondition] = [BoundaryCondition(Id="39")]
 
     # # Output parts
     # uplift_van_results: List[UpliftVanResult] = []
