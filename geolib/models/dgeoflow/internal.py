@@ -463,6 +463,33 @@ class BoundaryCondition(DGeoflowSubStructure):
         return False
 
 
+class Stage(DGeoflowBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
+    LayerActivationCollectionId: int
+    BoundaryConditionCollectionId: int
+
+
+class Calculation(DGeoflowBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
+    MeshPropertiesId: int
+    ResultsId: int
+
+
+class Scenario(DGeoflowSubStructure):
+    """scenarios/scenario_x.json"""
+
+    ContentVersion: Optional[str] = "2"
+    Id: Optional[str]
+    Label: Optional[str]
+    Notes: Optional[str] = None
+    GeometryId: int
+    SoilLayersId: int
+    Stages: List[Stage]
+    Calculations: List[Calculation]
+
+
 class DGeoflowStructure(BaseModelStructure):
     """Highest level DStability class that should be parsed to and serialized from.
 
@@ -484,12 +511,13 @@ class DGeoflowStructure(BaseModelStructure):
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
 
-    # TODO: SCENARIOS
-    # TODO: BOUNDARYCONDITIOMS
     # TODO: LAYERACTIVATIONS
     # TODO: MESHPROPERTIES
 
     boundary_conditions: List[BoundaryCondition] = [BoundaryCondition(Id="39")]
+
+    scenarios: List[Scenario] = [Scenario(Id="0")]
+    mesh_properties: List[MeshProperties] = [MeshProperties]
 
     # # Output parts
     # uplift_van_results: List[UpliftVanResult] = []
@@ -552,44 +580,6 @@ class DGeoflowStructure(BaseModelStructure):
 
         return unique_id
 
-    # def duplicate_stage(
-    #         self, current_stage: int, label: str, notes: str, unique_start_id: int
-    # ):
-    #     """Duplicates an existing stage.
-    #     Copies the specific stage fields for a stage and renumbers all Ids,
-    #     taking into account foreign keys by using the same renumbering.
-    #     """
-    #
-    #     old_to_new = {}
-    #     for fieldname, stagefield in self.get_stage_specific_fields(current_stage):
-    #         newstagefield = stagefield.copy(deep=True)
-    #
-    #         # Renumber the upper class
-    #         unique_start_id = self.renumber_fk_fields(
-    #             newstagefield, old_to_new, unique_start_id
-    #         )
-    #         # Renumber all children
-    #         for classinstance in children(newstagefield):
-    #             unique_start_id = self.renumber_fk_fields(
-    #                 classinstance, old_to_new, unique_start_id
-    #             )
-    #
-    #         # Update the stage with extra supplied fields
-    #         if fieldname == "stages":
-    #             newstagefield.Label = label
-    #             newstagefield.Notes = notes
-    #
-    #         getattr(self, fieldname).append(newstagefield)
-    #
-    #     return len(self.stages) - 1, unique_start_id
-    #
-    # def add_default_stage(self, label: str, notes: str, unique_start_id=500) -> int:
-    #     """Add a new default (empty) stage to DGeoflow."""
-    #     self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
-    #     self.geometries += [Geometry(Id=str(unique_start_id + 8))]
-    #
-    #     return len(self.stages) - 1, unique_start_id + 11
-
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DGeoflow.
         Finds all existing ids, takes the max and does +1.
@@ -613,26 +603,10 @@ class DGeoflowStructure(BaseModelStructure):
     def validator(self):
         return DGeoflowValidator(self)
 
-    def has_stage(self, stage_id: int) -> bool:
-        try:
-            self.stages[stage_id]
-            return True
-        except IndexError:
-            return False
-
     def has_result(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
             result_id = self.stages[stage_id].ResultId
             if result_id is None:
-                return False
-            else:
-                return True
-        return False
-
-    def has_loads(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            loads_id = self.stages[stage_id].LoadsId
-            if loads_id is None:
                 return False
             else:
                 return True
@@ -653,15 +627,6 @@ class DGeoflowStructure(BaseModelStructure):
                 if str(soil_layer_id) == layer.LayerId:
                     return True
             return False
-        return False
-
-    def has_reinforcements(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            reinforcements_id = self.stages[stage_id].ReinforcementsId
-            if reinforcements_id is None:
-                return False
-            else:
-                return True
         return False
 
 
