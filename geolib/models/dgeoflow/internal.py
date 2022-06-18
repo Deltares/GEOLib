@@ -502,6 +502,17 @@ class MeshProperty(DGeoflowSubStructure):
     MeshProperties: List[PersistentMeshProperties]
 
 
+class PersistentLayerActivations(DGeoflowBaseModelStructure):
+    LayerId: int
+    IsActive: bool
+
+
+class LayerActivation(DGeoflowSubStructure):
+    ContentVersion: Optional[str] = "2"
+    Id: Optional[str]
+    LayerActivations: List[PersistentLayerActivations]
+
+
 class DGeoflowStructure(BaseModelStructure):
     """Highest level DStability class that should be parsed to and serialized from.
 
@@ -523,12 +534,11 @@ class DGeoflowStructure(BaseModelStructure):
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
 
-    # TODO: LAYERACTIVATIONS
 
     boundary_conditions: List[BoundaryCondition] = [BoundaryCondition(Id="39")]
-
     scenarios: List[Scenario] = [Scenario(Id="0")]
     mesh_properties: List[MeshProperty] = [MeshProperty(Id="23")]
+    layer_activations: List[LayerActivation] = [LayerActivation(Id="21")]
 
     # # Output parts
     # uplift_van_results: List[UpliftVanResult] = []
