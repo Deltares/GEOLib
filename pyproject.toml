@@ -17,8 +17,8 @@ python = "^3.7"
 jsonschema = "^3.2"
 pydantic = {version = "^1.6.1 <1.9", extras = ["dotenv"]}
 zipp = "^3.1.0"
-fastapi = {version = "^0.58.1", optional = true}
-uvicorn = {version = "^0.11.5", optional = true}
+fastapi = {version = ">=0.58 <0.79", optional = true}
+uvicorn = {version = ">= 0.11 <0.18", optional = true}
 requests = "^2.24.0"
 jinja2 = "^2.11.2"
 markupsafe = "2.0.1"
@@ -26,7 +26,7 @@ markupsafe = "2.0.1"
 [tool.poetry.dev-dependencies]
 teamcity-messages = "^1.27"
 flake8 = "^3.7.9"
-black = "^19.10b0"
+black = "^22"
 devtools = "^0.5.1"
 coverage = "^5.0.4"
 pytest = "^5.4.1"
