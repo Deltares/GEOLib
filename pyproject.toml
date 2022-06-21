@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "d-geolib"
-version = "0.1.6"
+version = "0.1.7"
 description = "Python wrappers around the input and output files of the Deltares D-Serie models"
 authors = ["Maarten Pronk <maarten.pronk@deltares.nl>", "Deltares"]
 license = "MIT"
@@ -69,3 +69,14 @@ include_trailing_comma=true
 force_grid_wrap=0
 use_parentheses=true
 line_length=90
+profile = "black"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.7"
+tag-format = "$major.$minor.$patch$prerelease"
+version_files = [
+    "pyproject.toml:^version",
+    "geolib/__init__.py:__version__",
+]
+annotated_tag = true
