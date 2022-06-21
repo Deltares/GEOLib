@@ -15,12 +15,13 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 jsonschema = "^3.2"
-pydantic = {version = "^1.6.1", extras = ["dotenv"]}
+pydantic = {version = "^1.6.1 <1.9", extras = ["dotenv"]}
 zipp = "^3.1.0"
 fastapi = {version = "^0.58.1", optional = true}
 uvicorn = {version = "^0.11.5", optional = true}
 requests = "^2.24.0"
 jinja2 = "^2.11.2"
+markupsafe = "2.0.1"
 
 [tool.poetry.dev-dependencies]
 teamcity-messages = "^1.27"

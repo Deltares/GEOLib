@@ -1772,40 +1772,28 @@ class DStabilityStructure(BaseModelStructure):
     def ensure_validaty_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
         for i, stage in enumerate(values.get("stages")):
-            if (
-                not values.get("stages")[i].CalculationSettingsId
-                == values.get("calculationsettings")[i].Id
-            ):
+            if stage.CalculationSettingsId != values.get("calculationsettings")[i].Id:
                 raise ValueError("CalculationSettingsIds not linked!")
-            if (
-                not values.get("stages")[i].DecorationsId
-                == values.get("decorations")[i].Id
-            ):
+            if stage.DecorationsId != values.get("decorations")[i].Id:
                 raise ValueError("DecorationsIds not linked!")
-            if not values.get("stages")[i].GeometryId == values.get("geometries")[i].Id:
+            if stage.GeometryId != values.get("geometries")[i].Id:
                 raise ValueError("GeometryIds not linked!")
-            if not values.get("stages")[i].LoadsId == values.get("loads")[i].Id:
+            if stage.LoadsId != values.get("loads")[i].Id:
                 raise ValueError("LoadsIds not linked!")
-            if (
-                not values.get("stages")[i].ReinforcementsId
-                == values.get("reinforcements")[i].Id
-            ):
+            if stage.ReinforcementsId != values.get("reinforcements")[i].Id:
                 raise ValueError("ReinforcementsIds not linked!")
-            if not values.get("stages")[i].SoilLayersId == values.get("soillayers")[i].Id:
+            if stage.SoilLayersId != values.get("soillayers")[i].Id:
                 raise ValueError("SoilLayersIds not linked!")
-            if not values.get("stages")[i].StateId == values.get("states")[i].Id:
+            if stage.StateId != values.get("states")[i].Id:
                 raise ValueError("StateIds not linked!")
-            if (
-                not values.get("stages")[i].StateCorrelationsId
-                == values.get("statecorrelations")[i].Id
-            ):
+            if stage.StateCorrelationsId != values.get("statecorrelations")[i].Id:
                 raise ValueError("StateCorrelationsIds not linked!")
             if (
-                not values.get("stages")[i].WaternetCreatorSettingsId
-                == values.get("waternetcreatorsettings")[i].Id
+                stage.WaternetCreatorSettingsId
+                != values.get("waternetcreatorsettings")[i].Id
             ):
                 raise ValueError("WaternetCreatorSettingsIds not linked!")
-            if not values.get("stages")[i].WaternetId == values.get("waternets")[i].Id:
+            if stage.WaternetId != values.get("waternets")[i].Id:
                 raise ValueError("WaternetIds not linked!")
         return values
 
@@ -1825,7 +1813,9 @@ class DStabilityStructure(BaseModelStructure):
             "geometries",
         ]
 
-    def get_stage_specific_fields(self, stage=0) -> Tuple[str, DStabilitySubStructure]:
+    def get_stage_specific_fields(
+        self, stage=0
+    ) -> Generator[Tuple[str, DStabilitySubStructure], None, None]:
         """Yield stage specific fields for given stage."""
         for fieldname in self.stage_specific_fields:
             field = getattr(self, fieldname)
@@ -1886,7 +1876,9 @@ class DStabilityStructure(BaseModelStructure):
 
         return len(self.stages) - 1, unique_start_id
 
-    def add_default_stage(self, label: str, notes: str, unique_start_id=500) -> int:
+    def add_default_stage(
+        self, label: str, notes: str, unique_start_id=500
+    ) -> Tuple[int, int]:
         """Add a new default (empty) stage to DStability."""
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
