@@ -440,10 +440,14 @@ class GeometryData(DSeriesStructure):
             self.use_probabilistic_defaults_boundaries.useprobabilisticdefaultsboundaries,
         )
         self.stdv_boundaries.stdvboundaries = self.sort_based_on_new_indexes(
-            new_indexes, self.stdv_boundaries.stdvboundaries,
+            new_indexes,
+            self.stdv_boundaries.stdvboundaries,
         )
-        self.distribution_boundaries.distributionboundaries = self.sort_based_on_new_indexes(
-            new_indexes, self.distribution_boundaries.distributionboundaries,
+        self.distribution_boundaries.distributionboundaries = (
+            self.sort_based_on_new_indexes(
+                new_indexes,
+                self.distribution_boundaries.distributionboundaries,
+            )
         )
 
     def pre_process(self):

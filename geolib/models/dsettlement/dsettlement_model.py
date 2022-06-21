@@ -95,7 +95,7 @@ class DSettlementModel(BaseModel):
         self.filename = filename
 
     def add_soil(self, soil_input: Soil_Input) -> None:
-        """ Soil is converted in the internal structure and added in soil_collection."""
+        """Soil is converted in the internal structure and added in soil_collection."""
         soil_new = soil_input._to_dsettlement()
         self.datastructure.soil_collection.add_soil_if_unique(soil_new)
 
@@ -270,13 +270,15 @@ class DSettlementModel(BaseModel):
 
         """
         self.datastructure.check_x_in_vertical(point_of_vertical=point_of_vertical)
-        self.datastructure.probabilistic_data = self.datastructure.probabilistic_data.set_probabilistic_data(
-            point_of_vertical=point_of_vertical,
-            residual_settlement=residual_settlement,
-            maximum_number_of_samples=maximum_number_of_samples,
-            maximum_iterations=maximum_iterations,
-            reliability_type=reliability_type,
-            is_reliability_calculation=is_reliability_calculation,
+        self.datastructure.probabilistic_data = (
+            self.datastructure.probabilistic_data.set_probabilistic_data(
+                point_of_vertical=point_of_vertical,
+                residual_settlement=residual_settlement,
+                maximum_number_of_samples=maximum_number_of_samples,
+                maximum_iterations=maximum_iterations,
+                reliability_type=reliability_type,
+                is_reliability_calculation=is_reliability_calculation,
+            )
         )
 
     # 1.2.1 Soil profile

@@ -103,15 +103,17 @@ class TestDStabilityAnalysis:
     @pytest.mark.unittest
     def test_create_uplift_van_particle_swarm_algorithm_analysis(self):
         dstability_model = DStabilityModel()
-        uplift_van_particle_swarm_analysis = DStabilityUpliftVanParticleSwarmAnalysisMethod(
-            search_area_a=DStabilitySearchArea(
-                height=5.0, top_left=Point(x=-10.0, z=10.0), width=5.0
-            ),
-            search_area_b=DStabilitySearchArea(
-                height=5.0, top_left=Point(x=10.0, z=10.0), width=5.0
-            ),
-            tangent_area_height=2.0,
-            tangent_area_top_z=-5.0,
+        uplift_van_particle_swarm_analysis = (
+            DStabilityUpliftVanParticleSwarmAnalysisMethod(
+                search_area_a=DStabilitySearchArea(
+                    height=5.0, top_left=Point(x=-10.0, z=10.0), width=5.0
+                ),
+                search_area_b=DStabilitySearchArea(
+                    height=5.0, top_left=Point(x=10.0, z=10.0), width=5.0
+                ),
+                tangent_area_height=2.0,
+                tangent_area_top_z=-5.0,
+            )
         )
         dstability_model.set_model(uplift_van_particle_swarm_analysis)
         assert (
@@ -286,20 +288,22 @@ class TestDStabilityAnalysis:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
 
-        uplift_van_particle_swarm_analysis = DStabilityUpliftVanParticleSwarmAnalysisMethod(
-            search_area_a=DStabilitySearchArea(
-                height=5.109999999999999,
-                top_left=Point(x=4.3100000000000005, z=19.97),
-                width=4.949999999999999,
-            ),
-            search_area_b=DStabilitySearchArea(
-                height=2.08, top_left=Point(x=19.31, z=11.35), width=4.790000000000003
-            ),
-            slip_plane_constraints=DStabilitySlipPlaneConstraints(
-                width_zone_a=-5.0, x_left_zone_a=-5.0
-            ),
-            tangent_area_height=6.539999999999999,
-            tangent_area_top_z=9.43,
+        uplift_van_particle_swarm_analysis = (
+            DStabilityUpliftVanParticleSwarmAnalysisMethod(
+                search_area_a=DStabilitySearchArea(
+                    height=5.109999999999999,
+                    top_left=Point(x=4.3100000000000005, z=19.97),
+                    width=4.949999999999999,
+                ),
+                search_area_b=DStabilitySearchArea(
+                    height=2.08, top_left=Point(x=19.31, z=11.35), width=4.790000000000003
+                ),
+                slip_plane_constraints=DStabilitySlipPlaneConstraints(
+                    width_zone_a=-5.0, x_left_zone_a=-5.0
+                ),
+                tangent_area_height=6.539999999999999,
+                tangent_area_top_z=9.43,
+            )
         )
         assert (
             dstability_model.datastructure.calculationsettings[0].UpliftVanParticleSwarm

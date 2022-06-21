@@ -893,8 +893,10 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         expected_dict = {"property_1": "42", "property_2": "Lorem"}
         input_properties = [" Property 1 = 42 ", "Property 2: Lorem ipsum  "]
         # 2. Run test
-        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
-            input_properties
+        output_dict = (
+            DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+                input_properties
+            )
         )
 
         # 3. Verify final expectations
@@ -908,8 +910,10 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         expected_dict = {"property_1": "42"}
         input_properties = [" Property 1 = 42 ", "Property 1: 24"]
         # 2. Run test
-        output_dict = DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
-            input_properties
+        output_dict = (
+            DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties(
+                input_properties
+            )
         )
 
         # 3. Verify final expectations
@@ -992,7 +996,9 @@ class TestDSeriesStructureCollection:
         assert str(e_info.value) == expected_error
 
     @pytest.mark.unittest
-    def test_given_valid_collection_text_when_parse_text_then_returns_structure(self,):
+    def test_given_valid_collection_text_when_parse_text_then_returns_structure(
+        self,
+    ):
         class inline_properties_structure(DSeriesInlineProperties):
             property_dummy: int
 

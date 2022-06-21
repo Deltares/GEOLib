@@ -11,9 +11,6 @@ from .soil_utils import Color
 
 
 class SoilBaseModel(BaseDataClass):
-    class Config:
-        extra = "forbid"
-
     @validator("*")
     def fail_on_infinite(cls, v, values, field):
         if isinstance(v, float) and not isfinite(v):

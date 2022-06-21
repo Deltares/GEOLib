@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 class DStabilityValidator(BaseValidator):
     """Validator for DStability structure.
-    
+
     Has access to self.ds from parent class.
     Will run all is_valid_ functions to check for validity."""
 

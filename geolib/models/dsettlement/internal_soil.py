@@ -79,7 +79,9 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soildistpop: DistributionType = DistributionType.Normal
     soildistpermeabilityhorfactor: DistributionType = DistributionType.Normal
     soildistinitialvoidratio: DistributionType = DistributionType.Normal
-    soildistpermeabilitystrainmodulus: DistributionType = DistributionType.Normal  # fixed value
+    soildistpermeabilitystrainmodulus: DistributionType = (
+        DistributionType.Normal
+    )  # fixed value
     soildistlimitstress: DistributionType = DistributionType.Normal  # fixed value
     soildistcp: DistributionType = DistributionType.Normal
     soildistcp1: DistributionType = DistributionType.Normal

@@ -52,7 +52,10 @@ class TestConsolidation:
         ],
     )
     def test_create_consolidation_with_valid_paramters(self, degree):
-        consolidation = Consolidation(degree=degree, layer_id=1,)
+        consolidation = Consolidation(
+            degree=degree,
+            layer_id=1,
+        )
 
         assert isinstance(consolidation, Consolidation)
 
@@ -79,7 +82,8 @@ class TestConsolidation:
     ):
         with pytest.raises(ValidationError):
             Consolidation(
-                degree=degree, layer_id=1,
+                degree=degree,
+                layer_id=1,
             )
 
 
@@ -327,7 +331,10 @@ class TestDStabilityModelAddLoad:
 
         uniformloads = dstability_model.datastructure.loads[stage_id].UniformLoads
         assert len(uniformloads) == 1
-        assert isinstance(uniformloads[0], PersistableUniformLoad,)
+        assert isinstance(
+            uniformloads[0],
+            PersistableUniformLoad,
+        )
         if use_consolidations:
             assert len(uniformloads[0].Consolidations) == 1
             assert uniformloads[0].Consolidations[0].LayerId == str(soil_layer_id)

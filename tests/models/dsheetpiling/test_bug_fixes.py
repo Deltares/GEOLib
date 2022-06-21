@@ -84,7 +84,11 @@ class TestDsheetPilingBugFixes:
         model.add_load(load=uniform_load, stage_id=stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=stage_id - 1)
         model.add_load(load=moment_load, stage_id=stage_id)
 
