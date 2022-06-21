@@ -15,7 +15,7 @@ from ...utils import camel_to_snake, snake_to_camel
 
 from .internal import (
     DGeoflowStructure,
-    SoilCollection,
+    SoilCollection, SoilLayerCollection, PersistableSoilLayer,
 )
 
 from .serializer import DGeoflowInputSerializer, DGeoflowInputZipSerializer
@@ -28,13 +28,13 @@ class DGeoflowObject(BaseModel, metaclass=abc.ABCMeta):
 
 
 class DGeoflowModel(BaseModel):
-    """D-Stability is software for soft soil slope stability.
+    """D-Geoflow is software for soft soil piping calculations.
 
     This model can read, modify and create
-    .stix files
+    .flox files
     """
 
-    current_stage: int = -1
+    current_scenario: int = -1
     datastructure: DGeoflowStructure = DGeoflowStructure()
     current_id: int = -1
 
@@ -48,12 +48,20 @@ class DGeoflowModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DGeoflowConsole/D-GEO Suite Stability GEOLIB Console.exe") # TODO: To be adapted
+        return Path("DGeoflowConsole/D-GEO Suite Stability GEOLIB Console.exe")  # TODO: To be adapted
 
     @property
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
+
+    def get_layer(self, scenario_id: int, layer_id: int) -> PersistableSoilLayer:
+        """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
+        soillayers = self.datastructure.soillayers[scenario_id]
+        for layer in soillayers.SoilLayers:
+            if int(layer.LayerId) == layer_id:
+                return layer
+        raise ValueError(f"No soil layer found with layer id {layer_id}")
 
     def _get_next_id(self) -> int:
         self.current_id += 1
@@ -65,29 +73,29 @@ class DGeoflowModel(BaseModel):
 
     # @property
     # def output(self) -> DGeoflowResult:
-    #     # TODO Make something that works for all stages
-    #     return self.get_result(self.current_stage)
+    #     # TODO Make something that works for all scenarios
+    #     return self.get_result(self.current_scenario)
 
-    # def get_result(self, stage_id: int) -> Dict:
+    # def get_result(self, scenario_id: int) -> Dict:
     #     """
-    #     Returns the results of a stage. Calculation results are based on analysis type and calculation type.
+    #     Returns the results of a scenario. Calculation results are based on analysis type and calculation type.
     #
     #     Args:
-    #         stage_id (int): Id of a stage.
+    #         scenario_id (int): Id of a scenario.
     #
     #     Returns:
-    #         dict: Dictionary containing the analysis results of the stage.
+    #         dict: Dictionary containing the analysis results of the scenario.
     #
     #     Raises:
     #         ValueError: No results or calculationsettings available
     #     """
-    #     result = self._get_result_substructure(stage_id)
+    #     result = self._get_result_substructure(scenario_id)
     #     return result  # TODO snake_case keys?
-
-    # def _get_result_substructure(self, stage_id: int) -> DGeoflowResult:
-    #     if self.datastructure.has_result(stage_id):
-    #         result_id = self.datastructure.stages[stage_id].ResultId
-    #         calculation_settings = self.datastructure.calculationsettings[stage_id]
+    #
+    # def _get_result_substructure(self, scenario_id: int) -> DGeoflowResult:
+    #     if self.datastructure.has_result(scenario_id):
+    #         result_id = self.datastructure.scenarios[scenario_id].ResultId
+    #         calculation_settings = self.datastructure.calculationsettings[scenario_id]
     #         analysis_type = calculation_settings.AnalysisType
     #         calculation_type = calculation_settings.CalculationType
     #
@@ -99,8 +107,7 @@ class DGeoflowModel(BaseModel):
     #             if result.Id == result_id:
     #                 return result
     #
-    #     raise ValueError(f"No result found for result id {stage_id}")
-
+    #     raise ValueError(f"No result found for result id {scenario_id}")
 
     def serialize(self, location: Union[FilePath, DirectoryPath]):
         """Support serializing to directory while developing for debugging purposes."""
@@ -111,7 +118,49 @@ class DGeoflowModel(BaseModel):
         serializer.write(location)
         self.filename = location
 
-    def add_point(self, point: Point, stage=None) -> int:
+    def add_scenario_2(self, label: str, notes: str, set_current=True) -> int:
+        """Add a new scenario to the model.
+
+        Args:
+            label: Label for the scenario
+            notes: Notes for the scenario
+            set_current: Whether to make the new scenario the current scenario.
+
+        Returns:
+            the id of the new scenario
+        """
+        new_id = self._get_next_id()
+        new_scenario_id, new_unique_id = self.datastructure.add_default_scenario(
+            label, notes, new_id
+        )
+
+        if set_current:
+            self.current_scenario = new_scenario_id
+        self.current_id = new_unique_id
+        return new_scenario_id
+
+    def copy_scenario(self, label: str, notes: str, set_current=True) -> int:
+        """Copy an existing scenario and add it to the model.
+
+        Args:
+            label: Label for the scenario
+            notes: Notes for the scenario
+            set_current: Whether to make the new scenario the current scenario.
+
+        Returns:
+            the id of the new scenario
+        """
+        new_id = self._get_next_id()
+        new_scenario_id, new_unique_id = self.datastructure.duplicate_scenario(
+            self.current_scenario, label, notes, new_id
+        )
+
+        if set_current:
+            self.current_scenario = new_scenario_id
+        self.current_id = new_unique_id
+        return new_scenario_id
+
+    def add_point(self, point: Point, scenario=None) -> int:
         """Add point, which should be unique in the model and return the created point id."""
 
     def add_soil(self, soil: Soil) -> int:
@@ -149,12 +198,12 @@ class DGeoflowModel(BaseModel):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
 
     def add_layer(
-        self,
-        points: List[Point],
-        soil_code: str,
-        label: str = "",
-        notes: str = "",
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            soil_code: str,
+            label: str = "",
+            notes: str = "",
+            scenario_id: int = None,
     ) -> int:
         """
         Add a soil layer to the model
@@ -164,18 +213,18 @@ class DGeoflowModel(BaseModel):
             soil_code (str): code of the soil for this layer
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
-            stage_id (int): stage to add to, defaults to 0
+            scenario_id (int): scenario to add to, defaults to 0
 
         Returns:
             int: id of the added layer
         """
-        stage_id = stage_id if stage_id else self.current_stage
+        scenario_id = scenario_id if scenario_id else self.current_scenario
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        if not self.datastructure.has_scenario(scenario_id):
+            raise IndexError(f"scenario {scenario_id} is not available")
+        geometry = self.datastructure.geometries[scenario_id]
 
-        geometry = self.datastructure.geometries[stage_id]
-        soillayerscollection = self.datastructure.soillayers[stage_id]
+        soillayerscollection = self.datastructure.soillayers[scenario_id]
 
         # do we have this soil code?
         if not self.soils.has_soilcode(soil_code):
@@ -194,40 +243,108 @@ class DGeoflowModel(BaseModel):
         soillayerscollection.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.id)
         return int(persistable_layer.Id)
 
-    #TODO: Check if below is still needed for DGeoflow
+    def add_layeractivation(self, scenario_id: int = None, layer_id: int = None) -> int:
+        """
+        Add a layer activation to the model
 
-    # def set_model(self, analysis_method: DGeoflowAnalysisMethod, stage_id=None):
-    #     """Sets the model and applies the given parameters
-    #
-    #     Args:
-    #         analysis_method (DGeoflowAnalysisMethod): A subclass of DGeoflowAnalysisMethod.
-    #         stage_id: Id used to identify the stage to which the analysis method is linked.
-    #
-    #     Raises:
-    #         ValueError: When the provided analysismethod is no subclass of DGeoflowAnalysisMethod,
-    #         an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
-    #     """
-    #     stage_id = stage_id if stage_id else self.current_stage
-    #
-    #     if not self.datastructure.has_stage(stage_id):
-    #         raise IndexError(f"stage {stage_id} is not available")
-    #
-    #     calculationsettings = self.datastructure.calculationsettings[stage_id]
-    #
-    #     _analysis_method_mapping = {
-    #         AnalysisType.BISHOP: calculationsettings.set_bishop,
-    #         AnalysisType.BISHOP_BRUTE_FORCE: calculationsettings.set_bishop_brute_force,
-    #         AnalysisType.SPENCER: calculationsettings.set_spencer,
-    #         AnalysisType.SPENCER_GENETIC: calculationsettings.set_spencer_genetic,
-    #         AnalysisType.UPLIFT_VAN: calculationsettings.set_uplift_van,
-    #         AnalysisType.UPLIFT_VAN_PARTICLE_SWARM: calculationsettings.set_uplift_van_particle_swarm,
-    #     }
-    #
-    #     try:
-    #         _analysis_method_mapping[analysis_method.analysis_type](
-    #             analysis_method._to_internal_datastructure()
-    #         )
-    #     except KeyError:
-    #         raise ValueError(
-    #             f"Unknown analysis method {analysis_method.analysis_type.value} found"
-    #         )
+        Args:
+            scenario_id (int): scenario to add to, defaults to 0
+            layer_id (int): layer to add to
+
+        Returns:
+            int: id of the added layeractivation
+        """
+        scenario_id = scenario_id if scenario_id else self.current_scenario
+        layeractivationscollection = self.datastructure.layer_activations[scenario_id]
+
+        persistable_layer = self.get_layer(scenario_id, layer_id)
+        layeractivationscollection.add_layeractivation(layer_id=persistable_layer.LayerId)
+
+        return int(layeractivationscollection.Id)
+
+    def add_meshproperties(self,
+                           element_size: float = 1.0,
+                           label: str = "",
+                           scenario_id: int = None,
+                           layer_id: int = None) -> int:
+        """
+        Add a mesh properties to the model
+
+        Args:
+            element_size: size of the mesh elements for the discretization, defaults to 1.0
+            scenario_id (int): scenario to add to, defaults to 0
+            layer_id (int): layer to add to
+
+        Returns:
+            int: id of the added meshproperties collection
+        """
+        scenario_id = scenario_id if scenario_id else self.current_scenario
+        meshpropertiescollection = self.datastructure.mesh_properties[scenario_id]
+
+        persistable_layer = self.get_layer(scenario_id, layer_id)
+        meshpropertiescollection.add_meshproperty(layer_id=persistable_layer.LayerId, element_size=element_size,
+                                                  label=label)
+
+        return int(meshpropertiescollection.Id)
+
+    def add_boundarycondition(self, points: List[Point], head_level: float, label: str = "", notes: str = "",
+                              scenario_id: int = None) -> int:
+        """
+        Add boundary conditions to the model
+
+        Args:
+            points (List[Point]): list of Point classes, in clockwise order (non closed simple polygon)
+            head_level (float): level of the hydraulic head for the boundary condition
+            label (str): label defaults to empty string
+            notes (str): notes defaults to empty string
+            scenario_id (int): scenario to add to, defaults to 0
+
+        Returns:
+            int: id of the boundary conditions collection
+        """
+        scenario_id = scenario_id if scenario_id else self.current_scenario
+        boundaryconditions = self.datastructure.boundary_conditions[scenario_id]
+
+        boundaryconditions.add_boundarycondition(label, notes, points, head_level)
+
+        return int(boundaryconditions.Id)
+
+    def add_scenario(self, scenario_id: int = None, boundaryconditions_id: int = None, layeractivations_id: int = None,
+                     soillayers_id: int = None, geometry_id: int = None, meshproperties_id: int = None, label: str = "",
+                     notes: str = "",
+                     calculations_notes: str = "", stage_notes: str = "", calculations_label: str = None,
+                     stage_label: str = None) -> int:
+        """
+        Add a scenario to the model
+
+        Args:
+            scenario_id (int): scenario to add to, defaults to 0
+            boundaryconditions_id (int): id of the boundary conditions collection to add tothe scenario
+            layeractivations_id (int): id of the layer activation collection to add tothe scenario
+            soillayers_id (int): id of the soil layers to add to the scenario
+            geometry_id (int): id of the geometry to add to the scenario
+            meshproperties_id (int): id of the mesh properties to add to the scenario
+            label (str): label of the scenario, defaults to empty string
+            notes (str): notes of the scenario, defaults to empty string
+            calculations_notes (str): notes of the calculation, defaults to empty string
+            stage_notes (str): notes of the stage, defaults to empty string
+            calculations_label (str): label of the calculation, defaults to empty string
+            stage_label (str): label of the stage, defaults to empty string
+
+        Returns:
+            int: id of the scenario
+        """
+        scenario_id = scenario_id if scenario_id else self.current_scenario
+
+        scenarios = self.datastructure.scenarios[scenario_id]
+
+        scenarios.Label = label
+        scenarios.Notes = notes
+        scenarios.GeometryId = geometry_id
+        scenarios.SoilLayersId = soillayers_id
+        scenarios.add_calculation(label=calculations_label, notes=calculations_notes,
+                                  mesh_properties_id=meshproperties_id)
+        scenarios.add_stage(label=stage_label, notes=stage_notes,
+                            boundaryconditions_collection_id=boundaryconditions_id,
+                            layeractivation_collection_id=layeractivations_id)
+        return int(scenarios.Id)

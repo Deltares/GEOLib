@@ -10,8 +10,8 @@ from pydantic import ValidationError, confloat, conlist, root_validator, validat
 
 from geolib import __version__ as version
 from geolib.geometry import Point
-from geolib.models.dgeoflow.dgeoflow_validator import DGeoflowValidator
-from geolib.models.dgeoflow.utils import children
+from .dgeoflow_validator import DGeoflowValidator
+from .utils import children
 from geolib.soils import Soil, StorageParameters
 from geolib.utils import snake_to_camel
 
@@ -63,7 +63,7 @@ class PersistableSoilVisualization(DGeoflowBaseModelStructure):
 
 
 class SoilVisualisation(DGeoflowBaseModelStructure):
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
 
     @classmethod
@@ -87,7 +87,7 @@ class SoilLayerCollection(DGeoflowSubStructure):
     def structure_group(cls) -> str:
         return "soillayers"
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str]
     SoilLayers: List[PersistableSoilLayer] = []
 
@@ -111,65 +111,99 @@ class PersistableSoil(DGeoflowBaseModelStructure):
     Id: str = ""
     Name: str = ""
     Notes: str = ""
-    HorizontalPermeability: float
-    VerticalPermeability: float
+    HorizontalPermeability: confloat() = 0.001
+    VerticalPermeability: confloat() = 0.001
 
 
 class SoilCollection(DGeoflowSubStructure):
     """soils.json"""
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Soils: List[PersistableSoil] = [
         PersistableSoil(
             Code="H_Aa_ht_new",
             Id="2",
             Name="Embankment new",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="3",
             Name="Embankment old",
             Code="H_Aa_ht_old",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="4",
             Name="Clay, shallow",
             Code="H_Rk_k_shallow",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="5",
             Name="Clay, deep",
             Code="H_Rk_k_deep",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="6",
             Name="Organic clay",
             Code="H_Rk_ko",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="7",
             Name="Peat, shallow",
             Code="H_vhv_v",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="8",
             Name="Peat, deep",
             Code="H_vbv_v",
+            HorizontalPermeability=1.157E-07,
+            VerticalPermeability=1.157E-07
         ),
         PersistableSoil(
             Id="9",
             Name="Sand",
             Code="Sand",
+            HorizontalPermeability=0.00034720000000000004,
+            VerticalPermeability=0.00034720000000000004
         ),
         PersistableSoil(
             Id="10",
             Name="Clay with silt",
             Code="P_Rk_k&s",
+            HorizontalPermeability=1.157E-06,
+            VerticalPermeability=1.157E-06
         ),
         PersistableSoil(
             Id="11",
             Name="Sand with clay",
             Code="H_Ro_z&k",
+            HorizontalPermeability=1.1570000000000001E-05,
+            VerticalPermeability=1.1570000000000001E-05
         ),
+        PersistableSoil(
+            Id="12",
+            Name="Sand, less permeable",
+            Code="Sand, less permeable",
+            HorizontalPermeability=0.00017360000000000002,
+            VerticalPermeability=0.00017360000000000002
+        ),
+        PersistableSoil(
+            Id="13",
+            Name="Sand, permeable",
+            Code="Sand, permeable",
+            HorizontalPermeability=0.00052080000000000008,
+            VerticalPermeability=0.00052080000000000008
+        )
     ]
 
     @classmethod
@@ -198,7 +232,7 @@ class SoilCollection(DGeoflowSubStructure):
         Returns:
             None
         """
-        ps = soil._to_dstability()
+        ps = soil._to_dgeoflow()
 
         self.Soils.append(ps)
         return ps
@@ -215,41 +249,7 @@ class SoilCollection(DGeoflowSubStructure):
             standard_deviation=persistable_stochastic_parameter.StandardDeviation,
         )
 
-    def __determine_strength_increase_exponent(self, persistable_soil: PersistableSoil):
-        # shear increase exponent taken from persistable_soil.SuTable or just from persistable_soil
-        if (
-                persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
-                or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
-        ):
-            # SHANSEP model is selected so the StrengthIncreaseExponentStochasticParameter from persistable_soil should be used
-            return self.__to_global_stochastic_parameter(
-                persistable_soil.StrengthIncreaseExponentStochasticParameter
-            )
-        elif (
-                persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
-                or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value
-                == "SuTable"
-        ):
-            # SU table is selected so the StrengthIncreaseExponentStochasticParameter from SuTable should be used
-            return self.__to_global_stochastic_parameter(
-                persistable_soil.SuTable.StrengthIncreaseExponentStochasticParameter
-            )
-        else:
-            return None
-
     def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
-        from geolib.soils import (
-            SoilWeightParameters,
-        )
-
-        soil_weight_parameters = SoilWeightParameters()
-        soil_weight_parameters.saturated_weight.mean = (
-            persistable_soil.VolumetricWeightAbovePhreaticLevel
-        )
-        soil_weight_parameters.unsaturated_weight.mean = (
-            persistable_soil.VolumetricWeightAbovePhreaticLevel
-        )
-
         storage_parameters = StorageParameters(vertical_permeability=persistable_soil.VerticalPermeability,
                                                horizontal_permeability=persistable_soil.HorizontalPermeability)
 
@@ -306,7 +306,7 @@ class ProjectInfo(DGeoflowSubStructure):
     Analyst: Optional[str] = ""
     ApplicationCreated: Optional[str] = ""
     ApplicationModified: Optional[str] = ""
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Created: Optional[date] = datetime.now().date()
     CrossSection: Optional[str] = ""
     Date: Optional[date] = datetime.now().date()
@@ -360,7 +360,11 @@ class Geometry(DGeoflowSubStructure):
     def structure_group(cls) -> str:
         return "geometries"
 
-    ContentVersion: Optional[str] = "1"
+    @classmethod
+    def structure_name(cls) -> str:
+        return "geometry"
+
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str]
     Layers: List[PersistableLayer] = []
 
@@ -442,6 +446,10 @@ class BoundaryCondition(DGeoflowSubStructure):
     def structure_group(cls) -> str:
         return "boundaryconditions"
 
+    @classmethod
+    def structure_name(cls) -> str:
+        return "boundaryconditions"
+
     def contains_point(self, point: Point) -> bool:
         """
         Check if the given point is on one of the points of the layers
@@ -462,19 +470,28 @@ class BoundaryCondition(DGeoflowSubStructure):
 
         return False
 
+    def add_boundarycondition(self, label: str, notes: str, points: List[Point],
+                              head_level: float) -> PersistableBoundaryCondition:
+        pbc_properties = PersistableFixedHeadBoundaryConditionProperties(HeadLevel=head_level)
+        pbc = PersistableBoundaryCondition(Label=label, Notes=notes,
+                                           Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
+                                           FixedHeadBoundaryConditionProperties=pbc_properties)
+        self.BoundaryConditions.append(pbc)
+        return pbc
 
-class Stage(DGeoflowBaseModelStructure):
+
+class PersistableStage(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     LayerActivationCollectionId: int
     BoundaryConditionCollectionId: int
 
 
-class Calculation(DGeoflowBaseModelStructure):
+class PersistableCalculation(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     MeshPropertiesId: int
-    ResultsId: int
+    # ResultsId: int  #TODO: results in another MR
 
 
 class Scenario(DGeoflowSubStructure):
@@ -484,39 +501,105 @@ class Scenario(DGeoflowSubStructure):
     Id: Optional[str]
     Label: Optional[str]
     Notes: Optional[str] = None
-    GeometryId: int
-    SoilLayersId: int
-    Stages: List[Stage]
-    Calculations: List[Calculation]
+    GeometryId: int = None
+    SoilLayersId: int = None
+    Stages: List[PersistableStage] = []
+    Calculations: List[PersistableCalculation] = []
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "scenario"
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "scenarios"
+
+    def add_calculation(self, label: str, notes: str, mesh_properties_id: int) -> PersistableCalculation:
+        pc = PersistableCalculation(Label=label, Notes=notes, MeshPropertiesId=mesh_properties_id)
+        self.Calculations.append(pc)
+        return pc
+
+    def add_stage(self, label: str, notes: str, layeractivation_collection_id: int,
+                  boundaryconditions_collection_id: int) -> PersistableStage:
+        ps = PersistableStage(Label=label, Notes=notes, LayerActivationCollectionId=layeractivation_collection_id,
+                              BoundaryConditionCollectionId=boundaryconditions_collection_id)
+        self.Stages.append(ps)
+        return ps
 
 
-class PersistentMeshProperties(DGeoflowBaseModelStructure):
+class PersistableMeshProperties(DGeoflowBaseModelStructure):
     LayerId: int
     Label: Optional[str]
-    ElementSize: float
+    ElementSize: Optional[float] = 1
 
 
 class MeshProperty(DGeoflowSubStructure):
+    """meshproperties/meshproperties_x.json"""
+
     ContentVersion: Optional[str] = "2"
     Id: Optional[str]
-    MeshProperties: List[PersistentMeshProperties]
+    MeshProperties: Optional[List[PersistableMeshProperties]] = []
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "meshproperties"
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "meshproperties"
+
+    def add_meshproperty(self, layer_id: str, element_size: float, label: str) -> PersistableMeshProperties:
+        pmp = PersistableMeshProperties(LayerId=layer_id, Label=label, ElementSize=element_size)
+        self.MeshProperties.append(pmp)
+        return pmp
+
+    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
+        if exclude_soil_layer_id is not None:
+            exclude_soil_layer_id = str(exclude_soil_layer_id)
+        return {
+            layer.LayerId
+            for layer in self.MeshProperties
+            if layer.LayerId != exclude_soil_layer_id}
 
 
-class PersistentLayerActivations(DGeoflowBaseModelStructure):
+class PersistableLayerActivations(DGeoflowBaseModelStructure):
     LayerId: int
     IsActive: bool
 
 
 class LayerActivation(DGeoflowSubStructure):
+    """layeractivations/layeractivations_x.json"""
+
     ContentVersion: Optional[str] = "2"
     Id: Optional[str]
-    LayerActivations: List[PersistentLayerActivations]
+    LayerActivations: Optional[List[PersistableLayerActivations]] = []
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "layeractivations"
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "layeractivations"
+
+    def add_layeractivation(self, layer_id: str) -> PersistableLayerActivations:
+        pla = PersistableLayerActivations(LayerId=layer_id, IsActive=True)
+        self.LayerActivations.append(pla)
+        return pla
+
+    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
+        if exclude_soil_layer_id is not None:
+            exclude_soil_layer_id = str(exclude_soil_layer_id)
+        return {
+            layer.LayerId
+            for layer in self.LayerActivations
+            if layer.LayerId != exclude_soil_layer_id}
 
 
 class DGeoflowStructure(BaseModelStructure):
-    """Highest level DStability class that should be parsed to and serialized from.
+    """Highest level DGeoflow class that should be parsed to and serialized from.
 
-    The List[] items (one for each stage in the model) will be stored in a subfolder
+    The List[] items (one for each scenario in the model) will be stored in a subfolder
     to multiple json files. Where the first (0) instance
     has no suffix, but the second one has (1 => _1) etc.
 
@@ -524,32 +607,23 @@ class DGeoflowStructure(BaseModelStructure):
     """
 
     # input part
-
+    # Ids 2 -> 13 are already taken for the default PersistableSoil
+    # TODO: rename all Ids below with unique Id!!
     soillayers: List[SoilLayerCollection] = [
-        SoilLayerCollection(Id="13")
+        SoilLayerCollection(Id="14")
     ]  # soillayers/soillayers_x.json
     soils: SoilCollection = SoilCollection()  # soils.json
     soilvisualizations: SoilVisualisation = SoilVisualisation()  # soilvisualizations.json
 
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
-    geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
+    geometries: List[Geometry] = [Geometry(Id="1")]  # geometries/geometry_x.json
 
-
-    boundary_conditions: List[BoundaryCondition] = [BoundaryCondition(Id="39")]
-    scenarios: List[Scenario] = [Scenario(Id="0")]
-    mesh_properties: List[MeshProperty] = [MeshProperty(Id="23")]
-    layer_activations: List[LayerActivation] = [LayerActivation(Id="21")]
-
-    # # Output parts
-    # uplift_van_results: List[UpliftVanResult] = []
-    # uplift_van_particle_swarm_results: List[UpliftVanParticleSwarmResult] = []
-    # uplift_van_reliability_results: List[UpliftVanReliabilityResult] = []
-    # spencer_genetic_algorithm_results: List[SpencerGeneticAlgorithmResult] = []
-    # spencer_reliability_results: List[SpencerReliabilityResult] = []
-    # spencer_results: List[SpencerResult] = []
-    # bishop_bruteforce_results: List[BishopBruteForceResult] = []
-    # bishop_reliability_results: List[BishopReliabilityResult] = []
-    # bishop_results: List[BishopResult] = []
+    boundary_conditions: List[BoundaryCondition] = [
+        BoundaryCondition(Id="15")]  # boundaryconditions/boundaryconditions_x.json
+    scenarios: List[Scenario] = [Scenario(Id="0")]  # scenarios/scenario_x.json
+    mesh_properties: List[MeshProperty] = [
+        MeshProperty(Id="16", MeshProperties=[])]  # meshproperties/meshproperties_x.json
+    layer_activations: List[LayerActivation] = [LayerActivation(Id="17")]  # layeractivations/layeractivations_x.json
 
     class Config:
         arbitrary_types_allowed = True
@@ -559,9 +633,6 @@ class DGeoflowStructure(BaseModelStructure):
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validaty_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
-        for i, stage in enumerate(values.get("stages")):
-            if not values.get("stages")[i].GeometryId == values.get("geometries")[i].Id:
-                raise ValueError("Ids not linked!")
         return values
 
     @property
@@ -569,6 +640,10 @@ class DGeoflowStructure(BaseModelStructure):
         return [
             "soillayers",
             "geometries",
+            "boundaryconditions",
+            "layeractivations",
+            "meshproperties",
+            "scenarios",
         ]
 
     def get_stage_specific_fields(self, stage=0) -> Tuple[str, DGeoflowSubStructure]:
@@ -601,6 +676,52 @@ class DGeoflowStructure(BaseModelStructure):
 
         return unique_id
 
+    def duplicate_scenario(
+            self, current_stage: int, label: str, notes: str, unique_start_id: int
+    ):
+        """Duplicates an existing scenario.
+        Copies the specific stage fields for a stage and renumbers all Ids,
+        taking into account foreign keys by using the same renumbering.
+        """
+
+        old_to_new = {}
+        for fieldname, stagefield in self.get_stage_specific_fields(current_stage):
+            newstagefield = stagefield.copy(deep=True)
+
+            # Renumber the upper class
+            unique_start_id = self.renumber_fk_fields(
+                newstagefield, old_to_new, unique_start_id
+            )
+            # Renumber all children
+            for classinstance in children(newstagefield):
+                unique_start_id = self.renumber_fk_fields(
+                    classinstance, old_to_new, unique_start_id
+                )
+
+            # Update the stage with extra supplied fields
+            if fieldname == "stages":
+                newstagefield.Label = label
+                newstagefield.Notes = notes
+
+            getattr(self, fieldname).append(newstagefield)
+
+        return len(self.stages) - 1, unique_start_id
+
+    def add_default_scenario(self, label: str, notes: str, unique_start_id=500) -> int:
+        """Add a new default (empty) scenario to DGeoflow."""
+
+        self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 1))]
+        self.mesh_properties += [MeshProperty(Id=str(unique_start_id + 2))]
+        self.layer_activations += [LayerActivation(Id=str(unique_start_id + 3))]
+        self.geometries += [Geometry(Id=str(unique_start_id + 4))]
+        self.boundary_conditions += [BoundaryCondition(Id=str(unique_start_id + 5))]
+
+        # TODO also add LayerActivation and BoundaryCondtions to Scenario below (nested)?
+        self.scenarios += [Scenario(GeometryId=str(unique_start_id + 4),
+                                    SoilLayersId=str(unique_start_id + 1))]
+
+        return len(self.scenarios) - 1, unique_start_id + 11
+
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DGeoflow.
         Finds all existing ids, takes the max and does +1.
@@ -608,7 +729,6 @@ class DGeoflowStructure(BaseModelStructure):
 
         fk = ForeignKeys()
         classfields = fk.class_fields
-
         ids = []
         for instance in children(self):
             for field in classfields.get(instance.__class__.__name__, []):
@@ -624,18 +744,26 @@ class DGeoflowStructure(BaseModelStructure):
     def validator(self):
         return DGeoflowValidator(self)
 
-    def has_result(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            result_id = self.stages[stage_id].ResultId
-            if result_id is None:
-                return False
-            else:
-                return True
-        return False
+    def has_scenario(self, stage_id: int) -> bool:
+        try:
+            self.scenarios[stage_id]
+            return True
+        except IndexError:
+            return False
+
+    # TODO: result in another MR
+    # def has_result(self, stage_id: int) -> bool:
+    #     if self.has_stage(stage_id):
+    #         result_id = self.scenarios[stage_id].ResultId
+    #         if result_id is None:
+    #             return False
+    #         else:
+    #             return True
+    #     return False
 
     def has_soil_layers(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
-            soil_layers_id = self.stages[stage_id].SoilLayersId
+            soil_layers_id = self.scenarios[stage_id].SoilLayersId
             if soil_layers_id is None:
                 return False
             else:
@@ -653,50 +781,26 @@ class DGeoflowStructure(BaseModelStructure):
 
 class ForeignKeys(DGeoflowBaseModelStructure):
     """A dataclass that store the connections between the
-    various unique Ids used in DStability. These can be seen
+    various unique Ids used in DGeoflow. These can be seen
     as (implicit) foreign keys.
     """
 
     mapping: Dict[str, Tuple[str, ...]] = {
-        # "Waternet.Id": ("Stage.WaternetId",),
-        # "PersistableHeadLine.Id": (
-        #     "PersistableReferenceLine.BottomHeadLineId",
-        #     "PersistableReferenceLine.TopHeadLineId",
-        # ),
-        # "PersistableReferenceLine.Id": ("Waternet.PhreaticLineId",),
-        # "PersistableLayer.Id": (
-        #     "PersistableStatePoint.LayerId",
-        #     "PersistableSoilLayer.LayerId",
-        #     "PersistableConsolidation.LayerId",
-        #     "PersistableLayerLoad.LayerId",
-        #     "PersistableBerm.AddedLayerId",
-        #     "WaternetCreatorSettings.AquiferInsideAquitardLayerId",
-        #     "WaternetCreatorSettings.AquiferLayerId",
-        # ),
-        # Soil commented out for now, isn't used in stages
-        # "PersistableSoil.Id": (
-        #     "PersistableSoilVisualization.SoilId",
-        #     "PersistableSoilLayer.SoilId",
-        #     "PersistableSoilCorrelation.CorrelatedSoilIds",
-        #     "PersistableNailPropertiesForSoil.SoilId",
-        #     "PersistableSoilContribution.SoilId"
-        # ),
-        # "CalculationSettings.Id": ("Stage.CalculationSettingsId",),
-        # "Decorations.Id": ("Stage.DecorationsId",),
-        "Geometry.Id": ("Stage.GeometryId",),
-        "Loads.Id": ("Stage.LoadsId",),
-        # "Reinforcements.Id": ("Stage.ReinforcementsId",),
-        # "Result.Id": ("Stage.ResultId",),
-        "SoilLayerCollection.Id": ("Stage.SoilLayersId",),
-        # "StateCorrelation.Id": ("Stage.StateCorrelationsId",),
-        # "State.Id": ("Stage.StateId",),
-        # "WaternetCreatorSettings.Id": ("Stage.WaternetCreatorSettingsId",),
-        # "Stage.Id": ("PersistableStageContribution.StageId",),
-        # "PersistableStateLinePoint.Id": (
-        #     "PersistableStateCorrelation.CorrelatedStateIds",
-        #     "PersistableStateLinePointContribution.StateLinePointId",
-        # ),
-        # "PersistableStatePoint.Id": ("PersistableStatePointContribution.StatePointId",),
+
+        "PersistableSoil.Id": (
+            "PersistableSoilVisualization.SoilId",
+            "PersistableSoilLayer.SoilId",
+        ),
+        "PersistableLayer.Id": ("PersistableSoilLayer.LayerId",
+                                "PersistableMeshProperties.LayerId",
+                                "PersistableLayerActivations.LayerId",),
+        "Geometry.Id": ("Scenario.GeometryId",),
+        "SoilLayerCollection.Id": ("Scenario.SoilLayersId",),
+        "LayerActivation.Id": ("PersistableStage.LayerActivationCollectionId",),
+        "BoundaryCondition.Id": ("PersistableStage.BoundaryConditionCollectionId",),
+        "MeshProperty.Id": ("PersistableCalculation.MeshPropertiesId",),
+        # "Result.Id": ("PersistableCalculation.ResultsId",), #TODO: handle results in different MR
+
     }
 
     @property
