@@ -130,7 +130,8 @@ class TestDsheetPilingModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "filename", [pytest.param(Path("bm1-1.shi"), id="Input file")],
+        "filename",
+        [pytest.param(Path("bm1-1.shi"), id="Input file")],
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
@@ -178,7 +179,8 @@ class TestDsheetPilingModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "filename", [pytest.param(Path("bm1-1.shi"), id="Input file")],
+        "filename",
+        [pytest.param(Path("bm1-1.shi"), id="Input file")],
     )
     def test_writing_anchors_large_values(self, filename: Path):
         """Test for bug in which very large values overlapped eachother

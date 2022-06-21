@@ -136,14 +136,14 @@ class TestDSettlementAcceptance:
         soil_input.soil_classification_parameters = SoilClassificationParameters()
         soil_input.soil_weight_parameters = soil_external.SoilWeightParameters()
 
-        soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
-            mean=20
+        soil_input.soil_weight_parameters.saturated_weight = (
+            soil_external.StochasticParameter(mean=20)
         )
-        soil_input.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
-            mean=30
+        soil_input.soil_weight_parameters.unsaturated_weight = (
+            soil_external.StochasticParameter(mean=30)
         )
-        soil_input.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
-            mean=0.1
+        soil_input.soil_classification_parameters.initial_void_ratio = (
+            soil_external.StochasticParameter(mean=0.1)
         )
 
         soil_input.koppejan_parameters = soil_external.KoppejanParameters(
@@ -152,8 +152,8 @@ class TestDSettlementAcceptance:
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        soil_input.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
-            mean=10
+        soil_input.koppejan_parameters.preconsolidation_pressure = (
+            soil_external.StochasticParameter(mean=10)
         )
 
         dm.add_soil(soil_input)

@@ -85,7 +85,9 @@ def test_post_calculate_many():
 @pytest.mark.unittest
 def test_auth():
     response = client.post(
-        "/calculate/dsettlementmodels", json=[], auth=HTTPBasicAuth("test", "test"),
+        "/calculate/dsettlementmodels",
+        json=[],
+        auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 422
     assert "ensure this value has at least 1 items" in response.text

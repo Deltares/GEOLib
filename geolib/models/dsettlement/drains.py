@@ -9,7 +9,7 @@ from .internal import VerticalDrain as vd
 
 
 class ScheduleValues(BaseDataClass, metaclass=ABCMeta):
-    """ ScheduleValues to inherit from """
+    """ScheduleValues to inherit from"""
 
     schedule: Optional[DrainSchedule]
 

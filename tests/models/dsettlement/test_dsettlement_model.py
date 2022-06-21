@@ -295,7 +295,8 @@ class TestDSettlementModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "filename", [pytest.param(Path("bm1-1.sli"), id="Input file")],
+        "filename",
+        [pytest.param(Path("bm1-1.sli"), id="Input file")],
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
@@ -400,12 +401,18 @@ class TestDSettlementModel:
         "dserie_points, expected_result",
         [
             pytest.param(
-                [Point(id=1, x=0.0, y=0.0, z=0.0), Point(id=2, x=100.0, y=0.0, z=0.0),],
+                [
+                    Point(id=1, x=0.0, y=0.0, z=0.0),
+                    Point(id=2, x=100.0, y=0.0, z=0.0),
+                ],
                 [1, 2],
                 id="Default ordered points",
             ),
             pytest.param(
-                [Point(id=4, x=100.0, y=0.0, z=1.0), Point(id=3, x=0.0, y=0.0, z=1.0),],
+                [
+                    Point(id=4, x=100.0, y=0.0, z=1.0),
+                    Point(id=3, x=0.0, y=0.0, z=1.0),
+                ],
                 [2, 1],
                 id="Right to left sorted.",
             ),
@@ -792,7 +799,13 @@ class TestDSettlementModel:
         name = "Load 1"
         time = timedelta(days=1)
         point = Point(x=0.4, z=0.5)
-        olt = loads.TrapeziformLoad(gamma=10, height=2, xl=0.1, xm=0.2, xr=0.3,)
+        olt = loads.TrapeziformLoad(
+            gamma=10,
+            height=2,
+            xl=0.1,
+            xm=0.2,
+            xr=0.3,
+        )
         ds.add_other_load(name, time, point, olt)
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement"))
@@ -818,7 +831,11 @@ class TestDSettlementModel:
         name = "Load 1"
         time = timedelta(days=1)
         point = Point(x=0.2, z=0.3, y=0.4)
-        otc = loads.CircularLoad(weight=10.1, alpha=0.1, R=0.5,)
+        otc = loads.CircularLoad(
+            weight=10.1,
+            alpha=0.1,
+            R=0.5,
+        )
         ds.add_other_load(name, time, point, otc)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
         assert list(ds.other_loads.loads.values())[0].time == 1
@@ -835,7 +852,12 @@ class TestDSettlementModel:
         name = "Load 1"
         time = timedelta(days=1)
         point = Point(x=0.2, z=0.3, y=0.4)
-        olr = loads.RectangularLoad(weight=10.1, alpha=0.1, xwidth=0.5, zwidth=0.6,)
+        olr = loads.RectangularLoad(
+            weight=10.1,
+            alpha=0.1,
+            xwidth=0.5,
+            zwidth=0.6,
+        )
         ds.add_other_load(name, time, point, olr)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
         assert list(ds.other_loads.loads.values())[0].time == 1
@@ -860,7 +882,11 @@ class TestDSettlementModel:
         time = timedelta(days=1)
         name = "Load 1"
         olt = loads.TankLoad(
-            wallweight=10.1, internalweight=10.2, alpha=0.1, Rintern=0.5, dWall=0.6,
+            wallweight=10.1,
+            internalweight=10.2,
+            alpha=0.1,
+            Rintern=0.5,
+            dWall=0.6,
         )
         ds.add_other_load(name, time, point, olt)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
@@ -953,14 +979,14 @@ class TestDSettlementModel:
         soil_input.soil_classification_parameters = SoilClassificationParameters()
         soil_input.soil_weight_parameters = soil_external.SoilWeightParameters()
 
-        soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
-            mean=20
+        soil_input.soil_weight_parameters.saturated_weight = (
+            soil_external.StochasticParameter(mean=20)
         )
-        soil_input.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
-            mean=30
+        soil_input.soil_weight_parameters.unsaturated_weight = (
+            soil_external.StochasticParameter(mean=30)
         )
-        soil_input.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
-            mean=0.1
+        soil_input.soil_classification_parameters.initial_void_ratio = (
+            soil_external.StochasticParameter(mean=0.1)
         )
 
         soil_input.koppejan_parameters = soil_external.KoppejanParameters(
@@ -969,8 +995,8 @@ class TestDSettlementModel:
         soil_input.soil_state = soil_external.SoilState(
             use_equivalent_age=True, equivalent_age=2
         )
-        soil_input.koppejan_parameters.preconsolidation_pressure = soil_external.StochasticParameter(
-            mean=10
+        soil_input.koppejan_parameters.preconsolidation_pressure = (
+            soil_external.StochasticParameter(mean=10)
         )
         # step 3: run test
         ds.add_soil(soil_input)
@@ -1210,7 +1236,7 @@ class TestDSettlementModel:
     @only_teamcity
     class TestDSettlementAcceptance:
         def test_dsettlement_acceptance(self):
-            """ Acceptance test for D-Settlement serialisation"""
+            """Acceptance test for D-Settlement serialisation"""
             test_output_filepath = Path(
                 TestUtils.get_output_test_data_dir("dsettlement/acceptance")
             )
@@ -1287,10 +1313,12 @@ class TestDSettlementModel:
             soil.isotache_parameters.primary_compression_constant_b = StochasticParameter(
                 mean=1.000e-01, standard_deviation=2.500e-03
             )
-            soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
-                mean=5.000e-03,
-                standard_deviation=1.250e-03,
-                correlation_coefficient=0.01,
+            soil.isotache_parameters.secondary_compression_constant_c = (
+                StochasticParameter(
+                    mean=5.000e-03,
+                    standard_deviation=1.250e-03,
+                    correlation_coefficient=0.01,
+                )
             )
             s1 = dm.add_soil(soil)
 

@@ -23,14 +23,14 @@ class TestSoil_Internal:
         soil_input = Soil(name="MyNewSoil")
         soil_input.soil_classification_parameters = SoilClassificationParameters()
 
-        soil_input.soil_weight_parameters.saturated_weight = soil_external.StochasticParameter(
-            mean=14
+        soil_input.soil_weight_parameters.saturated_weight = (
+            soil_external.StochasticParameter(mean=14)
         )
-        soil_input.soil_weight_parameters.unsaturated_weight = soil_external.StochasticParameter(
-            mean=15
+        soil_input.soil_weight_parameters.unsaturated_weight = (
+            soil_external.StochasticParameter(mean=15)
         )
-        soil_input.soil_classification_parameters.initial_void_ratio = soil_external.StochasticParameter(
-            mean=0.1
+        soil_input.soil_classification_parameters.initial_void_ratio = (
+            soil_external.StochasticParameter(mean=0.1)
         )
         soil_input.koppejan_parameters = soil_external.KoppejanParameters(
             precon_koppejan_type=StateType.OCR

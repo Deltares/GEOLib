@@ -266,7 +266,8 @@ class TestDsheetPilingAcceptance:
 
         ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
-            name="GL-7", points=[Point(x=0, z=-7)],
+            name="GL-7",
+            points=[Point(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -293,7 +294,8 @@ class TestDsheetPilingAcceptance:
             )
             # stage_id refers to the pythonic input and the conversion in stage number for D-SheetPiling is handled internally
             model.add_calculation_options_per_stage(
-                calculation_options_per_stage=calc_options_per_stage, stage_id=stage_id,
+                calculation_options_per_stage=calc_options_per_stage,
+                stage_id=stage_id,
             )
 
         # add anchor
@@ -338,14 +340,20 @@ class TestDsheetPilingAcceptance:
 
         # add rigid support
         rigid_support = RigidSupport(
-            name="Redgy", level=-13, support_type=SupportType.ROTATION,
+            name="Redgy",
+            level=-13,
+            support_type=SupportType.ROTATION,
         )
         # For KranzAnchorStrengthCalculationOptions only one support should be present
         if not (isinstance(calc_options, KranzAnchorStrengthCalculationOptions)):
             model.add_support(rigid_support, stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
@@ -592,12 +600,18 @@ class TestDsheetPilingAcceptance:
 
         # add rigid support
         rigid_support = RigidSupport(
-            name="Redgy", level=-13, support_type=SupportType.ROTATION,
+            name="Redgy",
+            level=-13,
+            support_type=SupportType.ROTATION,
         )
         model.add_support(rigid_support, 3)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
@@ -801,12 +815,18 @@ class TestDsheetPilingAcceptance:
 
         # add rigid support
         rigid_support = RigidSupport(
-            name="Redgy", level=-13, support_type=SupportType.ROTATION,
+            name="Redgy",
+            level=-13,
+            support_type=SupportType.ROTATION,
         )
         model.add_support(rigid_support, stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=0)
 
         # add normal force
@@ -1039,7 +1059,8 @@ class TestDsheetPilingAcceptance:
 
         ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
-            name="GL-7", points=[Point(x=0, z=-7)],
+            name="GL-7",
+            points=[Point(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1066,7 +1087,8 @@ class TestDsheetPilingAcceptance:
             )
             # stage_id refers to the pythonic input and the conversion in stage number for D-SheetPiling is handled internally
             model.add_calculation_options_per_stage(
-                calculation_options_per_stage=calc_options_per_stage, stage_id=stage_id,
+                calculation_options_per_stage=calc_options_per_stage,
+                stage_id=stage_id,
             )
 
         # add anchor
@@ -1111,14 +1133,20 @@ class TestDsheetPilingAcceptance:
 
         # add rigid support
         rigid_support = RigidSupport(
-            name="Redgy", level=-13, support_type=SupportType.ROTATION,
+            name="Redgy",
+            level=-13,
+            support_type=SupportType.ROTATION,
         )
         # For KranzAnchorStrengthCalculationOptions only one support should be present
         if not (isinstance(calc_options, KranzAnchorStrengthCalculationOptions)):
             model.add_support(rigid_support, stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
@@ -1350,7 +1378,8 @@ class TestDsheetPilingAcceptance:
 
         ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
-            name="GL-7", points=[Point(x=0, z=-7)],
+            name="GL-7",
+            points=[Point(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1377,7 +1406,8 @@ class TestDsheetPilingAcceptance:
             )
             # stage_id refers to the pythonic input and the conversion in stage number for D-SheetPiling is handled internally
             model.add_calculation_options_per_stage(
-                calculation_options_per_stage=calc_options_per_stage, stage_id=stage_id,
+                calculation_options_per_stage=calc_options_per_stage,
+                stage_id=stage_id,
             )
 
         # add anchor
@@ -1422,14 +1452,20 @@ class TestDsheetPilingAcceptance:
 
         # add rigid support
         rigid_support = RigidSupport(
-            name="Redgy", level=-13, support_type=SupportType.ROTATION,
+            name="Redgy",
+            level=-13,
+            support_type=SupportType.ROTATION,
         )
         # For KranzAnchorStrengthCalculationOptions only one support should be present
         if not (isinstance(calc_options, KranzAnchorStrengthCalculationOptions)):
             model.add_support(rigid_support, stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
@@ -1537,7 +1573,9 @@ class TestDsheetPilingAcceptance:
             height=303.0,
         )
         sheet_pile_plastic_properties_1 = SheetPileModelPlasticCalculationProperties(
-            symmetrical=True, plastic_moment_positive=10, plastic_moment_negative=20,
+            symmetrical=True,
+            plastic_moment_positive=10,
+            plastic_moment_negative=20,
         )
         sheet_element_1 = Sheet(
             name="AZ 13",
@@ -1645,7 +1683,8 @@ class TestDsheetPilingAcceptance:
 
         ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
-            name="GL-7", points=[Point(x=0, z=-7)],
+            name="GL-7",
+            points=[Point(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1672,7 +1711,8 @@ class TestDsheetPilingAcceptance:
             )
             # stage_id refers to the pythonic input and the conversion in stage number for D-SheetPiling is handled internally
             model.add_calculation_options_per_stage(
-                calculation_options_per_stage=calc_options_per_stage, stage_id=stage_id,
+                calculation_options_per_stage=calc_options_per_stage,
+                stage_id=stage_id,
             )
 
         # add anchor
@@ -1717,14 +1757,20 @@ class TestDsheetPilingAcceptance:
 
         # add rigid support
         rigid_support = RigidSupport(
-            name="Redgy", level=-13, support_type=SupportType.ROTATION,
+            name="Redgy",
+            level=-13,
+            support_type=SupportType.ROTATION,
         )
         # For KranzAnchorStrengthCalculationOptions only one support should be present
         if not (isinstance(calc_options, KranzAnchorStrengthCalculationOptions)):
             model.add_support(rigid_support, stage_id)
 
         # add moment load
-        moment_load = Moment(name="New Moment", level=-4, load=10,)
+        moment_load = Moment(
+            name="New Moment",
+            level=-4,
+            load=10,
+        )
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load

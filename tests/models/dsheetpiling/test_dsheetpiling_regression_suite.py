@@ -17,7 +17,9 @@ class TestDSheetPilingRegressionSuite:
     @pytest.mark.systemtest
     @only_teamcity
     @pytest.mark.parametrize(
-        "test_file", input_testdata, ids=input_testdata_ids,
+        "test_file",
+        input_testdata,
+        ids=input_testdata_ids,
     )
     def test_parse_output_benchmarks_dsheetpiling(self, test_file: Path):
         # 1. Set up test data

@@ -94,7 +94,7 @@ class UniformLoad(BaseDataClass):
 
 
 class Moment(BaseDataClass):
-    """Moment Load. """
+    """Moment Load."""
 
     name: constr(min_length=1, max_length=50)
     level: float

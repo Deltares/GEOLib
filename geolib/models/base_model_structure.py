@@ -22,7 +22,7 @@ class BaseDataClass(BaseModel):
 class BaseModelStructure(BaseDataClass, abc.ABC):
     @property
     def is_valid(self) -> bool:
-        """ Validates the current model structure. """
+        """Validates the current model structure."""
         return self.validator().is_valid
 
     def validator(self) -> BaseValidator:

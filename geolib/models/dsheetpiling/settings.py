@@ -20,7 +20,9 @@ class LateralEarthPressureMethodStage(IntEnum):
     C_PHI_DELTA = 2
 
     @staticmethod
-    def get_stage_type_from_method(method_value: LateralEarthPressureMethod,):
+    def get_stage_type_from_method(
+        method_value: LateralEarthPressureMethod,
+    ):
         pair_dictionary = {
             LateralEarthPressureMethod.KA_KO_KP: LateralEarthPressureMethodStage.KA_KO_KP,
             LateralEarthPressureMethod.C_PHI_DELTA: LateralEarthPressureMethodStage.C_PHI_DELTA,
@@ -86,7 +88,7 @@ class SheetPilingElementMaterialType(IntEnum):
 
 
 class CalculationType(IntEnum):
-    """ Calculation type for D-SheetPiling"""
+    """Calculation type for D-SheetPiling"""
 
     STANDARD = 0
     DESIGN_SHEETPILING_LENGTH = 1

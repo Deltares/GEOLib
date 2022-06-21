@@ -23,7 +23,6 @@ if sys.version_info < (3, 9):
             return res
         return ()
 
-
 else:
     from typing import get_args as get_args  # NOQA
 

@@ -1838,7 +1838,9 @@ class DStabilityStructure(BaseModelStructure):
             value = getattr(instance, fkfield)
             if isinstance(value, (list, set, tuple)):
                 setattr(
-                    instance, fkfield, [get_correct_key(x, mapping) for x in value],
+                    instance,
+                    fkfield,
+                    [get_correct_key(x, mapping) for x in value],
                 )
             if isinstance(value, (int, float, str)):
                 setattr(instance, fkfield, get_correct_key(value, mapping))
