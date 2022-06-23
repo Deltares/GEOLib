@@ -14,28 +14,25 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pydantic = {version = "^1.6.1 <1.9", extras = ["dotenv"]}
+pydantic = {version = "^1.6.1 <1.10", extras = ["dotenv"]}
 zipp = "^3.1.0"
 fastapi = {version = ">=0.58 <0.79", optional = true}
 uvicorn = {version = ">= 0.11 <0.18", optional = true}
 requests = "^2.24.0"
-jinja2 = "^2.11.2"
-markupsafe = "2.0.1"
+jinja2 = "^3.1.2"
 
 [tool.poetry.dev-dependencies]
 teamcity-messages = "^1.27"
 flake8 = "^3.7.9"
 black = "^22"
-devtools = "^0.5.1"
-coverage = "^5.0.4"
-pytest = "^5.4.1"
-teamcity_messages = "^1.27"
-pytest-cov = "^2.8.1"
-rst2pdf = "^0.98"
-mypy = "^0.761.0"
-sphinx = "^3.2.1"
-recommonmark = "^0.6.0"
-sphinx-autodoc-typehints = "^1.11.0"
+devtools = "^0.8.0"
+pytest = "^7.1.2"
+pytest-cov = "^3.0.0"
+rst2pdf = "^0.99"
+mypy = "^0.961"
+sphinx = "^5.0.2"
+recommonmark = "^0.7.1"
+sphinx-autodoc-typehints = "^1.18.3"
 releases = "^1.6.3"
 sphinx-multiversion = "^0.2.4"
 isort = "^5.9.3"
@@ -48,7 +45,7 @@ geolib_server = "geolib.service.main:app"
 
 [tool.black]
 line-length = 90
-target-version = ['py37']
+target-version = ['py39']
 
 [build-system]
 requires = ["poetry>=0.12"]
@@ -56,7 +53,7 @@ build-backend = "poetry.masonry.api"
 
 [tox]
 isolated_build = true
-envlist = "py37, py38, py39"
+envlist = "py37, py38, py39, py310"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

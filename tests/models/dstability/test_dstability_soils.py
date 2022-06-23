@@ -88,16 +88,31 @@ class TestDStabilitySoil:
 
     def test_dstability_edit_soil(self):
         dstability_model = DStabilityModel(filename=None)
-        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
         soil_1 = Soil(
             name="Test", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
         )
         code = dstability_model.add_soil(soil_1)
 
+        assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
+        assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
+
         dstability_model.edit_soil(code=code, cohesion=2.0, friction_angle=35)
-        assert pytest.approx(
-            dstability_model.soils.get_soil("Test").mohr_coulomb_parameters.cohesion.mean,
-            2.0,
+        assert (
+            pytest.approx(
+                dstability_model.soils.get_soil(
+                    "Test"
+                ).mohr_coulomb_parameters.cohesion.mean
+            )
+            == 2.0
+        )
+        assert (
+            pytest.approx(
+                dstability_model.soils.get_soil(
+                    "Test"
+                ).mohr_coulomb_parameters.friction_angle.mean
+            )
+            == 35.0
         )
 
     def test_has_10_default_soils(self):
