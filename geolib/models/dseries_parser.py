@@ -205,7 +205,7 @@ class DSerieListGroupNextStructure(DSeriesStructure):
     """
 
     @abstractclassmethod
-    def group_delimiter() -> str:
+    def group_delimiter(cls) -> str:
         raise NotImplementedError("Implement in derived classes.")
 
     @classmethod

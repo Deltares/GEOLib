@@ -709,7 +709,7 @@ class SoilCollection(DStabilitySubStructure):
         # shear increase exponent taken from persistable_soil.SuTable or just from persistable_soil
         if (
             persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
-            or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
+            or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value == "Su"
         ):
             # SHANSEP model is selected so the StrengthIncreaseExponentStochasticParameter from persistable_soil should be used
             return self.__to_global_stochastic_parameter(
@@ -717,7 +717,7 @@ class SoilCollection(DStabilitySubStructure):
             )
         elif (
             persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
-            or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value
+            or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value
             == "SuTable"
         ):
             # SU table is selected so the StrengthIncreaseExponentStochasticParameter from SuTable should be used
