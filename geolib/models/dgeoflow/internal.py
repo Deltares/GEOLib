@@ -491,7 +491,7 @@ class PersistableCalculation(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     MeshPropertiesId: int
-    # ResultsId: int  #TODO: results in another MR
+    ResultsId: Optional[int]
 
 
 class Scenario(DGeoflowSubStructure):

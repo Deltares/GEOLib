@@ -35,6 +35,7 @@ class DGeoflowParser(BaseParser):
             # On List types, parse a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
+                print(field, element_type, filepath)
                 ds[field] = self.__parse_folder(element_type, filepath / "")
 
             # Otherwise its a single .json in the root folder
@@ -54,7 +55,6 @@ class DGeoflowParser(BaseParser):
             files = list(folder.iterdir())
         except FileNotFoundError:  # Not all result folders are required.
             return out
-
         # We need to sort to make sure that files such as x.json, x_1.json,
         # x_2.json etc. are stored sequentally, scandir produces arbitrary order.
         sorted_files = sorted(files, key=lambda x: x.name)
@@ -63,17 +63,15 @@ class DGeoflowParser(BaseParser):
                 out.append(fieldtype.parse_raw(file.open().read()))
             else:
                 logger.debug(f"Didn't match {fieldtype} for {file}")
-
         if len(out) == 0:
             logger.debug(f"Couldn't find {fieldtype} file(s) at {folder}")
-
         return out
 
 
 class DGeoflowZipParser(DGeoflowParser):
     @property
     def suffix_list(self) -> List[str]:
-        return [".stix"]
+        return [".flox"]
 
     def can_parse(self, filename: FilePath) -> bool:
         return filename.suffix in self.suffix_list
