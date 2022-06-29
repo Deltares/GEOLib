@@ -814,9 +814,9 @@ class SoilCollection(DStabilitySubStructure):
                     try:
                         setattr(persistable_soil, snake_to_camel(k), v)
 
-                        k_stochasic = f"{snake_to_camel(k)}StochasticParameter"
-                        if hasattr(persistable_soil, k_stochasic):
-                            getattr(persistable_soil, k_stochasic).Mean = v
+                        k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
+                        if hasattr(persistable_soil, k_stochastic):
+                            getattr(persistable_soil, k_stochastic).Mean = v
                     except AttributeError:
                         raise ValueError(f"Unknown soil parameter {k}.")
 
