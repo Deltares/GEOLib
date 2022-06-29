@@ -70,7 +70,7 @@ class UniformLoad(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     left_load: float
     right_load: float
-    verification_load_settings: VerificationLoadSettings = VerificationLoadSettings()
+    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = VerificationLoadSettingsHorizontalLineLoad()
     standard_deviation_left: float = 0.0
     standard_deviation_right: float = 0.0
     distribution_type_left: DistributionType = DistributionType.NORMAL
@@ -123,7 +123,7 @@ class SurchargeLoad(BaseDataClass):
 
     name: constr(min_length=1, max_length=50)
     points: conlist(Point, min_items=1)
-    verification_load_settings: VerificationLoadSettings = VerificationLoadSettings()
+    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = VerificationLoadSettingsHorizontalLineLoad()
     standard_deviation: float = 0.0
     distribution_type: DistributionType = DistributionType.NORMAL
 
