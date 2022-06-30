@@ -115,7 +115,8 @@ class TestDFoundationsModel:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "filename", [pytest.param(Path("bm1-1a.foi"), id="Input file")],
+        "filename",
+        [pytest.param(Path("bm1-1a.foi"), id="Input file")],
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data

@@ -35,3 +35,10 @@ class TestRegressionSuite:
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
             io.write(ds.output.json(indent=4))
+
+    @pytest.mark.unittest
+    def test_regression_issue8(self):
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_file = test_folder / "issue8.fod"
+        ds = DFoundationsModel()
+        ds.parse(test_file)

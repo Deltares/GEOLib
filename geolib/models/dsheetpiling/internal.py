@@ -813,11 +813,15 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         if self.model.method != LateralEarthPressureMethod.MIXED:
             for stage in self.construction_stages.stages:
-                stage.method_left = LateralEarthPressureMethodStage.get_stage_type_from_method(
-                    self.model.method
+                stage.method_left = (
+                    LateralEarthPressureMethodStage.get_stage_type_from_method(
+                        self.model.method
+                    )
                 )
-                stage.method_right = LateralEarthPressureMethodStage.get_stage_type_from_method(
-                    self.model.method
+                stage.method_right = (
+                    LateralEarthPressureMethodStage.get_stage_type_from_method(
+                        self.model.method
+                    )
                 )
 
     def set_calculation_options(self, **kwargs) -> None:
@@ -827,7 +831,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.calculation_options = CalculationOptions(**kwargs)
 
     def add_calculation_options_per_stage(
-        self, input_calc_options: CalculationOptionsPerStageExternal, stage_id: int,
+        self,
+        input_calc_options: CalculationOptionsPerStageExternal,
+        stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
             VerifyType.CUR: {
@@ -1018,7 +1024,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         )
 
     def add_element_in_sheet_piling(
-        self, sheet: Any, location_top: Optional[Point] = None,
+        self,
+        sheet: Any,
+        location_top: Optional[Point] = None,
     ) -> None:
         self.sheet_piling.update_level_top_sheet_pile(location_top)
         try:

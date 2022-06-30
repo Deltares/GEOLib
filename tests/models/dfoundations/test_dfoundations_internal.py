@@ -152,8 +152,16 @@ class TestInternalInputDFoundations:
     @pytest.mark.parametrize(
         "model, soilgamdryvalue",
         [
-            pytest.param("TENSION_PILES", 17, id="Tension default soils",),
-            pytest.param("BEARING_PILES", 18, id="Bearing default soils",),
+            pytest.param(
+                "TENSION_PILES",
+                17,
+                id="Tension default soils",
+            ),
+            pytest.param(
+                "BEARING_PILES",
+                18,
+                id="Bearing default soils",
+            ),
         ],
     )
     def test_default_soils_generated_model_specific(self, model, soilgamdryvalue):

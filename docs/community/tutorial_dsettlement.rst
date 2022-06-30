@@ -7,17 +7,19 @@ Tutorial D-Settlement
 
 .. code-block:: python
 
-    dm = DSettlementModel()
+    import geolib as gl
+
+    dm = gl.DSettlementModel()
 
 2. Bases on the model the function :func:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model`. Here the calculation model options can be set.
 
 .. code-block:: python
 
     dm.set_model(
-        constitutive_model=SoilModel.ISOTACHE,
-        consolidation_model=ConsolidationModel.DARCY,
+        constitutive_model=gl.models.dsettlement.internal.SoilModel.ISOTACHE,
+        consolidation_model=gl.models.dsettlement.internal.ConsolidationModel.DARCY,
         is_two_dimensional=True,
-        strain_type=StrainType.LINEAR,
+        strain_type=gl.models.dsettlement.internal.StrainType.LINEAR,
         is_vertical_drain=True,
         is_fit_for_settlement_plate=False,
         is_probabilistic=False,
@@ -31,30 +33,30 @@ Tutorial D-Settlement
 .. code-block:: python
 
     # points for the geometry 
-    p1 = Point(x=-50, z=0.0)
-    p2 = Point(x=-10, z=0.0)
-    p3 = Point(x=0, z=2)
-    p4 = Point(x=10, z=2)
-    p5 = Point(x=30, z=0.0)
-    p6 = Point(x=50, z=0.0)
-    p7 = Point(x=-50, z=-5)
-    p8 = Point(x=50, z=-5)
-    p9 = Point(x=-50, z=-10)
-    p10 = Point(x=50, z=-10)
-    p11 = Point(x=-50, z=-20)
-    p12 = Point(x=50, z=-20)
-    p15 = Point(x=-50, z=-30)
-    p16 = Point(x=-20, z=-30)
-    p17 = Point(x=-10, z=-30)
-    p18 = Point(x=0, z=-30)
-    p19 = Point(x=10, z=-30)
-    p20 = Point(x=20, z=-30)
-    p21 = Point(x=25, z=-30)
-    p22 = Point(x=30, z=-30)
-    p23 = Point(x=35, z=-30)
-    p24 = Point(x=40, z=-30)
-    p25 = Point(x=45, z=-30)
-    p26 = Point(x=50, z=-30)
+    p1 = gl.geometry.Point(x=-50, z=0.0)
+    p2 = gl.geometry.Point(x=-10, z=0.0)
+    p3 = gl.geometry.Point(x=0, z=2)
+    p4 = gl.geometry.Point(x=10, z=2)
+    p5 = gl.geometry.Point(x=30, z=0.0)
+    p6 = gl.geometry.Point(x=50, z=0.0)
+    p7 = gl.geometry.Point(x=-50, z=-5)
+    p8 = gl.geometry.Point(x=50, z=-5)
+    p9 = gl.geometry.Point(x=-50, z=-10)
+    p10 = gl.geometry.Point(x=50, z=-10)
+    p11 = gl.geometry.Point(x=-50, z=-20)
+    p12 = gl.geometry.Point(x=50, z=-20)
+    p15 = gl.geometry.Point(x=-50, z=-30)
+    p16 = gl.geometry.Point(x=-20, z=-30)
+    p17 = gl.geometry.Point(x=-10, z=-30)
+    p18 = gl.geometry.Point(x=0, z=-30)
+    p19 = gl.geometry.Point(x=10, z=-30)
+    p20 = gl.geometry.Point(x=20, z=-30)
+    p21 = gl.geometry.Point(x=25, z=-30)
+    p22 = gl.geometry.Point(x=30, z=-30)
+    p23 = gl.geometry.Point(x=35, z=-30)
+    p24 = gl.geometry.Point(x=40, z=-30)
+    p25 = gl.geometry.Point(x=45, z=-30)
+    p26 = gl.geometry.Point(x=50, z=-30)
 
 After defining the first points the boundaries of the geometry can be defined. This is done by calling the function 
 :func:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_boundary`. A boundary is represented as a list of points.
@@ -81,8 +83,8 @@ Define the points for the headline and set these points as input in the function
 .. code-block:: python
 
     # headline points
-    p13 = Point(x=-50, z=-2)
-    p14 = Point(x=50, z=-2)
+    p13 = gl.geometry.Point(x=-50, z=-2)
+    p14 = gl.geometry.Point(x=50, z=-2)
 
     pl_id = dm.add_head_line([p13, p14], is_phreatic=True)
 
@@ -90,7 +92,7 @@ Define the points for the headline and set these points as input in the function
 
 .. code-block:: python
 
-    soil = Soil(name="Sand")
+    soil = gl.soils.Soil(name="Sand")
     soil.soil_weight_parameters.saturated_weight.mean = 17
     soil.soil_weight_parameters.unsaturated_weight.mean = 15
     soil.soil_weight_parameters.saturated_weight.standard_deviation = 0.7
@@ -159,15 +161,15 @@ using :func:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_v
 .. code-block:: python
 
     from datetime import timedelta
-    test_drain = VerticalDrain(
-        drain_type=DrainType.COLUMN,
+    test_drain = gl.models.dsettlement.drains.VerticalDrain(
+        drain_type=gl.models.dsettlement.drain_types.DrainType.COLUMN,
         range_from=0.1,
         range_to=1.5,
         bottom_position=-10,
         center_to_center=4,
         diameter=0.1,
-        grid=DrainGridType.RECTANGULAR,
-        schedule=ScheduleValuesSimpleInput(
+        grid=gl.models.dsettlement.drains.DrainGridType.RECTANGULAR,
+        schedule=gl.models.dsettlement.drains.ScheduleValuesSimpleInput(
             start_of_drainage=timedelta(days=0.1),
             phreatic_level_in_drain=2,
             begin_time=1,
@@ -187,10 +189,10 @@ In this case a non uniform load is added to the model.
 
     from datetime import timedelta
     # set up the point list
-    point3 = Point(label="1", x=-50, y=0, z=0)
-    point4 = Point(label="2", x=-50, y=0, z=2)
-    point5 = Point(label="3", x=-10, y=0, z=2)
-    point6 = Point(label="4", x=-10, y=0, z=0)
+    point3 = gl.geometry.Point(label="1", x=-50, y=0, z=0)
+    point4 = gl.geometry.Point(label="2", x=-50, y=0, z=2)
+    point5 = gl.geometry.Point(label="3", x=-10, y=0, z=2)
+    point6 = gl.geometry.Point(label="4", x=-10, y=0, z=0)
     pointlist = [point3, point4, point5, point6]
     # Add first uniform load
     dm.add_non_uniform_load(

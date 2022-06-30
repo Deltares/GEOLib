@@ -277,7 +277,10 @@ class TestStrut:
 class TestSpringSupport:
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "name", [pytest.param("Correct name"),],
+        "name",
+        [
+            pytest.param("Correct name"),
+        ],
     )
     @pytest.mark.parametrize(
         "level",
@@ -357,7 +360,10 @@ class TestSpringSupport:
         ],
     )
     def test_intialization_spring_support_invalid_input_raises(
-        self, argument: str, value: Any, raising_context,
+        self,
+        argument: str,
+        value: Any,
+        raising_context,
     ):
         valid_kwargs = {
             "name": "Valid name",
@@ -372,7 +378,10 @@ class TestSpringSupport:
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
-        "name", [pytest.param("Correct name"),],
+        "name",
+        [
+            pytest.param("Correct name"),
+        ],
     )
     @pytest.mark.parametrize(
         "level",
@@ -447,7 +456,10 @@ class TestSpringSupport:
 class TestRigidSupport:
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "name", [pytest.param("Correct name"),],
+        "name",
+        [
+            pytest.param("Correct name"),
+        ],
     )
     @pytest.mark.parametrize(
         "level",
@@ -477,7 +489,11 @@ class TestRigidSupport:
         rotational_stiffness: int,
         translational_stiffness: int,
     ):
-        support = RigidSupport(name=name, level=level, support_type=support_type,)
+        support = RigidSupport(
+            name=name,
+            level=level,
+            support_type=support_type,
+        )
 
         internal = support.to_internal()
 
@@ -511,7 +527,10 @@ class TestRigidSupport:
         ],
     )
     def test_intialization_rigid_support_invalid_input_raises(
-        self, argument: str, value: Any, raising_context,
+        self,
+        argument: str,
+        value: Any,
+        raising_context,
     ):
         valid_kwargs = {
             "name": "Valid name",
@@ -525,7 +544,10 @@ class TestRigidSupport:
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
-        "name", [pytest.param("Correct name"),],
+        "name",
+        [
+            pytest.param("Correct name"),
+        ],
     )
     @pytest.mark.parametrize(
         "level",
@@ -556,7 +578,11 @@ class TestRigidSupport:
         rotational_stiffness: int,
         translational_stiffness: int,
     ):
-        support = RigidSupport(name=name, level=level, support_type=support_type,)
+        support = RigidSupport(
+            name=name,
+            level=level,
+            support_type=support_type,
+        )
         current_stage = _model.current_stage
         _model.add_support(support=support, stage_id=current_stage)
 

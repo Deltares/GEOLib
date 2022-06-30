@@ -1250,7 +1250,10 @@ class TestInternalParseOutputStructure:
             id="Design Sheetpile Length",
         ),
         pytest.param(
-            text_breuk_data, BreukData, validate_breuk_data_structure, id="Breuk Data",
+            text_breuk_data,
+            BreukData,
+            validate_breuk_data_structure,
+            id="Breuk Data",
         ),
         pytest.param(
             text_anchor_data,
@@ -1271,7 +1274,10 @@ class TestInternalParseOutputStructure:
             id="Output Construction Stage",
         ),
         pytest.param(
-            text_pressures, Pressures, validate_pressures_structure, id="Pressures",
+            text_pressures,
+            Pressures,
+            validate_pressures_structure,
+            id="Pressures",
         ),
         pytest.param(
             text_side_left,
@@ -1289,7 +1295,8 @@ class TestInternalParseOutputStructure:
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
-        "text_to_parse, internal_type, validation_method", text_to_structure_testdata,
+        "text_to_parse, internal_type, validation_method",
+        text_to_structure_testdata,
     )
     def test_given_construction_stage_inner_structure_when_parse_text_then_returns_structure(
         self,

@@ -2,6 +2,8 @@ name: ci
 
 on:
   push:
+    branches:
+    - master
   pull_request:
     branches:
     - master
@@ -45,21 +47,21 @@ jobs:
 
       - name: Install Dependencies
         run: poetry install -E server
-        if: steps.cache.outputs.cache-hit != 'true'
-
+        
       - name: Test with pytest
         run: poetry run pytest --cov=geolib --cov-report xml:coverage-reports/coverage-hydrolib-core.xml --junitxml=xunit-reports/xunit-result-hydrolib-core.xml -m "unittest and not workinprogress"
 
-      - name: Autoformat code if the check fails
-        if: ${{ (matrix.os == 'ubuntu-18.04') && (matrix.python-version == 3.8) }}
-        run: |
-          poetry run isort .
-          poetry run black .
-          git config --global user.name '${{ github.actor }}'
-          git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git checkout $GITHUB_HEAD_REF
-          git commit -am "autoformat: isort & black" && git push || true
+      #- name: Autoformat code if the check fails
+      #  if: ${{ (matrix.os == 'ubuntu-18.04') && (matrix.python-version == 3.8) }}
+      #  run: |
+      #    poetry run isort .
+      #    poetry run black .
+      #    git config --global user.name '${{ github.actor }}'
+      #    git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+      #    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+      #    git fetch
+      #    git checkout $GITHUB_HEAD_REF
+      #    git commit -am "autoformat: isort & black" && git push || true
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
