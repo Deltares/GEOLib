@@ -431,7 +431,7 @@ class PersistableFixedHeadBoundaryConditionProperties(DGeoflowBaseModelStructure
 class PersistableBoundaryCondition(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
-    Points: conlist(PersistablePoint, min_items=3)
+    Points: conlist(PersistablePoint, min_items=2)
     FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
 
 
