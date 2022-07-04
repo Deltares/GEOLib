@@ -36,7 +36,40 @@ class VerificationLoadSettingsHorizontalLineLoad(BaseDataClass):
     duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
 
 
+class VerificationLoadSettingsLoads(BaseDataClass):
+    """
+    These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
+    For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
+
+    Args:
+        duration_type: Select the duration of load application, Permanent or Variable.
+        load_type: Select the type of load, Favorable, Unfavorable or leave it D-Sheet Piling determined.
+    """
+
+    load_type: LoadTypeFavourableUnfavourable = (
+        LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
+    )
+    duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
+
+
 class VerificationLoadSettings(BaseDataClass):
+    """
+    Load class for moment loads
+    These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
+    For GEOLIB the "verification" parameter should be set to True in the function DSheetPilingModel.set_model
+
+    Args:
+        duration_type: Select the duration of load application, Permanent or Variable.
+        load_type: Select the type of load, Favorable or Unfavorable.
+    """
+
+    load_type: LoadTypeFavourableUnfavourableMoment = (
+        LoadTypeFavourableUnfavourableMoment.FAVOURABLE
+    )
+    duration_type: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
+
+
+class VerificationLoadSettingsMomentNormalForce(BaseDataClass):
     """
     Load class for moment loads
     These options are available only if the Verification (EC7/CUR) option is selected in the Model window for the D-SheetPiling model.
@@ -70,7 +103,7 @@ class UniformLoad(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     left_load: float
     right_load: float
-    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = VerificationLoadSettingsHorizontalLineLoad()
+    verification_load_settings: VerificationLoadSettingsLoads = VerificationLoadSettingsLoads()
     standard_deviation_left: float = 0.0
     standard_deviation_right: float = 0.0
     distribution_type_left: DistributionType = DistributionType.NORMAL
@@ -99,7 +132,7 @@ class Moment(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     level: float
     load: float
-    verification_load_settings: VerificationLoadSettings = VerificationLoadSettings()
+    verification_load_settings: VerificationLoadSettingsMomentNormalForce = VerificationLoadSettingsMomentNormalForce()
 
     def to_internal(self) -> MomentInternal:
         moment = MomentInternal(
@@ -123,7 +156,7 @@ class SurchargeLoad(BaseDataClass):
 
     name: constr(min_length=1, max_length=50)
     points: conlist(Point, min_items=1)
-    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = VerificationLoadSettingsHorizontalLineLoad()
+    verification_load_settings: VerificationLoadSettingsLoads = VerificationLoadSettingsLoads()
     standard_deviation: float = 0.0
     distribution_type: DistributionType = DistributionType.NORMAL
 
@@ -165,9 +198,7 @@ class HorizontalLineLoad(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     level: float
     load: float
-    verification_load_settings: VerificationLoadSettingsHorizontalLineLoad = (
-        VerificationLoadSettingsHorizontalLineLoad()
-    )
+    verification_load_settings: VerificationLoadSettingsLoads = VerificationLoadSettingsLoads()
 
     def to_internal(self) -> HorizontalLineLoadInternal:
         horizontallineload = HorizontalLineLoadInternal(
@@ -186,7 +217,7 @@ class NormalForce(BaseDataClass):
     force_at_surface_level_left_side: float
     force_at_surface_level_right_side: float
     force_at_sheet_pile_toe: float
-    verification_load_settings: VerificationLoadSettings = VerificationLoadSettings()
+    verification_load_settings: VerificationLoadSettingsMomentNormalForce = VerificationLoadSettingsMomentNormalForce()
 
     def to_internal(self) -> NormalForceInternal:
         normalforce = NormalForceInternal(
