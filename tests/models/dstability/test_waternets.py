@@ -21,7 +21,7 @@ class TestDStabilityHeadLine:
         )
         headline = dsm.datastructure.waternets[0].get_head_line(str(headline_id))
         assert isinstance(headline_id, int)
-        assert pytest.approx(headline.Points[0].X, -20.0)
+        assert pytest.approx(headline.Points[0].X) == -20.0
         assert dsm.waternets[0].PhreaticLineId == headline.Id
 
 
@@ -50,7 +50,7 @@ class TestDStabilityReferenceLine:
         )
         assert isinstance(reference_line_id, int)
         assert len(dsm.waternets[0].ReferenceLines) == 1
-        assert pytest.approx(reference_line.Points[-1].Z == -2.0)
+        assert pytest.approx(reference_line.Points[-1].Z) == -2.0
 
         # add ref line with invalid headline id
         with pytest.raises(ValueError):
