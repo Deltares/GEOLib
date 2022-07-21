@@ -52,7 +52,7 @@ class MetaData(BaseSettings):
 
     # For ignoring extra fields that could come with newer/older versions
     # of input/output fields. We don't support any other value than "forbid"!
-    extra_fields = "forbid"  # can be "ignore", "allow" or "forbid"
+    extra_fields = "ignore"  # can be "ignore", "allow" or "forbid"
 
     class Config:
         env_file = "geolib.env"

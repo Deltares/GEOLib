@@ -3,7 +3,7 @@ from datetime import datetime, date
 from enum import Enum
 from itertools import chain
 from math import isfinite
-from typing import List, Optional, Set, Dict, Tuple
+from typing import List, Optional, Set, Dict, Tuple, Union
 
 from geolib import BaseModelStructure
 from pydantic import ValidationError, confloat, conlist, root_validator, validator
@@ -34,6 +34,14 @@ class DGeoflowSubStructure(DGeoflowBaseModelStructure):
     @classmethod
     def structure_group(cls):
         return cls.structure_name()
+
+
+class CalculationTypeEnum(Enum):
+    GROUNDWATER_FLOW = "GroundwaterFlow"
+    PIPING = "PipeLength"
+
+
+CalculationType = CalculationTypeEnum
 
 
 class PersistableStochasticParameter(DGeoflowBaseModelStructure):
@@ -483,16 +491,34 @@ class BoundaryCondition(DGeoflowSubStructure):
 class PersistableStage(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
-    LayerActivationCollectionId: int
-    BoundaryConditionCollectionId: int
+    LayerActivationCollectionId: Optional[str]
+    BoundaryConditionCollectionId: Optional[str]
 
 
 class PersistableCalculation(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
-    MeshPropertiesId: int
+    MeshPropertiesId: Optional[str]
     ResultsId: Optional[int]
 
+class GroundwaterFlowResult(DGeoflowSubStructure):
+    Id: Optional[str] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "results/groundwaterflow/"
+
+class PipingResult(DGeoflowSubStructure):
+    Id: Optional[str] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "results/piping/"
+
+DGeoFlowResult = Union[
+    GroundwaterFlowResult,
+    PipingResult
+]
 
 class Scenario(DGeoflowSubStructure):
     """scenarios/scenario_x.json"""
@@ -501,8 +527,8 @@ class Scenario(DGeoflowSubStructure):
     Id: Optional[str]
     Label: Optional[str]
     Notes: Optional[str] = None
-    GeometryId: int = None
-    SoilLayersId: int = None
+    GeometryId: Optional[str]
+    SoilLayersId: Optional[str]
     Stages: List[PersistableStage] = []
     Calculations: List[PersistableCalculation] = []
 
@@ -514,13 +540,13 @@ class Scenario(DGeoflowSubStructure):
     def structure_group(cls) -> str:
         return "scenarios"
 
-    def add_calculation(self, label: str, notes: str, mesh_properties_id: int) -> PersistableCalculation:
+    def add_calculation(self, label: str, notes: str, mesh_properties_id: str) -> PersistableCalculation:
         pc = PersistableCalculation(Label=label, Notes=notes, MeshPropertiesId=mesh_properties_id)
         self.Calculations.append(pc)
         return pc
 
-    def add_stage(self, label: str, notes: str, layeractivation_collection_id: int,
-                  boundaryconditions_collection_id: int) -> PersistableStage:
+    def add_stage(self, label: str, notes: str, layeractivation_collection_id: str,
+                  boundaryconditions_collection_id: str) -> PersistableStage:
         ps = PersistableStage(Label=label, Notes=notes, LayerActivationCollectionId=layeractivation_collection_id,
                               BoundaryConditionCollectionId=boundaryconditions_collection_id)
         self.Stages.append(ps)
@@ -528,7 +554,7 @@ class Scenario(DGeoflowSubStructure):
 
 
 class PersistableMeshProperties(DGeoflowBaseModelStructure):
-    LayerId: int
+    LayerId: str
     Label: Optional[str]
     ElementSize: Optional[float] = 1
 
@@ -563,7 +589,7 @@ class MeshProperty(DGeoflowSubStructure):
 
 
 class PersistableLayerActivations(DGeoflowBaseModelStructure):
-    LayerId: int
+    LayerId: str
     IsActive: bool
 
 
@@ -620,30 +646,33 @@ class DGeoflowStructure(BaseModelStructure):
 
     boundary_conditions: List[BoundaryCondition] = [
         BoundaryCondition(Id="15")]  # boundaryconditions/boundaryconditions_x.json
-    scenarios: List[Scenario] = [Scenario(Id="0", GeometryId=1, SoilLayersId=14,
-                                    Stages=[PersistableStage(LayerActivationCollectionId=17, BoundaryConditionCollectionId=15)],
-                                    Calculations=[PersistableCalculation(MeshPropertiesId=16)])]  # scenarios/scenario_x.json
+    scenarios: List[Scenario] = [Scenario(Id="0", Label="Scenario 1", GeometryId="1", SoilLayersId="14",
+                                    Stages=[PersistableStage(Label="Stage 1", LayerActivationCollectionId="17", BoundaryConditionCollectionId="15")],
+                                    Calculations=[PersistableCalculation(Label="Calculation 1", MeshPropertiesId="16")])]  # scenarios/scenario_x.json
     mesh_properties: List[MeshProperty] = [
         MeshProperty(Id="16", MeshProperties=[])]  # meshproperties/meshproperties_x.json
     layer_activations: List[LayerActivation] = [LayerActivation(Id="17")]  # layeractivations/layeractivations_x.json
 
+    # Output parts
+    groundwater_flow_results: List[GroundwaterFlowResult] = []
+    piping_results: List[PipingResult] = []
+
     class Config:
         arbitrary_types_allowed = True
         validate_assignment = True
-        extra: "forbid"
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validaty_foreign_keys(cls, values):
         for i, scenario in enumerate(values.get("scenarios")):
             for j, stage in enumerate(scenario.Stages):
-                if stage.BoundaryConditionCollectionId != int(values.get("boundary_conditions")[j].Id):
+                if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[j].Id:
                     raise ValueError("BoundaryConditionCollectionIds not linked!")
-                if stage.LayerActivationCollectionId != int(values.get("layer_activations")[j].Id):
+                if stage.LayerActivationCollectionId != values.get("layer_activations")[j].Id:
                     raise ValueError("LayerActivationCollectionIds not linked!")
 
-            if scenario.GeometryId != int(values.get("geometries")[i].Id):
+            if scenario.GeometryId != values.get("geometries")[i].Id:
                 raise ValueError("GeometryIds not linked!")
-            if scenario.SoilLayersId != int(values.get("soillayers")[i].Id):
+            if scenario.SoilLayersId != values.get("soillayers")[i].Id:
                 raise ValueError("SoilLayersIds not linked!")
         return values
 
@@ -790,6 +819,17 @@ class DGeoflowStructure(BaseModelStructure):
             return False
         return False
 
+def get_result_substructure(
+        self, calculation_type: CalculationTypeEnum
+    ) -> List[DGeoFlowResult]:
+
+        result_types_mapping = {
+            CalculationTypeEnum.GROUNDWATER_FLOW: self.groundwater_flow_results,
+            CalculationTypeEnum.PIPING: self.piping_results,
+        }
+
+        return result_types_mapping[calculation_type]
+
 
 class ForeignKeys(DGeoflowBaseModelStructure):
     """A dataclass that store the connections between the
@@ -811,7 +851,7 @@ class ForeignKeys(DGeoflowBaseModelStructure):
         "LayerActivation.Id": ("PersistableStage.LayerActivationCollectionId",),
         "BoundaryCondition.Id": ("PersistableStage.BoundaryConditionCollectionId",),
         "MeshProperty.Id": ("PersistableCalculation.MeshPropertiesId",),
-        # "Result.Id": ("PersistableCalculation.ResultsId",), #TODO: handle results in different MR
+        "Result.Id": ("PersistableCalculation.ResultsId",)
 
     }
 

@@ -14,6 +14,10 @@ from .dgeoflow_parserprovider import DGeoflowParserProvider
 from ...utils import camel_to_snake, snake_to_camel
 
 from .internal import (
+    CalculationType,
+    GroundwaterFlowResult,
+    PipingResult,
+    DGeoFlowResult,
     DGeoflowStructure,
     SoilCollection, SoilLayerCollection, PersistableSoilLayer,
 )
@@ -51,6 +55,10 @@ class DGeoflowModel(BaseModel):
         return Path("DGeoFlowConsole/DGeoFlow Console.exe")
 
     @property
+    def console_flags_post(self) -> List[str]:
+        return [str(self.current_scenario + 2), "1"]
+
+    @property
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
@@ -71,43 +79,40 @@ class DGeoflowModel(BaseModel):
         super().parse(*args, **kwargs)
         self.current_id = self.datastructure.get_unique_id()
 
-    # @property
-    # def output(self) -> DGeoflowResult:
-    #     # TODO Make something that works for all scenarios
-    #     return self.get_result(self.current_scenario)
+    @property
+    def output(self) -> DGeoFlowResult:
+        # TODO Make something that works for all scenarios
+        return self.get_result(self.current_scenario)
 
-    # def get_result(self, scenario_id: int) -> Dict:
-    #     """
-    #     Returns the results of a scenario. Calculation results are based on analysis type and calculation type.
-    #
-    #     Args:
-    #         scenario_id (int): Id of a scenario.
-    #
-    #     Returns:
-    #         dict: Dictionary containing the analysis results of the scenario.
-    #
-    #     Raises:
-    #         ValueError: No results or calculationsettings available
-    #     """
-    #     result = self._get_result_substructure(scenario_id)
-    #     return result  # TODO snake_case keys?
-    #
-    # def _get_result_substructure(self, scenario_id: int) -> DGeoflowResult:
-    #     if self.datastructure.has_result(scenario_id):
-    #         result_id = self.datastructure.scenarios[scenario_id].ResultId
-    #         calculation_settings = self.datastructure.calculationsettings[scenario_id]
-    #         analysis_type = calculation_settings.AnalysisType
-    #         calculation_type = calculation_settings.CalculationType
-    #
-    #         results = self.datastructure.get_result_substructure(
-    #             analysis_type, calculation_type
-    #         )
-    #
-    #         for result in results:
-    #             if result.Id == result_id:
-    #                 return result
-    #
-    #     raise ValueError(f"No result found for result id {scenario_id}")
+    def get_result(self, scenario_id: int) -> Dict:
+        """
+        Returns the results of a scenario. Calculation results are based on analysis type and calculation type.
+    
+        Args:
+            scenario_id (int): Id of a scenario.
+    
+        Returns:
+            dict: Dictionary containing the analysis results of the scenario.
+    
+        Raises:
+            ValueError: No results or calculationsettings available
+        """
+        result = self._get_result_substructure(scenario_id)
+        return result  # TODO snake_case keys?
+    
+    def _get_result_substructure(self, scenario_id: int) -> DGeoFlowResult:
+        if self.datastructure.has_result(scenario_id):
+            calculation = self.datastructure.scenarios[scenario_id].Calculations[1]
+            result_id = calculation.ResultsId
+            calculation_type = calculation.CalculationType
+    
+            results = self.datastructure.get_result_substructure(calculation_type)
+    
+            for result in results:
+                if result.Id == result_id:
+                    return result
+    
+        raise ValueError(f"No result found for result id {scenario_id}")
 
     def serialize(self, location: Union[FilePath, DirectoryPath]):
         """Support serializing to directory while developing for debugging purposes."""

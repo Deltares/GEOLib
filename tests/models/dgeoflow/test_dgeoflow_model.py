@@ -113,7 +113,6 @@ class TestDGeoflowModel:
         assert model
 
     @pytest.mark.acceptance
-    @only_teamcity
     def test_generate_simple_model(self):
 
         dm = DGeoflowModel()
@@ -155,7 +154,9 @@ class TestDGeoflowModel:
             # Has to be done in separate loop since all layers first need to be definied.
             dm.add_layeractivation(layer_id=layer_id)
 
-        # assert len(dm.datastructure.loads[0].LayerLoads) == 4
+        dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 3, "River")
+        dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")
+
         assert dm.is_valid
 
         # Serialize model to input file.

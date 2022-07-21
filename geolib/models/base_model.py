@@ -53,7 +53,7 @@ class BaseModel(BaseDataClass, abc.ABC):
             raise CalculationError(-1, "Console executable not found.")
 
         process = run(
-            [str(executable)] + self.console_flags + [str(self.filename.resolve())],
+            [str(executable)] + self.console_flags + [str(self.filename.resolve())] + self.console_flags_post,
             timeout=timeout_in_seconds,
             cwd=str(self.filename.resolve().parent),
         )
@@ -128,6 +128,10 @@ class BaseModel(BaseDataClass, abc.ABC):
 
     @property
     def console_flags(self) -> List[str]:
+        return []
+
+    @property
+    def console_flags_post(self) -> List[str]:
         return []
 
     @abstractproperty
