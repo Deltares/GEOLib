@@ -620,7 +620,8 @@ class DGeoflowStructure(BaseModelStructure):
 
     boundary_conditions: List[BoundaryCondition] = [
         BoundaryCondition(Id="15")]  # boundaryconditions/boundaryconditions_x.json
-    scenarios: List[Scenario] = [Scenario(Id="0")]  # scenarios/scenario_x.json
+    scenarios: List[Scenario] = [Scenario(Id="0", GeometryId=1, SoilLayersId=14,
+                                    Stages=[PersistableStage(LayerActivationCollectionId=17, BoundaryConditionCollectionId=15)])]  # scenarios/scenario_x.json
     mesh_properties: List[MeshProperty] = [
         MeshProperty(Id="16", MeshProperties=[])]  # meshproperties/meshproperties_x.json
     layer_activations: List[LayerActivation] = [LayerActivation(Id="17")]  # layeractivations/layeractivations_x.json
@@ -632,7 +633,17 @@ class DGeoflowStructure(BaseModelStructure):
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validaty_foreign_keys(cls, values):
-        """TODO Include more fk relations, left for another issue."""
+        for i, scenario in enumerate(values.get("scenarios")):
+            for j, stage in enumerate(scenario.Stages):
+                if stage.BoundaryConditionCollectionId != int(values.get("boundary_conditions")[j].Id):
+                    raise ValueError("BoundaryConditionCollectionIds not linked!")
+                if stage.LayerActivationCollectionId != int(values.get("layer_activations")[j].Id):
+                    raise ValueError("LayerActivationCollectionIds not linked!")
+
+            if scenario.GeometryId != int(values.get("geometries")[i].Id):
+                raise ValueError("GeometryIds not linked!")
+            if scenario.SoilLayersId != int(values.get("soillayers")[i].Id):
+                raise ValueError("SoilLayersIds not linked!")
         return values
 
     @property
