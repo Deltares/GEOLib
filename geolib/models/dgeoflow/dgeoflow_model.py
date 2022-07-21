@@ -48,7 +48,7 @@ class DGeoflowModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DGeoflowConsole/D-GEO Suite Stability GEOLIB Console.exe")  # TODO: To be adapted
+        return Path("DGeoFlowConsole/DGeoFlow Console.exe")
 
     @property
     def soils(self) -> SoilCollection:
