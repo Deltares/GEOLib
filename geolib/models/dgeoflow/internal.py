@@ -621,7 +621,8 @@ class DGeoflowStructure(BaseModelStructure):
     boundary_conditions: List[BoundaryCondition] = [
         BoundaryCondition(Id="15")]  # boundaryconditions/boundaryconditions_x.json
     scenarios: List[Scenario] = [Scenario(Id="0", GeometryId=1, SoilLayersId=14,
-                                    Stages=[PersistableStage(LayerActivationCollectionId=17, BoundaryConditionCollectionId=15)])]  # scenarios/scenario_x.json
+                                    Stages=[PersistableStage(LayerActivationCollectionId=17, BoundaryConditionCollectionId=15)],
+                                    Calculations=[PersistableCalculation(MeshPropertiesId=16)])]  # scenarios/scenario_x.json
     mesh_properties: List[MeshProperty] = [
         MeshProperty(Id="16", MeshProperties=[])]  # meshproperties/meshproperties_x.json
     layer_activations: List[LayerActivation] = [LayerActivation(Id="17")]  # layeractivations/layeractivations_x.json
