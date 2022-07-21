@@ -709,7 +709,7 @@ class SoilCollection(DStabilitySubStructure):
         # shear increase exponent taken from persistable_soil.SuTable or just from persistable_soil
         if (
             persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
-            or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
+            or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value == "Su"
         ):
             # SHANSEP model is selected so the StrengthIncreaseExponentStochasticParameter from persistable_soil should be used
             return self.__to_global_stochastic_parameter(
@@ -717,7 +717,7 @@ class SoilCollection(DStabilitySubStructure):
             )
         elif (
             persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
-            or persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value
+            or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value
             == "SuTable"
         ):
             # SU table is selected so the StrengthIncreaseExponentStochasticParameter from SuTable should be used
@@ -813,6 +813,10 @@ class SoilCollection(DStabilitySubStructure):
                 for k, v in kwargs.items():
                     try:
                         setattr(persistable_soil, snake_to_camel(k), v)
+
+                        k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
+                        if hasattr(persistable_soil, k_stochastic):
+                            getattr(persistable_soil, k_stochastic).Mean = v
                     except AttributeError:
                         raise ValueError(f"Unknown soil parameter {k}.")
 

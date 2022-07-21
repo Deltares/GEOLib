@@ -35,7 +35,7 @@ def unpack_if_union(tp):
 
 
 def is_union(tp):
-    return isinstance(tp, _GenericAlias) and tp._name is None
+    return isinstance(tp, _GenericAlias) and tp._name in (None, "Optional")
 
 
 def is_list(tp):
