@@ -39,6 +39,7 @@ class DGeoflowModel(BaseModel):
     """
 
     current_scenario: int = -1
+    current_scenario_index: int = 0
     datastructure: DGeoflowStructure = DGeoflowStructure()
     current_id: int = -1
 
@@ -56,7 +57,7 @@ class DGeoflowModel(BaseModel):
 
     @property
     def console_flags_post(self) -> List[str]:
-        return [str(self.current_scenario + 2), "1"]
+        return [str(self.current_scenario_index + 1), "1"]
 
     @property
     def soils(self) -> SoilCollection:
@@ -82,9 +83,9 @@ class DGeoflowModel(BaseModel):
     @property
     def output(self) -> DGeoFlowResult:
         # TODO Make something that works for all scenarios
-        return self.get_result(self.current_scenario)
+        return self.get_result(self.current_scenario_index)
 
-    def get_result(self, scenario_id: int) -> Dict:
+    def get_result(self, scenario_index: int) -> Dict:
         """
         Returns the results of a scenario. Calculation results are based on analysis type and calculation type.
     
@@ -97,12 +98,12 @@ class DGeoflowModel(BaseModel):
         Raises:
             ValueError: No results or calculationsettings available
         """
-        result = self._get_result_substructure(scenario_id)
+        result = self._get_result_substructure(scenario_index)
         return result  # TODO snake_case keys?
     
-    def _get_result_substructure(self, scenario_id: int) -> DGeoFlowResult:
-        if self.datastructure.has_result(scenario_id):
-            calculation = self.datastructure.scenarios[scenario_id].Calculations[1]
+    def _get_result_substructure(self, scenario_index: int) -> DGeoFlowResult:
+        if self.datastructure.has_result(scenario_index):
+            calculation = self.datastructure.scenarios[scenario_index].Calculations[0]
             result_id = calculation.ResultsId
             calculation_type = calculation.CalculationType
     
@@ -112,7 +113,7 @@ class DGeoflowModel(BaseModel):
                 if result.Id == result_id:
                     return result
     
-        raise ValueError(f"No result found for result id {scenario_id}")
+        raise ValueError(f"No result found for result id {scenario_index}")
 
     def serialize(self, location: Union[FilePath, DirectoryPath]):
         """Support serializing to directory while developing for debugging purposes."""
@@ -141,6 +142,7 @@ class DGeoflowModel(BaseModel):
 
         if set_current:
             self.current_scenario = new_scenario_id
+            self.current_scenario_index += 1
         self.current_id = new_unique_id
         return new_scenario_id
 
@@ -162,6 +164,7 @@ class DGeoflowModel(BaseModel):
 
         if set_current:
             self.current_scenario = new_scenario_id
+            self.current_scenario_index += 1
         self.current_id = new_unique_id
         return new_scenario_id
 

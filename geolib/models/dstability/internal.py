@@ -1773,7 +1773,7 @@ class DStabilityStructure(BaseModelStructure):
     bishop_results: List[BishopResult] = []
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
-    def ensure_validaty_foreign_keys(cls, values):
+    def ensure_validity_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
         for i, stage in enumerate(values.get("stages")):
             if stage.CalculationSettingsId != values.get("calculationsettings")[i].Id:

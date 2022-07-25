@@ -494,12 +494,17 @@ class PersistableStage(DGeoflowBaseModelStructure):
     LayerActivationCollectionId: Optional[str]
     BoundaryConditionCollectionId: Optional[str]
 
+class PipeTrajectory(DGeoflowBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
 
 class PersistableCalculation(DGeoflowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
+    CalculationType: Optional[CalculationTypeEnum]
+    PipeTrajectory: Optional[PipeTrajectory]
     MeshPropertiesId: Optional[str]
-    ResultsId: Optional[int]
+    ResultsId: Optional[str]
 
 class GaussPointResult(DGeoflowBaseModelStructure):
     Point: Optional[PersistablePoint] = None
@@ -676,8 +681,19 @@ class DGeoflowStructure(BaseModelStructure):
         arbitrary_types_allowed = True
         validate_assignment = True
 
+    def get_result_substructure(
+            self, calculation_type: CalculationTypeEnum
+        ) -> List[DGeoFlowResult]:
+
+            result_types_mapping = {
+                CalculationTypeEnum.GROUNDWATER_FLOW: self.groundwater_flow_results,
+                CalculationTypeEnum.PIPING: self.piping_results,
+            }
+
+            return result_types_mapping[calculation_type]
+
     @root_validator(skip_on_failure=True, allow_reuse=True)
-    def ensure_validaty_foreign_keys(cls, values):
+    def ensure_validity_foreign_keys(cls, values):
         for i, scenario in enumerate(values.get("scenarios")):
             for j, stage in enumerate(scenario.Stages):
                 if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[j].Id:
@@ -702,7 +718,7 @@ class DGeoflowStructure(BaseModelStructure):
             "scenarios",
         ]
 
-    def get_stage_specific_fields(self, stage=0) -> Tuple[str, DGeoflowSubStructure]:
+    def get_scenario_specific_fields(self, stage=0) -> Tuple[str, DGeoflowSubStructure]:
         """Yield stage specific fields for given stage."""
         for fieldname in self.stage_specific_fields:
             field = getattr(self, fieldname)
@@ -733,33 +749,33 @@ class DGeoflowStructure(BaseModelStructure):
         return unique_id
 
     def duplicate_scenario(
-            self, current_stage: int, label: str, notes: str, unique_start_id: int
+            self, current_scenario: int, label: str, notes: str, unique_start_id: int
     ):
         """Duplicates an existing scenario.
-        Copies the specific stage fields for a stage and renumbers all Ids,
+        Copies the specific scenario fields for a scenario and renumbers all Ids,
         taking into account foreign keys by using the same renumbering.
         """
 
         old_to_new = {}
-        for fieldname, stagefield in self.get_stage_specific_fields(current_stage):
-            newstagefield = stagefield.copy(deep=True)
+        for fieldname, scenario_field in self.get_scenario_specific_fields(current_scenario):
+            new_scenario_fields = scenario_field.copy(deep=True)
 
             # Renumber the upper class
             unique_start_id = self.renumber_fk_fields(
-                newstagefield, old_to_new, unique_start_id
+                new_scenario_fields, old_to_new, unique_start_id
             )
             # Renumber all children
-            for classinstance in children(newstagefield):
+            for class_instance in children(new_scenario_fields):
                 unique_start_id = self.renumber_fk_fields(
-                    classinstance, old_to_new, unique_start_id
+                    class_instance, old_to_new, unique_start_id
                 )
 
             # Update the stage with extra supplied fields
             if fieldname == "stages":
-                newstagefield.Label = label
-                newstagefield.Notes = notes
+                new_scenario_fields.Label = label
+                new_scenario_fields.Notes = notes
 
-            getattr(self, fieldname).append(newstagefield)
+            getattr(self, fieldname).append(new_scenario_fields)
 
         return len(self.stages) - 1, unique_start_id
 
@@ -775,6 +791,7 @@ class DGeoflowStructure(BaseModelStructure):
         # TODO also add LayerActivation and BoundaryCondtions to Scenario below (nested)?
         self.scenarios += [Scenario(GeometryId=str(unique_start_id + 4),
                                     SoilLayersId=str(unique_start_id + 1))]
+        
 
         return len(self.scenarios) - 1, unique_start_id + 11
 
@@ -800,25 +817,25 @@ class DGeoflowStructure(BaseModelStructure):
     def validator(self):
         return DGeoflowValidator(self)
 
-    def has_scenario(self, stage_id: int) -> bool:
+    def has_scenario(self, scenario_id: int) -> bool:
         try:
-            self.scenarios[stage_id]
+            self.scenarios[scenario_id]
             return True
         except IndexError:
             return False
 
-    def has_result(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            result_id = self.stages[stage_id].ResultsId
+    def has_result(self, scenario_index: int) -> bool:
+        if self.has_scenario(scenario_index):
+            result_id = self.scenarios[scenario_index].Calculations[0].ResultsId
             if result_id is None:
                 return False
             else:
                 return True
         return False
 
-    def has_soil_layers(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            soil_layers_id = self.scenarios[stage_id].SoilLayersId
+    def has_soil_layers(self, scenario_id: int) -> bool:
+        if self.has_scenario(scenario_id):
+            soil_layers_id = self.scenarios[scenario_id].SoilLayersId
             if soil_layers_id is None:
                 return False
             else:
@@ -832,17 +849,6 @@ class DGeoflowStructure(BaseModelStructure):
                     return True
             return False
         return False
-
-def get_result_substructure(
-        self, calculation_type: CalculationTypeEnum
-    ) -> List[DGeoFlowResult]:
-
-        result_types_mapping = {
-            CalculationTypeEnum.GROUNDWATER_FLOW: self.groundwater_flow_results,
-            CalculationTypeEnum.PIPING: self.piping_results,
-        }
-
-        return result_types_mapping[calculation_type]
 
 
 class ForeignKeys(DGeoflowBaseModelStructure):
@@ -865,7 +871,7 @@ class ForeignKeys(DGeoflowBaseModelStructure):
         "LayerActivation.Id": ("PersistableStage.LayerActivationCollectionId",),
         "BoundaryCondition.Id": ("PersistableStage.BoundaryConditionCollectionId",),
         "MeshProperty.Id": ("PersistableCalculation.MeshPropertiesId",),
-        "Result.Id": ("PersistableCalculation.ResultsId",)
+        "Results.Id": ("PersistableCalculation.ResultsId",)
 
     }
 
