@@ -16,9 +16,9 @@ from tests.utils import TestUtils, only_teamcity
 
 class TestDGeoFlowModel:
     @pytest.mark.unittest
-    def test_instantiate_DGeoFlowModel(self):
+    def test_instantiate_dgeoflow_model(self):
         assert isinstance(DGeoFlowModel(filename=None), BaseModel), (
-            "" + "DGeoFlowModel does not instanciate BaseModel"
+            "" + "DGeoFlowModel does not instantiate BaseModel"
         )
 
     @pytest.mark.systemtest

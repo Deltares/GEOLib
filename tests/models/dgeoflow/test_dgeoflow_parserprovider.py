@@ -11,6 +11,8 @@ from tests.utils import TestUtils
 
 
 class TestDGeoFlowInputParser:
+    output_path = "dgeoflow/serialized"
+
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "dir_path",
@@ -23,7 +25,7 @@ class TestDGeoFlowInputParser:
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir("dgeoflow/serialized")
+            TestUtils.get_output_test_data_dir(self.output_path)
         )
 
         # 2. Verify initial expectations
@@ -48,7 +50,7 @@ class TestDGeoFlowInputParser:
                 / "Berekening3.flox"
         )
         test_output_dir = Path(
-            TestUtils.get_output_test_data_dir("dgeoflow/serialized")
+            TestUtils.get_output_test_data_dir(self.output_path)
         )
         # 2. Verify initial expectations
         assert test_filepath.exists(), "Test .flox not found."
@@ -90,7 +92,7 @@ class TestDGeoFlowInputParser:
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
         test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir("dgeoflow/serialized")
+            TestUtils.get_output_test_data_dir(self.output_path)
         )
 
         # 3. Run test.

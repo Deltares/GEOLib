@@ -39,9 +39,9 @@ from tests.utils import TestUtils, only_teamcity
 
 class TestDStabilityModel:
     @pytest.mark.unittest
-    def test_instantiate_DStabilityModel(self):
+    def test_instantiate_stability_model(self):
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
-            "" + "DStabilityModel does not instanciate BaseModel"
+            "" + "DStabilityModel does not instantiate BaseModel"
         )
 
     @pytest.mark.systemtest
