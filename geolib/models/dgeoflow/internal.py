@@ -10,13 +10,13 @@ from pydantic import ValidationError, confloat, conlist, root_validator, validat
 
 from geolib import __version__ as version
 from geolib.geometry import Point
-from .dgeoflow_validator import DGeoflowValidator
+from .dgeoflow_validator import DGeoFlowValidator
 from .utils import children
 from geolib.soils import Soil, StorageParameters
 from geolib.utils import snake_to_camel
 
 
-class DGeoflowBaseModelStructure(BaseModelStructure):
+class DGeoFlowBaseModelStructure(BaseModelStructure):
     def dict(_, *args, **kwargs):
         data = super().dict(*args, **kwargs)
         return {
@@ -25,7 +25,7 @@ class DGeoflowBaseModelStructure(BaseModelStructure):
         }
 
 
-class DGeoflowSubStructure(DGeoflowBaseModelStructure):
+class DGeoFlowSubStructure(DGeoFlowBaseModelStructure):
     @classmethod
     def structure_name(cls):
         class_name = cls.__name__
@@ -44,7 +44,7 @@ class CalculationTypeEnum(Enum):
 CalculationType = CalculationTypeEnum
 
 
-class PersistableStochasticParameter(DGeoflowBaseModelStructure):
+class PersistableStochasticParameter(DGeoFlowBaseModelStructure):
     IsProbabilistic: bool = False
     Mean: float = 1.0
     StandardDeviation: float = 0.0
@@ -64,13 +64,13 @@ class PersistableShadingType(Enum):
     NONE = "None"
 
 
-class PersistableSoilVisualization(DGeoflowBaseModelStructure):
+class PersistableSoilVisualization(DGeoFlowBaseModelStructure):
     Color: Optional[str]
     PersistableShadingType: Optional[PersistableShadingType]
     SoilId: Optional[str]
 
 
-class SoilVisualisation(DGeoflowBaseModelStructure):
+class SoilVisualisation(DGeoFlowBaseModelStructure):
     ContentVersion: Optional[str] = "2"
     SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
 
@@ -79,12 +79,12 @@ class SoilVisualisation(DGeoflowBaseModelStructure):
         return "soilvisualizations"
 
 
-class PersistableSoilLayer(DGeoflowBaseModelStructure):
+class PersistableSoilLayer(DGeoFlowBaseModelStructure):
     LayerId: Optional[str]
     SoilId: Optional[str]
 
 
-class SoilLayerCollection(DGeoflowSubStructure):
+class SoilLayerCollection(DGeoFlowSubStructure):
     """soillayers/soillayers_x.json"""
 
     @classmethod
@@ -114,7 +114,7 @@ class SoilLayerCollection(DGeoflowSubStructure):
         }
 
 
-class PersistableSoil(DGeoflowBaseModelStructure):
+class PersistableSoil(DGeoFlowBaseModelStructure):
     Code: str = ""
     Id: str = ""
     Name: str = ""
@@ -123,7 +123,7 @@ class PersistableSoil(DGeoflowBaseModelStructure):
     VerticalPermeability: confloat() = 0.001
 
 
-class SoilCollection(DGeoflowSubStructure):
+class SoilCollection(DGeoFlowSubStructure):
     """soils.json"""
 
     ContentVersion: Optional[str] = "2"
@@ -245,18 +245,6 @@ class SoilCollection(DGeoflowSubStructure):
         self.Soils.append(ps)
         return ps
 
-    @staticmethod
-    def __to_global_stochastic_parameter(
-            persistable_stochastic_parameter: PersistableStochasticParameter,
-    ):
-        from geolib.soils import StochasticParameter
-
-        return StochasticParameter(
-            is_probabilistic=persistable_stochastic_parameter.IsProbabilistic,
-            mean=persistable_stochastic_parameter.Mean,
-            standard_deviation=persistable_stochastic_parameter.StandardDeviation,
-        )
-
     def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
         storage_parameters = StorageParameters(vertical_permeability=persistable_soil.VerticalPermeability,
                                                horizontal_permeability=persistable_soil.HorizontalPermeability)
@@ -308,7 +296,7 @@ class SoilCollection(DGeoflowSubStructure):
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
 
 
-class ProjectInfo(DGeoflowSubStructure):
+class ProjectInfo(DGeoFlowSubStructure):
     """projectinfo.json."""
 
     Analyst: Optional[str] = ""
@@ -336,12 +324,12 @@ class ProjectInfo(DGeoflowSubStructure):
             return date
 
 
-class PersistablePoint(DGeoflowBaseModelStructure):
-    X: Optional[float] = "NaN"
-    Z: Optional[float] = "NaN"
+class PersistablePoint(DGeoFlowBaseModelStructure):
+    X: Optional[float] = 0
+    Z: Optional[float] = 0
 
 
-class PersistableLayer(DGeoflowBaseModelStructure):
+class PersistableLayer(DGeoFlowBaseModelStructure):
     Id: Optional[str]
     Label: Optional[str]
     Notes: Optional[str]
@@ -361,7 +349,7 @@ class PersistableLayer(DGeoflowBaseModelStructure):
         return points
 
 
-class Geometry(DGeoflowSubStructure):
+class Geometry(DGeoFlowSubStructure):
     """geometries/geometry_x.json"""
 
     @classmethod
@@ -432,18 +420,18 @@ class Geometry(DGeoflowSubStructure):
         return layer
 
 
-class PersistableFixedHeadBoundaryConditionProperties(DGeoflowBaseModelStructure):
+class PersistableFixedHeadBoundaryConditionProperties(DGeoFlowBaseModelStructure):
     HeadLevel: float
 
 
-class PersistableBoundaryCondition(DGeoflowBaseModelStructure):
+class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     Points: conlist(PersistablePoint, min_items=2)
     FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
 
 
-class BoundaryCondition(DGeoflowSubStructure):
+class BoundaryCondition(DGeoFlowSubStructure):
     """boundaryconditions/boundaryconditions_x.json"""
 
     ContentVersion: Optional[str] = "2"
@@ -488,17 +476,17 @@ class BoundaryCondition(DGeoflowSubStructure):
         return pbc
 
 
-class PersistableStage(DGeoflowBaseModelStructure):
+class PersistableStage(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     LayerActivationCollectionId: Optional[str]
     BoundaryConditionCollectionId: Optional[str]
 
-class PipeTrajectory(DGeoflowBaseModelStructure):
+class PipeTrajectory(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
 
-class PersistableCalculation(DGeoflowBaseModelStructure):
+class PersistableCalculation(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     CalculationType: Optional[CalculationTypeEnum]
@@ -506,20 +494,20 @@ class PersistableCalculation(DGeoflowBaseModelStructure):
     MeshPropertiesId: Optional[str]
     ResultsId: Optional[str]
 
-class GaussPointResult(DGeoflowBaseModelStructure):
+class GaussPointResult(DGeoFlowBaseModelStructure):
     Point: Optional[PersistablePoint] = None
     HydraulicHead: float = 1
 
-class NodeResult(DGeoflowBaseModelStructure):
+class NodeResult(DGeoFlowBaseModelStructure):
     Point: Optional[PersistablePoint] = None
     TotalPorePressure: float = 1
     HydraulicDischarge: float = 1
     
-class ElementResult(DGeoflowBaseModelStructure):
+class ElementResult(DGeoFlowBaseModelStructure):
     GaussPoints: Optional[List[GaussPointResult]] = []    
     NodeResults: Optional[List[NodeResult]] = []    
 
-class GroundwaterFlowResult(DGeoflowSubStructure):
+class GroundwaterFlowResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     Elements: Optional[List[ElementResult]] = []
     ContentVersion: Optional[str] = "2"
@@ -528,7 +516,7 @@ class GroundwaterFlowResult(DGeoflowSubStructure):
     def structure_group(cls) -> str:
         return "results/groundwaterflow/"
 
-class PipingResult(DGeoflowSubStructure):
+class PipingResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
 
     @classmethod
@@ -540,7 +528,7 @@ DGeoFlowResult = Union[
     PipingResult
 ]
 
-class Scenario(DGeoflowSubStructure):
+class Scenario(DGeoFlowSubStructure):
     """scenarios/scenario_x.json"""
 
     ContentVersion: Optional[str] = "2"
@@ -573,13 +561,13 @@ class Scenario(DGeoflowSubStructure):
         return ps
 
 
-class PersistableMeshProperties(DGeoflowBaseModelStructure):
+class PersistableMeshProperties(DGeoFlowBaseModelStructure):
     LayerId: str
     Label: Optional[str]
     ElementSize: Optional[float] = 1
 
 
-class MeshProperty(DGeoflowSubStructure):
+class MeshProperty(DGeoFlowSubStructure):
     """meshproperties/meshproperties_x.json"""
 
     ContentVersion: Optional[str] = "2"
@@ -608,12 +596,12 @@ class MeshProperty(DGeoflowSubStructure):
             if layer.LayerId != exclude_soil_layer_id}
 
 
-class PersistableLayerActivations(DGeoflowBaseModelStructure):
+class PersistableLayerActivations(DGeoFlowBaseModelStructure):
     LayerId: str
     IsActive: bool
 
 
-class LayerActivation(DGeoflowSubStructure):
+class LayerActivation(DGeoFlowSubStructure):
     """layeractivations/layeractivations_x.json"""
 
     ContentVersion: Optional[str] = "2"
@@ -642,8 +630,8 @@ class LayerActivation(DGeoflowSubStructure):
             if layer.LayerId != exclude_soil_layer_id}
 
 
-class DGeoflowStructure(BaseModelStructure):
-    """Highest level DGeoflow class that should be parsed to and serialized from.
+class DGeoFlowStructure(BaseModelStructure):
+    """Highest level DGeoFlow class that should be parsed to and serialized from.
 
     The List[] items (one for each scenario in the model) will be stored in a subfolder
     to multiple json files. Where the first (0) instance
@@ -653,8 +641,6 @@ class DGeoflowStructure(BaseModelStructure):
     """
 
     # input part
-    # Ids 2 -> 13 are already taken for the default PersistableSoil
-    # TODO: rename all Ids below with unique Id!!
     soillayers: List[SoilLayerCollection] = [
         SoilLayerCollection(Id="14")
     ]  # soillayers/soillayers_x.json
@@ -718,7 +704,7 @@ class DGeoflowStructure(BaseModelStructure):
             "scenarios",
         ]
 
-    def get_scenario_specific_fields(self, stage=0) -> Tuple[str, DGeoflowSubStructure]:
+    def get_scenario_specific_fields(self, stage=0) -> Tuple[str, DGeoFlowSubStructure]:
         """Yield stage specific fields for given stage."""
         for fieldname in self.stage_specific_fields:
             field = getattr(self, fieldname)
@@ -779,8 +765,8 @@ class DGeoflowStructure(BaseModelStructure):
 
         return len(self.stages) - 1, unique_start_id
 
-    def add_default_scenario(self, label: str, notes: str, unique_start_id=500) -> int:
-        """Add a new default (empty) scenario to DGeoflow."""
+    def add_default_scenario(self, label: str, notes: str, unique_start_id=500) -> Tuple[int, int]:
+        """Add a new default (empty) scenario to DGeoFlow."""
 
         self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 1))]
         self.mesh_properties += [MeshProperty(Id=str(unique_start_id + 2))]
@@ -788,15 +774,20 @@ class DGeoflowStructure(BaseModelStructure):
         self.geometries += [Geometry(Id=str(unique_start_id + 4))]
         self.boundary_conditions += [BoundaryCondition(Id=str(unique_start_id + 5))]
 
-        # TODO also add LayerActivation and BoundaryCondtions to Scenario below (nested)?
-        self.scenarios += [Scenario(GeometryId=str(unique_start_id + 4),
-                                    SoilLayersId=str(unique_start_id + 1))]
+        self.scenarios += [Scenario(Id=str(str(unique_start_id + 7)), 
+                                    Label="Scenario 1", 
+                                    GeometryId=str(unique_start_id + 4),
+                                    SoilLayersId=str(unique_start_id + 1),
+                                    Calculations=[PersistableCalculation(Id=str(unique_start_id + 6), Label="Calculation 1")],
+                                    Stages=[PersistableStage(Id=str(unique_start_id + 6), Label="Stage 1", 
+                                                            LayerActivationCollectionId=str(unique_start_id + 3), 
+                                                            BoundaryConditionCollectionId=str(unique_start_id + 5))])]
         
 
         return len(self.scenarios) - 1, unique_start_id + 11
 
     def get_unique_id(self) -> int:
-        """Return unique id that can be used in DGeoflow.
+        """Return unique id that can be used in DGeoFlow.
         Finds all existing ids, takes the max and does +1.
         """
 
@@ -815,7 +806,7 @@ class DGeoflowStructure(BaseModelStructure):
         return new_id
 
     def validator(self):
-        return DGeoflowValidator(self)
+        return DGeoFlowValidator(self)
 
     def has_scenario(self, scenario_id: int) -> bool:
         try:
@@ -851,9 +842,9 @@ class DGeoflowStructure(BaseModelStructure):
         return False
 
 
-class ForeignKeys(DGeoflowBaseModelStructure):
+class ForeignKeys(DGeoFlowBaseModelStructure):
     """A dataclass that store the connections between the
-    various unique Ids used in DGeoflow. These can be seen
+    various unique Ids used in DGeoFlow. These can be seen
     as (implicit) foreign keys.
     """
 

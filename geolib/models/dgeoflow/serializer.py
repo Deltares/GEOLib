@@ -12,13 +12,13 @@ from geolib.errors import NotConcreteError
 from geolib.models.serializers import BaseSerializer
 from geolib.models.utils import get_filtered_type_hints
 
-from .internal import DGeoflowStructure, DGeoflowStructure
+from .internal import DGeoFlowStructure, DGeoFlowStructure
 
 
-class DGeoflowBaseSerializer(BaseSerializer, metaclass=ABCMeta):
+class DGeoFlowBaseSerializer(BaseSerializer, metaclass=ABCMeta):
     """Serializer to folder/file structure."""
 
-    ds: DGeoflowStructure
+    ds: DGeoFlowStructure
 
     def serialize(self) -> Dict:
         serialized_datastructure: Dict = {}
@@ -49,7 +49,7 @@ class DGeoflowBaseSerializer(BaseSerializer, metaclass=ABCMeta):
         raise NotConcreteError
 
 
-class DGeoflowInputSerializer(DGeoflowBaseSerializer):
+class DGeoFlowInputSerializer(DGeoFlowBaseSerializer):
     def write(self, filepath: DirectoryPath) -> DirectoryPath:
         serialized_datastructure = self.serialize()
 
@@ -71,7 +71,7 @@ class DGeoflowInputSerializer(DGeoflowBaseSerializer):
         return filepath
 
 
-class DGeoflowInputZipSerializer(DGeoflowBaseSerializer):
+class DGeoFlowInputZipSerializer(DGeoFlowBaseSerializer):
     """DStabilSerializer for zipped.stix files."""
 
     def write(self, filepath: Union[FilePath, BytesIO]) -> Union[FilePath, BytesIO]:

@@ -9,19 +9,19 @@ from zipp import Path
 from geolib.models.parsers import BaseParser, BaseParserProvider
 from geolib.models.utils import get_filtered_type_hints
 
-from .internal import BaseModelStructure, DGeoflowStructure
+from .internal import BaseModelStructure, DGeoFlowStructure
 
 logger = logging.getLogger(__name__)
 
 
-class DGeoflowParser(BaseParser):
+class DGeoFlowParser(BaseParser):
     @property
     def suffix_list(self) -> List[str]:
         return [".json", ""]
 
     @property
-    def structure(self) -> Type[DGeoflowStructure]:
-        return DGeoflowStructure
+    def structure(self) -> Type[DGeoFlowStructure]:
+        return DGeoFlowStructure
 
     def can_parse(self, filename: FilePath) -> bool:
         return super().can_parse(filename) or filename.is_dir()
@@ -68,7 +68,7 @@ class DGeoflowParser(BaseParser):
         return out
 
 
-class DGeoflowZipParser(DGeoflowParser):
+class DGeoFlowZipParser(DGeoFlowParser):
     @property
     def suffix_list(self) -> List[str]:
         return [".flox"]
@@ -79,7 +79,7 @@ class DGeoflowZipParser(DGeoflowParser):
     def parse(self, filepath: FilePath) -> BaseModelStructure:
         with ZipFile(filepath) as zip:
 
-            # Fix backslashes in zipfile (untill fixed in DGeoflow)
+            # Fix backslashes in zipfile (untill fixed in DGeoFlow)
             for file in zip.filelist:
                 new_filename = file.filename.replace("\\", "/")
                 if new_filename != file.filename:
@@ -94,23 +94,23 @@ class DGeoflowZipParser(DGeoflowParser):
         return ds
 
 
-class DGeoflowParserProvider(BaseParserProvider):
+class DGeoFlowParserProvider(BaseParserProvider):
 
     _input_parsers = None
     _output_parsers = None
 
     @property
-    def input_parsers(self) -> Tuple[DGeoflowParser, DGeoflowZipParser]:
+    def input_parsers(self) -> Tuple[DGeoFlowParser, DGeoFlowZipParser]:
         if not self._input_parsers:
-            self._input_parsers = (DGeoflowZipParser(), DGeoflowParser())
+            self._input_parsers = (DGeoFlowZipParser(), DGeoFlowParser())
         return self._input_parsers
 
     @property
-    def output_parsers(self) -> Tuple[DGeoflowParser, DGeoflowZipParser]:
+    def output_parsers(self) -> Tuple[DGeoFlowParser, DGeoFlowZipParser]:
         if not self._output_parsers:
-            self._output_parsers = (DGeoflowParser(), DGeoflowZipParser())
+            self._output_parsers = (DGeoFlowParser(), DGeoFlowZipParser())
         return self._output_parsers
 
     @property
     def parser_name(self) -> str:
-        return "DGeoflow"
+        return "DGeoFlow"

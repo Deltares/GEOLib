@@ -8,17 +8,17 @@ from teamcity import is_running_under_teamcity
 
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
-from geolib.models.dgeoflow import DGeoflowModel
-from geolib.models.dgeoflow.internal import DGeoflowStructure
+from geolib.models.dgeoflow import DGeoFlowModel
+from geolib.models.dgeoflow.internal import DGeoFlowStructure
 
 from tests.utils import TestUtils, only_teamcity
 
 
-class TestDGeoflowModel:
+class TestDGeoFlowModel:
     @pytest.mark.unittest
-    def test_instantiate_DGeoflowModel(self):
-        assert isinstance(DGeoflowModel(filename=None), BaseModel), (
-            "" + "DGeoflowModel does not instanciate BaseModel"
+    def test_instantiate_DGeoFlowModel(self):
+        assert isinstance(DGeoFlowModel(filename=None), BaseModel), (
+            "" + "DGeoFlowModel does not instanciate BaseModel"
         )
 
     @pytest.mark.systemtest
@@ -36,7 +36,7 @@ class TestDGeoflowModel:
     ):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(filepath))
-        dgeoflow_model = DGeoflowModel(filename=None)
+        dgeoflow_model = DGeoFlowModel(filename=None)
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
@@ -47,7 +47,7 @@ class TestDGeoflowModel:
 
         # 4. Verify final expectations.
         assert dgeoflow_model.is_valid
-        assert isinstance(dgeoflow_model.datastructure, DGeoflowStructure)
+        assert isinstance(dgeoflow_model.datastructure, DGeoFlowStructure)
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
@@ -59,7 +59,7 @@ class TestDGeoflowModel:
     def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        dgeoflow_model = DGeoflowModel(filename=None)
+        dgeoflow_model = DGeoFlowModel(filename=None)
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dgeoflow/parseandserialize")
         )
@@ -93,7 +93,7 @@ class TestDGeoflowModel:
     )
     def test_execute_model_succesfully(self, dir_path: str):
         # 1. Set up test data.
-        dm = DGeoflowModel()
+        dm = DGeoFlowModel()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dm.parse(test_filepath)
 
@@ -115,7 +115,7 @@ class TestDGeoflowModel:
     @pytest.mark.acceptance
     def test_generate_simple_model(self):
 
-        dm = DGeoflowModel()
+        dm = DGeoFlowModel()
 
         layer_1 = [
             Point(x=-50, z=-10),

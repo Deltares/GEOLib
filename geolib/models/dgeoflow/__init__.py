@@ -1,1 +1,1 @@
-from .dgeoflow_model import DGeoflowModel
+from .dgeoflow_model import DGeoFlowModel

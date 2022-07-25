@@ -3,21 +3,21 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from geolib.models.dgeoflow import DGeoflowModel
-from geolib.models.dgeoflow.internal import ForeignKeys, BoundaryCondition, DGeoflowStructure
+from geolib.models.dgeoflow import DGeoFlowModel
+from geolib.models.dgeoflow.internal import ForeignKeys, BoundaryCondition, DGeoFlowStructure
 
 from geolib.models.dstability.utils import children
 from tests.utils import TestUtils
 
 
-class TestDGeoflowInternal:
+class TestDGeoFlowInternal:
     @pytest.mark.integrationtest
     def test_dstability_fk_validation(self):
         # 1. Set up test model
         test_input_filepath = Path(
             TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox")
         )
-        dm = DGeoflowModel(filename=None)
+        dm = DGeoFlowModel(filename=None)
         dm.parse(test_input_filepath)
 
         # 2. Verify initial expectations.
@@ -32,7 +32,7 @@ class TestDGeoflowInternal:
 
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):
-            DGeoflowStructure(**dict(dm.datastructure))
+            DGeoFlowStructure(**dict(dm.datastructure))
 
 
     @pytest.mark.unittest
@@ -47,7 +47,7 @@ class TestDGeoflowInternal:
     @pytest.mark.unittest
     def test_find_subclass_from_children(self):
         # Setup
-        dm = DGeoflowModel()
+        dm = DGeoFlowModel()
         test_filepath = Path(
             TestUtils.get_local_test_data_dir("dgeoflow/Berekening3")
         )

@@ -3,14 +3,14 @@ from pathlib import Path
 
 import pytest
 
-from geolib.models.dgeoflow import DGeoflowModel
-from geolib.models.dgeoflow.dgeoflow_parserprovider import DGeoflowParser, DGeoflowZipParser
-from geolib.models.dgeoflow.serializer import DGeoflowInputZipSerializer, DGeoflowInputSerializer
+from geolib.models.dgeoflow import DGeoFlowModel
+from geolib.models.dgeoflow.dgeoflow_parserprovider import DGeoFlowParser, DGeoFlowZipParser
+from geolib.models.dgeoflow.serializer import DGeoFlowInputZipSerializer, DGeoFlowInputSerializer
 
 from tests.utils import TestUtils
 
 
-class TestDGeoflowInputParser:
+class TestDGeoFlowInputParser:
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
         "dir_path",
@@ -20,7 +20,7 @@ class TestDGeoflowInputParser:
     )
     def test_dgeoflow_parse_directory(self, dir_path: str):
         # 1. Set up test model
-        input_parser = DGeoflowParser()
+        input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dgeoflow/serialized")
@@ -42,7 +42,7 @@ class TestDGeoflowInputParser:
     @pytest.mark.integrationtest
     def test_dgeoflow_parse_flox(self):
         # 1. Set up test model
-        input_parser = DGeoflowZipParser()
+        input_parser = DGeoFlowZipParser()
         test_filepath = (
                 Path(TestUtils.get_local_test_data_dir("dgeoflow"))
                 / "Berekening3.flox"
@@ -66,7 +66,7 @@ class TestDGeoflowInputParser:
     @pytest.mark.integrationtest
     def test_dgeoflow_serialize_flox(self):
         # 1. Set up test model
-        input_parser = DGeoflowParser()
+        input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
         test_output_filepath = (
                 Path(TestUtils.get_output_test_data_dir("dgeoflow"))
@@ -81,13 +81,13 @@ class TestDGeoflowInputParser:
         assert input_structure.is_valid
 
         # 4. Verify final expectations.
-        ds = DGeoflowInputZipSerializer(ds=input_structure)
+        ds = DGeoFlowInputZipSerializer(ds=input_structure)
         ds.write(test_output_filepath)
 
     @pytest.mark.integrationtest
     def test_dgeoflow_serialize_folders(self):
         # 1. Set up test model
-        input_parser = DGeoflowParser()
+        input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dgeoflow/serialized")
@@ -98,12 +98,12 @@ class TestDGeoflowInputParser:
         assert input_structure.is_valid
 
         # 4. Verify final expectations.
-        ds = DGeoflowInputSerializer(ds=input_structure)
+        ds = DGeoFlowInputSerializer(ds=input_structure)
         ds.write(test_output_filepath)
 
     @pytest.mark.integrationtest
     def test_dgeoflow_parse_serialize_flox_model(self):
-        dsm = DGeoflowModel()
+        dsm = DGeoFlowModel()
         test_filepath = (
                 Path(TestUtils.get_local_test_data_dir("dgeoflow"))
                 / "Berekening3.flox"

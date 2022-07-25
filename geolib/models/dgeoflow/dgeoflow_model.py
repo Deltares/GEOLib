@@ -9,7 +9,7 @@ from pydantic import DirectoryPath, FilePath
 from geolib.geometry import Point
 from geolib.models import BaseDataClass, BaseModel
 from geolib.soils import Soil
-from .dgeoflow_parserprovider import DGeoflowParserProvider
+from .dgeoflow_parserprovider import DGeoFlowParserProvider
 
 from ...utils import camel_to_snake, snake_to_camel
 
@@ -18,20 +18,20 @@ from .internal import (
     GroundwaterFlowResult,
     PipingResult,
     DGeoFlowResult,
-    DGeoflowStructure,
+    DGeoFlowStructure,
     SoilCollection, SoilLayerCollection, PersistableSoilLayer,
 )
 
-from .serializer import DGeoflowInputSerializer, DGeoflowInputZipSerializer
+from .serializer import DGeoFlowInputSerializer, DGeoFlowInputZipSerializer
 
 
-class DGeoflowObject(BaseModel, metaclass=abc.ABCMeta):
+class DGeoFlowObject(BaseModel, metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def _to_DGeoflow_sub_structure(self):
+    def _to_DGeoFlow_sub_structure(self):
         raise NotImplementedError
 
 
-class DGeoflowModel(BaseModel):
+class DGeoFlowModel(BaseModel):
     """D-Geoflow is software for soft soil piping calculations.
 
     This model can read, modify and create
@@ -40,7 +40,7 @@ class DGeoflowModel(BaseModel):
 
     current_scenario: int = -1
     current_scenario_index: int = 0
-    datastructure: DGeoflowStructure = DGeoflowStructure()
+    datastructure: DGeoFlowStructure = DGeoFlowStructure()
     current_id: int = -1
 
     def __init__(self, *args, **data) -> None:
@@ -48,8 +48,8 @@ class DGeoflowModel(BaseModel):
         self.current_id = self.datastructure.get_unique_id()
 
     @property
-    def parser_provider_type(self) -> Type[DGeoflowParserProvider]:
-        return DGeoflowParserProvider
+    def parser_provider_type(self) -> Type[DGeoFlowParserProvider]:
+        return DGeoFlowParserProvider
 
     @property
     def console_path(self) -> Path:
@@ -118,9 +118,9 @@ class DGeoflowModel(BaseModel):
     def serialize(self, location: Union[FilePath, DirectoryPath]):
         """Support serializing to directory while developing for debugging purposes."""
         if not location.is_dir():
-            serializer = DGeoflowInputZipSerializer(ds=self.datastructure)
+            serializer = DGeoFlowInputZipSerializer(ds=self.datastructure)
         else:
-            serializer = DGeoflowInputSerializer(ds=self.datastructure)
+            serializer = DGeoFlowInputSerializer(ds=self.datastructure)
         serializer.write(location)
         self.filename = location
 

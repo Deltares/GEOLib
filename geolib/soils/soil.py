@@ -800,7 +800,7 @@ class Soil(SoilBaseModel):
         )
 
     def _to_dgeoflow(self):
-        from geolib.models.dgeoflow.internal import PersistableSoil as DGeoflowSoil
+        from geolib.models.dgeoflow.internal import PersistableSoil as DGeoFlowSoil
 
         kwargs = {
             "Id": self.id,
@@ -809,4 +809,4 @@ class Soil(SoilBaseModel):
             "HorizontalPermeability": self.storage_parameters.horizontal_permeability,
             "VerticalPermeability": self.storage_parameters.vertical_permeability
         }
-        return self.__transfer_soil_dict_to_model(kwargs, DGeoflowSoil())
+        return self.__transfer_soil_dict_to_model(kwargs, DGeoFlowSoil())
