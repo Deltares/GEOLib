@@ -501,8 +501,23 @@ class PersistableCalculation(DGeoflowBaseModelStructure):
     MeshPropertiesId: Optional[str]
     ResultsId: Optional[int]
 
+class GaussPointResult(DGeoflowBaseModelStructure):
+    Point: Optional[PersistablePoint] = None
+    HydraulicHead: float = 1
+
+class NodeResult(DGeoflowBaseModelStructure):
+    Point: Optional[PersistablePoint] = None
+    TotalPorePressure: float = 1
+    HydraulicDischarge: float = 1
+    
+class ElementResult(DGeoflowBaseModelStructure):
+    GaussPoints: Optional[List[GaussPointResult]] = []    
+    NodeResults: Optional[List[NodeResult]] = []    
+
 class GroundwaterFlowResult(DGeoflowSubStructure):
     Id: Optional[str] = None
+    Elements: Optional[List[ElementResult]] = []
+    ContentVersion: Optional[str] = "2"
 
     @classmethod
     def structure_group(cls) -> str:
@@ -792,15 +807,14 @@ class DGeoflowStructure(BaseModelStructure):
         except IndexError:
             return False
 
-    # TODO: result in another MR
-    # def has_result(self, stage_id: int) -> bool:
-    #     if self.has_stage(stage_id):
-    #         result_id = self.scenarios[stage_id].ResultId
-    #         if result_id is None:
-    #             return False
-    #         else:
-    #             return True
-    #     return False
+    def has_result(self, stage_id: int) -> bool:
+        if self.has_stage(stage_id):
+            result_id = self.stages[stage_id].ResultsId
+            if result_id is None:
+                return False
+            else:
+                return True
+        return False
 
     def has_soil_layers(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
