@@ -52,6 +52,7 @@ in the *console_folder*.
 - "DSettlementConsole/DSettlementConsole.exe"
 - "DSheetPilingConsole/DSheetPilingConsole.exe"
 - "DStabilityConsole/D-GEO Suite Stability GEOLIB Console.exe"
+- "DGeoFlowConsole/DGeoFlow Console.exe"
 
 Dynamic settings
 ----------------
