@@ -51,7 +51,7 @@ in the *console_folder*.
 - "DFoundationsConsole/DFoundationsConsole.exe"
 - "DSettlementConsole/DSettlementConsole.exe"
 - "DSheetPilingConsole/DSheetPilingConsole.exe"
-- "DStabilityConsole/D-GEO Suite Stability GEOLIB Console.exe"
+- "DStabilityConsole/D-Stability Console.exe"
 
 Dynamic settings
 ----------------
