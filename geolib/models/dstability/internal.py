@@ -267,6 +267,7 @@ class PersistableStateLinePoint(DStabilityBaseModelStructure):
     IsAboveAndBelowCorrelated: Optional[bool]
     IsProbabilistic: Optional[bool]
     Label: Optional[str]
+    Notes: Optional[str]
     X: Optional[float]
 
 
@@ -279,6 +280,7 @@ class PersistableStatePoint(DStabilityBaseModelStructure):
     Id: Optional[str]
     IsProbabilistic: Optional[bool]
     Label: Optional[str]
+    Notes: Optional[str]
     LayerId: Optional[str]
     Point: Optional[PersistablePoint]
     Stress: Optional[PersistableStress]
@@ -506,7 +508,8 @@ class PersistableSoil(DStabilityBaseModelStructure):
     )
     Id: str = ""
     IsProbabilistic: bool = False
-    Name: str = ""
+    Name: Optional[str]
+    Notes: Optional[str]
     ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
         ShearStrengthModelTypePhreaticLevelInternal.C_PHI
     )
@@ -829,14 +832,16 @@ class SoilCollection(DStabilitySubStructure):
 
 
 class PersistableForbiddenLine(DStabilityBaseModelStructure):
-    End: Optional[PersistablePoint]
     Label: Optional[str]
+    Notes: Optional[str]
+    End: Optional[PersistablePoint]
     Start: Optional[PersistablePoint]
 
 
 class PersistableGeotextile(DStabilityBaseModelStructure):
-    End: Optional[PersistablePoint]
     Label: Optional[str]
+    Notes: Optional[str]
+    End: Optional[PersistablePoint]
     ReductionArea: Optional[float]
     Start: Optional[PersistablePoint]
     TensileStrength: Optional[float]
@@ -855,6 +860,7 @@ class PersistableNail(DStabilityBaseModelStructure):
     GroutDiameter: Optional[float] = 0.0
     HorizontalSpacing: Optional[float] = 0.0
     Label: Optional[str]
+    Notes: Optional[str]
     LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
     Length: Optional[float]
     Location: Optional[PersistablePoint]
@@ -918,6 +924,7 @@ class PersistableBondStress(DStabilityBaseModelStructure):
 
 
 class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
+    AreBondStressesActive: Optional[bool] = False
     BondStresses: Optional[List[Optional[PersistableBondStress]]] = []
     CompressionRatio: Optional[float]
     RheologicalCoefficient: Optional[float]
@@ -943,6 +950,8 @@ class PersistableConsolidation(DStabilityBaseModelStructure):
 
 
 class PersistableEarthquake(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     FreeWaterFactor: Optional[float] = 0.0
     HorizontalFactor: Optional[float] = 0.0
@@ -959,6 +968,7 @@ class PersistableLineLoad(DStabilityBaseModelStructure):
     Angle: Optional[float]
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     Label: Optional[str]
+    Notes: Optional[str]
     Location: Optional[PersistablePoint]
     Magnitude: Optional[float]
     Spread: Optional[float]
@@ -967,6 +977,7 @@ class PersistableLineLoad(DStabilityBaseModelStructure):
 class PersistableTree(DStabilityBaseModelStructure):
     Force: Optional[float]
     Label: Optional[str]
+    Notes: Optional[str]
     Location: Optional[PersistablePoint]
     RootZoneWidth: Optional[float]
     Spread: Optional[float]
@@ -976,6 +987,7 @@ class PersistableUniformLoad(DStabilityBaseModelStructure):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     End: Optional[float]
     Label: Optional[str]
+    Notes: Optional[str]
     Magnitude: Optional[float]
     Spread: Optional[float]
     Start: Optional[float]
@@ -1116,11 +1128,13 @@ class Geometry(DStabilitySubStructure):
 class PersistableBerm(DStabilityBaseModelStructure):
     AddedLayerId: Optional[str]
     Label: Optional[str]
+    Notes: Optional[str]
     Points: Optional[List[Optional[PersistablePoint]]]
 
 
 class PersistableExcavation(DStabilityBaseModelStructure):
     Label: Optional[str]
+    Notes: Optional[str]
     Points: Optional[List[Optional[PersistablePoint]]]
 
 
@@ -1142,6 +1156,8 @@ class PersistableCircle(DStabilityBaseModelStructure):
 
 
 class PersistableBishopSettings(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     Circle: Optional[PersistableCircle] = PersistableCircle()
 
 
@@ -1155,6 +1171,8 @@ class NullablePersistablePoint(DStabilityBaseModelStructure):
 
 
 class PersistableSearchGrid(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     BottomLeft: Optional[NullablePersistablePoint] = None
     NumberOfPointsInX: Optional[int] = 1
     NumberOfPointsInZ: Optional[int] = 1
@@ -1174,6 +1192,8 @@ class PersistableSlipPlaneConstraints(DStabilityBaseModelStructure):
 
 
 class PersistableTangentLines(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     BottomTangentLineZ: Optional[float] = "NaN"
     NumberOfTangentLines: Optional[int] = 1
     Space: Optional[float] = 0.5
@@ -1201,6 +1221,8 @@ CalculationType = CalculationTypeEnum
 
 
 class PersistableSpencerSettings(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
 
 
@@ -1219,6 +1241,8 @@ class PersistableGeneticSlipPlaneConstraints(DStabilityBaseModelStructure):
 
 
 class PersistableSpencerGeneticSettings(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
     SlipPlaneA: Optional[List[Optional[PersistablePoint]]] = None
     SlipPlaneB: Optional[List[Optional[PersistablePoint]]] = None
@@ -1234,23 +1258,31 @@ class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
 
 
 class PersistableUpliftVanSettings(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     SlipPlane: Optional[
         PersistableTwoCirclesOnTangentLine
     ] = PersistableTwoCirclesOnTangentLine()
 
 
 class PersistableSearchArea(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     Height: Optional[float] = 0.0
     TopLeft: Optional[NullablePersistablePoint] = None
     Width: Optional[float] = 0.0
 
 
 class PersistableTangentArea(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     Height: Optional[float] = 0.0
     TopZ: Optional[float] = None
 
 
 class PersistableUpliftVanParticleSwarmSettings(DStabilityBaseModelStructure):
+    Label: Optional[str]
+    Notes: Optional[str]
     OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
     SearchAreaA: Optional[PersistableSearchArea] = PersistableSearchArea()
     SearchAreaB: Optional[PersistableSearchArea] = PersistableSearchArea()
@@ -1387,6 +1419,7 @@ class BishopBruteForceResult(DStabilitySubStructure):
 
 class PersistableSoilContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
+    UncorrelatedAlpha: Optional[float] = None
     Property: Optional[str] = None
     SoilId: Optional[str] = None
     Value: Optional[float] = None
@@ -1394,6 +1427,7 @@ class PersistableSoilContribution(DStabilityBaseModelStructure):
 
 class PersistableStageContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
+    UncorrelatedAlpha: Optional[float] = None
     Property: Optional[str] = None
     StageId: Optional[str] = None
     Value: Optional[float] = None
@@ -1401,6 +1435,7 @@ class PersistableStageContribution(DStabilityBaseModelStructure):
 
 class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
+    UncorrelatedAlpha: Optional[float] = None
     Property: Optional[str] = None
     StateLinePointId: Optional[str] = None
     Value: Optional[float] = None
@@ -1408,6 +1443,7 @@ class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
 
 class PersistableStatePointContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
+    UncorrelatedAlpha: Optional[float] = None
     Property: Optional[str] = None
     StatePointId: Optional[str] = None
     Value: Optional[float] = None
