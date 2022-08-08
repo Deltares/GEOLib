@@ -557,7 +557,7 @@ class TestDStabilityModel:
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
         # stix output file path
         test_output_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_serialized_new.stix")
+            TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
         )
         # parse existing files
         dm.parse(test_filepath)
@@ -578,7 +578,7 @@ class TestDStabilityModel:
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
         # stix output file path
         test_output_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_serialized_new.stix")
+            TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
         )
         # parse existing files
         dm.parse(test_filepath)
