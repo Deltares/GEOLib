@@ -115,7 +115,7 @@ class TestDStabilityModel:
         [
             pytest.param("dstability/example_1", id="Input Structure"),
             pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
-            pytest.param("dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.1"),
+            pytest.param("dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"),
             pytest.param("dstability/ResultExample", id="Result Example")
         ],
     )
