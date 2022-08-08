@@ -1,0 +1,1419 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Soils &#8212; geolib 0.1.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="D-Foundations" href="models/dfoundations.html" />
+    <link rel="prev" title="Geometry" href="geometry.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geometry.html" title="Previous document">Geometry</a>
+        </li>
+        <li>
+          <a href="models/dfoundations.html" title="Next document">D-Foundations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="soils">
+<span id="soilsdev"></span><h1>Soils<a class="headerlink" href="#soils" title="Permalink to this headline">¶</a></h1>
+<section id="soil-libraries">
+<h2>Soil Libraries<a class="headerlink" href="#soil-libraries" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to import various input files which will automatically generate <cite>Soil</cite> objects from them.
+Several pre-existing soil materials as used in D-Foundations based on the NEN 9997-1 norm are defined here as well.
+The Belgian Annex Soils will be added later.</p>
+<p>Using Soil Library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">soils</span><span class="p">)</span>
+<span class="go">&lt;Soil A with code a&gt;, &lt;Soil B with code b&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="cpt-interpretation">
+<h2>CPT interpretation<a class="headerlink" href="#cpt-interpretation" title="Permalink to this headline">¶</a></h2>
+<p>This package won’t interpret CPTs. This will follow in the GEOLib+ package.
+There is a <code class="xref py py-class docutils literal notranslate"><span class="pre">geolib.soils.layers.CPT</span></code> class however, to load from D-Foundations and DSheetPiling input files.</p>
+</section>
+<section id="module-geolib.soils.soil">
+<span id="the-soil-class"></span><h2>The Soil Class<a class="headerlink" href="#module-geolib.soils.soil" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">BjerrumParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bjerrum parameters class</p>
+<dl class="simple">
+<dt>input_type_is_comp_ratio: [bool] is true when compression input mode is “compression ratio”, false when compression</dt><dd><p>input mode is “Compression index”</p>
+</dd>
+<dt>If input_type_is_comp_ratio is true, the following parameters are used as input:</dt><dd><p>reloading_swelling_RR
+compression_ratio_CR
+coef_secondary_compression_Ca</p>
+</dd>
+<dt>If input_type_is_comp_ratio is false, the following parameters are used as input:</dt><dd><p>reloading_swelling_index_Cr
+compression_index_Cc
+coef_secondary_compression_Ca</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.coef_secondary_compression_Ca">
+<span class="sig-name descname"><span class="pre">coef_secondary_compression_Ca</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.coef_secondary_compression_Ca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.compression_index_Cc">
+<span class="sig-name descname"><span class="pre">compression_index_Cc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.compression_index_Cc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.compression_ratio_CR">
+<span class="sig-name descname"><span class="pre">compression_ratio_CR</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.compression_ratio_CR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.correlation_reload_primary_compression_ratio">
+<span class="sig-name descname"><span class="pre">correlation_reload_primary_compression_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.correlation_reload_primary_compression_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.input_type_is_comp_ratio">
+<span class="sig-name descname"><span class="pre">input_type_is_comp_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.input_type_is_comp_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.primary_compression_index">
+<span class="sig-name descname"><span class="pre">primary_compression_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.primary_compression_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.primary_compression_ratio">
+<span class="sig-name descname"><span class="pre">primary_compression_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.primary_compression_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.reloading_index">
+<span class="sig-name descname"><span class="pre">reloading_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.reloading_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.reloading_ratio">
+<span class="sig-name descname"><span class="pre">reloading_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.reloading_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.reloading_swelling_RR">
+<span class="sig-name descname"><span class="pre">reloading_swelling_RR</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.reloading_swelling_RR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.BjerrumParameters.reloading_swelling_index_Cr">
+<span class="sig-name descname"><span class="pre">reloading_swelling_index_Cr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.BjerrumParameters.reloading_swelling_index_Cr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.ConeResistance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">ConeResistance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.ConeResistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cone resistance class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ConeResistance.max_cone_resistance">
+<span class="sig-name descname"><span class="pre">max_cone_resistance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.ConeResistance.max_cone_resistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ConeResistance.max_cone_resistance_type">
+<span class="sig-name descname"><span class="pre">max_cone_resistance_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">enum.Enum</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.ConeResistance.max_cone_resistance_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.DistributionType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">DistributionType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.DistributionType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.DistributionType.Deterministic">
+<span class="sig-name descname"><span class="pre">Deterministic</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#geolib.soils.soil.DistributionType.Deterministic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.DistributionType.LogNormal">
+<span class="sig-name descname"><span class="pre">LogNormal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#geolib.soils.soil.DistributionType.LogNormal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.DistributionType.Normal">
+<span class="sig-name descname"><span class="pre">Normal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.soils.soil.DistributionType.Normal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.DistributionType.Undefined">
+<span class="sig-name descname"><span class="pre">Undefined</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.DistributionType.Undefined" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficients">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">EarthPressureCoefficients</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficients" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficients.active">
+<span class="sig-name descname"><span class="pre">active</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficients.active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficients.earth_pressure_coefficients_type">
+<span class="sig-name descname"><span class="pre">earth_pressure_coefficients_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.EarthPressureCoefficientsType" title="geolib.soils.soil.EarthPressureCoefficientsType"><span class="pre">geolib.soils.soil.EarthPressureCoefficientsType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficients.earth_pressure_coefficients_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficients.neutral">
+<span class="sig-name descname"><span class="pre">neutral</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficients.neutral" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficients.passive">
+<span class="sig-name descname"><span class="pre">passive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficients.passive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficientsType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">EarthPressureCoefficientsType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficientsType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficientsType.BRINCHHANSEN">
+<span class="sig-name descname"><span class="pre">BRINCHHANSEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficientsType.BRINCHHANSEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.EarthPressureCoefficientsType.MANUAL">
+<span class="sig-name descname"><span class="pre">MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.EarthPressureCoefficientsType.MANUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.GrainType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">GrainType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.GrainType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.GrainType.COARSE">
+<span class="sig-name descname"><span class="pre">COARSE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.GrainType.COARSE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.GrainType.FINE">
+<span class="sig-name descname"><span class="pre">FINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.GrainType.FINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviour">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">HorizontalBehaviour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Horizontal behaviour class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviour.horizontal_behavior_type">
+<span class="sig-name descname"><span class="pre">horizontal_behavior_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.HorizontalBehaviourType" title="geolib.soils.soil.HorizontalBehaviourType"><span class="pre">geolib.soils.soil.HorizontalBehaviourType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviour.horizontal_behavior_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviour.soil_default_elasticity">
+<span class="sig-name descname"><span class="pre">soil_default_elasticity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviour.soil_default_elasticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviour.soil_elasticity">
+<span class="sig-name descname"><span class="pre">soil_elasticity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviour.soil_elasticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviourType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">HorizontalBehaviourType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviourType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviourType.Elastic">
+<span class="sig-name descname"><span class="pre">Elastic</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviourType.Elastic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviourType.Foundation">
+<span class="sig-name descname"><span class="pre">Foundation</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviourType.Foundation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.HorizontalBehaviourType.Stiff">
+<span class="sig-name descname"><span class="pre">Stiff</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.HorizontalBehaviourType.Stiff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.IsotacheParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">IsotacheParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.IsotacheParameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.IsotacheParameters.precon_isotache_type">
+<span class="sig-name descname"><span class="pre">precon_isotache_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StateType" title="geolib.soils.soil.StateType"><span class="pre">geolib.soils.soil.StateType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.IsotacheParameters.precon_isotache_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.IsotacheParameters.primary_compression_constant_b">
+<span class="sig-name descname"><span class="pre">primary_compression_constant_b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.IsotacheParameters.primary_compression_constant_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.IsotacheParameters.reloading_swelling_constant_a">
+<span class="sig-name descname"><span class="pre">reloading_swelling_constant_a</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.IsotacheParameters.reloading_swelling_constant_a" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.IsotacheParameters.secondary_compression_constant_c">
+<span class="sig-name descname"><span class="pre">secondary_compression_constant_c</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.IsotacheParameters.secondary_compression_constant_c" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">KoppejanParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.precon_koppejan_type">
+<span class="sig-name descname"><span class="pre">precon_koppejan_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StateType" title="geolib.soils.soil.StateType"><span class="pre">geolib.soils.soil.StateType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.precon_koppejan_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.preconsolidation_pressure">
+<span class="sig-name descname"><span class="pre">preconsolidation_pressure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.preconsolidation_pressure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.primary_Ap">
+<span class="sig-name descname"><span class="pre">primary_Ap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.primary_Ap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.primary_Asec">
+<span class="sig-name descname"><span class="pre">primary_Asec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.primary_Asec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.primary_Cp">
+<span class="sig-name descname"><span class="pre">primary_Cp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.primary_Cp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.primary_Cp_point">
+<span class="sig-name descname"><span class="pre">primary_Cp_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.primary_Cp_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.secular_Cs">
+<span class="sig-name descname"><span class="pre">secular_Cs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.secular_Cs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.secular_Cs_point">
+<span class="sig-name descname"><span class="pre">secular_Cs_point</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.secular_Cs_point" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.KoppejanParameters.soil_ap_as_approximation_by_Cp_Cs">
+<span class="sig-name descname"><span class="pre">soil_ap_as_approximation_by_Cp_Cs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.KoppejanParameters.soil_ap_as_approximation_by_Cp_Cs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.LambdaType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">LambdaType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.LambdaType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.LambdaType.KOTTER">
+<span class="sig-name descname"><span class="pre">KOTTER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.soils.soil.LambdaType.KOTTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.LambdaType.MANUAL">
+<span class="sig-name descname"><span class="pre">MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.LambdaType.MANUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.LambdaType.MULLERBRESLAU">
+<span class="sig-name descname"><span class="pre">MULLERBRESLAU</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.LambdaType.MULLERBRESLAU" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.ModulusSubgradeReaction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">ModulusSubgradeReaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.ModulusSubgradeReaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ModulusSubgradeReaction.MANUAL">
+<span class="sig-name descname"><span class="pre">MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.ModulusSubgradeReaction.MANUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ModulusSubgradeReaction.MENARD">
+<span class="sig-name descname"><span class="pre">MENARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.ModulusSubgradeReaction.MENARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.MohrCoulombParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">MohrCoulombParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.MohrCoulombParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mohr Coulomb parameters class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.MohrCoulombParameters.cohesion">
+<span class="sig-name descname"><span class="pre">cohesion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.MohrCoulombParameters.cohesion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.MohrCoulombParameters.cohesion_and_friction_angle_correlated">
+<span class="sig-name descname"><span class="pre">cohesion_and_friction_angle_correlated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.MohrCoulombParameters.cohesion_and_friction_angle_correlated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.MohrCoulombParameters.dilatancy_angle">
+<span class="sig-name descname"><span class="pre">dilatancy_angle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.MohrCoulombParameters.dilatancy_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.MohrCoulombParameters.friction_angle">
+<span class="sig-name descname"><span class="pre">friction_angle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.MohrCoulombParameters.friction_angle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.MohrCoulombParameters.friction_angle_interface">
+<span class="sig-name descname"><span class="pre">friction_angle_interface</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.MohrCoulombParameters.friction_angle_interface" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">ShearStrengthModelTypePhreaticLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shear Strength Model Type. These types represent the
+shear strength model that can be found in the UI of
+the D-Stability program.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB">
+<span class="sig-name descname"><span class="pre">MOHR_COULOMB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Mohr_Coulomb'</span></em><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'None'</span></em><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SHANSEP">
+<span class="sig-name descname"><span class="pre">SHANSEP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SHANSEP'</span></em><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SHANSEP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SUTABLE">
+<span class="sig-name descname"><span class="pre">SUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SuTable'</span></em><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SUTABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.transform_shear_strength_model_type_to_internal">
+<span class="sig-name descname"><span class="pre">transform_shear_strength_model_type_to_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.transform_shear_strength_model_type_to_internal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">Soil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.Soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Soil Material.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.bjerrum_parameters">
+<span class="sig-name descname"><span class="pre">bjerrum_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.BjerrumParameters" title="geolib.soils.soil.BjerrumParameters"><span class="pre">geolib.soils.soil.BjerrumParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.bjerrum_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.code">
+<span class="sig-name descname"><span class="pre">code</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.color">
+<span class="sig-name descname"><span class="pre">color</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil_utils.Color" title="geolib.soils.soil_utils.Color"><span class="pre">geolib.soils.soil_utils.Color</span></a></em><a class="headerlink" href="#geolib.soils.soil.Soil.color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.cone_resistance">
+<span class="sig-name descname"><span class="pre">cone_resistance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.ConeResistance" title="geolib.soils.soil.ConeResistance"><span class="pre">geolib.soils.soil.ConeResistance</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.cone_resistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.earth_pressure_coefficients">
+<span class="sig-name descname"><span class="pre">earth_pressure_coefficients</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.EarthPressureCoefficients" title="geolib.soils.soil.EarthPressureCoefficients"><span class="pre">geolib.soils.soil.EarthPressureCoefficients</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.earth_pressure_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.horizontal_behaviour">
+<span class="sig-name descname"><span class="pre">horizontal_behaviour</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.HorizontalBehaviour" title="geolib.soils.soil.HorizontalBehaviour"><span class="pre">geolib.soils.soil.HorizontalBehaviour</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.horizontal_behaviour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.is_drained">
+<span class="sig-name descname"><span class="pre">is_drained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.is_drained" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.is_probabilistic">
+<span class="sig-name descname"><span class="pre">is_probabilistic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.is_probabilistic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.isotache_parameters">
+<span class="sig-name descname"><span class="pre">isotache_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.IsotacheParameters" title="geolib.soils.soil.IsotacheParameters"><span class="pre">geolib.soils.soil.IsotacheParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.isotache_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.koppejan_parameters">
+<span class="sig-name descname"><span class="pre">koppejan_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.KoppejanParameters" title="geolib.soils.soil.KoppejanParameters"><span class="pre">geolib.soils.soil.KoppejanParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.koppejan_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.mohr_coulomb_parameters">
+<span class="sig-name descname"><span class="pre">mohr_coulomb_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.MohrCoulombParameters" title="geolib.soils.soil.MohrCoulombParameters"><span class="pre">geolib.soils.soil.MohrCoulombParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.mohr_coulomb_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.set_all_stochastic_parameters">
+<span class="sig-name descname"><span class="pre">set_all_stochastic_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.Soil.set_all_stochastic_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loop over all fields in soil class, and converts floats to stochastic parameters if necessary</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.set_stochastic_parameters">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_stochastic_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_class</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.Soil.set_stochastic_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts float to stochastic parameter, where the mean is set as the input float value
+:type input_class: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code>
+:param input_class:</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.shear_strength_model_above_phreatic_level">
+<span class="sig-name descname"><span class="pre">shear_strength_model_above_phreatic_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel" title="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel"><span class="pre">geolib.soils.soil.ShearStrengthModelTypePhreaticLevel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.shear_strength_model_above_phreatic_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.shear_strength_model_below_phreatic_level">
+<span class="sig-name descname"><span class="pre">shear_strength_model_below_phreatic_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel" title="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel"><span class="pre">geolib.soils.soil.ShearStrengthModelTypePhreaticLevel</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.shear_strength_model_below_phreatic_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.shell_factor">
+<span class="sig-name descname"><span class="pre">shell_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.shell_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_classification_parameters">
+<span class="sig-name descname"><span class="pre">soil_classification_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilClassificationParameters" title="geolib.soils.soil.SoilClassificationParameters"><span class="pre">geolib.soils.soil.SoilClassificationParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_classification_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_state">
+<span class="sig-name descname"><span class="pre">soil_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilState" title="geolib.soils.soil.SoilState"><span class="pre">geolib.soils.soil.SoilState</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_stiffness_parameters">
+<span class="sig-name descname"><span class="pre">soil_stiffness_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilStiffnessParameters" title="geolib.soils.soil.SoilStiffnessParameters"><span class="pre">geolib.soils.soil.SoilStiffnessParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_stiffness_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_type_be">
+<span class="sig-name descname"><span class="pre">soil_type_be</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilType" title="geolib.soils.soil.SoilType"><span class="pre">geolib.soils.soil.SoilType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_type_be" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_type_nl">
+<span class="sig-name descname"><span class="pre">soil_type_nl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilType" title="geolib.soils.soil.SoilType"><span class="pre">geolib.soils.soil.SoilType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_type_nl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_type_settlement_by_vibrations">
+<span class="sig-name descname"><span class="pre">soil_type_settlement_by_vibrations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilType" title="geolib.soils.soil.SoilType"><span class="pre">geolib.soils.soil.SoilType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_type_settlement_by_vibrations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.soil_weight_parameters">
+<span class="sig-name descname"><span class="pre">soil_weight_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SoilWeightParameters" title="geolib.soils.soil.SoilWeightParameters"><span class="pre">geolib.soils.soil.SoilWeightParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.soil_weight_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.storage_parameters">
+<span class="sig-name descname"><span class="pre">storage_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StorageParameters" title="geolib.soils.soil.StorageParameters"><span class="pre">geolib.soils.soil.StorageParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.storage_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.subgrade_reaction_parameters">
+<span class="sig-name descname"><span class="pre">subgrade_reaction_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SubgradeReactionParameters" title="geolib.soils.soil.SubgradeReactionParameters"><span class="pre">geolib.soils.soil.SubgradeReactionParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.subgrade_reaction_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.undrained_parameters">
+<span class="sig-name descname"><span class="pre">undrained_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.UndrainedParameters" title="geolib.soils.soil.UndrainedParameters"><span class="pre">geolib.soils.soil.UndrainedParameters</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.undrained_parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.use_probabilistic_defaults">
+<span class="sig-name descname"><span class="pre">use_probabilistic_defaults</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.use_probabilistic_defaults" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.use_tension">
+<span class="sig-name descname"><span class="pre">use_tension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.Soil.use_tension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilBaseModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SoilBaseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilBaseModel" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilBaseModel.fail_on_infinite">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fail_on_infinite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilBaseModel.fail_on_infinite" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SoilClassificationParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Soil classification class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.d_50">
+<span class="sig-name descname"><span class="pre">d_50</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.d_50" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.grain_type">
+<span class="sig-name descname"><span class="pre">grain_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.GrainType" title="geolib.soils.soil.GrainType"><span class="pre">geolib.soils.soil.GrainType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.grain_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.initial_void_ratio">
+<span class="sig-name descname"><span class="pre">initial_void_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.initial_void_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.max_void_ratio">
+<span class="sig-name descname"><span class="pre">max_void_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.max_void_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.min_void_ratio">
+<span class="sig-name descname"><span class="pre">min_void_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.min_void_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.porosity">
+<span class="sig-name descname"><span class="pre">porosity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.porosity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilClassificationParameters.relative_density">
+<span class="sig-name descname"><span class="pre">relative_density</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilClassificationParameters.relative_density" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SoilState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilState" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.equivalent_age">
+<span class="sig-name descname"><span class="pre">equivalent_age</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.equivalent_age" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.ocr_layer">
+<span class="sig-name descname"><span class="pre">ocr_layer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.ocr_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.pop_layer">
+<span class="sig-name descname"><span class="pre">pop_layer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.pop_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.state_lines">
+<span class="sig-name descname"><span class="pre">state_lines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StateLine" title="geolib.soils.soil.StateLine"><span class="pre">geolib.soils.soil.StateLine</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.state_lines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.state_points">
+<span class="sig-name descname"><span class="pre">state_points</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StatePoint" title="geolib.soils.soil.StatePoint"><span class="pre">geolib.soils.soil.StatePoint</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.state_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.use_equivalent_age">
+<span class="sig-name descname"><span class="pre">use_equivalent_age</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.use_equivalent_age" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilState.yield_stress_layer">
+<span class="sig-name descname"><span class="pre">yield_stress_layer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilState.yield_stress_layer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilStiffnessParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SoilStiffnessParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilStiffnessParameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilStiffnessParameters.emod_menard">
+<span class="sig-name descname"><span class="pre">emod_menard</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilStiffnessParameters.emod_menard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SoilType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType.CLAY">
+<span class="sig-name descname"><span class="pre">CLAY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#geolib.soils.soil.SoilType.CLAY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType.GRAVEL">
+<span class="sig-name descname"><span class="pre">GRAVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.SoilType.GRAVEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType.LOAM">
+<span class="sig-name descname"><span class="pre">LOAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.soils.soil.SoilType.LOAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType.PEAT">
+<span class="sig-name descname"><span class="pre">PEAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#geolib.soils.soil.SoilType.PEAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType.SAND">
+<span class="sig-name descname"><span class="pre">SAND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.SoilType.SAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilType.SANDY_LOAM">
+<span class="sig-name descname"><span class="pre">SANDY_LOAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#geolib.soils.soil.SoilType.SANDY_LOAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilWeightParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SoilWeightParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SoilWeightParameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilWeightParameters.saturated_weight">
+<span class="sig-name descname"><span class="pre">saturated_weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilWeightParameters.saturated_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SoilWeightParameters.unsaturated_weight">
+<span class="sig-name descname"><span class="pre">unsaturated_weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SoilWeightParameters.unsaturated_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.StateLine">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">StateLine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.StateLine" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO Decide if we want to keep state in soil class
+TODO decide if we want cross-dependency to geometry class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StateLine.state_line_points">
+<span class="sig-name descname"><span class="pre">state_line_points</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><span class="pre">geolib.geometry.one.Point</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StateLine.state_line_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.StatePoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">StatePoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.StatePoint" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StatePoint.state_layer_id">
+<span class="sig-name descname"><span class="pre">state_layer_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StatePoint.state_layer_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StatePoint.state_point_id">
+<span class="sig-name descname"><span class="pre">state_point_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StatePoint.state_point_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StatePoint.state_point_is_probabilistic">
+<span class="sig-name descname"><span class="pre">state_point_is_probabilistic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StatePoint.state_point_is_probabilistic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StatePoint.state_point_type">
+<span class="sig-name descname"><span class="pre">state_point_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StateType" title="geolib.soils.soil.StateType"><span class="pre">geolib.soils.soil.StateType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StatePoint.state_point_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.StateType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">StateType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.StateType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StateType.OCR">
+<span class="sig-name descname"><span class="pre">OCR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OCR'</span></em><a class="headerlink" href="#geolib.soils.soil.StateType.OCR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StateType.POP">
+<span class="sig-name descname"><span class="pre">POP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'POP'</span></em><a class="headerlink" href="#geolib.soils.soil.StateType.POP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StateType.YIELD_STRESS">
+<span class="sig-name descname"><span class="pre">YIELD_STRESS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'yield_stress'</span></em><a class="headerlink" href="#geolib.soils.soil.StateType.YIELD_STRESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">StochasticParameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.StochasticParameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stochastic parameters class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.correlation_coefficient">
+<span class="sig-name descname"><span class="pre">correlation_coefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.correlation_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.distribution_type">
+<span class="sig-name descname"><span class="pre">distribution_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.distribution_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.high_characteristic_value">
+<span class="sig-name descname"><span class="pre">high_characteristic_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.high_characteristic_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.high_design_value">
+<span class="sig-name descname"><span class="pre">high_design_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.high_design_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.is_probabilistic">
+<span class="sig-name descname"><span class="pre">is_probabilistic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.is_probabilistic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.low_characteristic_value">
+<span class="sig-name descname"><span class="pre">low_characteristic_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.low_characteristic_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.low_design_value">
+<span class="sig-name descname"><span class="pre">low_design_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.low_design_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StochasticParameter.standard_deviation">
+<span class="sig-name descname"><span class="pre">standard_deviation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StochasticParameter.standard_deviation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">StorageParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.StorageParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>In this case vertical_permeability has a unit of [m/day]. In GUI
+of the D-Settlement this value is displayed as [m/s].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters.horizontal_permeability">
+<span class="sig-name descname"><span class="pre">horizontal_permeability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StorageParameters.horizontal_permeability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters.permeability_horizontal_factor">
+<span class="sig-name descname"><span class="pre">permeability_horizontal_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StorageParameters.permeability_horizontal_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters.permeability_strain_type">
+<span class="sig-name descname"><span class="pre">permeability_strain_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StorageParameters.permeability_strain_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters.storage_type">
+<span class="sig-name descname"><span class="pre">storage_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.StorageTypes" title="geolib.soils.soil.StorageTypes"><span class="pre">geolib.soils.soil.StorageTypes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StorageParameters.storage_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters.vertical_consolidation_coefficient">
+<span class="sig-name descname"><span class="pre">vertical_consolidation_coefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StorageParameters.vertical_consolidation_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageParameters.vertical_permeability">
+<span class="sig-name descname"><span class="pre">vertical_permeability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.StorageParameters.vertical_permeability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageTypes">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">StorageTypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.StorageTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageTypes.constant_permeability">
+<span class="sig-name descname"><span class="pre">constant_permeability</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.soils.soil.StorageTypes.constant_permeability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageTypes.strain_dependent_permeability">
+<span class="sig-name descname"><span class="pre">strain_dependent_permeability</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.soils.soil.StorageTypes.strain_dependent_permeability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.StorageTypes.vertical_consolidation_coefficient">
+<span class="sig-name descname"><span class="pre">vertical_consolidation_coefficient</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.soils.soil.StorageTypes.vertical_consolidation_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SuTablePoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SuTablePoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SuTablePoint" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SuTablePoint.stress">
+<span class="sig-name descname"><span class="pre">stress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.soil.SuTablePoint.stress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SuTablePoint.su">
+<span class="sig-name descname"><span class="pre">su</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.soil.SuTablePoint.su" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SubgradeReactionParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_1_bottom">
+<span class="sig-name descname"><span class="pre">k_1_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_1_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_1_bottom_side">
+<span class="sig-name descname"><span class="pre">k_1_bottom_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_1_bottom_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_1_top">
+<span class="sig-name descname"><span class="pre">k_1_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_1_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_1_top_side">
+<span class="sig-name descname"><span class="pre">k_1_top_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_1_top_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_2_bottom">
+<span class="sig-name descname"><span class="pre">k_2_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_2_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_2_bottom_side">
+<span class="sig-name descname"><span class="pre">k_2_bottom_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_2_bottom_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_2_top">
+<span class="sig-name descname"><span class="pre">k_2_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_2_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_2_top_side">
+<span class="sig-name descname"><span class="pre">k_2_top_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_2_top_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_3_bottom">
+<span class="sig-name descname"><span class="pre">k_3_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_3_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_3_bottom_side">
+<span class="sig-name descname"><span class="pre">k_3_bottom_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_3_bottom_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_3_top">
+<span class="sig-name descname"><span class="pre">k_3_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_3_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_3_top_side">
+<span class="sig-name descname"><span class="pre">k_3_top_side</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_3_top_side" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_4_bottom">
+<span class="sig-name descname"><span class="pre">k_4_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_4_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_4_top">
+<span class="sig-name descname"><span class="pre">k_4_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_4_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_o_bottom">
+<span class="sig-name descname"><span class="pre">k_o_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_o_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.k_o_top">
+<span class="sig-name descname"><span class="pre">k_o_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.k_o_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.lambda_type">
+<span class="sig-name descname"><span class="pre">lambda_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.LambdaType" title="geolib.soils.soil.LambdaType"><span class="pre">geolib.soils.soil.LambdaType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.lambda_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.modulus_subgrade_reaction_type">
+<span class="sig-name descname"><span class="pre">modulus_subgrade_reaction_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.ModulusSubgradeReaction" title="geolib.soils.soil.ModulusSubgradeReaction"><span class="pre">geolib.soils.soil.ModulusSubgradeReaction</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.modulus_subgrade_reaction_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.tangent_secant_1">
+<span class="sig-name descname"><span class="pre">tangent_secant_1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.tangent_secant_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.tangent_secant_2">
+<span class="sig-name descname"><span class="pre">tangent_secant_2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.tangent_secant_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SubgradeReactionParameters.tangent_secant_3">
+<span class="sig-name descname"><span class="pre">tangent_secant_3</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.SubgradeReactionParameters.tangent_secant_3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">UndrainedParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Undrained shear strength parameters class. This class includes the SU Table and SHANSEP model variables included in D-Stability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.probabilistic_su_table">
+<span class="sig-name descname"><span class="pre">probabilistic_su_table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.probabilistic_su_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.s_and_m_correlated">
+<span class="sig-name descname"><span class="pre">s_and_m_correlated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.s_and_m_correlated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.shear_strength_ratio">
+<span class="sig-name descname"><span class="pre">shear_strength_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.shear_strength_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.shear_strength_ratio_and_shear_strength_exponent_correlated">
+<span class="sig-name descname"><span class="pre">shear_strength_ratio_and_shear_strength_exponent_correlated</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.shear_strength_ratio_and_shear_strength_exponent_correlated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.strength_increase_exponent">
+<span class="sig-name descname"><span class="pre">strength_increase_exponent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.soil.StochasticParameter" title="geolib.soils.soil.StochasticParameter"><span class="pre">geolib.soils.soil.StochasticParameter</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.strength_increase_exponent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.su_table">
+<span class="sig-name descname"><span class="pre">su_table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.soil.SuTablePoint" title="geolib.soils.soil.SuTablePoint"><span class="pre">geolib.soils.soil.SuTablePoint</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.su_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.su_table_variation_coefficient">
+<span class="sig-name descname"><span class="pre">su_table_variation_coefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.su_table_variation_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.to_su_table_points">
+<span class="sig-name descname"><span class="pre">to_su_table_points</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.to_su_table_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.undrained_shear_strength">
+<span class="sig-name descname"><span class="pre">undrained_shear_strength</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.undrained_shear_strength" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.undrained_shear_strength_bearing_capacity_factor">
+<span class="sig-name descname"><span class="pre">undrained_shear_strength_bearing_capacity_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.undrained_shear_strength_bearing_capacity_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.undrained_shear_strength_bottom">
+<span class="sig-name descname"><span class="pre">undrained_shear_strength_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.undrained_shear_strength_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.UndrainedParameters.undrained_shear_strength_top">
+<span class="sig-name descname"><span class="pre">undrained_shear_strength_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.soil.UndrainedParameters.undrained_shear_strength_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil_utils.Color">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil_utils.</span></span><span class="sig-name descname"><span class="pre">Color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil_utils.Color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color type from Pydantic</p>
+<p>see <a class="reference external" href="https://pydantic-docs.helpmanual.io/usage/types/#color-type">https://pydantic-docs.helpmanual.io/usage/types/#color-type</a></p>
+<p class="rubric">Example</p>
+<p>For construction:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Color</span><span class="p">(</span><span class="s2">&quot;ff00ff&quot;</span><span class="p">)</span>  <span class="c1"># hex value</span>
+<span class="n">Color</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>  <span class="c1"># rgb tuple</span>
+<span class="n">Color</span><span class="p">(</span><span class="s2">&quot;purple&quot;</span><span class="p">)</span>  <span class="c1"># named</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – </p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil_utils.Color.from_internal">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_internal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil_utils.Color.from_internal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a D-Serie color integer into a Color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dstability.internal.</span></span><span class="sig-name descname"><span class="pre">ShearStrengthModelTypePhreaticLevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shear Strength Model Type. These types represent the
+shear strength model that can be found in the UI of
+the D-Stability program.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB">
+<span class="sig-name descname"><span class="pre">MOHR_COULOMB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Mohr_Coulomb'</span></em><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'None'</span></em><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.SHANSEP">
+<span class="sig-name descname"><span class="pre">SHANSEP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SHANSEP'</span></em><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.SHANSEP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.SUTABLE">
+<span class="sig-name descname"><span class="pre">SUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SuTable'</span></em><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.SUTABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.transform_shear_strength_model_type_to_internal">
+<span class="sig-name descname"><span class="pre">transform_shear_strength_model_type_to_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevel.transform_shear_strength_model_type_to_internal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geometry.html" title="Previous document">Geometry</a>
+        </li>
+        <li>
+          <a href="models/dfoundations.html" title="Next document">D-Foundations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">Developer Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="model.html">Model Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geometry.html">Geometry</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Soils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#soil-libraries">Soil Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cpt-interpretation">CPT interpretation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-geolib.soils.soil">The Soil Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models/dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dsheetpiling.html">D-Sheetpiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models/dstability.html">D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="api.html">Developer Interface</a><ul>
+      <li>Previous: <a href="geometry.html" title="previous chapter">Geometry</a></li>
+      <li>Next: <a href="models/dfoundations.html" title="next chapter">D-Foundations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

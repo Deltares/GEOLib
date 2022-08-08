@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial D-Foundations &#8212; geolib 0.1.8 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial D-Settlement" href="tutorial_dsettlement.html" />
+    <link rel="prev" title="Tutorial Soils" href="tutorial_soil.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_soil.html" title="Previous document">Tutorial Soils</a>
+        </li>
+        <li>
+          <a href="tutorial_dsettlement.html" title="Next document">Tutorial D-Settlement</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="tutorial-d-foundations">
+<h1>Tutorial D-Foundations<a class="headerlink" href="#tutorial-d-foundations" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>The model data should be set. This can be done by initialasing the class  <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dfoundations</span><span class="o">.</span><span class="n">DFoundationsModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>2. When using the python API for D-Foundations, it is very important to start the project with setting the calculation
+options and the model. If this is not done, certain project data can be unintentionally overwritten.</p>
+<p>In this tutorial model options are set for bearing piles. The calculation model is in this case
+<a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.BearingPilesModel" title="geolib.models.dfoundations.dfoundations_model.BearingPilesModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPilesModel</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_options</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dfoundations</span><span class="o">.</span><span class="n">dfoundations_model</span><span class="o">.</span><span class="n">BearingPilesModel</span><span class="p">(</span>
+    <span class="n">is_rigid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factor_xi3</span><span class="o">=</span><span class="mi">9</span>
+<span class="p">)</span>
+<span class="n">calculation_options</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dfoundations</span><span class="o">.</span><span class="n">dfoundations_model</span><span class="o">.</span><span class="n">CalculationOptions</span><span class="p">(</span>
+    <span class="n">calculationtype</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dfoundations</span><span class="o">.</span><span class="n">dfoundations_model</span><span class="o">.</span><span class="n">CalculationType</span><span class="o">.</span><span class="n">VERIFICATION_DESIGN</span><span class="p">,</span>
+    <span class="n">cpt_test_level</span><span class="o">=-</span><span class="mf">19.0</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">model_options</span><span class="p">,</span> <span class="n">calculation_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>A CPT must be initialised using the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.profiles.CPT" title="geolib.models.dfoundations.profiles.CPT"><code class="xref py py-class docutils literal notranslate"><span class="pre">CPT</span></code></a>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cpt</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">CPT</span><span class="p">(</span>
+    <span class="n">cptname</span><span class="o">=</span><span class="s2">&quot;DELFT1&quot;</span><span class="p">,</span>
+    <span class="n">groundlevel</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">measured_data</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.10</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.20</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.30</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.40</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="s2">&quot;qc&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">},</span>
+    <span class="p">],</span>
+    <span class="n">timeorder_type</span><span class="o">=</span><span class="n">profiles</span><span class="o">.</span><span class="n">TimeOrderType</span><span class="o">.</span><span class="n">CPT_BEFORE_AND_AFTER_INSTALL</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>After inputing the CPT the rest of the inputs for the profiles should be initialised.
+To do that initialise the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.profiles.Excavation" title="geolib.models.dfoundations.profiles.Excavation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Excavation</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">excavation</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">Excavation</span><span class="p">(</span><span class="n">excavation_level</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The location of the CPT should also be defined.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">location_cpt</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then the profile can be defined by initialising the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.profiles.Profile" title="geolib.models.dfoundations.profiles.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.
+The layers can be input as a list of dicts.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;DELFT1&quot;</span><span class="p">,</span>
+    <span class="n">location</span><span class="o">=</span><span class="n">location_cpt</span><span class="p">,</span>
+    <span class="n">phreatic_level</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">pile_tip_level</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">cpt</span><span class="o">=</span><span class="n">cpt</span><span class="p">,</span>
+    <span class="n">excavation</span><span class="o">=</span><span class="n">excavation</span><span class="p">,</span>
+    <span class="n">layers</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="s2">&quot;Clay, clean, stiff&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;top_level&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;excess_pore_pressure_top&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;excess_pore_pressure_bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;ocr_value&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+            <span class="s2">&quot;reduction_core_resistance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="s2">&quot;Clay, clean, weak&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;top_level&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span>
+            <span class="s2">&quot;excess_pore_pressure_top&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;excess_pore_pressure_bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;ocr_value&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+            <span class="s2">&quot;reduction_core_resistance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;material&quot;</span><span class="p">:</span> <span class="s2">&quot;Clay, clean, stiff&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;top_level&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span>
+            <span class="s2">&quot;excess_pore_pressure_top&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;excess_pore_pressure_bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="s2">&quot;ocr_value&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+            <span class="s2">&quot;reduction_core_resistance&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">add_profile</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>4. The soil can be intialised with the <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and can be added to the model by using the function
+<a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_soil()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">undrained_parameters</span><span class="o">.</span><span class="n">undrained_shear_strength</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>5. The type(s) of pile and its location(s) needs to be defined. The possible combinations for these options can be found in <a class="reference internal" href="../dev/models/dfoundations.html#module-geolib.models.dfoundations.piles" title="geolib.models.dfoundations.piles"><code class="xref py py-class docutils literal notranslate"><span class="pre">piles</span></code></a>.
+In this case the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.piles.BearingRectangularPile" title="geolib.models.dfoundations.piles.BearingRectangularPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingRectangularPile</span></code></a> is initialised. In the following code block the location
+of the pile is first initialised by calling the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.piles.BearingPileLocation" title="geolib.models.dfoundations.piles.BearingPileLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPileLocation</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add Bearing Pile</span>
+<span class="n">location</span> <span class="o">=</span> <span class="n">piles</span><span class="o">.</span><span class="n">BearingPileLocation</span><span class="p">(</span>
+    <span class="n">point</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">pile_head_level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">surcharge</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">limit_state_str</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">limit_state_service</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>After that two different dictionaries are initialised <code class="docutils literal notranslate"><span class="pre">geometry_pile</span></code> represents the geometry input and <code class="docutils literal notranslate"><span class="pre">parent_pile</span></code> all
+the inputs that are related to the factors concerning the pile.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">geometry_pile</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">base_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">base_length</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">parent_pile</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+    <span class="n">pile_name</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+    <span class="n">pile_type</span><span class="o">=</span><span class="n">piles</span><span class="o">.</span><span class="n">BasePileType</span><span class="o">.</span><span class="n">USER_DEFINED_VIBRATING</span><span class="p">,</span>
+    <span class="n">pile_class_factor_shaft_sand_gravel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># alpha_s</span>
+    <span class="n">preset_pile_class_factor_shaft_clay_loam_peat</span><span class="o">=</span><span class="n">piles</span><span class="o">.</span><span class="n">BasePileTypeForClayLoamPeat</span><span class="o">.</span><span class="n">STANDARD</span><span class="p">,</span>
+    <span class="n">pile_class_factor_shaft_clay_loam_peat</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># alpha_s</span>
+    <span class="n">pile_class_factor_tip</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>  <span class="c1"># alpha_p</span>
+    <span class="n">load_settlement_curve</span><span class="o">=</span><span class="n">piles</span><span class="o">.</span><span class="n">LoadSettlementCurve</span><span class="o">.</span><span class="n">ONE</span><span class="p">,</span>
+    <span class="n">user_defined_pile_type_as_prefab</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">use_manual_reduction_for_qc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">elasticity_modulus</span><span class="o">=</span><span class="mf">1e7</span><span class="p">,</span>
+    <span class="n">characteristic_adhesion</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">overrule_pile_tip_shape_factor</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">overrule_pile_tip_cross_section_factors</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In that way the dictionaries can be used to initialise the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.piles.BearingRectangularPile" title="geolib.models.dfoundations.piles.BearingRectangularPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingRectangularPile</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pile</span> <span class="o">=</span> <span class="n">piles</span><span class="o">.</span><span class="n">BearingRectangularPile</span><span class="p">(</span><span class="o">**</span><span class="n">parent_pile</span><span class="p">,</span> <span class="o">**</span><span class="n">geometry_pile</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The pile can be finally added to the model using the function  <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_pile_if_unique()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">add_pile_if_unique</span><span class="p">(</span><span class="n">pile</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>6. To run the model first the model needs to be serialised. To do that define a
+output file name and call the function <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize()</span></code></a>.</p>
+<ol class="arabic simple" start="7">
+<li><p>Finally the <code class="docutils literal notranslate"><span class="pre">execute</span></code> function can be called to run the model in D-Foundations</p></li>
+</ol>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_soil.html" title="Previous document">Tutorial Soils</a>
+        </li>
+        <li>
+          <a href="tutorial_dsettlement.html" title="Next document">Tutorial D-Settlement</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial_soil.html">Tutorial Soils</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsettlement.html">Tutorial D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsheetpiling.html">Tutorial D-Sheet Piling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability.html">Tutorial D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_multi.html">Tutorial Multiple Calculations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="tutorial.html">Tutorials</a><ul>
+      <li>Previous: <a href="tutorial_soil.html" title="previous chapter">Tutorial Soils</a></li>
+      <li>Next: <a href="tutorial_dsettlement.html" title="next chapter">Tutorial D-Settlement</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
