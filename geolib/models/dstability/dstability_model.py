@@ -74,7 +74,7 @@ class DStabilityModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DStabilityConsole/D-GEO Suite Stability GEOLIB Console.exe")
+        return Path("DStabilityConsole/D-Stability Console.exe")
 
     @property
     def soils(self) -> SoilCollection:
