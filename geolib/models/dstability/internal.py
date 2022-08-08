@@ -508,7 +508,7 @@ class PersistableSoil(DStabilityBaseModelStructure):
     )
     Id: str = ""
     IsProbabilistic: bool = False
-    Name: Optional[str]
+    Name: Optional[str] = ""
     Notes: Optional[str] = ""
     ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
         ShearStrengthModelTypePhreaticLevelInternal.C_PHI
