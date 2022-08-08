@@ -1,6 +1,6 @@
 Changelog
 =========
-- :release:`0.1.8 <unreleased>`
+- :release:`0.1.8 <2022-08-08>`
 - :bug:`-` Allow load_type: DSHEETPILING_DETERMINED for UnformLoad and SurchargeLoad in DSheetPiling. By Mbweehuizen. 👍
 - :feature:`-` Added support for D-Stability 2022.01.(x) files.
 - :feature:`-` Added support for Python 3.10. By yurnih. 👍
