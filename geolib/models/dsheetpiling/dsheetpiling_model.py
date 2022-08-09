@@ -42,7 +42,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     PassiveSide,
@@ -170,7 +170,7 @@ class DSheetPilingModel(BaseModel):
         _map_method_b_available = {
             VerifyType.CUR: self.datastructure.input_data.calculation_options.curmethod,
             VerifyType.EC7NL: self.datastructure.input_data.calculation_options.ec7nlmethod,
-            VerifyType.EC7BE: self.datastructure.input_data.calculation_options.nbmethod,
+            VerifyType.EC7BE: self.datastructure.input_data.calculation_options.ec7bemethod,
         }
         if (
             self.datastructure.input_data.calculation_options.inputcalculationtype

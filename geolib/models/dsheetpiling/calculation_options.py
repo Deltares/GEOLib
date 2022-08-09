@@ -11,7 +11,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     VerifyType,
@@ -29,7 +29,7 @@ class CalculationOptionsPerStage(BaseDataClass):
 
     anchor_factor: float = 1
     partial_factor_set: Optional[
-        Union[PartialFactorSetEC7NADB, PartialFactorSetCUR, PartialFactorSetEC7NADNL]
+        Union[PartialFactorSetEC7NADBE, PartialFactorSetCUR, PartialFactorSetEC7NADNL]
     ] = None
 
 
@@ -98,8 +98,8 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stability_ec7_b_partial_factor_set: PartialFactorSetEC7NADB = (
-        PartialFactorSetEC7NADB.SET1
+    stability_ec7_b_partial_factor_set: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
     )
     stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
 
@@ -206,8 +206,8 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     design_ec7_nl_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
-    design_partial_factor_set_ec7_nad_b: PartialFactorSetEC7NADB = (
-        PartialFactorSetEC7NADB.SET1
+    design_partial_factor_set_ec7_nad_b: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
     )
     design_ec7_b_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA

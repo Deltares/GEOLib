@@ -298,7 +298,7 @@ class PartialFactorsEc7Nl3(DSeriesInlineMappedProperties):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7BSet1(DSeriesInlineMappedProperties):
+class PartialFactorsEc7BESet1(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00
@@ -335,7 +335,7 @@ class PartialFactorsEc7BSet1(DSeriesInlineMappedProperties):
     verticalbalancegammamb: float = 1.20
 
 
-class PartialFactorsEc7BSet2(DSeriesInlineMappedProperties):
+class PartialFactorsEc7BESet2(DSeriesInlineMappedProperties):
     safetyfactorgammad: float = 1.00
     safetyfactoreta: float = 1.00
     loadfactorpermunfav: float = 1.00

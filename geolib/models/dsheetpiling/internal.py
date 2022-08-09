@@ -5,8 +5,6 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import confloat, conint, conlist, constr
-
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -24,6 +22,7 @@ from geolib.models.dseries_parser import (
     DSerieVersion,
 )
 from geolib.utils import make_newline_validator
+from pydantic import confloat, conint, conlist, constr
 
 from .calculation_options import (
     CalculationOptionsPerStage as CalculationOptionsPerStageExternal,
@@ -41,8 +40,8 @@ from .internal_partial_factors import (
     PartialFactorsCurI,
     PartialFactorsCurIi,
     PartialFactorsCurIii,
-    PartialFactorsEc7BSet1,
-    PartialFactorsEc7BSet2,
+    PartialFactorsEc7BESet1,
+    PartialFactorsEc7BESet2,
     PartialFactorsEc7Nl0,
     PartialFactorsEc7Nl1,
     PartialFactorsEc7Nl2,
@@ -75,7 +74,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     PassiveSide,
@@ -139,11 +138,12 @@ class Soil(DSeriesUnmappedNameProperties):
     soilcohesion: confloat(ge=0, le=1000000000) = 0
     soilphi: confloat(ge=-89, le=89) = 0
     soildelta: confloat(ge=-80, le=89) = 0.00
-    soilcutop: float = 0  # fixed value
-    soilcubottom: float = 0  # fixed value
-    soilcubearingcapacityfactor: float = 4.10  # fixed value
+    soilisdeltaangleautomaticallycalculated: bool = False
+    # soilcutop: float = 0  # fixed value
+    # soilcubottom: float = 0  # fixed value
+    # soilcubearingcapacityfactor: float = 4.10  # fixed value
     soilocr: confloat(ge=0, le=1000) = 1.00
-    soildrained: int = 0  # fixed value
+    # soildrained: int = 0  # fixed value
     soilpermeabkx: confloat(ge=0.00000000001, le=1000000) = 0.0001
     soilstdcohesion: confloat(ge=0, le=100000000) = 0.00
     soilstdphi: confloat(ge=0, le=100000000) = 0.00
@@ -243,7 +243,7 @@ class CalculationOptions(DSeriesStructure):
     calcfirststageinitial: bool = False
     calcminornodeson: bool = False
     calcreducedeltas: bool = False
-    calcempiricalfactorstresstype: int = 0  # fixed value
+    # calcempiricalfactorstresstype: int = 0  # fixed value
     inputcalculationtype: CalculationType = CalculationType.STANDARD
     isvibrationcalculation: bool = False
     allowableanchorforcecalculationtype: bool = False
@@ -261,12 +261,14 @@ class CalculationOptions(DSeriesStructure):
         PartialFactorSetEC7NADNL.RC0
     )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
-    designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    designpartialfactorsetec7nadbe: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
+    )
+    designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadse: int = 0  # fixed value
-    designec7semethod: int = 0  # fixed value
+    # designpartialfactorsetec7nadse: int = 0  # fixed value
+    # designec7semethod: int = 0  # fixed value
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.CUR
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
@@ -275,8 +277,8 @@ class CalculationOptions(DSeriesStructure):
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     ec7nloverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     ec7nadnloverallstability: bool = False
-    ec7boverallstability: bool = False
-    nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    ec7beoverallstability: bool = False
+    ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
@@ -289,13 +291,16 @@ class CalculationOptions(DSeriesStructure):
     # Overall stability calculation
     curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
+    stabilityexport: int = 0
     stabilityeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
+    stabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
+    )
     stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    stabilityec7separtialfactorset: int = 0  # fixed value
+    # stabilityec7separtialfactorset: int = 0  # fixed value
     overallstabilitydrained: int = 1  # fixed value
 
     # These are all subgroups (key=value)
@@ -311,8 +316,8 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_nl_1: PartialFactorsEc7Nl1 = PartialFactorsEc7Nl1()
     partial_factors_ec7_nl_2: PartialFactorsEc7Nl2 = PartialFactorsEc7Nl2()
     partial_factors_ec7_nl_3: PartialFactorsEc7Nl3 = PartialFactorsEc7Nl3()
-    partial_factors_ec7_b_set1: PartialFactorsEc7BSet1 = PartialFactorsEc7BSet1()
-    partial_factors_ec7_b_set2: PartialFactorsEc7BSet2 = PartialFactorsEc7BSet2()
+    partial_factors_ec7_be_set1: PartialFactorsEc7BESet1 = PartialFactorsEc7BESet1()
+    partial_factors_ec7_be_set2: PartialFactorsEc7BESet2 = PartialFactorsEc7BESet2()
     partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
     partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
     partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
@@ -330,7 +335,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
     sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
     sheetpilingelementheight: conint(ge=10, le=100000) = 400
-    sheetpilingelementcoatingarea: confloat(ge=0.01, le=10) = 1.35
+    # sheetpilingelementcoatingarea: confloat(ge=0.01, le=10) = 1.35
     sheetpilingpilewidth: confloat(ge=0, le=100000) = 0
     sheetpilingelementsectionarea: conint(ge=10, le=100000) = 170
     sheetpilingelementresistingmoment: conint(ge=0, le=100000) = 0
@@ -355,7 +360,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     woodensheetpilingelemente: confloat(ge=0.001, le=1000000000000) = 100000
     woodensheetpilingelementcharacflexuralstrength: confloat(ge=0, le=100000) = 0
     woodensheetpilingelementksys: confloat(ge=0.01, le=10) = 1.15
-    woodensheetpilingelementkdef: confloat(ge=0.01, le=10) = 1
+    # woodensheetpilingelementkdef: confloat(ge=0.01, le=10) = 1
     woodensheetpilingelementpsi2eff: confloat(ge=0, le=10) = 1
     woodensheetpilingelementmaterialfactor: confloat(ge=0.01, le=10) = 1.3
     woodensheetpilingelementkmodfshort: confloat(ge=0.01, le=10) = 0.65
@@ -538,9 +543,9 @@ class StageOptions(DSeriesInlineMappedProperties):
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
-    stageverifyec7nadb: int = 0
-    stagepartialfactorsetec7nadse: int = 0  # fixed value
-    stageverifyec7nadse: int = 0  # fixed value
+    stageverifyec7nadbe: int = 0
+    # stagepartialfactorsetec7nadse: int = 0  # fixed value
+    # stageverifyec7nadse: int = 0  # fixed value
 
 
 class CalculationOptionsPerStage(DSeriesStructureCollection):
@@ -846,7 +851,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 "stageverifyec7nadnl": stage_id + 1,
                 "stageanchorfactorec7nadnl": input_calc_options.anchor_factor,
             },
-            VerifyType.EC7BE: {"stageverifyec7nadb": stage_id + 1},
+            VerifyType.EC7BE: {"stageverifyec7nadbe": stage_id + 1},
         }
         stageoptions = StageOptions(
             **_map_external_to_internal_values[self.calculation_options.verifytype]

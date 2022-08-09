@@ -121,7 +121,7 @@ class PartialFactorSetEC7NADNL(IntEnum):
     RC3 = 3
 
 
-class PartialFactorSetEC7NADB(IntEnum):
+class PartialFactorSetEC7NADBE(IntEnum):
     SET1 = 0
     SET2 = 1
 

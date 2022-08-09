@@ -4,8 +4,6 @@ from pathlib import Path
 from typing import List, Type
 
 import pytest
-from teamcity import is_running_under_teamcity
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -48,8 +46,8 @@ from geolib.models.dsheetpiling.loads import (
     NormalForce,
     SurchargeLoad,
     UniformLoad,
-    VerificationLoadSettingsMomentNormalForce,
     VerificationLoadSettingsLoads,
+    VerificationLoadSettingsMomentNormalForce,
 )
 from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
@@ -78,6 +76,7 @@ from geolib.models.dsheetpiling.supports import (
 from geolib.models.dsheetpiling.surface import Surface
 from geolib.models.dsheetpiling.water_level import WaterLevel
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
+from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -231,13 +230,13 @@ class TestDsheetPilingModel:
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
         output_test_file = output_test_folder / "test.shi"
 
-        df.parse(test_file)
-        df.serialize(output_test_file)
-
         # 2. Verify initial expectations.
-        assert output_test_file.is_file()
+        assert test_file.is_file()
 
         # 3. Run test.
+        df.parse(test_file)
+        df.serialize(output_test_file)
+        assert output_test_file.is_file()
         df.filename = output_test_file
         df.execute()
 
