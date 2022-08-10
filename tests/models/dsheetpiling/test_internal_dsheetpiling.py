@@ -1,9 +1,8 @@
 import warnings
 from typing import Callable, List
 
-import pytest
-
 import geolib.models.dsheetpiling.settings as settings
+import pytest
 from geolib.geometry import Point
 from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.calculation_options import CalculationOptionsPerStage
@@ -168,7 +167,7 @@ class TestInternal:
         )
 
     @pytest.mark.integrationtest
-    def test_add_calculation_options_per_stage_ec7_b(
+    def test_add_calculation_options_per_stage_ec7_be(
         self, model: DSheetPilingInputStructure
     ):
         # set inputs
@@ -185,7 +184,7 @@ class TestInternal:
         )
         # test output
         assert len(model.calculation_options_per_stage.stageoptions) == 1
-        assert model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadb == 1
+        assert model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadbe == 1
 
 
 class TestInternalParseInputStructure:
