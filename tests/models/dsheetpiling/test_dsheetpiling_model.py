@@ -243,6 +243,21 @@ class TestDsheetPilingModel:
         # 3. Verify return code of 0 (indicates succesfull run)
         assert df.datastructure
 
+    @pytest.mark.acceptance
+    @only_teamcity
+    def test_import_output(self):
+        # 1. Set up test data.
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_file = output_test_folder / "test.shd"
+
+        # 2. Verify initial expectations.
+        assert output_test_file.is_file()
+
+        # 3. Run test.
+        output_text = output_test_file.read_text()
+        output_structure = DSheetPilingDumpStructure.parse_text(output_text)
+        assert output_structure
+
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
         # 1. Set up test data.

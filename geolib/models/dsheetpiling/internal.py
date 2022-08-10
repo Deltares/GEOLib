@@ -139,11 +139,11 @@ class Soil(DSeriesUnmappedNameProperties):
     soilphi: confloat(ge=-89, le=89) = 0
     soildelta: confloat(ge=-80, le=89) = 0.00
     soilisdeltaangleautomaticallycalculated: bool = False
-    # soilcutop: float = 0  # fixed value
-    # soilcubottom: float = 0  # fixed value
-    # soilcubearingcapacityfactor: float = 4.10  # fixed value
+    soilcutop: float = 0  # fixed value
+    soilcubottom: float = 0  # fixed value
+    soilcubearingcapacityfactor: float = 4.10  # fixed value
     soilocr: confloat(ge=0, le=1000) = 1.00
-    # soildrained: int = 0  # fixed value
+    soildrained: int = 0  # fixed value
     soilpermeabkx: confloat(ge=0.00000000001, le=1000000) = 0.0001
     soilstdcohesion: confloat(ge=0, le=100000000) = 0.00
     soilstdphi: confloat(ge=0, le=100000000) = 0.00
@@ -243,7 +243,7 @@ class CalculationOptions(DSeriesStructure):
     calcfirststageinitial: bool = False
     calcminornodeson: bool = False
     calcreducedeltas: bool = False
-    # calcempiricalfactorstresstype: int = 0  # fixed value
+    calcempiricalfactorstresstype: int = 0  # fixed value
     inputcalculationtype: CalculationType = CalculationType.STANDARD
     isvibrationcalculation: bool = False
     allowableanchorforcecalculationtype: bool = False
@@ -267,8 +267,8 @@ class CalculationOptions(DSeriesStructure):
     designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    # designpartialfactorsetec7nadse: int = 0  # fixed value
-    # designec7semethod: int = 0  # fixed value
+    designpartialfactorsetec7nadse: int = 0  # fixed value
+    designec7semethod: int = 0  # fixed value
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.CUR
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
@@ -300,7 +300,7 @@ class CalculationOptions(DSeriesStructure):
         PartialFactorSetEC7NADBE.SET1
     )
     stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    # stabilityec7separtialfactorset: int = 0  # fixed value
+    stabilityec7separtialfactorset: int = 0  # fixed value
     overallstabilitydrained: int = 1  # fixed value
 
     # These are all subgroups (key=value)
@@ -335,7 +335,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
     sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
     sheetpilingelementheight: conint(ge=10, le=100000) = 400
-    # sheetpilingelementcoatingarea: confloat(ge=0.01, le=10) = 1.35
+    sheetpilingelementcoatingarea: confloat(ge=0.01, le=10) = 1.35
     sheetpilingpilewidth: confloat(ge=0, le=100000) = 0
     sheetpilingelementsectionarea: conint(ge=10, le=100000) = 170
     sheetpilingelementresistingmoment: conint(ge=0, le=100000) = 0
@@ -360,7 +360,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     woodensheetpilingelemente: confloat(ge=0.001, le=1000000000000) = 100000
     woodensheetpilingelementcharacflexuralstrength: confloat(ge=0, le=100000) = 0
     woodensheetpilingelementksys: confloat(ge=0.01, le=10) = 1.15
-    # woodensheetpilingelementkdef: confloat(ge=0.01, le=10) = 1
+    woodensheetpilingelementkdef: confloat(ge=0.01, le=10) = 1
     woodensheetpilingelementpsi2eff: confloat(ge=0, le=10) = 1
     woodensheetpilingelementmaterialfactor: confloat(ge=0.01, le=10) = 1.3
     woodensheetpilingelementkmodfshort: confloat(ge=0.01, le=10) = 0.65
@@ -544,8 +544,8 @@ class StageOptions(DSeriesInlineMappedProperties):
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
     stageverifyec7nadbe: int = 0
-    # stagepartialfactorsetec7nadse: int = 0  # fixed value
-    # stageverifyec7nadse: int = 0  # fixed value
+    stagepartialfactorsetec7nadse: int = 0  # fixed value
+    stageverifyec7nadse: int = 0  # fixed value
 
 
 class CalculationOptionsPerStage(DSeriesStructureCollection):
@@ -1228,6 +1228,8 @@ class OutputConstructionStage(DSeriesRepeatedGroupedProperties):
     anchor_data: Optional[AnchorData]
     hload_data: Optional[str]
     breuk_data: Optional[BreukData]
+    passive_side_data: Optional[str]
+    soil_collapse_data: Optional[str]
     moments_forces_displacements: Optional[MomentsForcesDisplacements]
     side: Optional[List[SideOutput]]
     uniform_load_data: Optional[str]
@@ -1361,6 +1363,9 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     ]
     verify_anchor_force: Optional[BaseVerificationStructureProperties]
     resume: Optional[Resume]
+    maximum_summary_results: Optional[str]
+    warnings: Optional[str]
+    errors: Optional[str]
     factors_for_verification: Optional[str]
 
 
