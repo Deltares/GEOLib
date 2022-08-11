@@ -1365,6 +1365,7 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     ]
     verify_anchor_force: Optional[BaseVerificationStructureProperties]
     resume: Optional[Resume]
+    supports_resume: Optional[str]
     anchors_and_struts_resume: Optional[str]
     cur_anchor_force_results: Optional[str]
     maximum_anchor_force: Optional[str]
