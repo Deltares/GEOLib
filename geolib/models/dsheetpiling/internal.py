@@ -1350,6 +1350,7 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     calculated_displacements: Optional[str]
     angles_kranz_calculation: Optional[str]
     kranz_calculation: Optional[str]
+    kranz_diagram_results: Optional[str]
 
     # Verifications, duplicated for all verifications.
     verify_deformation: Optional[BaseVerificationStructureProperties]
@@ -1363,6 +1364,9 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     ]
     verify_anchor_force: Optional[BaseVerificationStructureProperties]
     resume: Optional[Resume]
+    anchors_and_struts_resume: Optional[str]
+    cur_anchor_force_results: Optional[str]
+    maximum_anchor_force: Optional[str]
     maximum_summary_results: Optional[str]
     warnings: Optional[str]
     errors: Optional[str]
