@@ -194,6 +194,7 @@ class TestDsheetPilingBugFixes:
             model.output.verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level
         )
 
+    @pytest.mark.integrationtest
     def test_parse_field_verify_sheet_piling_according_to_cur_method_b(self):
         # Former test of test_geolib_173
         # 1. Define test data

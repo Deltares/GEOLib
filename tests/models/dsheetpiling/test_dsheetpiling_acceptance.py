@@ -3,9 +3,6 @@ import random
 from pathlib import Path
 
 import pytest
-from pydantic.color import Color
-from teamcity import is_running_under_teamcity
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -51,8 +48,8 @@ from geolib.models.dsheetpiling.loads import (
     NormalForce,
     SurchargeLoad,
     UniformLoad,
-    VerificationLoadSettingsMomentNormalForce,
     VerificationLoadSettingsLoads,
+    VerificationLoadSettingsMomentNormalForce,
 )
 from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
@@ -92,12 +89,14 @@ from geolib.soils import (
     Soil,
     SoilType,
 )
+from pydantic.color import Color
+from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
 
+@only_teamcity
+@pytest.mark.acceptance
 class TestDsheetPilingAcceptance:
-    @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -391,8 +390,6 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
-    @pytest.mark.acceptance
-    @only_teamcity
     def test_run_sheet_model_acceptance_multiple_stages(self, request):
         # 0. Set up test data.
         model = DSheetPilingModel()
@@ -642,8 +639,6 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
-    @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "modeltype",
         [
@@ -874,8 +869,6 @@ class TestDsheetPilingAcceptance:
                     model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
                 )
 
-    @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -1184,8 +1177,6 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
-    @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -1503,8 +1494,6 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
-    @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
