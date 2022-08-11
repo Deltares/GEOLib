@@ -1,8 +1,7 @@
 from pathlib import Path
 
-import pytest
-
 import geolib as gl
+import pytest
 from geolib.models.dsheetpiling.calculation_options import *
 from geolib.models.dsheetpiling.constructions import *
 from geolib.models.dsheetpiling.dsheetpiling_model import *
@@ -133,85 +132,96 @@ class TestDsheetPilingBugFixes:
         assert stage_2.uniform_loads[0] == "New UniformLoad"
 
     @pytest.mark.integrationtest
-    @pytest.mark.parametrize(
-        "file",
-        [
-            pytest.param("bm4-5a.shd"),
-            pytest.param("bm4-17a.shd"),
-            pytest.param("bm3-1b.shd"),
-            pytest.param("bm3-1d.shd"),
-        ],
-    )
-    def test_geolib_173(self, file: str):
-        # In this case the following structure can be seen in the dumpfile.
-        #
+    def test_parse_field_verify_sheet_piling_calculation_type_standard(self):
+        # Former test of test_geolib_173
+        # 1. Define test data
         model = gl.DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
-        test_file = test_folder / Path(file)
+        test_file = test_folder / Path("bm4-5a.shd")
 
+        # 2. Verify initial conditions
+        assert test_file.is_file()
+
+        # 3. Run test
         model.parse(filename=test_file)
-        outputdict = dict(model.output)
 
-        if outputdict["calculation_type"] == "Standard":
-            assert len(outputdict["construction_stage"]) == 3
-        elif (
-            outputdict["calculation_type"]
-            == "Verify Sheet Piling according to CUR Method B"
-        ):
-            assert (
-                len(
-                    model.output.verify_sheetpile_data[
-                        0
-                    ].verify_deformation.construction_stage
-                )
-                == 1
-            )
-            assert (
-                len(
-                    model.output.verify_sheetpile_data[
-                        0
-                    ].verify_moment_high_angle_of_subgr_reac.construction_stage
-                )
-                == 1
-            )
-            assert (
-                len(
-                    model.output.verify_sheetpile_data[
-                        0
-                    ].verify_moment_low_angle_of_subgr_reac.construction_stage
-                )
-                == 1
-            )
-            assert (
-                len(
-                    model.output.verify_sheetpile_data[
-                        0
-                    ].verify_high_mod_with_alt_passive_waterlevel.construction_stage
-                )
-                == 1
-            )
-            assert (
-                len(
-                    model.output.verify_sheetpile_data[
-                        0
-                    ].verify_low_mod_with_alt_passive_waterlevel.construction_stage
-                )
-                == 1
-            )
-        elif outputdict["calculation_type"] == "Allowable Anchor Force":
-            assert len(outputdict["construction_stage"]) == 1
-        elif (
-            outputdict["calculation_type"]
+        # 4. Verify final expectations
+        assert model.output.calculation_type == "Standard"
+        assert len(model.output.construction_stage) == 3
+
+    @pytest.mark.integrationtest
+    def test_parse_field_verify_sheet_piling_calculation_type_allowable_anchor_force(
+        self,
+    ):
+        # Former test of test_geolib_173
+        # 1. Define test data
+        model = gl.DSheetPilingModel()
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_file = test_folder / Path("bm3-1b.shd")
+
+        # 2. Verify initial conditions
+        assert test_file.is_file()
+
+        # 3. Run test
+        model.parse(filename=test_file)
+
+        # 4. Verify final expectations
+        assert model.output.calculation_type == "Allowable Anchor Force"
+        assert len(model.output.construction_stage) == 1
+
+    @pytest.mark.integrationtest
+    def test_parse_field_verify_sheet_piling_according_to_cur_method_a(self):
+        # Former test of test_geolib_173
+        # 1. Define test data
+        model = gl.DSheetPilingModel()
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_file = test_folder / Path("bm3-1d.shd")
+
+        # 2. Verify initial conditions
+        assert test_file.is_file()
+
+        # 3. Run test
+        model.parse(filename=test_file)
+
+        # 4. Verify final expectations.
+        assert (
+            model.output.calculation_type
             == "Verify Sheet Piling according to CUR Method A"
-        ):
-            assert len(model.output.verify_deformation.construction_stage) == 1
-            assert (
-                len(
-                    model.output.verify_moment_high_angle_of_subgr_reac.construction_stage
-                )
-                == 1
-            )
-            assert (
-                len(model.output.verify_moment_low_angle_of_subgr_reac.construction_stage)
-                == 1
-            )
+        )
+        assert model.output.verify_step_6____5_serviceability_limit_state
+        assert model.output.verify_step_6____5_multiplied_by_factor
+        assert (
+            model.output.verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level
+        )
+
+    def test_parse_field_verify_sheet_piling_according_to_cur_method_b(self):
+        # Former test of test_geolib_173
+        # 1. Define test data
+        model = gl.DSheetPilingModel()
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_file = test_folder / Path("bm4-17a.shd")
+
+        # 2. Verify initial conditions
+        assert test_file.is_file()
+
+        # 3. Run test
+        model.parse(filename=test_file)
+
+        assert (
+            model.output.calculation_type
+            == "Verify Sheet Piling according to CUR Method B"
+        )
+        assert model.output.verify_step_6____5_serviceability_limit_state
+        assert model.output.verify_step_6____5_multiplied_by_factor
+        assert (
+            model.output.verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level
+        )
+        assert (
+            model.output.verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level
+        )
+        assert (
+            model.output.verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level
+        )
+        assert (
+            model.output.verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level
+        )
