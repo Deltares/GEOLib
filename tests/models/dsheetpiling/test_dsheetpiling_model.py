@@ -242,16 +242,16 @@ class TestDsheetPilingModel:
         test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
         test_file = test_folder / "bm1-1.shi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
-        output_test_file = output_test_folder / "test.shi"
+        serialized_input_test_file = output_test_folder / "test.shi"
 
         # 2. Verify initial expectations.
         assert test_file.is_file()
 
         # 3. Run test.
         df.parse(test_file)
-        df.serialize(output_test_file)
-        assert output_test_file.is_file()
-        df.filename = output_test_file
+        df.serialize(serialized_input_test_file)
+        assert serialized_input_test_file.is_file()
+        df.filename = serialized_input_test_file
         df.execute()
 
         # 3. Verify return code of 0 (indicates succesfull run)

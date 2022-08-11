@@ -1,9 +1,8 @@
 from pathlib import Path
 
 import pytest
-from teamcity import is_running_under_teamcity
-
 from geolib.models import DSheetPilingModel
+from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -13,6 +12,27 @@ class TestDSheetPilingRegressionSuite:
         "dsheetpiling/benchmarks", "*.shd"
     )
     input_testdata_ids = [str(input_file.stem) for input_file in input_testdata]
+
+    # @pytest.mark.parametrize(
+    #     "test_file",
+    #     input_testdata,
+    #     ids=input_testdata_ids,
+    # )
+    # def test_generate_output_benchmarks_dsheetpiling(self, test_file: Path):
+    #     # 1. Set up test data.
+    #     df = DSheetPilingModel()
+    #     input_file = test_file.with_suffix(".shi")
+
+    #     # 2. Verify initial expectations.
+    #     assert input_file.is_file()
+
+    #     # 3. Run test.
+    #     df.parse(input_file)
+    #     df.execute()
+
+    #     # 3. Verify return code of 0 (indicates succesfull run)
+    #     assert df.datastructure
+    #     assert test_file.is_file()
 
     @pytest.mark.systemtest
     @only_teamcity
