@@ -14,7 +14,7 @@ class PartialFactorsEurocodeDa1Set1(DSeriesInlineMappedProperties):
     loadfactorpermunfavcalc: float = 0.0000
     loadfactorvarunfavcalc: float = 0.0000
     constructloadfactorpermfav: float = 1.00
-    constructloadfactorvarfav: float = 1.00
+    constructloadfactorvarfav: float = 0.00
     constructloadfactorpermunfavmultiply: float = 1.00
     constructloadfactorvarunfavmultiply: float = 1.00
     constructloadfactorpermunfavcalc: float = 1.0000
