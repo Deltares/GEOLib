@@ -1269,6 +1269,7 @@ class CurAnchorForceResults(DSheetpilingWithNumberOfRowsTable):
 class BaseVerificationStructureProperties(DSeriesRepeatedGroupedProperties):
     points_on_sheetpile: Optional[List[PointsOnSheetpile]]
     construction_stage: Optional[List[OutputConstructionStage]]
+
     resume: Optional[Resume]
     warning: Optional[str]
     error: Optional[str]
@@ -1371,6 +1372,22 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     warnings: Optional[str]
     errors: Optional[str]
     factors_for_verification: Optional[str]
+
+    # Special types defined based on test_geolib_173 (issue GeoLib #173)
+    verify_step_6____5_serviceability_limit_state: Optional[str]
+    verify_step_6____5_multiplied_by_factor: Optional[str]
+    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
+        str
+    ]
+    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
+        str
+    ]
+    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
+        str
+    ]
+    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
+        str
+    ]
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):
