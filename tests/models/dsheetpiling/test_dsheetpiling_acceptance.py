@@ -94,9 +94,9 @@ from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
 
-@only_teamcity
-@pytest.mark.acceptance
 class TestDsheetPilingAcceptance:
+    @only_teamcity
+    @pytest.mark.acceptance
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -390,6 +390,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    @only_teamcity
+    @pytest.mark.acceptance
     def test_run_sheet_model_acceptance_multiple_stages(self, request):
         # 0. Set up test data.
         model = DSheetPilingModel()
@@ -639,6 +641,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    @only_teamcity
+    @pytest.mark.acceptance
     @pytest.mark.parametrize(
         "modeltype",
         [
@@ -869,6 +873,8 @@ class TestDsheetPilingAcceptance:
                     model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
                 )
 
+    @only_teamcity
+    @pytest.mark.acceptance
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -1177,6 +1183,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    @only_teamcity
+    @pytest.mark.acceptance
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -1494,6 +1502,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    @only_teamcity
+    @pytest.mark.acceptance
     @pytest.mark.parametrize(
         "calc_options",
         [
