@@ -42,6 +42,8 @@ from .internal_partial_factors import (
     PartialFactorsCurIii,
     PartialFactorsEc7BESet1,
     PartialFactorsEc7BESet2,
+    PartialFactorsEc7BSet1,
+    PartialFactorsEc7BSet2,
     PartialFactorsEc7Nl0,
     PartialFactorsEc7Nl1,
     PartialFactorsEc7Nl2,
@@ -74,6 +76,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
+    PartialFactorSetEC7NADB,
     PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
@@ -261,6 +264,8 @@ class CalculationOptions(DSeriesStructure):
         PartialFactorSetEC7NADNL.RC0
     )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
+    designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorsetec7nadbe: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.SET1
     )
@@ -277,6 +282,8 @@ class CalculationOptions(DSeriesStructure):
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     ec7nloverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     ec7nadnloverallstability: bool = False
+    ec7boverallstability: bool = False
+    ec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7beoverallstability: bool = False
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -296,6 +303,7 @@ class CalculationOptions(DSeriesStructure):
     stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
+    stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     stabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.SET1
     )
@@ -316,6 +324,8 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_nl_1: PartialFactorsEc7Nl1 = PartialFactorsEc7Nl1()
     partial_factors_ec7_nl_2: PartialFactorsEc7Nl2 = PartialFactorsEc7Nl2()
     partial_factors_ec7_nl_3: PartialFactorsEc7Nl3 = PartialFactorsEc7Nl3()
+    partial_factors_ec7_b_set1: PartialFactorsEc7BSet1 = PartialFactorsEc7BSet1()
+    partial_factors_ec7_b_set2: PartialFactorsEc7BSet2 = PartialFactorsEc7BSet2()
     partial_factors_ec7_be_set1: PartialFactorsEc7BESet1 = PartialFactorsEc7BESet1()
     partial_factors_ec7_be_set2: PartialFactorsEc7BESet2 = PartialFactorsEc7BESet2()
     partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
@@ -543,6 +553,7 @@ class StageOptions(DSeriesInlineMappedProperties):
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
+    stageverifyec7nadb: int = 0
     stageverifyec7nadbe: int = 0
     stagepartialfactorsetec7nadse: int = 0  # fixed value
     stageverifyec7nadse: int = 0  # fixed value
@@ -851,7 +862,10 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 "stageverifyec7nadnl": stage_id + 1,
                 "stageanchorfactorec7nadnl": input_calc_options.anchor_factor,
             },
-            VerifyType.EC7BE: {"stageverifyec7nadbe": stage_id + 1},
+            VerifyType.EC7BE: {
+                "stageverifyec7nadbe": stage_id + 1,
+                "stageverifyec7nadb": stage_id + 1,
+            },
         }
         stageoptions = StageOptions(
             **_map_external_to_internal_values[self.calculation_options.verifytype]

@@ -3,14 +3,13 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import Any, List, Optional, Type, Union
 
-from pydantic import FilePath, PositiveFloat
-from pydantic.types import confloat, conint
-
 from geolib.geometry import Point
 from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
 from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
+from pydantic import FilePath, PositiveFloat
+from pydantic.types import confloat, conint
 
 from .calculation_options import CalculationOptions, CalculationOptionsPerStage
 from .dsheetpiling_parserprovider import DSheetPilingParserProvider
@@ -170,6 +169,7 @@ class DSheetPilingModel(BaseModel):
         _map_method_b_available = {
             VerifyType.CUR: self.datastructure.input_data.calculation_options.curmethod,
             VerifyType.EC7NL: self.datastructure.input_data.calculation_options.ec7nlmethod,
+            VerifyType.EC7B: self.datastructure.input_data.calculation_options.ec7bmethod,
             VerifyType.EC7BE: self.datastructure.input_data.calculation_options.ec7bemethod,
         }
         if (

@@ -1,8 +1,7 @@
 from enum import Enum, IntEnum
 
-from pydantic import conint
-
 from geolib.models import BaseDataClass
+from pydantic import conint
 
 
 class LateralEarthPressureMethod(IntEnum):
@@ -119,6 +118,11 @@ class PartialFactorSetEC7NADNL(IntEnum):
     RC1 = 1
     RC2 = 2
     RC3 = 3
+
+
+class PartialFactorSetEC7NADB(IntEnum):
+    SET1 = 0
+    SET2 = 1
 
 
 class PartialFactorSetEC7NADBE(IntEnum):
