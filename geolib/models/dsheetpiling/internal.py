@@ -286,6 +286,7 @@ class CalculationOptions(DSeriesStructure):
     ec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7beoverallstability: bool = False
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
