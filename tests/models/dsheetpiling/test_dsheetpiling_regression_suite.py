@@ -35,7 +35,7 @@ class TestDSheetPilingRegressionSuite:
     #     assert test_file.is_file()
 
     @pytest.mark.systemtest
-    # @only_teamcity
+    @only_teamcity
     @pytest.mark.parametrize(
         "test_file",
         input_testdata,
