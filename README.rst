@@ -70,3 +70,14 @@ In order to run the documentation, from the root of the repository, run:
 
 The documentation is now in the `build` subfolder, where you can open 
 the `index.html` in your browser.
+
+Build wheel
+-----------
+
+To build a distributable wheel package, run:
+
+.. code-block:: bash
+
+    $ poetry build
+
+The distributable packages are now built in the `dist` subfolder.

@@ -115,6 +115,8 @@ class TestDStabilityModel:
         [
             pytest.param("dstability/example_1", id="Input Structure"),
             pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
+            pytest.param("dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"),
+            pytest.param("dstability/ResultExample", id="Result Example")
         ],
     )
     def test_execute_model_succesfully(self, dir_path: str):
@@ -555,7 +557,7 @@ class TestDStabilityModel:
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
         # stix output file path
         test_output_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_serialized_new.stix")
+            TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
         )
         # parse existing files
         dm.parse(test_filepath)
@@ -576,7 +578,7 @@ class TestDStabilityModel:
         test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
         # stix output file path
         test_output_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_serialized_new.stix")
+            TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
         )
         # parse existing files
         dm.parse(test_filepath)

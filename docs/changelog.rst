@@ -1,6 +1,14 @@
 Changelog
 =========
-- :release:`0.1.7 <unreleased>`
+- :release:`0.1.8 <2022-08-08>`
+- :bug:`-` Allow load_type: DSHEETPILING_DETERMINED for UnformLoad and SurchargeLoad in DSheetPiling. By Mbweehuizen. 👍
+- :feature:`-` Added support for D-Stability 2022.01.(x) files.
+- :feature:`-` Added support for Python 3.10. By yurnih. 👍
+
+
+- :release:`0.1.7 <2022-06-21>`
+- :bug:`-` Fix for D-Stability files that cannot be parsed due to incorrect directory separators.
+- :feature:`-` Added support for Python 3.9. By yurnih. 👍
 
 - :release:`0.1.6 <2021-10-5>`
 - :bug:`-` Set correct number of lines in [RUN IDENTIFICATION] in DSettlement and DSheetPiling. By Maarten Betman of Boskalis. 👍
