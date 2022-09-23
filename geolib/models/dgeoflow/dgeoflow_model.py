@@ -251,25 +251,6 @@ class DGeoFlowModel(BaseModel):
         soillayerscollection.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.id)
         return int(persistable_layer.Id)
 
-    def add_layeractivation(self, scenario_id: int = None, layer_id: int = None) -> int:
-        """
-        Add a layer activation to the model
-
-        Args:
-            scenario_id (int): scenario to add to, defaults to 0
-            layer_id (int): layer to add to
-
-        Returns:
-            int: id of the added layeractivation
-        """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
-        layeractivationscollection = self.datastructure.layer_activations[scenario_id]
-
-        persistable_layer = self.get_layer(scenario_id, layer_id)
-        layeractivationscollection.add_layeractivation(layer_id=persistable_layer.LayerId)
-
-        return int(layeractivationscollection.Id)
-
     def add_meshproperties(self,
                            element_size: float = 1.0,
                            label: str = "",
@@ -317,7 +298,7 @@ class DGeoFlowModel(BaseModel):
 
         return int(boundaryconditions.Id)
 
-    def add_scenario(self, scenario_id: int = None, boundaryconditions_id: int = None, layeractivations_id: int = None,
+    def add_scenario(self, scenario_id: int = None, boundaryconditions_id: int = None,
                      soillayers_id: int = None, geometry_id: int = None, meshproperties_id: int = None, label: str = "",
                      notes: str = "",
                      calculations_notes: str = "", stage_notes: str = "", calculations_label: str = None,
@@ -327,8 +308,7 @@ class DGeoFlowModel(BaseModel):
 
         Args:
             scenario_id (int): scenario to add to, defaults to 0
-            boundaryconditions_id (int): id of the boundary conditions collection to add tothe scenario
-            layeractivations_id (int): id of the layer activation collection to add tothe scenario
+            boundaryconditions_id (int): id of the boundary conditions collection to add to the scenario
             soillayers_id (int): id of the soil layers to add to the scenario
             geometry_id (int): id of the geometry to add to the scenario
             meshproperties_id (int): id of the mesh properties to add to the scenario
@@ -350,9 +330,6 @@ class DGeoFlowModel(BaseModel):
         scenarios.Notes = notes
         scenarios.GeometryId = geometry_id
         scenarios.SoilLayersId = soillayers_id
-        scenarios.add_calculation(label=calculations_label, notes=calculations_notes,
-                                  mesh_properties_id=meshproperties_id)
-        scenarios.add_stage(label=stage_label, notes=stage_notes,
-                            boundaryconditions_collection_id=boundaryconditions_id,
-                            layeractivation_collection_id=layeractivations_id)
+        scenarios.add_calculation(label=calculations_label, notes=calculations_notes, mesh_properties_id=meshproperties_id)
+        scenarios.add_stage(label=stage_label, notes=stage_notes, boundaryconditions_collection_id=boundaryconditions_id)
         return int(scenarios.Id)

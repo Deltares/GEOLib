@@ -150,9 +150,6 @@ class TestDGeoFlowModel:
         ]
 
         layer_ids = [dm.add_layer(points, soil) for points, soil in layers_and_soils]
-        for layer_id in layer_ids:
-            # Has to be done in separate loop since all layers first need to be definied.
-            dm.add_layeractivation(layer_id=layer_id)
 
         dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 3, "River")
         dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")
@@ -160,7 +157,7 @@ class TestDGeoFlowModel:
         assert dm.is_valid
 
         # Serialize model to input file.
-        path = pathlib.Path.cwd() / "test.flox"
+        path = Path(TestUtils.get_output_test_data_dir("dgeoflow"), "simple_model.flox")
         dm.serialize(path)
 
         # Check for succesfull execution

@@ -4,7 +4,7 @@ import pytest
 from pydantic import ValidationError
 
 from geolib.models.dgeoflow import DGeoFlowModel
-from geolib.models.dgeoflow.internal import ForeignKeys, BoundaryCondition, DGeoFlowStructure
+from geolib.models.dgeoflow.internal import ForeignKeys, BoundaryConditionCollection, DGeoFlowStructure
 
 from geolib.models.dstability.utils import children
 from tests.utils import TestUtils
@@ -54,7 +54,7 @@ class TestDGeoFlowInternal:
         dm.parse(test_filepath)
 
         # Verify expecations
-        assert isinstance(dm.datastructure.boundary_conditions[0], BoundaryCondition)
+        assert isinstance(dm.datastructure.boundary_conditions[0], BoundaryConditionCollection)
 
         # Test
         child_classes = [type(x).__name__ for x in children(dm.datastructure)]

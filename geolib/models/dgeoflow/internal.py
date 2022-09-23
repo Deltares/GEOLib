@@ -39,7 +39,7 @@ class DGeoFlowSubStructure(DGeoFlowBaseModelStructure):
 class CalculationTypeEnum(Enum):
     GROUNDWATER_FLOW = "GroundwaterFlow"
     PIPING = "PipeLength"
-
+    CRITICAL_HEAD = "CriticalHead"
 
 CalculationType = CalculationTypeEnum
 
@@ -427,11 +427,12 @@ class PersistableFixedHeadBoundaryConditionProperties(DGeoFlowBaseModelStructure
 class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
+    Id: Optional[str]
     Points: conlist(PersistablePoint, min_items=2)
     FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
 
 
-class BoundaryCondition(DGeoFlowSubStructure):
+class BoundaryConditionCollection(DGeoFlowSubStructure):
     """boundaryconditions/boundaryconditions_x.json"""
 
     ContentVersion: Optional[str] = "2"
@@ -479,17 +480,23 @@ class BoundaryCondition(DGeoFlowSubStructure):
 class PersistableStage(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
-    LayerActivationCollectionId: Optional[str]
     BoundaryConditionCollectionId: Optional[str]
 
 class PipeTrajectory(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
 
+class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
+    MinimumHeadLevel: Optional[float]
+    MaximumHeadLevel: Optional[float]
+    StepSize: Optional[float]
+    
 class PersistableCalculation(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
-    CalculationType: Optional[CalculationTypeEnum]
+    CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
+    CriticalHeadId: Optional[str]
+    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace]
     PipeTrajectory: Optional[PipeTrajectory]
     MeshPropertiesId: Optional[str]
     ResultsId: Optional[str]
@@ -553,10 +560,8 @@ class Scenario(DGeoFlowSubStructure):
         self.Calculations.append(pc)
         return pc
 
-    def add_stage(self, label: str, notes: str, layeractivation_collection_id: str,
-                  boundaryconditions_collection_id: str) -> PersistableStage:
-        ps = PersistableStage(Label=label, Notes=notes, LayerActivationCollectionId=layeractivation_collection_id,
-                              BoundaryConditionCollectionId=boundaryconditions_collection_id)
+    def add_stage(self, label: str, notes: str, boundaryconditions_collection_id: str) -> PersistableStage:
+        ps = PersistableStage(Label=label, Notes=notes, BoundaryConditionCollectionId=boundaryconditions_collection_id)
         self.Stages.append(ps)
         return ps
 
@@ -595,41 +600,6 @@ class MeshProperty(DGeoFlowSubStructure):
             for layer in self.MeshProperties
             if layer.LayerId != exclude_soil_layer_id}
 
-
-class PersistableLayerActivations(DGeoFlowBaseModelStructure):
-    LayerId: str
-    IsActive: bool
-
-
-class LayerActivation(DGeoFlowSubStructure):
-    """layeractivations/layeractivations_x.json"""
-
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
-    LayerActivations: Optional[List[PersistableLayerActivations]] = []
-
-    @classmethod
-    def structure_name(cls) -> str:
-        return "layeractivations"
-
-    @classmethod
-    def structure_group(cls) -> str:
-        return "layeractivations"
-
-    def add_layeractivation(self, layer_id: str) -> PersistableLayerActivations:
-        pla = PersistableLayerActivations(LayerId=layer_id, IsActive=True)
-        self.LayerActivations.append(pla)
-        return pla
-
-    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
-        if exclude_soil_layer_id is not None:
-            exclude_soil_layer_id = str(exclude_soil_layer_id)
-        return {
-            layer.LayerId
-            for layer in self.LayerActivations
-            if layer.LayerId != exclude_soil_layer_id}
-
-
 class DGeoFlowStructure(BaseModelStructure):
     """Highest level DGeoFlow class that should be parsed to and serialized from.
 
@@ -650,14 +620,13 @@ class DGeoFlowStructure(BaseModelStructure):
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     geometries: List[Geometry] = [Geometry(Id="1")]  # geometries/geometry_x.json
 
-    boundary_conditions: List[BoundaryCondition] = [
-        BoundaryCondition(Id="15")]  # boundaryconditions/boundaryconditions_x.json
+    boundary_conditions: List[BoundaryConditionCollection] = [
+        BoundaryConditionCollection(Id="15")]  # boundaryconditions/boundaryconditions_x.json
     scenarios: List[Scenario] = [Scenario(Id="0", Label="Scenario 1", GeometryId="1", SoilLayersId="14",
-                                    Stages=[PersistableStage(Label="Stage 1", LayerActivationCollectionId="17", BoundaryConditionCollectionId="15")],
+                                    Stages=[PersistableStage(Label="Stage 1", BoundaryConditionCollectionId="15")],
                                     Calculations=[PersistableCalculation(Label="Calculation 1", MeshPropertiesId="16")])]  # scenarios/scenario_x.json
     mesh_properties: List[MeshProperty] = [
         MeshProperty(Id="16", MeshProperties=[])]  # meshproperties/meshproperties_x.json
-    layer_activations: List[LayerActivation] = [LayerActivation(Id="17")]  # layeractivations/layeractivations_x.json
 
     # Output parts
     groundwater_flow_results: List[GroundwaterFlowResult] = []
@@ -684,8 +653,6 @@ class DGeoFlowStructure(BaseModelStructure):
             for j, stage in enumerate(scenario.Stages):
                 if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[j].Id:
                     raise ValueError("BoundaryConditionCollectionIds not linked!")
-                if stage.LayerActivationCollectionId != values.get("layer_activations")[j].Id:
-                    raise ValueError("LayerActivationCollectionIds not linked!")
 
             if scenario.GeometryId != values.get("geometries")[i].Id:
                 raise ValueError("GeometryIds not linked!")
@@ -699,7 +666,6 @@ class DGeoFlowStructure(BaseModelStructure):
             "soillayers",
             "geometries",
             "boundaryconditions",
-            "layeractivations",
             "meshproperties",
             "scenarios",
         ]
@@ -770,17 +736,15 @@ class DGeoFlowStructure(BaseModelStructure):
 
         self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 1))]
         self.mesh_properties += [MeshProperty(Id=str(unique_start_id + 2))]
-        self.layer_activations += [LayerActivation(Id=str(unique_start_id + 3))]
         self.geometries += [Geometry(Id=str(unique_start_id + 4))]
-        self.boundary_conditions += [BoundaryCondition(Id=str(unique_start_id + 5))]
+        self.boundary_conditions += [BoundaryConditionCollection(Id=str(unique_start_id + 5))]
 
         self.scenarios += [Scenario(Id=str(str(unique_start_id + 7)), 
                                     Label="Scenario 1", 
                                     GeometryId=str(unique_start_id + 4),
                                     SoilLayersId=str(unique_start_id + 1),
                                     Calculations=[PersistableCalculation(Id=str(unique_start_id + 6), Label="Calculation 1")],
-                                    Stages=[PersistableStage(Id=str(unique_start_id + 6), Label="Stage 1", 
-                                                            LayerActivationCollectionId=str(unique_start_id + 3), 
+                                    Stages=[PersistableStage(Id=str(unique_start_id + 6), Label="Stage 1",
                                                             BoundaryConditionCollectionId=str(unique_start_id + 5))])]
         
 
@@ -855,12 +819,10 @@ class ForeignKeys(DGeoFlowBaseModelStructure):
             "PersistableSoilLayer.SoilId",
         ),
         "PersistableLayer.Id": ("PersistableSoilLayer.LayerId",
-                                "PersistableMeshProperties.LayerId",
-                                "PersistableLayerActivations.LayerId",),
+                                "PersistableMeshProperties.LayerId",),
         "Geometry.Id": ("Scenario.GeometryId",),
         "SoilLayerCollection.Id": ("Scenario.SoilLayersId",),
-        "LayerActivation.Id": ("PersistableStage.LayerActivationCollectionId",),
-        "BoundaryCondition.Id": ("PersistableStage.BoundaryConditionCollectionId",),
+        "BoundaryConditionCollection.Id": ("PersistableStage.BoundaryConditionCollectionId",),
         "MeshProperty.Id": ("PersistableCalculation.MeshPropertiesId",),
         "Results.Id": ("PersistableCalculation.ResultsId",)
 
