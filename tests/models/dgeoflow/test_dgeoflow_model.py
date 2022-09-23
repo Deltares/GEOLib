@@ -149,7 +149,7 @@ class TestDGeoFlowModel:
             (embankment, "H_Aa_ht_old"),
         ]
 
-        layer_ids = [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+        [dm.add_layer(points, soil) for points, soil in layers_and_soils]
 
         dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 3, "River")
         dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")

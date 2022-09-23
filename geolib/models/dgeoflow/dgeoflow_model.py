@@ -40,6 +40,7 @@ class DGeoFlowModel(BaseModel):
 
     current_scenario: int = -1
     current_scenario_index: int = 0
+    current_calculation_index: int = 0
     datastructure: DGeoFlowStructure = DGeoFlowStructure()
     current_id: int = -1
 
@@ -57,7 +58,7 @@ class DGeoFlowModel(BaseModel):
 
     @property
     def console_flags_post(self) -> List[str]:
-        return [str(self.current_scenario_index + 1), "1"]
+        return [str(self.current_scenario_index + 1), str(self.current_calculation_index + 1)]
 
     @property
     def soils(self) -> SoilCollection:
@@ -83,14 +84,15 @@ class DGeoFlowModel(BaseModel):
     @property
     def output(self) -> DGeoFlowResult:
         # TODO Make something that works for all scenarios
-        return self.get_result(self.current_scenario_index)
+        return self.get_result(self.current_scenario_index, self.current_calculation_index)
 
-    def get_result(self, scenario_index: int) -> Dict:
+    def get_result(self, scenario_index: int, calculation_index: int) -> Dict:
         """
         Returns the results of a scenario. Calculation results are based on analysis type and calculation type.
     
         Args:
-            scenario_id (int): Id of a scenario.
+            scenario_index (int): Index of a scenario.
+            calculation_index (int): Index of a calculation.
     
         Returns:
             dict: Dictionary containing the analysis results of the scenario.
@@ -98,12 +100,12 @@ class DGeoFlowModel(BaseModel):
         Raises:
             ValueError: No results or calculationsettings available
         """
-        result = self._get_result_substructure(scenario_index)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result  # TODO snake_case keys?
     
-    def _get_result_substructure(self, scenario_index: int) -> DGeoFlowResult:
+    def _get_result_substructure(self, scenario_index: int, calculation_index: int) -> DGeoFlowResult:
         if self.datastructure.has_result(scenario_index):
-            calculation = self.datastructure.scenarios[scenario_index].Calculations[0]
+            calculation = self.datastructure.scenarios[scenario_index].Calculations[calculation_index]
             result_id = calculation.ResultsId
             calculation_type = calculation.CalculationType
     
@@ -123,28 +125,6 @@ class DGeoFlowModel(BaseModel):
             serializer = DGeoFlowInputSerializer(ds=self.datastructure)
         serializer.write(location)
         self.filename = location
-
-    def add_scenario_2(self, label: str, notes: str, set_current=True) -> int:
-        """Add a new scenario to the model.
-
-        Args:
-            label: Label for the scenario
-            notes: Notes for the scenario
-            set_current: Whether to make the new scenario the current scenario.
-
-        Returns:
-            the id of the new scenario
-        """
-        new_id = self._get_next_id()
-        new_scenario_id, new_unique_id = self.datastructure.add_default_scenario(
-            label, notes, new_id
-        )
-
-        if set_current:
-            self.current_scenario = new_scenario_id
-            self.current_scenario_index += 1
-        self.current_id = new_unique_id
-        return new_scenario_id
 
     def copy_scenario(self, label: str, notes: str, set_current=True) -> int:
         """Copy an existing scenario and add it to the model.
