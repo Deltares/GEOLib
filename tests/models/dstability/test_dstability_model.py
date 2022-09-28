@@ -107,6 +107,9 @@ class TestDStabilityModel:
         )
 
     @pytest.mark.systemtest
+    @pytest.mark.skipif(
+        not is_running_under_teamcity(), reason="Console test only installed on TC."
+    )
     @pytest.mark.parametrize(
         "dir_path",
         [
