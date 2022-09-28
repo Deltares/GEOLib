@@ -107,16 +107,14 @@ class TestDStabilityModel:
         )
 
     @pytest.mark.systemtest
-    @pytest.mark.skipif(
-        not is_running_under_teamcity(), reason="Console test only installed on TC."
-    )
     @pytest.mark.parametrize(
         "dir_path",
         [
             pytest.param("dstability/example_1", id="Input Structure"),
             pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
             pytest.param("dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"),
-            pytest.param("dstability/ResultExample", id="Result Example")
+            pytest.param("dstability/ResultExample", id="Result Example"),
+            pytest.param("dstability/EmptyFile", id="EmptyFile")
         ],
     )
     def test_execute_model_succesfully(self, dir_path: str):
