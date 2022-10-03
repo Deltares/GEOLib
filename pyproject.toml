@@ -36,6 +36,8 @@ sphinx-autodoc-typehints = "^1.17.1"
 releases = "^1.6.3"
 sphinx-multiversion = "^0.2.4"
 isort = "^5.9.3"
+commitizen = "^2.29.5"
+tomlkit = "^0.11.3"
 
 [tool.poetry.extras]
 server = ["fastapi", "uvicorn"]
@@ -69,10 +71,16 @@ profile = "black"
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.1.8"
-tag-format = "$major.$minor.$patch$prerelease"
+tag_format = "v$major.$minor.$patch$prerelease"
 version_files = [
     "pyproject.toml:^version",
     "tests/test_geolib.py",
     "geolib/__init__.py:__version__",
 ]
 annotated_tag = true
+update_changelog_on_bump = true
+changelog_file = "docs/changelog.rst"
+
+[tool.commitizen.customize]
+bump_pattern = "^(break|new|fix|hotfix|refactor|docs)"
+bump_map = {"break" = "MAJOR", "new" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH", "refactor"="PATCH", "docs" = "PATCH"}
