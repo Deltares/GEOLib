@@ -236,7 +236,8 @@ class DSheetPilingModel(BaseModel):
         Calculation options per stage are set in [CALCULATION OPTIONS PER STAGE].
 
         Args:
-            stage_id: Curvesettings are set to this stage. This refers to the Pythonic input and has a starting point of 0.
+            calculation_options_per_stage: Calculation options for stage
+            stage_id: Settings are set to this stage. This refers to the Pythonic input and has a starting point of 0.
 
         Raises:
             ValueError: When non-existing stage_id is passed or when no
@@ -278,10 +279,10 @@ class DSheetPilingModel(BaseModel):
     def set_calculation_options(self, calculation_options: CalculationOptions) -> None:
         """Set calculation options.
 
-        Calculation options per stage are set in [CALCULATION OPTIONS].
+        Overall calculation options are set in [CALCULATION OPTIONS].
 
         Args:
-            stage_id: Curvesettings are set to this stage.
+            calculation_options: Calculation options
         """
         if not issubclass(type(calculation_options), CalculationOptions):
             raise ValueError(
@@ -385,8 +386,7 @@ class DSheetPilingModel(BaseModel):
 
         Args:
             top_level: Top level of the sheet piling.
-            elements: List of sheet piling elements, can be Sheet, DiaphragmWall, or Pile.
-            Elements are sorted on sheetpilingelementlevel.
+            elements: List of sheet piling elements, can be Sheet, DiaphragmWall, or Pile Elements are sorted on sheetpilingelementlevel.
         """
         self.datastructure.input_data.set_construction(
             top_level=top_level, elements=[element.to_internal() for element in elements]
