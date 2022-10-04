@@ -2,18 +2,17 @@ import json
 from collections import defaultdict
 from datetime import date, datetime
 from enum import Enum
-from functools import partial
 from itertools import chain
 from math import isfinite
 from typing import Dict, Generator, List, Optional, Set, Tuple, Union
 
-from pydantic import ValidationError, confloat, conlist, root_validator, validator
+from pydantic import ValidationError, conlist, root_validator, validator
 
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil
-from geolib.utils import camel_to_snake, snake_to_camel
+from geolib.soils import Soil
+from geolib.utils import snake_to_camel
 
 from .dstability_validator import DStabilityValidator
 from .utils import children
