@@ -309,6 +309,7 @@ class TestDsheetPilingAcceptance:
             length=2,
             angle=3,
             yield_force=100000000,
+            pre_stress=0.1
         )
         model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
@@ -573,6 +574,7 @@ class TestDsheetPilingAcceptance:
             length=2,
             angle=3,
             yield_force=100,
+            pre_stress=0.1
         )
         model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
@@ -1102,6 +1104,7 @@ class TestDsheetPilingAcceptance:
             length=2,
             angle=3,
             yield_force=100,
+            pre_stress=0.1
         )
         model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
@@ -1421,6 +1424,7 @@ class TestDsheetPilingAcceptance:
             length=2,
             angle=3,
             yield_force=100,
+            pre_stress=0.1
         )
         model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
@@ -1726,6 +1730,7 @@ class TestDsheetPilingAcceptance:
             length=2,
             angle=3,
             yield_force=100,
+            pre_stress=0.1
         )
         model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
