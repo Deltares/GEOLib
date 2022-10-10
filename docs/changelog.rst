@@ -1,6 +1,6 @@
 Changelog
 =========
-- :release:`0.1.9 <2022-10-10>`
+- :release:`0.1.11 <2022-10-10>`
 - :bug:`-` Fix: Changed default value pre stress in anchors D-SheetPiling from 0.1 to 0.0 (#28). By martinapippi. 👍
 
 - :release:`0.1.9 <2022-10-04>`
