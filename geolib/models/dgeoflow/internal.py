@@ -482,9 +482,17 @@ class PersistableStage(DGeoFlowBaseModelStructure):
     Notes: Optional[str]
     BoundaryConditionCollectionId: Optional[str]
 
+class ErosionDirection(Enum):
+    LEFT_TO_RIGHT = "LeftToRight",
+    RIGHT_TO_LEFT = "RightToLeft"
+
 class PipeTrajectory(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
+    D70: Optional[float]
+    Points: Optional[List[PersistablePoint]]
+    ErosionDirection: Optional[ErosionDirection]
+    ElementSize: Optional[float]
 
 class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
     MinimumHeadLevel: Optional[float]
@@ -620,8 +628,7 @@ class DGeoFlowStructure(BaseModelStructure):
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     geometries: List[Geometry] = [Geometry(Id="1")]  # geometries/geometry_x.json
 
-    boundary_conditions: List[BoundaryConditionCollection] = [
-        BoundaryConditionCollection(Id="15")]  # boundaryconditions/boundaryconditions_x.json
+    boundary_conditions: List[BoundaryConditionCollection] = [BoundaryConditionCollection(Id="15")]  # boundaryconditions/boundaryconditions_x.json
     scenarios: List[Scenario] = [Scenario(Id="0", Label="Scenario 1", GeometryId="1", SoilLayersId="14",
                                     Stages=[PersistableStage(Label="Stage 1", BoundaryConditionCollectionId="15")],
                                     Calculations=[PersistableCalculation(Label="Calculation 1", MeshPropertiesId="16")])]  # scenarios/scenario_x.json
@@ -649,10 +656,12 @@ class DGeoFlowStructure(BaseModelStructure):
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
+        stageCount = 0
         for i, scenario in enumerate(values.get("scenarios")):
-            for j, stage in enumerate(scenario.Stages):
-                if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[j].Id:
+            for _, stage in enumerate(scenario.Stages):
+                if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[stageCount].Id:
                     raise ValueError("BoundaryConditionCollectionIds not linked!")
+                stageCount += 1
 
             if scenario.GeometryId != values.get("geometries")[i].Id:
                 raise ValueError("GeometryIds not linked!")
