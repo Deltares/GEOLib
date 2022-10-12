@@ -111,7 +111,7 @@ class TestDGeoFlowModel:
         assert model
 
     @pytest.mark.acceptance
-    def test_generate_simple_model(self):
+    def test_generate_groundwaterflow_model(self):
 
         dm = DGeoFlowModel()
 
@@ -161,3 +161,7 @@ class TestDGeoFlowModel:
         # Check for succesfull execution
         dm.execute()
         assert dm.datastructure
+
+        assert len(dm.datastructure.groundwater_flow_results) == 1
+        assert len(dm.datastructure.groundwater_flow_results[0].Elements) == 386  # type: ignore
+        assert dm.datastructure.groundwater_flow_results[0].Elements[10].NodeResults[0].TotalPorePressure == 143.661  # type: ignore
