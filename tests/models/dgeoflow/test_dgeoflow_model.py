@@ -82,13 +82,11 @@ class TestDGeoFlowModel:
         )
 
     @pytest.mark.systemtest
-    @pytest.mark.skipif(
-        not is_running_under_teamcity(), reason="Console test only installed on TC."
-    )
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dgeoflow/Berekening3", id="Input Structure"),
+            pytest.param("dgeoflow/Berekening3", id="Basic flow"),
+            pytest.param("dgeoflow/Tutorial", id="Tutorial"),
         ],
     )
     def test_execute_model_succesfully(self, dir_path: str):
