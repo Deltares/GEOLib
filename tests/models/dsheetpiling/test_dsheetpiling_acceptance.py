@@ -310,7 +310,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100000000,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -574,7 +574,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -1103,7 +1103,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -1422,7 +1422,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -1727,7 +1727,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(

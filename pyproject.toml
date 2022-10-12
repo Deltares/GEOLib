@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "d-geolib"
-version = "0.1.8"
+version = "0.1.11"
 description = "Python wrappers around the input and output files of the Deltares D-Serie models"
 authors = ["Maarten Pronk <maarten.pronk@deltares.nl>", "Deltares"]
 license = "MIT"
@@ -36,6 +36,8 @@ sphinx-autodoc-typehints = "^1.17.1"
 releases = "^1.6.3"
 sphinx-multiversion = "^0.2.4"
 isort = "^5.9.3"
+commitizen = "^2.29.5"
+tomlkit = "^0.11.3"
 
 [tool.poetry.extras]
 server = ["fastapi", "uvicorn"]
@@ -68,11 +70,15 @@ profile = "black"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.1.8"
-tag-format = "$major.$minor.$patch$prerelease"
+version = "0.1.11"
+tag_format = "v$major.$minor.$patch$prerelease"
 version_files = [
     "pyproject.toml:^version",
     "tests/test_geolib.py",
     "geolib/__init__.py:__version__",
 ]
 annotated_tag = true
+
+[tool.commitizen.customize]
+bump_pattern = "^(break|new|fix|hotfix|refactor|docs)"
+bump_map = {"break" = "MAJOR", "new" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH", "refactor"="PATCH", "docs" = "PATCH"}
