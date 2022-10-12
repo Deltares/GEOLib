@@ -482,7 +482,7 @@ class PersistableStage(DGeoFlowBaseModelStructure):
     Notes: Optional[str]
     BoundaryConditionCollectionId: Optional[str]
 
-class ErosionDirection(Enum):
+class ErosionDirectionEnum(Enum):
     LEFT_TO_RIGHT = "LeftToRight",
     RIGHT_TO_LEFT = "RightToLeft"
 
@@ -491,7 +491,7 @@ class PipeTrajectory(DGeoFlowBaseModelStructure):
     Notes: Optional[str]
     D70: Optional[float]
     Points: Optional[List[PersistablePoint]]
-    ErosionDirection: Optional[ErosionDirection]
+    ErosionDirection: Optional[ErosionDirectionEnum] = ErosionDirectionEnum.RIGHT_TO_LEFT
     ElementSize: Optional[float]
 
 class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
