@@ -83,7 +83,6 @@ class DGeoFlowModel(BaseModel):
 
     @property
     def output(self) -> DGeoFlowResult:
-        # TODO Make something that works for all scenarios
         return self.get_result(self.current_scenario_index, self.current_calculation_index)
 
     def get_result(self, scenario_index: int, calculation_index: int) -> Dict:
@@ -100,8 +99,7 @@ class DGeoFlowModel(BaseModel):
         Raises:
             ValueError: No results or calculationsettings available
         """
-        result = self._get_result_substructure(scenario_index, calculation_index)
-        return result  # TODO snake_case keys?
+        return self._get_result_substructure(scenario_index, calculation_index)
     
     def _get_result_substructure(self, scenario_index: int, calculation_index: int) -> DGeoFlowResult:
         if self.datastructure.has_result(scenario_index):
@@ -274,10 +272,10 @@ class DGeoFlowModel(BaseModel):
         scenario_id = scenario_id if scenario_id else self.current_scenario
         boundaryconditions = self.datastructure.boundary_conditions[scenario_id]
 
-        boundaryConditionId = self._get_next_id()
-        boundaryconditions.add_boundarycondition(boundaryConditionId, label, notes, points, head_level)
+        boundary_condition_id = self._get_next_id()
+        boundaryconditions.add_boundarycondition(boundary_condition_id, label, notes, points, head_level)
 
-        return boundaryConditionId
+        return boundary_condition_id
 
     def add_scenario(self, scenario_id: int = None, boundaryconditions_id: int = None,
                      soillayers_id: int = None, geometry_id: int = None, meshproperties_id: int = None, label: str = "",

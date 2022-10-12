@@ -680,12 +680,12 @@ class DGeoFlowStructure(BaseModelStructure):
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
-        stageCount = 0
+        stage_count = 0
         for i, scenario in enumerate(values.get("scenarios")):
             for _, stage in enumerate(scenario.Stages):
-                if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[stageCount].Id:
+                if stage.BoundaryConditionCollectionId != values.get("boundary_conditions")[stage_count].Id:
                     raise ValueError("BoundaryConditionCollectionIds not linked!")
-                stageCount += 1
+                stage_count += 1
 
             if scenario.GeometryId != values.get("geometries")[i].Id:
                 raise ValueError("GeometryIds not linked!")

@@ -275,7 +275,7 @@ class TestDGeoFlowModel:
 
         [dm.add_layer(points, soil) for points, soil in layers_and_soils]
 
-        riverBoundaryId = dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 17, "River")
+        river_boundary_id = dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 17, "River")
         dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")
 
         calculation = dm.datastructure.scenarios[0].Calculations[0]
@@ -287,7 +287,7 @@ class TestDGeoFlowModel:
             ElementSize = 1,
             Points = [PersistablePoint(X=30,Z=0), PersistablePoint(X=-10,Z=0)]
         )
-        calculation.CriticalHeadId = str(riverBoundaryId)
+        calculation.CriticalHeadId = str(river_boundary_id)
         calculation.CriticalHeadSearchSpace.MinimumHeadLevel = 17.0
         calculation.CriticalHeadSearchSpace.MaximumHeadLevel = 18.0
 
