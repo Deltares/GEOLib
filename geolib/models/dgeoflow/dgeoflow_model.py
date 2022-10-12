@@ -16,7 +16,7 @@ from ...utils import camel_to_snake, snake_to_camel
 from .internal import (
     CalculationType,
     GroundwaterFlowResult,
-    PipingResult,
+    PipeLengthResult,
     DGeoFlowResult,
     DGeoFlowStructure,
     SoilCollection, SoilLayerCollection, PersistableSoilLayer,
@@ -274,9 +274,10 @@ class DGeoFlowModel(BaseModel):
         scenario_id = scenario_id if scenario_id else self.current_scenario
         boundaryconditions = self.datastructure.boundary_conditions[scenario_id]
 
-        boundaryconditions.add_boundarycondition(label, notes, points, head_level)
+        boundaryConditionId = self._get_next_id()
+        boundaryconditions.add_boundarycondition(boundaryConditionId, label, notes, points, head_level)
 
-        return int(boundaryconditions.Id)
+        return boundaryConditionId
 
     def add_scenario(self, scenario_id: int = None, boundaryconditions_id: int = None,
                      soillayers_id: int = None, geometry_id: int = None, meshproperties_id: int = None, label: str = "",

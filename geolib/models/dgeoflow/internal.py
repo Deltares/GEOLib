@@ -38,7 +38,7 @@ class DGeoFlowSubStructure(DGeoFlowBaseModelStructure):
 
 class CalculationTypeEnum(Enum):
     GROUNDWATER_FLOW = "GroundwaterFlow"
-    PIPING = "PipeLength"
+    PIPE_LENGTH = "PipeLength"
     CRITICAL_HEAD = "CriticalHead"
 
 CalculationType = CalculationTypeEnum
@@ -132,85 +132,85 @@ class SoilCollection(DGeoFlowSubStructure):
             Code="H_Aa_ht_new",
             Id="2",
             Name="Embankment new",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="3",
             Name="Embankment old",
             Code="H_Aa_ht_old",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="4",
             Name="Clay, shallow",
             Code="H_Rk_k_shallow",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="5",
             Name="Clay, deep",
             Code="H_Rk_k_deep",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="6",
             Name="Organic clay",
             Code="H_Rk_ko",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="7",
             Name="Peat, shallow",
             Code="H_vhv_v",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="8",
             Name="Peat, deep",
             Code="H_vbv_v",
-            HorizontalPermeability=1.157E-07,
-            VerticalPermeability=1.157E-07
+            HorizontalPermeability=0.01,
+            VerticalPermeability=0.01
         ),
         PersistableSoil(
             Id="9",
             Name="Sand",
             Code="Sand",
-            HorizontalPermeability=0.00034720000000000004,
-            VerticalPermeability=0.00034720000000000004
+            HorizontalPermeability=30,
+            VerticalPermeability=30
         ),
         PersistableSoil(
             Id="10",
             Name="Clay with silt",
             Code="P_Rk_k&s",
-            HorizontalPermeability=1.157E-06,
-            VerticalPermeability=1.157E-06
+            HorizontalPermeability=0.1,
+            VerticalPermeability=0.1
         ),
         PersistableSoil(
             Id="11",
             Name="Sand with clay",
             Code="H_Ro_z&k",
-            HorizontalPermeability=1.1570000000000001E-05,
-            VerticalPermeability=1.1570000000000001E-05
+            HorizontalPermeability=1,
+            VerticalPermeability=1
         ),
         PersistableSoil(
             Id="12",
             Name="Sand, less permeable",
             Code="Sand, less permeable",
-            HorizontalPermeability=0.00017360000000000002,
-            VerticalPermeability=0.00017360000000000002
+            HorizontalPermeability=15,
+            VerticalPermeability=15
         ),
         PersistableSoil(
             Id="13",
             Name="Sand, permeable",
             Code="Sand, permeable",
-            HorizontalPermeability=0.00052080000000000008,
-            VerticalPermeability=0.00052080000000000008
+            HorizontalPermeability=45,
+            VerticalPermeability=45
         )
     ]
 
@@ -467,10 +467,10 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
 
         return False
 
-    def add_boundarycondition(self, label: str, notes: str, points: List[Point],
+    def add_boundarycondition(self, id: int, label: str, notes: str, points: List[Point],
                               head_level: float) -> PersistableBoundaryCondition:
         pbc_properties = PersistableFixedHeadBoundaryConditionProperties(HeadLevel=head_level)
-        pbc = PersistableBoundaryCondition(Label=label, Notes=notes,
+        pbc = PersistableBoundaryCondition(Id=str(id), Label=label, Notes=notes,
                                            Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
                                            FixedHeadBoundaryConditionProperties=pbc_properties)
         self.BoundaryConditions.append(pbc)
@@ -495,16 +495,16 @@ class PipeTrajectory(DGeoFlowBaseModelStructure):
     ElementSize: Optional[float]
 
 class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
-    MinimumHeadLevel: Optional[float]
-    MaximumHeadLevel: Optional[float]
-    StepSize: Optional[float]
+    MinimumHeadLevel: Optional[float] = 0
+    MaximumHeadLevel: Optional[float] = 1
+    StepSize: Optional[float] = 0.1
     
 class PersistableCalculation(DGeoFlowBaseModelStructure):
     Label: Optional[str]
     Notes: Optional[str]
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
     CriticalHeadId: Optional[str]
-    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace]
+    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace] = PersistableCriticalHeadSearchSpace()
     PipeTrajectory: Optional[PipeTrajectory]
     MeshPropertiesId: Optional[str]
     ResultsId: Optional[str]
@@ -522,6 +522,11 @@ class ElementResult(DGeoFlowBaseModelStructure):
     GaussPoints: Optional[List[GaussPointResult]] = []    
     NodeResults: Optional[List[NodeResult]] = []    
 
+class PipeElementResult(DGeoFlowBaseModelStructure):
+    Nodes: Optional[List[PersistablePoint]] = []    
+    IsActive: Optional[bool]
+    Height: Optional[float] 
+
 class GroundwaterFlowResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     Elements: Optional[List[ElementResult]] = []
@@ -531,16 +536,33 @@ class GroundwaterFlowResult(DGeoFlowSubStructure):
     def structure_group(cls) -> str:
         return "results/groundwaterflow/"
 
-class PipingResult(DGeoFlowSubStructure):
+class PipeLengthResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
+    PipeLength: Optional[float]
+    Elements: Optional[List[ElementResult]] = []
+    PipeElements: Optional[List[PipeElementResult]] = []
+    ContentVersion: Optional[str] = "2"
 
     @classmethod
     def structure_group(cls) -> str:
-        return "results/piping/"
+        return "results/pipelength/"
+
+class CriticalHeadResult(DGeoFlowSubStructure):
+    Id: Optional[str] = None
+    PipeLength: Optional[float]
+    CriticalHead: Optional[float]
+    Elements: Optional[List[ElementResult]] = []
+    PipeElements: Optional[List[PipeElementResult]] = []
+    ContentVersion: Optional[str] = "2"
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "results/criticalhead/"
 
 DGeoFlowResult = Union[
     GroundwaterFlowResult,
-    PipingResult
+    PipeLengthResult,
+    CriticalHeadResult
 ]
 
 class Scenario(DGeoFlowSubStructure):
@@ -637,7 +659,8 @@ class DGeoFlowStructure(BaseModelStructure):
 
     # Output parts
     groundwater_flow_results: List[GroundwaterFlowResult] = []
-    piping_results: List[PipingResult] = []
+    pipe_length_results: List[PipeLengthResult] = []
+    critical_head_results: List[CriticalHeadResult] = []
 
     class Config:
         arbitrary_types_allowed = True
@@ -649,7 +672,8 @@ class DGeoFlowStructure(BaseModelStructure):
 
             result_types_mapping = {
                 CalculationTypeEnum.GROUNDWATER_FLOW: self.groundwater_flow_results,
-                CalculationTypeEnum.PIPING: self.piping_results,
+                CalculationTypeEnum.PIPE_LENGTH: self.pipe_length_results,
+                CalculationTypeEnum.CRITICAL_HEAD: self.critical_head_results,
             }
 
             return result_types_mapping[calculation_type]
