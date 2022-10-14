@@ -53,7 +53,10 @@ class BaseModel(BaseDataClass, abc.ABC):
             raise CalculationError(-1, f"Console executable not found at {executable}.")
 
         process = run(
-            [str(executable)] + self.console_flags + [str(self.filename.resolve())] + self.console_flags_post,
+            [str(executable)]
+            + self.console_flags
+            + [str(self.filename.resolve())]
+            + self.console_flags_post,
             timeout=timeout_in_seconds,
             cwd=str(self.filename.resolve().parent),
         )
@@ -229,7 +232,9 @@ class BaseModelList(BaseDataClass):
                 logger.error(
                     f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
                 )
-                raise CalculationError(-1, f"Console executable not found at {executable}.")
+                raise CalculationError(
+                    -1, f"Console executable not found at {executable}."
+                )
 
             process = Popen(
                 [str(executable)] + lead_model.console_flags + [str(i)],

@@ -4,9 +4,14 @@ from pathlib import Path
 import pytest
 
 from geolib.models.dgeoflow import DGeoFlowModel
-from geolib.models.dgeoflow.dgeoflow_parserprovider import DGeoFlowParser, DGeoFlowZipParser
-from geolib.models.dgeoflow.serializer import DGeoFlowInputZipSerializer, DGeoFlowInputSerializer
-
+from geolib.models.dgeoflow.dgeoflow_parserprovider import (
+    DGeoFlowParser,
+    DGeoFlowZipParser,
+)
+from geolib.models.dgeoflow.serializer import (
+    DGeoFlowInputSerializer,
+    DGeoFlowInputZipSerializer,
+)
 from tests.utils import TestUtils
 
 
@@ -24,9 +29,7 @@ class TestDGeoFlowInputParser:
         # 1. Set up test model
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir(self.output_path)
-        )
+        test_output_filepath = Path(TestUtils.get_output_test_data_dir(self.output_path))
 
         # 2. Verify initial expectations
         assert os.path.exists(test_filepath), "Testing directory not found."
@@ -46,12 +49,9 @@ class TestDGeoFlowInputParser:
         # 1. Set up test model
         input_parser = DGeoFlowZipParser()
         test_filepath = (
-                Path(TestUtils.get_local_test_data_dir("dgeoflow"))
-                / "Berekening3.flox"
+            Path(TestUtils.get_local_test_data_dir("dgeoflow")) / "Berekening3.flox"
         )
-        test_output_dir = Path(
-            TestUtils.get_output_test_data_dir(self.output_path)
-        )
+        test_output_dir = Path(TestUtils.get_output_test_data_dir(self.output_path))
         # 2. Verify initial expectations
         assert test_filepath.exists(), "Test .flox not found."
 
@@ -71,8 +71,8 @@ class TestDGeoFlowInputParser:
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
         test_output_filepath = (
-                Path(TestUtils.get_output_test_data_dir("dgeoflow"))
-                / "Berekening3_serialized.flox"
+            Path(TestUtils.get_output_test_data_dir("dgeoflow"))
+            / "Berekening3_serialized.flox"
         )
 
         # 2. Verify initial expectations
@@ -91,9 +91,7 @@ class TestDGeoFlowInputParser:
         # 1. Set up test model
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
-        test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir(self.output_path)
-        )
+        test_output_filepath = Path(TestUtils.get_output_test_data_dir(self.output_path))
 
         # 3. Run test.
         input_structure = input_parser.parse(test_filepath)
@@ -107,12 +105,11 @@ class TestDGeoFlowInputParser:
     def test_dgeoflow_parse_serialize_flox_model(self):
         dsm = DGeoFlowModel()
         test_filepath = (
-                Path(TestUtils.get_local_test_data_dir("dgeoflow"))
-                / "Berekening3.flox"
+            Path(TestUtils.get_local_test_data_dir("dgeoflow")) / "Berekening3.flox"
         )
         test_output_filepath = (
-                Path(TestUtils.get_output_test_data_dir("dgeoflow"))
-                / "Berekening3_serialized.flox"
+            Path(TestUtils.get_output_test_data_dir("dgeoflow"))
+            / "Berekening3_serialized.flox"
         )
 
         dsm.parse(test_filepath)

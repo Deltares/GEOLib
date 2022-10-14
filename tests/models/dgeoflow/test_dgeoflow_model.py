@@ -10,8 +10,13 @@ from teamcity import is_running_under_teamcity
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dgeoflow import DGeoFlowModel
-from geolib.models.dgeoflow.internal import CalculationTypeEnum, DGeoFlowStructure, ErosionDirectionEnum, PipeTrajectory, PersistablePoint
-
+from geolib.models.dgeoflow.internal import (
+    CalculationTypeEnum,
+    DGeoFlowStructure,
+    ErosionDirectionEnum,
+    PersistablePoint,
+    PipeTrajectory,
+)
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -32,7 +37,7 @@ class TestDGeoFlowModel:
             ),
         ],
     )
-    def test_given_datadir_when_parse_then_datastructure_of_expected_type(
+    def test_given_data_dir_when_parse_then_datastructure_of_expected_type(
         self, filepath: str
     ):
         # 1. Set up test data.
@@ -57,7 +62,7 @@ class TestDGeoFlowModel:
             pytest.param("dgeoflow/Berekening3", id="Input Structure"),
         ],
     )
-    def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
+    def test_given_data_when_parse_and_serialize_then_does_not_raise(self, dir_path: str):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dgeoflow_model = DGeoFlowModel(filename=None)
@@ -90,14 +95,15 @@ class TestDGeoFlowModel:
             pytest.param("dgeoflow/Tutorial", id="Tutorial"),
         ],
     )
-    def test_execute_model_succesfully(self, dir_path: str):
+    def test_execute_model_successfully(self, dir_path: str):
         # 1. Set up test data.
         dm = DGeoFlowModel()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dm.parse(test_filepath)
 
         test_output_filepath = (
-            Path(TestUtils.get_output_test_data_dir("dgeoflow")) / "Berekening3_serialized.flox"
+            Path(TestUtils.get_output_test_data_dir("dgeoflow"))
+            / "Berekening3_serialized.flox"
         )
         dm.serialize(test_output_filepath)
 
@@ -112,7 +118,7 @@ class TestDGeoFlowModel:
         assert model
 
     @pytest.mark.acceptance
-    def test_generate_groundwaterflow_model(self):
+    def test_generate_groundwater_flow_model(self):
 
         dm = DGeoFlowModel()
 
@@ -152,8 +158,8 @@ class TestDGeoFlowModel:
 
         [dm.add_layer(points, soil) for points, soil in layers_and_soils]
 
-        dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 3, "River")
-        dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")
+        dm.add_boundary_condition([Point(x=-50, z=0), Point(x=-10, z=0)], 3, "River")
+        dm.add_boundary_condition([Point(x=30, z=0), Point(x=50, z=0)], 0, "Polder")
 
         assert dm.is_valid
 
@@ -161,7 +167,7 @@ class TestDGeoFlowModel:
         path = Path(TestUtils.get_output_test_data_dir("dgeoflow"), "simple_model.flox")
         dm.serialize(path)
 
-        # Check for succesfull execution
+        # Check for successful execution
         dm.execute()
         assert dm.datastructure
 
@@ -209,24 +215,30 @@ class TestDGeoFlowModel:
 
         [dm.add_layer(points, soil) for points, soil in layers_and_soils]
 
-        dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 17, "River")
-        dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")
+        dm.add_boundary_condition([Point(x=-50, z=0), Point(x=-10, z=0)], 17, "River")
+        dm.add_boundary_condition([Point(x=30, z=0), Point(x=50, z=0)], 0, "Polder")
 
-        dm.datastructure.scenarios[0].Calculations[0].CalculationType = CalculationTypeEnum.PIPE_LENGTH
-        dm.datastructure.scenarios[0].Calculations[0].PipeTrajectory = PipeTrajectory(
-            Label = "Pipe",
-            D70 = 0.1,
-            ErosionDirection = ErosionDirectionEnum.RIGHT_TO_LEFT,
-            ElementSize = 1,
-            Points = [PersistablePoint(X=30,Z=0), PersistablePoint(X=-10,Z=0)]
+        dm.set_calculation_type(calculation_type=CalculationTypeEnum.PIPE_LENGTH)
+        dm.set_pipe_trajectory(
+            pipe_trajectory=PipeTrajectory(
+                Label="Pipe",
+                D70=0.1,
+                ErosionDirection=ErosionDirectionEnum.RIGHT_TO_LEFT,
+                ElementSize=1,
+                Points=[PersistablePoint(X=30, Z=0), PersistablePoint(X=-10, Z=0)],
+            )
         )
+        
         assert dm.is_valid
 
         # Serialize model to input file.
-        path = Path(TestUtils.get_output_test_data_dir("dgeoflow"), "simple_pipe_length_model.flox")
+        path = Path(
+            TestUtils.get_output_test_data_dir("dgeoflow"),
+            "simple_pipe_length_model.flox",
+        )
         dm.serialize(path)
 
-        # Check for succesfull execution
+        # Check for successful execution
         dm.execute()
         assert dm.datastructure
 
@@ -275,30 +287,35 @@ class TestDGeoFlowModel:
 
         [dm.add_layer(points, soil) for points, soil in layers_and_soils]
 
-        river_boundary_id = dm.add_boundarycondition([Point(x=-50,z=0), Point(x=-10,z=0)], 17, "River")
-        dm.add_boundarycondition([Point(x=30,z=0), Point(x=50,z=0)], 0, "Polder")
-
-        calculation = dm.datastructure.scenarios[0].Calculations[0]
-        calculation.CalculationType = CalculationTypeEnum.CRITICAL_HEAD
-        calculation.PipeTrajectory = PipeTrajectory(
-            Label = "Pipe",
-            D70 = 0.1,
-            ErosionDirection = ErosionDirectionEnum.RIGHT_TO_LEFT,
-            ElementSize = 1,
-            Points = [PersistablePoint(X=30,Z=0), PersistablePoint(X=-10,Z=0)]
+        river_boundary_id = dm.add_boundary_condition(
+            [Point(x=-50, z=0), Point(x=-10, z=0)], 17, "River"
         )
-        calculation.CriticalHeadId = str(river_boundary_id)
-        calculation.CriticalHeadSearchSpace.MinimumHeadLevel = 17.0
-        calculation.CriticalHeadSearchSpace.MaximumHeadLevel = 18.0
-
+        dm.add_boundary_condition([Point(x=30, z=0), Point(x=50, z=0)], 0, "Polder")
+        dm.set_calculation_type(calculation_type=CalculationTypeEnum.CRITICAL_HEAD)
+        dm.set_pipe_trajectory(
+            pipe_trajectory=PipeTrajectory(
+                Label="Pipe",
+                D70=0.1,
+                ErosionDirection=ErosionDirectionEnum.RIGHT_TO_LEFT,
+                ElementSize=1,
+                Points=[PersistablePoint(X=30, Z=0), PersistablePoint(X=-10, Z=0)],
+            )
+        )
+        dm.set_critical_head_boundary_condition(boundary_condition_id=river_boundary_id)
+        dm.set_critical_head_search_parameters(
+            minimum_head_level=17, maximum_head_level=18
+        )
 
         assert dm.is_valid
 
         # Serialize model to input file.
-        path = Path(TestUtils.get_output_test_data_dir("dgeoflow"), "simple_critical_head_model.flox")
+        path = Path(
+            TestUtils.get_output_test_data_dir("dgeoflow"),
+            "simple_critical_head_model.flox",
+        )
         dm.serialize(path)
 
-        # Check for succesfull execution
+        # Check for successful execution
         dm.execute()
         assert dm.datastructure
 

@@ -12,7 +12,7 @@ from geolib.errors import NotConcreteError
 from geolib.models.serializers import BaseSerializer
 from geolib.models.utils import get_filtered_type_hints
 
-from .internal import DGeoFlowStructure, DGeoFlowStructure
+from .internal import DGeoFlowStructure
 
 
 class DGeoFlowBaseSerializer(BaseSerializer, metaclass=ABCMeta):

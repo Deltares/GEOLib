@@ -4,8 +4,11 @@ import pytest
 from pydantic import ValidationError
 
 from geolib.models.dgeoflow import DGeoFlowModel
-from geolib.models.dgeoflow.internal import ForeignKeys, BoundaryConditionCollection, DGeoFlowStructure
-
+from geolib.models.dgeoflow.internal import (
+    BoundaryConditionCollection,
+    DGeoFlowStructure,
+    ForeignKeys,
+)
 from geolib.models.dstability.utils import children
 from tests.utils import TestUtils
 
@@ -24,7 +27,6 @@ class TestDGeoFlowInternal:
         assert test_input_filepath.exists()
         assert dm is not None
 
-
         # 3. Unlink a foreign key
         scenario = dm.datastructure.scenarios[0]
         scenario.GeometryId = -1
@@ -33,7 +35,6 @@ class TestDGeoFlowInternal:
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):
             DGeoFlowStructure(**dict(dm.datastructure))
-
 
     @pytest.mark.unittest
     def test_foreign_keys(self):
@@ -48,13 +49,13 @@ class TestDGeoFlowInternal:
     def test_find_subclass_from_children(self):
         # Setup
         dm = DGeoFlowModel()
-        test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dgeoflow/Berekening3")
-        )
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
         dm.parse(test_filepath)
 
         # Verify expecations
-        assert isinstance(dm.datastructure.boundary_conditions[0], BoundaryConditionCollection)
+        assert isinstance(
+            dm.datastructure.boundary_conditions[0], BoundaryConditionCollection
+        )
 
         # Test
         child_classes = [type(x).__name__ for x in children(dm.datastructure)]
