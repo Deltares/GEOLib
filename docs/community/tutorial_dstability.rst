@@ -2,7 +2,7 @@
 
 Tutorial D-Stability
 ====================
-1. The model data should be set. This can be done by initialising the class  :class:`~geolib.models.dstability.dstability_model.DStabilityModel`.
+1. The model data should be set. This can be done by initializing the class  :class:`~geolib.models.dstability.dstability_model.DStabilityModel`.
 
 .. code-block:: python
 
