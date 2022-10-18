@@ -228,7 +228,7 @@ class TestDGeoFlowModel:
                 Points=[PersistablePoint(X=30, Z=0), PersistablePoint(X=-10, Z=0)],
             )
         )
-        
+
         assert dm.is_valid
 
         # Serialize model to input file.

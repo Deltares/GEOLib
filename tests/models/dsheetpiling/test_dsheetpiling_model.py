@@ -48,8 +48,8 @@ from geolib.models.dsheetpiling.loads import (
     NormalForce,
     SurchargeLoad,
     UniformLoad,
-    VerificationLoadSettingsMomentNormalForce,
     VerificationLoadSettingsLoads,
+    VerificationLoadSettingsMomentNormalForce,
 )
 from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
