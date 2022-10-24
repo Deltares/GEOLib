@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial D-Sheet Piling &#8212; geolib 0.2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial D-Stability" href="tutorial_dstability.html" />
+    <link rel="prev" title="Tutorial D-Settlement" href="tutorial_dsettlement.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_dsettlement.html" title="Previous document">Tutorial D-Settlement</a>
+        </li>
+        <li>
+          <a href="tutorial_dstability.html" title="Next document">Tutorial D-Stability</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="tutorial-d-sheet-piling">
+<h1>Tutorial D-Sheet Piling<a class="headerlink" href="#tutorial-d-sheet-piling" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSheetPilingModel</span></code></a>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DSheetPilingModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>2. The type of model should be then defined. There are 4 different types of models that can be implemented in D-Sheetpiling.
+The <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.SheetModelType" title="geolib.models.dsheetpiling.dsheetpiling_model.SheetModelType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SheetModelType</span></code></a>, <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType" title="geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType"><code class="xref py py-class docutils literal notranslate"><span class="pre">WoodenSheetPileModelType</span></code></a>,
+<a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.SinglePileModelType" title="geolib.models.dsheetpiling.dsheetpiling_model.SinglePileModelType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SinglePileModelType</span></code></a> and <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType" title="geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiaphragmModelType</span></code></a>.</p>
+<p>Initialise as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">modeltype</span> <span class="o">=</span> <span class="n">SheetModelType</span><span class="p">(</span>
+    <span class="n">check_vertical_balance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">trildens_calculation</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">modeltype</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>After defining we will define the (required) sheet properties.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sheet_pile_properties_1</span> <span class="o">=</span> <span class="n">SheetPileProperties</span><span class="p">(</span>
+    <span class="n">material_type</span><span class="o">=</span><span class="n">SheetPilingElementMaterialType</span><span class="o">.</span><span class="n">Steel</span><span class="p">,</span>
+    <span class="n">section_bottom_level</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">elastic_stiffness_ei</span><span class="o">=</span><span class="mf">4.137e4</span><span class="p">,</span>
+    <span class="n">acting_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">mr_char_el</span><span class="o">=</span><span class="mi">312</span><span class="p">,</span>
+    <span class="n">modification_factor_k_mod</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">material_factor_gamma_m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">reduction_factor_on_maximum_moment</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">reduction_factor_on_ei</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">section_area</span><span class="o">=</span><span class="mi">137</span><span class="p">,</span>
+    <span class="n">elastic_section_modulus_w_el</span><span class="o">=</span><span class="mi">1300</span><span class="p">,</span>
+    <span class="n">coating_area</span><span class="o">=</span><span class="mf">1.23</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mf">303.0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>These properties should then be passed into the initialization of class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSheetPilingModel</span></code></a>.
+For example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sheet_element_1</span> <span class="o">=</span> <span class="n">Sheet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;AZ 13&quot;</span><span class="p">,</span> <span class="n">sheet_pile_properties</span><span class="o">=</span><span class="n">sheet_pile_properties_1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To define multiple sections of a sheet pile, another sheet element is created in the same way. Notice that the only value that needs to change is the section_bottom_level,
+as two sections cannot have the same bottom level.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sheet_pile_properties_2</span> <span class="o">=</span> <span class="n">SheetPileProperties</span><span class="p">(</span>
+    <span class="n">material_type</span><span class="o">=</span><span class="n">SheetPilingElementMaterialType</span><span class="o">.</span><span class="n">Steel</span><span class="p">,</span>
+    <span class="n">section_bottom_level</span><span class="o">=-</span><span class="mi">16</span><span class="p">,</span>
+    <span class="n">elastic_stiffness_ei</span><span class="o">=</span><span class="mf">4.137e4</span><span class="p">,</span>
+    <span class="n">acting_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">mr_char_el</span><span class="o">=</span><span class="mi">312</span><span class="p">,</span>
+    <span class="n">modification_factor_k_mod</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">material_factor_gamma_m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">reduction_factor_on_maximum_moment</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">reduction_factor_on_ei</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">section_area</span><span class="o">=</span><span class="mi">137</span><span class="p">,</span>
+    <span class="n">elastic_section_modulus_w_el</span><span class="o">=</span><span class="mi">1300</span><span class="p">,</span>
+    <span class="n">coating_area</span><span class="o">=</span><span class="mf">1.23</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mf">303.0</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">sheet_element_2</span> <span class="o">=</span> <span class="n">Sheet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;AZ 13&quot;</span><span class="p">,</span> <span class="n">sheet_pile_properties</span><span class="o">=</span><span class="n">sheet_pile_properties_2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These two sheet element can finally be added to the construction with the following command.
+The elements can be added in a form of a list when the construction is set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">level_top</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_construction</span><span class="p">(</span>
+    <span class="n">top_level</span><span class="o">=</span><span class="n">level_top</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="p">[</span><span class="n">sheet_element_1</span><span class="p">,</span> <span class="n">sheet_element_2</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>4. The stages should be defined after that. To define a stage call the function <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_stage" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_stage"><code class="xref py py-meth docutils literal notranslate"><span class="pre">geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_stage()</span></code></a>.
+The order of stages is defined as the order in which they were added. An example is added below. The user is also advised to store the output of the
+function (the <code class="docutils literal notranslate"><span class="pre">stage_id</span></code>) in a variable. This <code class="docutils literal notranslate"><span class="pre">stage_id</span></code> variable can be used later to define in which stage the surfaces, loads and supports, will be added.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">stage_id</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;New Stage&quot;</span><span class="p">,</span>
+    <span class="n">passive_side</span><span class="o">=</span><span class="n">PassiveSide</span><span class="o">.</span><span class="n">DSHEETPILING_DETERMINED</span><span class="p">,</span>
+    <span class="n">method_left</span><span class="o">=</span><span class="n">LateralEarthPressureMethodStage</span><span class="o">.</span><span class="n">KA_KO_KP</span><span class="p">,</span>
+    <span class="n">method_right</span><span class="o">=</span><span class="n">LateralEarthPressureMethodStage</span><span class="o">.</span><span class="n">KA_KO_KP</span><span class="p">,</span>
+    <span class="n">pile_top_displacement</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>5. Then the soils should be defined. In this case three types of soils materials will be defined.
+To define a soil material the class <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> should be initialised. For more information see the
+other <a class="reference internal" href="tutorial_soil.html#soil-tut"><span class="std std-ref">Tutorial Soils</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">soil_clay</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Clay&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After that all the different parameters can be defined.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set clay material</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">unsaturated_weight</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">saturated_weight</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle_interface</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">shell_factor</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">soil_state</span><span class="o">.</span><span class="n">ocr_layer</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">soil_classification_parameters</span><span class="o">.</span><span class="n">grain_type</span> <span class="o">=</span> <span class="n">GrainType</span><span class="o">.</span><span class="n">FINE</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">lambda_type</span> <span class="o">=</span> <span class="n">LambdaType</span><span class="o">.</span><span class="n">MULLERBRESLAU</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">k_1_top</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">k_1_bottom</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="c1"># These values refer to the settlement by vibration calculation</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">soil_classification_parameters</span><span class="o">.</span><span class="n">relative_density</span> <span class="o">=</span> <span class="mi">72</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">horizontal_permeability</span> <span class="o">=</span> <span class="mf">8e-11</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">soil_type_settlement_by_vibrations</span> <span class="o">=</span> <span class="n">SoilTypeSettlementByVibration</span><span class="o">.</span><span class="n">CLAY</span>
+</pre></div>
+</div>
+<p>The soil can be added to the model by the using the following function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil_clay</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the same way all the other materials can be defined and added to the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set peat material</span>
+<span class="n">soil_peat</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Peat&quot;</span><span class="p">)</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">unsaturated_weight</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">saturated_weight</span> <span class="o">=</span> <span class="mi">11</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle_interface</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">shell_factor</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">soil_state</span><span class="o">.</span><span class="n">ocr_layer</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">soil_classification_parameters</span><span class="o">.</span><span class="n">grain_type</span> <span class="o">=</span> <span class="n">GrainType</span><span class="o">.</span><span class="n">FINE</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">lambda_type</span> <span class="o">=</span> <span class="n">LambdaType</span><span class="o">.</span><span class="n">MULLERBRESLAU</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">k_1_top</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">k_1_bottom</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">soil_classification_parameters</span><span class="o">.</span><span class="n">relative_density</span> <span class="o">=</span> <span class="mi">72</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">horizontal_permeability</span> <span class="o">=</span> <span class="mf">8e-10</span>
+<span class="n">soil_peat</span><span class="o">.</span><span class="n">soil_type_settlement_by_vibrations</span> <span class="o">=</span> <span class="n">SoilTypeSettlementByVibration</span><span class="o">.</span><span class="n">PEAT</span>
+<span class="c1"># set sand material</span>
+<span class="n">soil_sand</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">)</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">unsaturated_weight</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">saturated_weight</span> <span class="o">=</span> <span class="mi">19</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span> <span class="o">=</span> <span class="mi">35</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle_interface</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">shell_factor</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">soil_state</span><span class="o">.</span><span class="n">ocr_layer</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">soil_classification_parameters</span><span class="o">.</span><span class="n">grain_type</span> <span class="o">=</span> <span class="n">GrainType</span><span class="o">.</span><span class="n">FINE</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">lambda_type</span> <span class="o">=</span> <span class="n">LambdaType</span><span class="o">.</span><span class="n">KOTTER</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">k_1_top</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">subgrade_reaction_parameters</span><span class="o">.</span><span class="n">k_1_bottom</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">soil_classification_parameters</span><span class="o">.</span><span class="n">relative_density</span> <span class="o">=</span> <span class="mi">72</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">horizontal_permeability</span> <span class="o">=</span> <span class="mf">8e-9</span>
+<span class="n">soil_sand</span><span class="o">.</span><span class="n">soil_type_settlement_by_vibrations</span> <span class="o">=</span> <span class="n">SoilTypeSettlementByVibration</span><span class="o">.</span><span class="n">SAND</span>
+<span class="c1"># add soils in model</span>
+<span class="k">for</span> <span class="n">soil</span> <span class="ow">in</span> <span class="p">(</span><span class="n">soil_peat</span><span class="p">,</span> <span class="n">soil_sand</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>6. After defining all the soil materials the profiles can be defined for the D-SheetPing calculation.
+A soil profile in GEOLIB is essentially a collection of soil layers. A soil layer can be initialised
+from the class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.profiles.SoilLayer" title="geolib.models.dsheetpiling.profiles.SoilLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilLayer</span></code></a> and requires as
+inputs the top position of the layer and the name of the soil material. Note that the soil materials,
+should have already been added to the model, these are referred to by name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">soil_layer_1</span> <span class="o">=</span> <span class="n">SoilLayer</span><span class="p">(</span><span class="n">top_of_layer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">soil_clay</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">soil_layer_2</span> <span class="o">=</span> <span class="n">SoilLayer</span><span class="p">(</span><span class="n">top_of_layer</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">soil_peat</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">soil_layer_3</span> <span class="o">=</span> <span class="n">SoilLayer</span><span class="p">(</span><span class="n">top_of_layer</span><span class="o">=-</span><span class="mi">6</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">soil_clay</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="n">soil_layer_4</span> <span class="o">=</span> <span class="n">SoilLayer</span><span class="p">(</span><span class="n">top_of_layer</span><span class="o">=-</span><span class="mi">13</span><span class="p">,</span> <span class="n">soil</span><span class="o">=</span><span class="n">soil_sand</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To define the soil profile initialise class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.profiles.SoilProfile" title="geolib.models.dsheetpiling.profiles.SoilProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilProfile</span></code></a>
+with the name of a profile and a list of the layers initialised in a top to bottom order.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span> <span class="o">=</span> <span class="n">SoilProfile</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;New Profile&quot;</span><span class="p">,</span>
+    <span class="n">layers</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">soil_layer_1</span><span class="p">,</span>
+        <span class="n">soil_layer_2</span><span class="p">,</span>
+        <span class="n">soil_layer_3</span><span class="p">,</span>
+        <span class="n">soil_layer_4</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_profile</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>7. To add surfaces for the right and left side the class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.surface.Surface" title="geolib.models.dsheetpiling.surface.Surface"><code class="xref py py-class docutils literal notranslate"><span class="pre">Surface</span></code></a>
+is used. Two surface are initialised in this case and are added in the first stage on the left and right side.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ground_level_surface</span> <span class="o">=</span> <span class="n">Surface</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;GL&quot;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)])</span>
+<span class="n">ground_level_minus_7_meter_surface</span> <span class="o">=</span> <span class="n">Surface</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;GL-7&quot;</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">7</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span>
+    <span class="n">surface</span><span class="o">=</span><span class="n">ground_level_surface</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_surface</span><span class="p">(</span>
+    <span class="n">surface</span><span class="o">=</span><span class="n">ground_level_minus_7_meter_surface</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>8. The water level are defined in the same way with initialiasing the class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.water_level.WaterLevel" title="geolib.models.dsheetpiling.water_level.WaterLevel"><code class="xref py py-class docutils literal notranslate"><span class="pre">WaterLevel</span></code></a>
+and then adding it to the model using the function <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_head_line" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_head_line"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_head_line()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">initial_water_level</span> <span class="o">=</span> <span class="n">WaterLevel</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;WL=GL-2&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_head_line</span><span class="p">(</span>
+    <span class="n">water_level</span><span class="o">=</span><span class="n">intial_water_level</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="9">
+<li><p>The calculation options also need to be defined. In this section several different available calculation options will be discussed.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Standard calculation initialised with class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">StandardCalculationOptions</span></code></a>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calc_options</span> <span class="o">=</span> <span class="n">StandardCalculationOptions</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_calculation_options</span><span class="p">(</span><span class="n">calculation_options</span><span class="o">=</span><span class="n">calc_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Verify calculation initialised with class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerifyCalculationOptions</span></code></a>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calc_options</span> <span class="o">=</span> <span class="n">VerifyCalculationOptions</span><span class="p">(</span>
+    <span class="n">input_calculation_type</span><span class="o">=</span><span class="n">CalculationType</span><span class="o">.</span><span class="n">VERIFY_SHEETPILING</span><span class="p">,</span>
+    <span class="n">verify_type</span><span class="o">=</span><span class="n">VerifyType</span><span class="o">.</span><span class="n">EC7NL</span><span class="p">,</span>
+    <span class="n">ec7_nl_method</span><span class="o">=</span><span class="n">PartialFactorCalculationType</span><span class="o">.</span><span class="n">METHODB</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_calculation_options</span><span class="p">(</span><span class="n">calculation_options</span><span class="o">=</span><span class="n">calc_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When a Verify <code class="docutils literal notranslate"><span class="pre">METHOD</span> <span class="pre">B</span></code> is selected the class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage" title="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationOptionsPerStage</span></code></a>
+also needs to be initialised and added to the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calc_options_per_stage</span> <span class="o">=</span> <span class="n">CalculationOptionsPerStage</span><span class="p">(</span>
+    <span class="n">anchor_factor</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">partial_factor_set</span><span class="o">=</span><span class="n">PartialFactorSetEC7NADNL</span><span class="o">.</span><span class="n">RC2</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_calculation_options_per_stage</span><span class="p">(</span>
+    <span class="n">calculation_options_per_stage</span><span class="o">=</span><span class="n">calc_options_per_stage</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Overal stability calculation are initialised with class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverallStabilityCalculationOptions</span></code></a>.
+Note that the input of the stage refers to the stage numbering as it is defined in D-SheetPing where the numbering of the stage ids begins from 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calc_options</span> <span class="o">=</span> <span class="n">OverallStabilityCalculationOptions</span><span class="p">(</span>
+    <span class="n">cur_stability_stage</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">overall_stability_type</span><span class="o">=</span><span class="n">DesignType</span><span class="o">.</span><span class="n">CUR</span><span class="p">,</span>
+    <span class="n">stability_cur_partial_factor_set</span><span class="o">=</span><span class="n">PartialFactorSetCUR</span><span class="o">.</span><span class="n">CLASSII</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_calculation_options</span><span class="p">(</span><span class="n">calculation_options</span><span class="o">=</span><span class="n">calc_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Kranz anchor strength calculation is initialised with class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">KranzAnchorStrengthCalculationOptions</span></code></a>.
+Note that the input of the stage refers to the stage numbering as it is defined in D-SheetPing where the numbering of the stage ids begins from 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calc_options</span> <span class="o">=</span><span class="n">KranzAnchorStrengthCalculationOptions</span><span class="p">(</span><span class="n">cur_anchor_force_stage</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_calculation_options</span><span class="p">(</span><span class="n">calculation_options</span><span class="o">=</span><span class="n">calc_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Design calculation is initialised with class <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignSheetpilingLengthCalculationOptions</span></code></a>.
+Note that the input of the stage refers to the stage numbering as it is defined in D-SheetPing where the numbering of the stage ids begins from 1.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calc_options</span> <span class="o">=</span> <span class="n">DesignSheetpilingLengthCalculationOptions</span><span class="p">(</span>
+    <span class="n">design_stage</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">design_pile_length_from</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">design_pile_length_to</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">design_pile_length_decrement</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">design_type</span><span class="o">=</span><span class="n">DesignType</span><span class="o">.</span><span class="n">EC7NL</span><span class="p">,</span>
+    <span class="n">design_partial_factor_set_ec7_nad_nl</span><span class="o">=</span><span class="n">PartialFactorSetEC7NADNL</span><span class="o">.</span><span class="n">RC1</span><span class="p">,</span>
+    <span class="n">design_ec7_nl_method</span><span class="o">=</span><span class="n">PartialFactorCalculationType</span><span class="o">.</span><span class="n">METHODA</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">set_calculation_options</span><span class="p">(</span><span class="n">calculation_options</span><span class="o">=</span><span class="n">calc_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>10. After defining these basic inputs the calculation can be run, but won’t be so useful. Several loads, supports and anchors can be defined.
+The following section list the way they can be initialised. The stage_id input here refers to the Python input which starts from 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add anchor</span>
+<span class="n">anchor</span> <span class="o">=</span> <span class="n">Anchor</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Grout anchor&quot;</span><span class="p">,</span>
+    <span class="n">level</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">,</span>
+    <span class="n">e_modulus</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+    <span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">wall_height_kranz</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">angle</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">yield_force</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_anchor_or_strut</span><span class="p">(</span><span class="n">support</span><span class="o">=</span><span class="n">anchor</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span><span class="p">)</span>
+
+<span class="c1"># add strut</span>
+<span class="n">floor</span> <span class="o">=</span> <span class="n">Strut</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Concrete floor&quot;</span><span class="p">,</span>
+    <span class="n">level</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span>
+    <span class="n">e_modulus</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+    <span class="n">angle</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">buckling_force</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">pre_compression</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_anchor_or_strut</span><span class="p">(</span><span class="n">support</span><span class="o">=</span><span class="n">floor</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span><span class="p">)</span>
+
+<span class="c1"># add horizontal line load</span>
+<span class="n">load</span> <span class="o">=</span> <span class="n">HorizontalLineLoad</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;New HorizontalLineLoad&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="n">load</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># add spring support</span>
+<span class="n">spring_support</span> <span class="o">=</span> <span class="n">SpringSupport</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Jerry&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span> <span class="n">rotational_stiffness</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">translational_stiffness</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_support</span><span class="p">(</span><span class="n">spring_support</span><span class="p">,</span> <span class="n">stage_id</span><span class="p">)</span>
+
+<span class="c1"># add rigid support</span>
+<span class="n">rigid_support</span> <span class="o">=</span> <span class="n">RigidSupport</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Redgy&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=-</span><span class="mi">13</span><span class="p">,</span> <span class="n">support_type</span><span class="o">=</span><span class="n">SupportType</span><span class="o">.</span><span class="n">ROTATION</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_support</span><span class="p">(</span><span class="n">rigid_support</span><span class="p">,</span> <span class="n">stage_id</span><span class="p">)</span>
+
+<span class="c1"># add moment load</span>
+<span class="n">moment_load</span> <span class="o">=</span> <span class="n">Moment</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;New Moment&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">load</span><span class="o">=</span><span class="mi">10</span><span class="p">,)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="n">moment_load</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># add uniform load</span>
+<span class="n">uniform_load</span> <span class="o">=</span> <span class="n">UniformLoad</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;New UniformLoad&quot;</span><span class="p">,</span> <span class="n">left_load</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">right_load</span><span class="o">=</span><span class="mf">12.5</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="n">uniform_load</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span><span class="p">)</span>
+
+<span class="c1"># add surcharge load</span>
+<span class="n">surcharge_load</span> <span class="o">=</span> <span class="n">SurchargeLoad</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;New SurchargeLoad&quot;</span><span class="p">,</span>
+    <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)],</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_surcharge_load</span><span class="p">(</span><span class="n">surcharge_load</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">Side</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="n">stage_id</span><span class="p">)</span>
+
+<span class="c1"># add normal force</span>
+<span class="n">normal_force</span> <span class="o">=</span> <span class="n">NormalForce</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;New normal force&quot;</span><span class="p">,</span>
+    <span class="n">force_at_sheet_pile_top</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">force_at_surface_level_left_side</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">force_at_surface_level_right_side</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">force_at_sheet_pile_toe</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="n">normal_force</span><span class="p">,</span> <span class="n">stage_id</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>11. To run the model first the model needs to be serialised. To do that define a
+output file name and call the function <a class="reference internal" href="../dev/models/dsheetpiling.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.serialize" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.serialize()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">input_test_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;Tutorial.shi&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">input_test_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="12">
+<li><p>Finally the execute function can be called to run the model in D-SheetPiling</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">input_test_file</span>
+<span class="n">model</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_dsettlement.html" title="Previous document">Tutorial D-Settlement</a>
+        </li>
+        <li>
+          <a href="tutorial_dstability.html" title="Next document">Tutorial D-Stability</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial_soil.html">Tutorial Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dfoundations.html">Tutorial D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsettlement.html">Tutorial D-Settlement</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial D-Sheet Piling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability.html">Tutorial D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dgeoflow.html">Tutorial D-Geo Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_multi.html">Tutorial Multiple Calculations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="tutorial.html">Tutorials</a><ul>
+      <li>Previous: <a href="tutorial_dsettlement.html" title="previous chapter">Tutorial D-Settlement</a></li>
+      <li>Next: <a href="tutorial_dstability.html" title="next chapter">Tutorial D-Stability</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
