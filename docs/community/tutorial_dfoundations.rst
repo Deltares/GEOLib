@@ -2,7 +2,7 @@
 
 Tutorial D-Foundations
 ======================
-1. The model data should be set. This can be done by initialasing the class  :class:`~geolib.models.dfoundations.dfoundations_model.DFoundationsModel`.
+1. The model data should be set. This can be done by initializing the class  :class:`~geolib.models.dfoundations.dfoundations_model.DFoundationsModel`.
 
 .. code-block:: python
 

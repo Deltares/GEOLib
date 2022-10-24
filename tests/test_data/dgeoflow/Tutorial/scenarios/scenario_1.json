@@ -1,0 +1,47 @@
+{
+  "Id": "1",
+  "Label": "Permeable sand only",
+  "Notes": null,
+  "GeometryId": "21",
+  "SoilLayersId": "28",
+  "Stages": [
+    {
+      "Label": "Top layer 2m (steady state)",
+      "Notes": "",
+      "BoundaryConditionCollectionId": "34"
+    }
+  ],
+  "Calculations": [
+    {
+      "Label": "Critical Head",
+      "Notes": "",
+      "CalculationType": "CriticalHead",
+      "PipeTrajectory": {
+        "Label": "Pipe",
+        "Notes": "",
+        "D70": 0.1,
+        "ElementSize": 0.0,
+        "ErosionDirection": "RightToLeft",
+        "Points": [
+          {
+            "X": 80.0,
+            "Z": -2.0
+          },
+          {
+            "X": 15.0,
+            "Z": -2.0
+          }
+        ]
+      },
+      "CriticalHeadId": "35",
+      "CriticalHeadSearchSpace": {
+        "MinimumHeadLevel": 4.0,
+        "MaximumHeadLevel": 6.0,
+        "StepSize": 0.05
+      },
+      "MeshPropertiesId": "41",
+      "ResultsId": "44"
+    }
+  ],
+  "ContentVersion": "2"
+}

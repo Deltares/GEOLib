@@ -39,9 +39,9 @@ from tests.utils import TestUtils, only_teamcity
 
 class TestDStabilityModel:
     @pytest.mark.unittest
-    def test_instantiate_DStabilityModel(self):
+    def test_instantiate_stability_model(self):
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
-            "" + "DStabilityModel does not instanciate BaseModel"
+            "" + "DStabilityModel does not instantiate BaseModel"
         )
 
     @pytest.mark.systemtest
@@ -115,9 +115,11 @@ class TestDStabilityModel:
         [
             pytest.param("dstability/example_1", id="Input Structure"),
             pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
-            pytest.param("dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"),
+            pytest.param(
+                "dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"
+            ),
             pytest.param("dstability/ResultExample", id="Result Example"),
-            pytest.param("dstability/EmptyFile", id="Empty File")
+            pytest.param("dstability/EmptyFile", id="Empty File"),
         ],
     )
     def test_execute_model_succesfully(self, dir_path: str):

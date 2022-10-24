@@ -224,8 +224,8 @@ class TestDsheetPilingBugFixes:
             method_left=LateralEarthPressureMethodStage.C_PHI_DELTA,
             method_right=LateralEarthPressureMethodStage.C_PHI_DELTA,
         )
-        dsheet_model.add_anchor_or_strut(Anchor(
-            name="Anchor",
-            level=-6), stage_id=0)
-        anchor = dsheet_model.datastructure.input_data.construction_stages.stages[0].anchors[0]
+        dsheet_model.add_anchor_or_strut(Anchor(name="Anchor", level=-6), stage_id=0)
+        anchor = dsheet_model.datastructure.input_data.construction_stages.stages[
+            0
+        ].anchors[0]
         assert anchor.pre_stress == 0

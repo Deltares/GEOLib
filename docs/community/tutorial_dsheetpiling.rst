@@ -4,7 +4,7 @@ Tutorial D-Sheet Piling
 =======================
 
 
-1. The model data should be set. This can be done by initialasing the class  :class:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel`.
+1. The model data should be set. This can be done by initializing the class  :class:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel`.
 
 .. code-block:: python
 
@@ -43,7 +43,7 @@ Initialise as follows:
             height=303.0,
         )
 
-These properties should then be passed into the initialisation of class :class:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel`.
+These properties should then be passed into the initialization of class :class:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel`.
 For example
 
 .. code-block:: python

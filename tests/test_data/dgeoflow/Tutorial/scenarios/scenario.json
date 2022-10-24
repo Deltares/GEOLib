@@ -1,0 +1,77 @@
+{
+  "Id": "0",
+  "Label": "Main scenario",
+  "Notes": null,
+  "GeometryId": "14",
+  "SoilLayersId": "27",
+  "Stages": [
+    {
+      "Label": "Top layer 2m (steady state)",
+      "Notes": "",
+      "BoundaryConditionCollectionId": "29"
+    }
+  ],
+  "Calculations": [
+    {
+      "Label": "Pipe length",
+      "Notes": "",
+      "CalculationType": "PipeLength",
+      "PipeTrajectory": {
+        "Label": "Pipe",
+        "Notes": "",
+        "D70": 0.1,
+        "ElementSize": 0.0,
+        "ErosionDirection": "RightToLeft",
+        "Points": [
+          {
+            "X": 80.0,
+            "Z": -2.0
+          },
+          {
+            "X": 15.0,
+            "Z": -2.0
+          }
+        ]
+      },
+      "CriticalHeadId": null,
+      "CriticalHeadSearchSpace": {
+        "MinimumHeadLevel": 0.0,
+        "MaximumHeadLevel": 1.0,
+        "StepSize": 0.1
+      },
+      "MeshPropertiesId": "39",
+      "ResultsId": "42"
+    },
+    {
+      "Label": "Critical Head",
+      "Notes": "",
+      "CalculationType": "CriticalHead",
+      "PipeTrajectory": {
+        "Label": "Pipe",
+        "Notes": "",
+        "D70": 0.1,
+        "ElementSize": 0.0,
+        "ErosionDirection": "RightToLeft",
+        "Points": [
+          {
+            "X": 80.0,
+            "Z": -2.0
+          },
+          {
+            "X": 15.0,
+            "Z": -2.0
+          }
+        ]
+      },
+      "CriticalHeadId": "30",
+      "CriticalHeadSearchSpace": {
+        "MinimumHeadLevel": 4.0,
+        "MaximumHeadLevel": 6.0,
+        "StepSize": 0.05
+      },
+      "MeshPropertiesId": "40",
+      "ResultsId": "43"
+    }
+  ],
+  "ContentVersion": "2"
+}
