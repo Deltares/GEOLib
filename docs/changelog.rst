@@ -1,7 +1,10 @@
 Changelog
 =========
+- :release:`0.1.12 <2022-10-24>`
+- :feature:`-` Feature: Add support for upcoming release of D-Geo Flow 2022.01. By MatthiasHauthVIKTOR & carloslubbers. 👍
+ 
 - :release:`0.1.12 <2022-10-21>`
-- :bug:`-` Fix: Fixed documentation typo link.  👍
+- :bug:`-` Fix: Fixed documentation typo link.
 
 - :release:`0.1.11 <2022-10-10>`
 - :bug:`-` Fix: Changed default value pre stress in anchors D-SheetPiling from 0.1 to 0.0 (#28). By martinapippi. 👍
