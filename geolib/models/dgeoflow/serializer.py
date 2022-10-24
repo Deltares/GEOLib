@@ -36,7 +36,7 @@ class DGeoFlowBaseSerializer(BaseSerializer, metaclass=ABCMeta):
                     fn = element_type.structure_name() + suffix + ".json"
                     serialized_datastructure[folder][fn] = data.json(indent=4)
 
-            # Otherwise its a single .json in the root folder
+            # Otherwise it is a single .json in the root folder
             else:
                 fn = fieldtype.structure_name() + ".json"
                 data = getattr(self.ds, field)

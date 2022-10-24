@@ -27,7 +27,7 @@ class DGeoFlowParser(BaseParser):
         return super().can_parse(filename) or filename.is_dir()
 
     def parse(self, filepath: DirectoryPath) -> BaseModelStructure:
-        ds = {}
+        data_structure = {}
 
         # Find required .json files via type hints
         for field, fieldtype in get_filtered_type_hints(self.structure):
@@ -36,16 +36,16 @@ class DGeoFlowParser(BaseParser):
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
                 print(field, element_type, filepath)
-                ds[field] = self.__parse_folder(element_type, filepath / "")
+                data_structure[field] = self.__parse_folder(element_type, filepath / "")
 
-            # Otherwise its a single .json in the root folder
+            # Otherwise it is a single .json in the root folder
             else:
                 fn = filepath / (fieldtype.structure_name() + ".json")
                 if not fn.exists():
                     raise FileNotFoundError(f"Couldn't find required file at {fn}")
-                ds[field] = fieldtype.parse_raw(fn.open().read())
+                data_structure[field] = fieldtype.parse_raw(fn.open().read())
 
-        return self.structure(**ds)
+        return self.structure(**data_structure)
 
     def __parse_folder(self, fieldtype, filepath: DirectoryPath) -> List:
         out = []
@@ -79,7 +79,7 @@ class DGeoFlowZipParser(DGeoFlowParser):
     def parse(self, filepath: FilePath) -> BaseModelStructure:
         with ZipFile(filepath) as zip:
 
-            # Fix backslashes in zipfile (untill fixed in DGeoFlow)
+            # Fix backslashes in zipfile (until fixed in DGeoFlow)
             for file in zip.filelist:
                 new_filename = file.filename.replace("\\", "/")
                 if new_filename != file.filename:
@@ -90,8 +90,8 @@ class DGeoFlowZipParser(DGeoFlowParser):
                     zip.NameToInfo[new_key] = zip.NameToInfo.pop(key)
 
             path = Path(zip)
-            ds = super().parse(path)
-        return ds
+            data_structure = super().parse(path)
+        return data_structure
 
 
 class DGeoFlowParserProvider(BaseParserProvider):
