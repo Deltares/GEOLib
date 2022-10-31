@@ -385,7 +385,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -636,7 +636,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -1178,7 +1178,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -1497,7 +1497,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -1802,7 +1802,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute(timeout_in_seconds=1000)
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:

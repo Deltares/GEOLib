@@ -241,7 +241,7 @@ class TestDsheetPilingModel:
         df.filename = output_test_file
         df.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
+        # 3. Verify return code of 0 (indicates successful run)
         assert df.datastructure
 
     @pytest.mark.unittest
