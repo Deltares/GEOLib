@@ -246,7 +246,7 @@ class TestDStabilityModel:
 
         # Serialize model to input file.
         path = Path(
-            TestUtils.get_output_test_data_dir("dstability/test.stix")
+            TestUtils.get_output_test_data_dir("dstability"), "test.stix"
         )
         dm.serialize(path)
 
