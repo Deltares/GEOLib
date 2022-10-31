@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial D-Settlement &#8212; geolib 0.2.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial D-Sheet Piling" href="tutorial_dsheetpiling.html" />
+    <link rel="prev" title="Tutorial D-Foundations" href="tutorial_dfoundations.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_dfoundations.html" title="Previous document">Tutorial D-Foundations</a>
+        </li>
+        <li>
+          <a href="tutorial_dsheetpiling.html" title="Next document">Tutorial D-Sheet Piling</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="tutorial-d-settlement">
+<h1>Tutorial D-Settlement<a class="headerlink" href="#tutorial-d-settlement" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
+
+<span class="n">dm</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">DSettlementModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Bases on the model the function <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_model()</span></code></a>. Here the calculation model options can be set.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
+    <span class="n">constitutive_model</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">SoilModel</span><span class="o">.</span><span class="n">ISOTACHE</span><span class="p">,</span>
+    <span class="n">consolidation_model</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">ConsolidationModel</span><span class="o">.</span><span class="n">DARCY</span><span class="p">,</span>
+    <span class="n">is_two_dimensional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">strain_type</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">StrainType</span><span class="o">.</span><span class="n">LINEAR</span><span class="p">,</span>
+    <span class="n">is_vertical_drain</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">is_fit_for_settlement_plate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">is_probabilistic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">is_horizontal_displacements</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">is_secondary_swelling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">is_waspan</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Then the geometry of the model should be defined by setting up the points which will make up the full geometry.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># points for the geometry</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p3</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p4</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p5</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p6</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p7</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">p8</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">p9</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">p10</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">p11</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">p12</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">p15</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p16</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p17</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p18</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p19</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p20</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p21</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p22</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p23</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p24</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p25</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">p26</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After defining the first points the boundaries of the geometry can be defined. This is done by calling the function
+<a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_boundary" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_boundary"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_boundary()</span></code></a>. A boundary is represented as a list of points.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b1</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">([</span><span class="n">p11</span><span class="p">,</span> <span class="n">p12</span><span class="p">])</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">([</span><span class="n">p9</span><span class="p">,</span> <span class="n">p10</span><span class="p">])</span>
+<span class="n">b3</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">([</span><span class="n">p7</span><span class="p">,</span> <span class="n">p8</span><span class="p">])</span>
+<span class="n">b4</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">([</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">])</span>
+<span class="n">b5</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">([</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span><span class="p">,</span> <span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">,</span> <span class="n">p6</span><span class="p">])</span>
+<span class="n">b6</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">p15</span><span class="p">,</span> <span class="n">p16</span><span class="p">,</span> <span class="n">p17</span><span class="p">,</span> <span class="n">p18</span><span class="p">,</span> <span class="n">p19</span><span class="p">,</span> <span class="n">p20</span><span class="p">,</span> <span class="n">p21</span><span class="p">,</span> <span class="n">p22</span><span class="p">,</span> <span class="n">p23</span><span class="p">,</span> <span class="n">p24</span><span class="p">,</span> <span class="n">p25</span><span class="p">,</span> <span class="n">p26</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Then define the calculation verticals from the function <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_verticals" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_verticals"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_verticals()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">set_verticals</span><span class="p">([</span><span class="n">p21</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Define the points for the headline and set these points as input in the function <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_head_line" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_head_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_head_line()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># headline points</span>
+<span class="n">p13</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p14</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">pl_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_head_line</span><span class="p">([</span><span class="n">p13</span><span class="p">,</span> <span class="n">p14</span><span class="p">],</span> <span class="n">is_phreatic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>After the basic geometry is inputted the soils can be defined. An example is appended below.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">soil</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">soils</span><span class="o">.</span><span class="n">Soil</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">)</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">saturated_weight</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">unsaturated_weight</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">saturated_weight</span><span class="o">.</span><span class="n">standard_deviation</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">unsaturated_weight</span><span class="o">.</span><span class="n">standard_deviation</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">vertical_consolidation_coefficient</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">1.00e-12</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">vertical_consolidation_coefficient</span><span class="o">.</span><span class="n">standard_deviation</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mf">5.00e-13</span>
+<span class="p">)</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">soil_state</span><span class="o">.</span><span class="n">pop_layer</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">isotache_parameters</span><span class="o">.</span><span class="n">precon_isotache_type</span> <span class="o">=</span> <span class="n">StateType</span><span class="o">.</span><span class="n">POP</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">isotache_parameters</span><span class="o">.</span><span class="n">reloading_swelling_constant_a</span> <span class="o">=</span> <span class="n">StochasticParameter</span><span class="p">(</span>
+    <span class="n">mean</span><span class="o">=</span><span class="mf">1.000e-02</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mf">2.500e-03</span><span class="p">,</span> <span class="n">correlation_coefficient</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="p">)</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">isotache_parameters</span><span class="o">.</span><span class="n">primary_compression_constant_b</span> <span class="o">=</span> <span class="n">StochasticParameter</span><span class="p">(</span>
+    <span class="n">mean</span><span class="o">=</span><span class="mf">1.000e-01</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mf">2.500e-03</span>
+<span class="p">)</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">isotache_parameters</span><span class="o">.</span><span class="n">secondary_compression_constant_c</span> <span class="o">=</span> <span class="n">StochasticParameter</span><span class="p">(</span>
+    <span class="n">mean</span><span class="o">=</span><span class="mf">5.000e-03</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mf">1.250e-03</span><span class="p">,</span> <span class="n">correlation_coefficient</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="p">)</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After the soils have been added, layers can be defined with the function <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_layer" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_layer"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_layer()</span></code></a>. Note that we refer to the soils by name.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l1</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span>
+    <span class="n">material_name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">,</span>
+    <span class="n">head_line_top</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">head_line_bottom</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">boundary_top</span><span class="o">=</span><span class="n">b1</span><span class="p">,</span>
+    <span class="n">boundary_bottom</span><span class="o">=</span><span class="n">b2</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span>
+    <span class="n">material_name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">,</span>
+    <span class="n">head_line_top</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">head_line_bottom</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">boundary_top</span><span class="o">=</span><span class="n">b2</span><span class="p">,</span>
+    <span class="n">boundary_bottom</span><span class="o">=</span><span class="n">b3</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">l3</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span>
+    <span class="n">material_name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">,</span>
+    <span class="n">head_line_top</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">head_line_bottom</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">boundary_top</span><span class="o">=</span><span class="n">b3</span><span class="p">,</span>
+    <span class="n">boundary_bottom</span><span class="o">=</span><span class="n">b4</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">l4</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span>
+    <span class="n">material_name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">,</span>
+    <span class="n">head_line_top</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">head_line_bottom</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">boundary_top</span><span class="o">=</span><span class="n">b4</span><span class="p">,</span>
+    <span class="n">boundary_bottom</span><span class="o">=</span><span class="n">b5</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">l5</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span>
+    <span class="n">material_name</span><span class="o">=</span><span class="s2">&quot;Sand&quot;</span><span class="p">,</span>
+    <span class="n">head_line_top</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">head_line_bottom</span><span class="o">=</span><span class="n">pl_id</span><span class="p">,</span>
+    <span class="n">boundary_top</span><span class="o">=</span><span class="n">b5</span><span class="p">,</span>
+    <span class="n">boundary_bottom</span><span class="o">=</span><span class="n">b6</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>5. After the complete geometry is defined other inputs can be set. For example the vertical drains.
+Initialise class <code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalDrain</span></code>. And add it to the model
+using <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_vertical_drain" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_vertical_drain"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_vertical_drain()</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="n">test_drain</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">drains</span><span class="o">.</span><span class="n">VerticalDrain</span><span class="p">(</span>
+    <span class="n">drain_type</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">drain_types</span><span class="o">.</span><span class="n">DrainType</span><span class="o">.</span><span class="n">COLUMN</span><span class="p">,</span>
+    <span class="n">range_from</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">range_to</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">bottom_position</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">center_to_center</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">diameter</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">grid</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">drains</span><span class="o">.</span><span class="n">DrainGridType</span><span class="o">.</span><span class="n">RECTANGULAR</span><span class="p">,</span>
+    <span class="n">schedule</span><span class="o">=</span><span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dsettlement</span><span class="o">.</span><span class="n">drains</span><span class="o">.</span><span class="n">ScheduleValuesSimpleInput</span><span class="p">(</span>
+        <span class="n">start_of_drainage</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+        <span class="n">phreatic_level_in_drain</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="n">begin_time</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">end_time</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">underpressure</span><span class="o">=</span><span class="mi">55</span><span class="p">,</span>
+        <span class="n">tube_pressure_during_dewatering</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">water_head_during_dewatering</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+<span class="c1"># set vertical drains</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">set_vertical_drain</span><span class="p">(</span><span class="n">test_drain</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>6. For a D-Settlement calculation to be performed at least one  load should be defined.
+In this case a non uniform load is added to the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">timedelta</span>
+<span class="c1"># set up the point list</span>
+<span class="n">point3</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">point4</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">point5</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">point6</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">pointlist</span> <span class="o">=</span> <span class="p">[</span><span class="n">point3</span><span class="p">,</span> <span class="n">point4</span><span class="p">,</span> <span class="n">point5</span><span class="p">,</span> <span class="n">point6</span><span class="p">]</span>
+<span class="c1"># Add first uniform load</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_non_uniform_load</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;My First Load&quot;</span><span class="p">,</span>
+    <span class="n">points</span><span class="o">=</span><span class="n">pointlist</span><span class="p">,</span>
+    <span class="n">time_start</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">time_end</span><span class="o">=</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">gamma_dry</span><span class="o">=</span><span class="mf">20.02</span><span class="p">,</span>
+    <span class="n">gamma_wet</span><span class="o">=</span><span class="mf">21.02</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>7. To run the model first the model needs to be serialised. To do that define a
+output file name and call the function <a class="reference internal" href="../dev/models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel.serialize" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">geolib.models.dsettlement.dsettlement_model.DSettlementModel.serialize()</span></code></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">input_test_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;Tutorial.sli&quot;</span><span class="p">)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">input_test_file</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Finally the execute function can be called to run the model in D-Settlement console.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">input_test_file</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_dfoundations.html" title="Previous document">Tutorial D-Foundations</a>
+        </li>
+        <li>
+          <a href="tutorial_dsheetpiling.html" title="Next document">Tutorial D-Sheet Piling</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial_soil.html">Tutorial Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dfoundations.html">Tutorial D-Foundations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsheetpiling.html">Tutorial D-Sheet Piling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability.html">Tutorial D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dgeoflow.html">Tutorial D-Geo Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_multi.html">Tutorial Multiple Calculations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="tutorial.html">Tutorials</a><ul>
+      <li>Previous: <a href="tutorial_dfoundations.html" title="previous chapter">Tutorial D-Foundations</a></li>
+      <li>Next: <a href="tutorial_dsheetpiling.html" title="next chapter">Tutorial D-Sheet Piling</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

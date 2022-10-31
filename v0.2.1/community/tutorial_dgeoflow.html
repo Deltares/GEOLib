@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial D-Geo Flow &#8212; geolib 0.2.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial Multiple Calculations" href="tutorial_multi.html" />
+    <link rel="prev" title="Tutorial D-Stability" href="tutorial_dstability.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_dstability.html" title="Previous document">Tutorial D-Stability</a>
+        </li>
+        <li>
+          <a href="tutorial_multi.html" title="Next document">Tutorial Multiple Calculations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="tutorial-d-geo-flow">
+<h1>Tutorial D-Geo Flow<a class="headerlink" href="#tutorial-d-geo-flow" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>The model data should be set. This can be done by initializing the class  <code class="xref py py-class docutils literal notranslate"><span class="pre">DGeoFlowModel</span></code>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span> <span class="o">=</span> <span class="n">DGeoFlowModel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>2. Choose a calculation, from the <code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationTypeEnum</span></code> and set
+it to the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">set_calculation_type</span><span class="p">(</span><span class="n">calculation_type</span><span class="o">=</span><span class="n">CalculationTypeEnum</span><span class="o">.</span><span class="n">CRITICAL_HEAD</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>We can then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and add it to the model. Refer to <a class="reference internal" href="tutorial_soil.html#soil-tut"><span class="std std-ref">Tutorial Soils</span></a> for more information.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add soil</span>
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Peat&quot;</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;HV&quot;</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">horizontal_permeability</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">storage_parameters</span><span class="o">.</span><span class="n">vertical_permeability</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">soil_peat_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Afterwards we create several layers and choose a soil for them.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add layers</span>
+<span class="n">layer_1</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">layer_2</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">layer_3</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+<span class="p">]</span>
+<span class="n">embankment</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">layers_and_soils</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="n">layer_1</span><span class="p">,</span> <span class="s2">&quot;Sand&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">layer_2</span><span class="p">,</span> <span class="s2">&quot;H_Ro_z&amp;k&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">layer_3</span><span class="p">,</span> <span class="s2">&quot;HV&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">embankment</span><span class="p">,</span> <span class="s2">&quot;H_Aa_ht_old&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="p">[</span><span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">soil</span><span class="p">)</span> <span class="k">for</span> <span class="n">points</span><span class="p">,</span> <span class="n">soil</span> <span class="ow">in</span> <span class="n">layers_and_soils</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>With the geometry defined, let’s add the boundary conditions.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">river_boundary_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary_condition</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)],</span> <span class="mi">17</span><span class="p">,</span> <span class="s2">&quot;River&quot;</span>
+<span class="p">)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_boundary_condition</span><span class="p">([</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)],</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Polder&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>You can now set the calculation settings.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set a pipe trajectory</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">set_pipe_trajectory</span><span class="p">(</span>
+    <span class="n">pipe_trajectory</span><span class="o">=</span><span class="n">PipeTrajectory</span><span class="p">(</span>
+        <span class="n">Label</span><span class="o">=</span><span class="s2">&quot;Pipe&quot;</span><span class="p">,</span>
+        <span class="n">D70</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">ErosionDirection</span><span class="o">=</span><span class="n">ErosionDirectionEnum</span><span class="o">.</span><span class="n">RIGHT_TO_LEFT</span><span class="p">,</span>
+        <span class="n">ElementSize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">Points</span><span class="o">=</span><span class="p">[</span><span class="n">PersistablePoint</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">PersistablePoint</span><span class="p">(</span><span class="n">X</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mi">0</span><span class="p">)],</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Set the river boundary to be the critical boundary condition</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">set_critical_head_boundary_condition</span><span class="p">(</span><span class="n">boundary_condition_id</span><span class="o">=</span><span class="n">river_boundary_id</span><span class="p">)</span>
+
+<span class="c1"># Set the critical head search parameters</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">set_critical_head_search_parameters</span><span class="p">(</span>
+    <span class="n">minimum_head_level</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">maximum_head_level</span><span class="o">=</span><span class="mi">18</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To run the model first the model needs to be serialized. To do that define a
+output file name and call the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tutorial.flox&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally the execute function can be called to run the model in D-Geo Flow.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial_dstability.html" title="Previous document">Tutorial D-Stability</a>
+        </li>
+        <li>
+          <a href="tutorial_multi.html" title="Next document">Tutorial Multiple Calculations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tutorial_soil.html">Tutorial Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dfoundations.html">Tutorial D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsettlement.html">Tutorial D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsheetpiling.html">Tutorial D-Sheet Piling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability.html">Tutorial D-Stability</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial D-Geo Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_multi.html">Tutorial Multiple Calculations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">Developer Interface</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="tutorial.html">Tutorials</a><ul>
+      <li>Previous: <a href="tutorial_dstability.html" title="previous chapter">Tutorial D-Stability</a></li>
+      <li>Next: <a href="tutorial_multi.html" title="next chapter">Tutorial Multiple Calculations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
