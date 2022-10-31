@@ -1,6 +1,9 @@
 Changelog
 =========
-- :release:`0.1.12 <2022-10-24>`
+- :release:`0.2.1 <2022-10-31>`
+- :bug:`-` Fix: Updated D-Geo Flow model to latest version before release.
+ 
+- :release:`0.2.0 <2022-10-24>`
 - :feature:`-` Feature: Add support for upcoming release of D-Geo Flow 2022.01. By MatthiasHauthVIKTOR & carloslubbers. 👍
  
 - :release:`0.1.12 <2022-10-21>`
