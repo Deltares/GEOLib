@@ -122,7 +122,7 @@ class TestDStabilityModel:
             pytest.param("dstability/EmptyFile", id="Empty File"),
         ],
     )
-    def test_execute_model_succesfully(self, dir_path: str):
+    def test_execute_model_successfully(self, dir_path: str):
         # 1. Set up test data.
         dm = DStabilityModel()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
@@ -238,17 +238,19 @@ class TestDStabilityModel:
 
         layer_ids = [dm.add_layer(points, soil) for points, soil in layers_and_soils]
         for layer_id in layer_ids:
-            # Has to be done in separate loop since all layers first need to be definied.
+            # Has to be done in separate loop since all layers first need to be defined.
             dm.add_soil_layer_consolidations(soil_layer_id=layer_id)
 
         assert len(dm.datastructure.loads[0].LayerLoads) == 4
         assert dm.is_valid
 
         # Serialize model to input file.
-        path = pathlib.Path.cwd() / "test.stix"
+        path = Path(
+            TestUtils.get_local_test_data_dir("dstability/test.stix")
+        )
         dm.serialize(path)
 
-        # Check for succesfull execution
+        # Check for successful execution
         dm.execute()
         assert dm.datastructure
 
