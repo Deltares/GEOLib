@@ -527,19 +527,14 @@ class PersistableCalculation(DGeoFlowBaseModelStructure):
     ResultsId: Optional[str]
 
 
-class GaussPointResult(DGeoFlowBaseModelStructure):
-    Point: Optional[PersistablePoint] = None
-    HydraulicHead: float = 1
-
-
 class NodeResult(DGeoFlowBaseModelStructure):
     Point: Optional[PersistablePoint] = None
     TotalPorePressure: float = 1
     HydraulicDischarge: float = 1
+    HydraulicHead: float = 1
 
 
 class ElementResult(DGeoFlowBaseModelStructure):
-    GaussPoints: Optional[List[GaussPointResult]] = []
     NodeResults: Optional[List[NodeResult]] = []
 
 
