@@ -6,6 +6,8 @@ Tutorial D-Geo Flow
 
 .. code-block:: python
 
+    from geolib.models.dgeoflow import DGeoFlowModel
+
     dm = DGeoFlowModel()
 
 2. Choose a calculation, from the :class:`~geolib.models.dgeoflow.CalculationTypeEnum` and set
@@ -13,11 +15,15 @@ it to the model.
 
 .. code-block:: python
 
+    from geolib.models.dgeoflow.internal import CalculationTypeEnum
+    
     dm.set_calculation_type(calculation_type=CalculationTypeEnum.CRITICAL_HEAD)
 
 3. We can then create a :class:`~geolib.soils.Soil` and add it to the model. Refer to :ref:`soil_tut` for more information.
 
 .. code-block:: python
+
+    from geolib.soils import Soil
 
     # add soil
     soil = Soil()
@@ -30,6 +36,8 @@ it to the model.
 4. Afterwards we create several layers and choose a soil for them.
 
 .. code-block:: python
+
+    from geolib.geometry import Point
 
     # add layers
     layer_1 = [
@@ -81,6 +89,8 @@ it to the model.
 
 .. code-block:: python
     
+    from geolib.models.dgeoflow.internal import PipeTrajectory, ErosionDirectionEnum, PersistablePoint
+
     # Set a pipe trajectory
     dm.set_pipe_trajectory(
         pipe_trajectory=PipeTrajectory(
@@ -107,6 +117,7 @@ output file name and call the function :meth:`~geolib.models.dgeoflow.dgeoflow_m
 .. code-block:: python
 
     from pathlib import Path
+    
     dm.serialize(Path("tutorial.flox")
 
 Finally the execute function can be called to run the model in D-Geo Flow.
