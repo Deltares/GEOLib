@@ -53,18 +53,24 @@
 <ol class="arabic simple">
 <li><p>The model data should be set. This can be done by initializing the class  <code class="xref py py-class docutils literal notranslate"><span class="pre">DGeoFlowModel</span></code>.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span> <span class="o">=</span> <span class="n">DGeoFlowModel</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dgeoflow</span> <span class="kn">import</span> <span class="n">DGeoFlowModel</span>
+
+<span class="n">dm</span> <span class="o">=</span> <span class="n">DGeoFlowModel</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>2. Choose a calculation, from the <code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationTypeEnum</span></code> and set
 it to the model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">set_calculation_type</span><span class="p">(</span><span class="n">calculation_type</span><span class="o">=</span><span class="n">CalculationTypeEnum</span><span class="o">.</span><span class="n">CRITICAL_HEAD</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dgeoflow.internal</span> <span class="kn">import</span> <span class="n">CalculationTypeEnum</span>
+
+<span class="n">dm</span><span class="o">.</span><span class="n">set_calculation_type</span><span class="p">(</span><span class="n">calculation_type</span><span class="o">=</span><span class="n">CalculationTypeEnum</span><span class="o">.</span><span class="n">CRITICAL_HEAD</span><span class="p">)</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>We can then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and add it to the model. Refer to <a class="reference internal" href="tutorial_soil.html#soil-tut"><span class="std std-ref">Tutorial Soils</span></a> for more information.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+
+<span class="c1"># add soil</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Peat&quot;</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;HV&quot;</span>
@@ -76,7 +82,9 @@ it to the model.</p>
 <ol class="arabic simple" start="4">
 <li><p>Afterwards we create several layers and choose a soil for them.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add layers</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="c1"># add layers</span>
 <span class="n">layer_1</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
     <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
@@ -126,7 +134,9 @@ it to the model.</p>
 <ol class="arabic simple" start="6">
 <li><p>You can now set the calculation settings.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set a pipe trajectory</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dgeoflow.internal</span> <span class="kn">import</span> <span class="n">PipeTrajectory</span><span class="p">,</span> <span class="n">ErosionDirectionEnum</span><span class="p">,</span> <span class="n">PersistablePoint</span>
+
+<span class="c1"># Set a pipe trajectory</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_pipe_trajectory</span><span class="p">(</span>
     <span class="n">pipe_trajectory</span><span class="o">=</span><span class="n">PipeTrajectory</span><span class="p">(</span>
         <span class="n">Label</span><span class="o">=</span><span class="s2">&quot;Pipe&quot;</span><span class="p">,</span>
@@ -149,6 +159,7 @@ it to the model.</p>
 <p>To run the model first the model needs to be serialized. To do that define a
 output file name and call the function <code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
 <span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tutorial.flox&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
