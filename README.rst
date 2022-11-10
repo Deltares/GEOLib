@@ -12,7 +12,7 @@ Install GEOLib with:
 
     $ pip install d-geolib
 
-Configure your environment using the instructions on our `Setup <https://deltares.github.io/GEOLib/latest/user/setup.html>` page.
+Configure your environment using the instructions on our `Setup <https://deltares.github.io/GEOLib/latest/user/setup.html>`_ page.
 You may get the console executables from the Deltares download portal, or in the case of the D-GEO Suite, you may copy the contents of the installation 'bin' directory to your console folder.
 
 Running the source code
