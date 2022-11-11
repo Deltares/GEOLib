@@ -30,7 +30,7 @@ To install the required dependencies to run GEOLib code, run:
 
 .. code-block:: bash
 
-    $ pip install -r requirements
+    $ pip install -r requirements.txt
 
 Or, when having poetry installed (you should):
 
