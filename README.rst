@@ -1,7 +1,7 @@
 GEOLib
 =============================
 
-GEOLib is a Python package to generate, execute and parse several D-Serie numerical models.
+GEOLib is a Python package to generate, execute and parse several D-Serie and D-GEO Suite numerical models.
 
 Installation
 ------------
