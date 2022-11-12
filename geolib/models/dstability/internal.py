@@ -141,6 +141,39 @@ class Waternet(DStabilitySubStructure):
             self.PhreaticLineId = head_line.Id
 
         return head_line
+    
+    def edit_head_line(self,
+                       head_line_id: str,
+                       label: str or None,
+                       notes: str or None,
+                       points: List[Point],
+                       is_phreatic_line: bool or None) -> PersistableHeadLine:
+        """
+        Update a headline
+
+        Args:
+            head_line_id (str): id of the headline
+            points (list of Point): ordered points of the headline 
+
+        Returns:
+            PersistableHeadLine: the edited headline
+        """
+
+        for persistable_headline in self.HeadLines:
+            if persistable_headline.Id == head_line_id:
+                if label is None:
+                    label = persistable_headline.Label
+                if notes is None:
+                    notes = persistable_headline.Notes
+                if is_phreatic_line is None:
+                    is_phreatic_line = False
+                head_line = PersistableHeadLine(Id=head_line_id, Label=label, Notes=notes)
+                head_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
+                if is_phreatic_line:
+                    self.PhreaticLineId = head_line.Id
+                return persistable_headline
+            
+        raise ValueError(f"Head line id '{head_line_id}' not found in Waternets/PersistableHeadlines")
 
     def add_reference_line(
         self,
