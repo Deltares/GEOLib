@@ -144,9 +144,9 @@ class Waternet(DStabilitySubStructure):
     
     def edit_head_line(self,
                        head_line_id: str,
+                       points: List[Point],
                        label: str or None,
                        notes: str or None,
-                       points: List[Point],
                        is_phreatic_line: bool or None) -> PersistableHeadLine:
         """
         Update a headline
@@ -204,6 +204,53 @@ class Waternet(DStabilitySubStructure):
 
         self.ReferenceLines.append(reference_line)
         return reference_line
+    
+        def edit_reference_line(self,
+                       reference_line_id: str,
+                       points: List[Point],
+                       label: str or None,
+                       notes: str or None,
+                       bottom_head_line_id: str or None,
+                       top_head_line_id: str or None,
+                       ) -> PersistableReferenceLine:
+        """
+        Update a reference line
+
+        Args:
+            reference_line_id (str): id of the reference line
+            points (list of Point): ordered points of the reference line
+
+        Returns:
+            PersistableHeadLine: the edited headline
+        """
+
+        for persistable_reference_line in self.ReferenceLines:
+            if persistable_reference_line.Id == reference_line_id:
+                if label is None:
+                    label = persistable_reference_line.Label
+                if notes is None:
+                    notes = persistable_reference_line.Notes
+                if bottom_head_line_id is None:
+                    is_phreatic_line = persistable_reference_line.BottomHeadLineId
+                if top_head_line_id is None:
+                    top_head_line_id = persistable_reference_line.TopHeadLineId
+                reference_line = PersistableReferenceLine(Id=head_line_id, Label=label, Notes=notes)
+                reference_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
+
+                if not self.has_head_line_id(bottom_head_line_id):
+                    raise ValueError(
+                        f"Unknown headline id {bottom_head_line_id} for bottom_head_line_id"
+                    )
+
+                if not self.has_head_line_id(top_head_line_id):
+                    raise ValueError(
+                        f"Unknown headline id {top_head_line_id} for top_head_line_id"
+                    )
+
+                reference_line.BottomHeadLineId = bottom_head_line_id
+                reference_line.TopHeadLineId = top_head_line_id
+
+                return persistable_reference_line
 
 
 class PersistableDitchCharacteristics(DStabilityBaseModelStructure):
