@@ -16,13 +16,16 @@ class TestDStabilityHeadLine:
     def test_add_head_line(self):
         dsm = DStabilityModel()
         points = [Point(x=-20.0, z=-2.0), Point(x=50.0, z=-2.0)]
-        headline_id = dsm.add_head_line(
+        head_line_id = dsm.add_head_line(
             label="TestHL", points=points, is_phreatic_line=True
         )
-        headline = dsm.datastructure.waternets[0].get_head_line(str(headline_id))
-        assert isinstance(headline_id, int)
-        assert pytest.approx(headline.Points[0].X) == -20.0
-        assert dsm.waternets[0].PhreaticLineId == headline.Id
+        head_line = dsm.datastructure.waternets[0].get_head_line(str(headline_id))
+        assert isinstance(head_line_id, int)
+        assert pytest.approx(head_line.Points[0].X) == -20.0
+        assert dsm.waternets[0].PhreaticLineId == head_line.Id
+        points_v2 = [Point(x=-25.0, z=-3.0), Point(x=55.0, z=-3.0)]
+        dsm.edit_head_line(head_line_id=head_line_id, points=points_v2)
+        assert pytest.approx(headline.Points[0].Z) == -3.0
 
 
 class TestDStabilityReferenceLine:
@@ -51,6 +54,10 @@ class TestDStabilityReferenceLine:
         assert isinstance(reference_line_id, int)
         assert len(dsm.waternets[0].ReferenceLines) == 1
         assert pytest.approx(reference_line.Points[-1].Z) == -2.0
+        
+        points_v2 = [Point(x=-25.0, z=-3.0), Point(x=55.0, z=-3.0)]
+        dsm.edit_reference_line(reference_line_id=headline_id, points=points_v2)
+        assert pytest.approx(reference_line.Points[0].Z) == -3.0
 
         # add ref line with invalid headline id
         with pytest.raises(ValueError):
