@@ -28,7 +28,7 @@ class TestDStabilityHeadLine:
     def test_edit_head_line(self):
         dsm = DStabilityModel()
         points = [Point(x=-20.0, z=-2.0), Point(x=50.0, z=-2.0)]
-        head_line_id = dsm.add_head_line(
+        dsm.add_head_line(
             label="TestHL", points=points, is_phreatic_line=True
         )
         head_line_id_2 = dsm.add_head_line(
@@ -97,7 +97,7 @@ class TestDStabilityReferenceLine:
         )
         
         # adding valid reference line
-        reference_line_id = dsm.add_reference_line(
+        dsm.add_reference_line(
             label="TestRL",
             points=points,
             bottom_headline_id=head_line_1_id,
