@@ -117,9 +117,9 @@ class TestDStabilityReferenceLine:
         assert pytest.approx(reference_line.Points[0].Z) == -3.0
         assert dsm.waternets[0].ReferenceLines[1].BottomHeadLineId == head_line_3_id
 
-        # edith ref line with invalid headline id
+        # edit ref line with invalid headline id
         with pytest.raises(ValueError):
-            dsm.add_reference_line(
+            dsm.edit_reference_line(
                 label="TestRL",
                 points=points,
                 bottom_headline_id=-1,
