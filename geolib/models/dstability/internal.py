@@ -126,12 +126,12 @@ class Waternet(DStabilitySubStructure):
         return head_line_id in {head_line.Id for head_line in self.HeadLines}
 
     def add_head_line(
-        self,
-        head_line_id: str,
-        label: str,
-        notes: str,
-        points: List[Point],
-        is_phreatic_line: bool,
+            self,
+            head_line_id: str,
+            label: str,
+            notes: str,
+            points: List[Point],
+            is_phreatic_line: bool,
     ) -> PersistableHeadLine:
         head_line = PersistableHeadLine(Id=head_line_id, Label=label, Notes=notes)
         head_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
@@ -141,7 +141,7 @@ class Waternet(DStabilitySubStructure):
             self.PhreaticLineId = head_line.Id
 
         return head_line
-    
+
     def edit_head_line(self,
                        head_line_id: str,
                        points: List[Point],
@@ -153,7 +153,10 @@ class Waternet(DStabilitySubStructure):
 
         Args:
             head_line_id (str): id of the headline
-            points (list of Point): ordered points of the headline 
+            points (list of Point): ordered points of the headline
+            label
+            notes
+            is_phreatic_line
 
         Returns:
             PersistableHeadLine: the edited headline
@@ -172,17 +175,17 @@ class Waternet(DStabilitySubStructure):
                 if is_phreatic_line:
                     self.PhreaticLineId = head_line.Id
                 return persistable_headline
-            
+
         raise ValueError(f"Head line id '{head_line_id}' not found in Waternets/PersistableHeadlines")
 
     def add_reference_line(
-        self,
-        reference_line_id: str,
-        label: str,
-        notes: str,
-        points: List[Point],
-        bottom_head_line_id: str,
-        top_head_line_id: str,
+            self,
+            reference_line_id: str,
+            label: str,
+            notes: str,
+            points: List[Point],
+            bottom_head_line_id: str,
+            top_head_line_id: str,
     ) -> PersistableReferenceLine:
         reference_line = PersistableReferenceLine(
             Id=reference_line_id, Label=label, Notes=notes
@@ -204,21 +207,24 @@ class Waternet(DStabilitySubStructure):
 
         self.ReferenceLines.append(reference_line)
         return reference_line
-    
-        def edit_reference_line(self,
-                       reference_line_id: str,
-                       points: List[Point],
-                       label: str or None,
-                       notes: str or None,
-                       bottom_head_line_id: str or None,
-                       top_head_line_id: str or None,
-                       ) -> PersistableReferenceLine:
-        """
-        Update a reference line
+
+    def edit_reference_line(self,
+                            reference_line_id: str,
+                            points: List[Point],
+                            label: str or None,
+                            notes: str or None,
+                            bottom_head_line_id: str or None,
+                            top_head_line_id: str or None,
+                            ) -> PersistableReferenceLine:
+        """Update a reference line
 
         Args:
             reference_line_id (str): id of the reference line
             points (list of Point): ordered points of the reference line
+            label
+            notes
+            bottom_head_line_id
+            top_head_line_id
 
         Returns:
             PersistableHeadLine: the edited headline
@@ -231,10 +237,10 @@ class Waternet(DStabilitySubStructure):
                 if notes is None:
                     notes = persistable_reference_line.Notes
                 if bottom_head_line_id is None:
-                    is_phreatic_line = persistable_reference_line.BottomHeadLineId
+                    bottom_head_line_id = persistable_reference_line.BottomHeadLineId
                 if top_head_line_id is None:
                     top_head_line_id = persistable_reference_line.TopHeadLineId
-                reference_line = PersistableReferenceLine(Id=head_line_id, Label=label, Notes=notes)
+                reference_line = PersistableReferenceLine(Id=reference_line_id, Label=label, Notes=notes)
                 reference_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
 
                 if not self.has_head_line_id(bottom_head_line_id):
@@ -385,9 +391,9 @@ class State(DStabilitySubStructure):
         self.StatePoints.append(state_point)
 
     def add_state_line(
-        self,
-        points: List[PersistablePoint],
-        state_points: List[PersistableStateLinePoint],
+            self,
+            points: List[PersistablePoint],
+            state_points: List[PersistableStateLinePoint],
     ):
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
 
@@ -777,7 +783,7 @@ class SoilCollection(DStabilitySubStructure):
 
     @staticmethod
     def __to_global_stochastic_parameter(
-        persistable_stochastic_parameter: PersistableStochasticParameter,
+            persistable_stochastic_parameter: PersistableStochasticParameter,
     ):
         from geolib.soils import StochasticParameter
 
@@ -790,17 +796,17 @@ class SoilCollection(DStabilitySubStructure):
     def __determine_strength_increase_exponent(self, persistable_soil: PersistableSoil):
         # shear increase exponent taken from persistable_soil.SuTable or just from persistable_soil
         if (
-            persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
-            or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value == "Su"
+                persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "Su"
+                or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value == "Su"
         ):
             # SHANSEP model is selected so the StrengthIncreaseExponentStochasticParameter from persistable_soil should be used
             return self.__to_global_stochastic_parameter(
                 persistable_soil.StrengthIncreaseExponentStochasticParameter
             )
         elif (
-            persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
-            or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value
-            == "SuTable"
+                persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
+                or persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.value
+                == "SuTable"
         ):
             # SU table is selected so the StrengthIncreaseExponentStochasticParameter from SuTable should be used
             return self.__to_global_stochastic_parameter(
@@ -961,7 +967,7 @@ class Reinforcements(DStabilitySubStructure):
     Nails: List[PersistableNail] = []
 
     def add_reinforcement(
-        self, reinforcement: "DStabilityReinforcement"
+            self, reinforcement: "DStabilityReinforcement"
     ) -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
         internal_datastructure = reinforcement._to_internal_datastructure()
         plural_class_name = f"{reinforcement.__class__.__name__}s"
@@ -1087,7 +1093,7 @@ class Loads(DStabilitySubStructure):
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
 
     def add_load(
-        self, load: "DStabilityLoad", consolidations: List["Consolidation"]
+            self, load: "DStabilityLoad", consolidations: List["Consolidation"]
     ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
         internal_datastructure = load.to_internal_datastructure()
 
@@ -1107,7 +1113,7 @@ class Loads(DStabilitySubStructure):
         return internal_datastructure
 
     def add_layer_load(
-        self, soil_layer_id: int, consolidations: List["Consolidation"]
+            self, soil_layer_id: int, consolidations: List["Consolidation"]
     ) -> PersistableLayerLoad:
         layer_load = PersistableLayerLoad(
             LayerId=str(soil_layer_id),
@@ -1176,7 +1182,7 @@ class Geometry(DStabilitySubStructure):
         raise ValueError(f"Layer id {id} not found in this geometry")
 
     def add_layer(
-        self, id: str, label: str, notes: str, points: List[Point]
+            self, id: str, label: str, notes: str, points: List[Point]
     ) -> PersistableLayer:
         """
         Add a new layer to the model. Layers are expected;
@@ -1398,7 +1404,7 @@ class CalculationSettings(DStabilitySubStructure):
         self.AnalysisType = AnalysisType.BISHOP
 
     def set_bishop_brute_force(
-        self, bishop_brute_force_settings: PersistableBishopBruteForceSettings
+            self, bishop_brute_force_settings: PersistableBishopBruteForceSettings
     ) -> None:
         self.BishopBruteForce = bishop_brute_force_settings
         self.AnalysisType = AnalysisType.BISHOP_BRUTE_FORCE
@@ -1408,7 +1414,7 @@ class CalculationSettings(DStabilitySubStructure):
         self.AnalysisType = AnalysisType.SPENCER
 
     def set_spencer_genetic(
-        self, spencer_genetic_settings: PersistableSpencerGeneticSettings
+            self, spencer_genetic_settings: PersistableSpencerGeneticSettings
     ) -> None:
         self.SpencerGenetic = spencer_genetic_settings
         self.AnalysisType = AnalysisType.SPENCER_GENETIC
@@ -1418,8 +1424,8 @@ class CalculationSettings(DStabilitySubStructure):
         self.AnalysisType = AnalysisType.UPLIFT_VAN
 
     def set_uplift_van_particle_swarm(
-        self,
-        uplift_van_particle_swarm_settings: PersistableUpliftVanParticleSwarmSettings,
+            self,
+            uplift_van_particle_swarm_settings: PersistableUpliftVanParticleSwarmSettings,
     ) -> None:
         self.UpliftVanParticleSwarm = uplift_van_particle_swarm_settings
         self.AnalysisType = AnalysisType.UPLIFT_VAN_PARTICLE_SWARM
@@ -1815,6 +1821,7 @@ DStabilityResult = Union[
     BishopResult,
 ]
 
+
 ###########################
 # INPUT AND OUTPUT COMBINED
 ###########################
@@ -1908,8 +1915,8 @@ class DStabilityStructure(BaseModelStructure):
             if stage.StateCorrelationsId != values.get("statecorrelations")[i].Id:
                 raise ValueError("StateCorrelationsIds not linked!")
             if (
-                stage.WaternetCreatorSettingsId
-                != values.get("waternetcreatorsettings")[i].Id
+                    stage.WaternetCreatorSettingsId
+                    != values.get("waternetcreatorsettings")[i].Id
             ):
                 raise ValueError("WaternetCreatorSettingsIds not linked!")
             if stage.WaternetId != values.get("waternets")[i].Id:
@@ -1933,7 +1940,7 @@ class DStabilityStructure(BaseModelStructure):
         ]
 
     def get_stage_specific_fields(
-        self, stage=0
+            self, stage=0
     ) -> Generator[Tuple[str, DStabilitySubStructure], None, None]:
         """Yield stage specific fields for given stage."""
         for fieldname in self.stage_specific_fields:
@@ -1967,7 +1974,7 @@ class DStabilityStructure(BaseModelStructure):
         return unique_id
 
     def duplicate_stage(
-        self, current_stage: int, label: str, notes: str, unique_start_id: int
+            self, current_stage: int, label: str, notes: str, unique_start_id: int
     ):
         """Duplicates an existing stage.
         Copies the specific stage fields for a stage and renumbers all Ids,
@@ -1998,7 +2005,7 @@ class DStabilityStructure(BaseModelStructure):
         return len(self.stages) - 1, unique_start_id
 
     def add_default_stage(
-        self, label: str, notes: str, unique_start_id=500
+            self, label: str, notes: str, unique_start_id=500
     ) -> Tuple[int, int]:
         """Add a new default (empty) stage to DStability."""
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
@@ -2109,7 +2116,7 @@ class DStabilityStructure(BaseModelStructure):
         return False
 
     def get_result_substructure(
-        self, analysis_type: AnalysisTypeEnum, calculation_type: CalculationTypeEnum
+            self, analysis_type: AnalysisTypeEnum, calculation_type: CalculationTypeEnum
     ) -> List[DStabilityResult]:
 
         result_types_mapping = {
