@@ -132,7 +132,7 @@ class DStabilityModel(BaseModel):
         raise ValueError(f"No result found for result id {stage_id}")
 
     def get_slipcircle_result(
-        self, stage_id: int
+            self, stage_id: int
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
@@ -260,12 +260,12 @@ class DStabilityModel(BaseModel):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
 
     def add_layer(
-        self,
-        points: List[Point],
-        soil_code: str,
-        label: str = "",
-        notes: str = "",
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            soil_code: str,
+            label: str = "",
+            notes: str = "",
+            stage_id: int = None,
     ) -> int:
         """
         Add a soil layer to the model
@@ -306,12 +306,12 @@ class DStabilityModel(BaseModel):
         return int(persistable_layer.Id)
 
     def add_head_line(
-        self,
-        points: List[Point],
-        label: str = "",
-        notes: str = "",
-        is_phreatic_line: bool = False,
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            label: str = "",
+            notes: str = "",
+            is_phreatic_line: bool = False,
+            stage_id: int = None,
     ) -> int:
         """
         Add head line to the model
@@ -338,14 +338,54 @@ class DStabilityModel(BaseModel):
         )
         return int(persistable_headline.Id)
 
+    def edit_head_line(
+            self,
+            head_line_id: int,
+            points: List[Point],
+            label: Optional[str] = None,
+            notes: Optional[str] = None,
+            is_phreatic_line: Optional[bool] = None,
+            stage_id: int = None,
+    ) -> int:
+        """
+        Edit head line in a model
+
+        Args:
+            head_line_id (str): id of headline
+            points (List[Point]): list of Point classes
+            label (str): label defaults to empty string
+            notes (str): notes defaults to empty string
+            is_phreatic_line (bool): set as phreatic line, defaults to False
+            stage_id (int): stage to add to, defaults to current stage
+
+        Returns:
+            bool: id of the edited headline
+        """
+
+        stage_id = stage_id if stage_id else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        waternet = self.waternets[stage_id]
+
+        persistable_headline = waternet.edit_head_line(
+            head_line_id=head_line_id,
+            points=points,
+            label=label,
+            notes=notes,
+            is_phreatic_line=is_phreatic_line
+        )
+        return int(persistable_headline.Id)
+
     def add_reference_line(
-        self,
-        points: List[Point],
-        bottom_headline_id: int,
-        top_head_line_id: int,
-        label: str = "",
-        notes: str = "",
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            bottom_headline_id: int,
+            top_head_line_id: int,
+            label: str = "",
+            notes: str = "",
+            stage_id: int = None,
     ) -> int:
         """
         Add reference line to the model
@@ -378,10 +418,52 @@ class DStabilityModel(BaseModel):
         )
         return int(persistable_referenceline.Id)
 
+    def edit_reference_line(
+            self,
+            reference_line_id: int,
+            points: List[Point],
+            label: Optional[str] = None,
+            notes: Optional[str] = None,
+            bottom_head_line_id: Optional[int] = None,
+            top_head_line_id: Optional[int] = None,
+            stage_id: int = None,) -> int:
+        """
+        Edit reference line to the model
+
+        Args:
+            reference_line_id (int): id of to be edited reference line
+            points (List[Point]): list of Point classes
+            bottom_head_line_id (int): id of the headline to use as the bottom headline
+            top_head_line_id (int): id of the headline to use as the top headline
+            label (str): label defaults to empty string
+            notes (str): notes defaults to empty string
+            stage_id (int): stage to add to, defaults to 0
+
+        Returns:
+            int: id of the edited reference line
+        """
+
+        stage_id = stage_id if stage_id else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        waternet = self.waternets[stage_id]
+
+        persistable_reference_line = waternet.edit_reference_line(
+            reference_line_id=reference_line_id,
+            points=points,
+            label=label,
+            notes=notes,
+            bottom_head_line_id=bottom_head_line_id,
+            top_head_line_id=top_head_line_id
+        )
+        return int(persistable_reference_line.Id)
+
     def add_state_point(
-        self,
-        state_point: DStabilityStatePoint,
-        stage_id: int = None,
+            self,
+            state_point: DStabilityStatePoint,
+            stage_id: int = None,
     ) -> int:
         """
         Add state point to the model
@@ -419,10 +501,10 @@ class DStabilityModel(BaseModel):
         return int(persistable_statepoint.Id)
 
     def add_state_line(
-        self,
-        points: List[Point],
-        state_points: List[DStabilityStateLinePoint],
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            state_points: List[DStabilityStateLinePoint],
+            stage_id: int = None,
     ) -> None:
         """
         Add state line. From the Soils, only the state parameters are used.
@@ -461,10 +543,10 @@ class DStabilityModel(BaseModel):
         states.add_state_line(persistable_points, persistable_state_line_points)
 
     def add_load(
-        self,
-        load: DStabilityLoad,
-        consolidations: Optional[List[Consolidation]] = None,
-        stage_id: Optional[int] = None,
+            self,
+            load: DStabilityLoad,
+            consolidations: Optional[List[Consolidation]] = None,
+            stage_id: Optional[int] = None,
     ) -> None:
         """Add a load to the object.
 
@@ -487,7 +569,7 @@ class DStabilityModel(BaseModel):
                 f"load should be a subclass of DstabilityReinforcement, received {load}"
             )
         if self.datastructure.has_soil_layers(stage_id) and self.datastructure.has_loads(
-            stage_id
+                stage_id
         ):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id)
@@ -498,10 +580,10 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No loads found for stage id {stage_id}")
 
     def add_soil_layer_consolidations(
-        self,
-        soil_layer_id: int,
-        consolidations: Optional[List[Consolidation]] = None,
-        stage_id: int = None,
+            self,
+            soil_layer_id: int,
+            consolidations: Optional[List[Consolidation]] = None,
+            stage_id: int = None,
     ) -> None:
         """Add consolidations for a layer (layerload).
 
@@ -520,7 +602,7 @@ class DStabilityModel(BaseModel):
         stage_id = stage_id if stage_id is not None else self.current_stage
 
         if self.datastructure.has_soil_layer(
-            stage_id, soil_layer_id
+                stage_id, soil_layer_id
         ) and self.datastructure.has_loads(stage_id):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id, soil_layer_id)
@@ -534,7 +616,7 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No soil layers found found for stage id {stage_id}")
 
     def _get_default_consolidations(
-        self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
+            self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
     ) -> List[Consolidation]:
         """Length of the consolidations is equal to the amount of soil layers.
 
@@ -549,10 +631,10 @@ class DStabilityModel(BaseModel):
         raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def _verify_consolidations(
-        self,
-        consolidations: List[Consolidation],
-        stage_id: int,
-        exclude_soil_layer_id: Optional[int] = None,
+            self,
+            consolidations: List[Consolidation],
+            stage_id: int,
+            exclude_soil_layer_id: Optional[int] = None,
     ) -> None:
         if self.datastructure.has_soil_layers(stage_id):
             consolidation_soil_layer_ids: Set[str] = {
@@ -570,9 +652,9 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def add_reinforcement(
-        self,
-        reinforcement: DStabilityReinforcement,
-        stage_id: Optional[int] = None,
+            self,
+            reinforcement: DStabilityReinforcement,
+            stage_id: Optional[int] = None,
     ) -> None:
         """Add a reinforcement to the model.
 

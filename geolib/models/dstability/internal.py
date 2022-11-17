@@ -143,11 +143,11 @@ class Waternet(DStabilitySubStructure):
         return head_line
 
     def edit_head_line(self,
-                       head_line_id: str,
+                       head_line_id: int,
                        points: List[Point],
-                       label: str or None,
-                       notes: str or None,
-                       is_phreatic_line: bool or None) -> PersistableHeadLine:
+                       label: Optional[str] = None,
+                       notes: Optional[str] = None,
+                       is_phreatic_line: Optional[bool] = None) -> PersistableHeadLine:
         """
         Update a headline
 
@@ -209,12 +209,12 @@ class Waternet(DStabilitySubStructure):
         return reference_line
 
     def edit_reference_line(self,
-                            reference_line_id: str,
+                            reference_line_id: int,
                             points: List[Point],
-                            label: str or None,
-                            notes: str or None,
-                            bottom_head_line_id: str or None,
-                            top_head_line_id: str or None,
+                            label: Optional[str],
+                            notes: Optional[str],
+                            bottom_head_line_id: Optional[int],
+                            top_head_line_id: Optional[int],
                             ) -> PersistableReferenceLine:
         """Update a reference line
 
