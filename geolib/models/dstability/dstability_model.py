@@ -25,6 +25,7 @@ from .internal import (
     Stage,
     UpliftVanSlipCircleResult,
     Waternet,
+    PersistableReferenceLine
 )
 from .loads import Consolidation, DStabilityLoad
 from .reinforcements import DStabilityReinforcement
@@ -450,7 +451,7 @@ class DStabilityModel(BaseModel):
 
         waternet = self.waternets[stage_id]
 
-        persistable_reference_line = waternet.edit_reference_line(
+        persistable_reference_line: PersistableReferenceLine = waternet.edit_reference_line(
             reference_line_id=reference_line_id,
             points=points,
             label=label,
