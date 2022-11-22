@@ -106,7 +106,7 @@ At the moment that version number is:
 
 * D-Settlement **19.1**
 * D-Foundations **19.1**
-* D-SheetPiling **19.1**
+* D-SheetPiling **19.3**
 * D-Stability **2022.01.2**
 * D-Geo flow **2022.01**
 
