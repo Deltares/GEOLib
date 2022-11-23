@@ -318,14 +318,14 @@ class ProjectInfo(DGeoFlowSubStructure):
     Remarks: Optional[str] = f"Created with GEOLib {version}"
 
     @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
-    def nltime(cls, datestring):
-        if isinstance(datestring, str):
-            position = datestring.index(max(datestring.split("-"), key=len))
+    def nltime(cls, date: Union[date, str]) -> date:
+        if isinstance(date, str):
+            position = date.index(max(date.split("-"), key=len))
             if position > 0:
-                date = datetime.strptime(datestring, "%d-%M-%Y").date()
+                date = datetime.strptime(date, "%d-%m-%Y").date()
             else:
-                date = datetime.strptime(datestring, "%Y-%M-%d").date()
-            return date
+                date = datetime.strptime(date, "%Y-%m-%d").date()
+        return date
 
 
 class PersistablePoint(DGeoFlowBaseModelStructure):
