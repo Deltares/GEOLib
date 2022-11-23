@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ from geolib.models.dgeoflow.internal import (
     BoundaryConditionCollection,
     DGeoFlowStructure,
     ForeignKeys,
+    ProjectInfo,
 )
 from geolib.models.dstability.utils import children
 from tests.utils import TestUtils
@@ -62,3 +64,18 @@ class TestDGeoFlowInternal:
 
         # Verify result
         assert "PersistableBoundaryCondition" in child_classes
+
+    @pytest.mark.unittest
+    def test_projectinfo_validation(self):
+        projectinfo = ProjectInfo()
+
+        assert projectinfo.Created == datetime.now().date()
+
+        projectinfo = ProjectInfo(Created=datetime(2022, 11, 23))
+        assert projectinfo.Created == datetime(2022, 11, 23).date()
+
+        projectinfo = ProjectInfo(Created="23-11-2022")
+        assert projectinfo.Created == datetime(2022, 11, 23).date()
+
+        projectinfo = ProjectInfo(Created="2022-11-23")
+        assert projectinfo.Created == datetime(2022, 11, 23).date()
