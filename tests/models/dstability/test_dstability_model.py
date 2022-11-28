@@ -245,9 +245,7 @@ class TestDStabilityModel:
         assert dm.is_valid
 
         # Serialize model to input file.
-        path = Path(
-            TestUtils.get_output_test_data_dir("dstability"), "test.stix"
-        )
+        path = Path(TestUtils.get_output_test_data_dir("dstability"), "test.stix")
         dm.serialize(path)
 
         # Check for successful execution

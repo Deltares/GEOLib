@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 
 import pytest
@@ -8,6 +9,7 @@ from geolib.models.dstability.internal import (
     DStabilityStructure,
     ForeignKeys,
     PersistableHeadLine,
+    ProjectInfo,
     Waternet,
 )
 from geolib.models.dstability.utils import children
@@ -108,3 +110,18 @@ class TestDStabilityInternal:
         # Verify
         assert stage_id == 1
         assert unique_id > unique_start_id
+
+    @pytest.mark.unittest
+    def test_projectinfo_validation(self):
+        projectinfo = ProjectInfo()
+
+        assert projectinfo.Created == datetime.now().date()
+
+        projectinfo = ProjectInfo(Created=datetime(2022, 11, 23))
+        assert projectinfo.Created == datetime(2022, 11, 23).date()
+
+        projectinfo = ProjectInfo(Created="23-11-2022")
+        assert projectinfo.Created == datetime(2022, 11, 23).date()
+
+        projectinfo = ProjectInfo(Created="2022-11-23")
+        assert projectinfo.Created == datetime(2022, 11, 23).date()
