@@ -1,9 +1,14 @@
-from geolib.models.dgeoflow import DGeoFlowModel
-from geolib.models.dgeoflow.internal import CalculationTypeEnum
-from geolib.soils import Soil
-from geolib.geometry import Point
-from geolib.models.dgeoflow.internal import PipeTrajectory, ErosionDirectionEnum, PersistablePoint
 from pathlib import Path
+
+from geolib.geometry import Point
+from geolib.models.dgeoflow import DGeoFlowModel
+from geolib.models.dgeoflow.internal import (
+    CalculationTypeEnum,
+    ErosionDirectionEnum,
+    PersistablePoint,
+    PipeTrajectory,
+)
+from geolib.soils import Soil
 
 dm = DGeoFlowModel()
 dm.set_calculation_type(calculation_type=CalculationTypeEnum.CRITICAL_HEAD)
@@ -74,9 +79,7 @@ dm.set_pipe_trajectory(
 dm.set_critical_head_boundary_condition(boundary_condition_id=river_boundary_id)
 
 # Set the critical head search parameters
-dm.set_critical_head_search_parameters(
-    minimum_head_level=17, maximum_head_level=18
-)
+dm.set_critical_head_search_parameters(minimum_head_level=17, maximum_head_level=18)
 
 dm.serialize(Path("tutorial.flox"))
 
