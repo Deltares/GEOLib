@@ -14,12 +14,13 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pydantic = {version = "^1.6.1 <1.10", extras = ["dotenv"]}
+pydantic = {version = "^1.6.1", extras = ["dotenv"]}
 zipp = "^3.1.0"
-fastapi = {version = ">=0.58 <0.79", optional = true}
-uvicorn = {version = ">= 0.11 <0.19", optional = true}
+fastapi = {version = ">=0.58", optional = true}
+uvicorn = {version = ">= 0.11", optional = true}
 requests = "^2.24.0"
 jinja2 = "^3.1.2"
+httpx = {version = "^0.23.1", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 teamcity-messages = "^1.27"
@@ -40,7 +41,7 @@ commitizen = "^2.29.5"
 tomlkit = "^0.11.3"
 
 [tool.poetry.extras]
-server = ["fastapi", "uvicorn"]
+server = ["fastapi", "uvicorn", "httpx"]
 
 [tool.poetry.scripts]
 geolib_server = "geolib.service.main:app"
