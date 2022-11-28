@@ -1,5 +1,10 @@
 Changelog
 =========
+- :release:`0.2.2 <2022-10-31>`
+- :feature:`-` Set dates in project info for D-Geo Flow and D-Stability. By yurnih. 👍
+- :feature:`-` Update python package dependencies.
+- :support:`-` Various documentation improvements.
+
 - :release:`0.2.1 <2022-10-31>`
 - :bug:`-` Fix: Updated D-Geo Flow model to latest version before release.
  
