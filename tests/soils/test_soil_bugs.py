@@ -26,8 +26,8 @@ class TestNaNSoils:
             soil = Soil(mohr_coulomb_parameters=kwargs)
 
     @pytest.mark.unittest
-    def test_set_Cu_Is_Optional(self):
-            #soil = Soil()
+    def test_set_cu_is_optional(self):
+
             SOIL_PARAMETERS = [
                 {'materiaal': 'Onbekend materiaal', "unsat": 0.0, "sat": 0.0, "phi": 0.0, "soiltype": SoilType.GRAVEL},
                 {'materiaal': 'Grond, fijn korrelig', "unsat": 18.0, "sat": 20.0, "phi": 25.0, "soiltype": SoilType.SAND},
