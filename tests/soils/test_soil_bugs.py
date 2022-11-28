@@ -25,13 +25,6 @@ class TestNaNSoils:
             kwargs = {"cohesion": 5, "friction_angle": "inf"}
             soil = Soil(mohr_coulomb_parameters=kwargs)
 
-        with pytest.raises(ValidationError):
-            kwargs = {"cohesion": 5, "friction_angle": "inf"}
-            soil = Soil(DSeriesUnmappedNameProperties=kwargs)
-
-           #from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
-           #from geolib.soils.soil import Soil, SoilType
-
     @pytest.mark.unittest
     def test_set_Cu_Is_Optional(self):
             #soil = Soil()
