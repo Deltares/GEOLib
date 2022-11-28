@@ -45,6 +45,9 @@ server = ["fastapi", "uvicorn"]
 [tool.poetry.scripts]
 geolib_server = "geolib.service.main:app"
 
+[tool.poetry.group.dev.dependencies]
+exceptiongroup = "^1.0.4"
+
 [tool.black]
 line-length = 90
 target-version = ['py37']
