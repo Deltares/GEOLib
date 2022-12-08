@@ -94,7 +94,7 @@ class TestDStabilitySoil:
         )
         id = dstability_model.add_soil(soil_1)
 
-        assert id == 1
+        assert id == '22'
         assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
         assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
 
