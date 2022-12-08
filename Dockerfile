@@ -1,0 +1,39 @@
+### Build
+
+FROM ubuntu:latest AS build
+LABEL maintainer="Willem Noorduin <willem.noorduin@deltares.nl>"
+
+RUN apt-get -y update && apt-get -y install python3 
+RUN apt-get -y install python3-pip
+
+# Make a user geolib
+
+RUN useradd -c "GEOLib user" -m -s /usr/bin/bash geolib
+USER geolib
+
+RUN mkdir -p /home/geolib/.local/bin
+RUN export PATH="${PATH}:/home/geolib/.local/bin"
+
+# Install Requirements for GEOLib
+
+ADD requirements.txt /home/geolib
+RUN pip install -r /home/geolib/requirements.txt
+
+# Install GEOLib
+
+RUN pip install d-geolib
+
+USER root
+
+### Deploy
+
+FROM alpine:latest
+
+RUN adduser -h /home/geolib -D geolib
+
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+
+USER geolib
+COPY --from=build /home/geolib/.local /home/geolib/.local
+
