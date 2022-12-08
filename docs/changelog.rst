@@ -1,6 +1,9 @@
 Changelog
 =========
-- :release:`0.2.2 <2022-10-31>`
+- :release:`0.2.3 <2022-12-05>`
+- :bug:`-` Set default value for Cu (0.0) in D-Foundations.
+
+- :release:`0.2.2 <2022-11-28>`
 - :feature:`-` Set dates in project info for D-Geo Flow and D-Stability. By yurnih. 👍
 - :feature:`-` Update python package dependencies.
 - :support:`-` Various documentation improvements.
