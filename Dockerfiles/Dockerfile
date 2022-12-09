@@ -1,9 +1,9 @@
 ### Build
 
-FROM ubuntu:latest AS build
+FROM ubuntu:22.10 AS build
 LABEL maintainer="Willem Noorduin <willem.noorduin@deltares.nl>"
 
-RUN apt-get -y update && apt-get -y install python3 
+RUN apt-get -y update && apt-get -y install python3
 RUN apt-get -y install python3-pip
 
 # Make a user geolib
@@ -27,13 +27,12 @@ USER root
 
 ### Deploy
 
-FROM alpine:latest
+FROM ubuntu:22.10
 
-RUN adduser -h /home/geolib -D geolib
+RUN useradd -c "Geolib User" -m -d /home/geolib geolib
 
 ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN apt-get -y update && apt-get -y install python3
 
 USER geolib
 COPY --from=build /home/geolib/.local /home/geolib/.local
-
