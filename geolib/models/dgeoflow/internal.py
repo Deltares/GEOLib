@@ -121,8 +121,8 @@ class PersistableSoil(DGeoFlowBaseModelStructure):
     Id: str = ""
     Name: str = ""
     Notes: str = ""
-    HorizontalPermeability: confloat() = 0.001
-    VerticalPermeability: confloat() = 0.001
+    HorizontalPermeability: float = 0.001
+    VerticalPermeability: float = 0.001
 
 
 class SoilCollection(DGeoFlowSubStructure):
@@ -292,6 +292,10 @@ class SoilCollection(DGeoFlowSubStructure):
                 for k, v in kwargs.items():
                     try:
                         setattr(persistable_soil, snake_to_camel(k), v)
+
+                        k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
+                        if hasattr(persistable_soil, k_stochastic):
+                            getattr(persistable_soil, k_stochastic).Mean = v
                     except AttributeError:
                         raise ValueError(f"Unknown soil parameter {k}.")
 

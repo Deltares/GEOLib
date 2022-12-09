@@ -240,7 +240,7 @@ class DStabilityModel(BaseModel):
 
         soil.id = self._get_next_id()
         persistant_soil = self.soils.add_soil(soil)
-        return persistant_soil.Code
+        return persistant_soil.Id
 
     def edit_soil(self, code: str, **kwargs: dict) -> None:
         """

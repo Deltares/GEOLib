@@ -1,5 +1,8 @@
 Changelog
 =========
+- :release:`0.2.4 <2022-12-08>`
+- :bug:`-` Return generated soil id when using add_soil method in D-Stability and D-Geo Flow. (Issue #64)
+
 - :release:`0.2.3 <2022-12-05>`
 - :bug:`-` Set default value for Cu (0.0) in D-Foundations.
 
