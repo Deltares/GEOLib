@@ -44,7 +44,7 @@ jobs:
       - name: Install Dependencies
         run: poetry install -E server
         
-      - name: Install Dependencies
+      - name: Build sphinx documentation
         run: |
           cd docs
           poetry run python -m sphinx . build -b html -c .
@@ -59,9 +59,10 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "Update documentation" -a || true
+          git commit -m "Update dev version documentation" -a || true
           # The above command will fail if no changes were present, so we ignore
           # the return code.
+          
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
