@@ -1,0 +1,70 @@
+name: ci-release
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  Release:
+    strategy:
+        fail-fast: false
+        matrix:
+          python-version: ["3.10"]
+          os: [ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.2.0
+        with:
+          poetry-version: 1.2.2
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: ~/.virtualenvs
+          key: venv--${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            venv--${{ matrix.os }}-${{ matrix.python-version }}-
+
+      - name: Set Poetry config
+        run: |
+          poetry config virtualenvs.in-project false
+          poetry config virtualenvs.path ~/.virtualenvs
+
+      - name: Install Dependencies
+        run: poetry install -E server
+        
+      - name: Install Dependencies
+        run: |
+          cd docs
+          poetry run python -m sphinx . build -b html -c .
+
+      - name: Commit documentation changes
+        run: |
+          git clone https://github.com/Deltares/GEOLib.git --branch gh-pages --single-branch gh-pages
+          rm -r -f gh-pages/dev
+          mkdir gh-pages/dev
+          cp -r docs/build/* gh-pages/dev
+          cd gh-pages
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update documentation" -a || true
+          # The above command will fail if no changes were present, so we ignore
+          # the return code.
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+          directory: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
