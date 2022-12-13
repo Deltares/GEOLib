@@ -3,45 +3,46 @@ GEOLib Containers
 1.0.  Linux Container
 ---------------------
 
-willem@L02712:/mnt/c/home/willem/development/github/GEOLib$ cat Dockerfiles/prod/Dockerfile-ubuntu
-### Build
+.. code-block::
+    willem@L02712:/mnt/c/home/willem/development/github/GEOLib$ cat Dockerfiles/prod/Dockerfile-ubuntu
+    ### Build
 
-FROM ubuntu:22.10 AS build
-LABEL maintainer="Willem Noorduin <willem.noorduin@deltares.nl>"
+    FROM ubuntu:22.10 AS build
+    LABEL maintainer="Willem Noorduin <willem.noorduin@deltares.nl>"
 
-RUN apt-get -y update && apt-get -y install python3
-RUN apt-get -y install python3-pip
+    RUN apt-get -y update && apt-get -y install python3
+    RUN apt-get -y install python3-pip
 
-# Make a user geolib
+    # Make a user geolib
 
-RUN useradd -c "GEOLib user" -m -s /usr/bin/bash geolib
-USER geolib
+    RUN useradd -c "GEOLib user" -m -s /usr/bin/bash geolib
+    USER geolib
 
-RUN mkdir -p /home/geolib/.local/bin
-RUN export PATH="${PATH}:/home/geolib/.local/bin"
+    RUN mkdir -p /home/geolib/.local/bin
+    RUN export PATH="${PATH}:/home/geolib/.local/bin"
 
-# Install Requirements for GEOLib
+    # Install Requirements for GEOLib
 
-ADD requirements.txt /home/geolib
-RUN pip install -r /home/geolib/requirements.txt
+    ADD requirements.txt /home/geolib
+    RUN pip install -r /home/geolib/requirements.txt
 
-# Install GEOLib
+    # Install GEOLib
 
-RUN pip install d-geolib
+    RUN pip install d-geolib
 
-USER root
+    USER root
 
-### Deploy
+    ### Deploy
 
-FROM ubuntu:22.10
+    FROM ubuntu:22.10
 
-RUN useradd -c "Geolib User" -m -d /home/geolib geolib
+    RUN useradd -c "Geolib User" -m -d /home/geolib geolib
 
-ENV PYTHONUNBUFFERED=1
-RUN apt-get -y update && apt-get -y install python3
+    ENV PYTHONUNBUFFERED=1
+    RUN apt-get -y update && apt-get -y install python3
 
-USER geolib
-COPY --from=build /home/geolib/.local /home/geolib/.local
+    USER geolib
+    COPY --from=build /home/geolib/.local /home/geolib/.local
 
 After building this:
 
