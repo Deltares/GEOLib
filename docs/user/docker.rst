@@ -1,6 +1,7 @@
 GEOLib Containers
 
 1.0.  Linux Container
+---------------------
 
 willem@L02712:/mnt/c/home/willem/development/github/GEOLib$ cat Dockerfiles/prod/Dockerfile-ubuntu
 ### Build
@@ -85,6 +86,7 @@ COPY --from=build /home/geolib/.local /home/geolib/.local
 But alpine does not offer much except sh.
 
 2.0.  Windows Container
+-----------------------
 
 willem@L02712:/mnt/c/home/willem/development/github/GEOLib$ cat Dockerfile-windows
 ### build stage
