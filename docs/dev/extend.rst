@@ -160,4 +160,6 @@ It's good to keep the `requirements.txt` up to date, so afterwards run:
 
 .. code-block:: bash
 
-    $ poetry export --without-hashes -f requirements.txt > requirements.txt
+    $ poetry install
+    $ poetry export -E server -f requirements.txt --output requirements.txt --without-hashes
+    $ poetry export -E server -f requirements.txt --output requirements-dev.txt --with dev --without-hashes

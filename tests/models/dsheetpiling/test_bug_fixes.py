@@ -215,3 +215,17 @@ class TestDsheetPilingBugFixes:
                 len(model.output.verify_moment_low_angle_of_subgr_reac.construction_stage)
                 == 1
             )
+
+    def test_pre_stress_anchor(self):
+        dsheet_model = DSheetPilingModel()
+        dsheet_model.add_stage(
+            name="Initialized stage",
+            passive_side=PassiveSide.LEFT,
+            method_left=LateralEarthPressureMethodStage.C_PHI_DELTA,
+            method_right=LateralEarthPressureMethodStage.C_PHI_DELTA,
+        )
+        dsheet_model.add_anchor_or_strut(Anchor(name="Anchor", level=-6), stage_id=0)
+        anchor = dsheet_model.datastructure.input_data.construction_stages.stages[
+            0
+        ].anchors[0]
+        assert anchor.pre_stress == 0

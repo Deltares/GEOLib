@@ -3,7 +3,7 @@
 Tutorial D-Settlement
 =====================
 
-1. The model data should be set. This can be done by initialasing the class  :class:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel`.
+1. The model data should be set. This can be done by initializing the class  :class:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel`.
 
 .. code-block:: python
 

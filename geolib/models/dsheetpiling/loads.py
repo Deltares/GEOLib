@@ -103,7 +103,9 @@ class UniformLoad(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     left_load: float
     right_load: float
-    verification_load_settings: VerificationLoadSettingsLoads = VerificationLoadSettingsLoads()
+    verification_load_settings: VerificationLoadSettingsLoads = (
+        VerificationLoadSettingsLoads()
+    )
     standard_deviation_left: float = 0.0
     standard_deviation_right: float = 0.0
     distribution_type_left: DistributionType = DistributionType.NORMAL
@@ -132,7 +134,9 @@ class Moment(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     level: float
     load: float
-    verification_load_settings: VerificationLoadSettingsMomentNormalForce = VerificationLoadSettingsMomentNormalForce()
+    verification_load_settings: VerificationLoadSettingsMomentNormalForce = (
+        VerificationLoadSettingsMomentNormalForce()
+    )
 
     def to_internal(self) -> MomentInternal:
         moment = MomentInternal(
@@ -156,7 +160,9 @@ class SurchargeLoad(BaseDataClass):
 
     name: constr(min_length=1, max_length=50)
     points: conlist(Point, min_items=1)
-    verification_load_settings: VerificationLoadSettingsLoads = VerificationLoadSettingsLoads()
+    verification_load_settings: VerificationLoadSettingsLoads = (
+        VerificationLoadSettingsLoads()
+    )
     standard_deviation: float = 0.0
     distribution_type: DistributionType = DistributionType.NORMAL
 
@@ -198,7 +204,9 @@ class HorizontalLineLoad(BaseDataClass):
     name: constr(min_length=1, max_length=50)
     level: float
     load: float
-    verification_load_settings: VerificationLoadSettingsLoads = VerificationLoadSettingsLoads()
+    verification_load_settings: VerificationLoadSettingsLoads = (
+        VerificationLoadSettingsLoads()
+    )
 
     def to_internal(self) -> HorizontalLineLoadInternal:
         horizontallineload = HorizontalLineLoadInternal(
@@ -217,7 +225,9 @@ class NormalForce(BaseDataClass):
     force_at_surface_level_left_side: float
     force_at_surface_level_right_side: float
     force_at_sheet_pile_toe: float
-    verification_load_settings: VerificationLoadSettingsMomentNormalForce = VerificationLoadSettingsMomentNormalForce()
+    verification_load_settings: VerificationLoadSettingsMomentNormalForce = (
+        VerificationLoadSettingsMomentNormalForce()
+    )
 
     def to_internal(self) -> NormalForceInternal:
         normalforce = NormalForceInternal(

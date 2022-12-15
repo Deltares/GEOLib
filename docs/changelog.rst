@@ -1,5 +1,31 @@
 Changelog
 =========
+- :release:`0.2.4 <2022-12-08>`
+- :bug:`-` Return generated soil id when using add_soil method in D-Stability and D-Geo Flow. (Issue #64)
+
+- :release:`0.2.3 <2022-12-05>`
+- :bug:`-` Set default value for Cu (0.0) in D-Foundations.
+
+- :release:`0.2.2 <2022-11-28>`
+- :feature:`-` Set dates in project info for D-Geo Flow and D-Stability. By yurnih. 👍
+- :feature:`-` Update python package dependencies.
+- :support:`-` Various documentation improvements.
+
+- :release:`0.2.1 <2022-10-31>`
+- :bug:`-` Fix: Updated D-Geo Flow model to latest version before release.
+ 
+- :release:`0.2.0 <2022-10-24>`
+- :feature:`-` Feature: Add support for upcoming release of D-Geo Flow 2022.01. By MatthiasHauthVIKTOR & carloslubbers. 👍
+ 
+- :release:`0.1.12 <2022-10-21>`
+- :bug:`-` Fix: Fixed documentation typo link.
+
+- :release:`0.1.11 <2022-10-10>`
+- :bug:`-` Fix: Changed default value pre stress in anchors D-SheetPiling from 0.1 to 0.0 (#28). By martinapippi. 👍
+
+- :release:`0.1.9 <2022-10-04>`
+- :bug:`-` D-Stability parsing error with NaN values in Soil
+
 - :release:`0.1.8 <2022-08-08>`
 - :bug:`-` Allow load_type: DSHEETPILING_DETERMINED for UnformLoad and SurchargeLoad in DSheetPiling. By Mbweehuizen. 👍
 - :feature:`-` Added support for D-Stability 2022.01.(x) files.

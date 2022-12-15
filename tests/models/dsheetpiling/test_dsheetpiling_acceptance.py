@@ -51,8 +51,8 @@ from geolib.models.dsheetpiling.loads import (
     NormalForce,
     SurchargeLoad,
     UniformLoad,
-    VerificationLoadSettingsMomentNormalForce,
     VerificationLoadSettingsLoads,
+    VerificationLoadSettingsMomentNormalForce,
 )
 from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
@@ -310,7 +310,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100000000,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -385,7 +385,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -574,7 +574,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -636,7 +636,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -1103,7 +1103,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -1178,7 +1178,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -1422,7 +1422,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -1497,7 +1497,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute()
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
@@ -1727,7 +1727,7 @@ class TestDsheetPilingAcceptance:
             angle=3,
             yield_force=100,
         )
-        model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
+        model.add_anchor_or_strut(support=anchor, stage_id=stage_id, pre_stress=0.1)
 
         # add strut
         floor = Strut(
@@ -1802,7 +1802,7 @@ class TestDsheetPilingAcceptance:
         model.filename = output_test_file
         model.execute(timeout_in_seconds=1000)
 
-        # 4. Verify succesfull parsing of output datastructure
+        # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:

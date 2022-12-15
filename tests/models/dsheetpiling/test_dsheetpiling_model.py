@@ -48,8 +48,8 @@ from geolib.models.dsheetpiling.loads import (
     NormalForce,
     SurchargeLoad,
     UniformLoad,
-    VerificationLoadSettingsMomentNormalForce,
     VerificationLoadSettingsLoads,
+    VerificationLoadSettingsMomentNormalForce,
 )
 from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
@@ -241,7 +241,7 @@ class TestDsheetPilingModel:
         df.filename = output_test_file
         df.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
+        # 3. Verify return code of 0 (indicates successful run)
         assert df.datastructure
 
     @pytest.mark.unittest

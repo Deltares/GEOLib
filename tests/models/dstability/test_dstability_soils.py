@@ -92,12 +92,13 @@ class TestDStabilitySoil:
         soil_1 = Soil(
             name="Test", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
         )
-        code = dstability_model.add_soil(soil_1)
+        id = dstability_model.add_soil(soil_1)
 
+        assert id == '22'
         assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
         assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
 
-        dstability_model.edit_soil(code=code, cohesion=2.0, friction_angle=35)
+        dstability_model.edit_soil(code=soil_1.code, cohesion=2.0, friction_angle=35)
         assert (
             pytest.approx(
                 dstability_model.soils.get_soil(
