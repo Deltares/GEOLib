@@ -107,8 +107,8 @@ This is a tension stress for the anchor and a compression stress for the strut.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stage_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Curvesettings are set to this stage. This refers to the Pythonic input and has a starting point of 0.</p></li>
-<li><p><strong>calculation_options_per_stage</strong> (<a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage" title="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationOptionsPerStage</span></code></a>) – </p></li>
+<li><p><strong>calculation_options_per_stage</strong> (<a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage" title="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationOptionsPerStage</span></code></a>) – Calculation options for stage</p></li>
+<li><p><strong>stage_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Settings are set to this stage. This refers to the Pythonic input and has a starting point of 0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -383,13 +383,10 @@ datastructure.</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.set_calculation_options">
 <span class="sig-name descname"><span class="pre">set_calculation_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calculation_options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.set_calculation_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set calculation options.</p>
-<p>Calculation options per stage are set in [CALCULATION OPTIONS].</p>
+<p>Overall calculation options are set in [CALCULATION OPTIONS].</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>stage_id</strong> – Curvesettings are set to this stage.</p></li>
-<li><p><strong>calculation_options</strong> (<a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions" title="geolib.models.dsheetpiling.calculation_options.CalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationOptions</span></code></a>) – </p></li>
-</ul>
+<dd class="field-odd"><p><strong>calculation_options</strong> (<a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions" title="geolib.models.dsheetpiling.calculation_options.CalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationOptions</span></code></a>) – Calculation options</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -407,8 +404,7 @@ Removes current sheetpiling when called.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>top_level</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – Top level of the sheet piling.</p></li>
-<li><p><strong>elements</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dsheetpiling.constructions.Sheet" title="geolib.models.dsheetpiling.constructions.Sheet"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sheet</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall" title="geolib.models.dsheetpiling.constructions.DiaphragmWall"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiaphragmWall</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.constructions.Pile" title="geolib.models.dsheetpiling.constructions.Pile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pile</span></code></a>]]) – List of sheet piling elements, can be Sheet, DiaphragmWall, or Pile.</p></li>
-<li><p><strong>sheetpilingelementlevel.</strong> (<em>Elements are sorted on</em>) – </p></li>
+<li><p><strong>elements</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dsheetpiling.constructions.Sheet" title="geolib.models.dsheetpiling.constructions.Sheet"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sheet</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall" title="geolib.models.dsheetpiling.constructions.DiaphragmWall"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiaphragmWall</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.constructions.Pile" title="geolib.models.dsheetpiling.constructions.Pile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pile</span></code></a>]]) – List of sheet piling elements (can be Sheet, DiaphragmWall, or Pile elements) which are sorted on sheetpilingelementlevel.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -972,12 +968,12 @@ with the slope  of  each  branch  defined  directly  by  the  tangent  modulus</
 <dd><p>An enumeration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.settings.ModulusSubgradeReaction.MANUAL">
-<span class="sig-name descname"><span class="pre">MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModulusSubgradeReaction.MANUAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModulusSubgradeReaction.MANUAL" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.settings.ModulusSubgradeReaction.MENARD">
-<span class="sig-name descname"><span class="pre">MENARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModulusSubgradeReaction.MENARD" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MENARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModulusSubgradeReaction.MENARD" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
