@@ -386,7 +386,7 @@ class DSheetPilingModel(BaseModel):
 
         Args:
             top_level: Top level of the sheet piling.
-            elements: List of sheet piling elements, can be Sheet, DiaphragmWall, or Pile Elements are sorted on sheetpilingelementlevel.
+            elements: List of sheet piling elements (can be Sheet, DiaphragmWall, or Pile elements) which are sorted on sheetpilingelementlevel.
         """
         self.datastructure.input_data.set_construction(
             top_level=top_level, elements=[element.to_internal() for element in elements]
