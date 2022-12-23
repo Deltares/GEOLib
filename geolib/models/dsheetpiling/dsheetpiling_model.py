@@ -138,7 +138,7 @@ class DSheetPilingModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DSheetPilingConsole/DSheetPilingConsole.exe")
+        return Path("DSheetPilingConsole/DSheetPiling.exe")
 
     @property
     def console_flags(self) -> List[str]:

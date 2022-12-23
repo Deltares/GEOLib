@@ -16,7 +16,7 @@ The *geolib.env* file is a simple text file, which can contain any number of par
     CONSOLE_FOLDER="tests"  # path has to exist!
 
 This configuration variable points to the folder in which the consoles are placed (each in its own subfolder).
-It can also be set by a **CONSOLE_FOLDER** environment variable. The enviroment variable will
+It can also be set by a **CONSOLE_FOLDER** environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.
 
 The defaults are as follows::
@@ -50,7 +50,7 @@ in the *console_folder*.
 
 - "DFoundationsConsole/DFoundationsConsole.exe"
 - "DSettlementConsole/DSettlementConsole.exe"
-- "DSheetPilingConsole/DSheetPilingConsole.exe"
+- "DSheetPilingConsole/DSheetPiling.exe"
 - "DStabilityConsole/D-Stability Console.exe"
 
 Dynamic settings
