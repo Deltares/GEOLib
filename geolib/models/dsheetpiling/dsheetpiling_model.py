@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from io import BytesIO
 from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import Any, List, Optional, Type, Union
@@ -153,7 +154,7 @@ class DSheetPilingModel(BaseModel):
     def model_type(self) -> Union[str, ModelType]:
         return self.datastructure.input_data.model.model
 
-    def serialize(self, filename: FilePath):
+    def serialize(self, filename: Union[FilePath, BytesIO]):
         ds = self.datastructure.input_data.dict()
         ds.update(
             {
@@ -163,7 +164,8 @@ class DSheetPilingModel(BaseModel):
         )
         serializer = DSheetPilingInputSerializer(ds=ds)
         serializer.write(filename)
-        self.filename = filename
+        if not isinstance(filename, BytesIO):
+            self.filename = filename
 
     def _is_calculation_per_stage_required(self) -> bool:
         """Function that checks if [CALCULATION PER STAGE] can be modified. This is true for a verify sheet-piling calculation and method B."""

@@ -1,6 +1,7 @@
 import abc
 import re
 from enum import Enum
+from io import BytesIO
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Type, Union
 
@@ -126,14 +127,15 @@ class DGeoFlowModel(BaseModel):
 
         raise ValueError(f"No result found for result id {scenario_index}")
 
-    def serialize(self, location: Union[FilePath, DirectoryPath]):
+    def serialize(self, location: Union[FilePath, DirectoryPath, BytesIO]):
         """Support serializing to directory while developing for debugging purposes."""
-        if not location.is_dir():
+        if isinstance(location, BytesIO) or (isinstance(location, Path) and not location.is_dir()):
             serializer = DGeoFlowInputZipSerializer(ds=self.datastructure)
         else:
             serializer = DGeoFlowInputSerializer(ds=self.datastructure)
         serializer.write(location)
-        self.filename = location
+        if not isinstance(location, BytesIO):
+            self.filename = location
 
     def copy_scenario(self, label: str, notes: str, set_current=True) -> int:
         """Copy an existing scenario and add it to the model.

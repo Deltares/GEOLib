@@ -1,5 +1,6 @@
 import logging
 from datetime import timedelta
+from io import BytesIO
 from operator import attrgetter
 from pathlib import Path
 from subprocess import CompletedProcess, run
@@ -82,7 +83,7 @@ class DSettlementModel(BaseModel):
     def console_flags(self) -> List[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
-    def serialize(self, filename: FilePath):
+    def serialize(self, filename: [FilePath, BytesIO]):
         """
         Serialize and pre-process
         Args:
@@ -92,7 +93,9 @@ class DSettlementModel(BaseModel):
 
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
-        self.filename = filename
+
+        if not isinstance(filename, BytesIO):
+            self.filename = filename
 
     def add_soil(self, soil_input: Soil_Input) -> None:
         """Soil is converted in the internal structure and added in soil_collection."""

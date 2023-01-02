@@ -1,5 +1,6 @@
 import logging
 from enum import Enum
+from io import BytesIO
 from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import List, Optional, Type, Union
@@ -165,10 +166,11 @@ class DFoundationsModel(BaseModel):
     def input(self):
         return self.datastructure.input_data
 
-    def serialize(self, filename: FilePath):
+    def serialize(self, filename: Union[FilePath, BytesIO]):
         serializer = DFoundationsInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
-        self.filename = filename
+        if not isinstance(filename, BytesIO):
+            self.filename = filename
 
     def set_model(
         self,

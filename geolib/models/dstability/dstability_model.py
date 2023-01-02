@@ -1,6 +1,7 @@
 import abc
 import re
 from enum import Enum
+from io import BytesIO
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Type, Union
 
@@ -167,14 +168,15 @@ class DStabilityModel(BaseModel):
         result = self._get_result_substructure(stage_id)
         return result.get_slipplane_output()
 
-    def serialize(self, location: Union[FilePath, DirectoryPath]):
+    def serialize(self, location: Union[FilePath, DirectoryPath, BytesIO]):
         """Support serializing to directory while developing for debugging purposes."""
-        if not location.is_dir():
+        if isinstance(location, BytesIO) or (isinstance(location, Path) and not location.is_dir()):
             serializer = DStabilityInputZipSerializer(ds=self.datastructure)
         else:
             serializer = DStabilityInputSerializer(ds=self.datastructure)
         serializer.write(location)
-        self.filename = location
+        if not isinstance(location, BytesIO):
+            self.filename = location
 
     def add_stage(self, label: str, notes: str, set_current=True) -> int:
         """Add a new stage to the model.
