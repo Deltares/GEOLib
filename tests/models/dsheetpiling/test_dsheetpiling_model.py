@@ -1,5 +1,6 @@
 import logging
 import os
+from io import BytesIO
 from pathlib import Path
 from typing import List, Type
 
@@ -733,6 +734,20 @@ class TestDsheetPilingModel:
         model.serialize(output_test_file)
 
         assert output_test_file.is_file()
+
+    def test_intialized_model_can_be_serialized_bytesio(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_file = BytesIO()
+
+        # 2. Verify initial expectations
+        model = DSheetPilingModel()
+        assert isinstance(model, DSheetPilingModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert isinstance(output_test_file, BytesIO)
 
     @pytest.mark.integrationtest
     def test_add_surcharge_load(self, model: DSheetPilingModel):
