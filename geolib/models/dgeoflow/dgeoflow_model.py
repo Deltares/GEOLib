@@ -1,8 +1,8 @@
 import abc
 import re
 from enum import Enum
-from io import BytesIO
 from pathlib import Path
+from typing import BinaryIO
 from typing import Dict, List, Optional, Set, Type, Union
 
 from pydantic import DirectoryPath, FilePath
@@ -127,14 +127,15 @@ class DGeoFlowModel(BaseModel):
 
         raise ValueError(f"No result found for result id {scenario_index}")
 
-    def serialize(self, location: Union[FilePath, DirectoryPath, BytesIO]):
+    def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
         """Support serializing to directory while developing for debugging purposes."""
-        if isinstance(location, BytesIO) or (isinstance(location, Path) and not location.is_dir()):
-            serializer = DGeoFlowInputZipSerializer(ds=self.datastructure)
-        else:
+        if isinstance(location, Path) and location.is_dir():
             serializer = DGeoFlowInputSerializer(ds=self.datastructure)
+        else:
+            serializer = DGeoFlowInputZipSerializer(ds=self.datastructure)
         serializer.write(location)
-        if not isinstance(location, BytesIO):
+
+        if isinstance(location, Path):
             self.filename = location
 
     def copy_scenario(self, label: str, notes: str, set_current=True) -> int:

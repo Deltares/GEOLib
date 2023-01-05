@@ -1,9 +1,9 @@
 import logging
 from datetime import timedelta
-from io import BytesIO
 from operator import attrgetter
 from pathlib import Path
 from subprocess import CompletedProcess, run
+from typing import BinaryIO
 from typing import List, Optional, Type, Union
 
 from pydantic import FilePath, validate_arguments
@@ -83,7 +83,7 @@ class DSettlementModel(BaseModel):
     def console_flags(self) -> List[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
-    def serialize(self, filename: [FilePath, BytesIO]):
+    def serialize(self, filename: [FilePath, BinaryIO]):
         """
         Serialize and pre-process
         Args:
@@ -94,7 +94,7 @@ class DSettlementModel(BaseModel):
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
 
-        if not isinstance(filename, BytesIO):
+        if isinstance(filename, Path):
             self.filename = filename
 
     def add_soil(self, soil_input: Soil_Input) -> None:

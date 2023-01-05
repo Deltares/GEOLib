@@ -1,5 +1,6 @@
-from io import BytesIO
+from pathlib import Path
 from typing import Any
+from typing import BinaryIO
 from typing import Dict
 from typing import Union
 
@@ -16,9 +17,13 @@ class BaseSerializer(BaseDataClass):
     def render(self) -> str:
         return str(self.ds)
 
-    def write(self, filename: Union[FilePath, BytesIO]):
+    def write(self, filename: Union[FilePath, BinaryIO]):
         """Write serialized model to Filepath or BytesIO buffer"""
-        if isinstance(filename, BytesIO):
+        # if filename is pathlike, open file (in text mode) and write str
+        if isinstance(filename, Path):
+            with open(filename, "w") as io:
+                io.write(self.render())
+
+        # if filename is opened file (in binary mode) or BytesIO object, write render as bytes
+        else:
             filename.write(self.render().encode('utf-8'))
-        with open(filename, "w") as io:
-            io.write(self.render())
