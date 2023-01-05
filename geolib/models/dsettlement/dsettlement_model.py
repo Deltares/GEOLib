@@ -83,7 +83,7 @@ class DSettlementModel(BaseModel):
     def console_flags(self) -> List[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
-    def serialize(self, filename: [FilePath, BinaryIO]):
+    def serialize(self, filename: Union[FilePath, BinaryIO]):
         """
         Serialize and pre-process
         Args:

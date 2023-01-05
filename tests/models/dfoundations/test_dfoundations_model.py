@@ -1,5 +1,6 @@
 import logging
 import os
+from io import BytesIO
 from pathlib import Path
 from typing import Type
 
@@ -68,6 +69,38 @@ class TestDFoundationsModel:
         assert isinstance(dfoundation_model, BaseModel), (
             "" + "DFoundationsModel does not instanciate BaseModel"
         )
+
+    @pytest.mark.unittest
+    def test_intialized_model_can_be_serialized(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
+        filename = "serialized_from_intialized_model.foi"
+        output_test_file = output_test_folder / filename
+
+        # 2. Verify initial expectations
+        model = DFoundationsModel()
+        assert isinstance(model, DFoundationsModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert output_test_file.is_file()
+
+    @pytest.mark.unittest
+    def test_intialized_model_can_be_serialized_bytesio(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_file = BytesIO()
+
+        # 2. Verify initial expectations
+        model = DFoundationsModel()
+        assert isinstance(model, DFoundationsModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert isinstance(output_test_file, BytesIO)
 
     @pytest.mark.unittest
     def test_ensure_newlines_run_identification(self):
@@ -190,6 +223,18 @@ class TestDFoundationsModel:
     def test_execute_console_without_filename_raises_exception(self):
         # 1. Set up test data.
         df = DFoundationsModel()
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert df.execute()
+
+    @pytest.mark.unittest
+    def test_execute_console_with_bytesio_raises_exception(self):
+        # 1. Set up test data.
+        df = DFoundationsModel()
+
+        output_file = BytesIO()
+        df.serialize(output_file)
 
         # 2. Run test
         with pytest.raises(Exception):

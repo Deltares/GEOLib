@@ -254,6 +254,18 @@ class TestDsheetPilingModel:
         with pytest.raises(Exception):
             assert df.execute()
 
+    @pytest.mark.unittest
+    def test_execute_console_with_bytesio_raises_exception(self):
+        # 1. Set up test data.
+        df = DSheetPilingModel()
+
+        output_file = BytesIO()
+        df.serialize(output_file)
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert df.execute()
+
     @pytest.mark.parametrize(
         "reverse_elements",
         [
