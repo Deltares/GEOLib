@@ -4,7 +4,7 @@ from geolib import __version__
 
 from .context import geolib
 
-version = "0.2.4"
+version = "0.3.0"
 
 
 @pytest.mark.systemtest
