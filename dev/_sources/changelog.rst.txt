@@ -1,5 +1,8 @@
 Changelog
 =========
+- :release:`0.3.0 <2023-01-68>`
+- :feature:`-` Add support for serializing to a BytesIO buffer. (Issue #68) By Mbweehuizen. 👍
+
 - :release:`0.2.4 <2022-12-08>`
 - :bug:`-` Return generated soil id when using add_soil method in D-Stability and D-Geo Flow. (Issue #64)
 
