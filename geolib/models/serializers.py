@@ -21,9 +21,9 @@ class BaseSerializer(BaseDataClass):
         """Write serialized model to Filepath or BytesIO buffer"""
         # if filename is pathlike, open file (in text mode) and write str
         if isinstance(filename, Path):
-            with open(filename, "w") as io:
+            with open(filename, "w", encoding='cp1252') as io:
                 io.write(self.render())
 
         # if filename is opened file (in binary mode) or BytesIO object, write render as bytes
         else:
-            filename.write(self.render().encode('utf-8'))
+            filename.write(self.render().encode('cp1252'))
