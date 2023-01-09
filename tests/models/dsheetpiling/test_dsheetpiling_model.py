@@ -196,12 +196,12 @@ class TestDsheetPilingModel:
         [pytest.param(Path("bm1-1.shi"), id="Input file")],
     )
     def test_writing_anchors_large_values(self, filename: Path):
-        """Test for bug in which very large values overlapped eachother
+        """Test for bug in which very large values overlapped each other
         in the .shi output, resulting in an invalid file.
         """
 
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
         test_file = test_folder / filename
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
         output_test_file = output_test_folder / filename
