@@ -79,6 +79,7 @@ from geolib.soils import MohrCoulombParameters, Soil, SoilType
 from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dsheetpiling/benchmarks"
 
 @pytest.fixture
 def model() -> DSheetPilingModel:
@@ -114,7 +115,7 @@ class TestDsheetPilingModel:
         self, filename: Path, structure: Type
     ):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
         ds = DSheetPilingModel()
 
@@ -134,9 +135,9 @@ class TestDsheetPilingModel:
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -171,7 +172,7 @@ class TestDsheetPilingModel:
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
             od_value = output_datastructure[ds_key]
-            if not (ds_value == od_value):
+            if ds_value != od_value:
                 logging.warning(f"UNEQUAL: {ds_value} != {od_value}")
                 try:
                     # try getting better description of the problem
@@ -201,9 +202,9 @@ class TestDsheetPilingModel:
         """
 
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -239,9 +240,9 @@ class TestDsheetPilingModel:
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         df = DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1.shi"
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         serialized_input_test_file = output_test_folder / "test.shi"
 
         # 2. Verify initial expectations.
@@ -261,7 +262,7 @@ class TestDsheetPilingModel:
     @only_teamcity
     def test_import_output(self):
         # 1. Set up test data.
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / "test.shd"
 
         # 2. Verify initial expectations.

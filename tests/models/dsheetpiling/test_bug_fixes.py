@@ -11,6 +11,8 @@ from geolib.models.dsheetpiling.settings import *
 from geolib.soils import *
 from tests.utils import TestUtils
 
+test_file_directory = "dsheetpiling/benchmarks"
+
 
 class TestDsheetPilingBugFixes:
     @pytest.mark.acceptance
@@ -20,7 +22,7 @@ class TestDsheetPilingBugFixes:
 
         # 1. Build model.
         model = gl.DSheetPilingModel()
-        test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = test_folder / Path("test_consistent_model_setting.shi")
 
         # 1. Build model.
@@ -55,7 +57,7 @@ class TestDsheetPilingBugFixes:
 
         # 1. Build model.
         model = gl.DSheetPilingModel()
-        test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = test_folder / Path("GEOLIB191.shi")
 
         # Add stage 1.
@@ -136,7 +138,7 @@ class TestDsheetPilingBugFixes:
         # Former test of test_geolib_173
         # 1. Define test data
         model = gl.DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / Path("bm4-5a.shd")
 
         # 2. Verify initial conditions
@@ -156,7 +158,7 @@ class TestDsheetPilingBugFixes:
         # Former test of test_geolib_173
         # 1. Define test data
         model = gl.DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / Path("bm3-1b.shd")
 
         # 2. Verify initial conditions
@@ -174,7 +176,7 @@ class TestDsheetPilingBugFixes:
         # Former test of test_geolib_173
         # 1. Define test data
         model = gl.DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / Path("bm3-1d.shd")
 
         # 2. Verify initial conditions
@@ -199,7 +201,7 @@ class TestDsheetPilingBugFixes:
         # Former test of test_geolib_173
         # 1. Define test data
         model = gl.DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / Path("bm4-17a.shd")
 
         # 2. Verify initial conditions

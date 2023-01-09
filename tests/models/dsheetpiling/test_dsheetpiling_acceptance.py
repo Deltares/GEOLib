@@ -93,6 +93,7 @@ from pydantic.color import Color
 from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dsheetpiling/benchmarks"
 
 class TestDsheetPilingAcceptance:
     # @only_teamcity
@@ -135,7 +136,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -667,7 +668,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -913,7 +914,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -1223,7 +1224,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -1542,7 +1543,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
