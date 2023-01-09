@@ -114,7 +114,7 @@ class TestDsheetPilingModel:
         self, filename: Path, structure: Type
     ):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
         test_file = test_folder / filename
         ds = DSheetPilingModel()
 
@@ -134,9 +134,9 @@ class TestDsheetPilingModel:
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -239,7 +239,7 @@ class TestDsheetPilingModel:
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         df = DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling/benchmarks"))
         test_file = test_folder / "bm1-1.shi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
         serialized_input_test_file = output_test_folder / "test.shi"
@@ -254,7 +254,7 @@ class TestDsheetPilingModel:
         df.filename = serialized_input_test_file
         df.execute()
 
-        # 3. Verify return code of 0 (indicates succesfull run)
+        # 3. Verify return code of 0 (indicates successful run)
         assert df.datastructure
 
     @pytest.mark.acceptance
@@ -749,7 +749,7 @@ class TestDsheetPilingModel:
     def test_intialized_model_can_be_serialized(self):
         """Internal datastructure should be serializable from an initialized model"""
         # 1. setup test
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
         filename = "serialized_from_intialized_model.shi"
         output_test_file = output_test_folder / filename
 
