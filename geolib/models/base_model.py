@@ -59,7 +59,7 @@ class BaseModel(BaseDataClass, abc.ABC):
         )
         logger.debug(f"Executed with {process.args}")
 
-        # Successfull run
+        # Successful run
         output_filename = output_filename_from_input(self)
         logger.info(
             f"Checking for {output_filename}, while process exited with {process.returncode}"
@@ -70,7 +70,7 @@ class BaseModel(BaseDataClass, abc.ABC):
                 return self  # TODO Figure out whether we should instantiate a new model (parse is a classmethod)
             except ValidationError:
                 logger.warning(
-                    f"Ouput file generated but parsing of {output_filename} failed."
+                    f"Output file generated but parsing of {output_filename} failed."
                 )
                 error = self.get_error_context()
                 raise CalculationError(process.returncode, error)

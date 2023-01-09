@@ -747,7 +747,7 @@ class TestDsheetPilingModel:
             model.add_anchor_or_strut(support="not a support object", stage_id=stage_id)
 
     def test_intialized_model_can_be_serialized(self):
-        """Internal datastructure should be serializable from a intialized model"""
+        """Internal datastructure should be serializable from an initialized model"""
         # 1. setup test
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
         filename = "serialized_from_intialized_model.shi"
