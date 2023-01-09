@@ -156,8 +156,8 @@ class DSheetPilingModel(BaseModel):
         ds = self.datastructure.input_data.dict()
         ds.update(
             {
-                "version": self.datastructure.version.dict(),
-                "version_externals": self.datastructure.version_externals.dict(),
+                "version": self.datastructure.input_data.version.dict(),
+                "version_externals": self.datastructure.input_data.version_externals.dict(),
             }
         )
         serializer = DSheetPilingInputSerializer(ds=ds)

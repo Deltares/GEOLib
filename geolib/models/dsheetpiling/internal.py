@@ -698,6 +698,8 @@ class Water(DSeriesUnmappedNameProperties):
 class DSheetPilingInputStructure(DSeriesStructure):
     """Representation of complete .shi file."""
 
+    version: Version = Version()
+    version_externals: VersionExternals = VersionExternals()
     soil_collection: SoilCollection = SoilCollection()
     run_identification: str = 2 * "\n"
     model: Model = Model()
@@ -1408,8 +1410,6 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):
-    version: Version = Version()
-    version_externals: VersionExternals = VersionExternals()
     input_data: DSheetPilingInputStructure = DSheetPilingInputStructure()
     output_data: Optional[DSheetPilingOutputStructure] = None
 

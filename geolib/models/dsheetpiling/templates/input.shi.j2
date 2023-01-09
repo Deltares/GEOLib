@@ -8,6 +8,7 @@ FILENAME   : {{ output_fn }}
 CREATED BY : GEOLib version {{ glversion }}
 
 ==========================    BEGINNING OF DATA     ==========================
+[INPUT DATA]
 [VERSION]
 Soil={{ version.soil }}
 D-Sheet Piling={{ version.d__sheet_piling }}
@@ -18,7 +19,6 @@ DGSCPTipCalc.dll={{ version_externals.dgscptipcalc____dll }}
 DGSCPTipUI.dll={{ version_externals.dgscptipui____dll }}
 [END OF VERSION EXTERNALS]
 
-[INPUT DATA]
 [SOIL COLLECTION]
     {{ soil_collection.soil|length }} = number of items
 {% for soil in soil_collection.soil %}
