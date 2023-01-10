@@ -78,6 +78,10 @@ RUN pip install -r  C:/requirements.txt
 
 RUN pip install d-geolib
 
+# Install Visual Studion redistributable
+
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://vcredist.com/install.ps1'))
+
 #
 # Deploy and replace "_" and "-" by "" in the names of the subdirectories so that in the end we have:
 # o C:\GEOLibConsoles\DGeoFlowConsole
