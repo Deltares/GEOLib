@@ -82,15 +82,14 @@ RUN pip install d-geolib
 
 RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://vcredist.com/install.ps1'))
 
+# Install choco application manager and vim
+
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+RUN choco install vim --params "'/NoDesktopShortcuts /InstallDir:C:\Program Files\vim'" -y
+
 #
 # Deploy and replace "_" and "-" by "" in the names of the subdirectories so that in the end we have:
 # o C:\GEOLibConsoles\DGeoFlowConsole
 # o C:\GEOLibConsoles\DStabilityConsole
-# See other project GeoLib, to keep this one clean
+# See other project GeoApps, to keep this one clean
 #
-
-#ADD d-geo C:\\
-#RUN move C:\GEOLibConsoles\D-Geo_Flow-Console\ 'C:\GEOLibConsoles\D-Geo_Flow-Console\'.replace('-', '').replace('_', '')
-#RUN move C:\GEOLibConsoles\D-Stability-Console\ 'C:\GEOLibConsoles\D-Stability-Console\'.replace('-', '').replace('_', '')
-
-#USER ContainerUser
