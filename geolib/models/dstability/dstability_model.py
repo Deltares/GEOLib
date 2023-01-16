@@ -2,6 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
+from typing import BinaryIO
 from typing import Dict, List, Optional, Set, Type, Union
 
 from pydantic import DirectoryPath, FilePath
@@ -167,14 +168,15 @@ class DStabilityModel(BaseModel):
         result = self._get_result_substructure(stage_id)
         return result.get_slipplane_output()
 
-    def serialize(self, location: Union[FilePath, DirectoryPath]):
+    def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
         """Support serializing to directory while developing for debugging purposes."""
-        if not location.is_dir():
-            serializer = DStabilityInputZipSerializer(ds=self.datastructure)
-        else:
+        if isinstance(location, Path) and location.is_dir():
             serializer = DStabilityInputSerializer(ds=self.datastructure)
+        else:
+            serializer = DStabilityInputZipSerializer(ds=self.datastructure)
         serializer.write(location)
-        self.filename = location
+        if isinstance(location, Path):
+            self.filename = location
 
     def add_stage(self, label: str, notes: str, set_current=True) -> int:
         """Add a new stage to the model.

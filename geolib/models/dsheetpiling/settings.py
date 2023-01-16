@@ -166,8 +166,8 @@ class GrainType(IntEnum):
 
 
 class ModulusSubgradeReaction(IntEnum):
-    MENARD = 0
-    MANUAL = 1
+    MANUAL = 0
+    MENARD = 1
 
 
 class EarthPressureCoefficients(IntEnum):

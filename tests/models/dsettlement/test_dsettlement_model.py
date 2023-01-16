@@ -2,6 +2,7 @@ import logging
 import os
 import pathlib
 from datetime import timedelta
+from io import BytesIO
 from pathlib import Path
 from typing import List
 from warnings import warn
@@ -84,6 +85,38 @@ class TestDSettlementModel:
         assert isinstance(
             dsettlement_model, BaseModel
         ), "DSettlementModel does not instanciate BaseModel"
+
+    @pytest.mark.unittest
+    def test_intialized_model_can_be_serialized(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
+        filename = "serialized_from_intialized_model.sli"
+        output_test_file = output_test_folder / filename
+
+        # 2. Verify initial expectations
+        model = DSettlementModel()
+        assert isinstance(model, DSettlementModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert output_test_file.is_file()
+
+    @pytest.mark.unittest
+    def test_intialized_model_can_be_serialized_bytesio(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_file = BytesIO()
+
+        # 2. Verify initial expectations
+        model = DSettlementModel()
+        assert isinstance(model, DSettlementModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert isinstance(output_test_file, BytesIO)
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
@@ -183,11 +216,23 @@ class TestDSettlementModel:
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
         # 1. Set up test data.
-        df = DSettlementModel()
+        dm = DSettlementModel()
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            assert dm.execute()
+
+    @pytest.mark.unittest
+    def test_execute_console_with_bytesio_raises_exception(self):
+        # 1. Set up test data.
+        dm = DSettlementModel()
+
+        output_file = BytesIO()
+        dm.serialize(output_file)
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert dm.execute()
 
     @pytest.mark.integrationtest
     def test_set_calculation_times(self):

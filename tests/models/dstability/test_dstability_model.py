@@ -1,6 +1,7 @@
 import os
 import pathlib
 import shutil
+from io import BytesIO
 from pathlib import Path
 
 import pytest
@@ -43,6 +44,36 @@ class TestDStabilityModel:
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
             "" + "DStabilityModel does not instantiate BaseModel"
         )
+
+    def test_intialized_model_can_be_serialized(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dstability"))
+        filename = "serialized_from_intialized_model.stix"
+        output_test_file = output_test_folder / filename
+
+        # 2. Verify initial expectations
+        model = DStabilityModel()
+        assert isinstance(model, DStabilityModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert output_test_file.is_file()
+
+    def test_intialized_model_can_be_serialized_bytesio(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_file = BytesIO()
+
+        # 2. Verify initial expectations
+        model = DStabilityModel()
+        assert isinstance(model, DStabilityModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert isinstance(output_test_file, BytesIO)
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
@@ -142,6 +173,27 @@ class TestDStabilityModel:
 
         # 3. Verify model output has been parsed
         assert model
+
+    @pytest.mark.unittest
+    def test_execute_console_without_filename_raises_exception(self):
+        # 1. Set up test data.
+        dm = DStabilityModel()
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert dm.execute()
+
+    @pytest.mark.unittest
+    def test_execute_console_with_bytesio_raises_exception(self):
+        # 1. Set up test data.
+        dm = DStabilityModel()
+
+        output_file = BytesIO()
+        dm.serialize(output_file)
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert dm.execute()
 
     @pytest.mark.integrationtest
     def test_add_default_stage(self):
