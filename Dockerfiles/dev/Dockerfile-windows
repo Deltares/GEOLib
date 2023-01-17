@@ -71,8 +71,8 @@ RUN Write-Host ('Downloading get-pip.py ({0}) ...' -f $env:PYTHON_GET_PIP_URL); 
 
 # Install Requirements for GEOLib
 
-COPY requirements.txt C:\\
-RUN pip install -r  C:/requirements.txt
+COPY requirements-dev.txt C:\\
+RUN pip install -r  C:/requirements-dev.txt
 
 # Install GEOLib
 
