@@ -1,3 +1,4 @@
+
 ### build stage
 
 FROM sdk-4.8-windowsservercore-ltsc2019:debug
@@ -82,10 +83,16 @@ RUN pip install d-geolib
 
 RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://vcredist.com/install.ps1'))
 
-# Install choco application manager and vim
+# Install choco application manager and vim and 7z
 
 RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 RUN choco install vim --params "'/NoDesktopShortcuts /InstallDir:C:\Program Files\vim'" -y
+RUN choco install 7zip --params "'/NoDesktopShortcuts /InstallDir:C:\Program Files\7zip'" -y
+RUN choco install mingw --params "'/NoDesktopShortcuts /InstallDir:C:\Program Files\mingw'" -y
+
+# Install mingw32 with extra debug tools
+
+#COPY Dockerfiles\\powershell-utils\\install-mingw32.ps1 C:\\Temp\\install-mingw32.ps1
 
 #
 # Deploy and replace "_" and "-" by "" in the names of the subdirectories so that in the end we have:
