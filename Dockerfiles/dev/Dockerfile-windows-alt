@@ -1,0 +1,40 @@
+### build stage
+
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+RUN New-Item C:/temp -ItemType Directory; \
+  New-Item C:/data -ItemType Directory;
+WORKDIR C:/temp
+
+# Install choco application manager, vim, python and pip
+
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+RUN choco install vim --params "'/NoDesktopShortcuts /InstallDir:C:\Program Files\vim'" -y; \
+    choco install python --pre --params "'/NoDesktopShortcuts /InstallDir:C:\Program Files\python'" -y;
+
+RUN choco install pip -y
+	
+# RUN $ENV:PATH="$ENV:PATH;C:\Program Files\git\bin" && \
+#	Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH -Value $ENV:PATH
+#	choco install pip -y
+
+# Install Requirements for GEOLib
+
+COPY requirements-dev.txt C:\\
+#RUN pip install -r  C:/requirements-dev.txt
+
+# Install GEOLib
+
+#RUN pip install d-geolib
+
+# Install Visual Studion redistributable
+
+RUN Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://vcredist.com/install.ps1'))
+
+#
+# Deploy and replace "_" and "-" by "" in the names of the subdirectories so that in the end we have:
+# o C:\GEOLibConsoles\DGeoFlowConsole
+# o C:\GEOLibConsoles\DStabilityConsole
+# See other project GeoApps, to keep this one clean
+#
