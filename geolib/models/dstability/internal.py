@@ -799,33 +799,42 @@ class SoilCollection(DStabilitySubStructure):
 
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
 
-    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
+    def edit_soil(self, code: Optional[str]=None, name: Optional[str]=None, **kwargs: dict) -> PersistableSoil:
         """
         Update a soil.
 
         Args:
-            code (str): code of the soil
-            kwargs (dict): dictionary with agument names and values
+            code (str): code of the soil. Either name or code must be provided
+            name (str): name of the soil. Either name or code must be provided
+            kwargs (dict): dictionary with argument names and values
 
         Returns:
             PersistableSoil: the edited soil
         """
-        for persistable_soil in self.Soils:
-            if persistable_soil.Code == code:
-                for k, v in kwargs.items():
-                    try:
-                        setattr(persistable_soil, snake_to_camel(k), v)
-
-                        k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
-                        if hasattr(persistable_soil, k_stochastic):
-                            getattr(persistable_soil, k_stochastic).Mean = v
-                    except AttributeError:
-                        raise ValueError(f"Unknown soil parameter {k}.")
-
+        def set_parameter_persistable_soil(persistable_soil):
+            for k, v in kwargs.items():
+                try:
+                    setattr(persistable_soil, snake_to_camel(k), v)
+                    k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
+                    if hasattr(persistable_soil, k_stochastic):
+                        getattr(persistable_soil, k_stochastic).Mean = v
+                except AttributeError:
+                    raise ValueError(f"Unknown soil parameter {k}.")
                 return persistable_soil
 
-        raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
+        if code is not None:
+            for persistable_soil in self.Soils:
+                if persistable_soil.Code == code:
+                    return set_parameter_persistable_soil(persistable_soil=persistable_soil)
+            raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
 
+        if name is not None:
+            for persistable_soil in self.Soils:
+                if persistable_soil.Name == name:
+                    return set_parameter_persistable_soil(persistable_soil=persistable_soil)
+            raise ValueError(f"Soil name '{name}' not found in the SoilCollection")
+
+        raise ValueError(f"Please specify either name or code parameter to edit the soils.")
 
 # Reinforcements
 
