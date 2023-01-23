@@ -18,19 +18,53 @@ class TestDGeoFlowSoil:
             soil_2 = Soil(name="AnotherTest", code="Test")
             dgeoflow_model.add_soil(soil_2)
 
-    def test_dgeoflow_edit_soil(self):
+    def test_dgeoflow_edit_soil_by_code(self):
         dgeoflow_model = DGeoFlowModel(filename=None)
-        storage_parameters = StorageParameters(horizontal_permeability=10.0, vertical_permeability=20.0)
-        soil_1 = Soil(
-            name="Test", code="Test", storage_parameters=storage_parameters
+        storage_parameters = StorageParameters(
+            horizontal_permeability=10.0, vertical_permeability=20.0
         )
+        soil_1 = Soil(name="TestName", code="Test", storage_parameters=storage_parameters)
         id = dgeoflow_model.add_soil(soil_1)
 
-        assert id == '18'
+        assert id == "18"
         assert soil_1.storage_parameters.horizontal_permeability.mean == 10.0
         assert soil_1.storage_parameters.vertical_permeability.mean == 20.0
 
-        dgeoflow_model.edit_soil(code=soil_1.code, horizontal_permeability=2.0, vertical_permeability=35.0)
+        dgeoflow_model.edit_soil(
+            code=soil_1.code, horizontal_permeability=2.0, vertical_permeability=35.0
+        )
+        assert (
+            pytest.approx(
+                dgeoflow_model.soils.get_soil(
+                    "Test"
+                ).storage_parameters.horizontal_permeability
+            )
+            == 2.0
+        )
+        assert (
+            pytest.approx(
+                dgeoflow_model.soils.get_soil(
+                    "Test"
+                ).storage_parameters.vertical_permeability
+            )
+            == 35.0
+        )
+
+    def test_dgeoflow_edit_soil_by_name(self):
+        dgeoflow_model = DGeoFlowModel(filename=None)
+        storage_parameters = StorageParameters(
+            horizontal_permeability=10.0, vertical_permeability=20.0
+        )
+        soil_1 = Soil(name="TestName", code="Test", storage_parameters=storage_parameters)
+        id = dgeoflow_model.add_soil(soil_1)
+
+        assert id == "18"
+        assert soil_1.storage_parameters.horizontal_permeability.mean == 10.0
+        assert soil_1.storage_parameters.vertical_permeability.mean == 20.0
+
+        dgeoflow_model.edit_soil_by_name(
+            name=soil_1.name, horizontal_permeability=2.0, vertical_permeability=35.0
+        )
         assert (
             pytest.approx(
                 dgeoflow_model.soils.get_soil(
@@ -65,8 +99,8 @@ class TestDGeoFlowSoil:
             "P_Rk_k&s",
             "Sand",
             "H_Ro_z&k",
-            'Sand, less permeable',
-            'Sand, permeable',
+            "Sand, less permeable",
+            "Sand, permeable",
         }
         default_soilcodes = {soil.Code for soil in dgeoflow_model.soils.Soils}
         assert expected_soilcodes == default_soilcodes
