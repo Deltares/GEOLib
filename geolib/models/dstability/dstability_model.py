@@ -21,6 +21,7 @@ from .internal import (
     DStabilityResult,
     DStabilityStructure,
     PersistablePoint,
+    PersistableSoil,
     SoilCollection,
     SpencerSlipPlaneResult,
     Stage,
@@ -244,18 +245,32 @@ class DStabilityModel(BaseModel):
         persistant_soil = self.soils.add_soil(soil)
         return persistant_soil.Id
 
-    def edit_soil(self, code: str, **kwargs: dict) -> None:
+    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
         """
         Edit an existing soil with parameter names based on the soil class members
 
         Args:
             code (str): the code of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angel=25.0'
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
 
         Returns:
-            bool: True for succes, False otherwise
+            PersistableSoil: the edited soil
         """
         return self.soils.edit_soil(code, **kwargs)
+
+    def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
+        """
+        Edit an existing soil with parameter names based on the soil class members. 
+        This method will edit the first occurence of the name if the name is used multiple times.
+
+        Args:
+            name (str): the name of the soil
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
+
+        Returns:
+            PersistableSoil: the edited soil
+        """
+        return self.soils.edit_soil_by_name(name, **kwargs)
 
     @property
     def points(self):
