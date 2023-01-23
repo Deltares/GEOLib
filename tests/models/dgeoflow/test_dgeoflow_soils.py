@@ -24,9 +24,9 @@ class TestDGeoFlowSoil:
             horizontal_permeability=10.0, vertical_permeability=20.0
         )
         soil_1 = Soil(name="TestName", code="Test", storage_parameters=storage_parameters)
-        id = dgeoflow_model.add_soil(soil_1)
+        added_soil_id = dgeoflow_model.add_soil(soil_1)
 
-        assert id == "18"
+        assert added_soil_id == "18"
         assert soil_1.storage_parameters.horizontal_permeability.mean == 10.0
         assert soil_1.storage_parameters.vertical_permeability.mean == 20.0
 
@@ -56,9 +56,9 @@ class TestDGeoFlowSoil:
             horizontal_permeability=10.0, vertical_permeability=20.0
         )
         soil_1 = Soil(name="TestName", code="Test", storage_parameters=storage_parameters)
-        id = dgeoflow_model.add_soil(soil_1)
+        added_soil_id = dgeoflow_model.add_soil(soil_1)
 
-        assert id == "18"
+        assert added_soil_id == "18"
         assert soil_1.storage_parameters.horizontal_permeability.mean == 10.0
         assert soil_1.storage_parameters.vertical_permeability.mean == 20.0
 

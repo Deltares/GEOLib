@@ -92,9 +92,9 @@ class TestDStabilitySoil:
         soil_1 = Soil(
             name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
         )
-        id = dstability_model.add_soil(soil_1)
+        added_soil_id = dstability_model.add_soil(soil_1)
 
-        assert id == "22"
+        assert added_soil_id == "22"
         assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
         assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
 
@@ -122,9 +122,9 @@ class TestDStabilitySoil:
         soil_1 = Soil(
             name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
         )
-        id = dstability_model.add_soil(soil_1)
+        added_soil_id = dstability_model.add_soil(soil_1)
 
-        assert id == "22"
+        assert added_soil_id == "22"
         assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
         assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
 
