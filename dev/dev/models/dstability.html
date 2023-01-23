@@ -387,14 +387,35 @@ state_point are a list of DStabilit.. where ONLY the x is used, the Z will be ca
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>code</strong> (<em>str</em>) – the code of the soil</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angel=25.0’</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angle=25.0’</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>True for succes, False otherwise</p>
+<dd class="field-even"><p>the edited soil</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool</p>
+<dd class="field-odd"><p>PersistableSoil</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.edit_soil_by_name">
+<span class="sig-name descname"><span class="pre">edit_soil_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.edit_soil_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an existing soil with parameter names based on the soil class members.
+This method will edit the first occurence of the name if the name is used multiple times.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – the name of the soil</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angle=25.0’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the edited soil</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>PersistableSoil</p>
 </dd>
 </dl>
 </dd></dl>
