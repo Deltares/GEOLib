@@ -803,7 +803,7 @@ class Soil(SoilBaseModel):
         from geolib.models.dgeoflow.internal import PersistableSoil as DGeoFlowSoil
 
         self.set_all_stochastic_parameters()
-        
+
         kwargs = {
             "Id": self.id,
             "Name": self.name,
