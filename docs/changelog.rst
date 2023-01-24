@@ -1,5 +1,9 @@
 Changelog
 =========
+- :release:`0.4.0 <2023-01-24>`
+- :feature:`-` Add extra method for D-Stability and D-Geo Flow to look up a Soil by name and edit it. By yida-tao. 👍
+- :feature:`-` Add official support for Python 3.11.
+
 - :release:`0.3.0 <2023-01-06>`
 - :feature:`-` Add support for serializing to a BytesIO buffer. (Issue #68) By Mbweehuizen. 👍
 
