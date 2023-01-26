@@ -35,7 +35,6 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx_autodoc_typehints",
     "sphinx_multiversion",
-    "rst2pdf.pdfbuilder",
     "releases",
 ]
 

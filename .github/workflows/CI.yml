@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7, 3.8, 3.9, "3.10"]
+        python-version: [3.7, 3.8, 3.9, "3.10", "3.11"]
         os: [ubuntu-22.04, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -49,22 +49,3 @@ jobs:
         
       - name: Test with pytest
         run: poetry run pytest --cov=geolib --cov-report xml:coverage-reports/coverage-hydrolib-core.xml --junitxml=xunit-reports/xunit-result-hydrolib-core.xml -m "unittest and not workinprogress"
-
-      #- name: Autoformat code if the check fails
-      #  if: ${{ (matrix.os == 'ubuntu-18.04') && (matrix.python-version == 3.8) }}
-      #  run: |
-      #    poetry run isort .
-      #    poetry run black .
-      #    git config --global user.name '${{ github.actor }}'
-      #    git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-      #    git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-      #    git fetch
-      #    git checkout $GITHUB_HEAD_REF
-      #    git commit -am "autoformat: isort & black" && git push || true
-
-      #- name: SonarCloud Scan
-      #  uses: SonarSource/sonarcloud-github-action@master
-      #  if: ${{ (matrix.os == 'ubuntu-18.04') && (matrix.python-version == 3.8) }}
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
