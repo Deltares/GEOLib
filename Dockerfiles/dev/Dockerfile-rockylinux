@@ -1,0 +1,22 @@
+FROM rockylinux/rockylinux:latest
+
+RUN dnf -y module install python39
+
+# Make a user geolib
+
+RUN useradd -c "GEOLib user" -m -s /usr/bin/bash geolib
+
+USER geolib
+RUN mkdir -p /home/geolib/.local/bin
+RUN export PATH="${PATH}:/home/geolib/.local/bin"
+
+# Install Requirements for GEOLib
+
+ADD requirements.txt /home/geolib
+RUN pip3 install -r /home/geolib/requirements.txt
+
+# Install GEOLib
+
+RUN pip3 install d-geolib
+
+USER root
