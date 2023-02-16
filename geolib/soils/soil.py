@@ -798,3 +798,15 @@ class Soil(SoilBaseModel):
             soilcurko3=self.subgrade_reaction_parameters.k_3_bottom_side,
             soilhorizontalbehaviourtype=self.horizontal_behaviour.horizontal_behavior_type,
         )
+
+    def _to_dgeoflow(self):
+        from geolib.models.dgeoflow.internal import PersistableSoil as DGeoFlowSoil
+
+        kwargs = {
+            "Id": self.id,
+            "Name": self.name,
+            "Code": self.code,
+            "HorizontalPermeability": self.storage_parameters.horizontal_permeability,
+            "VerticalPermeability": self.storage_parameters.vertical_permeability,
+        }
+        return self.__transfer_soil_dict_to_model(kwargs, DGeoFlowSoil())

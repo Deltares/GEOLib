@@ -437,7 +437,7 @@ class DSheetPilingModel(BaseModel):
         self,
         support: Union[Anchor, Strut],
         stage_id: int,
-        pre_stress: PositiveFloat = 0.1,
+        pre_stress: PositiveFloat = 0,
     ) -> None:
         """Add anchor or strut to a stage.
 

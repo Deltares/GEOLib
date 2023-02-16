@@ -37,7 +37,7 @@ class DStabilityParser(BaseParser):
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
                 ds[field] = self.__parse_folder(element_type, filepath / "")
 
-            # Otherwise its a single .json in the root folder
+            # Otherwise it is a single .json in the root folder
             else:
                 fn = filepath / (fieldtype.structure_name() + ".json")
                 if not fn.exists():
@@ -81,7 +81,7 @@ class DStabilityZipParser(DStabilityParser):
     def parse(self, filepath: FilePath) -> BaseModelStructure:
         with ZipFile(filepath) as zip:
 
-            # Fix backslashes in zipfile (untill fixed in DStability)
+            # Fix backslashes in zipfile (until fixed in DStability)
             for file in zip.filelist:
                 new_filename = file.filename.replace("\\", "/")
                 if new_filename != file.filename:
