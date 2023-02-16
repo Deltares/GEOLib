@@ -1,17 +1,17 @@
 DUMP FILE FOR D-SHEET PILING
 ==============================================================================
-COMPANY    : Deltares 
+COMPANY    : Stichting Deltares 
 
-DATE       : 20-12-2022
-TIME       : 14:33:10
-FILENAME   : D:\Test\DSheetPiling\data\Benchmarks\bm4-44r.shd
-CREATED BY : D-Sheet Piling version 22.2.0.39542
+DATE       : 2/1/2023
+TIME       : 1:40:46 PM
+FILENAME   : D:\pvcsprojects\applications\DSheetPiling\trunk\data\New folder\bm4-44r.shd
+CREATED BY : D-Sheet Piling version 23.1.0.40049
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1010
-D-Sheet Piling=1032
+D-Sheet Piling=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
@@ -496,8 +496,8 @@ SurchargeLoadDistribution=2
 [END OF SURCHARGE LOADS]
 
 [SOIL DISPLACEMENTS]
-  7 Number of soil displacements
 [TABLE]
+DataCount=7
 [COLUMN INDICATION]
 Number
 Depth level
@@ -1030,8 +1030,8 @@ ReliabilityStage=0
 Standard
 [END OF CALCULATION TYPE]
 [SHEET PILE ELEMENTS]
-2 : Number of elements
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Elastic stiffness EI including reduction factor
 Stiffness EI 2nd branch positive of M-Kappa diagram
@@ -1058,8 +1058,8 @@ Explanation of reduction
 [END OF TABLE]
 [END OF SHEET PILE ELEMENTS]
 [POINTS ON SHEETPILE]
-212 : Number of nodes
 [TABLE]
+DataCount=212
 [COLUMN INDICATION]
 Depth
 [END OF COLUMN INDICATION]
@@ -1285,8 +1285,8 @@ CalculationStatus=0
 IterationCount=3
 PartialFactorSet=4
 [SUPPORT DATA]
-2 : Number of supports
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Node number
 Position
@@ -1303,6 +1303,7 @@ SupportName
 [END OF SUPPORT DATA]
 [MOMENTS FORCES DISPLACEMENTS]
 [TABLE]
+DataCount=212
 [COLUMN INDICATION]
 Moment
 Shear force
@@ -1538,8 +1539,8 @@ Method Ka,K0,Kp
 [END OF SURFACE]
 [SOIL PROFILE FOR SINGLE PILE MODEL]
 New Profile
-6 : Number of layers
 [TABLE]
+DataCount=6
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1568,6 +1569,7 @@ Layer name
 6 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=6
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1587,8 +1589,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SINGLE PILE MODEL]
 [PRESSURES]
-212 : Number of nodes
 [TABLE]
+DataCount=212
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -1829,8 +1831,8 @@ Method Ka,K0,Kp
 [END OF SURFACE]
 [SOIL PROFILE FOR SINGLE PILE MODEL]
 New Profile
-6 : Number of layers
 [TABLE]
+DataCount=6
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1859,6 +1861,7 @@ Layer name
 6 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=6
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1878,8 +1881,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SINGLE PILE MODEL]
 [PRESSURES]
-212 : Number of nodes
 [TABLE]
+DataCount=212
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -2108,8 +2111,8 @@ Status character
 [END OF SIDE]
 [END OF CONSTRUCTION STAGE]
 [RESUME]
-CalculationCount=1
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Moment
 ShearForce
@@ -2129,8 +2132,8 @@ CalculationStatus
 [END OF TABLE]
 [END OF RESUME]
 [SUPPORTS RESUME]
-CalculationCount=2
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 StageNumber
 VerificationType
@@ -2150,10 +2153,25 @@ SupportName
 [END OF TABLE]
 [END OF SUPPORTS RESUME]
 [WARNINGS]
-WarningCount=0
+[TABLE]
+DataCount=1
+[COLUMN INDICATION]
+WarningType
+StageNumber
+VerifySet
+SoilProfileName
+SoilMaterialName
+Parameter01
+[END OF COLUMN INDICATION]
+[DATA]
+    9    -1    -1 '' '' ''
+[END OF DATA]
+[END OF TABLE]
 [END OF WARNINGS]
 [ERRORS]
-ErrorCount=0
+[TABLE]
+DataCount=0
+[END OF TABLE]
 [END OF ERRORS]
 [END OF OUTPUT DATA]
 [END OF DUMPFILE]

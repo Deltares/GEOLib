@@ -2,16 +2,16 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    : Deltares 
 
-DATE       : 20-12-2022
-TIME       : 14:27:50
+DATE       : 26-01-2023
+TIME       : 16:05:26
 FILENAME   : D:\Test\DSheetPiling\data\Benchmarks\bm4-14c.shd
-CREATED BY : D-Sheet Piling version 22.2.0.39542
+CREATED BY : D-Sheet Piling version 23.1.0.39934
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1010
-D-Sheet Piling=1032
+D-Sheet Piling=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
@@ -554,7 +554,7 @@ SheetPilingElementSectionArea=170
 SheetPilingElementResistingMoment=0
 SheetPilingElementReductionFactorEI=1.00
 SheetPilingElementNote=
-SheetPilingElementMaxCharacteristicMoment=300.00
+SheetPilingElementMaxCharacteristicMoment=0.00
 SheetPilingElementMaxPlasticCharacteristicMoment=0.00
 SheetPilingElementKMod=1.00
 SheetPilingElementMaterialFactor=1.00
@@ -570,10 +570,10 @@ DiaphragmWallPosEIElastoPlastic2=2.000000E+04
 DiaphragmWallPosMomElastoPlastic=0.00
 DiaphragmWallNegEIElastoPlastic2=2.000000E+04
 DiaphragmWallNegMomElastoPlastic=0.00
-WoodenSheetPilingElementE=0.000000E+00
+WoodenSheetPilingElementE=1.000000E+05
 WoodenSheetPilingElementCharacFlexuralStrength=0.00
 WoodenSheetPilingElementKSys=1.15
-WoodenSheetPilingElementKDef=2.00
+WoodenSheetPilingElementKDef=1.00
 WoodenSheetPilingElementPsi2Eff=1.00
 WoodenSheetPilingElementMaterialFactor=1.30
 WoodenSheetPilingElementKModFShort=0.65
@@ -640,8 +640,8 @@ SurchargeLoadDistribution=2
 [END OF SURCHARGE LOADS]
 
 [SOIL DISPLACEMENTS]
- 10 Number of soil displacements
 [TABLE]
+DataCount=10
 [COLUMN INDICATION]
 Number
 Depth level
@@ -1168,8 +1168,8 @@ ReliabilityStage=0
 Standard
 [END OF CALCULATION TYPE]
 [SHEET PILE ELEMENTS]
-1 : Number of elements
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Elastic stiffness EI including reduction factor
 Stiffness EI 2nd branch positive of M-Kappa diagram
@@ -1190,13 +1190,13 @@ Stiffness EI at ULS for wooden sheet pile
 Explanation of reduction
 [END OF COLUMN INDICATION]
 [DATA]
-   63900.00000  20000.00000  20000.00000  20000.00000  20000.00000 300.000   0.000      0.00    -10.00  1.00  1.00   0.000   0.000   0.822      0.00000      0.00000 '-'
+   63900.00000  20000.00000  20000.00000  20000.00000  20000.00000   0.000   0.000      0.00    -10.00  1.00  1.00   0.000   0.000   0.822    213.33333    426.66667 '-'
 [END OF DATA]
 [END OF TABLE]
 [END OF SHEET PILE ELEMENTS]
 [POINTS ON SHEETPILE]
-156 : Number of nodes
 [TABLE]
+DataCount=156
 [COLUMN INDICATION]
 Depth
 [END OF COLUMN INDICATION]
@@ -1367,6 +1367,7 @@ IterationCount=5
 PartialFactorSet=4
 [MOMENTS FORCES DISPLACEMENTS]
 [TABLE]
+DataCount=156
 [COLUMN INDICATION]
 Moment
 Shear force
@@ -1546,8 +1547,8 @@ Method Ka,K0,Kp
 [END OF SURFACE]
 [SOIL PROFILE FOR SINGLE PILE MODEL]
 New Profile
-10 : Number of layers
 [TABLE]
+DataCount=10
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1580,6 +1581,7 @@ Layer name
 10 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=10
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1603,8 +1605,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SINGLE PILE MODEL]
 [PRESSURES]
-156 : Number of nodes
 [TABLE]
+DataCount=156
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -1789,8 +1791,8 @@ Method Ka,K0,Kp
 [END OF SURFACE]
 [SOIL PROFILE FOR SINGLE PILE MODEL]
 New Profile
-10 : Number of layers
 [TABLE]
+DataCount=10
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1823,6 +1825,7 @@ Layer name
 10 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=10
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1846,8 +1849,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SINGLE PILE MODEL]
 [PRESSURES]
-156 : Number of nodes
 [TABLE]
+DataCount=156
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -2020,8 +2023,8 @@ Status character
 [END OF SIDE]
 [END OF CONSTRUCTION STAGE]
 [RESUME]
-CalculationCount=1
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Moment
 ShearForce
@@ -2041,19 +2044,13 @@ CalculationStatus
 [END OF TABLE]
 [END OF RESUME]
 [WARNINGS]
-WarningCount=0
+[TABLE]
+DataCount=0
+[END OF TABLE]
 [END OF WARNINGS]
 [ERRORS]
-ErrorCount=1
 [TABLE]
-[COLUMN INDICATION]
-ErrorType
-StageNumber
-VerifySet
-[END OF COLUMN INDICATION]
-[DATA]
-    6    -1    12
-[END OF DATA]
+DataCount=0
 [END OF TABLE]
 [END OF ERRORS]
 [END OF OUTPUT DATA]

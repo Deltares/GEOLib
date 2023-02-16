@@ -2,16 +2,16 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    : Deltares 
 
-DATE       : 20-12-2022
-TIME       : 14:28:24
+DATE       : 26-01-2023
+TIME       : 16:06:01
 FILENAME   : D:\Test\DSheetPiling\data\Benchmarks\bm4-19e.shd
-CREATED BY : D-Sheet Piling version 22.2.0.39542
+CREATED BY : D-Sheet Piling version 23.1.0.39934
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1010
-D-Sheet Piling=1032
+D-Sheet Piling=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
@@ -255,12 +255,12 @@ SheetPilingElementEI=4.137000E+04
 SheetPilingElementWidth=1.00
 SheetPilingElementLevel=-14.00
 SheetPilingElementHeight=303
-SheetPilingPileWidth=0.67
+SheetPilingPileWidth=1.00
 SheetPilingElementSectionArea=137
 SheetPilingElementResistingMoment=1300
 SheetPilingElementReductionFactorEI=1.00
 SheetPilingElementNote=
-SheetPilingElementMaxCharacteristicMoment=312.00
+SheetPilingElementMaxCharacteristicMoment=0.00
 SheetPilingElementMaxPlasticCharacteristicMoment=0.00
 SheetPilingElementKMod=1.00
 SheetPilingElementMaterialFactor=1.00
@@ -276,10 +276,10 @@ DiaphragmWallPosEIElastoPlastic2=2.000000E+04
 DiaphragmWallPosMomElastoPlastic=0.00
 DiaphragmWallNegEIElastoPlastic2=2.000000E+04
 DiaphragmWallNegMomElastoPlastic=0.00
-WoodenSheetPilingElementE=0.000000E+00
+WoodenSheetPilingElementE=1.000000E+05
 WoodenSheetPilingElementCharacFlexuralStrength=0.00
 WoodenSheetPilingElementKSys=1.15
-WoodenSheetPilingElementKDef=2.00
+WoodenSheetPilingElementKDef=1.00
 WoodenSheetPilingElementPsi2Eff=1.00
 WoodenSheetPilingElementMaterialFactor=1.30
 WoodenSheetPilingElementKModFShort=0.65
@@ -1032,8 +1032,8 @@ ReliabilityStage=0
 Standard
 [END OF CALCULATION TYPE]
 [SHEET PILE ELEMENTS]
-1 : Number of elements
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Elastic stiffness EI including reduction factor
 Stiffness EI 2nd branch positive of M-Kappa diagram
@@ -1054,13 +1054,13 @@ Stiffness EI at ULS for wooden sheet pile
 Explanation of reduction
 [END OF COLUMN INDICATION]
 [DATA]
-   41370.00000  20000.00000  20000.00000  20000.00000  20000.00000 312.000   0.000      0.00    -14.00  1.00  1.00   0.000   0.000   0.869      0.00000      0.00000 '-'
+   41370.00000  20000.00000  20000.00000  20000.00000  20000.00000   0.000   0.000      0.00    -14.00  1.00  1.00   0.000   0.000   0.869     92.72709    185.45418 '-'
 [END OF DATA]
 [END OF TABLE]
 [END OF SHEET PILE ELEMENTS]
 [POINTS ON SHEETPILE]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Depth
 [END OF COLUMN INDICATION]
@@ -1236,8 +1236,8 @@ CalculationStatus=0
 IterationCount=4
 PartialFactorSet=4
 [UNIFORM LOAD DATA]
-2 : Number of uniform loads
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -1252,8 +1252,8 @@ Is favorable (0=false, 1=true)
 [END OF TABLE]
 [END OF UNIFORM LOAD DATA]
 [SURCHARGE DATA]
-2 : Number of items
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -1297,6 +1297,7 @@ Is favorable (0=false, 1=true)
 [END OF SOIL COLLAPSE DATA]
 [MOMENTS FORCES DISPLACEMENTS]
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Moment
 Shear force
@@ -1482,8 +1483,8 @@ Method c,phi,delta
 [END OF SURFACE]
 [SOIL PROFILE FOR SHEET PILING MODEL]
 Profile initial
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1511,6 +1512,7 @@ Layer name
 4 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1528,8 +1530,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
 [SLIDE PLANE]
-28 : Number of slide planes
 [TABLE]
+DataCount=28
 [COLUMN INDICATION]
 Slide plane position
 Theta min
@@ -1570,8 +1572,8 @@ Q max
 [END OF TABLE]
 [END OF SLIDE PLANE]
 [LAMBDAS]
-27 : Number of Lambdas 
 [TABLE]
+DataCount=27
 [COLUMN INDICATION]
 Position
 Vertical stress
@@ -1613,8 +1615,8 @@ Lambda passive
 [END OF TABLE]
 [END OF LAMBDAS]
 [PRESSURES]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -1791,8 +1793,8 @@ Status character
 [END OF TABLE]
 [END OF PRESSURES]
 [FORCE FROM LAYER]
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Force
@@ -1821,8 +1823,8 @@ Method Ka,K0,Kp
 [END OF SURFACE]
 [SOIL PROFILE FOR SHEET PILING MODEL]
 Profile initial
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1850,6 +1852,7 @@ Layer name
 4 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1867,8 +1870,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
 [PRESSURES]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -2045,8 +2048,8 @@ Status character
 [END OF TABLE]
 [END OF PRESSURES]
 [FORCE FROM LAYER]
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Force
@@ -2063,8 +2066,8 @@ Layer name
 [END OF SIDE]
 [END OF CONSTRUCTION STAGE]
 [POINTS ON SHEETPILE]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Depth
 [END OF COLUMN INDICATION]
@@ -2240,8 +2243,8 @@ CalculationStatus=0
 IterationCount=5
 PartialFactorSet=4
 [ANCHOR DATA]
-1 : Number of anchors
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Position
 Force
@@ -2257,8 +2260,8 @@ Name
 [END OF TABLE]
 [END OF ANCHOR DATA]
 [UNIFORM LOAD DATA]
-2 : Number of uniform loads
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -2273,8 +2276,8 @@ Is favorable (0=false, 1=true)
 [END OF TABLE]
 [END OF UNIFORM LOAD DATA]
 [SURCHARGE DATA]
-4 : Number of items
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -2292,8 +2295,8 @@ Is favorable (0=false, 1=true)
 [END OF TABLE]
 [END OF SURCHARGE DATA]
 [HORIZONTAL LINE LOAD DATA]
-2 : Number of horizontal line loads
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Index
 Level
@@ -2336,6 +2339,7 @@ Is favorable (0=false, 1=true)
 [END OF SOIL COLLAPSE DATA]
 [MOMENTS FORCES DISPLACEMENTS]
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Moment
 Shear force
@@ -2521,8 +2525,8 @@ Method c,phi,delta
 [END OF SURFACE]
 [SOIL PROFILE FOR SHEET PILING MODEL]
 Profile initial
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -2550,6 +2554,7 @@ Layer name
 4 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Layer
 Branch
@@ -2567,8 +2572,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
 [SLIDE PLANE]
-28 : Number of slide planes
 [TABLE]
+DataCount=28
 [COLUMN INDICATION]
 Slide plane position
 Theta min
@@ -2609,8 +2614,8 @@ Q max
 [END OF TABLE]
 [END OF SLIDE PLANE]
 [LAMBDAS]
-27 : Number of Lambdas 
 [TABLE]
+DataCount=27
 [COLUMN INDICATION]
 Position
 Vertical stress
@@ -2652,8 +2657,8 @@ Lambda passive
 [END OF TABLE]
 [END OF LAMBDAS]
 [PRESSURES]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -2830,8 +2835,8 @@ Status character
 [END OF TABLE]
 [END OF PRESSURES]
 [FORCE FROM LAYER]
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Force
@@ -2860,8 +2865,8 @@ Method c,phi,delta
 [END OF SURFACE]
 [SOIL PROFILE FOR SHEET PILING MODEL]
 Profile initial
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -2889,6 +2894,7 @@ Layer name
 4 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Layer
 Branch
@@ -2906,8 +2912,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
 [SLIDE PLANE]
-22 : Number of slide planes
 [TABLE]
+DataCount=22
 [COLUMN INDICATION]
 Slide plane position
 Theta min
@@ -2942,8 +2948,8 @@ Q max
 [END OF TABLE]
 [END OF SLIDE PLANE]
 [LAMBDAS]
-21 : Number of Lambdas 
 [TABLE]
+DataCount=21
 [COLUMN INDICATION]
 Position
 Vertical stress
@@ -2979,8 +2985,8 @@ Lambda passive
 [END OF TABLE]
 [END OF LAMBDAS]
 [PRESSURES]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -3157,8 +3163,8 @@ Status character
 [END OF TABLE]
 [END OF PRESSURES]
 [FORCE FROM LAYER]
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Force
@@ -3175,8 +3181,8 @@ Layer name
 [END OF SIDE]
 [END OF CONSTRUCTION STAGE]
 [POINTS ON SHEETPILE]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Depth
 [END OF COLUMN INDICATION]
@@ -3352,8 +3358,8 @@ CalculationStatus=0
 IterationCount=4
 PartialFactorSet=4
 [ANCHOR DATA]
-1 : Number of anchors
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Position
 Force
@@ -3369,8 +3375,8 @@ Name
 [END OF TABLE]
 [END OF ANCHOR DATA]
 [UNIFORM LOAD DATA]
-4 : Number of uniform loads
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -3387,8 +3393,8 @@ Is favorable (0=false, 1=true)
 [END OF TABLE]
 [END OF UNIFORM LOAD DATA]
 [SURCHARGE DATA]
-2 : Number of items
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -3404,8 +3410,8 @@ Is favorable (0=false, 1=true)
 [END OF TABLE]
 [END OF SURCHARGE DATA]
 [HORIZONTAL LINE LOAD DATA]
-2 : Number of horizontal line loads
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 Index
 Level
@@ -3448,6 +3454,7 @@ Is favorable (0=false, 1=true)
 [END OF SOIL COLLAPSE DATA]
 [MOMENTS FORCES DISPLACEMENTS]
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Moment
 Shear force
@@ -3633,8 +3640,8 @@ Method Ka,K0,Kp
 [END OF SURFACE]
 [SOIL PROFILE FOR SHEET PILING MODEL]
 Profile initial
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -3662,6 +3669,7 @@ Layer name
 4 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Layer
 Branch
@@ -3679,8 +3687,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
 [PRESSURES]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -3857,8 +3865,8 @@ Status character
 [END OF TABLE]
 [END OF PRESSURES]
 [FORCE FROM LAYER]
-4 : Number of layers
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Level top layer
 Force
@@ -3887,8 +3895,8 @@ Method c,phi,delta
 [END OF SURFACE]
 [SOIL PROFILE FOR SHEET PILING MODEL]
 Profile add. pressure
-5 : Number of layers
 [TABLE]
+DataCount=5
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -3917,6 +3925,7 @@ Layer name
 5 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=5
 [COLUMN INDICATION]
 Layer
 Branch
@@ -3935,8 +3944,8 @@ Modulus of subgrade reaction bottom
 [END OF MULTILINEAR BRANCHES]
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
 [SLIDE PLANE]
-14 : Number of slide planes
 [TABLE]
+DataCount=14
 [COLUMN INDICATION]
 Slide plane position
 Theta min
@@ -3963,8 +3972,8 @@ Q max
 [END OF TABLE]
 [END OF SLIDE PLANE]
 [LAMBDAS]
-13 : Number of Lambdas 
 [TABLE]
+DataCount=13
 [COLUMN INDICATION]
 Position
 Vertical stress
@@ -3992,8 +4001,8 @@ Lambda passive
 [END OF TABLE]
 [END OF LAMBDAS]
 [PRESSURES]
-162 : Number of nodes
 [TABLE]
+DataCount=162
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -4170,8 +4179,8 @@ Status character
 [END OF TABLE]
 [END OF PRESSURES]
 [FORCE FROM LAYER]
-5 : Number of layers
 [TABLE]
+DataCount=5
 [COLUMN INDICATION]
 Level top layer
 Force
@@ -4189,8 +4198,8 @@ Layer name
 [END OF SIDE]
 [END OF CONSTRUCTION STAGE]
 [RESUME]
-CalculationCount=3
 [TABLE]
+DataCount=3
 [COLUMN INDICATION]
 Moment
 ShearForce
@@ -4212,8 +4221,8 @@ CalculationStatus
 [END OF TABLE]
 [END OF RESUME]
 [ANCHORS AND STRUTS RESUME]
-CalculationCount=2
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 StageNumber
 VerificationType
@@ -4235,6 +4244,7 @@ AnchorName
 [END OF ANCHORS AND STRUTS RESUME]
 [MAXIMUM ANCHOR FORCE]
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 AnchorName
 Force
@@ -4254,8 +4264,8 @@ VerticalBalanceSummary=0
 AllStagesAreStable=1
 [END OF MAXIMUM SUMMARY RESULTS]
 [WARNINGS]
-WarningCount=2
 [TABLE]
+DataCount=2
 [COLUMN INDICATION]
 WarningType
 StageNumber
@@ -4271,16 +4281,8 @@ Parameter01
 [END OF TABLE]
 [END OF WARNINGS]
 [ERRORS]
-ErrorCount=1
 [TABLE]
-[COLUMN INDICATION]
-ErrorType
-StageNumber
-VerifySet
-[END OF COLUMN INDICATION]
-[DATA]
-    6    -1    12
-[END OF DATA]
+DataCount=0
 [END OF TABLE]
 [END OF ERRORS]
 [END OF OUTPUT DATA]
