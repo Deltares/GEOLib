@@ -320,9 +320,11 @@ class TestInternalParseInputStructure:
         }
         column_keys_line = "\n".join(column_values.keys())
         column_values_line = "\t".join([str(value) for value in column_values.values()])
+        data_count = len(column_values.values())
         text_to_parse = f"""
             1 : Number of stages
             [TABLE]
+            DataCount={data_count}
             [COLUMN INDICATION]
             {column_keys_line}
             [END OF COLUMN INDICATION]
@@ -416,8 +418,8 @@ class TestInternalParseInputStructure:
             [END OF TABLE]
             """
 
-    text_pressures = """1 : Number of nodes
-        [TABLE]
+    text_pressures = """[TABLE]
+        DataCount=1
         [COLUMN INDICATION]
         Horizontal pressure
         Pore pressure
@@ -801,8 +803,8 @@ class TestInternalParseOutputStructure:
             [END OF TABLE]
             """
 
-    text_pressures = """1 : Number of nodes
-        [TABLE]
+    text_pressures = """[TABLE]
+        DataCount=1
         [COLUMN INDICATION]
         Horizontal pressure
         Pore pressure
@@ -916,8 +918,8 @@ class TestInternalParseOutputStructure:
         [END OF DESIGN LENGTH CALCULATION]
         """
 
-    text_points_on_sheetpile = """6: Number of nodes
-        [TABLE]
+    text_points_on_sheetpile = """[TABLE]
+        DataCount=6
         [COLUMN INDICATION]
         Depth
         [END OF COLUMN INDICATION]

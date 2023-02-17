@@ -78,8 +78,6 @@ class DSheetpilingWithNumberOfRowsTable(DSeriesWrappedTableStructure):
             DSeriesStructure: Fully parsed structure.
         """
         splitted_text = text.split("\n")
-        # Skip validating for now.
-        splitted_text.pop(0)
         return super().parse_text("\n".join(splitted_text))
 
 
