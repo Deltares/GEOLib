@@ -297,7 +297,7 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added layer
         """
-        stage_id = stage_id if stage_id is None else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -343,7 +343,7 @@ class DStabilityModel(BaseModel):
         Returns:
             bool: id of the added headline
         """
-        stage_id = stage_id if stage_id is None else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -378,7 +378,7 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added reference line
         """
-        stage_id = stage_id if stage_id is None else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -413,7 +413,7 @@ class DStabilityModel(BaseModel):
         Todo:
             Check if point lies within the given layer
         """
-        stage_id = stage_id if stage_id is None else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -456,7 +456,7 @@ class DStabilityModel(BaseModel):
         #    let op dat points.xmin <= x <= points.xmax
         # 4. voeg de PersistableStateLine toe aan de interne datastructuur
         # 5. geef de id terug
-        stage_id = stage_id if stage_id is None else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -628,7 +628,7 @@ class DStabilityModel(BaseModel):
             ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod,
             an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id is None else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
