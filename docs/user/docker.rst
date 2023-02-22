@@ -3,7 +3,7 @@ GEOLib Containers
 1.0.  Linux Container
 ---------------------
 
-.. code-block::
+code-block::
     willem@L02712:/mnt/c/home/willem/development/github/GEOLib$ cat Dockerfiles/prod/Dockerfile-ubuntu
     ### Build
 
