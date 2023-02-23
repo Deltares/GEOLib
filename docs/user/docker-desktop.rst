@@ -159,8 +159,32 @@ Windows containers
 The GEOLibs and the GEOApps (which is essentially GeoLibs bundleled with DStabilityConsole and DGeoFlowConsole) needs to run in windows
 containers and that is an entirely different beast.
 
-To achieve this, right-click the Docker icon in the task bar and choose "Switch to Windows Containers".
+To achieve this, right-click the Docker icon in the task bar and choose "Switch to Windows Containers". Now we can do the following::
 
+  PS C:\> hostname
+  L02712              <== Outside the Container
 
+  PS C:\> docker pull mcr.microsoft.com/windows/nanoserver:ltsc2019
+  ltsc2019: Pulling from windows/nanoserver
+  af0153d864f1: Pull complete
+  Digest: sha256:fc2d54de31f170c0bef160137b4dc0a80c2105a218b248dc71c754e1fcabd14f
+  Status: Downloaded newer image for mcr.microsoft.com/windows/nanoserver:ltsc2019
+  mcr.microsoft.com/windows/nanoserver:ltsc2019
+
+  PS C:\> docker images
+  REPOSITORY                             TAG        IMAGE ID       CREATED       SIZE
+  mcr.microsoft.com/windows/nanoserver   ltsc2019   00a00b91628a   2 weeks ago   258MB
+  
+  PS C:\> docker run -it mcr.microsoft.com/windows/nanoserver:ltsc2019 cmd
+  Microsoft Windows [Version 10.0.17763.4010]
+  (c) 2018 Microsoft Corporation. All rights reserved.
+
+  C:\>hostname          <== Inside the Container
+  ac77ce348bcc
+
+  C:\>exit
+
+  PS C:\> hostname
+  L02712              <== Outside the Container
 
 
