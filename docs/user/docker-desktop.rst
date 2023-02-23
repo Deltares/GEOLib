@@ -44,94 +44,95 @@ wsl 1
 Although it is not really necessary for GEOLibs, you want to include a Linux here, because Docker-Desktop expects it. We install an Ubuntu 
 in "Windows Subsystem for Linux 1" Here. From within the GUI, open en elevated Powershell. Then::
 
-PS C:\> wsl --list --online
-The following is a list of valid distributions that can be installed.
-The default distribution is denoted by '*'.
-Install using 'wsl --install -d <Distro>'.
+  PS C:\> wsl --list --online
+  The following is a list of valid distributions that can be installed.
+  The default distribution is denoted by '*'.
+  Install using 'wsl --install -d <Distro>'.
 
-  NAME               FRIENDLY NAME
-* Ubuntu             Ubuntu
-  Debian             Debian GNU/Linux
-  kali-linux         Kali Linux Rolling
-  SLES-12            SUSE Linux Enterprise Server v12
-  SLES-15            SUSE Linux Enterprise Server v15
-  Ubuntu-18.04       Ubuntu 18.04 LTS
-  Ubuntu-20.04       Ubuntu 20.04 LTS
-  OracleLinux_8_5    Oracle Linux 8.5
-  OracleLinux_7_9    Oracle Linux 7.9
+    NAME               FRIENDLY NAME
+  * Ubuntu             Ubuntu
+    Debian             Debian GNU/Linux
+    kali-linux         Kali Linux Rolling
+    SLES-12            SUSE Linux Enterprise Server v12
+    SLES-15            SUSE Linux Enterprise Server v15
+    Ubuntu-18.04       Ubuntu 18.04 LTS
+    Ubuntu-20.04       Ubuntu 20.04 LTS
+    OracleLinux_8_5    Oracle Linux 8.5
+    OracleLinux_7_9    Oracle Linux 7.9
   
-PS C:\> wsl --list --online
-The following is a list of valid distributions that can be installed.
-The default distribution is denoted by '*'.
-Install using 'wsl --install -d <Distro>'.
+  PS C:\> wsl --list --online
+  The following is a list of valid distributions that can be installed.
+  The default distribution is denoted by '*'.
+  Install using 'wsl --install -d <Distro>'.
 
-  NAME                                   FRIENDLY NAME
-* Ubuntu                                 Ubuntu
-  Debian                                 Debian GNU/Linux
-  kali-linux                             Kali Linux Rolling
-  Ubuntu-18.04                           Ubuntu 18.04 LTS
-  Ubuntu-20.04                           Ubuntu 20.04 LTS
-  Ubuntu-22.04                           Ubuntu 22.04 LTS
-  OracleLinux_8_5                        Oracle Linux 8.5
-  OracleLinux_7_9                        Oracle Linux 7.9
-  SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4
-  openSUSE-Leap-15.4                     openSUSE Leap 15.4
-  openSUSE-Tumbleweed                    openSUSE Tumbleweed
+    NAME                                   FRIENDLY NAME
+  * Ubuntu                                 Ubuntu
+    Debian                                 Debian GNU/Linux
+    kali-linux                             Kali Linux Rolling
+    Ubuntu-18.04                           Ubuntu 18.04 LTS
+    Ubuntu-20.04                           Ubuntu 20.04 LTS
+    Ubuntu-22.04                           Ubuntu 22.04 LTS
+    OracleLinux_8_5                        Oracle Linux 8.5
+    OracleLinux_7_9                        Oracle Linux 7.9
+    SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4
+    openSUSE-Leap-15.4                     openSUSE Leap 15.4
+    openSUSE-Tumbleweed                    openSUSE Tumbleweed
 
-PS C:\> wsl --install -d Ubuntu
-Installing: Windows Subsystem for Linux
-Windows Subsystem for Linux has been installed.
-Installing: Windows Subsystem for Linux
-[==========================52,0%
+  PS C:\> wsl --install -d Ubuntu
+  Installing: Windows Subsystem for Linux
+  Windows Subsystem for Linux has been installed.
+  Installing: Windows Subsystem for Linux
+  [==========================52,0%
 
-After rebooting, the installation of Ubuntu in the Linux Subsystem for Windows will commence, and you see:
+After rebooting, the installation of Ubuntu in the Linux Subsystem for Windows will commence, and you see::
 
-Installing, this may take a few minutes...
-Please create a default UNIX user account. The username does not need to match your Windows username.
-For more information visit: https://aka.ms/wslusers
-Enter new UNIX username: deltares
-New password:
-Retype new password:
-passwd: password updated successfully
-Installation successful!
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
+  Installing, this may take a few minutes...
+  Please create a default UNIX user account. The username does not need to match your Windows username.
+  For more information visit: https://aka.ms/wslusers
+  Enter new UNIX username: deltares
+  New password:
+  Retype new password:
+  passwd: password updated successfully
+  Installation successful!
+  To run a command as administrator (user "root"), use "sudo <command>".
+  See "man sudo_root" for details.
 
-Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.79.1-microsoft-standard-WSL2 x86_64)
+  Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.79.1-microsoft-standard-WSL2 x86_64)
 
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
+  * Documentation:  https://help.ubuntu.com
+  * Management:     https://landscape.canonical.com
+  * Support:        https://ubuntu.com/advantage
 
-This message is shown once a day. To disable it please create the
-/home/deltares/.hushlogin file.
+  This message is shown once a day. To disable it please create the
+  /home/deltares/.hushlogin file.
 
 This is a ubuntu running inside Windows 10. Just like a normal Ubuntu::
 
-deltares@DESKTOP-ECMHLMF:~$ sudo su
-[sudo] password for deltares: ***
+  deltares@DESKTOP-ECMHLMF:~$ sudo su
+  [sudo] password for deltares: ***
 
-root@DESKTOP-ECMHLMF:/home/deltares#...
+  root@DESKTOP-ECMHLMF:/home/deltares#
+  ...
 
 
 wsl 2
 -----
 
-The Docker Desktop is only running under wsl 2, but::
+The Docker Desktop is only running under wsl 2, so::
 
-PS C:\> wsl --update
-Checking for updates.
-The most recent version of Windows Subsystem for Linux is already installed.
+  PS C:\> wsl --update
+  Checking for updates.
+  The most recent version of Windows Subsystem for Linux is already installed.
 
-PS C:\> wsl --set-default-version 2
+  PS C:\> wsl --set-default-version 2
 
-PS C:\> wsl -l -v
-  NAME      STATE           VERSION
-* Ubuntu    Stopped         2
+  PS C:\> wsl -l -v
+    NAME      STATE           VERSION
+  * Ubuntu    Stopped         2
 
-PS C:\Users\Willem> wsl -l -v
-  NAME      STATE           VERSION
-* Ubuntu    Stopped         2
+  PS C:\Users\Willem> wsl -l -v
+    NAME      STATE           VERSION
+  * Ubuntu    Stopped         2
 
 
 Installing Docker Desktop on Windows 10
@@ -142,18 +143,15 @@ the installation, choose the installation option "Use WSL 2 instead of Hyper-V".
 
 After login out and login in and starting docker desktop. You can do things like::
 
-PS C:\Users\Willem> docker ps
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-PS C:\Users\Willem> docker images
-REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
-PS C:\Users\Willem> docker search nginx
-NAME                                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
-nginx                                             Official build of Nginx.                        17941     [OK]
-linuxserver/nginx                                 An Nginx container, brought to you by LinuxS…   182
-bitnami/nginx                                     Bitnami nginx Docker Image                      150                  [OK]
-
-PS C:\Users\Willem>
-
+  PS C:\> docker ps
+  CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+  PS C:\Users\Willem> docker images
+  REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+  PS C:\Users\Willem> docker search nginx
+  NAME                                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+  nginx                                             Official build of Nginx.                        17941     [OK]
+  linuxserver/nginx                                 An Nginx container, brought to you by LinuxS…   182
+  bitnami/nginx                                     Bitnami nginx Docker Image                      150                  [OK]
 
 Windows containers
 ------------------
