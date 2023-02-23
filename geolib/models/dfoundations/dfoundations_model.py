@@ -151,7 +151,7 @@ class DFoundationsModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DFoundationsConsole/DFoundationsConsole.exe")
+        return Path("DFoundations/DFoundations.exe")
 
     @property
     def console_flags(self) -> List[str]:

@@ -20,7 +20,7 @@ This configuration variable points to the folder in which the consoles are place
 Note that the *CONSOLE_FOLDER* variable has to point to an existing path,
 otherwise GEOLib will not start. The executables are expected in the following locations::
 
-- *CONSOLE_FOLDER*/"DFoundationsConsole/DFoundationsConsole.exe"
+- *CONSOLE_FOLDER*/"DFoundationsConsole/DFoundations.exe"
 - *CONSOLE_FOLDER*/"DSettlementConsole/DSettlementConsole.exe"
 - *CONSOLE_FOLDER*/"DSheetPilingConsole/DSheetPilingConsole.exe"
 - *CONSOLE_FOLDER*/"DStabilityConsole/D-Stability Console.exe"
@@ -92,7 +92,7 @@ Console usage
 If you wish to use these consoles without Python on the command line, 
 note that all except for the DStability console require the "/b" flag, i.e.::
 
-    $ DFoundationsConsole/DFoundationsConsole.exe /b "folder_or_file"
+    $ DFoundationsConsole/DFoundations.exe /b "folder_or_file"
 
 Note that you can only execute these files from the commandline, double clicking on them in Explorer won't work.
 
