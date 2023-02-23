@@ -29,13 +29,14 @@ laptops come with this preset already installed in the BIOS.
 As a second, we have to switch on some windows capabilities. Although we can do this in the gui, the simplest is to do this via an elevated
 Powershell prompt (so, running as Administrator). There, issue the following commands::
 
-PS C:\> Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
+  PS C:\> Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 
 (Answer N on the question whether to reboot)::
 
-PS C:> Enable-WindowsOptionalFeature -Online -FeatureName $("Microsoft-Hyper-V", "Containers") -All
+  PS C:> Enable-WindowsOptionalFeature -Online -FeatureName $("Microsoft-Hyper-V", "Containers") -All
 
 (Answer Y on the question whether to reboot. This will reboot and you see that a couple of things get installed).
+
 
 wsl 1
 -----
@@ -59,93 +60,36 @@ Install using 'wsl --install -d <Distro>'.
   OracleLinux_8_5    Oracle Linux 8.5
   OracleLinux_7_9    Oracle Linux 7.9
   
-PS C:\Users\Willem> wsl --install -d Ubuntu
-Installing: Windows Subsystem for Linux
-Windows Subsystem for Linux has been installed.
-Installing: Ubuntu
-Ubuntu has been installed.
-The requested operation is successful. Changes will not be effective until the system is rebooted.
-
-After rebooting, the installation of Ubuntu in the Linux Subsystem for Windows will commence, and you see:
-
-Installing, this may take a few minutes...
-Please create a default UNIX user account. The username does not need to match your Windows username.
-For more information visit: https://aka.ms/wslusers
-Enter new UNIX username: willem
-New password:
-Retype new password:
-passwd: password updated successfully
-Installation successful!
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-
-Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.79.1-microsoft-standard-WSL2 x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-This message is shown once a day. To disable it please create the
-/home/willem/.hushlogin file.
-
-This is a ubuntu running inside Windows 10. Just like a normal Ubuntu::
-
-willem@VMWARE-DESKTOP:~$ sudo su -
-[sudo] password for willem:
-Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.79.1-microsoft-standard-WSL2 x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-This message is shown once a day. To disable it please create the
-/root/.hushlogin file.
-root@VMWARE-DESKTOP:~# apt-get update && apt-get -y upgrade
-...
-
-
-
-
-
-
-wsl 1 and wsl 2
----------------
-
-Although we only need 
-
-3.2.1.	wsl 1
-
-From within the GUI, open en elevated Powershell (if you do this via the ssh-connection, it will fail). Then:
-
-PS C:\Users\Willem> wsl --list --online
+PS C:\> wsl --list --online
 The following is a list of valid distributions that can be installed.
 The default distribution is denoted by '*'.
 Install using 'wsl --install -d <Distro>'.
 
-  NAME               FRIENDLY NAME
-* Ubuntu             Ubuntu
-  Debian             Debian GNU/Linux
-  kali-linux         Kali Linux Rolling
-  SLES-12            SUSE Linux Enterprise Server v12
-  SLES-15            SUSE Linux Enterprise Server v15
-  Ubuntu-18.04       Ubuntu 18.04 LTS
-  Ubuntu-20.04       Ubuntu 20.04 LTS
-  OracleLinux_8_5    Oracle Linux 8.5
-  OracleLinux_7_9    Oracle Linux 7.9
-  
-PS C:\Users\Willem> wsl --install -d Ubuntu
+  NAME                                   FRIENDLY NAME
+* Ubuntu                                 Ubuntu
+  Debian                                 Debian GNU/Linux
+  kali-linux                             Kali Linux Rolling
+  Ubuntu-18.04                           Ubuntu 18.04 LTS
+  Ubuntu-20.04                           Ubuntu 20.04 LTS
+  Ubuntu-22.04                           Ubuntu 22.04 LTS
+  OracleLinux_8_5                        Oracle Linux 8.5
+  OracleLinux_7_9                        Oracle Linux 7.9
+  SUSE-Linux-Enterprise-Server-15-SP4    SUSE Linux Enterprise Server 15 SP4
+  openSUSE-Leap-15.4                     openSUSE Leap 15.4
+  openSUSE-Tumbleweed                    openSUSE Tumbleweed
+
+PS C:\> wsl --install -d Ubuntu
 Installing: Windows Subsystem for Linux
 Windows Subsystem for Linux has been installed.
-Installing: Ubuntu
-Ubuntu has been installed.
-The requested operation is successful. Changes will not be effective until the system is rebooted.
+Installing: Windows Subsystem for Linux
+[==========================52,0%
 
 After rebooting, the installation of Ubuntu in the Linux Subsystem for Windows will commence, and you see:
 
 Installing, this may take a few minutes...
 Please create a default UNIX user account. The username does not need to match your Windows username.
 For more information visit: https://aka.ms/wslusers
-Enter new UNIX username: willem
+Enter new UNIX username: deltares
 New password:
 Retype new password:
 passwd: password updated successfully
@@ -160,62 +104,43 @@ Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.79.1-microsoft-standard-WSL2 x86_6
  * Support:        https://ubuntu.com/advantage
 
 This message is shown once a day. To disable it please create the
-/home/willem/.hushlogin file.
+/home/deltares/.hushlogin file.
 
-This is a ubuntu running inside Windows 10. Just like a normal Ubuntu:
+This is a ubuntu running inside Windows 10. Just like a normal Ubuntu::
 
-willem@VMWARE-DESKTOP:~$ sudo su -
-[sudo] password for willem:
-Welcome to Ubuntu 22.04.1 LTS (GNU/Linux 5.15.79.1-microsoft-standard-WSL2 x86_64)
+deltares@DESKTOP-ECMHLMF:~$ sudo su
+[sudo] password for deltares: ***
 
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-
-This message is shown once a day. To disable it please create the
-/root/.hushlogin file.
-root@VMWARE-DESKTOP:~# apt-get update && apt-get -y upgrade
-...
+root@DESKTOP-ECMHLMF:/home/deltares#...
 
 
-3.2.2.	wsl 2
+wsl 2
+-----
 
-The Docker Desktop is only running under wsl 2, but:
+The Docker Desktop is only running under wsl 2, but::
 
-PS C:\Users\Willem> wsl --version
-WSL version: 1.0.3.0
-Kernel version: 5.15.79.1
-WSLg version: 1.0.47
-MSRDC version: 1.2.3575
-Direct3D version: 1.606.4
-DXCore version: 10.0.25131.1002-220531-1700.rs-onecore-base2-hyp
-Windows version: 10.0.19045.2486
-
-We have still to upgrade wsl 1 to wsl 2 (see https://learn.microsoft.com/en-us/windows/wsl/install).
-
-PS C:\Users\Willem> Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
-PS C:\Users\Willem> Restart-Computer -Force
-
-Next download and install: https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
-
-PS C:\Users\Willem> wsl --update
+PS C:\> wsl --update
 Checking for updates.
 The most recent version of Windows Subsystem for Linux is already installed.
-PS C:\Users\Willem> wsl --set-default-version 2
+
+PS C:\> wsl --set-default-version 2
+
+PS C:\> wsl -l -v
+  NAME      STATE           VERSION
+* Ubuntu    Stopped         2
 
 PS C:\Users\Willem> wsl -l -v
   NAME      STATE           VERSION
 * Ubuntu    Stopped         2
 
-Lastly, try to start this Ubuntu by opening a shell.
 
+Installing Docker Desktop on Windows 10
+---------------------------------------
 
-3.3.	Installing Docker Desktop on Windows 10
+This is a GUI Application, so go to the Windows 10 GUI and download and install https://www.docker.com/products/docker-desktop/. During 
+the installation, choose the installation option "Use WSL 2 instead of Hyper-V". Then let the installer do its work.
 
-3.3.1.	Docker Desktop
-
-This is a GUI Application, so go to the Windows 10 GUI and download and install https://www.docker.com/products/docker-desktop/.
-After login out and login in and starting docker desktop. You can do things like:
+After login out and login in and starting docker desktop. You can do things like::
 
 PS C:\Users\Willem> docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
@@ -226,35 +151,18 @@ NAME                                              DESCRIPTION                   
 nginx                                             Official build of Nginx.                        17941     [OK]
 linuxserver/nginx                                 An Nginx container, brought to you by LinuxS…   182
 bitnami/nginx                                     Bitnami nginx Docker Image                      150                  [OK]
+
 PS C:\Users\Willem>
 
-You cannot start windows containers. To achieve this, right-click the Docker icon in the task bar and choose "Switch to Windows Containers"
 
-Of course the same thing can be done via SSH:
+Windows containers
+------------------
 
-PS C:\Users\Willem> ssh Willem@192.168.74.20
-Willem@192.168.74.20's password:
-Microsoft Windows [Version 10.0.19045.2486]
-(c) Microsoft Corporation. All rights reserved.
+The GEOLibs and the GEOApps (which is essentially GeoLibs bundleled with DStabilityConsole and DGeoFlowConsole) needs to run in windows
+containers and that is an entirely different beast.
 
-willem@VMWARE-DESKTOP C:\Users\Willem>powershell
-Windows PowerShell
-Copyright (C) Microsoft Corporation. All rights reserved.
+To achieve this, right-click the Docker icon in the task bar and choose "Switch to Windows Containers".
 
-Try the new cross-platform PowerShell https://aka.ms/pscore6
 
-PS C:\Users\Willem> docker ps
-docker ps
-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-PS C:\Users\Willem>
 
-3.3.2.	open \\.\pipe\docker_engine_windows
 
-When installing wsl-1, wsl-2 and Docker Desktop there is an issue in switching to Windows Containers. After switching, you get the error
-message:
-
-open \\.\pipe\docker_engine_windows: The system cannot find the file specified
-
-You can resolve this by installing a few things more:
-
-PS C:> Enable-WindowsOptionalFeature -Online -FeatureName $("Microsoft-Hyper-V", "Containers") -All
