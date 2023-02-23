@@ -26,7 +26,7 @@ from .internal import (
     SpencerSlipPlaneResult,
     Stage,
     UpliftVanSlipCircleResult,
-    Waternet,
+    Waternet, SoilCorrelation, PersistableStateCorrelation,
 )
 from .loads import Consolidation, DStabilityLoad
 from .reinforcements import DStabilityReinforcement
@@ -83,6 +83,10 @@ class DStabilityModel(BaseModel):
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
 
+    @property
+    def soil_correlations(self) -> SoilCorrelation:
+        return self.datastructure.soilcorrelation
+
     def _get_next_id(self) -> int:
         self.current_id += 1
         return self.current_id
@@ -134,7 +138,7 @@ class DStabilityModel(BaseModel):
         raise ValueError(f"No result found for result id {stage_id}")
 
     def get_slipcircle_result(
-        self, stage_id: int
+            self, stage_id: int
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
@@ -277,12 +281,12 @@ class DStabilityModel(BaseModel):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
 
     def add_layer(
-        self,
-        points: List[Point],
-        soil_code: str,
-        label: str = "",
-        notes: str = "",
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            soil_code: str,
+            label: str = "",
+            notes: str = "",
+            stage_id: int = None,
     ) -> int:
         """
         Add a soil layer to the model
@@ -323,12 +327,12 @@ class DStabilityModel(BaseModel):
         return int(persistable_layer.Id)
 
     def add_head_line(
-        self,
-        points: List[Point],
-        label: str = "",
-        notes: str = "",
-        is_phreatic_line: bool = False,
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            label: str = "",
+            notes: str = "",
+            is_phreatic_line: bool = False,
+            stage_id: int = None,
     ) -> int:
         """
         Add head line to the model
@@ -356,13 +360,13 @@ class DStabilityModel(BaseModel):
         return int(persistable_headline.Id)
 
     def add_reference_line(
-        self,
-        points: List[Point],
-        bottom_headline_id: int,
-        top_head_line_id: int,
-        label: str = "",
-        notes: str = "",
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            bottom_headline_id: int,
+            top_head_line_id: int,
+            label: str = "",
+            notes: str = "",
+            stage_id: int = None,
     ) -> int:
         """
         Add reference line to the model
@@ -396,9 +400,9 @@ class DStabilityModel(BaseModel):
         return int(persistable_referenceline.Id)
 
     def add_state_point(
-        self,
-        state_point: DStabilityStatePoint,
-        stage_id: int = None,
+            self,
+            state_point: DStabilityStatePoint,
+            stage_id: int = None,
     ) -> int:
         """
         Add state point to the model
@@ -436,10 +440,10 @@ class DStabilityModel(BaseModel):
         return int(persistable_statepoint.Id)
 
     def add_state_line(
-        self,
-        points: List[Point],
-        state_points: List[DStabilityStateLinePoint],
-        stage_id: int = None,
+            self,
+            points: List[Point],
+            state_points: List[DStabilityStateLinePoint],
+            stage_id: int = None,
     ) -> None:
         """
         Add state line. From the Soils, only the state parameters are used.
@@ -477,11 +481,34 @@ class DStabilityModel(BaseModel):
 
         states.add_state_line(persistable_points, persistable_state_line_points)
 
+    def add_state_correlation(self,
+                              correlated_state_ids: List[int],
+                              stage_id: int = None):
+
+        stage_id = stage_id if stage_id is not None else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        state_correlations = self.datastructure.statecorrelations[stage_id]
+
+        for state_id in correlated_state_ids:
+            try:
+                _ = self.datastructure.states[stage_id].get_state(state_id)
+            except ValueError:
+                raise ValueError(f"No state point with id '{state_id} in this geometry")
+
+        persistable_state_correlation = PersistableStateCorrelation(
+            CorrelatedStateIds=correlated_state_ids,
+            IsFullyCorrelated=True)
+
+        state_correlations.add_state_correlation(persistable_state_correlation)
+
     def add_load(
-        self,
-        load: DStabilityLoad,
-        consolidations: Optional[List[Consolidation]] = None,
-        stage_id: Optional[int] = None,
+            self,
+            load: DStabilityLoad,
+            consolidations: Optional[List[Consolidation]] = None,
+            stage_id: Optional[int] = None,
     ) -> None:
         """Add a load to the object.
 
@@ -504,7 +531,7 @@ class DStabilityModel(BaseModel):
                 f"load should be a subclass of DstabilityReinforcement, received {load}"
             )
         if self.datastructure.has_soil_layers(stage_id) and self.datastructure.has_loads(
-            stage_id
+                stage_id
         ):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id)
@@ -515,10 +542,10 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No loads found for stage id {stage_id}")
 
     def add_soil_layer_consolidations(
-        self,
-        soil_layer_id: int,
-        consolidations: Optional[List[Consolidation]] = None,
-        stage_id: int = None,
+            self,
+            soil_layer_id: int,
+            consolidations: Optional[List[Consolidation]] = None,
+            stage_id: int = None,
     ) -> None:
         """Add consolidations for a layer (layerload).
 
@@ -537,7 +564,7 @@ class DStabilityModel(BaseModel):
         stage_id = stage_id if stage_id is not None else self.current_stage
 
         if self.datastructure.has_soil_layer(
-            stage_id, soil_layer_id
+                stage_id, soil_layer_id
         ) and self.datastructure.has_loads(stage_id):
             if consolidations is None:
                 consolidations = self._get_default_consolidations(stage_id, soil_layer_id)
@@ -551,7 +578,7 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No soil layers found found for stage id {stage_id}")
 
     def _get_default_consolidations(
-        self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
+            self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
     ) -> List[Consolidation]:
         """Length of the consolidations is equal to the amount of soil layers.
 
@@ -566,10 +593,10 @@ class DStabilityModel(BaseModel):
         raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def _verify_consolidations(
-        self,
-        consolidations: List[Consolidation],
-        stage_id: int,
-        exclude_soil_layer_id: Optional[int] = None,
+            self,
+            consolidations: List[Consolidation],
+            stage_id: int,
+            exclude_soil_layer_id: Optional[int] = None,
     ) -> None:
         if self.datastructure.has_soil_layers(stage_id):
             consolidation_soil_layer_ids: Set[str] = {
@@ -587,9 +614,9 @@ class DStabilityModel(BaseModel):
             raise ValueError(f"No soil layers found for stage id {stage_id}")
 
     def add_reinforcement(
-        self,
-        reinforcement: DStabilityReinforcement,
-        stage_id: Optional[int] = None,
+            self,
+            reinforcement: DStabilityReinforcement,
+            stage_id: Optional[int] = None,
     ) -> None:
         """Add a reinforcement to the model.
 
@@ -616,6 +643,14 @@ class DStabilityModel(BaseModel):
             raise ValueError(
                 f"No reinforcements found for stage found with id {stage_id}"
             )
+
+    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+        """Add a soil correlation to the model.
+
+        Args:
+            list_correlated_soil_ids: A list of soil ids that are correlated.
+        """
+        self.soil_correlations.add_soil_correlation(list_correlated_soil_ids)
 
     def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
         """Sets the model and applies the given parameters

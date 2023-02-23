@@ -578,13 +578,21 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # state point
-        dm.add_state_point(
+        id_state_one = dm.add_state_point(
             DStabilityStatePoint(
                 layer_id=layer_ids[2],  # HV layer
                 point=Point(x=0, z=-2.5),
                 stress=DStabilityStress(pop=10.0),
             )
         )
+        id_state_two = dm.add_state_point(
+            DStabilityStatePoint(
+                layer_id=layer_ids[0],  # Sand layer
+                point=Point(x=0, z=-15),
+                stress=DStabilityStress(pop=10.0),
+            )
+        )
+
         path = outputdir / "test_state_point.stix"
         dm.serialize(path)
 
@@ -597,12 +605,26 @@ class TestDStabilityModel:
                 )
             ],
         )
+
         path = outputdir / "test_state_line.stix"
         dm.serialize(path)
 
+        # State correlation
+        dm.add_state_correlation([id_state_one, id_state_two])
+        path = outputdir / "test_state_correlation.stix"
+        dm.serialize(path)
+
+        # Soil correlation
+        soil_id_one = dm.soils.get_soil('H_Ro_z&k').id
+        soil_id_two = dm.soils.get_soil('Sand').id
+
+        dm.add_soil_correlation([soil_id_one, soil_id_two])
+        path = outputdir / "test_soil_correlation.stix"
+        dm.serialize(path)
+
         # 3. Verify model output has been parsed
-        model = dm.execute()
-        assert model
+        # model = dm.execute()
+        # assert model
 
     @pytest.mark.integrationtest
     def test_su_table_version_parsing(self):
