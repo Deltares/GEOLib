@@ -59,4 +59,3 @@ class TestDStabilityStates:
     def test_dstability_add_state_correlation_wrong_layer_id(self):
         with pytest.raises(ValueError):
             _ = self.dm.add_state_correlation([self.id_state_one, -1])
-

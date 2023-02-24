@@ -615,8 +615,8 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # Soil correlation
-        soil_id_one = dm.soils.get_soil('H_Ro_z&k').id
-        soil_id_two = dm.soils.get_soil('Sand').id
+        soil_id_one = dm.soils.get_soil("H_Ro_z&k").id
+        soil_id_two = dm.soils.get_soil("Sand").id
 
         dm.add_soil_correlation([soil_id_one, soil_id_two])
         path = outputdir / "test_soil_correlation.stix"
