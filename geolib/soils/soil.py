@@ -375,7 +375,8 @@ class SoilType(IntEnum):
     CLAY = 3
     PEAT = 4
     SANDY_LOAM = 5
-
+    TERTCLAY = 6
+    CLAYEYSAND = 7
 
 class Soil(SoilBaseModel):
     """Soil Material."""
@@ -405,7 +406,6 @@ class Soil(SoilBaseModel):
     use_probabilistic_defaults: Optional[bool] = False
     soil_type_settlement_by_vibrations: Optional[SoilType] = SoilType.SAND
     soil_type_nl: Optional[SoilType] = SoilType.SAND
-    soil_type_be: Optional[SoilType] = SoilType.SAND
     soil_state: Optional[SoilState] = SoilState()
     shear_strength_model_above_phreatic_level: Optional[
         ShearStrengthModelTypePhreaticLevel
@@ -574,7 +574,6 @@ class Soil(SoilBaseModel):
             name=self.name,
             soilcolor=self.color.to_internal(),
             soilsoiltype=self.soil_type_nl,
-            soilbelgiansoiltype=self.soil_type_be,
             soilgamdry=self.soil_weight_parameters.unsaturated_weight.mean,
             soilgamwet=self.soil_weight_parameters.saturated_weight.mean,
             soilinitialvoidratio=self.soil_classification_parameters.initial_void_ratio.mean,

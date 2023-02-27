@@ -31,7 +31,6 @@ DGSFoundationCalc.dll={{ version_externals.dgsfoundationcalc____dll }}
 {{ soil.name }}
 SoilColor={{ soil.soilcolor }}
 SoilSoilType={{ soil.soilsoiltype.value }}
-SoilBelgianSoilType={{ soil.soilbelgiansoiltype.value }}
 SoilGamDry={{ soil.soilgamdry }}
 SoilGamWet={{ soil.soilgamwet }}
 SoilInitialVoidRatio={{ soil.soilinitialvoidratio }}
@@ -277,6 +276,7 @@ Layer ({{ loop.index }})
 {% endfor %}
 {% endfor %}
 [END OF PROFILES]
+{{user_clasification_method}}
 [SLOPES]
 {{ slopes }}
 [END OF SLOPES]
@@ -361,9 +361,6 @@ Layer ({{ loop.index }})
 {{ types___bearing_piles }}
 {% endif %}
 [END OF TYPES - BEARING PILES]
-[TYPES - BEARING PILES BELGIAN]
-{{ types___bearing_piles_belgian }}
-[END OF TYPES - BEARING PILES BELGIAN]
 [TYPES - TENSION PILES (CUR)]
 {% if types___tension_piles_cur is not string %}
 0 : pile type shown in main graph
@@ -457,9 +454,6 @@ PileName
 {{ positions___bearing_piles }}
 {% endif %}
 [END OF POSITIONS - BEARING PILES]
-[POSITIONS - BEARING PILES BELGIAN]
-{{ positions___bearing_piles_belgian }}
-[END OF POSITIONS - BEARING PILES BELGIAN]
 [POSITIONS - TENSION PILES (CUR)]
 {% if positions___tension_piles_cur is not string %}
 [TABLE]
@@ -493,9 +487,9 @@ PileName
 {% set co = calculation_options %}
 {{ '1 : Superstructure rigidity = Rigid' if co.is_rigid else '0 : Superstructure rigidity = Non-rigid' }}
 {{ '{:>12.3f}'.format(co.max_allowed_settlement_lim_state_str) }} : Max. allowed settlement [m]; lim. state STR/GEO
-{{ '{:>12.6f}'.format(co.max_allowed_rel_rotation_lim_state_str) }} : Max. allowed rel. rotation [m/m]; lim. state STR/GEO
+{{ '{:>12}'.format(co.max_allowed_rel_rotation_lim_state_str) }} : Reciprocal max. allowed rel. rotation [m/m]; lim. state STR/GEO
 {{ '{:>12.3f}'.format(co.max_allowed_settlement_lim_state_serv) }} : Max. allowed settlement [m]; serv. lim. state
-{{ '{:>12.6f}'.format(co.max_allowed_rel_rotation_lim_state_serv) }} : Max. allowed rel. rotation [m/m]; serv. lim. state
+{{ '{:>12}'.format(co.max_allowed_rel_rotation_lim_state_serv) }} : Reciprocal max. allowed rel. rotation [m/m]; serv. lim. state
 {{ co.is_xi3_overruled.value }} : Factor xi3 NEN overruled = {{ co.is_xi3_overruled.name }}
 {% if co.is_xi3_overruled %}
 {{ '{:>12.2f}'.format(co.factor_xi3) }} : Factor xi3 user defined
@@ -516,6 +510,12 @@ PileName
 {% if co.is_area_overruled %}
 {{ '{:>12.2f}'.format(co.area) }} : Area [m2] user defined
 {% endif %}
+{{ co.is_qbmax_overruled.value }} : Qb;max overruled = {{ co.is_qbmax_overruled.name }}
+{{ '{:>12.2f}'.format(co.qbmax) }} : Qb;max user defined
+{{ co.is_qcza_low_overruled.value }} : Qc;z;a low overruled = {{ co.is_qcza_low_overruled.name }}
+{{ '{:>12.2f}'.format(co.qcza_low) }} : Qc;z;a low user defined
+{{ co.is_qcza_high_overruled.value }} : Qc;z;a high overruled = {{ co.is_qcza_high_overruled.name }}
+{{ '{:>12.2f}'.format(co.qcza_high) }} : Qc;z;a high user defined
 {{ co.is_suppress_qc_reduction.value }} : Suppress qcIII reduction = {{ co.is_suppress_qc_reduction.name }}
 {{ co.is_overrule_excavation.value }} : Overrule excavation = {{ co.is_overrule_excavation.name }}
 {{ co.use_pile_group.value }} : Use pile group = {{ co.use_pile_group.name }}
@@ -550,25 +550,10 @@ PileName
 {{ co.use_piezometric_levels.value }} : Use Piezometric levels = {{ co.use_piezometric_levels.name }}
 {{ co.use_almere_rules.value }} : Use Almere rules = {{ co.use_almere_rules.name }}
 {{ co.use_extra_almere_rules.value }} : Use Extra Almere rules = {{ co.use_extra_almere_rules.name }}
-0 : Xi3 BPB overruled = FALSE
-0 : Xi4 BPB overruled = FALSE
-0 : Gamma rd overruled = FALSE
-        1.00 : Factor xi3 user defined
-        1.00 : Factor xi4 user defined
-        1.00 : Factor Gamma rd user defined
-0 : Gamma b BPB overruled = FALSE
-        1.00 : Factor Gamma b user defined
-0 : Gamma s BPB overruled = FALSE
-        1.00 : Factor Gamma s user defined
- 0 : Suppress all qc reduction (BP) = FALSE
 {{ co.is_ea_gem_overruled.value }} : Eea;gem overruled = {{ co.is_ea_gem_overruled.name }}
 {{ '{:.2f}'.format(co.ea_gem) }} : Eea;gem user defined
-0 : Use Quality Assurance = FALSE
-     1000.00 : Area covered per CPT
 {{ co.is_gamma_s_overruled.value }} : Gamma s for NEN overruled = {{ co.is_gamma_s_overruled.name }}
 {{ '{:>12.2f}'.format(co.factor_gamma_s) }} : Factor Gamma s for NEN user defined
-0 : Factor Beta (BPB) overruled = FALSE
-        1.00 : Factor Beta (BPB) user defined
 {% else %}
 {{ calculation_options }}
 {% endif %}
@@ -614,9 +599,6 @@ PileName
 {{ preliminary_design }}
 {% endif %}
 [END OF PRELIMINARY DESIGN]
-[DE BEER]
-{{ de_beer }}
-[END OF DE BEER]
 [LOCATION MAP]
 
        {{ location_map }}

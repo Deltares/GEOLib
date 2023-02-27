@@ -219,7 +219,8 @@ class Layer(DSeriesTreeStructure):
     excess_pore_pressure_top: float = 0.0  # [kN/m3]
     excess_pore_pressure_bottom: float = 0.0  # [kN/m3]
     ocr_value: float = 1.0  # [-]
-    reduction_core_resistance: int = 0  # [%]
+    reduction_core_resistance: float = 0.0  # [%]
+
 
 
 class ReductionCoreResistanceEnum(IntEnum):
@@ -433,9 +434,9 @@ class CalculationOptions(DSeriesNoParseSubStructure):
 
     # Transformation
     max_allowed_settlement_lim_state_str: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_str: confloat(ge=0.0001, le=10000) = 0.0001
+    max_allowed_rel_rotation_lim_state_str: conint(ge=0, le=10000) = 100
     max_allowed_settlement_lim_state_serv: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_serv: confloat(ge=0.0001, le=10000) = 0.0001
+    max_allowed_rel_rotation_lim_state_serv: conint(ge=0, le=10000) = 300
 
     # Overrule parameters Bearing Piles
     is_xi3_overruled: Bool = Bool.FALSE
@@ -450,6 +451,12 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     factor_gamma_fnk: Optional[confloat(ge=-100, le=100)] = 2
     is_area_overruled: Bool = Bool.FALSE
     area: Optional[confloat(ge=0, le=100000)] = 1000
+    is_qbmax_overruled: Bool = Bool.FALSE
+    qbmax: Optional[confloat(ge=0, le=100)] = 15
+    is_qcza_low_overruled: Bool = Bool.FALSE
+    qcza_low: Optional[confloat(ge=0, le=100)] = 12
+    is_qcza_high_overruled: Bool = Bool.FALSE
+    qcza_high: Optional[confloat(ge=0, le=100)] = 15
     is_ea_gem_overruled: Bool = Bool.FALSE
     ea_gem: Optional[confloat(ge=1)] = 100000
 
@@ -493,23 +500,6 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     surcharge: confloat(ge=0, le=1e7) = 0
     use_piezometric_levels: Bool = Bool.TRUE
 
-    # Model options Bearing Piles BE
-    is_xi3_bpb_overruled: Bool = Bool.FALSE
-    factor_xi3_bpb: confloat(ge=0.01, le=10) = 1.0
-    is_xi4_bpb_overruled: Bool = Bool.FALSE
-    factor_xi4_bpb: confloat(ge=0.01, le=10) = 1.0
-    is_gamma_rd_overruled: Bool = Bool.FALSE
-    factor_gamma_rd: confloat(ge=1, le=100) = 1.0
-    is_gamma_b_bpb_overruled: Bool = Bool.FALSE
-    factor_gamma_b_bpb: confloat(ge=1, le=100) = 1.0
-    is_gamma_s_bpb_overruled: Bool = Bool.FALSE
-    factor_gamma_s_bpb: confloat(ge=1, le=100) = 1.0
-    suppress_all_qc_reduction_bp: Bool = Bool.FALSE
-    use_quality_assurance: Bool = Bool.FALSE
-    area_covered_per_cpt: confloat(ge=0) = 1000
-    is_beta_bpb_overruled: Bool = Bool.FALSE
-    factor_beat_bpb: confloat(ge=0.0, le=10) = 0
-
     def __init__(self, *args, **kwargs):
         """If defaults are overriden, update
         the related toggle fields as well.
@@ -536,7 +526,6 @@ class ModelTypeEnum(IntEnum):
     BEARING_PILES = 0
     TENSION_PILES = 1
     SHALLOW_FOUNDATIONS = 2
-    BEARING_PILES_BELGIAN = 3
 
 
 class ModelType(DFoundationsInlineProperties):
@@ -613,18 +602,19 @@ class DFoundationsInputStructure(DSeriesStructure):
     run_identification: str = 6 * "\n"
     cpt_list: CPTList = CPTList()
     profiles: Profiles = Profiles()
+    user_classification_method: str = cleandoc(
+        """          
+        [USER CLASSIFICATION METHOD]
+        0
+        [END OF USER CLASSIFICATION METHOD]
+        """
+    )
     slopes: str = cleandoc(
         """
             0 = number of items
         """
     )
     types___bearing_piles: Union[List[TypesBearingPiles], str] = cleandoc(
-        """
-        -1 : pile type shown in main graph
-            0 = number of items
-        """
-    )
-    types___bearing_piles_belgian: str = cleandoc(
         """
         -1 : pile type shown in main graph
             0 = number of items
@@ -647,24 +637,7 @@ class DFoundationsInputStructure(DSeriesStructure):
         """
     )
     positions___bearing_piles: Union[PositionsBearingPiles, str] = PositionsBearingPiles()
-    positions___bearing_piles_belgian: str = cleandoc(
-        """
-        [TABLE]
-        [COLUMN INDICATION]
-        index
-        X
-        Y
-        PileHeadLevel
-        Surcharge
-        LimitStateStrGeo
-        LimitStateService
-        PileName
-        [END OF COLUMN INDICATION]
-        [DATA]
-        [END OF DATA]
-        [END OF TABLE]
-        """
-    )
+
     positions___tension_piles_cur: Union[
         PositionsTensionPiles, str
     ] = PositionsTensionPiles()
@@ -690,19 +663,6 @@ class DFoundationsInputStructure(DSeriesStructure):
     calculation_options: Union[CalculationOptions, str] = CalculationOptions()
     calculationtype: CalculationType = CalculationType()
     preliminary_design: Union[PreliminaryDesign, str] = PreliminaryDesign()
-    de_beer: str = cleandoc(
-        """
-          0.0357 : Cone diameter [m]
-            1.00 : Installation factor [-]
-           1.000 : Scale factor [-]
-           -4.00 : Trajectory begin [m]
-          -20.00 : Trajectory end [m]
-            1.00 : Trajectory interval [m]
-        0 : Number of Profiles selected for calculation
-            -1 : No pile type selected
-        0 : Lambda overruled = FALSE
-        """
-    )
     location_map: str = cleandoc(
         """
          0.0000
@@ -832,12 +792,13 @@ class DFoundationsDumpfileOutputStructure(DSeriesStructure):
     verification_results_sf: Optional[str]
     verification_results_tp_1b2: Optional[str]
     verification_design_results: Optional[str]
+    calculation_warnings: Optional[DFoundationsCalculationWarnings]
 
 
 class DFoundationsStructure(DSeriesStructure):
     input_data: DFoundationsInputStructure = DFoundationsInputStructure()
     dumpfile_output: Optional[DFoundationsDumpfileOutputStructure]
-    calculation_warnings: Optional[DFoundationsCalculationWarnings]
+
 
 
 class DFoundationsDumpStructure(DSeriesStructure):

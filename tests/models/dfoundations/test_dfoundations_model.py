@@ -233,45 +233,34 @@ class TestDFoundationsModel:
 
         gravel = Soil(name="Gravel")
         gravel.soil_type_nl = SoilType.GRAVEL
-        gravel.soil_type_be = SoilType.GRAVEL
         gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
         gravel.undrained_parameters.undrained_shear_strength = 1000
 
         sandy_loam = Soil(name="Sandy loam")
-        sandy_loam.soil_type_nl = SoilType.SANDY_LOAM
-        sandy_loam.soil_type_be = SoilType.SANDY_LOAM
+        sandy_loam.soil_type_nl = SoilType.TERTCLAY
         sandy_loam.mohr_coulomb_parameters = mohr_coulomb_parameters
         sandy_loam.undrained_parameters.undrained_shear_strength = 1000
 
         sandy_loam_and_gravel = Soil(name="Sandy loam")
         sandy_loam_and_gravel.soil_type_nl = SoilType.SANDY_LOAM
-        sandy_loam_and_gravel.soil_type_be = SoilType.GRAVEL
         sandy_loam_and_gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
         sandy_loam_and_gravel.undrained_parameters.undrained_shear_strength = 1000
 
         # 3. Run test
         df.add_soil(gravel)
-        with pytest.raises(ValueError):
-            df.add_soil(sandy_loam)
-        df.add_soil(sandy_loam_and_gravel)
+        df.add_soil(sandy_loam)
+        with pytest.raises(NameError):
+            df.add_soil(sandy_loam_and_gravel)
 
         # 4. Verify final expectations.
         assert (
             df.datastructure.input_data.soil_collection.soil[-2].soilsoiltype
             == SoilType.GRAVEL
         )
-        assert (
-            df.datastructure.input_data.soil_collection.soil[-2].soilbelgiansoiltype
-            == SoilType.GRAVEL
-        )
 
         assert (
             df.datastructure.input_data.soil_collection.soil[-1].soilsoiltype
-            == SoilType.SANDY_LOAM
-        )
-        assert (
-            df.datastructure.input_data.soil_collection.soil[-1].soilbelgiansoiltype
-            == SoilType.GRAVEL
+            == SoilType.TERTCLAY
         )
 
     @pytest.fixture
