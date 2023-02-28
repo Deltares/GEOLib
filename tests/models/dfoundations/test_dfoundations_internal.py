@@ -401,6 +401,22 @@ class TestInternalOutputDFoundations:
         + "[END OF VERIFICATION RESULTS]"
     )
 
+    calculation_warnings = (
+            "[CALCULATION WARNINGS]\n"
+            + "1 = IsWarningF1Given (1=true, 0=false)\n"
+            + "0 = F1GreaterThan1Found (1=true, 0=false)\n"
+            + "0 = IsWarningNENDepthGiven (1=true, 0=false)\n"
+            + "1 = IsWarningSFFundWidthGiven (1=true, 0=false)\n"
+            + "0 = IsWarningSFFundLengthGiven (1=true, 0=false)\n"
+            + "0 = IsWarningSFCudGiven (1=true, 0=false)\n"
+            + "0 = IsWarningSFDeltaPhiGiven (1=true, 0=false)\n"
+            + "12 = IsWarningNENSpacingGiven (> 0 warning, 0= no warning)\n"
+            + "0 = IsWarningSFSlopeNotRelevantGiven (1=true, 0=false)\n"
+            + "0 = IsWarningNENSFPlacementDepthTooDeep (1=true, 0=false)\n"
+            + "0 = IsWarningNENSFPlacementDepthTooShallow (1=true, 0=false)\n"
+            + "[END OF CALCULATION WARNINGS]"
+    )
+
     dumpfile_output = (
         "[DUMPFILE OUTPUT]\n"
         + "[RESULTS AT CPT TEST LEVEL]\n"
@@ -408,30 +424,14 @@ class TestInternalOutputDFoundations:
         + f"{verification_results}\n"
         + "[FOOTNOTE WARNINGS]\n"
         + "[END OF FOOTNOTE WARNINGS]\n"
+        + f"{calculation_warnings}\n"
         + "[END OF DUMPFILE OUTPUT]"
-    )
-
-    calculation_warnings = (
-        "[CALCULATION WARNINGS]\n"
-        + "1 = IsWarningF1Given (1=true, 0=false)\n"
-        + "0 = F1GreaterThan1Found (1=true, 0=false)\n"
-        + "0 = IsWarningNENDepthGiven (1=true, 0=false)\n"
-        + "1 = IsWarningSFFundWidthGiven (1=true, 0=false)\n"
-        + "0 = IsWarningSFFundLengthGiven (1=true, 0=false)\n"
-        + "0 = IsWarningSFCudGiven (1=true, 0=false)\n"
-        + "0 = IsWarningSFDeltaPhiGiven (1=true, 0=false)\n"
-        + "12 = IsWarningNENSpacingGiven (> 0 warning, 0= no warning)\n"
-        + "0 = IsWarningSFSlopeNotRelevantGiven (1=true, 0=false)\n"
-        + "0 = IsWarningNENSFPlacementDepthTooDeep (1=true, 0=false)\n"
-        + "0 = IsWarningNENSFPlacementDepthTooShallow (1=true, 0=false)\n"
-        + "[END OF CALCULATION WARNINGS]"
     )
 
     dfoundations_structure_text = (
         "[DUMPFILE]\n"
         + f"{input_data}\n"
         + f"{dumpfile_output}\n"
-        + f"{calculation_warnings}\n"
         + "[END OF DUMPFILE]"
     )
 
@@ -557,11 +557,11 @@ class TestInternalOutputDFoundations:
         "text_to_parse, property_name, parsing_type, expected_type",
         [
             pytest.param(
-                dfoundations_structure_text,
+                dumpfile_output,
                 "calculation_warnings",
-                DFoundationsStructure,
+                DFoundationsDumpfileOutputStructure,
                 DFoundationsCalculationWarnings,
-                id="Calculation Warnings",
+                id="Calculation warnings",
             ),
             pytest.param(
                 dfoundations_structure_text,
