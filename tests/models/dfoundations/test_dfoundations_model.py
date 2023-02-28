@@ -662,6 +662,7 @@ class TestDFoundationsModel:
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / test_file_name
+        log_output_test_file = output_test_file.with_suffix('.log')
 
         df.parse(test_file)
 
@@ -678,7 +679,7 @@ class TestDFoundationsModel:
 
         # 3. Run test
         df.add_pile_if_unique(pile, location)
-        df.serialize(output_test_file) # bij het serializen wordt de DataCount van de MEASUREDDATA tabel NIET geschreven!!!!
+        df.serialize(output_test_file)
 
         # 4. Verify initial expectations.
         assert output_test_file.is_file()
@@ -689,8 +690,9 @@ class TestDFoundationsModel:
         # 6. Verify model output has been parsed.
         with pytest.raises(CalculationError) as e:
             df.execute()
-
-        assert "Number of CPTs (0 ) is outside its limits" in e.value.message
+        # The no cpt error is now written to the log file, no longer raised as error.
+        assert "Couldn't determine source of error for" in e.value.message
+        assert log_output_test_file.is_file()
 
     @pytest.mark.acceptance
     @only_teamcity
@@ -708,6 +710,7 @@ class TestDFoundationsModel:
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / test_file_name
+        log_output_test_file = output_test_file.with_suffix('.log')
 
         df.parse(test_file)
 
@@ -738,7 +741,9 @@ class TestDFoundationsModel:
         with pytest.raises(CalculationError) as e:
             df.execute()
 
-        assert "Number of CPTs (0 ) is outside its limits" in e.value.message
+        # The no cpt error is now written to the log file, no longer raised as error.
+        assert "Couldn't determine source of error for" in e.value.message
+        assert log_output_test_file.is_file()
 
     @pytest.mark.integrationtest
     def test_set_model_options(self):

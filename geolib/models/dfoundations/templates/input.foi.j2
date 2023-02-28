@@ -219,6 +219,7 @@ SoilCcIndex={{ soil.soilccindex }}
 [END OF VOID VALUE EQUIVALENT ELECTRONIC QC]
 [MEASURED DATA]
 [TABLE]
+DataCount={{ '{:>4}'.format(cpt.measured_data.data|length) }}
 [COLUMN INDICATION]
 {% for key in cpt.measured_data.data[0].keys() %}
 {{ key }}
@@ -434,6 +435,7 @@ Layer ({{ loop.index }})
 [POSITIONS - BEARING PILES]
 {% if positions___bearing_piles is mapping %}
 [TABLE]
+DataCount={{ '{:>4}'.format(positions___bearing_piles.positions|length) }}
 [COLUMN INDICATION]
 index
 X
@@ -457,6 +459,7 @@ PileName
 [POSITIONS - TENSION PILES (CUR)]
 {% if positions___tension_piles_cur is not string %}
 [TABLE]
+DataCount={{ '{:>4}'.format(positions___tension_piles_cur.positions|length) }}
 [COLUMN INDICATION]
 index
 X
