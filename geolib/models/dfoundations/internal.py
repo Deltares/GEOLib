@@ -434,9 +434,9 @@ class CalculationOptions(DSeriesNoParseSubStructure):
 
     # Transformation
     max_allowed_settlement_lim_state_str: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_str: conint(ge=0, le=10000) = 100
+    max_allowed_rel_rotation_lim_state_str: conint(ge=1, le=10000) = 100
     max_allowed_settlement_lim_state_serv: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_serv: conint(ge=0, le=10000) = 300
+    max_allowed_rel_rotation_lim_state_serv: conint(ge=1, le=10000) = 300
 
     # Overrule parameters Bearing Piles
     is_xi3_overruled: Bool = Bool.FALSE
@@ -584,12 +584,12 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 
 class Version(DSerieVersion):
-    soil: int = 1005
-    d__foundations: int = 1015
+    soil: int = 1010
+    d__foundations: int = 1024
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
-    dgsfoundationcalc____dll: str = "19.1.2.26122"
+    dgsfoundationcalc____dll: str = "23.1.0.40358"
 
 
 class DFoundationsInputStructure(DSeriesStructure):
@@ -644,19 +644,7 @@ class DFoundationsInputStructure(DSeriesStructure):
     positions___shallow_foundations: str = cleandoc(
         """
         [TABLE]
-        [COLUMN INDICATION]
-        index
-        X
-        Y
-        Angle
-        FoundationType
-        Load
-        Profile
-        Slope
-        PileName
-        [END OF COLUMN INDICATION]
-        [DATA]
-        [END OF DATA]
+        DataCount=0
         [END OF TABLE]
         """
     )
