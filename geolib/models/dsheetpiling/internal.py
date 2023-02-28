@@ -125,8 +125,8 @@ class Version(DSerieVersion):
 
 
 class VersionExternals(DSeriesInlineMappedProperties):
-    dgscptipcalc____dll: str = "19.1.1.23469"
-    dgscptipui____dll: str = "19.1.1.23469"
+    dgscptipcalc____dll: str = "21.3.1.35380"
+    dgscptipui____dll: str = "21.3.1.35380"
 
 
 class Soil(DSeriesUnmappedNameProperties):
