@@ -2,8 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import BinaryIO
-from typing import Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
 
 from pydantic import DirectoryPath, FilePath
 
@@ -96,11 +95,11 @@ class DStabilityModel(BaseModel):
         return self.datastructure.waternets
 
     @property
-    def output(self) -> DStabilityResult:
-        # TODO Make something that works for all stages
-        return self.get_result(self.current_stage)
+    def output(self) -> List[DStabilityResult]:
+        all_stage_ids = [stage.Id for stage in self.datastructure.stages]
+        return [self.get_result(stage_id=int(stage_id)) for stage_id in all_stage_ids]
 
-    def get_result(self, stage_id: int) -> Dict:
+    def get_result(self, stage_id: int) -> DStabilityResult:
         """
         Returns the results of a stage. Calculation results are based on analysis type and calculation type.
 
@@ -260,7 +259,7 @@ class DStabilityModel(BaseModel):
 
     def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
         """
-        Edit an existing soil with parameter names based on the soil class members. 
+        Edit an existing soil with parameter names based on the soil class members.
         This method will edit the first occurence of the name if the name is used multiple times.
 
         Args:

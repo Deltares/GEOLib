@@ -173,8 +173,10 @@ class TestStage:
         )
         assert model.current_stage == 0
         assert len(model.datastructure.input_data.construction_stages.stages) == 1
-        assert (model.datastructure.input_data.construction_stages.stages[0].passive_side
-                == PassiveSide.DSHEETPILING_DETERMINED)
+        assert (
+            model.datastructure.input_data.construction_stages.stages[0].passive_side
+            == PassiveSide.DSHEETPILING_DETERMINED
+        )
 
         model.add_stage(
             name=name_2nd_stage,
@@ -184,10 +186,14 @@ class TestStage:
         )
         assert model.current_stage == 1
         assert len(model.datastructure.input_data.construction_stages.stages) == 2
-        assert (model.datastructure.input_data.construction_stages.stages[0].passive_side
-                == PassiveSide.DSHEETPILING_DETERMINED)
-        assert (model.datastructure.input_data.construction_stages.stages[1].passive_side
-                == PassiveSide.LEFT)
+        assert (
+            model.datastructure.input_data.construction_stages.stages[0].passive_side
+            == PassiveSide.DSHEETPILING_DETERMINED
+        )
+        assert (
+            model.datastructure.input_data.construction_stages.stages[1].passive_side
+            == PassiveSide.LEFT
+        )
 
     @pytest.mark.unittest
     def test_add_second_stage_with_similar_name_raises_value_error(self):

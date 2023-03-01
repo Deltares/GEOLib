@@ -11,6 +11,7 @@ from geolib.models.dstability.internal import (
     BishopSlipCircleResult,
     CalculationSettings,
     CalculationType,
+    DStabilityResult,
     PersistableCircle,
     PersistablePoint,
     SpencerGeneticAlgorithmResult,
@@ -269,3 +270,14 @@ class TestDStabilityResults:
                 slipplane_result = model.get_slipplane_result(stage_id=i)
 
                 assert isinstance(slipplane_result, SpencerSlipPlaneResult)
+
+    @pytest.mark.unittest
+    def test_output_isinstance_list(self, _get_dstability_model):
+        model = _get_dstability_model
+        output = model.output
+        assert isinstance(output, list)
+        assert len(output) == 9
+
+        assert isinstance(output[0], UpliftVanResult)
+        assert isinstance(output[1], UpliftVanReliabilityResult)
+        assert isinstance(output[2], UpliftVanParticleSwarmResult)

@@ -99,7 +99,7 @@ class TestBaseModel:
         output = ml.execute(output_folder, nprocesses=1)
         assert len(output.models) == 2
         for model in output.models:
-            assert model.output
+            assert model.output[-1]
 
         assert len(output.errors) == 1
         assert fn in output.errors[-1]
@@ -139,7 +139,7 @@ class TestBaseModel:
         output = ml.execute_remote("/")  # no url is needed with the TestClient
         assert len(output.models) == 2
         for model in output.models:
-            assert model.output
+            assert model.output[-1]
             # Metadata is kept intact
             assert model.meta.company == "Foo"
             # But the console_folder meta variable is reset to default
@@ -175,7 +175,7 @@ class TestBaseModel:
 
         # Execute and make sure there's output
         model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
-        assert model.output
+        assert model.output[-1]
 
         # Metadata is kept intact
         assert model.meta.company == "Foo"
