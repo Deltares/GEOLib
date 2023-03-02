@@ -56,16 +56,18 @@ class DFoundationsTableWrapper(DSeriesStructure):
     @classmethod
     def parse_text(cls, text):
         """Parses a Table wrapped in another group such as:
-        [TABLE GROUP]
+        [TABLE]
+        DataCount = x followed by
+        [END OF TABLE]  directly when x = 0 or, when x > 0, by
         [COLUMN INDICATION]
         A
         B
         [END OF COLUMN INDICATION]
-        [GROUP DATA]
+        [DATA]
         1 1
         2 2
-        [END OF GROUP DATA]
-        [END OF TABLE GROUP]
+        [END OF DATA]
+        [END OF TABLE]
 
         Args:
             text (str): Wrapped table group to parse.
