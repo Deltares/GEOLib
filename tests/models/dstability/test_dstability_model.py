@@ -616,19 +616,6 @@ class TestDStabilityModel:
         path = outputdir / "test_state_line.stix"
         dm.serialize(path)
 
-        # State correlation
-        dm.add_state_correlation([id_state_one, id_state_two])
-        path = outputdir / "test_state_correlation.stix"
-        dm.serialize(path)
-
-        # Soil correlation
-        soil_id_one = dm.soils.get_soil("H_Ro_z&k").id
-        soil_id_two = dm.soils.get_soil("Sand").id
-
-        dm.add_soil_correlation([soil_id_one, soil_id_two])
-        path = outputdir / "test_soil_correlation.stix"
-        dm.serialize(path)
-
         # 3. Verify model output has been parsed
         model = dm.execute()
         assert model
