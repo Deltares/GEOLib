@@ -220,6 +220,7 @@ SoilCcIndex={{ soil.soilccindex }}
 [MEASURED DATA]
 [TABLE]
 DataCount={{ '{:>4}'.format(cpt.measured_data.data|length) }}
+{% if cpt.measured_data.data|length > 0 %}
 [COLUMN INDICATION]
 {% for key in cpt.measured_data.data[0].keys() %}
 {{ key }}
@@ -236,6 +237,7 @@ DataCount={{ '{:>4}'.format(cpt.measured_data.data|length) }}
 {% endfor %}
 {% endfor %}
 [END OF DATA]
+{% endif %}
 [END OF TABLE]
 [END OF MEASURED DATA]
 {% if not loop.last %}
@@ -436,6 +438,7 @@ Layer ({{ loop.index }})
 {% if positions___bearing_piles is mapping %}
 [TABLE]
 DataCount={{ '{:>4}'.format(positions___bearing_piles.positions|length) }}
+{% if positions___bearing_piles.positions|length > 0 %}
 [COLUMN INDICATION]
 index
 X
@@ -451,6 +454,7 @@ PileName
 {{ '{:>6}'.format(position.index) }}  {{ '{:>9.2f}'.format(position.x_coordinate) }} {{ '{:>9.2f}'.format(position.y_coordinate) }} {{ '{:>9.2f}'.format(position.pile_head_level) }} {{ '{:>9.2f}'.format(position.surcharge) }} {{ '{:>9.2f}'.format(position.limit_state_str) }} {{ '{:>9.2f}'.format(position.limit_state_service) }} {{ '{:>12}'.format(position.pile_name)}}
 {% endfor %}
 [END OF DATA]
+{% endif %}
 [END OF TABLE]
 {% else %}
 {{ positions___bearing_piles }}
@@ -460,6 +464,7 @@ PileName
 {% if positions___tension_piles_cur is not string %}
 [TABLE]
 DataCount={{ '{:>4}'.format(positions___tension_piles_cur.positions|length) }}
+{% if positions___tension_piles_cur.positions|length > 0 %}
 [COLUMN INDICATION]
 index
 X
@@ -477,6 +482,7 @@ PileName
 {{ '{:>6}'.format(position.index) }}  {{ '{:>9.2f}'.format(position.x_coordinate) }} {{ '{:>9.2f}'.format(position.y_coordinate) }} {{ '{:>9.2f}'.format(position.pile_head_level) }} {{ '{:>2}'.format(position.use_alternating_loads) }} {{ '{:>9.2f}'.format(position.max_force) }} {{ '{:>9.2f}'.format(position.min_force) }} {{ '{:>9.2f}'.format(position.limit_state_str) }} {{ '{:>9.2f}'.format(position.limit_state_service) }} {{ '{:>12}'.format(position.pile_name)}}
 {% endfor %}
 [END OF DATA]
+{% endif %}
 [END OF TABLE]
 {% else %}
 {{ positions___tension_piles_cur }}
