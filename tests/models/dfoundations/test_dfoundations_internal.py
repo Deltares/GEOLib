@@ -262,6 +262,13 @@ class TestInternalOutputDFoundations:
     # region Fixtures
     input_data = "[INPUT DATA]\n" + "[END OF INPUT DATA]"
 
+    empty_table_block = (
+        "[NEN AVERAGE PILE FACTORS]\n"
+        + "[TABLE]\n"
+        + "DataCount=0\n"
+        + "[END OF TABLE]\n"
+        + "[END OF NEN AVERAGE PILE FACTORS]"
+    )
     nen_average_pile_factors = (
         "[NEN AVERAGE PILE FACTORS]\n"
         + "[TABLE]\n"
@@ -470,6 +477,18 @@ class TestInternalOutputDFoundations:
         assert parsed_structure
         assert len(parsed_structure.data) == 3
         assert parsed_structure.data[0] == first_expected_value
+
+    @pytest.mark.integrationtest
+    def test_given_empty_nen_average_pile_factors_text_when_parse_then_returns_empty(self):
+        # 1. Set up test data
+        group_text = self.get_group_text(self.empty_table_block)
+
+        # 2. Run test
+        parsed_structure = DFoundationsNenPileResultsTable.parse_text(group_text)
+
+        # 3. Verify final expectations.
+        assert parsed_structure
+        assert len(parsed_structure.data) == 0
 
     @pytest.mark.integrationtest
     def test_given_max_shaft_and_point_text_when_parse_then_returns_structure(self):
