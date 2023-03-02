@@ -2,8 +2,7 @@ import logging
 from enum import Enum
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import BinaryIO
-from typing import List, Optional, Type, Union
+from typing import BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, confloat
 

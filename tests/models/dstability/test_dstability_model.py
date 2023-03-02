@@ -25,7 +25,8 @@ from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import (
     AnalysisTypeEnum,
     CalculationTypeEnum,
-    DStabilityStructure, PersistableStochasticParameter,
+    DStabilityStructure,
+    PersistableStochasticParameter,
 )
 from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
@@ -583,12 +584,12 @@ class TestDStabilityModel:
                 layer_id=layer_ids[2],  # HV layer
                 point=Point(x=0, z=-2.5),
                 is_probabilistic=True,
-                stress=DStabilityStress(pop=10.0,
-                                        stochastic_parameter=PersistableStochasticParameter(
-                                            IsProbabilistic=True,
-                                            Mean=43,
-                                            StandardDeviation=10),
-                                        ),
+                stress=DStabilityStress(
+                    pop=10.0,
+                    stochastic_parameter=PersistableStochasticParameter(
+                        IsProbabilistic=True, Mean=43, StandardDeviation=10
+                    ),
+                ),
             )
         )
         id_state_two = dm.add_state_point(

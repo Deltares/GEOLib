@@ -66,6 +66,13 @@ Running flake8, mypy is also recommended. For mypy use:
 
     $ mypy --config-file pyproject.toml geolib
 
+Running standard linters is advised:
+
+.. code-block:: bash
+
+    $ poetry run isort .
+    $ poetry run black .
+
 
 Documentation
 -------------
