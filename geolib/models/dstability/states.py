@@ -46,9 +46,10 @@ class DStabilityStress(DStabilityObject):
         data = {
             **{
                 snake_to_camel(name): value
-                for name, value in self.dict(exclude={"stochastic_parameter"}).items()
+                for name, value in self.dict().items()
             }
         }
+        data["PopStochasticParameter"] = data.pop("StochasticParameter")
         return PersistableStress(**data)
 
 
@@ -74,6 +75,7 @@ class DStabilityStatePoint(DStabilityObject):
     label: str = ""
 
     def _to_internal_datastructure(self) -> PersistableStatePoint:
+        print(self.stress._to_internal_datastructure())
         data = {
             **{
                 snake_to_camel(name): value

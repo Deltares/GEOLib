@@ -431,6 +431,7 @@ class DStabilityModel(BaseModel):
         state_point.id = (
             self._get_next_id()
         )  # the user does not know the id so we have to add it
+        print(state_point)
         persistable_statepoint = state_point._to_internal_datastructure()
         states.add_state_point(persistable_statepoint)
         return int(persistable_statepoint.Id)
