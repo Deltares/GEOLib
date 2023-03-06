@@ -342,6 +342,8 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
         else:
             # Expected two groups (column_indication and data)
             keys = table_data[0].split("\n")
+            keys = [make_key(j) for j in keys]
+
             values_dict_list = [
                 dict(zip(keys, values))
                 for values in map(split_line, table_data[1].split("\n"))
@@ -349,12 +351,6 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
             collection_property_name = list(cls.__fields__.items())[0][0]
 
         return cls(**{collection_property_name: values_dict_list})
-
-    # @classmethod
-    # def parse_text(cls, text):
-    #    unwrapped_text = DSerieParser.parse_group_as_dict(text)
-    #    return super().parse_text(list(unwrapped_text.values())[0])
-
 
 class DSerieOldTableStructure(DSeriesStructure):
     @classmethod
