@@ -292,7 +292,7 @@ class PositionBearingPile(InternalPile):
     surcharge: confloat(ge=0, le=100000)
     limit_state_str: confloat(ge=0, le=100000)
     limit_state_service: confloat(ge=0, le=100000)
-    pile_name: constr(min_length=1, max_length=10)
+    pile_name: constr(min_length=1, max_length=100)
 
 
 class PositionTensionPile(InternalPile):
@@ -305,7 +305,7 @@ class PositionTensionPile(InternalPile):
     min_force: confloat(ge=-100000, le=100000)
     limit_state_str: confloat(ge=0, le=100000)
     limit_state_service: confloat(ge=0, le=100000)
-    pile_name: constr(min_length=1, max_length=10)
+    pile_name: constr(min_length=1, max_length=100)
 
 
 class PositionsBearingPiles(DSeriesNoParseSubStructure):
