@@ -26,7 +26,7 @@ from .internal import (
 class PileLocation(BaseDataClass):
     """Base Class for Pile location."""
 
-    pile_name: constr(min_length=0, max_length=10) = ""
+    pile_name: constr(min_length=0, max_length=100) = ""
     point: Point
     pile_head_level: confloat(ge=-1000, le=1000)
     limit_state_str: confloat(ge=0, le=100000)
