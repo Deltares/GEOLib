@@ -81,7 +81,7 @@ class BaseModel(BaseDataClass, abc.ABC):
         # Unsuccessful run
         else:
             error = self.get_error_context()
-            raise CalculationError(process.returncode, error)
+            raise CalculationError(process.returncode, error + " Path: " + str(output_filename.absolute))
 
     def execute_remote(self, endpoint: HttpUrl) -> "BaseModel":
         """Execute a Model on a remote endpoint.
