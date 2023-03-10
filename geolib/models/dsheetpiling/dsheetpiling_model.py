@@ -23,7 +23,6 @@ from .internal import (
     Water,
 )
 from .loads import (
-    Earthquake,
     HorizontalLineLoad,
     Moment,
     NormalForce,
@@ -401,16 +400,15 @@ class DSheetPilingModel(BaseModel):
             HorizontalLineLoad,
             NormalForce,
             SoilDisplacement,
-            Earthquake,
             UniformLoad,
         ],
         stage_id: int,
     ):
-        """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake
+        """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad
 
         Args:
-            load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake.
-            Note that SoilDisplacement and Earthquake are only valid for a Pile construction.
+            load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad.
+            Note that SoilDisplacement and UniformLoad are only valid for a sheetpiling.
             stage_id: Load is added to this stage.
 
         Raises:
