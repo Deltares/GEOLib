@@ -10,6 +10,7 @@ from geolib.soils import Soil
 from tests.utils import TestUtils, only_teamcity
 
 
+@pytest.mark.usefixtures("cleandir_dfo")
 @pytest.mark.acceptance
 @only_teamcity
 def test_run_model_from_scratch_expanded():

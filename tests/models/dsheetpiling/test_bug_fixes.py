@@ -14,7 +14,7 @@ from tests.utils import TestUtils
 test_file_directory = "dsheetpiling/benchmarks"
 
 
-@pytest.mark.usefixtures("cleandir")
+@pytest.mark.usefixtures("cleandir_dsh")
 class TestDsheetPilingBugFixes:
     @pytest.mark.acceptance
     def test_consistent_model_setting(self):
