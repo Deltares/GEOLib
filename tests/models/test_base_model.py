@@ -77,7 +77,7 @@ class TestBaseModel:
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
             (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
-            (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
+            (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
         ],
     )
     def test_basemodellist_execute(self, model, filename, modelname):
@@ -117,7 +117,7 @@ class TestBaseModel:
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
             (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
-            (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
+            (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
         ],
     )
     def test_basemodellist_execute_remote(self, _, __, model, filename, modelname):
@@ -161,7 +161,7 @@ class TestBaseModel:
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
             (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
-            (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
+            (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
         ],
     )
     def test_basemodel_execute_remote(self, _, __, model, filename, modelname):
