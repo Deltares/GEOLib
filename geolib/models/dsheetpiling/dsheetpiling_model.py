@@ -408,9 +408,10 @@ class DSheetPilingModel(BaseModel):
 
         Args:
             load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad.
-            Note that SoilDisplacement and UniformLoad are only valid for a sheetpiling.
             stage_id: Load is added to this stage.
 
+        Note: SoilDisplacement and UniformLoad are only valid for a sheetpiling construction.
+        
         Raises:
             ValueError: When non-existing stage_id is passed.
             ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.
