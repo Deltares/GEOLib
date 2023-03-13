@@ -103,8 +103,6 @@ can help with autocompletion and validation.
 .. autoclass:: geolib.models.dsheetpiling.internal.SideOutput
 .. autoclass:: geolib.models.dsheetpiling.internal.BreukData
 .. autoclass:: geolib.models.dsheetpiling.internal.AnchorData
-.. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthCalculation
-.. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthInfo
 .. autoclass:: geolib.models.dsheetpiling.internal.MomentsForcesDisplacements
 .. autoclass:: geolib.models.dsheetpiling.internal.Pressures
 
