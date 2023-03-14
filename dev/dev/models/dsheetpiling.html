@@ -147,17 +147,19 @@ This is a tension stress for the anchor and a compression stress for the strut.<
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_load">
 <span class="sig-name descname"><span class="pre">add_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake</p>
+<dd><p>Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>load</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dsheetpiling.loads.Moment" title="geolib.models.dsheetpiling.loads.Moment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Moment</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.HorizontalLineLoad" title="geolib.models.dsheetpiling.loads.HorizontalLineLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizontalLineLoad</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.NormalForce" title="geolib.models.dsheetpiling.loads.NormalForce"><code class="xref py py-class docutils literal notranslate"><span class="pre">NormalForce</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.SoilDisplacement" title="geolib.models.dsheetpiling.loads.SoilDisplacement"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilDisplacement</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.Earthquake" title="geolib.models.dsheetpiling.loads.Earthquake"><code class="xref py py-class docutils literal notranslate"><span class="pre">Earthquake</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.UniformLoad" title="geolib.models.dsheetpiling.loads.UniformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformLoad</span></code></a>]) – Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake.</p></li>
-<li><p><strong>construction.</strong> (<em>Note that SoilDisplacement and Earthquake are only valid for a Pile</em>) – </p></li>
+<li><p><strong>load</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dsheetpiling.loads.Moment" title="geolib.models.dsheetpiling.loads.Moment"><code class="xref py py-class docutils literal notranslate"><span class="pre">Moment</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.HorizontalLineLoad" title="geolib.models.dsheetpiling.loads.HorizontalLineLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">HorizontalLineLoad</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.NormalForce" title="geolib.models.dsheetpiling.loads.NormalForce"><code class="xref py py-class docutils literal notranslate"><span class="pre">NormalForce</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.SoilDisplacement" title="geolib.models.dsheetpiling.loads.SoilDisplacement"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilDisplacement</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.loads.UniformLoad" title="geolib.models.dsheetpiling.loads.UniformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformLoad</span></code></a>]) – Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad.</p></li>
 <li><p><strong>stage_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Load is added to this stage.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
+</dl>
+<p>Note: SoilDisplacement and UniformLoad are only valid for a sheetpiling construction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>ValueError</strong> – When non-existing stage_id is passed.</p></li>
 <li><p><strong>ValueError</strong> – When a verification calculation is selected but duration_type and load_type are not defined for the load.</p></li>
 </ul>
@@ -2261,22 +2263,6 @@ Otherwise, the program will automatically apply the following factors:</p>
 <section id="module-geolib.models.dsheetpiling.loads">
 <span id="loads"></span><h2>Loads<a class="headerlink" href="#module-geolib.models.dsheetpiling.loads" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="geolib.models.dsheetpiling.loads.Earthquake">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.loads.</span></span><span class="sig-name descname"><span class="pre">Earthquake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.loads.Earthquake" title="Permalink to this definition">¶</a></dt>
-<dd><p>Non Uniform Load.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="geolib.models.dsheetpiling.loads.Earthquake.force">
-<span class="sig-name descname"><span class="pre">force</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.loads.Earthquake.force" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.loads.HorizontalLineLoad">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.loads.</span></span><span class="sig-name descname"><span class="pre">HorizontalLineLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.loads.HorizontalLineLoad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Horizontal Line Load.</p>
@@ -2382,12 +2368,17 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.loads.SoilDisplacement">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.loads.</span></span><span class="sig-name descname"><span class="pre">SoilDisplacement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.loads.SoilDisplacement" title="Permalink to this definition">¶</a></dt>
-<dd><p>Non Uniform Load.</p>
+<dd><p>Soil Displacement Load.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.loads.SoilDisplacement.force">
+<span class="sig-name descname"><span class="pre">force</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.loads.SoilDisplacement.force" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -3291,15 +3282,15 @@ can help with autocompletion and validation.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.internal.DesignSheetpileLength">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.internal.</span></span><span class="sig-name descname"><span class="pre">DesignSheetpileLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_length_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#id3" title="geolib.models.dsheetpiling.internal.DesignLengthInfo"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthInfo</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_length_calculation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#id0" title="geolib.models.dsheetpiling.internal.DesignLengthCalculation"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthCalculation</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.internal.DesignSheetpileLength" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.internal.</span></span><span class="sig-name descname"><span class="pre">DesignSheetpileLength</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_length_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.internal.DesignLengthInfo" title="geolib.models.dsheetpiling.internal.DesignLengthInfo"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthInfo</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">design_length_calculation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.internal.DesignLengthCalculation" title="geolib.models.dsheetpiling.internal.DesignLengthCalculation"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthCalculation</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.internal.DesignSheetpileLength" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.internal.DesignSheetpileLength.design_length_calculation">
-<span class="sig-name descname"><span class="pre">design_length_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#id0" title="geolib.models.dsheetpiling.internal.DesignLengthCalculation"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthCalculation</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.internal.DesignSheetpileLength.design_length_calculation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">design_length_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.internal.DesignLengthCalculation" title="geolib.models.dsheetpiling.internal.DesignLengthCalculation"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthCalculation</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.internal.DesignSheetpileLength.design_length_calculation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.internal.DesignSheetpileLength.design_length_info">
-<span class="sig-name descname"><span class="pre">design_length_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#id3" title="geolib.models.dsheetpiling.internal.DesignLengthInfo"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthInfo</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.internal.DesignSheetpileLength.design_length_info" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">design_length_info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.internal.DesignLengthInfo" title="geolib.models.dsheetpiling.internal.DesignLengthInfo"><span class="pre">geolib.models.dsheetpiling.internal.DesignLengthInfo</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.internal.DesignSheetpileLength.design_length_info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -3615,26 +3606,6 @@ can help with autocompletion and validation.</p>
 <dd><dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.internal.AnchorData.anchordata">
 <span class="sig-name descname"><span class="pre">anchordata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.internal.AnchorData.anchordata" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="id0">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.internal.</span></span><span class="sig-name descname"><span class="pre">DesignLengthCalculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">designlengthcalculation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py attribute">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">designlengthcalculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="id3">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.internal.</span></span><span class="sig-name descname"><span class="pre">DesignLengthInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">designlengthinfo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id3" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py attribute">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">designlengthinfo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
