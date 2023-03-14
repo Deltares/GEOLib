@@ -2,8 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import BinaryIO
-from typing import Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
 
 from pydantic import DirectoryPath, FilePath
 
@@ -260,7 +259,7 @@ class DStabilityModel(BaseModel):
 
     def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
         """
-        Edit an existing soil with parameter names based on the soil class members. 
+        Edit an existing soil with parameter names based on the soil class members.
         This method will edit the first occurence of the name if the name is used multiple times.
 
         Args:

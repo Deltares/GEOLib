@@ -1,8 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import Any, List, Optional, Type, Union
-from typing import BinaryIO
+from typing import Any, BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, PositiveFloat
 from pydantic.types import confloat, conint

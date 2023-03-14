@@ -26,6 +26,7 @@ from geolib.models.dstability.internal import (
     AnalysisTypeEnum,
     CalculationTypeEnum,
     DStabilityStructure,
+    PersistableStochasticParameter,
 )
 from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
@@ -578,13 +579,27 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # state point
-        dm.add_state_point(
+        id_state_one = dm.add_state_point(
             DStabilityStatePoint(
                 layer_id=layer_ids[2],  # HV layer
                 point=Point(x=0, z=-2.5),
+                is_probabilistic=True,
+                stress=DStabilityStress(
+                    pop=10.0,
+                    stochastic_parameter=PersistableStochasticParameter(
+                        IsProbabilistic=True, Mean=43, StandardDeviation=10
+                    ),
+                ),
+            )
+        )
+        id_state_two = dm.add_state_point(
+            DStabilityStatePoint(
+                layer_id=layer_ids[0],  # Sand layer
+                point=Point(x=0, z=-15),
                 stress=DStabilityStress(pop=10.0),
             )
         )
+
         path = outputdir / "test_state_point.stix"
         dm.serialize(path)
 
@@ -597,6 +612,7 @@ class TestDStabilityModel:
                 )
             ],
         )
+
         path = outputdir / "test_state_line.stix"
         dm.serialize(path)
 
