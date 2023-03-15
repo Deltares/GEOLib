@@ -118,6 +118,7 @@ class PartialFactorSetEC7NADNL(IntEnum):
     RC1 = 1
     RC2 = 2
     RC3 = 3
+    SLS = 4
 
 
 class PartialFactorSetEC7NADBE(IntEnum):
@@ -130,6 +131,7 @@ class PartialFactorSetCUR(IntEnum):
     CLASSI = 0
     CLASSII = 1
     CLASSIII = 2
+    SLS = 3
 
 
 class PartialFactorCalculationType(IntEnum):
