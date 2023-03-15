@@ -17,3 +17,10 @@ def cleandir_dfo():
     #
     shutil.rmtree(test_output_folder)
 
+
+@pytest.fixture(scope="session")
+def cleandir_dse():
+    test_output_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
+    #
+    shutil.rmtree(test_output_folder)
+

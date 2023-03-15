@@ -50,6 +50,7 @@ from geolib.soils import (
 from tests.utils import TestUtils, only_teamcity
 
 
+@pytest.mark.usefixtures("cleandir_dse")
 class TestDSettlementAcceptance:
     def setup_class(self):
         self.soils = [
