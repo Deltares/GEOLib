@@ -100,7 +100,6 @@ class SheetPileProperties(BaseDataClass):
 
      reduction_factor_on_maximum_moment : The reduction factor applied to the maximum allowable moment
      reduction_factor_on_ei : Reduction factor applied on the stiffness EI of the pile.
-     coating_area : The area of coating of the sheet piling (> 1). This is defined as the
      length of the perimeter of the sheet piling section per running meter of wall [m2/m2 wall].
 
      height : The thickness of the sheet piling profile [mm].
@@ -117,9 +116,8 @@ class SheetPileProperties(BaseDataClass):
     acting_width: Optional[float] = None
     section_bottom_level: Optional[
         float
-    ] = None  # TODO important paramter, shouldn't be default
+    ] = None  # TODO important parameter, shouldn't be default
     height: Optional[int] = 400  # value is defined in mm
-    coating_area: Optional[float] = None
     width_of_sheet_piles: Optional[float] = None
     section_area: Optional[int] = None
     elastic_section_modulus_w_el: Optional[int] = None
@@ -313,7 +311,6 @@ class Sheet(BaseDataClass):
             sheetpilingelementwidth=self.sheet_pile_properties.acting_width,
             sheetpilingelementlevel=self.sheet_pile_properties.section_bottom_level,
             sheetpilingelementheight=self.sheet_pile_properties.height,
-            sheetpilingelementcoatingarea=self.sheet_pile_properties.coating_area,
             sheetpilingpilewidth=self.sheet_pile_properties.width_of_sheet_piles,
             sheetpilingelementsectionarea=self.sheet_pile_properties.section_area,
             sheetpilingelementresistingmoment=self.sheet_pile_properties.elastic_section_modulus_w_el,

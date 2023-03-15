@@ -39,7 +39,6 @@ Initialise as follows:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
 
@@ -67,7 +66,6 @@ as two sections cannot have the same bottom level.
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(name="AZ 13", sheet_pile_properties=sheet_pile_properties_2)

@@ -348,7 +348,6 @@ class TestInternalParseInputStructure:
     text_model = """0 : Sheet piling
         0 : Ka, Ko, Kp soil parameters
         0 : Verification = FALSE
-        0 : EC7-SE visible = FALSE
         0 : Pile loaded by forces
         0 : Pile loaded by user defined soil displacements
         0 : Probabilistic = FALSE
@@ -533,7 +532,6 @@ class TestInternalParseInputStructure:
         assert model.model == 0
         assert model.method == 0
         assert model.verification is False
-        assert model.ec7se_visible is False
         assert model.pile_load_option is False
         assert model.probabilistic is False
         assert model.check_vertical_balance is False

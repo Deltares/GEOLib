@@ -161,7 +161,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_1 = Sheet(
@@ -179,7 +178,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(
@@ -422,7 +420,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_1 = Sheet(
@@ -440,7 +437,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(
@@ -939,7 +935,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         wooden_pile_properties = WoodenSheetPileProperties(
@@ -970,7 +965,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(
@@ -1569,7 +1563,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_pile_plastic_properties_1 = SheetPileModelPlasticCalculationProperties(
@@ -1594,7 +1587,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(

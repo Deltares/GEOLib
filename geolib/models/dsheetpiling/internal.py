@@ -42,15 +42,10 @@ from .internal_partial_factors import (
     PartialFactorsCurIii,
     PartialFactorsEc7BESet1,
     PartialFactorsEc7BESet2,
-    PartialFactorsEc7BSet1,
-    PartialFactorsEc7BSet2,
     PartialFactorsEc7Nl0,
     PartialFactorsEc7Nl1,
     PartialFactorsEc7Nl2,
     PartialFactorsEc7Nl3,
-    PartialFactorsEc7SeVk1,
-    PartialFactorsEc7SeVk2,
-    PartialFactorsEc7SeVk3,
     PartialFactorsEurocodeDa1Set1,
     PartialFactorsEurocodeDa1Set2,
     PartialFactorsEurocodeDa2,
@@ -76,7 +71,6 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
     PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
@@ -99,7 +93,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1010
-_DEFAULT_SHEETPILING_VERSION: int = 1026
+_DEFAULT_SHEETPILING_VERSION: int = 1033
 
 REQ_RUN_LINES = 2
 
@@ -108,7 +102,6 @@ class Model(DSeriesInlineReversedProperties):
     model: ModelType = ModelType.SHEET_PILING
     method: LateralEarthPressureMethod = LateralEarthPressureMethod.MIXED
     verification: bool = False
-    ec7se_visible: bool = False
     pile_load_option: bool = False
     pile_load_by_user: bool = False
     probabilistic: bool = False
@@ -246,7 +239,6 @@ class CalculationOptions(DSeriesStructure):
     calcfirststageinitial: bool = False
     calcminornodeson: bool = False
     calcreducedeltas: bool = False
-    calcempiricalfactorstresstype: int = 0  # fixed value
     inputcalculationtype: CalculationType = CalculationType.STANDARD
     isvibrationcalculation: bool = False
     allowableanchorforcecalculationtype: bool = False
@@ -264,7 +256,6 @@ class CalculationOptions(DSeriesStructure):
         PartialFactorSetEC7NADNL.RC0
     )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorsetec7nadbe: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.SET1
@@ -272,8 +263,6 @@ class CalculationOptions(DSeriesStructure):
     designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadse: int = 0  # fixed value
-    designec7semethod: int = 0  # fixed value
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.CUR
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
@@ -282,8 +271,6 @@ class CalculationOptions(DSeriesStructure):
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     ec7nloverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     ec7nadnloverallstability: bool = False
-    ec7boverallstability: bool = False
-    ec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7beoverallstability: bool = False
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -291,9 +278,6 @@ class CalculationOptions(DSeriesStructure):
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     curoverallstability: bool = False
-    ec7semethod: int = 0  # fixed value
-    ec7seoverallpartialfactorset: int = 0  # fixed value
-    ec7nadseoverallstability: int = 0  # fixed value
     # Characteristic Kranz Anchor Strength calculation
     curanchorforcestage: conint(ge=0) = 0
     # Overall stability calculation
@@ -304,13 +288,10 @@ class CalculationOptions(DSeriesStructure):
     stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     stabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.SET1
     )
     stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    stabilityec7separtialfactorset: int = 0  # fixed value
-    overallstabilitydrained: int = 1  # fixed value
 
     # These are all subgroups (key=value)
     partial_factors_eurocode_da1_set1: PartialFactorsEurocodeDa1Set1 = (
@@ -325,16 +306,11 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_nl_1: PartialFactorsEc7Nl1 = PartialFactorsEc7Nl1()
     partial_factors_ec7_nl_2: PartialFactorsEc7Nl2 = PartialFactorsEc7Nl2()
     partial_factors_ec7_nl_3: PartialFactorsEc7Nl3 = PartialFactorsEc7Nl3()
-    partial_factors_ec7_b_set1: PartialFactorsEc7BSet1 = PartialFactorsEc7BSet1()
-    partial_factors_ec7_b_set2: PartialFactorsEc7BSet2 = PartialFactorsEc7BSet2()
     partial_factors_ec7_be_set1: PartialFactorsEc7BESet1 = PartialFactorsEc7BESet1()
     partial_factors_ec7_be_set2: PartialFactorsEc7BESet2 = PartialFactorsEc7BESet2()
     partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
     partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
     partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
-    partial_factors_ec7_se_vk1: PartialFactorsEc7SeVk1 = PartialFactorsEc7SeVk1()
-    partial_factors_ec7_se_vk2: PartialFactorsEc7SeVk2 = PartialFactorsEc7SeVk2()
-    partial_factors_ec7_se_vk3: PartialFactorsEc7SeVk3 = PartialFactorsEc7SeVk3()
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
@@ -346,7 +322,6 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
     sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
     sheetpilingelementheight: conint(ge=10, le=100000) = 400
-    sheetpilingelementcoatingarea: confloat(ge=0.01, le=10) = 1.35
     sheetpilingpilewidth: confloat(ge=0, le=100000) = 0
     sheetpilingelementsectionarea: conint(ge=10, le=100000) = 170
     sheetpilingelementresistingmoment: conint(ge=0, le=100000) = 0
@@ -554,10 +529,7 @@ class StageOptions(DSeriesInlineMappedProperties):
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
-    stageverifyec7nadb: int = 0
     stageverifyec7nadbe: int = 0
-    stagepartialfactorsetec7nadse: int = 0  # fixed value
-    stageverifyec7nadse: int = 0  # fixed value
 
 
 class CalculationOptionsPerStage(DSeriesStructureCollection):
@@ -867,7 +839,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
             },
             VerifyType.EC7BE: {
                 "stageverifyec7nadbe": stage_id + 1,
-                "stageverifyec7nadb": stage_id + 1,
             },
         }
         stageoptions = StageOptions(
