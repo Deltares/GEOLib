@@ -106,6 +106,7 @@ class TestDsheetPilingAcceptance:
                     input_calculation_type=CalculationType.VERIFY_SHEETPILING,
                     verify_type=VerifyType.EC7NL,
                     ec7_nl_method=PartialFactorCalculationType.METHODB,
+                    stability_export=True
                 )
             ),
             (StandardCalculationOptions()),

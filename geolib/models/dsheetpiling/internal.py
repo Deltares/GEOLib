@@ -279,7 +279,7 @@ class CalculationOptions(DSeriesStructure):
     # Overall stability calculation
     curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
-    stabilityexport: int = 0
+    stabilityexport: bool = False
     stabilityeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0

@@ -167,6 +167,7 @@ class VerifyCalculationOptions(CalculationOptions):
     cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     cur_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     cur_overall_stability: bool = False
+    stability_export: bool = False
 
     @property
     def allowable_anchor_force_calculation_type(self) -> bool:
