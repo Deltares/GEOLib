@@ -196,6 +196,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.mohr_coulomb_parameters.cohesion = 10
         soil_clay.mohr_coulomb_parameters.friction_angle = 17
         soil_clay.mohr_coulomb_parameters.friction_angle_interface = 11
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_clay.shell_factor = 1
         soil_clay.soil_state.ocr_layer = 1
         soil_clay.soil_classification_parameters.grain_type = GrainType.FINE
@@ -212,6 +213,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.mohr_coulomb_parameters.cohesion = 2
         soil_peat.mohr_coulomb_parameters.friction_angle = 20
         soil_peat.mohr_coulomb_parameters.friction_angle_interface = 0
+        soil_peat.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = False
         soil_peat.shell_factor = 1
         soil_peat.soil_state.ocr_layer = 1
         soil_peat.soil_classification_parameters.grain_type = GrainType.FINE
@@ -228,6 +230,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.mohr_coulomb_parameters.cohesion = 0
         soil_sand.mohr_coulomb_parameters.friction_angle = 35
         soil_sand.mohr_coulomb_parameters.friction_angle_interface = 27
+        soil_sand.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_sand.shell_factor = 1
         soil_sand.soil_state.ocr_layer = 1
         soil_sand.soil_classification_parameters.grain_type = GrainType.FINE
@@ -455,6 +458,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.mohr_coulomb_parameters.cohesion = 10
         soil_clay.mohr_coulomb_parameters.friction_angle = 17
         soil_clay.mohr_coulomb_parameters.friction_angle_interface = 11
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_clay.shell_factor = 1
         soil_clay.soil_state.ocr_layer = 1
         soil_clay.soil_classification_parameters.grain_type = GrainType.FINE
@@ -471,6 +475,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.mohr_coulomb_parameters.cohesion = 2
         soil_peat.mohr_coulomb_parameters.friction_angle = 20
         soil_peat.mohr_coulomb_parameters.friction_angle_interface = 0
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = False
         soil_peat.shell_factor = 1
         soil_peat.soil_state.ocr_layer = 1
         soil_peat.soil_classification_parameters.grain_type = GrainType.FINE
@@ -487,6 +492,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.mohr_coulomb_parameters.cohesion = 0
         soil_sand.mohr_coulomb_parameters.friction_angle = 35
         soil_sand.mohr_coulomb_parameters.friction_angle_interface = 27
+        soil_sand.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_sand.shell_factor = 1
         soil_sand.soil_state.ocr_layer = 1
         soil_sand.soil_classification_parameters.grain_type = GrainType.FINE

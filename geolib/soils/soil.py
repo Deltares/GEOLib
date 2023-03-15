@@ -77,9 +77,8 @@ class MohrCoulombParameters(SoilBaseModel):
     cohesion: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     dilatancy_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     friction_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    friction_angle_interface: Optional[
-        Union[float, StochasticParameter]
-    ] = StochasticParameter()
+    friction_angle_interface: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    is_delta_angle_automatically_calculated: Optional[bool] = None
     cohesion_and_friction_angle_correlated: Optional[bool] = None
 
 
@@ -761,6 +760,7 @@ class Soil(SoilBaseModel):
             soilcohesion=self.mohr_coulomb_parameters.cohesion.mean,
             soilphi=self.mohr_coulomb_parameters.friction_angle.mean,
             soildelta=self.mohr_coulomb_parameters.friction_angle_interface.mean,
+            soilisdeltaangleautomaticallycalculated=self.mohr_coulomb_parameters.is_delta_angle_automatically_calculated,
             soilocr=self.soil_state.ocr_layer.mean,
             soilpermeabkx=self.storage_parameters.horizontal_permeability.mean,
             soilstdcohesion=self.mohr_coulomb_parameters.cohesion.standard_deviation,

@@ -135,11 +135,7 @@ class Soil(DSeriesUnmappedNameProperties):
     soilphi: confloat(ge=-89, le=89) = 0
     soildelta: confloat(ge=-80, le=89) = 0.00
     soilisdeltaangleautomaticallycalculated: bool = False
-    soilcutop: float = 0  # fixed value
-    soilcubottom: float = 0  # fixed value
-    soilcubearingcapacityfactor: float = 4.10  # fixed value
     soilocr: confloat(ge=0, le=1000) = 1.00
-    soildrained: int = 0  # fixed value
     soilpermeabkx: confloat(ge=0.00000000001, le=1000000) = 0.0001
     soilstdcohesion: confloat(ge=0, le=100000000) = 0.00
     soilstdphi: confloat(ge=0, le=100000000) = 0.00
