@@ -85,6 +85,8 @@ class TestBaseModel:
         a = model()
         b = model()
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
+        if modelname == 'dfoundations':
+            input_folder = Path(TestUtils.get_local_test_data_dir(modelname + "/benchmarks"))
         benchmark_fn = input_folder / filename
 
         output_folder = Path(TestUtils.get_output_test_data_dir(modelname)) / "multiple"
