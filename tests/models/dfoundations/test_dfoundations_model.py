@@ -100,7 +100,7 @@ class TestDFoundationsModel:
         self, filename: Path, structure: Type
     ):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / filename
         ds = DFoundationsModel()
 
@@ -120,7 +120,7 @@ class TestDFoundationsModel:
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / filename
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / filename
@@ -169,7 +169,7 @@ class TestDFoundationsModel:
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test.foi"
@@ -400,7 +400,7 @@ class TestDFoundationsModel:
     def test_add_bearing_pile_location(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_bearing_pile_location.foi"
@@ -438,7 +438,7 @@ class TestDFoundationsModel:
     def test_add_two_equal_bearing_pile_locations(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_bearing_pile_location.foi"
@@ -474,7 +474,7 @@ class TestDFoundationsModel:
     def test_add_two_unique_bearing_pile_locations(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_bearing_pile_locations.foi"
@@ -521,7 +521,7 @@ class TestDFoundationsModel:
     def test_add_tension_pile_location(self, create_tension_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_tension_pile_location.foi"
@@ -561,7 +561,7 @@ class TestDFoundationsModel:
     def test_add_two_equal_tension_pile_locations(self, create_tension_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_tension_pile_locations.foi"
@@ -599,7 +599,7 @@ class TestDFoundationsModel:
     def test_add_two_unique_tension_pile_locations(self, create_tension_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_tension_pile_locations.foi"
@@ -657,7 +657,7 @@ class TestDFoundationsModel:
 
         # 2. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
@@ -705,7 +705,7 @@ class TestDFoundationsModel:
 
         # 2. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
