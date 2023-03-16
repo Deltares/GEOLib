@@ -172,6 +172,8 @@ class TestBaseModel:
         # Setup models
         modelinstance = model()
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
+        if modelname == 'dfoundations':
+            input_folder = Path(TestUtils.get_local_test_data_dir(modelname + "/benchmarks"))
         benchmark_fn = input_folder / filename
         modelinstance.parse(benchmark_fn)
         modelinstance.meta.company = "Foo"
