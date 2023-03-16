@@ -226,62 +226,6 @@ class PartialFactorsEc7Nl3(DSeriesInlineMappedProperties):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7BSet1(DSeriesInlineMappedProperties):
-    loadfactorpermunfav: float = 1.00
-    loadfactorpermfav: float = 1.00
-    loadfactorvarunfav: float = 1.00
-    loadfactorvarfav: float = 0.00
-    constructloadfactorpermfav: float = 1.00
-    constructloadfactorvarfav: float = 1.00
-    constructloadfactorpermunfavcalc: float = 1.00
-    constructloadfactorvarunfavcalc: float = 1.00
-    effectfactor: float = 1.35
-    effectfactorvarunfav: float = 1.10
-    materialfactorcohesion: float = 1.00
-    materialfactortgphi: float = 1.000
-    materialfactorsubgradereaction: float = 1.00
-    resistancefactor: float = 1.00
-    geometryincretainingheight: float = 10.00
-    geometrymaxincretainingheight: float = 0.50
-    geometrydeltapassivesurfacelevel: float = 0.00
-    geometrydeltapassivephreaticline: float = 0.00
-    geometrydeltaactivephreaticline: float = 0.00
-    overallstabilityfactordrivingmoment: float = 1.00
-    overallstabilityfactorcohesion: float = 1.00
-    overallstabilityfactortgphi: float = 1.00
-    overallstabilityfactorunitweight: float = 1.00
-    factorrepvaluesmdpmax: float = 0.00
-    verticalbalancegammamb: float = 1.20
-
-
-class PartialFactorsEc7BSet2(DSeriesInlineMappedProperties):
-    loadfactorpermunfav: float = 1.00
-    loadfactorpermfav: float = 1.00
-    loadfactorvarunfav: float = 1.10
-    loadfactorvarfav: float = 0.00
-    constructloadfactorpermfav: float = 1.00
-    constructloadfactorvarfav: float = 1.00
-    constructloadfactorpermunfavcalc: float = 1.00
-    constructloadfactorvarunfavcalc: float = 1.00
-    effectfactor: float = 1.00
-    effectfactorvarunfav: float = 1.00
-    materialfactorcohesion: float = 1.25
-    materialfactortgphi: float = 1.250
-    materialfactorsubgradereaction: float = 1.00
-    resistancefactor: float = 1.00
-    geometryincretainingheight: float = 10.00
-    geometrymaxincretainingheight: float = 0.50
-    geometrydeltapassivesurfacelevel: float = 0.00
-    geometrydeltapassivephreaticline: float = 0.00
-    geometrydeltaactivephreaticline: float = 0.00
-    overallstabilityfactordrivingmoment: float = 1.00
-    overallstabilityfactorcohesion: float = 1.25
-    overallstabilityfactortgphi: float = 1.25
-    overallstabilityfactorunitweight: float = 1.00
-    factorrepvaluesmdpmax: float = 0.00
-    verticalbalancegammamb: float = 1.20
-
-
 class PartialFactorsEc7BESet1(DSeriesInlineMappedProperties):
     loadfactorpermunfav: float = 1.00
     loadfactorpermfav: float = 1.00
