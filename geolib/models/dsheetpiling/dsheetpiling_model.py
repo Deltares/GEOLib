@@ -83,7 +83,8 @@ class WoodenSheetPileModelType(BaseModelType):
     method: Optional[LateralEarthPressureMethod] = None
     check_vertical_balance: Optional[bool] = None
     verification: Optional[bool] = None
-    elastic_calculation: Optional[bool] = None
+    elastic_calculation: bool = True
+    wooden_sheetpiling: bool = True
 
     @property
     def model(self) -> ModelType:
@@ -114,10 +115,13 @@ class DiaphragmModelType(BaseModelType):
     method: Optional[LateralEarthPressureMethod] = None
     check_vertical_balance: Optional[bool] = None
     verification: Optional[bool] = None
+    elastic_calculation: bool = False
+    diepwand_calculation: bool = True
+
 
     @property
     def model(self) -> ModelType:
-        return ModelType.DIAPHRAGM_WALL
+        return ModelType.SHEET_PILING
 
 
 class DSheetPilingModel(BaseModel):
