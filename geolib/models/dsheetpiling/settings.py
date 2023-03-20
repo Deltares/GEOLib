@@ -37,7 +37,7 @@ class ModelType(IntEnum):
     Note that the model type SHEET_PILING includes sheet piling, wooden sheet piling and diaphragm wall.
     """
 
-    SHEET_PILING = 0
+    WALL = 0
     SINGLE_PILE = 1
 
 

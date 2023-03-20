@@ -103,7 +103,7 @@ REQ_RUN_LINES = 2
 
 
 class Model(DSeriesInlineReversedProperties):
-    model: ModelType = ModelType.SHEET_PILING
+    model: ModelType = ModelType.WALL
     method: LateralEarthPressureMethod = LateralEarthPressureMethod.MIXED
     verification: bool = False
     ec7se_visible: bool = False
