@@ -474,7 +474,7 @@ class TestDFoundationsModel:
     def test_add_two_unique_bearing_pile_locations(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations" + "/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations/benchmarks"))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_bearing_pile_locations.foi"
