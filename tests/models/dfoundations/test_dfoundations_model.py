@@ -695,7 +695,6 @@ class TestDFoundationsModel:
         assert log_output_test_file.is_file()
         with open(log_output_test_file) as f:
             text = f.read()
-            print(text)
         is_text_ok = text.__contains__("Number of CPTs (0 ) is outside its limits (1 - 350)")
         assert is_text_ok
 
