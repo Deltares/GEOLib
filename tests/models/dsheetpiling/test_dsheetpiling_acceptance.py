@@ -106,7 +106,6 @@ class TestDsheetPilingAcceptance:
                     input_calculation_type=CalculationType.VERIFY_SHEETPILING,
                     verify_type=VerifyType.EC7NL,
                     ec7_nl_method=PartialFactorCalculationType.METHODB,
-                    stability_export=True
                 )
             ),
             (StandardCalculationOptions()),
@@ -115,6 +114,7 @@ class TestDsheetPilingAcceptance:
                     cur_stability_stage=0,
                     overall_stability_type=DesignType.CUR,
                     stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    stability_export=True
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -392,6 +392,12 @@ class TestDsheetPilingAcceptance:
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
+
+        # 5. For OverallStabilityCalculationOptions a STI file should be present because StabilityExport is True
+        if isinstance(calc_options, OverallStabilityCalculationOptions):
+            output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+            output_test_file = output_test_folder / f"{test_name_with_id} (1).sti"
+            assert output_test_file.exists(), "STI file not found."
 
     # @only_teamcity
     @pytest.mark.acceptance

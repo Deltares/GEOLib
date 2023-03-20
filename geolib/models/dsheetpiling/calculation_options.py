@@ -92,6 +92,7 @@ class OverallStabilityCalculationOptions(CalculationOptions):
      stability_ec7_nl_partial_factor_set: partial factor set selected for the EC7 NL calculation
      stability_ec7_be_partial_factor_set: partial factor set selected for the EC7 BE calculation
      stability_cur_partial_factor_set: partial factor set selected for the CUR calculation
+     stability_export: Set on True to generate an input file with STI format which can be opened with D-Geo Stability
     """
 
     input_calculation_type: CalculationType = CalculationType.OVERALL_STABILITY
@@ -105,6 +106,7 @@ class OverallStabilityCalculationOptions(CalculationOptions):
         PartialFactorSetEC7NADBE.SET1
     )
     stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
+    stability_export: bool = False
 
 
 class KranzAnchorStrengthCalculationOptions(CalculationOptions):
@@ -167,7 +169,6 @@ class VerifyCalculationOptions(CalculationOptions):
     cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     cur_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     cur_overall_stability: bool = False
-    stability_export: bool = False
 
     @property
     def allowable_anchor_force_calculation_type(self) -> bool:
