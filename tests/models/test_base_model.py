@@ -76,7 +76,7 @@ class TestBaseModel:
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
             (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
         ],
     )
@@ -85,8 +85,6 @@ class TestBaseModel:
         a = model()
         b = model()
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
-        if modelname == 'dfoundations':
-            input_folder = Path(TestUtils.get_local_test_data_dir(modelname + "/benchmarks"))
         benchmark_fn = input_folder / filename
 
         output_folder = Path(TestUtils.get_output_test_data_dir(modelname)) / "multiple"
@@ -118,7 +116,7 @@ class TestBaseModel:
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
             (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
         ],
     )
@@ -127,8 +125,6 @@ class TestBaseModel:
         a = model()
         b = model()
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
-        if modelname == 'dfoundations':
-            input_folder = Path(TestUtils.get_local_test_data_dir(modelname + "/benchmarks"))
         benchmark_fn = input_folder / filename
 
         ml = BaseModelList(models=[a, b])
@@ -164,7 +160,7 @@ class TestBaseModel:
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
             (DStabilityModel, "Tutorial_v20_2_1.stix", "dstability"),
         ],
     )
@@ -172,8 +168,6 @@ class TestBaseModel:
         # Setup models
         modelinstance = model()
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
-        if modelname == 'dfoundations':
-            input_folder = Path(TestUtils.get_local_test_data_dir(modelname + "/benchmarks"))
         benchmark_fn = input_folder / filename
         modelinstance.parse(benchmark_fn)
         modelinstance.meta.company = "Foo"
