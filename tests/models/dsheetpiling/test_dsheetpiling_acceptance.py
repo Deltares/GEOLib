@@ -93,7 +93,7 @@ from pydantic.color import Color
 from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
-test_file_directory = "dsheetpiling/benchmarks"
+test_file_directory = "dsheetpiling/acceptance"
 
 class TestDsheetPilingAcceptance:
     # @only_teamcity
