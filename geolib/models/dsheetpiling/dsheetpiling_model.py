@@ -76,7 +76,7 @@ class SheetModelType(BaseModelType):
 
     @property
     def model(self) -> ModelType:
-        return ModelType.WALL
+        return ModelType.SHEET_PILING
 
 
 class WoodenSheetPileModelType(BaseModelType):
@@ -88,7 +88,7 @@ class WoodenSheetPileModelType(BaseModelType):
 
     @property
     def model(self) -> ModelType:
-        return ModelType.WALL
+        return ModelType.SHEET_PILING
 
 
 class SinglePileModelType(BaseModelType):
