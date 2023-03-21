@@ -33,7 +33,7 @@ class LateralEarthPressureMethodStage(IntEnum):
 class ModelType(IntEnum):
     """Represents the model types from D-Sheet Piling using the same integer values used in the application.
 
-    The Model type determines the kind of construction: single pile or wall.
+    The Model type determines the kind of construction: single pile or sheet piling.
     Note that the model type SHEET_PILING includes sheet piling, wooden sheet piling and diaphragm wall.
     """
 
