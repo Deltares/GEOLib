@@ -659,6 +659,15 @@ class SupportContainer(DSeriesNoParseSubStructure):
         return {support.name for support in self.supports}
 
 
+class VibrationPosition(DSeriesNoParseSubStructure):
+    x: float
+    z: float
+
+
+class VibrationPositions(DSeriesNoParseSubStructure):
+    positions: List[VibrationPosition] = []
+
+
 class Water(DSeriesUnmappedNameProperties):
     unit_weight_of_water: float = 9.81
 
@@ -762,8 +771,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
     )
 
     """
-    When there are no anchors, struts, supports, or soil displacements in the model,
-    their respective blocks is not present in the .shi file.
+    When there are no anchors, struts, supports, vibration positions or soil displacements in the model,
+    their respective block is not present in the .shi file.
     """
     soil_displacements: Optional[str] = None
     rigid_supports: Union[str, SupportContainer, None] = None
@@ -772,6 +781,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
     normal_forces: Union[str, NormalForces, None] = None
     anchors: Union[str, Anchors, None] = None
     struts: Union[str, Struts, None] = None
+    vibration_positions: Union[str, VibrationPositions, None] = None
 
     # Custom validator
     _validate_run_identification = make_newline_validator(

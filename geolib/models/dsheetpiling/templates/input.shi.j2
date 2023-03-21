@@ -324,6 +324,19 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
 {% endif %}
 [END OF NORMAL FORCES]
 {% endif %}
+{% if vibration_positions %}
+
+[VIBRATION POSITIONS]
+{% if vibration_positions is mapping %}
+  {{ vibration_positions.items | length }} : Number of items
+{% for position in vibration_positions.positions %}
+  {{"%5.3f"|format(position.x)}} {{"%5.3f"|format(position.z)}}
+{% endfor %}
+{% else %}
+{{ vibration_positions }}
+{% endif %}
+[END OF VIBRATION POSITIONS]
+{% endif %}
 
 [WATER]
  {{ water.unit_weight_of_water }} Unit weight of water
