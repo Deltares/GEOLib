@@ -479,6 +479,16 @@ datastructure.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType.diepwand_calculation">
+<span class="sig-name descname"><span class="pre">diepwand_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType.diepwand_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType.elastic_calculation">
+<span class="sig-name descname"><span class="pre">elastic_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType.elastic_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType.method">
 <span class="sig-name descname"><span class="pre">method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.settings.LateralEarthPressureMethod" title="geolib.models.dsheetpiling.settings.LateralEarthPressureMethod"><span class="pre">geolib.models.dsheetpiling.settings.LateralEarthPressureMethod</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType.method" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -595,7 +605,7 @@ datastructure.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.elastic_calculation">
-<span class="sig-name descname"><span class="pre">elastic_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.elastic_calculation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">elastic_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.elastic_calculation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -616,6 +626,11 @@ datastructure.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.verification">
 <span class="sig-name descname"><span class="pre">verification</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.verification" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.wooden_sheetpiling">
+<span class="sig-name descname"><span class="pre">wooden_sheetpiling</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType.wooden_sheetpiling" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -926,12 +941,8 @@ datastructure.</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.settings.ModelType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.settings.</span></span><span class="sig-name descname"><span class="pre">ModelType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModelType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents the model types from D-Sheet Piling using the same integer values used in the application.</p>
-<p>The Model type determines the kind of calculation that’s performed on the construction.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="geolib.models.dsheetpiling.settings.ModelType.DIAPHRAGM_WALL">
-<span class="sig-name descname"><span class="pre">DIAPHRAGM_WALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModelType.DIAPHRAGM_WALL" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>The Model type determines the kind of construction: single pile or sheet piling.
+Note that the model type SHEET_PILING includes sheet piling, wooden sheet piling and diaphragm wall.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.settings.ModelType.SHEET_PILING">
 <span class="sig-name descname"><span class="pre">SHEET_PILING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.settings.ModelType.SHEET_PILING" title="Permalink to this definition">¶</a></dt>
