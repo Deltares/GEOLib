@@ -1269,11 +1269,19 @@ class CalculationTypeEnum(Enum):
 
 CalculationType = CalculationTypeEnum
 
+class PersistableGeneticSlipPlaneConstraints(DStabilityBaseModelStructure):
+    IsEnabled: Optional[bool] = False
+    MinimumAngleBetweenSlices: Optional[float] = 0.0
+    MinimumThrustLinePercentageInsideSlices: Optional[float] = 0.0
+
 
 class PersistableSpencerSettings(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+    SlipPlaneConstraints: Optional[
+        PersistableGeneticSlipPlaneConstraints
+    ] = PersistableGeneticSlipPlaneConstraints()
 
 
 class OptionsTypeEnum(Enum):
@@ -1282,12 +1290,6 @@ class OptionsTypeEnum(Enum):
 
 
 OptionsType = OptionsTypeEnum
-
-
-class PersistableGeneticSlipPlaneConstraints(DStabilityBaseModelStructure):
-    IsEnabled: Optional[bool] = False
-    MinimumAngleBetweenSlices: Optional[float] = 0.0
-    MinimumThrustLinePercentageInsideSlices: Optional[float] = 0.0
 
 
 class PersistableSpencerGeneticSettings(DStabilityBaseModelStructure):
