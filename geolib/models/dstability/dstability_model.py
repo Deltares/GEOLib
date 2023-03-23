@@ -23,7 +23,7 @@ from .internal import (
     PersistableSoil,
     SoilCollection,
     SpencerSlipPlaneResult,
-    Stage,
+    Scenario,
     UpliftVanSlipCircleResult,
     Waternet,
 )
@@ -221,7 +221,7 @@ class DStabilityModel(BaseModel):
         return new_stage_id
 
     @property
-    def stages(self) -> List[Stage]:
+    def stages(self) -> List[Scenario]:
         return self.datastructure.stages
 
     def add_point(self, point: Point, stage=None) -> int:

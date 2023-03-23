@@ -17,7 +17,7 @@ from geolib.models.dstability.internal import (
     SpencerReliabilityResult,
     SpencerResult,
     SpencerSlipPlaneResult,
-    Stage,
+    Scenario,
     UpliftVanParticleSwarmResult,
     UpliftVanReliabilityResult,
     UpliftVanResult,
@@ -186,7 +186,7 @@ def _get_dstability_model():
         result_id = str(
             100 + i
         )  # This way result id's and stage id's don't overlap.  # TODO research if that matters.
-        model.datastructure.stages.append(Stage(Id=stage_id, ResultId=result_id))
+        model.datastructure.stages.append(Scenario(Id=stage_id, ResultId=result_id))
         model.datastructure.calculationsettings.append(
             CalculationSettings(
                 AnalysisType=analysis_type, CalculationType=calculation_type

@@ -335,21 +335,7 @@ class StateCorrelation(DStabilitySubStructure):
     Id: Optional[str]
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
 
-
-class Stage(DStabilitySubStructure):
-    """stages/stage_x.json"""
-
-    @classmethod
-    def structure_name(cls) -> str:
-        return "stage"
-
-    @classmethod
-    def structure_group(cls) -> str:
-        return "stages"
-
-    AnalysisType: Optional[AnalysisTypeEnum] = AnalysisType.BISHOP_BRUTE_FORCE
-    CalculationSettingsId: Optional[str]
-    ContentVersion: Optional[str] = "1"
+class PersistableStage(DStabilityBaseModelStructure):
     DecorationsId: Optional[str]
     GeometryId: Optional[str]
     Id: Optional[str]
@@ -357,13 +343,37 @@ class Stage(DStabilitySubStructure):
     LoadsId: Optional[str]
     Notes: Optional[str] = ""
     ReinforcementsId: Optional[str]
-    ResultId: Optional[str] = None
     SoilLayersId: Optional[str]
     StateCorrelationsId: Optional[str]
     StateId: Optional[str]
     WaternetCreatorSettingsId: Optional[str]
     WaternetId: Optional[str]
+    ContentVersion: Optional[str] = "2"
 
+class PersistableCalculation(DStabilityBaseModelStructure):
+    Id: Optional[str]
+    Label: Optional[str] = ""
+    Notes: Optional[str] = ""
+    ResultId: Optional[str] = None
+    CalculationSettingsId: Optional[str]
+
+class Scenario(DStabilitySubStructure):
+    """scenarios/scenario_x.json"""
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "scenario"
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "scenarios"
+
+    Stages: Optional[List[PersistableStage]] = []
+    Calculations: Optional[List[PersistableCalculation]] =[]
+    ContentVersion: Optional[str] = "2"
+    Id: Optional[str]
+    Label: Optional[str] = ""
+    Notes: Optional[str] = ""
 
 class PersistableShadingType(Enum):
     DIAGONAL_A = "DiagonalA"
@@ -1347,7 +1357,7 @@ class PersistableUpliftVanParticleSwarmSettings(DStabilityBaseModelStructure):
 class CalculationSettings(DStabilitySubStructure):
     """calculationsettings/calculationsettings_x.json"""
 
-    AnalysisType: Optional[AnalysisTypeEnum]
+    AnalysisType: Optional[AnalysisTypeEnum] = AnalysisTypeEnum.BISHOP_BRUTE_FORCE
     Bishop: Optional[PersistableBishopSettings] = PersistableBishopSettings()
     BishopBruteForce: Optional[
         PersistableBishopBruteForceSettings
@@ -1812,42 +1822,54 @@ class DStabilityStructure(BaseModelStructure):
     statecorrelations: List[StateCorrelation] = [
         StateCorrelation(Id="17")
     ]  # statecorrelations/statecorrelations_x.json
-    stages: List[Stage] = [
-        Stage(
-            CalculationSettingsId="20",
-            DecorationsId="12",
-            GeometryId="11",
+    stages: List[Scenario] = [
+        Scenario(
             Id="0",
-            Label="Stage 1",
-            LoadsId="18",
-            Notes="Default stage by GEOLib",
-            ReinforcementsId="19",
-            SoilLayersId="13",
-            StateId="16",
-            StateCorrelationsId="17",
-            WaternetCreatorSettingsId="15",
-            WaternetId="14",
+            Label="Scenario 1",
+            Notes = "Default Scenario by GEOLib",
+            Stages = [
+                PersistableStage(
+                    DecorationsId="12",
+                    GeometryId="11",
+                    Id="43",
+                    Label="Stage 1",
+                    LoadsId="18",
+                    Notes="Default stage by GEOLib",
+                    ReinforcementsId="19",
+                    SoilLayersId="13",
+                    StateId="16",
+                    StateCorrelationsId="17",
+                    WaternetCreatorSettingsId="15",
+                    WaternetId="14"
+                )],
+            Calculations = [
+                PersistableCalculation(
+                    CalculationSettingsId="20",
+                    Id="42",
+                    Label="Calculation 1",
+                    Notes="Default calculation by GEOLib"
+                )]
         )
-    ]  # stages/stage_x.json
+    ]
     soillayers: List[SoilLayerCollection] = [
         SoilLayerCollection(Id="13")
-    ]  # soillayers/soillayers_x.json
-    soilcorrelation: SoilCorrelation = SoilCorrelation()  # soilcorrelations.json
-    soils: SoilCollection = SoilCollection()  # soils.json
-    soilvisualizations: SoilVisualisation = SoilVisualisation()  # soilvisualizations.json
+    ]
+    soilcorrelation: SoilCorrelation = SoilCorrelation()
+    soils: SoilCollection = SoilCollection()
+    soilvisualizations: SoilVisualisation = SoilVisualisation()
     reinforcements: List[Reinforcements] = [
         Reinforcements(Id="19")
-    ]  # reinforcements/reinforcements_x.json
-    projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
-    nailproperties: NailProperties = NailProperties()  # nailpropertiesforsoils.json
-    loads: List[Loads] = [Loads(Id="18")]  # loads/loads_x.json
+    ]
+    projectinfo: ProjectInfo = ProjectInfo()
+    nailproperties: NailProperties = NailProperties()
+    loads: List[Loads] = [Loads(Id="18")]
     decorations: List[Decorations] = [
         Decorations(Id="12")
-    ]  # decorations/decorations_x.json
+    ]
     calculationsettings: List[CalculationSettings] = [
         CalculationSettings(Id="20")
-    ]  # calculationsettings/calculationsettings_x.json
-    geometries: List[Geometry] = [Geometry(Id="11")]  # geometries/geometry_x.json
+    ]
+    geometries: List[Geometry] = [Geometry(Id="11")]
 
     # Output parts
     uplift_van_results: List[UpliftVanResult] = []
@@ -1863,30 +1885,33 @@ class DStabilityStructure(BaseModelStructure):
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
-        for i, stage in enumerate(values.get("stages")):
-            if stage.CalculationSettingsId != values.get("calculationsettings")[i].Id:
-                raise ValueError("CalculationSettingsIds not linked!")
-            if stage.DecorationsId != values.get("decorations")[i].Id:
-                raise ValueError("DecorationsIds not linked!")
-            if stage.GeometryId != values.get("geometries")[i].Id:
-                raise ValueError("GeometryIds not linked!")
-            if stage.LoadsId != values.get("loads")[i].Id:
-                raise ValueError("LoadsIds not linked!")
-            if stage.ReinforcementsId != values.get("reinforcements")[i].Id:
-                raise ValueError("ReinforcementsIds not linked!")
-            if stage.SoilLayersId != values.get("soillayers")[i].Id:
-                raise ValueError("SoilLayersIds not linked!")
-            if stage.StateId != values.get("states")[i].Id:
-                raise ValueError("StateIds not linked!")
-            if stage.StateCorrelationsId != values.get("statecorrelations")[i].Id:
-                raise ValueError("StateCorrelationsIds not linked!")
-            if (
-                stage.WaternetCreatorSettingsId
-                != values.get("waternetcreatorsettings")[i].Id
-            ):
-                raise ValueError("WaternetCreatorSettingsIds not linked!")
-            if stage.WaternetId != values.get("waternets")[i].Id:
-                raise ValueError("WaternetIds not linked!")
+        for i, scenario in enumerate(values.get("scenarios")):
+            for i, stage in enumerate(values.get("stages")):
+                if stage.DecorationsId != values.get("decorations")[i].Id:
+                    raise ValueError("DecorationsIds not linked!")
+                if stage.GeometryId != values.get("geometries")[i].Id:
+                    raise ValueError("GeometryIds not linked!")
+                if stage.LoadsId != values.get("loads")[i].Id:
+                    raise ValueError("LoadsIds not linked!")
+                if stage.ReinforcementsId != values.get("reinforcements")[i].Id:
+                    raise ValueError("ReinforcementsIds not linked!")
+                if stage.SoilLayersId != values.get("soillayers")[i].Id:
+                    raise ValueError("SoilLayersIds not linked!")
+                if stage.StateId != values.get("states")[i].Id:
+                    raise ValueError("StateIds not linked!")
+                if stage.StateCorrelationsId != values.get("statecorrelations")[i].Id:
+                    raise ValueError("StateCorrelationsIds not linked!")
+                if (
+                    stage.WaternetCreatorSettingsId
+                    != values.get("waternetcreatorsettings")[i].Id
+                ):
+                    raise ValueError("WaternetCreatorSettingsIds not linked!")
+                if stage.WaternetId != values.get("waternets")[i].Id:
+                    raise ValueError("WaternetIds not linked!")
+            for i, calculation in enumerate(values.get("calculations")):
+                if calculation.CalculationSettingsId != values.get("calculationsettings")[i].Id:
+                    raise ValueError("CalculationSettingsIds not linked!")
+
         return values
 
     @property
@@ -1896,7 +1921,7 @@ class DStabilityStructure(BaseModelStructure):
             "waternetcreatorsettings",
             "states",
             "statecorrelations",
-            "stages",
+            "scenarios",
             "soillayers",
             "reinforcements",
             "loads",
@@ -1988,7 +2013,7 @@ class DStabilityStructure(BaseModelStructure):
         self.calculationsettings += [CalculationSettings(Id=str(unique_start_id + 10))]
         self.geometries += [Geometry(Id=str(unique_start_id + 8))]
         self.stages += [
-            Stage(
+            Scenario(
                 CalculationSettingsId=str(unique_start_id + 10),
                 DecorationsId=str(unique_start_id + 9),
                 GeometryId=str(unique_start_id + 8),
