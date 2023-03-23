@@ -490,10 +490,19 @@ class PersistableSuTable(DStabilityBaseModelStructure):
                 SuTablePoint(su=su_table_point.Su, stress=su_table_point.EffectiveStress)
             )
         return su_table
+    
+class PersistableMohrCoulombClassicShearStrengthModel(DStabilityBaseModelStructure):
+    Cohesion: float = 0.0
+    CohesionAndFrictionAngleCorrelated: bool = False
+    CohesionStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
+    FrictionAngle: float = 0.0
+    FrictionAngleStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
 
-
-class PersistableSoil(DStabilityBaseModelStructure):
-    Code: str = ""
+class PersistableMohrCoulombAdvancedShearStrengthModel(DStabilityBaseModelStructure):
     Cohesion: float = 0.0
     CohesionAndFrictionAngleCorrelated: bool = False
     CohesionStochasticParameter: PersistableStochasticParameter = (
@@ -507,6 +516,10 @@ class PersistableSoil(DStabilityBaseModelStructure):
     FrictionAngleStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
+
+
+class PersistableSoil(DStabilityBaseModelStructure):
+    Code: str = ""
     Id: str = ""
     IsProbabilistic: bool = False
     Name: Optional[str] = ""
@@ -516,6 +529,12 @@ class PersistableSoil(DStabilityBaseModelStructure):
     )
     ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
         ShearStrengthModelTypePhreaticLevelInternal.SU
+    )
+    MohrCoulombClassicShearStrengthModel: PersistableMohrCoulombClassicShearStrengthModel = (
+        PersistableMohrCoulombClassicShearStrengthModel()
+    )
+    MohrCoulombAdvancedShearStrengthModel: PersistableMohrCoulombAdvancedShearStrengthModel = (
+        PersistableMohrCoulombAdvancedShearStrengthModel()
     )
     ShearStrengthRatio: float = 0.0
     ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
@@ -540,9 +559,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="2",
             Name="Embankment new",
             Code="H_Aa_ht_new",
-            Cohesion=7.0,
-            FrictionAngle=30.0,
-            Dilatancy=0.0,
+            MohrCoulombAdvancedShearStrengthModel=PersistableMohrCoulombAdvancedShearStrengthModel(
+                Cohesion=7.0,
+                FrictionAngle=30.0,
+                Dilatancy=0.0
+            ),        
             ShearStrengthRatio=0.26,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=19.3,
@@ -552,9 +573,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="3",
             Name="Embankment old",
             Code="H_Aa_ht_old",
-            Cohesion=7.0,
-            FrictionAngle=30.0,
-            Dilatancy=0.0,
+            MohrCoulombAdvancedShearStrengthModel=PersistableMohrCoulombAdvancedShearStrengthModel(
+                Cohesion=7.0,
+                FrictionAngle=30.0,
+                Dilatancy=0.0
+            ), 
             ShearStrengthRatio=0.26,
             StrengthIncreaseExponent=0.9,
             VolumetricWeightAbovePhreaticLevel=18.0,
@@ -564,9 +587,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="4",
             Name="Clay, shallow",
             Code="H_Rk_k_shallow",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.23,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
@@ -577,9 +597,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="5",
             Name="Clay, deep",
             Code="H_Rk_k_deep",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.23,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
@@ -590,9 +607,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="6",
             Name="Organic clay",
             Code="H_Rk_ko",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.24,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.85,
@@ -603,9 +617,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="7",
             Name="Peat, shallow",
             Code="H_vhv_v",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.3,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
@@ -616,9 +627,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="8",
             Name="Peat, deep",
             Code="H_vbv_v",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.27,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
@@ -629,9 +637,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="9",
             Name="Sand",
             Code="Sand",
-            Cohesion=0.0,
-            FrictionAngle=30.0,
-            Dilatancy=0.0,
+            MohrCoulombAdvancedShearStrengthModel=PersistableMohrCoulombAdvancedShearStrengthModel(
+                Cohesion=0.0,
+                FrictionAngle=30.0,
+                Dilatancy=0.0
+            ),
             ShearStrengthRatio=0.0,
             ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED,
             StrengthIncreaseExponent=0.0,
@@ -642,9 +652,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="10",
             Name="Clay with silt",
             Code="P_Rk_k&s",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.22,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
@@ -655,9 +662,6 @@ class SoilCollection(DStabilitySubStructure):
             Id="11",
             Name="Sand with clay",
             Code="H_Ro_z&k",
-            Cohesion=0.0,
-            FrictionAngle=0.0,
-            Dilatancy=0.0,
             ShearStrengthRatio=0.22,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
             StrengthIncreaseExponent=0.9,
