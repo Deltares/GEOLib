@@ -517,6 +517,16 @@ class PersistableMohrCoulombAdvancedShearStrengthModel(DStabilityBaseModelStruct
         PersistableStochasticParameter()
     )
 
+class PersistableSuShearStrengthModel(DStabilityBaseModelStructure):
+    ShearStrengthRatio: float = 0.0
+    ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
+    ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
+    StrengthIncreaseExponent: float = 1.0
+    StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
+        PersistableStochasticParameter()
+    )
 
 class PersistableSoil(DStabilityBaseModelStructure):
     Code: str = ""
@@ -536,14 +546,8 @@ class PersistableSoil(DStabilityBaseModelStructure):
     MohrCoulombAdvancedShearStrengthModel: PersistableMohrCoulombAdvancedShearStrengthModel = (
         PersistableMohrCoulombAdvancedShearStrengthModel()
     )
-    ShearStrengthRatio: float = 0.0
-    ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
-    ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = (
-        PersistableStochasticParameter()
-    )
-    StrengthIncreaseExponent: float = 1.0
-    StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
-        PersistableStochasticParameter()
+    SuShearStrengthModel: PersistableSuShearStrengthModel = (
+        PersistableSuShearStrengthModel()
     )
     VolumetricWeightAbovePhreaticLevel: float = 0.0
     VolumetricWeightBelowPhreaticLevel: float = 0.0
@@ -563,9 +567,11 @@ class SoilCollection(DStabilitySubStructure):
                 Cohesion=7.0,
                 FrictionAngle=30.0,
                 Dilatancy=0.0
-            ),        
-            ShearStrengthRatio=0.26,
-            StrengthIncreaseExponent=0.9,
+            ),   
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.26,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=19.3,
             VolumetricWeightBelowPhreaticLevel=19.3,
         ),
@@ -578,8 +584,10 @@ class SoilCollection(DStabilitySubStructure):
                 FrictionAngle=30.0,
                 Dilatancy=0.0
             ), 
-            ShearStrengthRatio=0.26,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.26,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
         ),
@@ -587,9 +595,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="4",
             Name="Clay, shallow",
             Code="H_Rk_k_shallow",
-            ShearStrengthRatio=0.23,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.23,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=14.8,
             VolumetricWeightBelowPhreaticLevel=14.8,
         ),
@@ -597,9 +607,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="5",
             Name="Clay, deep",
             Code="H_Rk_k_deep",
-            ShearStrengthRatio=0.23,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.23,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=15.6,
             VolumetricWeightBelowPhreaticLevel=15.6,
         ),
@@ -607,9 +619,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="6",
             Name="Organic clay",
             Code="H_Rk_ko",
-            ShearStrengthRatio=0.24,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.85,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.24,
+                StrengthIncreaseExponent=0.85,
+            ),
             VolumetricWeightAbovePhreaticLevel=13.9,
             VolumetricWeightBelowPhreaticLevel=13.9,
         ),
@@ -617,9 +631,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="7",
             Name="Peat, shallow",
             Code="H_vhv_v",
-            ShearStrengthRatio=0.3,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.3,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=10.1,
             VolumetricWeightBelowPhreaticLevel=10.1,
         ),
@@ -627,9 +643,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="8",
             Name="Peat, deep",
             Code="H_vbv_v",
-            ShearStrengthRatio=0.27,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.27,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=11.0,
             VolumetricWeightBelowPhreaticLevel=11.0,
         ),
@@ -642,9 +660,7 @@ class SoilCollection(DStabilitySubStructure):
                 FrictionAngle=30.0,
                 Dilatancy=0.0
             ),
-            ShearStrengthRatio=0.0,
             ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED,
-            StrengthIncreaseExponent=0.0,
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=20.0,
         ),
@@ -652,9 +668,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="10",
             Name="Clay with silt",
             Code="P_Rk_k&s",
-            ShearStrengthRatio=0.22,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.22,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
         ),
@@ -662,9 +680,11 @@ class SoilCollection(DStabilitySubStructure):
             Id="11",
             Name="Sand with clay",
             Code="H_Ro_z&k",
-            ShearStrengthRatio=0.22,
             ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SU,
-            StrengthIncreaseExponent=0.9,
+            SuShearStrengthModel=PersistableSuShearStrengthModel(
+                ShearStrengthRatio=0.22,
+                StrengthIncreaseExponent=0.9,
+            ),
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
         ),
