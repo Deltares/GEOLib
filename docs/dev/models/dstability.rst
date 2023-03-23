@@ -96,7 +96,7 @@ Output
 .. autoclass:: geolib.models.dstability.internal.BishopResult
 
 .. autoclass:: geolib.models.dstability.internal.PersistableSoilContribution
-.. autoclass:: geolib.models.dstability.internal.PersistableStageContribution
+.. autoclass:: geolib.models.dstability.internal.PersistableCalculationContribution
 .. autoclass:: geolib.models.dstability.internal.PersistableSpencerSlice
 .. autoclass:: geolib.models.dstability.internal.PersistableStateLinePointContribution
 .. autoclass:: geolib.models.dstability.internal.PersistableStatePointContribution

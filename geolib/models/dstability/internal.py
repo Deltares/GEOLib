@@ -1477,10 +1477,10 @@ class PersistableSoilContribution(DStabilityBaseModelStructure):
     Value: Optional[float] = None
 
 
-class PersistableStageContribution(DStabilityBaseModelStructure):
+class PersistableCalculationContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
     Property: Optional[str] = None
-    StageId: Optional[str] = None
+    CalculationId: Optional[str] = None
     UncorrelatedAlpha: Optional[float] = None
     Value: Optional[float] = None
 
@@ -1508,7 +1508,7 @@ class BishopReliabilityResult(DStabilitySubStructure):
     Id: Optional[str] = None
     ReliabilityIndex: Optional[float] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    StageContributions: Optional[List[Optional[PersistableStageContribution]]] = None
+    CalculationContributions: Optional[List[Optional[PersistableCalculationContribution]]] = None
     StateLinePointContributions: Optional[
         List[Optional[PersistableStateLinePointContribution]]
     ] = None
@@ -1634,7 +1634,7 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     ReliabilityIndex: Optional[float] = None
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    StageContributions: Optional[List[Optional[PersistableStageContribution]]] = None
+    CalculationContributions: Optional[List[Optional[PersistableCalculationContribution]]] = None
     StateLinePointContributions: Optional[
         List[Optional[PersistableStateLinePointContribution]]
     ] = None
@@ -1718,7 +1718,7 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     ReliabilityIndex: Optional[float] = None
     RightCenter: Optional[PersistablePoint] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    StageContributions: Optional[List[Optional[PersistableStageContribution]]] = None
+    CalculationContributions: Optional[List[Optional[PersistableCalculationContribution]]] = None
     StateLinePointContributions: Optional[
         List[Optional[PersistableStateLinePointContribution]]
     ] = None
@@ -2158,7 +2158,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
         "StateCorrelation.Id": ("Stage.StateCorrelationsId",),
         "State.Id": ("Stage.StateId",),
         "WaternetCreatorSettings.Id": ("Stage.WaternetCreatorSettingsId",),
-        "Stage.Id": ("PersistableStageContribution.StageId",),
+        "Stage.Id": ("PersistableCalculationContribution.CalculationId",),
         "PersistableStateLinePoint.Id": (
             "PersistableStateCorrelation.CorrelatedStateIds",
             "PersistableStateLinePointContribution.StateLinePointId",
