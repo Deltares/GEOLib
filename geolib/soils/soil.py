@@ -61,7 +61,7 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
         )
 
         transformation_dict = {
-            "Mohr_Coulomb": ShearStrengthModelTypePhreaticLevelInternal.C_PHI,
+            "Mohr_Coulomb": ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED,
             "None": ShearStrengthModelTypePhreaticLevelInternal.NONE,
             "SHANSEP": ShearStrengthModelTypePhreaticLevelInternal.SU,
             "SuTable": ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,

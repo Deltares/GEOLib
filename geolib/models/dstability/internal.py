@@ -450,14 +450,16 @@ class ShearStrengthModelTypePhreaticLevelInternal(Enum):
     are internally defined in the json files of D-Stability.
     """
 
-    C_PHI = "CPhi"
+    MOHR_COULOMB_ADVANCED = "MohrCoulombAdvanced"
+    MOHR_COULOMB_CLASSIC = "MohrCoulombClassic"
     NONE = "None"
     SU = "Su"
     SUTABLE = "SuTable"
 
     def to_global_shear_strength_model(self):
         transform_dictionary = {
-            "CPhi": "Mohr_Coulomb",
+            "MohrCoulombAdvanced": "Mohr_Coulomb_Advanced",
+            "MohrCoulombClassic": "Mohr_Coulomb_Classic",
             "None": "None",
             "Su": "SHANSEP",
             "SuTable": "SuTable",
@@ -510,7 +512,7 @@ class PersistableSoil(DStabilityBaseModelStructure):
     Name: Optional[str] = ""
     Notes: Optional[str] = ""
     ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
-        ShearStrengthModelTypePhreaticLevelInternal.C_PHI
+        ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
     )
     ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
         ShearStrengthModelTypePhreaticLevelInternal.SU
@@ -631,7 +633,7 @@ class SoilCollection(DStabilitySubStructure):
             FrictionAngle=30.0,
             Dilatancy=0.0,
             ShearStrengthRatio=0.0,
-            ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.C_PHI,
+            ShearStrengthModelTypeBelowPhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED,
             StrengthIncreaseExponent=0.0,
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=20.0,
