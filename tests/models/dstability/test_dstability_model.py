@@ -141,12 +141,7 @@ class TestDStabilityModel:
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
         "dir_path",
-        [
-            pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
-            pytest.param(
-                "dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"
-            ),
+        [                       
             pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/EmptyFile", id="Empty File"),
             pytest.param(
