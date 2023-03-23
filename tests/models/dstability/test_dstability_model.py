@@ -139,9 +139,6 @@ class TestDStabilityModel:
         )
 
     @pytest.mark.systemtest
-    @pytest.mark.skipif(
-        not is_running_under_teamcity(), reason="Console test only installed on TC."
-    )
     @pytest.mark.parametrize(
         "dir_path",
         [
@@ -152,6 +149,9 @@ class TestDStabilityModel:
             ),
             pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/EmptyFile", id="Empty File"),
+            pytest.param(
+                "dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.01"
+            ),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):
@@ -252,7 +252,6 @@ class TestDStabilityModel:
         assert new_id == max_id_after_initialization_of_dstability_structure
 
     @pytest.mark.acceptance
-    @only_teamcity
     def test_generate_simple_model(self):
 
         dm = DStabilityModel()
@@ -323,7 +322,6 @@ class TestDStabilityModel:
         assert len(dm.output.SlipPlane) == 5
 
     @pytest.mark.acceptance
-    @only_teamcity
     def test_generate_model_from_scratch(self):
 
         dm = DStabilityModel()
