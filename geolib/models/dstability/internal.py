@@ -1175,7 +1175,7 @@ class Geometry(DStabilitySubStructure):
         return layer
 
 
-class PersistableBerm(DStabilityBaseModelStructure):
+class PersistableElevation(DStabilityBaseModelStructure):
     AddedLayerId: Optional[str]
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
@@ -1191,7 +1191,7 @@ class PersistableExcavation(DStabilityBaseModelStructure):
 class Decorations(DStabilitySubStructure):
     """decorations/decorations_x.json."""
 
-    Berms: Optional[List[Optional[PersistableBerm]]] = []
+    Elevations: Optional[List[Optional[PersistableElevation]]] = []
     ContentVersion: Optional[str] = "1"
     Excavations: Optional[List[Optional[PersistableExcavation]]] = []
     Id: Optional[str]
@@ -2134,7 +2134,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
             "PersistableSoilLayer.LayerId",
             "PersistableConsolidation.LayerId",
             "PersistableLayerLoad.LayerId",
-            "PersistableBerm.AddedLayerId",
+            "PersistableElevation.AddedLayerId",
             "WaternetCreatorSettings.AquiferInsideAquitardLayerId",
             "WaternetCreatorSettings.AquiferLayerId",
         ),
