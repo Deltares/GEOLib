@@ -11,7 +11,6 @@ from geolib.models.dstability.internal import (
     BishopSlipCircleResult,
     CalculationSettings,
     CalculationType,
-    DStabilityResult,
     PersistableCircle,
     PersistablePoint,
     SpencerGeneticAlgorithmResult,
@@ -42,7 +41,7 @@ def _persistable_circle() -> PersistableCircle:
     return PersistableCircle(Center=_left_center_persistable_point(), Radius=5)
 
 
-def _slip_pane() -> List[PersistablePoint]:
+def _slip_plane() -> List[PersistablePoint]:
     x_z_coordinates = [(0, 10), (2.5, 8), (5, 4), (2.5, 2), (10, 0)]
     return [PersistablePoint(X=x, Z=z) for x, z in x_z_coordinates]
 
@@ -79,19 +78,19 @@ def _uplift_van_particle_swarm_result(result_id: str) -> UpliftVanParticleSwarmR
 
 def _spencer_result(result_id: str) -> SpencerResult:
     return SpencerResult(
-        Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_pane()
+        Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_plane()
     )
 
 
 def _spencer_genetic_algorithm_result(result_id: str) -> SpencerGeneticAlgorithmResult:
     return SpencerGeneticAlgorithmResult(
-        Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_pane()
+        Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_plane()
     )
 
 
 def _spencer_reliability_result(result_id: str) -> SpencerReliabilityResult:
     return SpencerReliabilityResult(
-        Id=result_id, FailureProbability=_failure_probability, SlipPlane=_slip_pane()
+        Id=result_id, FailureProbability=_failure_probability, SlipPlane=_slip_plane()
     )
 
 
@@ -272,12 +271,16 @@ class TestDStabilityResults:
                 assert isinstance(slipplane_result, SpencerSlipPlaneResult)
 
     @pytest.mark.unittest
-    def test_output_isinstance_list(self, _get_dstability_model):
+    def test_output_isinstance_list(self, _get_dstability_model: DStabilityModel):
         model = _get_dstability_model
+
+        model.datastructure.stages.append(Stage(Id="200", ResultId=None))
+
         output = model.output
         assert isinstance(output, list)
-        assert len(output) == 9
+        assert len(output) == 10
 
         assert isinstance(output[0], UpliftVanResult)
         assert isinstance(output[1], UpliftVanReliabilityResult)
         assert isinstance(output[2], UpliftVanParticleSwarmResult)
+        assert output[9] is None

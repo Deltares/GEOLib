@@ -1758,6 +1758,7 @@ DStabilityResult = Union[
     BishopBruteForceResult,
     BishopReliabilityResult,
     BishopResult,
+    None
 ]
 
 ###########################
