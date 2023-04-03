@@ -95,11 +95,29 @@ class DStabilityModel(BaseModel):
         return self.datastructure.waternets
 
     @property
-    def output(self) -> DStabilityResult:
-        # TODO Make something that works for all stages
-        return self.get_result(self.current_stage)
+    def output(self) -> List[DStabilityResult]:
+        def _get_result_or_none(stage_id) -> DStabilityResult:
+            if self.has_result(stage_id=int(stage_id)):
+                return self.get_result(stage_id=int(stage_id))
+            else:
+                return None
 
-    def get_result(self, stage_id: int) -> Dict:
+        all_stage_ids = [stage.Id for stage in self.datastructure.stages]
+        return [_get_result_or_none(stage_id=stage_id) for stage_id in all_stage_ids]
+
+    def has_result(self, stage_id: int) -> bool:
+        """
+        Returns whether a stage has a result.
+
+        Args:
+            stage_id (int): Id of a stage.
+
+        Returns:
+            bool: Value indicating whether the stage has a result.
+        """
+        return self.datastructure.has_result(stage_id)
+
+    def get_result(self, stage_id: int) -> DStabilityResult:
         """
         Returns the results of a stage. Calculation results are based on analysis type and calculation type.
 

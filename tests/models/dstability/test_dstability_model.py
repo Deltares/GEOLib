@@ -312,7 +312,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert pytest.approx(dm.output.FactorOfSafety, rel=1e-3) == 0.723
+        assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
 
     def test_get_slipeplane(self):
         test_filepath = Path(
@@ -320,7 +320,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert len(dm.output.SlipPlane) == 5
+        assert len(dm.output[-1].SlipPlane) == 5
 
     @pytest.mark.acceptance
     @only_teamcity
