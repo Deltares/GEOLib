@@ -7,7 +7,7 @@ D-Foundations model
 -------------------
 
 .. autosummary::
-   :toctree: ..\_autosummary
+   :toctree: ../_autosummary
    :recursive:
 
    geolib.models.dfoundations
