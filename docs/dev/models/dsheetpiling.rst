@@ -7,7 +7,7 @@ D-Sheet Piling model
 --------------------
 
 .. autosummary::
-   :toctree: ..\_autosummary
+   :toctree: ../_autosummary
    :recursive:
 
    geolib.models.dsheetpiling
