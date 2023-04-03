@@ -311,6 +311,15 @@ class State(DStabilitySubStructure):
     ):
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
 
+    def get_state(
+        self, state_id: int
+    ) -> Union[PersistableStatePoint, PersistableStateLine]:
+        for state in self.StatePoints + self.StateLines:
+            if state.Id == str(state_id):
+                return state
+
+        raise ValueError(f"State point with id {state_id} not found")
+
 
 # statecorrelation
 
@@ -335,7 +344,23 @@ class StateCorrelation(DStabilitySubStructure):
     Id: Optional[str]
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
 
-class PersistableStage(DStabilityBaseModelStructure):
+    def add_state_correlation(
+        self, state_correlation: PersistableStateCorrelation
+    ) -> None:
+        self.StateCorrelations.append(state_correlation)
+
+
+class Stage(DStabilitySubStructure):
+    """stages/stage_x.json"""
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "stage"
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "stages"
+
     DecorationsId: Optional[str]
     GeometryId: Optional[str]
     Id: Optional[str]
@@ -368,7 +393,7 @@ class Scenario(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "scenarios"
 
-    Stages: Optional[List[PersistableStage]] = []
+    Stages: Optional[List[Stage]] = []
     Calculations: Optional[List[PersistableCalculation]] =[]
     ContentVersion: Optional[str] = "2"
     Id: Optional[str]
@@ -452,6 +477,20 @@ class SoilCorrelation(DStabilitySubStructure):
     @classmethod
     def structure_name(cls) -> str:
         return "soilcorrelations"
+
+    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+        """
+        Add a new soil correlation to the model.
+
+        Args:
+            list_correlated_soil_ids (List[str]): a list of soil ids that are correlated
+
+        Returns:
+            None
+        """
+        self.SoilCorrelations.append(
+            PersistableSoilCorrelation(CorrelatedSoilIds=list_correlated_soil_ids)
+        )
 
 
 class ShearStrengthModelTypePhreaticLevelInternal(Enum):
@@ -1796,7 +1835,9 @@ DStabilityResult = Union[
     BishopBruteForceResult,
     BishopReliabilityResult,
     BishopResult,
+    None
 ]
+
 
 ###########################
 # INPUT AND OUTPUT COMBINED
@@ -1828,7 +1869,7 @@ class DStabilityStructure(BaseModelStructure):
             Label="Scenario 1",
             Notes = "Default Scenario by GEOLib",
             Stages = [
-                PersistableStage(
+                Stage(
                     DecorationsId="12",
                     GeometryId="11",
                     Id="43",

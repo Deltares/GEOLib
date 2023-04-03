@@ -306,7 +306,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert pytest.approx(dm.output.FactorOfSafety, rel=1e-3) == 0.723
+        assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
 
     def test_get_slipeplane(self):
         test_filepath = Path(
@@ -314,7 +314,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert len(dm.output.SlipPlane) == 5
+        assert len(dm.output[-1].SlipPlane) == 5
 
     @pytest.mark.acceptance
     def test_generate_model_from_scratch(self):
@@ -607,6 +607,19 @@ class TestDStabilityModel:
         )
 
         path = outputdir / "test_state_line.stix"
+        dm.serialize(path)
+
+        # State correlation
+        dm.add_state_correlation([id_state_one, id_state_two])
+        path = outputdir / "test_state_correlation.stix"
+        dm.serialize(path)
+
+        # Soil correlation
+        soil_id_one = dm.soils.get_soil("H_Ro_z&k").id
+        soil_id_two = dm.soils.get_soil("Sand").id
+
+        dm.add_soil_correlation([soil_id_one, soil_id_two])
+        path = outputdir / "test_soil_correlation.stix"
         dm.serialize(path)
 
         # 3. Verify model output has been parsed
