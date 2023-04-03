@@ -83,7 +83,7 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 
 [MODEL]
 {% if model is mapping -%}
-{{ model.model.value }} : {{ {0: 'Sheet piling', 1: 'Single pile', 2: 'Diaphragm wall'}[model.model.value]}}
+{{ model.model.value }} : {{ {0: 'Sheet piling', 1: 'Single pile'}[model.model.value]}}
 {{ model.method.value }} : {{ {0: 'Ka, Ko, Kp soil parameters', 1: 'C, phi, delta soil parameters', 2: 'Mixed'}[model.method.value]}}
 {{ model.verification | int }} : Verification = {{ model.verification | string | upper }}
 {{ model.ec7se_visible | int }} : EC7-SE visible = {{ model.ec7se_visible | string | upper }}

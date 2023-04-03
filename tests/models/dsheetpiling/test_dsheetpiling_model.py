@@ -403,7 +403,7 @@ class TestDsheetPilingModel:
             pytest.param(SheetModelType, 0, id="Sheet model"),
             pytest.param(WoodenSheetPileModelType, 0, id="Wooden sheet model"),
             pytest.param(SinglePileModelType, 1, id="Single pile model"),
-            pytest.param(DiaphragmModelType, 2, id="Diaphragm model"),
+            pytest.param(DiaphragmModelType, 0, id="Diaphragm model"),
         ],
     )
     def test_set_model(self, modeltype, expected_model_value: int):
