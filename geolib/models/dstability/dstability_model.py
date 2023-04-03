@@ -21,7 +21,9 @@ from .internal import (
     DStabilityStructure,
     PersistablePoint,
     PersistableSoil,
+    PersistableStateCorrelation,
     SoilCollection,
+    SoilCorrelation,
     SpencerSlipPlaneResult,
     Stage,
     UpliftVanSlipCircleResult,
@@ -81,6 +83,10 @@ class DStabilityModel(BaseModel):
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
+
+    @property
+    def soil_correlations(self) -> SoilCorrelation:
+        return self.datastructure.soilcorrelation
 
     def _get_next_id(self) -> int:
         self.current_id += 1
@@ -494,6 +500,29 @@ class DStabilityModel(BaseModel):
 
         states.add_state_line(persistable_points, persistable_state_line_points)
 
+    def add_state_correlation(
+        self, correlated_state_ids: List[int], stage_id: int = None
+    ):
+
+        stage_id = stage_id if stage_id is not None else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        state_correlations = self.datastructure.statecorrelations[stage_id]
+
+        for state_id in correlated_state_ids:
+            try:
+                _ = self.datastructure.states[stage_id].get_state(state_id)
+            except ValueError:
+                raise ValueError(f"No state point with id '{state_id} in this geometry")
+
+        persistable_state_correlation = PersistableStateCorrelation(
+            CorrelatedStateIds=correlated_state_ids, IsFullyCorrelated=True
+        )
+
+        state_correlations.add_state_correlation(persistable_state_correlation)
+
     def add_load(
         self,
         load: DStabilityLoad,
@@ -633,6 +662,14 @@ class DStabilityModel(BaseModel):
             raise ValueError(
                 f"No reinforcements found for stage found with id {stage_id}"
             )
+
+    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+        """Add a soil correlation to the model.
+
+        Args:
+            list_correlated_soil_ids: A list of soil ids that are correlated.
+        """
+        self.soil_correlations.add_soil_correlation(list_correlated_soil_ids)
 
     def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
         """Sets the model and applies the given parameters

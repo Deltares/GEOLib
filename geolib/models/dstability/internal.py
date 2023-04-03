@@ -311,6 +311,15 @@ class State(DStabilitySubStructure):
     ):
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
 
+    def get_state(
+        self, state_id: int
+    ) -> Union[PersistableStatePoint, PersistableStateLine]:
+        for state in self.StatePoints + self.StateLines:
+            if state.Id == str(state_id):
+                return state
+
+        raise ValueError(f"State point with id {state_id} not found")
+
 
 # statecorrelation
 
@@ -334,6 +343,11 @@ class StateCorrelation(DStabilitySubStructure):
     ContentVersion: Optional[str] = "1"
     Id: Optional[str]
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
+
+    def add_state_correlation(
+        self, state_correlation: PersistableStateCorrelation
+    ) -> None:
+        self.StateCorrelations.append(state_correlation)
 
 
 class Stage(DStabilitySubStructure):
@@ -442,6 +456,20 @@ class SoilCorrelation(DStabilitySubStructure):
     @classmethod
     def structure_name(cls) -> str:
         return "soilcorrelations"
+
+    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+        """
+        Add a new soil correlation to the model.
+
+        Args:
+            list_correlated_soil_ids (List[str]): a list of soil ids that are correlated
+
+        Returns:
+            None
+        """
+        self.SoilCorrelations.append(
+            PersistableSoilCorrelation(CorrelatedSoilIds=list_correlated_soil_ids)
+        )
 
 
 class ShearStrengthModelTypePhreaticLevelInternal(Enum):
@@ -1760,6 +1788,7 @@ DStabilityResult = Union[
     BishopResult,
     None
 ]
+
 
 ###########################
 # INPUT AND OUTPUT COMBINED
