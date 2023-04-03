@@ -244,6 +244,17 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_soil_correlation">
+<span class="sig-name descname"><span class="pre">add_soil_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_correlated_soil_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_soil_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a soil correlation to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>list_correlated_soil_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – A list of soil ids that are correlated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations">
 <span class="sig-name descname"><span class="pre">add_soil_layer_consolidations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soil_layer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add consolidations for a layer (layerload).</p>
@@ -284,6 +295,19 @@ the number of consolidations given should equal the amount of layers.</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>the id of the new stage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_state_correlation">
+<span class="sig-name descname"><span class="pre">add_state_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">correlated_state_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>correlated_state_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -571,6 +595,16 @@ This method will edit the first occurence of the name if the name is used multip
 <li><p><strong>ValueError</strong> – When the provided analysismethod is no subclass of DStabilityAnalysisMethod,</p></li>
 <li><p><strong>an invalid stage_id is provided</strong><strong>, </strong><strong>the analysis method is not known</strong><strong> or </strong><strong>the datastructure is no longer valid.</strong> – </p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.soil_correlations">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soil_correlations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.SoilCorrelation</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soil_correlations" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCorrelation</span></code></p>
 </dd>
 </dl>
 </dd></dl>
