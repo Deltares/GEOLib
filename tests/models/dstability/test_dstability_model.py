@@ -630,8 +630,8 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # 3. Verify model output has been parsed
-        # model = dm.execute()
-        # assert model
+        model = dm.execute()
+        assert model
 
     @pytest.mark.integrationtest
     def test_su_table_version_parsing(self):
