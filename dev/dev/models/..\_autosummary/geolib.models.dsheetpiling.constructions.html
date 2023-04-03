@@ -1,0 +1,802 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dsheetpiling.constructions &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="geolib.models.dsheetpiling.dsheetpiling_model" href="geolib.models.dsheetpiling.dsheetpiling_model.html" />
+    <link rel="prev" title="geolib.models.dsheetpiling.calculation_options" href="geolib.models.dsheetpiling.calculation_options.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsheetpiling.calculation_options.html" title="Previous document">geolib.models.dsheetpiling.calculation_options</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsheetpiling.dsheetpiling_model.html" title="Next document">geolib.models.dsheetpiling.dsheetpiling_model</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dsheetpiling.constructions">
+<span id="geolib-models-dsheetpiling-constructions"></span><h1>geolib.models.dsheetpiling.constructions<a class="headerlink" href="#module-geolib.models.dsheetpiling.constructions" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall" title="geolib.models.dsheetpiling.constructions.DiaphragmWall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DiaphragmWall</span></code></a>(**data)</p></td>
+<td><p>Diaphragm Wall selected from the model window in D-Sheet Piling</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties" title="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DiaphragmWallProperties</span></code></a>(**data)</p></td>
+<td><p>Pile selected from the model window in D-Sheet Piling</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties" title="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FullPlasticCalculationProperties</span></code></a>(**data)</p></td>
+<td><p>Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.Pile" title="geolib.models.dsheetpiling.constructions.Pile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Pile</span></code></a>(**data)</p></td>
+<td><p>Pile selected from the model window in D-Sheet Piling</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.PileProperties" title="geolib.models.dsheetpiling.constructions.PileProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PileProperties</span></code></a>(**data)</p></td>
+<td><p>Pile selected from the model window in D-Sheet Piling</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.Sheet" title="geolib.models.dsheetpiling.constructions.Sheet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sheet</span></code></a>(**data)</p></td>
+<td><p>Sheet Piling selected from the model window in D-Sheet Piling</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties" title="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SheetPileModelPlasticCalculationProperties</span></code></a>(**data)</p></td>
+<td><p>Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties" title="geolib.models.dsheetpiling.constructions.SheetPileProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SheetPileProperties</span></code></a>(**data)</p></td>
+<td><p>Pile selected from the model window in D-Sheet Piling</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties" title="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WoodenSheetPileProperties</span></code></a>(**data)</p></td>
+<td><p>Wooden pile selected from the model window in D-Sheet Piling</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">DiaphragmWall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Diaphragm Wall selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the element inputted</p></li>
+<li><p><strong>diaphragm_wall_properties</strong> – properties specifically used for the Diaphragm Wall element.</p></li>
+<li><p><strong>plastic_properties</strong> – plastic calculation properties. For the Diaphragm Wall option, these are always present.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.diaphragm_wall_properties">
+<span class="sig-name descname"><span class="pre">diaphragm_wall_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties" title="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties"><span class="pre">geolib.models.dsheetpiling.constructions.DiaphragmWallProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.diaphragm_wall_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.plastic_properties">
+<span class="sig-name descname"><span class="pre">plastic_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties" title="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties"><span class="pre">geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.plastic_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">DiaphragmWallProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pile selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material_type</strong> – Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.</p></li>
+<li><p><strong>acting_width</strong> – The acting width can be used when the effective width changes along the sheet piling.
+D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads,
+supports and reactions, except the normal force.</p></li>
+<li><p><strong>elastic_stiffness_ei</strong> – Stiffness of the section per running meter.</p></li>
+<li><p><strong>section_bottom_level</strong> – the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.</p></li>
+<li><p><strong>mr_char_el:</strong> – Characterictic elastic moment without safety factors.:</p></li>
+<li><p><strong>material_factor_gamma_m</strong> – <p>The partial safety factor γm should be defined, only if the User defined material type
+is selected. Otherwise, the program will automatically apply the following factors
+(acc. to the corresponding Eurocode) to calculate the design allowable moment:</p>
+<ul>
+<li><p>Steel: γm = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4) ;</p></li>
+<li><p>Concrete: γm = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6;</p></li>
+<li><p>Wood: γm = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1);</p></li>
+<li><p>Synthetic: γm = 1.2</p></li>
+</ul>
+</p></li>
+<li><p><strong>modification_factor_k_mod</strong> – <p>The modification factor kmod should be defined, only if the User defined
+and synthetic material type is selected.
+Otherwise, the program will automatically apply the following factors:</p>
+<ul>
+<li><p>Steel: kmod = 1 ;</p></li>
+<li><p>Concrete: kmod = 1 ;</p></li>
+<li><p>Wood: kmod= 1 ;</p></li>
+</ul>
+</p></li>
+<li><p><strong>reduction_factor_on_ei</strong> – Reduction factor applied on the stiffness EI of the pile.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.acting_width">
+<span class="sig-name descname"><span class="pre">acting_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.acting_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.elastic_stiffness_ei">
+<span class="sig-name descname"><span class="pre">elastic_stiffness_ei</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.elastic_stiffness_ei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.material_factor_gamma_m">
+<span class="sig-name descname"><span class="pre">material_factor_gamma_m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.material_factor_gamma_m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.material_type">
+<span class="sig-name descname"><span class="pre">material_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType" title="geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType"><span class="pre">geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.material_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.modification_factor_k_mod">
+<span class="sig-name descname"><span class="pre">modification_factor_k_mod</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.modification_factor_k_mod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.mr_char_el">
+<span class="sig-name descname"><span class="pre">mr_char_el</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.mr_char_el" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.mr_char_pl">
+<span class="sig-name descname"><span class="pre">mr_char_pl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.mr_char_pl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.note_on_reduction_factor">
+<span class="sig-name descname"><span class="pre">note_on_reduction_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.note_on_reduction_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.reduction_factor_on_ei">
+<span class="sig-name descname"><span class="pre">reduction_factor_on_ei</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.reduction_factor_on_ei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.reduction_factor_on_maximum_moment">
+<span class="sig-name descname"><span class="pre">reduction_factor_on_maximum_moment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.reduction_factor_on_maximum_moment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.section_bottom_level">
+<span class="sig-name descname"><span class="pre">section_bottom_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.section_bottom_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">FullPlasticCalculationProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>symmetrical</strong> – This option is True in case of a symmetric moment-curvature diagram.</p></li>
+<li><p><strong>eI_branch_2_positive</strong> – The flexural stiffness of the 2nd branch of the moment-curvature diagram (in compression).</p></li>
+<li><p><strong>eI_branch_2_negative</strong> – The flexural stiffness of the 2nd branch of the moment-curvature diagram (in traction).</p></li>
+<li><p><strong>moment_point_1_positive</strong> – The limit moment of the of the 1st branch of the moment-curvature diagram (in compression).</p></li>
+<li><p><strong>moment_point_1_negative</strong> – The limit moment of the of the 1st branch of the moment-curvature diagram (in traction).</p></li>
+<li><p><strong>plastic_moment_positive</strong> – The plastic moment of the positive part of the moment-curvature diagram (in compression).</p></li>
+<li><p><strong>plastic_moment_negative</strong> – The plastic moment of the positive part of the moment-curvature diagram (in traction).</p></li>
+<li><p><strong>eI_branch_3_positive</strong> – The flexural stiffness of the 3rd branch of the moment-curvaturediagram (in compression).</p></li>
+<li><p><strong>moment_point_2_positive</strong> – The limit moment of the of the 2nd branch of the moment-curvature diagram (in compression).</p></li>
+<li><p><strong>eI_branch_3_negative</strong> – The flexural stiffness of the 3rd branch of the moment-curvaturediagram (in traction).</p></li>
+<li><p><strong>moment_point_2_negative</strong> – The limit moment of the of the 2nd branch of the moment-curvature diagram (in traction).</p></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../../_images/fullplastic.png"><img alt="../../../_images/fullplastic.png" class="align-center" src="../../../_images/fullplastic.png" style="width: 420.0px; height: 280.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_2_negative">
+<span class="sig-name descname"><span class="pre">eI_branch_2_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_2_negative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_2_positive">
+<span class="sig-name descname"><span class="pre">eI_branch_2_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_2_positive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_3_negative">
+<span class="sig-name descname"><span class="pre">eI_branch_3_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_3_negative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_3_positive">
+<span class="sig-name descname"><span class="pre">eI_branch_3_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_3_positive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_1_negative">
+<span class="sig-name descname"><span class="pre">moment_point_1_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_1_negative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_1_positive">
+<span class="sig-name descname"><span class="pre">moment_point_1_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_1_positive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_2_negative">
+<span class="sig-name descname"><span class="pre">moment_point_2_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_2_negative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_2_positive">
+<span class="sig-name descname"><span class="pre">moment_point_2_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_2_positive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.plastic_moment_negative">
+<span class="sig-name descname"><span class="pre">plastic_moment_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.plastic_moment_negative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.plastic_moment_positive">
+<span class="sig-name descname"><span class="pre">plastic_moment_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.plastic_moment_positive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.symmetrical">
+<span class="sig-name descname"><span class="pre">symmetrical</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.symmetrical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">Pile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pile selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the element inputted</p></li>
+<li><p><strong>pile_properties</strong> – properties specifically used for the Pile element.</p></li>
+<li><p><strong>plastic_properties</strong> – plastic calculation properties. If Elastic calculation checkbox is not selected.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.pile_properties">
+<span class="sig-name descname"><span class="pre">pile_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.PileProperties" title="geolib.models.dsheetpiling.constructions.PileProperties"><span class="pre">geolib.models.dsheetpiling.constructions.PileProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.pile_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.plastic_properties">
+<span class="sig-name descname"><span class="pre">plastic_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties" title="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties"><span class="pre">geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.plastic_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">PileProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pile selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material_type</strong> – Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.</p></li>
+<li><p><strong>elastic_stiffness_ei</strong> – Stiffness of the section per running meter.</p></li>
+<li><p><strong>section_bottom_level</strong> – the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.</p></li>
+<li><p><strong>mr_char_el</strong> – Characterictic elastic moment without safety factors.</p></li>
+<li><p><strong>material_factor_gamma_m</strong> – The partial safety factor γ m should be defined, only if the User defined material type</p></li>
+<li><p><strong>Otherwise</strong> (<em>is selected.</em>) – </p></li>
+<li><p><strong>factors</strong> (<em>the program will automatically apply the following</em>) – </p></li>
+<li><p><strong>moment</strong> (<em>(</em><em>acc. to the corresponding Eurocode</em><em>) </em><em>to calculate the design allowable</em>) – </p></li>
+<li><p><strong>Steel</strong> (<em>*</em>) – γm = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)</p></li>
+<li><p><strong>Concrete</strong> (<em>*</em>) – γm = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6</p></li>
+<li><p><strong>Wood</strong> (<em>*</em>) – γm = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)</p></li>
+<li><p><strong>Synthetic</strong> (<em>*</em>) – γm = 1.2</p></li>
+<li><p><strong>modification_factor_k_mod</strong> – The modification factor kmod should be defined, only if the User defined</p></li>
+<li><p><strong>selected.</strong> (<em>and synthetic material type is</em>) – </p></li>
+<li><p><strong>Otherwise</strong> – </p></li>
+<li><p><strong>factors</strong> – </p></li>
+<li><p><strong>Steel</strong> – kmod = 1</p></li>
+<li><p><strong>Concrete</strong> – kmod = 1</p></li>
+<li><p><strong>Wood</strong> – kmod= 1</p></li>
+<li><p><strong>reduction_factor_on_maximum_moment</strong> – The reduction factor applied to the maximum allowable moment</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.diameter">
+<span class="sig-name descname"><span class="pre">diameter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.diameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.elastic_stiffness_ei">
+<span class="sig-name descname"><span class="pre">elastic_stiffness_ei</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.elastic_stiffness_ei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.material_factor_gamma_m">
+<span class="sig-name descname"><span class="pre">material_factor_gamma_m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.material_factor_gamma_m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.material_type">
+<span class="sig-name descname"><span class="pre">material_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType" title="geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType"><span class="pre">geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.material_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.modification_factor_k_mod">
+<span class="sig-name descname"><span class="pre">modification_factor_k_mod</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.modification_factor_k_mod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.mr_char_el">
+<span class="sig-name descname"><span class="pre">mr_char_el</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.mr_char_el" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.mr_char_pl">
+<span class="sig-name descname"><span class="pre">mr_char_pl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.mr_char_pl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.note_on_reduction_factor">
+<span class="sig-name descname"><span class="pre">note_on_reduction_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.note_on_reduction_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.reduction_factor_on_ei">
+<span class="sig-name descname"><span class="pre">reduction_factor_on_ei</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.reduction_factor_on_ei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.reduction_factor_on_maximum_moment">
+<span class="sig-name descname"><span class="pre">reduction_factor_on_maximum_moment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.reduction_factor_on_maximum_moment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.section_bottom_level">
+<span class="sig-name descname"><span class="pre">section_bottom_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.section_bottom_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">Sheet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sheet Piling selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the element inputted</p></li>
+<li><p><strong>sheet_pile_properties</strong> – properties specifically used for the Sheet pile element.</p></li>
+<li><p><strong>plastic_properties</strong> – plastic calculation properties. If Elastic calculation checkbox is not selected.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.plastic_properties">
+<span class="sig-name descname"><span class="pre">plastic_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties" title="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties"><span class="pre">geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.plastic_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.sheet_pile_properties">
+<span class="sig-name descname"><span class="pre">sheet_pile_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties" title="geolib.models.dsheetpiling.constructions.SheetPileProperties"><span class="pre">geolib.models.dsheetpiling.constructions.SheetPileProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.sheet_pile_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.wooden_sheet_pile_properties">
+<span class="sig-name descname"><span class="pre">wooden_sheet_pile_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties" title="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties"><span class="pre">geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.wooden_sheet_pile_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">SheetPileModelPlasticCalculationProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refering to Moment-Curvature Diagram(M-N-Kappa) in  the D-SheetPiling UI</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plastic_moment_positive</strong> – The plastic moment of the positive part of the moment-curvature diagram (in compression).</p></li>
+<li><p><strong>plastic_moment_negative</strong> – The plastic moment of the positive part of the moment-curvature diagram (in traction).</p></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../../_images/sheetpileplastic.png"><img alt="../../../_images/sheetpileplastic.png" class="align-center" src="../../../_images/sheetpileplastic.png" style="width: 420.0px; height: 280.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.plastic_moment_negative">
+<span class="sig-name descname"><span class="pre">plastic_moment_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.plastic_moment_negative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.plastic_moment_positive">
+<span class="sig-name descname"><span class="pre">plastic_moment_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.plastic_moment_positive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.symmetrical">
+<span class="sig-name descname"><span class="pre">symmetrical</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.symmetrical" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">SheetPileProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pile selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>material_type</strong> – Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.</p></li>
+<li><p><strong>acting_width</strong> – The acting width can be used when the effective width changes along the sheet piling. D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads, supports and reactions, except the normal force.</p></li>
+<li><p><strong>elastic_stiffness_ei</strong> – Stiffness of the section per running meter.</p></li>
+<li><p><strong>section_bottom_level</strong> – the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.</p></li>
+<li><p><strong>mr_char_el</strong> – Characterictic elastic moment without safety factors.</p></li>
+<li><p><strong>material_factor_gamma_m</strong> – <p>The partial safety factor γm should be defined, only if the User defined material type is selected. Otherwise, the program will automatically apply the following factors (acc. to the corresponding Eurocode) to calculate the design allowable moment:</p>
+<ul>
+<li><p>Steel: γm = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)</p></li>
+<li><p>Concrete: γm = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6</p></li>
+<li><p>Wood: γm = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)</p></li>
+<li><p>Synthetic: γm = 1.2</p></li>
+</ul>
+</p></li>
+<li><p><strong>modification_factor_k_mod</strong> – <p>The modification factor kmod should be defined, only if the User defined and synthetic material type is selected. Otherwise, the program will automatically apply the following factors:</p>
+<ul>
+<li><p>Steel: kmod = 1</p></li>
+<li><p>Concrete: kmod = 1</p></li>
+<li><p>Wood: kmod= 1</p></li>
+</ul>
+</p></li>
+<li><p><strong>reduction_factor_on_maximum_moment</strong> – The reduction factor applied to the maximum allowable moment</p></li>
+<li><p><strong>reduction_factor_on_ei</strong> – Reduction factor applied on the stiffness EI of the pile.</p></li>
+<li><p><strong>coating_area</strong> – The area of coating of the sheet piling (&gt; 1). This is defined as the</p></li>
+<li><p><strong>wall</strong><strong>]</strong><strong></strong> (<em>length of the perimeter of the sheet piling section per running meter of wall</em><em> [</em><em>m2/m2</em>) – </p></li>
+<li><p><strong>height</strong> – The thickness of the sheet piling profile [mm].</p></li>
+<li><p><strong>elastic_section_modulus_w_el</strong> – The section modulus (also called resisting moment in the Netherlands) of the sheet piling,</p></li>
+<li><p><strong>[</strong><strong>cm3/m</strong><strong>]</strong> – </p></li>
+<li><p><strong>control</strong> (<em>used for a Feasibility</em>) – </p></li>
+<li><p><strong>section_area</strong> – The cross-sectional area of the sheet piling, [cm3/m].</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.acting_width">
+<span class="sig-name descname"><span class="pre">acting_width</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.acting_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.coating_area">
+<span class="sig-name descname"><span class="pre">coating_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.coating_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.elastic_section_modulus_w_el">
+<span class="sig-name descname"><span class="pre">elastic_section_modulus_w_el</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.elastic_section_modulus_w_el" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.elastic_stiffness_ei">
+<span class="sig-name descname"><span class="pre">elastic_stiffness_ei</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.elastic_stiffness_ei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.material_factor_gamma_m">
+<span class="sig-name descname"><span class="pre">material_factor_gamma_m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.material_factor_gamma_m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.material_type">
+<span class="sig-name descname"><span class="pre">material_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType" title="geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType"><span class="pre">geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.material_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.modification_factor_k_mod">
+<span class="sig-name descname"><span class="pre">modification_factor_k_mod</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.modification_factor_k_mod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.mr_char_el">
+<span class="sig-name descname"><span class="pre">mr_char_el</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.mr_char_el" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.mr_char_pl">
+<span class="sig-name descname"><span class="pre">mr_char_pl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.mr_char_pl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.note_on_reduction_factor">
+<span class="sig-name descname"><span class="pre">note_on_reduction_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.note_on_reduction_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.reduction_factor_on_ei">
+<span class="sig-name descname"><span class="pre">reduction_factor_on_ei</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.reduction_factor_on_ei" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.reduction_factor_on_maximum_moment">
+<span class="sig-name descname"><span class="pre">reduction_factor_on_maximum_moment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.reduction_factor_on_maximum_moment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.section_area">
+<span class="sig-name descname"><span class="pre">section_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.section_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.section_bottom_level">
+<span class="sig-name descname"><span class="pre">section_bottom_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.section_bottom_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.width_of_sheet_piles">
+<span class="sig-name descname"><span class="pre">width_of_sheet_piles</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.width_of_sheet_piles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">WoodenSheetPileProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wooden pile selected from the model window in D-Sheet Piling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elasticity_modulus_e_m_0_mean</strong> – The mean modulus of elasticity per running meter.</p></li>
+<li><p><strong>charac_flexural_strength_f_m_0_char</strong> – The characteristic flexural strength.</p></li>
+<li><p><strong>system_factor_k_sys</strong> – The system factor that considers the cooperation of structural elements.</p></li>
+<li><p><strong>deform_factor_k_def</strong> – Specifies deformation factor for the hardwoods or the reduction of the stiffness caused by the saturation of softwoods.</p></li>
+<li><p><strong>creep_factor_psi_2_eff</strong> – The value of considers the percentage of the load that is constantly present.</p></li>
+<li><p><strong>material_factor_gamma_m</strong> – The material factor.</p></li>
+<li><p><strong>modif_factor_on_f_m_0_char_short_term_k_mod_f_short</strong> – The short term modification factor of the strength to count for duration life of the wooden pile.</p></li>
+<li><p><strong>modif_factor_on_f_m_0_char_long_term_k_mod_f_long</strong> – The long term modification factor of the strength to count for duration life of the wooden pile.</p></li>
+<li><p><strong>modification_factor_on_e_m_0_d_k_mod_e</strong> – This value describes the modification factor of the elasticity.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.charac_flexural_strength_f_m_0_char">
+<span class="sig-name descname"><span class="pre">charac_flexural_strength_f_m_0_char</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.charac_flexural_strength_f_m_0_char" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.creep_factor_psi_2_eff">
+<span class="sig-name descname"><span class="pre">creep_factor_psi_2_eff</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.creep_factor_psi_2_eff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.deform_factor_k_def">
+<span class="sig-name descname"><span class="pre">deform_factor_k_def</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.deform_factor_k_def" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.elasticity_modulus_e_m_0_mean">
+<span class="sig-name descname"><span class="pre">elasticity_modulus_e_m_0_mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.elasticity_modulus_e_m_0_mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.material_factor_gamma_m">
+<span class="sig-name descname"><span class="pre">material_factor_gamma_m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.material_factor_gamma_m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modif_factor_on_f_m_0_char_long_term_k_mod_f_long">
+<span class="sig-name descname"><span class="pre">modif_factor_on_f_m_0_char_long_term_k_mod_f_long</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modif_factor_on_f_m_0_char_long_term_k_mod_f_long" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modif_factor_on_f_m_0_char_short_term_k_mod_f_short">
+<span class="sig-name descname"><span class="pre">modif_factor_on_f_m_0_char_short_term_k_mod_f_short</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modif_factor_on_f_m_0_char_short_term_k_mod_f_short" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modification_factor_on_e_m_0_d_k_mod_e">
+<span class="sig-name descname"><span class="pre">modification_factor_on_e_m_0_d_k_mod_e</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modification_factor_on_e_m_0_d_k_mod_e" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.system_factor_k_sys">
+<span class="sig-name descname"><span class="pre">system_factor_k_sys</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.system_factor_k_sys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsheetpiling.calculation_options.html" title="Previous document">geolib.models.dsheetpiling.calculation_options</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsheetpiling.dsheetpiling_model.html" title="Next document">geolib.models.dsheetpiling.dsheetpiling_model</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dstability.html">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../soils.html">Soils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../api.html">API Reference</a><ul>
+  <li><a href="../dsheetpiling.html">D-Sheet Piling</a><ul>
+  <li><a href="geolib.models.dsheetpiling.html">geolib.models.dsheetpiling</a><ul>
+      <li>Previous: <a href="geolib.models.dsheetpiling.calculation_options.html" title="previous chapter">geolib.models.dsheetpiling.calculation_options</a></li>
+      <li>Next: <a href="geolib.models.dsheetpiling.dsheetpiling_model.html" title="next chapter">geolib.models.dsheetpiling.dsheetpiling_model</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

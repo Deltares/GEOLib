@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dsheetpiling.surface &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="geolib.models.dsheetpiling.water_level" href="geolib.models.dsheetpiling.water_level.html" />
+    <link rel="prev" title="geolib.models.dsheetpiling.supports" href="geolib.models.dsheetpiling.supports.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsheetpiling.supports.html" title="Previous document">geolib.models.dsheetpiling.supports</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsheetpiling.water_level.html" title="Next document">geolib.models.dsheetpiling.water_level</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dsheetpiling.surface">
+<span id="geolib-models-dsheetpiling-surface"></span><h1>geolib.models.dsheetpiling.surface<a class="headerlink" href="#module-geolib.models.dsheetpiling.surface" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.surface.Surface" title="geolib.models.dsheetpiling.surface.Surface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Surface</span></code></a>(**data)</p></td>
+<td><p>Surface.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.surface.Surface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.surface.</span></span><span class="sig-name descname"><span class="pre">Surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.surface.Surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Surface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Name of the surface.</p></li>
+<li><p><strong>points</strong> – Surface points. Points (X, Z) must be defined from the sheet outwards regarding x-coordinate.</p></li>
+<li><p><strong>distribution_type</strong> – Distribution type.</p></li>
+<li><p><strong>std</strong> – Standard deviation of the distribution type.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.surface.Surface.distribution_type">
+<span class="sig-name descname"><span class="pre">distribution_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.DistributionType" title="geolib.models.dsheetpiling.settings.DistributionType"><span class="pre">geolib.models.dsheetpiling.settings.DistributionType</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.surface.Surface.distribution_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.surface.Surface.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.surface.ConstrainedStrValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.surface.Surface.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.surface.Surface.points">
+<span class="sig-name descname"><span class="pre">points</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">types.ConstrainedListValue</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><span class="pre">geolib.geometry.one.Point</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.surface.Surface.points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.surface.Surface.points_must_be_increasing_and_greater_or_equal_to_zero">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points_must_be_increasing_and_greater_or_equal_to_zero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.surface.Surface.points_must_be_increasing_and_greater_or_equal_to_zero" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.surface.Surface.std">
+<span class="sig-name descname"><span class="pre">std</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dsheetpiling.surface.ConstrainedFloatValue</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.surface.Surface.std" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsheetpiling.supports.html" title="Previous document">geolib.models.dsheetpiling.supports</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsheetpiling.water_level.html" title="Next document">geolib.models.dsheetpiling.water_level</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dstability.html">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../soils.html">Soils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../api.html">API Reference</a><ul>
+  <li><a href="../dsheetpiling.html">D-Sheet Piling</a><ul>
+  <li><a href="geolib.models.dsheetpiling.html">geolib.models.dsheetpiling</a><ul>
+      <li>Previous: <a href="geolib.models.dsheetpiling.supports.html" title="previous chapter">geolib.models.dsheetpiling.supports</a></li>
+      <li>Next: <a href="geolib.models.dsheetpiling.water_level.html" title="next chapter">geolib.models.dsheetpiling.water_level</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

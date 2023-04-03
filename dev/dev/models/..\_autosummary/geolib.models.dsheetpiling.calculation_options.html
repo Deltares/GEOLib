@@ -1,0 +1,725 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dsheetpiling.calculation_options &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="geolib.models.dsheetpiling.constructions" href="geolib.models.dsheetpiling.constructions.html" />
+    <link rel="prev" title="geolib.models.dsheetpiling" href="geolib.models.dsheetpiling.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsheetpiling.html" title="Previous document">geolib.models.dsheetpiling</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsheetpiling.constructions.html" title="Next document">geolib.models.dsheetpiling.constructions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dsheetpiling.calculation_options">
+<span id="geolib-models-dsheetpiling-calculation-options"></span><h1>geolib.models.dsheetpiling.calculation_options<a class="headerlink" href="#module-geolib.models.dsheetpiling.calculation_options" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions" title="geolib.models.dsheetpiling.calculation_options.CalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Base class for all calculation options.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage" title="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalculationOptionsPerStage</span></code></a>(**data)</p></td>
+<td><p>Calculation options are needed when a verification calculation is performed with method B.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DesignSheetpilingLengthCalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Design sheet pile calculation selected in Start Calculation window.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KranzAnchorStrengthCalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Kranz anchor strength calculation selected in Start Calculation window.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OverallStabilityCalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Overall stability calculation selected in Start Calculation window.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReliabilityAnalysisCalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Reliability analysis calculation selected in Start Calculation window.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StandardCalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Standard calculation selected in Start Calculation window.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerifyCalculationOptions</span></code></a>(**data)</p></td>
+<td><p>Verify sheet pile calculation selected in Start Calculation window.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">CalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all calculation options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>calc_first_stage_initial</strong> – This option determines equal neutral stresses at both sides, for initially non-horizontal surfaces or initial surcharges.</p></li>
+<li><p><strong>calc_minor_nodes_on</strong> – Select either the faster, classic, coarse element determination (False) of active and passive pressures, or the more accurate fine element determination(True).</p></li>
+<li><p><strong>calc_reduce_deltas</strong> – Set on True for reduction of the wall friction angles according to CUR 166 for the calculation of the passive earth pressure coefficients of Culmann method.</p></li>
+<li><p><strong>input_calculation_type</strong> – select the type of calculation that is going to be performed.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.calculation_properties">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculation_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions"><span class="pre">geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions"><span class="pre">geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions"><span class="pre">geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions"><span class="pre">geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions"><span class="pre">geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions"><span class="pre">geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.calculation_properties" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">StandardCalculationOptions</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignSheetpilingLengthCalculationOptions</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerifyCalculationOptions</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">KranzAnchorStrengthCalculationOptions</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">OverallStabilityCalculationOptions</span></code></a>, <a class="reference internal" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions" title="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReliabilityAnalysisCalculationOptions</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">CalculationOptionsPerStage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculation options are needed when a verification calculation is performed with method B.
+The user can specify a different partial factor set for each of the stages. This input is optional
+when another type of calculation is performed.
+:param anchor_factor: multiplication factor for the anchor stiffness.
+:param partial_factor_set: partial factor sets corresponding to different code annexes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.anchor_factor">
+<span class="sig-name descname"><span class="pre">anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.anchor_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.partial_factor_set">
+<span class="sig-name descname"><span class="pre">partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetCUR" title="geolib.models.dsheetpiling.settings.PartialFactorSetCUR"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetCUR</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">DesignSheetpilingLengthCalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design sheet pile calculation selected in Start Calculation window.</p>
+<p>Note that design_pile_length can show up as a different value in the GUI
+compared to what’s been set in the .shi file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>design_stage</strong> – Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.</p></li>
+<li><p><strong>design_pile_length_from</strong> – The starting point of the pile over which the analysis should be performed.</p></li>
+<li><p><strong>design_pile_length_to</strong> – The end point of the pile over which the analysis should be performed</p></li>
+<li><p><strong>design_pile_length_decrement</strong> – the Decrement in length for each analysis step.</p></li>
+<li><p><strong>design_type</strong> – types of design.</p></li>
+<li><p><strong>design_eurocode_partial_factor_set</strong> – Select partial factor set</p></li>
+<li><p><strong>design_partial_factor_set_ec7_nad_nl</strong> – Select partial factor set</p></li>
+<li><p><strong>design_ec7_nl_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
+<li><p><strong>design_partial_factor_set_ec7_nad_b</strong> – Select partial factor set</p></li>
+<li><p><strong>design_ec7_b_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
+<li><p><strong>design_partial_factor_set</strong> – Select partial factor set</p></li>
+<li><p><strong>design_cur_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_cur_method">
+<span class="sig-name descname"><span class="pre">design_cur_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorCalculationType" title="geolib.models.dsheetpiling.settings.PartialFactorCalculationType"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorCalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_cur_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_ec7_b_method">
+<span class="sig-name descname"><span class="pre">design_ec7_b_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorCalculationType" title="geolib.models.dsheetpiling.settings.PartialFactorCalculationType"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorCalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_ec7_b_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_ec7_nl_method">
+<span class="sig-name descname"><span class="pre">design_ec7_nl_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorCalculationType" title="geolib.models.dsheetpiling.settings.PartialFactorCalculationType"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorCalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_ec7_nl_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_eurocode_partial_factor_set">
+<span class="sig-name descname"><span class="pre">design_eurocode_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_eurocode_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_partial_factor_set">
+<span class="sig-name descname"><span class="pre">design_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetCUR" title="geolib.models.dsheetpiling.settings.PartialFactorSetCUR"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetCUR</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_partial_factor_set_ec7_nad_b">
+<span class="sig-name descname"><span class="pre">design_partial_factor_set_ec7_nad_b</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_partial_factor_set_ec7_nad_b" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_partial_factor_set_ec7_nad_nl">
+<span class="sig-name descname"><span class="pre">design_partial_factor_set_ec7_nad_nl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_partial_factor_set_ec7_nad_nl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_decrement">
+<span class="sig-name descname"><span class="pre">design_pile_length_decrement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_decrement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_from">
+<span class="sig-name descname"><span class="pre">design_pile_length_from</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_to">
+<span class="sig-name descname"><span class="pre">design_pile_length_to</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_stage">
+<span class="sig-name descname"><span class="pre">design_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedIntValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_type">
+<span class="sig-name descname"><span class="pre">design_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.DesignType" title="geolib.models.dsheetpiling.settings.DesignType"><span class="pre">geolib.models.dsheetpiling.settings.DesignType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">KranzAnchorStrengthCalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kranz anchor strength calculation selected in Start Calculation
+window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cur_anchor_force_stage</strong> – Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.cur_anchor_force_stage">
+<span class="sig-name descname"><span class="pre">cur_anchor_force_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedIntValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.cur_anchor_force_stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">OverallStabilityCalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overall stability calculation selected in Start Calculation window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cur_stability_stage</strong> – Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.</p></li>
+<li><p><strong>overall_stability_type</strong> – which type of calculation is going to be performed</p></li>
+<li><p><strong>stability_eurocode_partial_factor_set</strong> – partial factor set selected for the EC7 General calculation</p></li>
+<li><p><strong>stability_ec7_nl_partial_factor_set</strong> – partial factor set selected for the EC7 NL calculation</p></li>
+<li><p><strong>stability_ec7_b_partial_factor_set</strong> – partial factor set selected for the EC7 B calculation</p></li>
+<li><p><strong>stability_cur_partial_factor_set</strong> – partial factor set selected for the CUR calculation</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.cur_stability_stage">
+<span class="sig-name descname"><span class="pre">cur_stability_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedIntValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.cur_stability_stage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.overall_stability_type">
+<span class="sig-name descname"><span class="pre">overall_stability_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.DesignType" title="geolib.models.dsheetpiling.settings.DesignType"><span class="pre">geolib.models.dsheetpiling.settings.DesignType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.overall_stability_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_cur_partial_factor_set">
+<span class="sig-name descname"><span class="pre">stability_cur_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetCUR" title="geolib.models.dsheetpiling.settings.PartialFactorSetCUR"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetCUR</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_cur_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_ec7_b_partial_factor_set">
+<span class="sig-name descname"><span class="pre">stability_ec7_b_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADB</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_ec7_b_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_ec7_nl_partial_factor_set">
+<span class="sig-name descname"><span class="pre">stability_ec7_nl_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_ec7_nl_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_eurocode_partial_factor_set">
+<span class="sig-name descname"><span class="pre">stability_eurocode_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.stability_eurocode_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">ReliabilityAnalysisCalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reliability analysis calculation selected in Start Calculation
+window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">StandardCalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standard calculation selected in Start Calculation window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>calc_auto_lambdas_on</strong> – When True Automatic leaves the values of the lateral earth pressure ratios that are calculated by the Culmann (c, phi, delta) method as they are.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_auto_lambdas_on">
+<span class="sig-name descname"><span class="pre">calc_auto_lambdas_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_auto_lambdas_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.calculation_options.</span></span><span class="sig-name descname"><span class="pre">VerifyCalculationOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify sheet pile calculation selected in Start Calculation window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>verify_type</strong> – Select partial factor set</p></li>
+<li><p><strong>eurocode_partial_factor_set</strong> – Select partial factor set</p></li>
+<li><p><strong>eurocode_overall_stability</strong> – Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.</p></li>
+<li><p><strong>ec7_nl_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
+<li><p><strong>ec7_nl_overall_partial_factor_set</strong> – Select partial factor set</p></li>
+<li><p><strong>ec7_nl_overall_anchor_factor</strong> – multiplication factor for the anchor stiffness</p></li>
+<li><p><strong>ec7_nad_nl_overall_stability</strong> – Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.</p></li>
+<li><p><strong>ec7_b_overall_stability</strong> – Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.</p></li>
+<li><p><strong>nb_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
+<li><p><strong>cur_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
+<li><p><strong>cur_overall_partial_factor_set</strong> – Select partial factor set</p></li>
+<li><p><strong>cur_overall_anchor_factor</strong> – multiplication factor for the anchor stiffness</p></li>
+<li><p><strong>cur_overall_stability</strong> – Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.</p></li>
+<li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.allowable_anchor_force_calculation_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">allowable_anchor_force_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.allowable_anchor_force_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.calc_first_stage_initial">
+<span class="sig-name descname"><span class="pre">calc_first_stage_initial</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.calc_first_stage_initial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.calc_minor_nodes_on">
+<span class="sig-name descname"><span class="pre">calc_minor_nodes_on</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.calc_minor_nodes_on" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.calc_reduce_deltas">
+<span class="sig-name descname"><span class="pre">calc_reduce_deltas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.calc_reduce_deltas" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_method">
+<span class="sig-name descname"><span class="pre">cur_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorCalculationType" title="geolib.models.dsheetpiling.settings.PartialFactorCalculationType"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorCalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_anchor_factor">
+<span class="sig-name descname"><span class="pre">cur_overall_anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_anchor_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_partial_factor_set">
+<span class="sig-name descname"><span class="pre">cur_overall_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetCUR" title="geolib.models.dsheetpiling.settings.PartialFactorSetCUR"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetCUR</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_stability">
+<span class="sig-name descname"><span class="pre">cur_overall_stability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_stability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_b_overall_stability">
+<span class="sig-name descname"><span class="pre">ec7_b_overall_stability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_b_overall_stability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nad_nl_overall_stability">
+<span class="sig-name descname"><span class="pre">ec7_nad_nl_overall_stability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nad_nl_overall_stability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_method">
+<span class="sig-name descname"><span class="pre">ec7_nl_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorCalculationType" title="geolib.models.dsheetpiling.settings.PartialFactorCalculationType"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorCalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_anchor_factor">
+<span class="sig-name descname"><span class="pre">ec7_nl_overall_anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dsheetpiling.calculation_options.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_anchor_factor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_partial_factor_set">
+<span class="sig-name descname"><span class="pre">ec7_nl_overall_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL" title="geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetEC7NADNL</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.eurocode_overall_stability">
+<span class="sig-name descname"><span class="pre">eurocode_overall_stability</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.eurocode_overall_stability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.eurocode_partial_factor_set">
+<span class="sig-name descname"><span class="pre">eurocode_partial_factor_set</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorSetVerifyEC" title="geolib.models.dsheetpiling.settings.PartialFactorSetVerifyEC"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorSetVerifyEC</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.eurocode_partial_factor_set" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.input_calculation_type">
+<span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><span class="pre">geolib.models.dsheetpiling.settings.CalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.input_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.is_vibration_calculation">
+<span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.is_vibration_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.nb_method">
+<span class="sig-name descname"><span class="pre">nb_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.PartialFactorCalculationType" title="geolib.models.dsheetpiling.settings.PartialFactorCalculationType"><span class="pre">geolib.models.dsheetpiling.settings.PartialFactorCalculationType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.nb_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.verify_type">
+<span class="sig-name descname"><span class="pre">verify_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.VerifyType" title="geolib.models.dsheetpiling.settings.VerifyType"><span class="pre">geolib.models.dsheetpiling.settings.VerifyType</span></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.verify_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsheetpiling.html" title="Previous document">geolib.models.dsheetpiling</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsheetpiling.constructions.html" title="Next document">geolib.models.dsheetpiling.constructions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dstability.html">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../soils.html">Soils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../api.html">API Reference</a><ul>
+  <li><a href="../dsheetpiling.html">D-Sheet Piling</a><ul>
+  <li><a href="geolib.models.dsheetpiling.html">geolib.models.dsheetpiling</a><ul>
+      <li>Previous: <a href="geolib.models.dsheetpiling.html" title="previous chapter">geolib.models.dsheetpiling</a></li>
+      <li>Next: <a href="geolib.models.dsheetpiling.constructions.html" title="next chapter">geolib.models.dsheetpiling.constructions</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

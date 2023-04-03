@@ -6,28 +6,15 @@ D-Stability
 D-Stability model
 -----------------
 
-.. automodule:: geolib.models.dstability.dstability_model
-.. automodule:: geolib.models.dstability.analysis
+.. autosummary::
+   :toctree: ../_autosummary
+   :recursive:
 
+   geolib.models.dstability
 
-
-Loads
-----------------
-
-.. automodule:: geolib.models.dstability.loads
-
-
-
-Reinforcements
--------------------------
-
-.. automodule:: geolib.models.dstability.reinforcements
-
-
-States
-------
-
-.. automodule:: geolib.models.dstability.states
+Tutorial
+--------
+You can find the D-Stability tutorial here: :doc:`../../community/tutorial_dstability`
 
 
 Geometry
@@ -79,30 +66,5 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
     ds.filename = Path('geometry_example.stix')
     ds.serialize(ds.filename)
 
-..  image:: /figures/dstability/geometry_example.png
+..  image:: /figures/dgeosuite/geometry_example.png
     :width: 800
-
-Output
-------
-
-.. autoclass:: geolib.models.dstability.internal.UpliftVanResult
-.. autoclass:: geolib.models.dstability.internal.UpliftVanParticleSwarmResult
-.. autoclass:: geolib.models.dstability.internal.UpliftVanReliabilityResult
-.. autoclass:: geolib.models.dstability.internal.SpencerGeneticAlgorithmResult
-.. autoclass:: geolib.models.dstability.internal.SpencerReliabilityResult
-.. autoclass:: geolib.models.dstability.internal.SpencerResult
-.. autoclass:: geolib.models.dstability.internal.BishopBruteForceResult
-.. autoclass:: geolib.models.dstability.internal.BishopReliabilityResult
-.. autoclass:: geolib.models.dstability.internal.BishopResult
-
-.. autoclass:: geolib.models.dstability.internal.PersistableSoilContribution
-.. autoclass:: geolib.models.dstability.internal.PersistableStageContribution
-.. autoclass:: geolib.models.dstability.internal.PersistableSpencerSlice
-.. autoclass:: geolib.models.dstability.internal.PersistableStateLinePointContribution
-.. autoclass:: geolib.models.dstability.internal.PersistableStatePointContribution
-.. autoclass:: geolib.models.dstability.internal.PersistablePoint
-.. autoclass:: geolib.models.dstability.internal.PersistableSlice
-
-.. autoclass:: geolib.models.dstability.internal.SpencerSlipPlaneResult
-.. autoclass:: geolib.models.dstability.internal.UpliftVanSlipCircleResult
-.. autoclass:: geolib.models.dstability.internal.BishopSlipCircleResult

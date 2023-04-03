@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dfoundations.internal_soil &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="geolib.models.dfoundations.piles" href="geolib.models.dfoundations.piles.html" />
+    <link rel="prev" title="geolib.models.dfoundations.internal" href="geolib.models.dfoundations.internal.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dfoundations.internal.html" title="Previous document">geolib.models.dfoundations.internal</a>
+        </li>
+        <li>
+          <a href="geolib.models.dfoundations.piles.html" title="Next document">geolib.models.dfoundations.piles</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dfoundations.internal_soil">
+<span id="geolib-models-dfoundations-internal-soil"></span><h1>geolib.models.dfoundations.internal_soil<a class="headerlink" href="#module-geolib.models.dfoundations.internal_soil" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.MaxConeResistType" title="geolib.models.dfoundations.internal_soil.MaxConeResistType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaxConeResistType</span></code></a>(value)</p></td>
+<td><p>An enumeration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.Soil" title="geolib.models.dfoundations.internal_soil.Soil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Soil</span></code></a>(*args, name[, soilcolor, soilsoiltype, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe" title="geolib.models.dfoundations.internal_soil.SoilTypeBe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SoilTypeBe</span></code></a>(value)</p></td>
+<td><p>An enumeration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl" title="geolib.models.dfoundations.internal_soil.SoilTypeNl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SoilTypeNl</span></code></a>(value)</p></td>
+<td><p>An enumeration.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.MaxConeResistType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dfoundations.internal_soil.</span></span><span class="sig-name descname"><span class="pre">MaxConeResistType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.MaxConeResistType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.MaxConeResistType.MANUAL">
+<span class="sig-name descname"><span class="pre">MANUAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.MaxConeResistType.MANUAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.MaxConeResistType.STANDARD">
+<span class="sig-name descname"><span class="pre">STANDARD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.MaxConeResistType.STANDARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dfoundations.internal_soil.</span></span><span class="sig-name descname"><span class="pre">Soil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedStrValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcolor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10871211</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilsoiltype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl" title="geolib.models.dfoundations.internal_soil.SoilTypeNl"><span class="pre">geolib.models.dfoundations.internal_soil.SoilTypeNl</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SoilTypeNl.SAND</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilbelgiansoiltype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe" title="geolib.models.dfoundations.internal_soil.SoilTypeBe"><span class="pre">geolib.models.dfoundations.internal_soil.SoilTypeBe</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">SoilTypeBe.SAND</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilgamdry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilgamwet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilinitialvoidratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildiameterd50</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilminvoidratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilmaxvoidratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcohesion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcu</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilmaxconeresisttype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.MaxConeResistType" title="geolib.models.dfoundations.internal_soil.MaxConeResistType"><span class="pre">geolib.models.dfoundations.internal_soil.MaxConeResistType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">MaxConeResistType.STANDARD</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilmaxconeresist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilusetension</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../_autosummary/geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.TRUE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilca</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.004</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilccindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.126</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.default_soils">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">default_soils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'BEARING_PILES'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.default_soils" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="#geolib.models.dfoundations.internal_soil.Soil" title="geolib.models.dfoundations.internal_soil.Soil"><code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedStrValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilbelgiansoiltype">
+<span class="sig-name descname"><span class="pre">soilbelgiansoiltype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe" title="geolib.models.dfoundations.internal_soil.SoilTypeBe"><span class="pre">geolib.models.dfoundations.internal_soil.SoilTypeBe</span></a></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilbelgiansoiltype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilca">
+<span class="sig-name descname"><span class="pre">soilca</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilccindex">
+<span class="sig-name descname"><span class="pre">soilccindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilccindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilcohesion">
+<span class="sig-name descname"><span class="pre">soilcohesion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilcohesion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilcolor">
+<span class="sig-name descname"><span class="pre">soilcolor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilcolor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilcu">
+<span class="sig-name descname"><span class="pre">soilcu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilcu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soildiameterd50">
+<span class="sig-name descname"><span class="pre">soildiameterd50</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soildiameterd50" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilgamdry">
+<span class="sig-name descname"><span class="pre">soilgamdry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilgamdry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilgamwet">
+<span class="sig-name descname"><span class="pre">soilgamwet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilgamwet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilinitialvoidratio">
+<span class="sig-name descname"><span class="pre">soilinitialvoidratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilinitialvoidratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilmaxconeresist">
+<span class="sig-name descname"><span class="pre">soilmaxconeresist</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilmaxconeresist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilmaxconeresisttype">
+<span class="sig-name descname"><span class="pre">soilmaxconeresisttype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.MaxConeResistType" title="geolib.models.dfoundations.internal_soil.MaxConeResistType"><span class="pre">geolib.models.dfoundations.internal_soil.MaxConeResistType</span></a></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilmaxconeresisttype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilmaxvoidratio">
+<span class="sig-name descname"><span class="pre">soilmaxvoidratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilmaxvoidratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilminvoidratio">
+<span class="sig-name descname"><span class="pre">soilminvoidratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilminvoidratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilphi">
+<span class="sig-name descname"><span class="pre">soilphi</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dfoundations.internal_soil.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilphi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilsoiltype">
+<span class="sig-name descname"><span class="pre">soilsoiltype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl" title="geolib.models.dfoundations.internal_soil.SoilTypeNl"><span class="pre">geolib.models.dfoundations.internal_soil.SoilTypeNl</span></a></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilsoiltype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.Soil.soilusetension">
+<span class="sig-name descname"><span class="pre">soilusetension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../_autosummary/geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.Soil.soilusetension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeBe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dfoundations.internal_soil.</span></span><span class="sig-name descname"><span class="pre">SoilTypeBe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeBe.CLAY">
+<span class="sig-name descname"><span class="pre">CLAY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe.CLAY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeBe.GRAVEL">
+<span class="sig-name descname"><span class="pre">GRAVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe.GRAVEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeBe.LOAM">
+<span class="sig-name descname"><span class="pre">LOAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe.LOAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeBe.PEAT">
+<span class="sig-name descname"><span class="pre">PEAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe.PEAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeBe.SAND">
+<span class="sig-name descname"><span class="pre">SAND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeBe.SAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dfoundations.internal_soil.</span></span><span class="sig-name descname"><span class="pre">SoilTypeNl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl.CLAY">
+<span class="sig-name descname"><span class="pre">CLAY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl.CLAY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl.GRAVEL">
+<span class="sig-name descname"><span class="pre">GRAVEL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl.GRAVEL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl.LOAM">
+<span class="sig-name descname"><span class="pre">LOAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl.LOAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl.PEAT">
+<span class="sig-name descname"><span class="pre">PEAT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl.PEAT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl.SAND">
+<span class="sig-name descname"><span class="pre">SAND</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl.SAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dfoundations.internal_soil.SoilTypeNl.SANDYLOAM">
+<span class="sig-name descname"><span class="pre">SANDYLOAM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#geolib.models.dfoundations.internal_soil.SoilTypeNl.SANDYLOAM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dfoundations.internal.html" title="Previous document">geolib.models.dfoundations.internal</a>
+        </li>
+        <li>
+          <a href="geolib.models.dfoundations.piles.html" title="Next document">geolib.models.dfoundations.piles</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../_autosummary/geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../dstability.html">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../soils.html">Soils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../api.html">API Reference</a><ul>
+  <li><a href="../dfoundations.html">D-Foundations</a><ul>
+  <li><a href="geolib.models.dfoundations.html">geolib.models.dfoundations</a><ul>
+      <li>Previous: <a href="geolib.models.dfoundations.internal.html" title="previous chapter">geolib.models.dfoundations.internal</a></li>
+      <li>Next: <a href="geolib.models.dfoundations.piles.html" title="next chapter">geolib.models.dfoundations.piles</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

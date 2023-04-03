@@ -11,6 +11,17 @@ This part of the documentation covers all the interfaces of GEOLib. Click on "ge
 
    geolib
 
+Models
+------------------
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   models/*
+   geometry
+   soils
+ 
 Indices and tables
 ------------------
 

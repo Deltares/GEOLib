@@ -57,7 +57,7 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a>(**data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a>(**data)</p></td>
 <td><p>D-Settlement is a dedicated tool for predicting soil settlements by external loading.</p></td>
 </tr>
 </tbody>
@@ -160,7 +160,7 @@ by external loading.</p>
 <li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedStrValue</span></code>) – </p></li>
 <li><p><strong>time</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">timedelta</span></code>) – </p></li>
 <li><p><strong>point</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>) – </p></li>
-<li><p><strong>other_load</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.TrapeziformLoad" title="geolib.models.dsettlement.loads.TrapeziformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrapeziformLoad</span></code></a>, <a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.RectangularLoad" title="geolib.models.dsettlement.loads.RectangularLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">RectangularLoad</span></code></a>, <a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.CircularLoad" title="geolib.models.dsettlement.loads.CircularLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircularLoad</span></code></a>, <a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.TankLoad" title="geolib.models.dsettlement.loads.TankLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">TankLoad</span></code></a>, <a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.UniformLoad" title="geolib.models.dsettlement.loads.UniformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformLoad</span></code></a>]) – </p></li>
+<li><p><strong>other_load</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="geolib.models.dsettlement.loads.html#geolib.models.dsettlement.loads.TrapeziformLoad" title="geolib.models.dsettlement.loads.TrapeziformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrapeziformLoad</span></code></a>, <a class="reference internal" href="geolib.models.dsettlement.loads.html#geolib.models.dsettlement.loads.RectangularLoad" title="geolib.models.dsettlement.loads.RectangularLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">RectangularLoad</span></code></a>, <a class="reference internal" href="geolib.models.dsettlement.loads.html#geolib.models.dsettlement.loads.CircularLoad" title="geolib.models.dsettlement.loads.CircularLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircularLoad</span></code></a>, <a class="reference internal" href="geolib.models.dsettlement.loads.html#geolib.models.dsettlement.loads.TankLoad" title="geolib.models.dsettlement.loads.TankLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">TankLoad</span></code></a>, <a class="reference internal" href="geolib.models.dsettlement.loads.html#geolib.models.dsettlement.loads.UniformLoad" title="geolib.models.dsettlement.loads.UniformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniformLoad</span></code></a>]) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>
@@ -263,12 +263,12 @@ by external loading.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.output">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.internal.Results" title="geolib.models.dsettlement.internal.Results"><span class="pre">geolib.models.dsettlement.internal.Results</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.output" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.Results" title="geolib.models.dsettlement.internal.Results"><span class="pre">geolib.models.dsettlement.internal.Results</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Access internal dict-like datastructure of the output.</p>
 <p>Requires a successful execute.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.internal.Results" title="geolib.models.dsettlement.internal.Results"><code class="xref py py-class docutils literal notranslate"><span class="pre">Results</span></code></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.Results" title="geolib.models.dsettlement.internal.Results"><code class="xref py py-class docutils literal notranslate"><span class="pre">Results</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -368,8 +368,8 @@ by external loading.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>constitutive_model</strong> (<a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.internal.SoilModel" title="geolib.models.dsettlement.internal.SoilModel"><em>SoilModel</em></a>) – enum</p></li>
-<li><p><strong>consolidation_model</strong> (<a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.internal.ConsolidationModel" title="geolib.models.dsettlement.internal.ConsolidationModel"><em>ConsolidationModel</em></a>) – enum</p></li>
+<li><p><strong>constitutive_model</strong> (<a class="reference internal" href="geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.SoilModel" title="geolib.models.dsettlement.internal.SoilModel"><em>SoilModel</em></a>) – enum</p></li>
+<li><p><strong>consolidation_model</strong> (<a class="reference internal" href="geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.ConsolidationModel" title="geolib.models.dsettlement.internal.ConsolidationModel"><em>ConsolidationModel</em></a>) – enum</p></li>
 <li><p><strong>is_two_dimensional</strong> (<em>bool</em>) – true if geometry is 2 dimensional</p></li>
 <li><p><strong>strain_type</strong> (<a class="reference internal" href="geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.StrainType" title="geolib.models.dsettlement.internal.StrainType"><em>StrainType</em></a>) – enum</p></li>
 <li><p><strong>is_vertical_drain</strong> (<em>bool</em>) – true if vertical drain is present</p></li>
@@ -433,7 +433,7 @@ Monte Carlo analysis requires a large number of samples, if many stochastic para
 <span class="sig-name descname"><span class="pre">set_vertical_drain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verticaldrain</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_vertical_drain" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>verticaldrain</strong> (<a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.drains.VerticalDrain" title="geolib.models.dsettlement.drains.VerticalDrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalDrain</span></code></a>) – </p>
+<dd class="field-odd"><p><strong>verticaldrain</strong> (<a class="reference internal" href="geolib.models.dsettlement.drains.html#geolib.models.dsettlement.drains.VerticalDrain" title="geolib.models.dsettlement.drains.VerticalDrain"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalDrain</span></code></a>) – </p>
 </dd>
 </dl>
 </dd></dl>
@@ -519,13 +519,15 @@ X and Y coordinates should be defined for each vertical.</p>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="geolib.html">geolib</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="geolib.errors.html">geolib.errors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="geolib.geometry.html">geolib.geometry</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="geolib.models.html">geolib.models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="geolib.service.html">geolib.service</a></li>
-<li class="toctree-l3"><a class="reference internal" href="geolib.soils.html">geolib.soils</a></li>
-<li class="toctree-l3"><a class="reference internal" href="geolib.utils.html">geolib.utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../models/dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models/dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../models/dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models/dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../models/dstability.html">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soils.html">Soils</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>

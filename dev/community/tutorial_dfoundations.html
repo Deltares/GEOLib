@@ -51,7 +51,7 @@
   <section id="tutorial-d-foundations">
 <h1>Tutorial D-Foundations<a class="headerlink" href="#tutorial-d-foundations" title="Permalink to this headline">¶</a></h1>
 <ol class="arabic simple">
-<li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a>.</p></li>
+<li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a>.</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dfoundations</span><span class="o">.</span><span class="n">DFoundationsModel</span><span class="p">()</span>
 </pre></div>
@@ -59,7 +59,7 @@
 <p>2. When using the python API for D-Foundations, it is very important to start the project with setting the calculation
 options and the model. If this is not done, certain project data can be unintentionally overwritten.</p>
 <p>In this tutorial model options are set for bearing piles. The calculation model is in this case
-<a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.BearingPilesModel" title="geolib.models.dfoundations.dfoundations_model.BearingPilesModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPilesModel</span></code></a>.</p>
+<a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.BearingPilesModel" title="geolib.models.dfoundations.dfoundations_model.BearingPilesModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPilesModel</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_options</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">dfoundations</span><span class="o">.</span><span class="n">dfoundations_model</span><span class="o">.</span><span class="n">BearingPilesModel</span><span class="p">(</span>
     <span class="n">is_rigid</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">factor_xi3</span><span class="o">=</span><span class="mi">9</span>
 <span class="p">)</span>
@@ -71,7 +71,7 @@ options and the model. If this is not done, certain project data can be unintent
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p>A CPT must be initialised using the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.profiles.CPT" title="geolib.models.dfoundations.profiles.CPT"><code class="xref py py-class docutils literal notranslate"><span class="pre">CPT</span></code></a>.</p></li>
+<li><p>A CPT must be initialised using the class <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.profiles.html#geolib.models.dfoundations.profiles.CPT" title="geolib.models.dfoundations.profiles.CPT"><code class="xref py py-class docutils literal notranslate"><span class="pre">CPT</span></code></a>.</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cpt</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">CPT</span><span class="p">(</span>
     <span class="n">cptname</span><span class="o">=</span><span class="s2">&quot;DELFT1&quot;</span><span class="p">,</span>
@@ -92,7 +92,7 @@ options and the model. If this is not done, certain project data can be unintent
 </pre></div>
 </div>
 <p>After inputing the CPT the rest of the inputs for the profiles should be initialised.
-To do that initialise the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.profiles.Excavation" title="geolib.models.dfoundations.profiles.Excavation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Excavation</span></code></a>.</p>
+To do that initialise the class <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.profiles.html#geolib.models.dfoundations.profiles.Excavation" title="geolib.models.dfoundations.profiles.Excavation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Excavation</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">excavation</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">Excavation</span><span class="p">(</span><span class="n">excavation_level</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -100,7 +100,7 @@ To do that initialise the class <a class="reference internal" href="../dev/model
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">location_cpt</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then the profile can be defined by initialising the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.profiles.Profile" title="geolib.models.dfoundations.profiles.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.
+<p>Then the profile can be defined by initialising the class <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.profiles.html#geolib.models.dfoundations.profiles.Profile" title="geolib.models.dfoundations.profiles.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a>.
 The layers can be input as a list of dicts.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">profile</span> <span class="o">=</span> <span class="n">profiles</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;DELFT1&quot;</span><span class="p">,</span>
@@ -140,7 +140,7 @@ The layers can be input as a list of dicts.</p>
 </pre></div>
 </div>
 <p>4. The soil can be intialised with the <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and can be added to the model by using the function
-<a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_soil()</span></code></a>.</p>
+<a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_soil"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_soil()</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span> <span class="o">=</span> <span class="mi">20</span>
@@ -149,9 +149,9 @@ The layers can be input as a list of dicts.</p>
 <span class="n">df</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>5. The type(s) of pile and its location(s) needs to be defined. The possible combinations for these options can be found in <a class="reference internal" href="../dev/models/dfoundations.html#module-geolib.models.dfoundations.piles" title="geolib.models.dfoundations.piles"><code class="xref py py-class docutils literal notranslate"><span class="pre">piles</span></code></a>.
-In this case the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.piles.BearingRectangularPile" title="geolib.models.dfoundations.piles.BearingRectangularPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingRectangularPile</span></code></a> is initialised. In the following code block the location
-of the pile is first initialised by calling the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.piles.BearingPileLocation" title="geolib.models.dfoundations.piles.BearingPileLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPileLocation</span></code></a>.</p>
+<p>5. The type(s) of pile and its location(s) needs to be defined. The possible combinations for these options can be found in <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.piles.html#module-geolib.models.dfoundations.piles" title="geolib.models.dfoundations.piles"><code class="xref py py-class docutils literal notranslate"><span class="pre">piles</span></code></a>.
+In this case the class <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.piles.html#geolib.models.dfoundations.piles.BearingRectangularPile" title="geolib.models.dfoundations.piles.BearingRectangularPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingRectangularPile</span></code></a> is initialised. In the following code block the location
+of the pile is first initialised by calling the class <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.piles.html#geolib.models.dfoundations.piles.BearingPileLocation" title="geolib.models.dfoundations.piles.BearingPileLocation"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingPileLocation</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add Bearing Pile</span>
 <span class="n">location</span> <span class="o">=</span> <span class="n">piles</span><span class="o">.</span><span class="n">BearingPileLocation</span><span class="p">(</span>
     <span class="n">point</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
@@ -182,16 +182,16 @@ the inputs that are related to the factors concerning the pile.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>In that way the dictionaries can be used to initialise the class <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.piles.BearingRectangularPile" title="geolib.models.dfoundations.piles.BearingRectangularPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingRectangularPile</span></code></a>.</p>
+<p>In that way the dictionaries can be used to initialise the class <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.piles.html#geolib.models.dfoundations.piles.BearingRectangularPile" title="geolib.models.dfoundations.piles.BearingRectangularPile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BearingRectangularPile</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pile</span> <span class="o">=</span> <span class="n">piles</span><span class="o">.</span><span class="n">BearingRectangularPile</span><span class="p">(</span><span class="o">**</span><span class="n">parent_pile</span><span class="p">,</span> <span class="o">**</span><span class="n">geometry_pile</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The pile can be finally added to the model using the function  <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_pile_if_unique()</span></code></a>.</p>
+<p>The pile can be finally added to the model using the function  <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.add_pile_if_unique"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_pile_if_unique()</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">add_pile_if_unique</span><span class="p">(</span><span class="n">pile</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>6. To run the model first the model needs to be serialised. To do that define a
-output file name and call the function <a class="reference internal" href="../dev/models/dfoundations.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize()</span></code></a>.</p>
+output file name and call the function <a class="reference internal" href="../dev/models/..%5C_autosummary/geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize()</span></code></a>.</p>
 <ol class="arabic simple" start="7">
 <li><p>Finally the <code class="docutils literal notranslate"><span class="pre">execute</span></code> function can be called to run the model in D-Foundations</p></li>
 </ol>
