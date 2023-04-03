@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>D-Stability &#8212; geolib 0.4.0 documentation</title>
+    <title>D-Stability &#8212; geolib 0.5.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
@@ -15,8 +15,6 @@
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Contributing" href="../extend.html" />
-    <link rel="prev" title="D-Sheetpiling" href="dsheetpiling.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -33,14 +31,6 @@
                 &nbsp;
   <nav id="rellinks">
     <ul>
-        <li>
-          &larr;
-          <a href="dsheetpiling.html" title="Previous document">D-Sheetpiling</a>
-        </li>
-        <li>
-          <a href="../extend.html" title="Next document">Contributing</a>
-          &rarr;
-        </li>
     </ul>
   </nav>
               </div>
@@ -232,7 +222,7 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dd><p>Add a new soil to the model. The code must be unique, the id will be generated</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>soil</strong> (<a class="reference internal" href="../soils.html#geolib.soils.soil.Soil" title="geolib.soils.soil.Soil"><em>Soil</em></a>) – a new soil</p>
+<dd class="field-odd"><p><strong>soil</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dfoundations.internal_soil.html#geolib.models.dfoundations.internal_soil.Soil" title="geolib.models.dfoundations.internal_soil.Soil"><em>Soil</em></a>) – a new soil</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>id of the added soil</p>
@@ -400,7 +390,7 @@ state_point are a list of DStabilit.. where ONLY the x is used, the Z will be ca
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.datastructure">
-<span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.DStabilityStructure</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.datastructure" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.DStabilityStructure" title="geolib.models.dstability.internal.DStabilityStructure"><span class="pre">geolib.models.dstability.internal.DStabilityStructure</span></a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.datastructure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -418,7 +408,7 @@ state_point are a list of DStabilit.. where ONLY the x is used, the Z will be ca
 <dd class="field-even"><p>the edited soil</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>PersistableSoil</p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -439,10 +429,15 @@ This method will edit the first occurence of the name if the name is used multip
 <dd class="field-even"><p>the edited soil</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>PersistableSoil</p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_result">
@@ -527,6 +522,11 @@ This method will edit the first occurence of the name if the name is used multip
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">MetaData</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.meta" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.output">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dstability.internal.UpliftVanResult" title="geolib.models.dstability.internal.UpliftVanResult"><span class="pre">geolib.models.dstability.internal.UpliftVanResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.UpliftVanParticleSwarmResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmResult"><span class="pre">geolib.models.dstability.internal.UpliftVanParticleSwarmResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.UpliftVanReliabilityResult" title="geolib.models.dstability.internal.UpliftVanReliabilityResult"><span class="pre">geolib.models.dstability.internal.UpliftVanReliabilityResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.SpencerGeneticAlgorithmResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmResult"><span class="pre">geolib.models.dstability.internal.SpencerGeneticAlgorithmResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.SpencerReliabilityResult" title="geolib.models.dstability.internal.SpencerReliabilityResult"><span class="pre">geolib.models.dstability.internal.SpencerReliabilityResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.SpencerResult" title="geolib.models.dstability.internal.SpencerResult"><span class="pre">geolib.models.dstability.internal.SpencerResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.BishopBruteForceResult" title="geolib.models.dstability.internal.BishopBruteForceResult"><span class="pre">geolib.models.dstability.internal.BishopBruteForceResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.BishopReliabilityResult" title="geolib.models.dstability.internal.BishopReliabilityResult"><span class="pre">geolib.models.dstability.internal.BishopReliabilityResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.BishopResult" title="geolib.models.dstability.internal.BishopResult"><span class="pre">geolib.models.dstability.internal.BishopResult</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Permalink to this definition">¶</a></dt>
@@ -547,14 +547,14 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dstability.dstability_parserprovider.html#geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider" title="geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider"><span class="pre">geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the parser provider type of the current concrete class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityParserProvider</span></code>]</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="../_autosummary/geolib.models.dstability.dstability_parserprovider.html#geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider" title="geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityParserProvider</span></code></a>]</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
@@ -601,41 +601,41 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.soil_correlations">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soil_correlations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.SoilCorrelation</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soil_correlations" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soil_correlations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilCorrelation" title="geolib.models.dstability.internal.SoilCorrelation"><span class="pre">geolib.models.dstability.internal.SoilCorrelation</span></a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soil_correlations" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCorrelation</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilCorrelation" title="geolib.models.dstability.internal.SoilCorrelation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCorrelation</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.soils">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soils</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.SoilCollection</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soils" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soils</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilCollection" title="geolib.models.dstability.internal.SoilCollection"><span class="pre">geolib.models.dstability.internal.SoilCollection</span></a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soils" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCollection</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilCollection" title="geolib.models.dstability.internal.SoilCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCollection</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.stages">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dstability.internal.Stage</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.stages" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.Stage" title="geolib.models.dstability.internal.Stage"><span class="pre">geolib.models.dstability.internal.Stage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.stages" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Stage</span></code>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.Stage" title="geolib.models.dstability.internal.Stage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stage</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.waternets">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waternets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dstability.internal.Waternet</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.waternets" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waternets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.Waternet" title="geolib.models.dstability.internal.Waternet"><span class="pre">geolib.models.dstability.internal.Waternet</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.waternets" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Waternet</span></code>]</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.Waternet" title="geolib.models.dstability.internal.Waternet"><code class="xref py py-class docutils literal notranslate"><span class="pre">Waternet</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -662,10 +662,10 @@ This method will edit the first occurence of the name if the name is used multip
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.analysis.DStabilityAnalysisMethod.analysis_type">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analysis_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.AnalysisTypeEnum</span></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityAnalysisMethod.analysis_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">analysis_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.AnalysisTypeEnum" title="geolib.models.dstability.internal.AnalysisTypeEnum"><span class="pre">geolib.models.dstability.internal.AnalysisTypeEnum</span></a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityAnalysisMethod.analysis_type" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalysisTypeEnum</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.AnalysisTypeEnum" title="geolib.models.dstability.internal.AnalysisTypeEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnalysisTypeEnum</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -978,7 +978,7 @@ This method will edit the first occurence of the name if the name is used multip
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.options_type">
-<span class="sig-name descname"><span class="pre">options_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.OptionsTypeEnum</span></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.options_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">options_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.OptionsTypeEnum" title="geolib.models.dstability.internal.OptionsTypeEnum"><span class="pre">geolib.models.dstability.internal.OptionsTypeEnum</span></a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilitySpencerGeneticAnalysisMethod.options_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1042,7 +1042,7 @@ This method will edit the first occurence of the name if the name is used multip
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.options_type">
-<span class="sig-name descname"><span class="pre">options_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.OptionsTypeEnum</span></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.options_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">options_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.OptionsTypeEnum" title="geolib.models.dstability.internal.OptionsTypeEnum"><span class="pre">geolib.models.dstability.internal.OptionsTypeEnum</span></a></em><a class="headerlink" href="#geolib.models.dstability.analysis.DStabilityUpliftVanParticleSwarmAnalysisMethod.options_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1099,7 +1099,7 @@ This method will edit the first occurence of the name if the name is used multip
 <span class="sig-name descname"><span class="pre">to_internal_datastructure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.Consolidation.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableConsolidation</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableConsolidation" title="geolib.models.dstability.internal.PersistableConsolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableConsolidation</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1147,6 +1147,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.loads.Earthquake.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.loads.Earthquake.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.loads.Earthquake.vertical_factor">
 <span class="sig-name descname"><span class="pre">vertical_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dstability.loads.Earthquake.vertical_factor" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1173,6 +1178,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.loads.LineLoad.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.loads.LineLoad.location">
 <span class="sig-name descname"><span class="pre">location</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><span class="pre">geolib.geometry.one.Point</span></a></em><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.location" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1187,7 +1197,7 @@ This method will edit the first occurence of the name if the name is used multip
 <span class="sig-name descname"><span class="pre">to_internal_datastructure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.LineLoad.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLineLoad</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLineLoad" title="geolib.models.dstability.internal.PersistableLineLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLineLoad</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1211,6 +1221,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.loads.TreeLoad.height">
 <span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.loads.TreeLoad.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.loads.TreeLoad.label" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1250,6 +1265,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.loads.UniformLoad.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.loads.UniformLoad.magnitude">
 <span class="sig-name descname"><span class="pre">magnitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.loads.ConstrainedFloatValue</span></em><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.magnitude" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1264,7 +1284,7 @@ This method will edit the first occurence of the name if the name is used multip
 <span class="sig-name descname"><span class="pre">to_internal_datastructure</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.loads.UniformLoad.to_internal_datastructure" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableUniformLoad</span></code></p>
+<dd class="field-odd"><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableUniformLoad" title="geolib.models.dstability.internal.PersistableUniformLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableUniformLoad</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1306,6 +1326,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.reinforcements.ForbiddenLine.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.ForbiddenLine.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.reinforcements.ForbiddenLine.start">
 <span class="sig-name descname"><span class="pre">start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><span class="pre">geolib.geometry.one.Point</span></a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.ForbiddenLine.start" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1328,6 +1353,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.reinforcements.Geotextile.end">
 <span class="sig-name descname"><span class="pre">end</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><span class="pre">geolib.geometry.one.Point</span></a></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile.end" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.reinforcements.Geotextile.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Geotextile.label" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1379,6 +1409,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.reinforcements.Nail.horizontal_spacing">
 <span class="sig-name descname"><span class="pre">horizontal_spacing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.horizontal_spacing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.reinforcements.Nail.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.reinforcements.Nail.label" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1546,8 +1581,8 @@ This method will edit the first occurence of the name if the name is used multip
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ocr</strong> (<em>float</em>) – OCR value, defaults to 1.0</p></li>
 <li><p><strong>pop</strong> (<em>float</em>) – POP value, defaults to 0.0</p></li>
-<li><p><strong>stochastic_parameter</strong> (<em>PersistableStochasticParameter</em>) – </p></li>
-<li><p><strong>state_type</strong> (<a class="reference internal" href="../soils.html#geolib.soils.soil.StateType" title="geolib.soils.soil.StateType"><em>StateType</em></a>) – type of state</p></li>
+<li><p><strong>stochastic_parameter</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableStochasticParameter" title="geolib.models.dgeoflow.internal.PersistableStochasticParameter"><em>PersistableStochasticParameter</em></a>) – </p></li>
+<li><p><strong>state_type</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.StateType" title="geolib.models.dstability.internal.StateType"><em>StateType</em></a>) – type of state</p></li>
 <li><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p></li>
 </ul>
 </dd>
@@ -1564,12 +1599,12 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.states.DStabilityStress.state_type">
-<span class="sig-name descname"><span class="pre">state_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.StateType</span></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.state_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">state_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.StateType" title="geolib.models.dstability.internal.StateType"><span class="pre">geolib.models.dstability.internal.StateType</span></a></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.state_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.states.DStabilityStress.stochastic_parameter">
-<span class="sig-name descname"><span class="pre">stochastic_parameter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">geolib.models.dstability.internal.PersistableStochasticParameter</span></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.stochastic_parameter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stochastic_parameter</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableStochasticParameter" title="geolib.models.dstability.internal.PersistableStochasticParameter"><span class="pre">geolib.models.dstability.internal.PersistableStochasticParameter</span></a></em><a class="headerlink" href="#geolib.models.dstability.states.DStabilityStress.stochastic_parameter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1981,7 +2016,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.BishopBruteForceResult.Circle">
-<span class="sig-name descname"><span class="pre">Circle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dstability.internal.PersistableCircle</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.internal.BishopBruteForceResult.Circle" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Circle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableCircle" title="geolib.models.dstability.internal.PersistableCircle"><span class="pre">geolib.models.dstability.internal.PersistableCircle</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.internal.BishopBruteForceResult.Circle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2027,7 +2062,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.BishopReliabilityResult.Circle">
-<span class="sig-name descname"><span class="pre">Circle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dstability.internal.PersistableCircle</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.internal.BishopReliabilityResult.Circle" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Circle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableCircle" title="geolib.models.dstability.internal.PersistableCircle"><span class="pre">geolib.models.dstability.internal.PersistableCircle</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.internal.BishopReliabilityResult.Circle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2093,7 +2128,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.BishopResult.Circle">
-<span class="sig-name descname"><span class="pre">Circle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dstability.internal.PersistableCircle</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.internal.BishopResult.Circle" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">Circle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableCircle" title="geolib.models.dstability.internal.PersistableCircle"><span class="pre">geolib.models.dstability.internal.PersistableCircle</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.internal.BishopResult.Circle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -2823,14 +2858,6 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
                 &nbsp;
   <nav id="rellinks">
     <ul>
-        <li>
-          &larr;
-          <a href="dsheetpiling.html" title="Previous document">D-Sheetpiling</a>
-        </li>
-        <li>
-          <a href="../extend.html" title="Next document">Contributing</a>
-          &rarr;
-        </li>
     </ul>
   </nav>
               </div>
@@ -2863,26 +2890,8 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Developer Interface</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../model.html">Model Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../geometry.html">Geometry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../soils.html">Soils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dfoundations.html">D-Foundations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dsettlement.html">D-Settlement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dsheetpiling.html">D-Sheetpiling</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">D-Stability</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.dstability_model">D-Stability model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.loads">Loads</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.reinforcements">Reinforcements</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dstability.states">States</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#geometry">Geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
@@ -2900,7 +2909,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
     
     <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
     
-    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
     
     <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
     
@@ -2909,10 +2918,6 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../api.html">Developer Interface</a><ul>
-      <li>Previous: <a href="dsheetpiling.html" title="previous chapter">D-Sheetpiling</a></li>
-      <li>Next: <a href="../extend.html" title="next chapter">Contributing</a></li>
-  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -2931,7 +2936,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2021, Deltares.
+      &copy;2023, Deltares.
       
     </div>
 

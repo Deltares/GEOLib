@@ -1,0 +1,625 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dgeoflow.dgeoflow_model &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="geolib.models.dgeoflow.dgeoflow_parserprovider" href="geolib.models.dgeoflow.dgeoflow_parserprovider.html" />
+    <link rel="prev" title="geolib.models.dgeoflow" href="geolib.models.dgeoflow.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dgeoflow.html" title="Previous document">geolib.models.dgeoflow</a>
+        </li>
+        <li>
+          <a href="geolib.models.dgeoflow.dgeoflow_parserprovider.html" title="Next document">geolib.models.dgeoflow.dgeoflow_parserprovider</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dgeoflow.dgeoflow_model">
+<span id="geolib-models-dgeoflow-dgeoflow-model"></span><h1>geolib.models.dgeoflow.dgeoflow_model<a class="headerlink" href="#module-geolib.models.dgeoflow.dgeoflow_model" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel" title="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DGeoFlowModel</span></code></a>(*args, **data)</p></td>
+<td><p>D-Geoflow is software for soft soil piping calculations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowObject" title="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DGeoFlowObject</span></code></a>(**data)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param data</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dgeoflow.dgeoflow_model.</span></span><span class="sig-name descname"><span class="pre">DGeoFlowModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>D-Geoflow is software for soft soil piping calculations.</p>
+<p>This model can read, modify and create
+.flox files</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_boundary_condition">
+<span class="sig-name descname"><span class="pre">add_boundary_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_boundary_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add boundary conditions to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes, in clockwise order (non closed simple polygon)</p></li>
+<li><p><strong>head_level</strong> (<em>float</em>) – level of the hydraulic head for the boundary condition</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
+<li><p><strong>scenario_id</strong> (<em>int</em>) – scenario to add to, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the boundary conditions collection</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_layer">
+<span class="sig-name descname"><span class="pre">add_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a soil layer to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes, in clockwise order (non closed simple polygon)</p></li>
+<li><p><strong>soil_code</strong> (<em>str</em>) – code of the soil for this layer</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
+<li><p><strong>scenario_id</strong> (<em>int</em>) – scenario to add to, defaults to 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added layer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_meshproperties">
+<span class="sig-name descname"><span class="pre">add_meshproperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_meshproperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a mesh properties to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – size of the mesh elements for the discretization, defaults to 1.0</p></li>
+<li><p><strong>scenario_id</strong> (<em>int</em>) – scenario to add to, defaults to 0</p></li>
+<li><p><strong>layer_id</strong> (<em>int</em>) – layer to add to</p></li>
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added meshproperties collection</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_point">
+<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add point, which should be unique in the model and return the created point id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_scenario">
+<span class="sig-name descname"><span class="pre">add_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaryconditions_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soillayers_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meshproperties_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculations_notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculations_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a scenario to the model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>int</em>) – scenario to add to, defaults to 0</p></li>
+<li><p><strong>boundaryconditions_id</strong> (<em>int</em>) – id of the boundary conditions collection to add to the scenario</p></li>
+<li><p><strong>soillayers_id</strong> (<em>int</em>) – id of the soil layers to add to the scenario</p></li>
+<li><p><strong>geometry_id</strong> (<em>int</em>) – id of the geometry to add to the scenario</p></li>
+<li><p><strong>meshproperties_id</strong> (<em>int</em>) – id of the mesh properties to add to the scenario</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – label of the scenario, defaults to empty string</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – notes of the scenario, defaults to empty string</p></li>
+<li><p><strong>calculations_notes</strong> (<em>str</em>) – notes of the calculation, defaults to empty string</p></li>
+<li><p><strong>stage_notes</strong> (<em>str</em>) – notes of the stage, defaults to empty string</p></li>
+<li><p><strong>calculations_label</strong> (<em>str</em>) – label of the calculation, defaults to empty string</p></li>
+<li><p><strong>stage_label</strong> (<em>str</em>) – label of the stage, defaults to empty string</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the scenario</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_soil">
+<span class="sig-name descname"><span class="pre">add_soil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soil</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new soil to the model. The code must be unique, the id will be generated</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>soil</strong> (<a class="reference internal" href="geolib.models.dfoundations.internal_soil.html#geolib.models.dfoundations.internal_soil.Soil" title="geolib.models.dfoundations.internal_soil.Soil"><em>Soil</em></a>) – a new soil</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the added soil</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_flags_post">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">console_flags_post</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_flags_post" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">console_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pathlib.Path</span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_path" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.copy_scenario">
+<span class="sig-name descname"><span class="pre">copy_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.copy_scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy an existing scenario and add it to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the scenario</p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the scenario</p></li>
+<li><p><strong>set_current</strong> – Whether to make the new scenario the current scenario.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the id of the new scenario</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_calculation_index">
+<span class="sig-name descname"><span class="pre">current_calculation_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_calculation_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_id">
+<span class="sig-name descname"><span class="pre">current_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_scenario">
+<span class="sig-name descname"><span class="pre">current_scenario</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_scenario" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_scenario_index">
+<span class="sig-name descname"><span class="pre">current_scenario_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_scenario_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.datastructure">
+<span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.DGeoFlowStructure" title="geolib.models.dgeoflow.internal.DGeoFlowStructure"><span class="pre">geolib.models.dgeoflow.internal.DGeoFlowStructure</span></a></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.datastructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.edit_soil">
+<span class="sig-name descname"><span class="pre">edit_soil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.edit_soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an existing soil with parameter names based on the soil class members</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>code</strong> (<em>str</em>) – the code of the soil</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angle=25.0’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the edited soil</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.edit_soil_by_name">
+<span class="sig-name descname"><span class="pre">edit_soil_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.edit_soil_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an existing soil with parameter names based on the soil class members</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – the name of the soil</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angle=25.0’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the edited soil</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.get_layer">
+<span class="sig-name descname"><span class="pre">get_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.get_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+<li><p><strong>layer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoilLayer" title="geolib.models.dgeoflow.internal.PersistableSoilLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableSoilLayer</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.get_result">
+<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the results of a scenario. Calculation results are based on analysis type and calculation type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>int</em>) – Index of a scenario.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em>) – Index of a calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary containing the analysis results of the scenario.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – No results or calculationsettings available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.output">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.GroundwaterFlowResult" title="geolib.models.dgeoflow.internal.GroundwaterFlowResult"><span class="pre">geolib.models.dgeoflow.internal.GroundwaterFlowResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PipeLengthResult" title="geolib.models.dgeoflow.internal.PipeLengthResult"><span class="pre">geolib.models.dgeoflow.internal.PipeLengthResult</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.CriticalHeadResult" title="geolib.models.dgeoflow.internal.CriticalHeadResult"><span class="pre">geolib.models.dgeoflow.internal.CriticalHeadResult</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the output.</p>
+<p>Requires a successful execute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.GroundwaterFlowResult" title="geolib.models.dgeoflow.internal.GroundwaterFlowResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroundwaterFlowResult</span></code></a>, <a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PipeLengthResult" title="geolib.models.dgeoflow.internal.PipeLengthResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipeLengthResult</span></code></a>, <a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.CriticalHeadResult" title="geolib.models.dgeoflow.internal.CriticalHeadResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CriticalHeadResult</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse input or outputfile to Model, depending on extension.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.parser_provider_type">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dgeoflow.dgeoflow_parserprovider.html#geolib.models.dgeoflow.dgeoflow_parserprovider.DGeoFlowParserProvider" title="geolib.models.dgeoflow.dgeoflow_parserprovider.DGeoFlowParserProvider"><span class="pre">geolib.models.dgeoflow.dgeoflow_parserprovider.DGeoFlowParserProvider</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parser provider type of the current concrete class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="geolib.models.dgeoflow.dgeoflow_parserprovider.html#geolib.models.dgeoflow.dgeoflow_parserprovider.DGeoFlowParserProvider" title="geolib.models.dgeoflow.dgeoflow_parserprovider.DGeoFlowParserProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">DGeoFlowParserProvider</span></code></a>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.points">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.serialize">
+<span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.serialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Support serializing to directory while developing for debugging purposes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>location</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DirectoryPath</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryIO</span></code>]) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_calculation_type">
+<span class="sig-name descname"><span class="pre">set_calculation_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">CalculationTypeEnum.GROUNDWATER_FLOW</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_calculation_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the calculation type of a calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>int</em>) – The scenario index to add to, defaults to 0.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em>) – The calculation index to add to, defaults to 0.</p></li>
+<li><p><strong>calculation_type</strong> (<a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.CalculationTypeEnum" title="geolib.models.dgeoflow.internal.CalculationTypeEnum"><em>CalculationTypeEnum</em></a>) – The calculation type, defaults to GROUNDWATER_FLOW.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_critical_head_boundary_condition">
+<span class="sig-name descname"><span class="pre">set_critical_head_boundary_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_condition_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_critical_head_boundary_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the critical head boundary condition for a calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>int</em>) – The scenario index to add to, defaults to 0.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em>) – The calculation index to add to, defaults to 0.</p></li>
+<li><p><strong>boundary_condition_id</strong> (<em>int</em>) – The id of the critical head boundary condition.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_critical_head_search_parameters">
+<span class="sig-name descname"><span class="pre">set_critical_head_search_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimum_head_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_head_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_critical_head_search_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the critical head search parameters condition for a calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>int</em>) – The scenario index to add to, defaults to 0.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em>) – The calculation index to add to, defaults to 0.</p></li>
+<li><p><strong>minimum_head_level</strong> (<em>float</em>) – The minimum head level to search at, defaults to 0.</p></li>
+<li><p><strong>maximum_head_level</strong> (<em>float</em>) – The maximum head level to search at, defaults to 1.</p></li>
+<li><p><strong>step_size</strong> (<em>float</em>) – The step size to search with, defaults to 0.1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_pipe_trajectory">
+<span class="sig-name descname"><span class="pre">set_pipe_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipe_trajectory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.set_pipe_trajectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the pipe trajectory for a calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>int</em>) – The scenario index to add to, defaults to 0.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em>) – The calculation index to add to, defaults to 0.</p></li>
+<li><p><strong>pipe_trajectory</strong> (<a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PipeTrajectory" title="geolib.models.dgeoflow.internal.PipeTrajectory"><em>PipeTrajectory</em></a>) – The pipe trajectory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.soils">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soils</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.SoilCollection" title="geolib.models.dgeoflow.internal.SoilCollection"><span class="pre">geolib.models.dgeoflow.internal.SoilCollection</span></a></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.soils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.SoilCollection" title="geolib.models.dgeoflow.internal.SoilCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilCollection</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowObject">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dgeoflow.dgeoflow_model.</span></span><span class="sig-name descname"><span class="pre">DGeoFlowObject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dgeoflow.html" title="Previous document">geolib.models.dgeoflow</a>
+        </li>
+        <li>
+          <a href="geolib.models.dgeoflow.dgeoflow_parserprovider.html" title="Next document">geolib.models.dgeoflow.dgeoflow_parserprovider</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="geolib.html">geolib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="geolib.errors.html">geolib.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.geometry.html">geolib.geometry</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="geolib.models.html">geolib.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.service.html">geolib.service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.soils.html">geolib.soils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.utils.html">geolib.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+  <li><a href="geolib.html">geolib</a><ul>
+  <li><a href="geolib.models.html">geolib.models</a><ul>
+  <li><a href="geolib.models.dgeoflow.html">geolib.models.dgeoflow</a><ul>
+      <li>Previous: <a href="geolib.models.dgeoflow.html" title="previous chapter">geolib.models.dgeoflow</a></li>
+      <li>Next: <a href="geolib.models.dgeoflow.dgeoflow_parserprovider.html" title="next chapter">geolib.models.dgeoflow.dgeoflow_parserprovider</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

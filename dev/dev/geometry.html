@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Geometry &#8212; geolib 0.4.0 documentation</title>
+    <title>Geometry &#8212; geolib 0.5.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -15,8 +15,6 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Soils" href="soils.html" />
-    <link rel="prev" title="Model Interface" href="model.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -33,14 +31,6 @@
                 &nbsp;
   <nav id="rellinks">
     <ul>
-        <li>
-          &larr;
-          <a href="model.html" title="Previous document">Model Interface</a>
-        </li>
-        <li>
-          <a href="soils.html" title="Next document">Soils</a>
-          &rarr;
-        </li>
     </ul>
   </nav>
               </div>
@@ -56,7 +46,7 @@
 a single Point class.</p>
 <p>In 1D applications it’s only used to
 specify, for example height, other fields left None.</p>
-<p>For profiles used in 1D applications, see <code class="xref py py-class docutils literal notranslate"><span class="pre">ProfileLayer</span></code></p>
+<p>For profiles used in 1D applications, see <a class="reference internal" href="_autosummary/geolib.soils.layers.html#geolib.soils.layers.ProfileLayer" title="geolib.soils.layers.ProfileLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProfileLayer</span></code></a></p>
 <dl class="py class">
 <dt class="sig sig-object py" id="geolib.geometry.one.Point">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.geometry.one.</span></span><span class="sig-name descname"><span class="pre">Point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.geometry.one.Point" title="Permalink to this definition">¶</a></dt>
@@ -125,14 +115,6 @@ form an ordered Ring (Polygon).</p>
                 &nbsp;
   <nav id="rellinks">
     <ul>
-        <li>
-          &larr;
-          <a href="model.html" title="Previous document">Model Interface</a>
-        </li>
-        <li>
-          <a href="soils.html" title="Next document">Soils</a>
-          &rarr;
-        </li>
     </ul>
   </nav>
               </div>
@@ -165,22 +147,8 @@ form an ordered Ring (Polygon).</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="api.html">Developer Interface</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="model.html">Model Interface</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Geometry</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.geometry.one">1D Geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id1">2D Geometry</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="soils.html">Soils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/dfoundations.html">D-Foundations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/dsettlement.html">D-Settlement</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/dsheetpiling.html">D-Sheetpiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models/dstability.html">D-Stability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="extend.html">Contributing</a></li>
@@ -198,7 +166,7 @@ form an ordered Ring (Polygon).</p>
     
     <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
     
-    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
     
     <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
     
@@ -207,10 +175,6 @@ form an ordered Ring (Polygon).</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="api.html">Developer Interface</a><ul>
-      <li>Previous: <a href="model.html" title="previous chapter">Model Interface</a></li>
-      <li>Next: <a href="soils.html" title="next chapter">Soils</a></li>
-  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -229,7 +193,7 @@ form an ordered Ring (Polygon).</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2021, Deltares.
+      &copy;2023, Deltares.
       
     </div>
 

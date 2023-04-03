@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dseries_parser &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="geolib.models.dsettlement" href="geolib.models.dsettlement.html" />
+    <link rel="prev" title="geolib.models.dgeoflow.utils" href="geolib.models.dgeoflow.utils.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dgeoflow.utils.html" title="Previous document">geolib.models.dgeoflow.utils</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsettlement.html" title="Next document">geolib.models.dsettlement</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dseries_parser">
+<span id="geolib-models-dseries-parser"></span><h1>geolib.models.dseries_parser<a class="headerlink" href="#module-geolib.models.dseries_parser" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.get_field_collection_type" title="geolib.models.dseries_parser.get_field_collection_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_field_collection_type</span></code></a>(class_type, field_idx)</p></td>
+<td><p>Gets the type wrapped by a collection of a given class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.get_line_property_key_value" title="geolib.models.dseries_parser.get_line_property_key_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_line_property_key_value</span></code></a>(text, reversed_key)</p></td>
+<td><p>Returns the unformatted key and formatted value for a given line.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.get_line_property_value" title="geolib.models.dseries_parser.get_line_property_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_line_property_value</span></code></a>(text, reversed_key)</p></td>
+<td><p>Returns the property value representation in the dseries files assuming is delimited by either ':' or '='.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.is_structure_collection" title="geolib.models.dseries_parser.is_structure_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_structure_collection</span></code></a>(field)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param field</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.make_key" title="geolib.models.dseries_parser.make_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_key</span></code></a>(key)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param key</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.read_property_as_list" title="geolib.models.dseries_parser.read_property_as_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_property_as_list</span></code></a>(field_name, field, ...)</p></td>
+<td><p>Reads a property containing a collection of values represented as a list of strings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.split_line_elements" title="geolib.models.dseries_parser.split_line_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_line_elements</span></code></a>(text)</p></td>
+<td><p>Separates by space and tabulator.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.strip_line_first_element" title="geolib.models.dseries_parser.strip_line_first_element"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strip_line_first_element</span></code></a>(text)</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">param text</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSerieListGroupNextStructure" title="geolib.models.dseries_parser.DSerieListGroupNextStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSerieListGroupNextStructure</span></code></a>(*args)</p></td>
+<td><p>Creates a DSeriesStructure that can parse fields like this:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSerieListStructure" title="geolib.models.dseries_parser.DSerieListStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSerieListStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSerieMatrixStructure" title="geolib.models.dseries_parser.DSerieMatrixStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSerieMatrixStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSerieOldTableStructure" title="geolib.models.dseries_parser.DSerieOldTableStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSerieOldTableStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSerieParser" title="geolib.models.dseries_parser.DSerieParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSerieParser</span></code></a>([filename])</p></td>
+<td><p>Class to parse older DSerie formats in a generic way.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSerieVersion" title="geolib.models.dseries_parser.DSerieVersion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSerieVersion</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesInlineMappedProperties" title="geolib.models.dseries_parser.DSeriesInlineMappedProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesInlineMappedProperties</span></code></a>(*args)</p></td>
+<td><p>Specialization of DSeriesInlineProperties, use this class when the properties in the text are the same as in the concrete class definition: .</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesInlineProperties" title="geolib.models.dseries_parser.DSeriesInlineProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesInlineProperties</span></code></a>(*args)</p></td>
+<td><p>Generates a structure where the properties are assumed to be in the same order as define in the concrete implementation.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesInlineReversedProperties" title="geolib.models.dseries_parser.DSeriesInlineReversedProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesInlineReversedProperties</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesMatrixTreeStructureCollection" title="geolib.models.dseries_parser.DSeriesMatrixTreeStructureCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesMatrixTreeStructureCollection</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesNoParseSubStructure" title="geolib.models.dseries_parser.DSeriesNoParseSubStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesNoParseSubStructure</span></code></a>(*args)</p></td>
+<td><p>DSerie structure that prevents its field from being parsed further.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties" title="geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesRepeatedGroupedProperties</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupsWithInlineMappedProperties" title="geolib.models.dseries_parser.DSeriesRepeatedGroupsWithInlineMappedProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesRepeatedGroupsWithInlineMappedProperties</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructureCollection" title="geolib.models.dseries_parser.DSeriesStructureCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesStructureCollection</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesTableStructure" title="geolib.models.dseries_parser.DSeriesTableStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesTableStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesTreeStructure" title="geolib.models.dseries_parser.DSeriesTreeStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesTreeStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesTreeStructureCollection" title="geolib.models.dseries_parser.DSeriesTreeStructureCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesTreeStructureCollection</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups" title="geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesTreeStructurePropertiesInGroups</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesUnmappedNameProperties" title="geolib.models.dseries_parser.DSeriesUnmappedNameProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesUnmappedNameProperties</span></code></a>(*args)</p></td>
+<td><p>Specialization of DSeriesInlineMappedProperties, use this class when the properties in the text are the same as in the concrete class definition except for &quot;name&quot;, which has not been declared as a key in the input text: .</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesWrappedTableStructure" title="geolib.models.dseries_parser.DSeriesWrappedTableStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DSeriesWrappedTableStructure</span></code></a>(*args)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieListGroupNextStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSerieListGroupNextStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieListGroupNextStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a DSeriesStructure that can parse fields like this:</p>
+<blockquote>
+<div><p>[NUMBER OF STRUCTURES]
+2
+——-
+[STRUCTURE VALUE]
+42
+[END STRUCTURE VALUE]
+[NEXT NUMBER OF STRUCTURES]
+[STRUCTURE VALUE]
+24
+[END STRUCTURE VALUE]
+[END NUMBER OF STRUCTURES]</p>
+<p>into:</p>
+<dl class="simple">
+<dt>wrapper = [</dt><dd><p>“2</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl>
+<dt>[STRUCTURE VALUE…”,</dt><dd><blockquote>
+<div><p>“[STRUCTURE VALUE…”,</p>
+</div></blockquote>
+<p>]</p>
+<p>Note the “NEXT NUMBER OF STRUCTURES” element that makes this different
+from a normal ListGroup structure. The extra strings at the beginning
+of the first element should be ignored by the child parser.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieListGroupNextStructure.group_delimiter">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group_delimiter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieListGroupNextStructure.group_delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieListStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSerieListStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieListStructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieListStructure.parse_text_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_text_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieListStructure.parse_text_lines" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieMatrixStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSerieMatrixStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieMatrixStructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieOldTableStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSerieOldTableStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieOldTableStructure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSerieParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to parse older DSerie formats in a generic way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>]) – </p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser.dserie_structure">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dserie_structure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.base_model_structure.html#geolib.models.base_model_structure.BaseModelStructure" title="geolib.models.base_model_structure.BaseModelStructure"><span class="pre">geolib.models.base_model_structure.BaseModelStructure</span></a></em><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser.dserie_structure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.base_model_structure.html#geolib.models.base_model_structure.BaseModelStructure" title="geolib.models.base_model_structure.BaseModelStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelStructure</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">FilePath</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSeriesStructure</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser.parse_group">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_lines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loose_properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser.parse_group" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Parses a text with headers such as [GROUP] and [END OF GROUP] and</dt><dd><p>yields each property of the group as a Tuple[property name, value].
+Because it is an iterable it may contain repeated elements.
+Delegating responsibility on what to do with such elements to the caller.</p>
+<p>Example:</p>
+<p>[GROUP A]
+data
+more_data
+[END OF GROUP A]</p>
+<p>into:</p>
+<dl class="simple">
+<dt>(</dt><dd><p>“group_a”: “data</p>
+</dd>
+</dl>
+</dd>
+<dt>more_data”</dt><dd><p>)</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>text_lines (str): List of fields.
+loose_properties (bool, optional): Properties without a key are yielded.
+unique_keys (bool, optional): Whether elements can be repeated or not.</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: [description]</p>
+</dd>
+<dt>Returns:</dt><dd><p>Iterable[Tuple[str, str]]: Parsed collection of property values, can include repe.</p>
+</dd>
+<dt>Yields:</dt><dd><p>Iterator[Iterable[Tuple[str, str]]]: Parsed Tuple[Property name, value]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+<li><p><strong>loose_properties</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – </p></li>
+<li><p><strong>unique_keys</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser.parse_group_as_dict">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_group_as_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser.parse_group_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Parses a text with headers such as</dt><dd><p>[GROUP] and [END OF GROUP] into a dict.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>text {str} – List of fields</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict – Parsed dictionary.</p>
+</dd>
+</dl>
+<p>Can parse the following:</p>
+<p>[GROUP A]
+data
+more_data
+[END OF GROUP A]</p>
+<p>into:</p>
+<dl class="simple">
+<dt>{</dt><dd><p>“group_a”: “data</p>
+</dd>
+</dl>
+</dd>
+<dt>more_data”</dt><dd><p>}</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser.parse_list_group">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_list_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exceptions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['vertical',</span> <span class="pre">'soil',</span> <span class="pre">'residual_settlements']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skipped_keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser.parse_list_group" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to parse several groups in a sli/sld file that can include repeated groups.</p>
+<blockquote>
+<div><p>Includes an exception to always parse a group as a list.
+Can parse the following:</p>
+<p>[GROUP A]
+data
+[END OF GROUP A]
+[GROUP B]
+[GROUP B1]
+data
+[END OF GROUP B1]
+[END OF GROUP B]
+[GROUP B]
+data
+[END OF GROUP B]</p>
+<p>into</p>
+<dl class="simple">
+<dt>{</dt><dd><p>“group_a”: “data</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>“</dt><dd><dl class="simple">
+<dt>“group_b: [</dt><dd><p>“[GROUP B1]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>data
+[END OF GROUP B1]”,</p>
+<blockquote>
+<div><blockquote>
+<div><p>“data”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieParser.suffix_list">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">suffix_list</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dseries_parser.DSerieParser.suffix_list" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSerieVersion">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSerieVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSerieVersion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineMappedProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesInlineMappedProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineMappedProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialization of DSeriesInlineProperties, use this class when the
+properties in the text are the same as in the concrete class definition:
+.. rubric:: Example</p>
+<dl class="simple">
+<dt>Given class my_structure(DSeriesInlineMappedProeprties):</dt><dd><p>property_dummy_int: int
+property_dummy_str: str</p>
+</dd>
+<dt>and text, text_to_parse:</dt><dd><p>[STRUCTURE]
+property dummy int = 42 some unit/scale
+[PROPERTY DUMMY STR]
+It also works with mixed groups.
+[END OF PROPERTY DUMMY STR]
+[END OF STRUCTURE]</p>
+</dd>
+</dl>
+<p>When ms = my_structure.parse_text(text_to_parse)
+Then:</p>
+<blockquote>
+<div><p>ms.property_dummy_int = 42
+ms.proeprty_dummy_str = “It also works with mixed groups.”</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineMappedProperties.get_property_key_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_property_key_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_property</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineMappedProperties.get_property_key_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets both property key and value from the text line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text containing key and value.</p></li>
+<li><p><strong>expected_property</strong> (<em>str</em>) – The expected property if there was no key.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parsed key and value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesInlineProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a structure where the properties are assumed to be
+in the same order as define in the concrete implementation.
+Hence, only the read value field is relevant here.
+Use when properties are in order.
+.. rubric:: Example</p>
+<dl class="simple">
+<dt>Given class my_structure(DSeriesInlineProperties):</dt><dd><p>property_one: int</p>
+</dd>
+<dt>and text, text_to_parse:</dt><dd><p>[InlineStructure]
+dummy_text: 42 some unit/and scale
+[END OF InlineStructure]</p>
+</dd>
+</dl>
+<p>When ms = my_structure.parse_text(text)
+Then:</p>
+<blockquote>
+<div><p>parsed_structure.property_one = 42</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Parsed structure.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure">DSeriesStructure</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineProperties.get_properties_in_text">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_properties_in_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineProperties.get_properties_in_text" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineProperties.get_property_key_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_property_key_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_property</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineProperties.get_property_key_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the property key and value for a given text line.
+It allows concrete classes to override it and either use the expected property
+name or another value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text line to parse.</p></li>
+<li><p><strong>expected_property</strong> (<em>str</em>) – The expected property key if parsing the structure properties in order.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Property name and property value text.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineReversedProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesInlineReversedProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineReversedProperties" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesInlineReversedProperties.get_property_key_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_property_key_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_property</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesInlineReversedProperties.get_property_key_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the value content for a line of format:
+value : key || value = key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text line with value-key</p></li>
+<li><p><strong>expected_property</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesMatrixTreeStructureCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesMatrixTreeStructureCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesMatrixTreeStructureCollection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesMatrixTreeStructureCollection.parse_collection_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_collection_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collecion_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesMatrixTreeStructureCollection.parse_collection_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collecion_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>) – </p></li>
+<li><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSeriesStructure</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesNoParseSubStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesNoParseSubStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesNoParseSubStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>DSerie structure that prevents its field from
+being parsed further.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesNoParseSubStructure.is_parseable">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_parseable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesNoParseSubStructure.is_parseable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesRepeatedGroupedProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties.get_inline_properties">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_inline_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inline_properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties.get_inline_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes all unmapped properties and returns them in a dictionary.
+This method can be replaced in concrete implementations of this class.
+:type inline_properties: <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]
+:param inline_properties: List of property values which key was not found.
+:type inline_properties: List[str]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns a dictionary of inline properties.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties.get_validated_mappings">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_validated_mappings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generated_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties.get_validated_mappings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates the input dictionary mapping within this class properties.
+Allows for extension on lower classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>generated_dict</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>str</em><em>]</em>) – [description]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Validated dictionary.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties.group_value_is_list">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">group_value_is_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupedProperties.group_value_is_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether a group key should be parsed as list or flat value.
+Allows inherited classes to override its behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>group_key</strong> (<em>str</em>) – Property name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Whether the key represents a list of values or not.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesRepeatedGroupsWithInlineMappedProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesRepeatedGroupsWithInlineMappedProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupsWithInlineMappedProperties" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_inline_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inline_properties</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesRepeatedGroupsWithInlineMappedProperties.get_inline_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes all unmapped properties and returns them in a dictionary.
+This method can be replaced in concrete implementations of this class.
+Follows a philosophy of FIFO for repeated keys.
+:type inline_properties: <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]
+:param inline_properties: List of property values which key was not found.
+:type inline_properties: List[str]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Resulting inline mapped properties.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesStructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesStructure.dict">
+<span class="sig-name descname"><span class="pre">dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesStructure.dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a dictionary representation of the model, optionally specifying which fields to include or exclude.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesStructure.get_structure_required_fields">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_structure_required_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesStructure.get_structure_required_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows concrete classes to filter out fields that would normally be
+parsed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of Tuples[FieldName, FieldType]</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[Tuple[str, Type]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesStructure.is_parseable">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_parseable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesStructure.is_parseable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesStructureCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesStructureCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesStructureCollection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTableStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesTableStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTableStructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTableStructure.validate_number_of_rows">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_number_of_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTableStructure.validate_number_of_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates whether the number of lines matched the expected rows to be read.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lines</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Lines representing rows of data.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="geolib.errors.html#geolib.errors.ParserError" title="geolib.errors.ParserError"><strong>ParserError</strong></a> – When the expectations are not met.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesTreeStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructure.get_next_property_text_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_next_property_text_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructure.get_next_property_text_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows inherited classes to override the text lines that are fed into other
+structures contained in a list property.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_lines</strong> (<em>list</em>) – List containing other lists or flat text to be parsed.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filtered list of text to be parsed into a property.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructure.get_tree_structure_read_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_tree_structure_read_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructure.get_tree_structure_read_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows inherited classes to override how many lines have been actually been read
+for a given parsed structure based on the cls being instantiated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parsed_tuple</strong> (<em>Tuple</em><em>[</em><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><em>DSeriesStructure</em></a><em>, </em><em>int</em><em>]</em>) – Tuple of parsed structure and read lines for it.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Resulting tuple with real number of parsed lines.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure">DSeriesStructure</a>, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructure.parse_text_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_text_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructure.parse_text_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a list of strings into the properties of a structure.
+.. rubric:: Example</p>
+<dl class="simple">
+<dt>[   [“1”, “Property value”],</dt><dd><p>[“2”, “Values in Property”],
+[“4”, “2”]]</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_lines</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – List of properties as strings.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – When the number of values for a property does not match its definition.</p></li>
+<li><p><strong>ValueError</strong> – When the number of properties does not match the text definition.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Structure with parsed properties.
+int: Index of last line being read as part of current structure.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure">DSeriesStructure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructureCollection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesTreeStructureCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructureCollection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructureCollection.get_number_of_structures">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_number_of_structures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructureCollection.get_number_of_structures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides an overridable method that retrieves the number of
+structures contained in the tree collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lines</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Tree collection lines.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of structures expected.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructureCollection.parse_collection_type">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_collection_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collecion_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructureCollection.parse_collection_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collecion_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>) – </p></li>
+<li><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSeriesStructure</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructureCollection.parse_text_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_text_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructureCollection.parse_text_lines" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSeriesStructure</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesTreeStructurePropertiesInGroups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups.get_next_property_text_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_next_property_text_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups.get_next_property_text_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the first element of a list of Tuples[PropertyTextValue, PropertyName]
+and splits it into further parseable lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text_lines</strong> (<em>list</em>) – list of Tuples[PropertyTextValue, PropertyName].</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of lines representing a property value (another structure).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups.get_tree_structure_read_lines">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_tree_structure_read_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parsed_tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesTreeStructurePropertiesInGroups.get_tree_structure_read_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allows inherited classes to override how many lines have been actually been read
+for a given parsed structure based on the cls being instantiated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parsed_tuple</strong> (<em>Tuple</em><em>[</em><a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure"><em>DSeriesStructure</em></a><em>, </em><em>int</em><em>]</em>) – Tuple of parsed structure and read lines for it.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Resulting tuple with real number of parsed lines.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure">DSeriesStructure</a>, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesUnmappedNameProperties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesUnmappedNameProperties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesUnmappedNameProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialization of DSeriesInlineMappedProperties, use this class when the
+properties in the text are the same as in the concrete class definition except
+for “name”, which has not been declared as a key in the input text:
+.. rubric:: Example</p>
+<dl class="simple">
+<dt>Given class my_structure(DSeriesInlineMappedProeprties):</dt><dd><p>name: str
+property_dummy_int: 42</p>
+</dd>
+<dt>and text, text_to_parse:</dt><dd><p>[STRUCTURE]
+This is a name
+property dummy int = 42 some unit/scale
+[END OF STRUCTURE]</p>
+</dd>
+</dl>
+<p>When ms = my_structure.parse_text(text_to_parse)
+Then:</p>
+<blockquote>
+<div><p>ms.name: “This is a name”
+ms.property_dummy_int = 42</p>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesUnmappedNameProperties.get_property_key_value">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_property_key_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_property</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesUnmappedNameProperties.get_property_key_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets both property key and value from the text line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text containing key and value.</p></li>
+<li><p><strong>expected_property</strong> (<em>str</em>) – The expected property if there was no key.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Parsed key and value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesWrappedTableStructure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">DSeriesWrappedTableStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesWrappedTableStructure" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.DSeriesWrappedTableStructure.validate_number_of_rows">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_number_of_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.DSeriesWrappedTableStructure.validate_number_of_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>These sort of tables do not contain information of the number of rows
+contained in the file. Therefore they are not validated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lines</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Parsed rows.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.get_field_collection_type">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">get_field_collection_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.get_field_collection_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the type wrapped by a collection of a given class.
+.. rubric:: Example</p>
+<dl class="simple">
+<dt>DummyClass:</dt><dd><p>dummycollection: List[SubDummyClass]</p>
+</dd>
+</dl>
+<p>get_field_collection_type(DummyClass, 0) -&gt; SubDummyClass</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>class_type</strong> (<em>Type</em>) – Class containing a collection field.</p></li>
+<li><p><strong>field_idx</strong> (<em>int</em>) – Position of the collection field in the class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The class for the items in the collection.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.get_line_property_key_value">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">get_line_property_key_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reversed_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.get_line_property_key_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the unformatted key and formatted value for a given line.
+.. rubric:: Examples</p>
+<p>reversed_key = False
+key= value 123 -&gt; key, value
+reversed_key = True
+value 123= key asdf -&gt; key, value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Text from where to extract key and value.</p></li>
+<li><p><strong>reversed_key</strong> (<em>bool</em>) – Whether the key comes before or after the value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Unformatted key and formatted value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.get_line_property_value">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">get_line_property_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reversed_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.get_line_property_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the property value representation in the dseries files
+assuming is delimited by either ‘:’ or ‘=’.
+.. rubric:: Examples</p>
+<dl class="simple">
+<dt>Given (reversed_key = True):</dt><dd><p>4.2 : property_value
+4.2 = property_value</p>
+</dd>
+<dt>Given (reversed_key = False):</dt><dd><p>property_value : 4.2
+property_value = 4.2</p>
+</dd>
+<dt>Returns:</dt><dd><p>4.2</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> (<em>str</em>) – Unformatted line of text.</p></li>
+<li><p><strong>reversed_key</strong> (<em>bool</em>) – How the key needs to be extracted.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>First field containing value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.is_structure_collection">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">is_structure_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.is_structure_collection" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>field</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.make_key">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">make_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.make_key" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.read_property_as_list">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">read_property_as_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_lines</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.read_property_as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a property containing a collection of values represented as
+a list of strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field_name</strong> (<em>str</em>) – Name of the field to parse.</p></li>
+<li><p><strong>field</strong> (<em>Type</em>) – Type to parse the values to.</p></li>
+<li><p><strong>text_lines</strong> (<em>list</em>) – List of list of strings containing values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the values given don’t match the defined expectations.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns generated DSeriesStructures and lines read.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Tuple[List[<a class="reference internal" href="#geolib.models.dseries_parser.DSeriesStructure" title="geolib.models.dseries_parser.DSeriesStructure">DSeriesStructure</a>], int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.split_line_elements">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">split_line_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.split_line_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Separates by space and tabulator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Text to break into separate fields.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of formatted values.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="geolib.models.dseries_parser.strip_line_first_element">
+<span class="sig-prename descclassname"><span class="pre">geolib.models.dseries_parser.</span></span><span class="sig-name descname"><span class="pre">strip_line_first_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dseries_parser.strip_line_first_element" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>text</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dgeoflow.utils.html" title="Previous document">geolib.models.dgeoflow.utils</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsettlement.html" title="Next document">geolib.models.dsettlement</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="geolib.html">geolib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="geolib.errors.html">geolib.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.geometry.html">geolib.geometry</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="geolib.models.html">geolib.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.service.html">geolib.service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.soils.html">geolib.soils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.utils.html">geolib.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+  <li><a href="geolib.html">geolib</a><ul>
+  <li><a href="geolib.models.html">geolib.models</a><ul>
+      <li>Previous: <a href="geolib.models.dgeoflow.utils.html" title="previous chapter">geolib.models.dgeoflow.utils</a></li>
+      <li>Next: <a href="geolib.models.dsettlement.html" title="next chapter">geolib.models.dsettlement</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
