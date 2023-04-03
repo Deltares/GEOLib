@@ -1,49 +1,20 @@
 .. _dsheetpiling:
 
-D-Sheetpiling
+D-Sheet Piling
 ========================
 
-D-Sheetpiling model
--------------------
+D-Sheet Piling model
+--------------------
 
-.. automodule:: geolib.models.dsheetpiling.dsheetpiling_model
+.. autosummary::
+   :toctree: ..\_autosummary
+   :recursive:
 
+   geolib.models.dsheetpiling
 
-.. automodule:: geolib.models.dsheetpiling.settings
-
-
-.. automodule:: geolib.models.dsheetpiling.calculation_options
-
-
-Constructions
--------------
-
-.. automodule:: geolib.models.dsheetpiling.constructions
-
-
-Loads
--------------
-
-.. automodule:: geolib.models.dsheetpiling.loads
-
-
-Supports
--------------
-
-.. automodule:: geolib.models.dsheetpiling.supports
-
-
-Geometry
+Tutorial
 --------
-
-.. automodule:: geolib.models.dsheetpiling.profiles
-
-
-.. automodule:: geolib.models.dsheetpiling.surface
-
-
-.. automodule:: geolib.models.dsheetpiling.water_level
-
+You can find the D-Sheet Piling tutorial here: :doc:`../../community/tutorial_dsheetpiling`
 
 Output
 ------
