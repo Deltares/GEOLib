@@ -1,22 +1,15 @@
 .. _api:
 
-Developer Interface
+API Reference
 ===================
 
-This part of the documentation covers all the interfaces of GEOLib.
+This part of the documentation covers all the interfaces of GEOLib. Click on "geolib" below to start browsing the GEOLib package API reference.
 
-.. toctree::
-   :maxdepth: 3
+.. autosummary::
+   :toctree: _autosummary
+   :recursive:
 
-   model
-   geometry
-   soils
-   models/dfoundations
-   models/dsettlement
-   models/dsheetpiling
-   models/dstability
-
-
+   geolib
 
 Indices and tables
 ------------------

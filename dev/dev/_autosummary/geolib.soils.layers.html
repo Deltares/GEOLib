@@ -1,0 +1,356 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.soils.layers &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="geolib.soils.library" href="geolib.soils.library.html" />
+    <link rel="prev" title="geolib.soils" href="geolib.soils.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.soils.html" title="Previous document">geolib.soils</a>
+        </li>
+        <li>
+          <a href="geolib.soils.library.html" title="Next document">geolib.soils.library</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.soils.layers">
+<span id="geolib-soils-layers"></span><h1>geolib.soils.layers<a class="headerlink" href="#module-geolib.soils.layers" title="Permalink to this headline">¶</a></h1>
+<p>Profile and Layer classes which are used by both D-Foundations and DSheetPiling.
+D-Foundations often requires more parameters, which are unused for DSheetPiling.</p>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.soils.layers.CPT" title="geolib.soils.layers.CPT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CPT</span></code></a>(**data)</p></td>
+<td><p>Internal Placeholder CPT measurements as used in D-Foundations/D-Sheetpiling.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.soils.layers.CPTRule" title="geolib.soils.layers.CPTRule"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CPTRule</span></code></a>(**data)</p></td>
+<td><p>Placeholder class for CPT interpretation options.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.soils.layers.Profile" title="geolib.soils.layers.Profile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Profile</span></code></a>(**data)</p></td>
+<td><p>D-Foundations Profile.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.soils.layers.ProfileLayer" title="geolib.soils.layers.ProfileLayer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProfileLayer</span></code></a>(**data)</p></td>
+<td><p>Layer in a Profile.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.layers.CPT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.layers.</span></span><span class="sig-name descname"><span class="pre">CPT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.layers.CPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal Placeholder CPT measurements as used in D-Foundations/D-Sheetpiling.</p>
+<p>It is here because input files can contain CPTs coupled to a Profile.</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Add Friction and other parameters?</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.CPT.qc">
+<span class="sig-name descname"><span class="pre">qc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.layers.CPT.qc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.CPT.z">
+<span class="sig-name descname"><span class="pre">z</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.layers.CPT.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.layers.CPTRule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.layers.</span></span><span class="sig-name descname"><span class="pre">CPTRule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.layers.CPTRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder class for CPT interpretation options.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.layers.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.layers.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>D-Foundations Profile.</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Determine extra fields related to Excavations</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.bottom_positive_skin_friction">
+<span class="sig-name descname"><span class="pre">bottom_positive_skin_friction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.bottom_positive_skin_friction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.cpt">
+<span class="sig-name descname"><span class="pre">cpt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.layers.CPT" title="geolib.soils.layers.CPT"><span class="pre">geolib.soils.layers.CPT</span></a></em><a class="headerlink" href="#geolib.soils.layers.Profile.cpt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.cpt_rule">
+<span class="sig-name descname"><span class="pre">cpt_rule</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.soils.layers.CPTRule" title="geolib.soils.layers.CPTRule"><span class="pre">geolib.soils.layers.CPTRule</span></a></em><a class="headerlink" href="#geolib.soils.layers.Profile.cpt_rule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.expected_ground_level_settlement">
+<span class="sig-name descname"><span class="pre">expected_ground_level_settlement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.expected_ground_level_settlement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.label">
+<span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.soils.layers.ProfileLayer" title="geolib.soils.layers.ProfileLayer"><span class="pre">geolib.soils.layers.ProfileLayer</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.soils.layers.Profile.layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.min_layer_thickness">
+<span class="sig-name descname"><span class="pre">min_layer_thickness</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.min_layer_thickness" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.overconsolidation_ratio">
+<span class="sig-name descname"><span class="pre">overconsolidation_ratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.overconsolidation_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.phreatic_level">
+<span class="sig-name descname"><span class="pre">phreatic_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.phreatic_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.pile_tip_level">
+<span class="sig-name descname"><span class="pre">pile_tip_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.pile_tip_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.Profile.top_positive_skin_friction">
+<span class="sig-name descname"><span class="pre">top_positive_skin_friction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.Profile.top_positive_skin_friction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.layers.</span></span><span class="sig-name descname"><span class="pre">ProfileLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.layers.ProfileLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layer in a Profile. Note that we add the vertical location of
+the layer with a Point class.</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>Will the ocr be added to the Soil class?</p></li>
+<li><p>Decouple pore_pressures into special Class/Line</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer.material">
+<span class="sig-name descname"><span class="pre">material</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.Soil" title="geolib.soils.soil.Soil"><span class="pre">geolib.soils.soil.Soil</span></a></em><a class="headerlink" href="#geolib.soils.layers.ProfileLayer.material" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer.ocr">
+<span class="sig-name descname"><span class="pre">ocr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.ProfileLayer.ocr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer.pore_pressure_bottom">
+<span class="sig-name descname"><span class="pre">pore_pressure_bottom</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.ProfileLayer.pore_pressure_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer.pore_pressure_top">
+<span class="sig-name descname"><span class="pre">pore_pressure_top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.ProfileLayer.pore_pressure_top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer.reduction_cone_resistance">
+<span class="sig-name descname"><span class="pre">reduction_cone_resistance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.soils.layers.ProfileLayer.reduction_cone_resistance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.layers.ProfileLayer.top">
+<span class="sig-name descname"><span class="pre">top</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><span class="pre">geolib.geometry.one.Point</span></a></em><a class="headerlink" href="#geolib.soils.layers.ProfileLayer.top" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.soils.html" title="Previous document">geolib.soils</a>
+        </li>
+        <li>
+          <a href="geolib.soils.library.html" title="Next document">geolib.soils.library</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="geolib.html">geolib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="geolib.errors.html">geolib.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.geometry.html">geolib.geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.models.html">geolib.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.service.html">geolib.service</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="geolib.soils.html">geolib.soils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.utils.html">geolib.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+  <li><a href="geolib.html">geolib</a><ul>
+  <li><a href="geolib.soils.html">geolib.soils</a><ul>
+      <li>Previous: <a href="geolib.soils.html" title="previous chapter">geolib.soils</a></li>
+      <li>Next: <a href="geolib.soils.library.html" title="next chapter">geolib.soils.library</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

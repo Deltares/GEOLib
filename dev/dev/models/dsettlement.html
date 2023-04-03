@@ -15,8 +15,6 @@
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="D-Sheetpiling" href="dsheetpiling.html" />
-    <link rel="prev" title="D-Foundations" href="dfoundations.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -33,14 +31,6 @@
                 &nbsp;
   <nav id="rellinks">
     <ul>
-        <li>
-          &larr;
-          <a href="dfoundations.html" title="Previous document">D-Foundations</a>
-        </li>
-        <li>
-          <a href="dsheetpiling.html" title="Next document">D-Sheetpiling</a>
-          &rarr;
-        </li>
     </ul>
   </nav>
               </div>
@@ -221,12 +211,17 @@ by external loading.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.datastructure">
-<span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dsettlement.internal.DSettlementStructure</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">geolib.models.dsettlement.internal.DSettlementOutputStructure</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.datastructure" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.DSettlementStructure" title="geolib.models.dsettlement.internal.DSettlementStructure"><span class="pre">geolib.models.dsettlement.internal.DSettlementStructure</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.DSettlementOutputStructure" title="geolib.models.dsettlement.internal.DSettlementOutputStructure"><span class="pre">geolib.models.dsettlement.internal.DSettlementOutputStructure</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.datastructure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.distribution_boundaries">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distribution_boundaries</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.distribution_boundaries" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.filename" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -237,6 +232,11 @@ by external loading.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.layers">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../model.html#geolib.models.meta.MetaData" title="geolib.models.meta.MetaData"><span class="pre">geolib.models.meta.MetaData</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.meta" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -265,14 +265,14 @@ by external loading.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.parser_provider_type">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dsettlement.dsettlement_parserprovider.DSettlementParserProvider</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.dsettlement_parserprovider.html#geolib.models.dsettlement.dsettlement_parserprovider.DSettlementParserProvider" title="geolib.models.dsettlement.dsettlement_parserprovider.DSettlementParserProvider"><span class="pre">geolib.models.dsettlement.dsettlement_parserprovider.DSettlementParserProvider</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.parser_provider_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the parser provider type of the current concrete class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementParserProvider</span></code>]</p>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Type</span></code>[<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.dsettlement_parserprovider.html#geolib.models.dsettlement.dsettlement_parserprovider.DSettlementParserProvider" title="geolib.models.dsettlement.dsettlement_parserprovider.DSettlementParserProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementParserProvider</span></code></a>]</p>
 </dd>
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
@@ -301,7 +301,7 @@ by external loading.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>precon_pressure_within_layer</strong> (<em>PreconPressureWithinLayer</em>) – type of preconsolidation pressure within the layer</p></li>
+<li><p><strong>precon_pressure_within_layer</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.PreconPressureWithinLayer" title="geolib.models.dsettlement.internal.PreconPressureWithinLayer"><em>PreconPressureWithinLayer</em></a>) – type of preconsolidation pressure within the layer</p></li>
 <li><p><strong>is_imaginary_surface</strong> (<em>bool</em>) – true if imaginary surface</p></li>
 <li><p><strong>imaginary_surface_layer</strong> (<em>PositivInt</em>) – index of layer</p></li>
 <li><p><strong>is_submerging</strong> (<em>bool</em>) – true if submerging</p></li>
@@ -311,10 +311,10 @@ by external loading.</p>
 <li><p><strong>maintain_profile_time</strong> (<em>conint</em><em>(</em><em>ge=0</em><em>, </em><em>le=100000</em><em>)</em>) – time for maintain profile [days]</p></li>
 <li><p><strong>maintain_profile_gamma_dry</strong> (<em>confloat</em><em>(</em><em>ge=-100</em><em>, </em><em>le=100</em><em>)</em>) – unit weight above phreatic line for maintain profile [kN/m3]</p></li>
 <li><p><strong>maintain_profile_gamma_wet</strong> (<em>confloat</em><em>(</em><em>ge=-100</em><em>, </em><em>le=100</em><em>)</em>) – unit weight below phreatic line for maintain profile [kN/m3]</p></li>
-<li><p><strong>dispersion_conditions_layer_boundaries_top</strong> (<em>DispersionConditionLayerBoundary</em>) – dispersion condition at the top of the layer</p></li>
+<li><p><strong>dispersion_conditions_layer_boundaries_top</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.DispersionConditionLayerBoundary" title="geolib.models.dsettlement.internal.DispersionConditionLayerBoundary"><em>DispersionConditionLayerBoundary</em></a>) – dispersion condition at the top of the layer</p></li>
 <li><p><strong>dispersion_conditions_layer_boundaries_top</strong> – dispersion condition at the bottom of the layer</p></li>
-<li><p><strong>stress_distribution_soil</strong> (<em>StressDistributionSoil</em>) – type of stress distribution of the soil</p></li>
-<li><p><strong>stress_distribution_loads</strong> (<em>StressDistributionLoads</em>) – type of stress distribution loads</p></li>
+<li><p><strong>stress_distribution_soil</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.StressDistributionSoil" title="geolib.models.dsettlement.internal.StressDistributionSoil"><em>StressDistributionSoil</em></a>) – type of stress distribution of the soil</p></li>
+<li><p><strong>stress_distribution_loads</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.StressDistributionLoads" title="geolib.models.dsettlement.internal.StressDistributionLoads"><em>StressDistributionLoads</em></a>) – type of stress distribution loads</p></li>
 <li><p><strong>iteration_stop_criteria_submerging</strong> (<em>confloat</em><em>(</em><em>ge=0.0</em><em>, </em><em>le=1.0</em><em>)</em>) – submerging iteration stop criteria</p></li>
 <li><p><strong>iteration_stop_criteria_submerging_layer_height</strong> (<em>confloat</em><em>(</em><em>ge=0</em><em>, </em><em>le=99.999</em><em>)</em>) – minimum settlement for submerging iteration stop criteria [m]</p></li>
 <li><p><strong>maximum_iteration_steps_for_submerging</strong> (<em>conint</em><em>(</em><em>ge=1</em><em>, </em><em>le=100</em><em>)</em>) – maximum iteraion steps for submerging</p></li>
@@ -361,7 +361,7 @@ by external loading.</p>
 <li><p><strong>constitutive_model</strong> (<a class="reference internal" href="#geolib.models.dsettlement.internal.SoilModel" title="geolib.models.dsettlement.internal.SoilModel"><em>SoilModel</em></a>) – enum</p></li>
 <li><p><strong>consolidation_model</strong> (<a class="reference internal" href="#geolib.models.dsettlement.internal.ConsolidationModel" title="geolib.models.dsettlement.internal.ConsolidationModel"><em>ConsolidationModel</em></a>) – enum</p></li>
 <li><p><strong>is_two_dimensional</strong> (<em>bool</em>) – true if geometry is 2 dimensional</p></li>
-<li><p><strong>strain_type</strong> (<em>StrainType</em>) – enum</p></li>
+<li><p><strong>strain_type</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.StrainType" title="geolib.models.dsettlement.internal.StrainType"><em>StrainType</em></a>) – enum</p></li>
 <li><p><strong>is_vertical_drain</strong> (<em>bool</em>) – true if vertical drain is present</p></li>
 <li><p><strong>is_fit_for_settlement_plate</strong> (<em>bool</em>) – true if fit for settlement plate</p></li>
 <li><p><strong>is_probabilistic</strong> (<em>bool</em>) – true if probabilistic calculation should be made</p></li>
@@ -387,7 +387,7 @@ by external loading.</p>
 <li><p><strong>residual_settlement</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>) – For FORM and Monte Carlo methods, the allowed residual settlement can be set.</p></li>
 <li><p><strong>maximum_number_of_samples</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The number of samples that the Monte Carlo method will use.</p></li>
 <li><p><strong>maximum_iterations</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The maximum number of iterations for the FORM method.</p></li>
-<li><p><strong>reliability_type</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ProbabilisticCalculationType</span></code>) – <p>Select one of the following methods</p>
+<li><p><strong>reliability_type</strong> (<a class="reference internal" href="../_autosummary/geolib.models.dsettlement.probabilistic_calculation_types.html#geolib.models.dsettlement.probabilistic_calculation_types.ProbabilisticCalculationType" title="geolib.models.dsettlement.probabilistic_calculation_types.ProbabilisticCalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProbabilisticCalculationType</span></code></a>) – <p>Select one of the following methods</p>
 <ul>
 <li><p>SettlementsDeterministic: a regular deterministic settlement analysis along all verticals, based on fixed mean values of the parameters.</p></li>
 <li><dl class="simple">
@@ -528,6 +528,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.CircularLoad.load_type">
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.CircularLoad.load_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.loads.CircularLoad.weight">
 <span class="sig-name descname"><span class="pre">weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.CircularLoad.weight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -545,7 +550,7 @@ X and Y coordinates should be defined for each vertical.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.loads.OtherLoad.load_type">
-<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.OtherLoad.load_type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.OtherLoad.load_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -571,6 +576,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad.alpha">
 <span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad.load_type">
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad.load_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -630,6 +640,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.load_type">
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.load_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.wallweight">
 <span class="sig-name descname"><span class="pre">wallweight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.wallweight" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -655,6 +670,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.height">
 <span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.load_type">
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.load_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -697,6 +717,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad.height">
 <span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad.load_type">
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad.load_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -745,6 +770,11 @@ X and Y coordinates should be defined for each vertical.</p>
 </dd>
 </dl>
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.schedule">
+<span class="sig-name descname"><span class="pre">schedule</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsettlement.drain_types.DrainSchedule" title="geolib.models.dsettlement.drain_types.DrainSchedule"><span class="pre">geolib.models.dsettlement.drain_types.DrainSchedule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.time">
 <span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime.timedelta</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.time" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -777,6 +807,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesOff.phreatic_level_in_drain">
 <span class="sig-name descname"><span class="pre">phreatic_level_in_drain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesOff.phreatic_level_in_drain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesOff.schedule">
+<span class="sig-name descname"><span class="pre">schedule</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsettlement.drain_types.DrainSchedule" title="geolib.models.dsettlement.drain_types.DrainSchedule"><span class="pre">geolib.models.dsettlement.drain_types.DrainSchedule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesOff.schedule" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -816,6 +851,11 @@ X and Y coordinates should be defined for each vertical.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.phreatic_level_in_drain">
 <span class="sig-name descname"><span class="pre">phreatic_level_in_drain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.phreatic_level_in_drain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.schedule">
+<span class="sig-name descname"><span class="pre">schedule</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#geolib.models.dsettlement.drain_types.DrainSchedule" title="geolib.models.dsettlement.drain_types.DrainSchedule"><span class="pre">geolib.models.dsettlement.drain_types.DrainSchedule</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.schedule" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1271,14 +1311,6 @@ the order and point numbers of the points in the example is the only allowed pos
                 &nbsp;
   <nav id="rellinks">
     <ul>
-        <li>
-          &larr;
-          <a href="dfoundations.html" title="Previous document">D-Foundations</a>
-        </li>
-        <li>
-          <a href="dsheetpiling.html" title="Next document">D-Sheetpiling</a>
-          &rarr;
-        </li>
     </ul>
   </nav>
               </div>
@@ -1311,25 +1343,8 @@ the order and point numbers of the points in the example is the only allowed pos
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../api.html">Developer Interface</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../model.html">Model Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../geometry.html">Geometry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../soils.html">Soils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dfoundations.html">D-Foundations</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">D-Settlement</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dsettlement.dsettlement_model">D-Settlement model</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dsettlement.loads">Loads</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-geolib.models.dsettlement.drains">Drains</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#geometry">Geometry</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#output">Output</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="dsheetpiling.html">D-Sheetpiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dstability.html">D-Stability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
@@ -1347,7 +1362,7 @@ the order and point numbers of the points in the example is the only allowed pos
     
     <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
     
-    <li class="toctree-l1"><a href="deltares.github.io/geolib/">@Project documentation</a></li>
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
     
     <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
     
@@ -1356,10 +1371,6 @@ the order and point numbers of the points in the example is the only allowed pos
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../api.html">Developer Interface</a><ul>
-      <li>Previous: <a href="dfoundations.html" title="previous chapter">D-Foundations</a></li>
-      <li>Next: <a href="dsheetpiling.html" title="next chapter">D-Sheetpiling</a></li>
-  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -1378,7 +1389,7 @@ the order and point numbers of the points in the example is the only allowed pos
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2021, Deltares.
+      &copy;2023, Deltares.
       
     </div>
 

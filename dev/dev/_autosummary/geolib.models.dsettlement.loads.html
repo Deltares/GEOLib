@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dsettlement.loads &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="geolib.models.dsettlement.probabilistic_calculation_types" href="geolib.models.dsettlement.probabilistic_calculation_types.html" />
+    <link rel="prev" title="geolib.models.dsettlement.internal_soil" href="geolib.models.dsettlement.internal_soil.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsettlement.internal_soil.html" title="Previous document">geolib.models.dsettlement.internal_soil</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsettlement.probabilistic_calculation_types.html" title="Next document">geolib.models.dsettlement.probabilistic_calculation_types</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dsettlement.loads">
+<span id="geolib-models-dsettlement-loads"></span><h1>geolib.models.dsettlement.loads<a class="headerlink" href="#module-geolib.models.dsettlement.loads" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.CircularLoad" title="geolib.models.dsettlement.loads.CircularLoad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CircularLoad</span></code></a>(**data)</p></td>
+<td><p>Create a circular load with the given name and properties.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.OtherLoad" title="geolib.models.dsettlement.loads.OtherLoad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OtherLoad</span></code></a>(**data)</p></td>
+<td><p>Other Load Class to inherit from.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.RectangularLoad" title="geolib.models.dsettlement.loads.RectangularLoad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RectangularLoad</span></code></a>(**data)</p></td>
+<td><p>Create a rectangular load with the given name and properties</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.TankLoad" title="geolib.models.dsettlement.loads.TankLoad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TankLoad</span></code></a>(**data)</p></td>
+<td><p>Create a tank load with the given name and properties.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.TrapeziformLoad" title="geolib.models.dsettlement.loads.TrapeziformLoad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrapeziformLoad</span></code></a>(**data)</p></td>
+<td><p>Create a trapeziform load with the given name and properties.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../models/dsettlement.html#geolib.models.dsettlement.loads.UniformLoad" title="geolib.models.dsettlement.loads.UniformLoad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UniformLoad</span></code></a>(**data)</p></td>
+<td><p>Create a uniform load with the given name and properties.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.CircularLoad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.loads.</span></span><span class="sig-name descname"><span class="pre">CircularLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.loads.CircularLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a circular load with the given name and properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weight</strong> – The mangitude of the load.</p></li>
+<li><p><strong>alpha</strong> – The shape factor alpha is used to specify the shape of the contact pressure.</p></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../_images/circular.png"><img alt="../../_images/circular.png" class="align-center" src="../../_images/circular.png" style="width: 200.0px; height: 100.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.CircularLoad.R">
+<span class="sig-name descname"><span class="pre">R</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.CircularLoad.R" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.CircularLoad.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.CircularLoad.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.CircularLoad.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.CircularLoad.weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.OtherLoad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.loads.</span></span><span class="sig-name descname"><span class="pre">OtherLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.loads.OtherLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Other Load Class to inherit from.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.OtherLoad.load_type">
+<span class="sig-name descname"><span class="pre">load_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dsettlement.internal.html#geolib.models.dsettlement.internal.TypeOtherLoads" title="geolib.models.dsettlement.internal.TypeOtherLoads"><span class="pre">geolib.models.dsettlement.internal.TypeOtherLoads</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.OtherLoad.load_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.loads.</span></span><span class="sig-name descname"><span class="pre">RectangularLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a rectangular load with the given name and properties</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>weight</strong> – The mangitude of the load.</p></li>
+<li><p><strong>alpha</strong> – The shape factor alpha is used to specify the shape of the contact pressure</p></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../_images/rectangural.png"><img alt="../../_images/rectangural.png" class="align-center" src="../../_images/rectangural.png" style="width: 200.0px; height: 100.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad.weight">
+<span class="sig-name descname"><span class="pre">weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad.weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad.xwidth">
+<span class="sig-name descname"><span class="pre">xwidth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad.xwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.RectangularLoad.zwidth">
+<span class="sig-name descname"><span class="pre">zwidth</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.RectangularLoad.zwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.loads.</span></span><span class="sig-name descname"><span class="pre">TankLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a tank load with the given name and properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wallweight</strong> – The magnitude of the load induced by the weight of the material in which the tank is made.</p></li>
+<li><p><strong>alpha</strong> – The shape factor alpha is used to specify the shape of the contact pressure.</p></li>
+<li><p><strong>internalweight</strong> – The magnitude of the load induced by the weight of the material stored in the tank.</p></li>
+</ul>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../_images/tank.png"><img alt="../../_images/tank.png" class="align-center" src="../../_images/tank.png" style="width: 200.0px; height: 100.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.Rintern">
+<span class="sig-name descname"><span class="pre">Rintern</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.Rintern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.alpha" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.dWall">
+<span class="sig-name descname"><span class="pre">dWall</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.dWall" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.internalweight">
+<span class="sig-name descname"><span class="pre">internalweight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.internalweight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TankLoad.wallweight">
+<span class="sig-name descname"><span class="pre">wallweight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TankLoad.wallweight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.loads.</span></span><span class="sig-name descname"><span class="pre">TrapeziformLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a trapeziform load with the given name and properties.</p>
+<p>:param gamma – The weight of the load per m<sup>3</sup>:</p>
+<a class="reference internal image-reference" href="../../_images/trapeziform.png"><img alt="../../_images/trapeziform.png" class="align-center" src="../../_images/trapeziform.png" style="width: 200.0px; height: 100.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.gamma">
+<span class="sig-name descname"><span class="pre">gamma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.gamma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.xl">
+<span class="sig-name descname"><span class="pre">xl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.xl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.xm">
+<span class="sig-name descname"><span class="pre">xm</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.xm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.TrapeziformLoad.xr">
+<span class="sig-name descname"><span class="pre">xr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.TrapeziformLoad.xr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.loads.</span></span><span class="sig-name descname"><span class="pre">UniformLoad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a uniform load with the given name and properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>unit_weight</strong> – The weight of the load per m<sup>3</sup></p>
+</dd>
+</dl>
+<a class="reference internal image-reference" href="../../_images/uniform.png"><img alt="../../_images/uniform.png" class="align-center" src="../../_images/uniform.png" style="width: 200.0px; height: 100.0px;" /></a>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad.gamma">
+<span class="sig-name descname"><span class="pre">gamma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad.gamma" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad.height">
+<span class="sig-name descname"><span class="pre">height</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad.unit_weight">
+<span class="sig-name descname"><span class="pre">unit_weight</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad.unit_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.loads.UniformLoad.y_application">
+<span class="sig-name descname"><span class="pre">y_application</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.loads.UniformLoad.y_application" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsettlement.internal_soil.html" title="Previous document">geolib.models.dsettlement.internal_soil</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsettlement.probabilistic_calculation_types.html" title="Next document">geolib.models.dsettlement.probabilistic_calculation_types</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="geolib.html">geolib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="geolib.errors.html">geolib.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.geometry.html">geolib.geometry</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="geolib.models.html">geolib.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.service.html">geolib.service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.soils.html">geolib.soils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.utils.html">geolib.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+  <li><a href="geolib.html">geolib</a><ul>
+  <li><a href="geolib.models.html">geolib.models</a><ul>
+  <li><a href="geolib.models.dsettlement.html">geolib.models.dsettlement</a><ul>
+      <li>Previous: <a href="geolib.models.dsettlement.internal_soil.html" title="previous chapter">geolib.models.dsettlement.internal_soil</a></li>
+      <li>Next: <a href="geolib.models.dsettlement.probabilistic_calculation_types.html" title="next chapter">geolib.models.dsettlement.probabilistic_calculation_types</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

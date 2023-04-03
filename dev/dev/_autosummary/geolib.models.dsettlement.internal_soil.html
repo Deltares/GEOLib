@@ -1,0 +1,774 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>geolib.models.dsettlement.internal_soil &#8212; geolib 0.5.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="geolib.models.dsettlement.loads" href="geolib.models.dsettlement.loads.html" />
+    <link rel="prev" title="geolib.models.dsettlement.internal" href="geolib.models.dsettlement.internal.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsettlement.internal.html" title="Previous document">geolib.models.dsettlement.internal</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsettlement.loads.html" title="Next document">geolib.models.dsettlement.loads</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-geolib.models.dsettlement.internal_soil">
+<span id="geolib-models-dsettlement-internal-soil"></span><h1>geolib.models.dsettlement.internal_soil<a class="headerlink" href="#module-geolib.models.dsettlement.internal_soil" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsettlement.internal_soil.PreconType" title="geolib.models.dsettlement.internal_soil.PreconType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PreconType</span></code></a>(value)</p></td>
+<td><p>An enumeration.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsettlement.internal_soil.SoilInternal" title="geolib.models.dsettlement.internal_soil.SoilInternal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SoilInternal</span></code></a>(*args[, name, soilcolor, ...])</p></td>
+<td><p>Representation of [SOIL] group.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.PreconType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.internal_soil.</span></span><span class="sig-name descname"><span class="pre">PreconType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.PreconType" title="Permalink to this definition">¶</a></dt>
+<dd><p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.PreconType.OCR">
+<span class="sig-name descname"><span class="pre">OCR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.PreconType.OCR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.PreconType.POP">
+<span class="sig-name descname"><span class="pre">POP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.PreconType.POP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.PreconType.PRECONSOLIDATION_PRESSURE">
+<span class="sig-name descname"><span class="pre">PRECONSOLIDATION_PRESSURE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.PreconType.PRECONSOLIDATION_PRESSURE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.PreconType.UNDEFINED">
+<span class="sig-name descname"><span class="pre">UNDEFINED</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.PreconType.UNDEFINED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsettlement.internal_soil.</span></span><span class="sig-name descname"><span class="pre">SoilInternal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcolor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9764853</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilgamdry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilgamwet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">14</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilinitialvoidratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcohesion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpreconisotachetype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#geolib.models.dsettlement.internal_soil.PreconType" title="geolib.models.dsettlement.internal_soil.PreconType"><span class="pre">geolib.models.dsettlement.internal_soil.PreconType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PreconType.POP</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpreconkoppejantype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#geolib.models.dsettlement.internal_soil.PreconType" title="geolib.models.dsettlement.internal_soil.PreconType"><span class="pre">geolib.models.dsettlement.internal_soil.PreconType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">PreconType.OCR</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soiluseequivalentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.FALSE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilequivalentage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">19800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilocr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soillimitstress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildrained</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.FALSE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilapasapproximationbycpcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.FALSE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpermeabilityver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpermeabilityhorfactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstoragetype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.StorageTypes" title="geolib.soils.soil.StorageTypes"><span class="pre">geolib.soils.soil.StorageTypes</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">StorageTypes.strain_dependent_permeability</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpermeabilitystrainmodulus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000000000000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soiluseprobdefaults</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.FALSE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdgamdry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdgamwet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdpc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdpricompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdseccompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdseccomprate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdocr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdpermeabilityver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdpop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdpermeabilityhorfactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdinitialvoidratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdpermeabilitystrainmodulus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdlimitstress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcs1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdasec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdca</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdrratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdsratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcrindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdccindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilstdcswindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistgamdry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistgamwet</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistdpc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistpricompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistseccompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistseccomprate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistocr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistpermeabilityver</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistpop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistpermeabilityhorfactor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistinitialvoidratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistpermeabilitystrainmodulus</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistlimitstress</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcs1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistasec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistca</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistrratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistsratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcrindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistccindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildistcswindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistributionType.Normal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorcpcp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorcscp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorcs1cp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorapcp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcoraseccp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorcrindexccindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorrratiocratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorcaccindexorcratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorpricompindexseccompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcorseccomprateseccompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcp1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcs1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilasec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilca</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcompratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.TRUE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilrratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilsratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcrindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilccindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilcswindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilpricompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilseccompindex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilseccomprate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilhorizontalbehaviourtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../soils.html#geolib.soils.soil.HorizontalBehaviourType" title="geolib.soils.soil.HorizontalBehaviourType"><span class="pre">geolib.soils.soil.HorizontalBehaviourType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">HorizontalBehaviourType.Elastic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soilelasticity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soildefaultelasticity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">Bool.TRUE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Representation of [SOIL] group.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilap">
+<span class="sig-name descname"><span class="pre">soilap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilapasapproximationbycpcs">
+<span class="sig-name descname"><span class="pre">soilapasapproximationbycpcs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilapasapproximationbycpcs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilasec">
+<span class="sig-name descname"><span class="pre">soilasec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilasec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilca">
+<span class="sig-name descname"><span class="pre">soilca</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcar">
+<span class="sig-name descname"><span class="pre">soilcar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilccindex">
+<span class="sig-name descname"><span class="pre">soilccindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilccindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcohesion">
+<span class="sig-name descname"><span class="pre">soilcohesion</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcohesion" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcolor">
+<span class="sig-name descname"><span class="pre">soilcolor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcolor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcompratio">
+<span class="sig-name descname"><span class="pre">soilcompratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcompratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorapcp1">
+<span class="sig-name descname"><span class="pre">soilcorapcp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorapcp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcoraseccp1">
+<span class="sig-name descname"><span class="pre">soilcoraseccp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcoraseccp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcaccindexorcratio">
+<span class="sig-name descname"><span class="pre">soilcorcaccindexorcratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcaccindexorcratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcpcp1">
+<span class="sig-name descname"><span class="pre">soilcorcpcp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcpcp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcrindexccindex">
+<span class="sig-name descname"><span class="pre">soilcorcrindexccindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcrindexccindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcs1cp1">
+<span class="sig-name descname"><span class="pre">soilcorcs1cp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcs1cp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcscp1">
+<span class="sig-name descname"><span class="pre">soilcorcscp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorcscp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorpricompindexseccompindex">
+<span class="sig-name descname"><span class="pre">soilcorpricompindexseccompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorpricompindexseccompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorrratiocratio">
+<span class="sig-name descname"><span class="pre">soilcorrratiocratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorrratiocratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcorseccomprateseccompindex">
+<span class="sig-name descname"><span class="pre">soilcorseccomprateseccompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcorseccomprateseccompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcp">
+<span class="sig-name descname"><span class="pre">soilcp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcp1">
+<span class="sig-name descname"><span class="pre">soilcp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcratio">
+<span class="sig-name descname"><span class="pre">soilcratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcrindex">
+<span class="sig-name descname"><span class="pre">soilcrindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcrindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcs">
+<span class="sig-name descname"><span class="pre">soilcs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcs1">
+<span class="sig-name descname"><span class="pre">soilcs1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcs1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcswindex">
+<span class="sig-name descname"><span class="pre">soilcswindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcswindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilcv">
+<span class="sig-name descname"><span class="pre">soilcv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilcv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildefaultelasticity">
+<span class="sig-name descname"><span class="pre">soildefaultelasticity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildefaultelasticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistap">
+<span class="sig-name descname"><span class="pre">soildistap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistasec">
+<span class="sig-name descname"><span class="pre">soildistasec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistasec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistca">
+<span class="sig-name descname"><span class="pre">soildistca</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcar">
+<span class="sig-name descname"><span class="pre">soildistcar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistccindex">
+<span class="sig-name descname"><span class="pre">soildistccindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistccindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcp">
+<span class="sig-name descname"><span class="pre">soildistcp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcp1">
+<span class="sig-name descname"><span class="pre">soildistcp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcratio">
+<span class="sig-name descname"><span class="pre">soildistcratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcrindex">
+<span class="sig-name descname"><span class="pre">soildistcrindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcrindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcs">
+<span class="sig-name descname"><span class="pre">soildistcs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcs1">
+<span class="sig-name descname"><span class="pre">soildistcs1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcs1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcswindex">
+<span class="sig-name descname"><span class="pre">soildistcswindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcswindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistcv">
+<span class="sig-name descname"><span class="pre">soildistcv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistcv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistdpc">
+<span class="sig-name descname"><span class="pre">soildistdpc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistdpc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistgamdry">
+<span class="sig-name descname"><span class="pre">soildistgamdry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistgamdry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistgamwet">
+<span class="sig-name descname"><span class="pre">soildistgamwet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistgamwet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistinitialvoidratio">
+<span class="sig-name descname"><span class="pre">soildistinitialvoidratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistinitialvoidratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistlimitstress">
+<span class="sig-name descname"><span class="pre">soildistlimitstress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistlimitstress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistocr">
+<span class="sig-name descname"><span class="pre">soildistocr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistocr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistpermeabilityhorfactor">
+<span class="sig-name descname"><span class="pre">soildistpermeabilityhorfactor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistpermeabilityhorfactor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistpermeabilitystrainmodulus">
+<span class="sig-name descname"><span class="pre">soildistpermeabilitystrainmodulus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistpermeabilitystrainmodulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistpermeabilityver">
+<span class="sig-name descname"><span class="pre">soildistpermeabilityver</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistpermeabilityver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistpop">
+<span class="sig-name descname"><span class="pre">soildistpop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistpop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistpricompindex">
+<span class="sig-name descname"><span class="pre">soildistpricompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistpricompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistrratio">
+<span class="sig-name descname"><span class="pre">soildistrratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistrratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistseccompindex">
+<span class="sig-name descname"><span class="pre">soildistseccompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistseccompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistseccomprate">
+<span class="sig-name descname"><span class="pre">soildistseccomprate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistseccomprate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildistsratio">
+<span class="sig-name descname"><span class="pre">soildistsratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.DistributionType" title="geolib.soils.soil.DistributionType"><span class="pre">geolib.soils.soil.DistributionType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildistsratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soildrained">
+<span class="sig-name descname"><span class="pre">soildrained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soildrained" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilelasticity">
+<span class="sig-name descname"><span class="pre">soilelasticity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilelasticity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilequivalentage">
+<span class="sig-name descname"><span class="pre">soilequivalentage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilequivalentage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilgamdry">
+<span class="sig-name descname"><span class="pre">soilgamdry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilgamdry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilgamwet">
+<span class="sig-name descname"><span class="pre">soilgamwet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilgamwet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilhorizontalbehaviourtype">
+<span class="sig-name descname"><span class="pre">soilhorizontalbehaviourtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.HorizontalBehaviourType" title="geolib.soils.soil.HorizontalBehaviourType"><span class="pre">geolib.soils.soil.HorizontalBehaviourType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilhorizontalbehaviourtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilinitialvoidratio">
+<span class="sig-name descname"><span class="pre">soilinitialvoidratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilinitialvoidratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soillimitstress">
+<span class="sig-name descname"><span class="pre">soillimitstress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soillimitstress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilocr">
+<span class="sig-name descname"><span class="pre">soilocr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilocr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpc">
+<span class="sig-name descname"><span class="pre">soilpc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpermeabilityhorfactor">
+<span class="sig-name descname"><span class="pre">soilpermeabilityhorfactor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpermeabilityhorfactor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpermeabilitystrainmodulus">
+<span class="sig-name descname"><span class="pre">soilpermeabilitystrainmodulus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpermeabilitystrainmodulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpermeabilityver">
+<span class="sig-name descname"><span class="pre">soilpermeabilityver</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpermeabilityver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilphi">
+<span class="sig-name descname"><span class="pre">soilphi</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilphi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpop">
+<span class="sig-name descname"><span class="pre">soilpop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpreconisotachetype">
+<span class="sig-name descname"><span class="pre">soilpreconisotachetype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsettlement.internal_soil.PreconType" title="geolib.models.dsettlement.internal_soil.PreconType"><span class="pre">geolib.models.dsettlement.internal_soil.PreconType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpreconisotachetype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpreconkoppejantype">
+<span class="sig-name descname"><span class="pre">soilpreconkoppejantype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dsettlement.internal_soil.PreconType" title="geolib.models.dsettlement.internal_soil.PreconType"><span class="pre">geolib.models.dsettlement.internal_soil.PreconType</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpreconkoppejantype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilpricompindex">
+<span class="sig-name descname"><span class="pre">soilpricompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilpricompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilrratio">
+<span class="sig-name descname"><span class="pre">soilrratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilrratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilseccompindex">
+<span class="sig-name descname"><span class="pre">soilseccompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilseccompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilseccomprate">
+<span class="sig-name descname"><span class="pre">soilseccomprate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilseccomprate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilsratio">
+<span class="sig-name descname"><span class="pre">soilsratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilsratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdap">
+<span class="sig-name descname"><span class="pre">soilstdap</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdap" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdasec">
+<span class="sig-name descname"><span class="pre">soilstdasec</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdasec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdca">
+<span class="sig-name descname"><span class="pre">soilstdca</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdca" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcar">
+<span class="sig-name descname"><span class="pre">soilstdcar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdccindex">
+<span class="sig-name descname"><span class="pre">soilstdccindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdccindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcp">
+<span class="sig-name descname"><span class="pre">soilstdcp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcp1">
+<span class="sig-name descname"><span class="pre">soilstdcp1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcp1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcratio">
+<span class="sig-name descname"><span class="pre">soilstdcratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcrindex">
+<span class="sig-name descname"><span class="pre">soilstdcrindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcrindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcs">
+<span class="sig-name descname"><span class="pre">soilstdcs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcs1">
+<span class="sig-name descname"><span class="pre">soilstdcs1</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcs1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcswindex">
+<span class="sig-name descname"><span class="pre">soilstdcswindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcswindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcv">
+<span class="sig-name descname"><span class="pre">soilstdcv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdcv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdgamdry">
+<span class="sig-name descname"><span class="pre">soilstdgamdry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdgamdry" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdgamwet">
+<span class="sig-name descname"><span class="pre">soilstdgamwet</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdgamwet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdinitialvoidratio">
+<span class="sig-name descname"><span class="pre">soilstdinitialvoidratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdinitialvoidratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdlimitstress">
+<span class="sig-name descname"><span class="pre">soilstdlimitstress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdlimitstress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdocr">
+<span class="sig-name descname"><span class="pre">soilstdocr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdocr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpc">
+<span class="sig-name descname"><span class="pre">soilstdpc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpermeabilityhorfactor">
+<span class="sig-name descname"><span class="pre">soilstdpermeabilityhorfactor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpermeabilityhorfactor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpermeabilitystrainmodulus">
+<span class="sig-name descname"><span class="pre">soilstdpermeabilitystrainmodulus</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpermeabilitystrainmodulus" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpermeabilityver">
+<span class="sig-name descname"><span class="pre">soilstdpermeabilityver</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpermeabilityver" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpop">
+<span class="sig-name descname"><span class="pre">soilstdpop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpricompindex">
+<span class="sig-name descname"><span class="pre">soilstdpricompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdpricompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdrratio">
+<span class="sig-name descname"><span class="pre">soilstdrratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdrratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdseccompindex">
+<span class="sig-name descname"><span class="pre">soilstdseccompindex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdseccompindex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdseccomprate">
+<span class="sig-name descname"><span class="pre">soilstdseccomprate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdseccomprate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstdsratio">
+<span class="sig-name descname"><span class="pre">soilstdsratio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstdsratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soilstoragetype">
+<span class="sig-name descname"><span class="pre">soilstoragetype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.soils.soil.StorageTypes" title="geolib.soils.soil.StorageTypes"><span class="pre">geolib.soils.soil.StorageTypes</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soilstoragetype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soiluseequivalentage">
+<span class="sig-name descname"><span class="pre">soiluseequivalentage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soiluseequivalentage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.internal_soil.SoilInternal.soiluseprobdefaults">
+<span class="sig-name descname"><span class="pre">soiluseprobdefaults</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.internal.html#geolib.models.internal.Bool" title="geolib.models.internal.Bool"><span class="pre">geolib.models.internal.Bool</span></a></em><a class="headerlink" href="#geolib.models.dsettlement.internal_soil.SoilInternal.soiluseprobdefaults" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="geolib.models.dsettlement.internal.html" title="Previous document">geolib.models.dsettlement.internal</a>
+        </li>
+        <li>
+          <a href="geolib.models.dsettlement.loads.html" title="Next document">geolib.models.dsettlement.loads</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="geolib.html">geolib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="geolib.errors.html">geolib.errors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.geometry.html">geolib.geometry</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="geolib.models.html">geolib.models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.service.html">geolib.service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.soils.html">geolib.soils</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geolib.utils.html">geolib.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+  <li><a href="geolib.html">geolib</a><ul>
+  <li><a href="geolib.models.html">geolib.models</a><ul>
+  <li><a href="geolib.models.dsettlement.html">geolib.models.dsettlement</a><ul>
+      <li>Previous: <a href="geolib.models.dsettlement.internal.html" title="previous chapter">geolib.models.dsettlement.internal</a></li>
+      <li>Next: <a href="geolib.models.dsettlement.loads.html" title="next chapter">geolib.models.dsettlement.loads</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
