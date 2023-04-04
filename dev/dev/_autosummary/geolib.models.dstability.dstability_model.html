@@ -469,17 +469,17 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_result">
-<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the results of a stage. Calculation results are based on analysis type and calculation type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – Id of a stage.</p>
+<dd class="field-odd"><p><strong>stage_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Id of a stage, if None is supplied the result of the current stage is returned.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary containing the analysis results of the stage.</p>
+<dd class="field-even"><p>The analysis results of the stage.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p>DStabilityResult</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p><strong>ValueError</strong> – No results or calculationsettings available</p>
