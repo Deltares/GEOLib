@@ -1,5 +1,8 @@
 Changelog
 =========
+- :release:`0.5.1 <2023-04-04>`
+- :feature:`-` Add optional parameter for stage_id to DStabilityModel.get_result (#114)
+
 - :release:`0.5.0 <2023-04-03>`
 - :feature:`-` Breaking change: D-Stability output property now returns the results for all stages.
 - :feature:`-` Add methods to D-Stability model: add_state_correlation, add_soil_correlation.

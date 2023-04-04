@@ -1,3 +1,7 @@
+"""
+The internal data model structure.
+"""
+
 import json
 from collections import defaultdict
 from datetime import date, datetime

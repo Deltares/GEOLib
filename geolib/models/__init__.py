@@ -1,3 +1,7 @@
+"""
+Module containing all GEOLib application specific models for the D-GEO Suite and D-Series.
+"""
+
 from .base_model_structure import BaseDataClass, BaseModelStructure  # isort:skip
 from .base_model import BaseModel, BaseModelList
 from .dfoundations import DFoundationsModel

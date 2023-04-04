@@ -284,3 +284,16 @@ class TestDStabilityResults:
         assert isinstance(output[1], UpliftVanReliabilityResult)
         assert isinstance(output[2], UpliftVanParticleSwarmResult)
         assert output[9] is None
+
+    @pytest.mark.unittest
+    def test_get_result_with_none_is_current_stage(self, _get_dstability_model: DStabilityModel):
+        model = _get_dstability_model
+        model.current_stage = 2
+        output = model.get_result()
+        assert isinstance(output, UpliftVanParticleSwarmResult)
+
+    @pytest.mark.unittest
+    def test_get_result_with_id_is_stage_result(self, _get_dstability_model: DStabilityModel):
+        model = _get_dstability_model
+        output = model.get_result(3)
+        assert isinstance(output, SpencerResult)

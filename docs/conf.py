@@ -19,7 +19,7 @@ import geolib  # isort:skip
 # -- Project information -----------------------------------------------------
 
 project = "geolib"
-copyright = "2021, Deltares"
+copyright = "2023, Deltares"
 author = "Deltares"
 
 
@@ -30,6 +30,7 @@ author = "Deltares"
 # ones.
 extensions = [
     "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
     "sphinx.ext.todo",
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
@@ -88,7 +89,7 @@ html_theme_options = {
     "extra_nav_links": {
         "@Source code": "https://github.com/Deltares/GEOLib",
         "@Issue Tracker": "https://github.com/Deltares/GEOLib/issues",
-        "@Project documentation": "deltares.github.io/geolib/",
+        "@Project documentation": "https://deltares.github.io/geolib/",
         "@Releases": "https://github.com/Deltares/GEOLib/releases",
     },
     "show_relbars": True,

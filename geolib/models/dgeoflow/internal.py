@@ -1,3 +1,7 @@
+"""
+The internal data model structure.
+"""
+
 from collections import defaultdict
 from datetime import date, datetime
 from enum import Enum

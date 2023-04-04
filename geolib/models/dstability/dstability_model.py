@@ -123,21 +123,24 @@ class DStabilityModel(BaseModel):
         """
         return self.datastructure.has_result(stage_id)
 
-    def get_result(self, stage_id: int) -> DStabilityResult:
+    def get_result(self, stage_id: Optional[int] = None) -> DStabilityResult:
         """
         Returns the results of a stage. Calculation results are based on analysis type and calculation type.
 
         Args:
-            stage_id (int): Id of a stage.
+            stage_id (Optional[int]): Id of a stage, if None is supplied the result of the current stage is returned.
 
         Returns:
-            dict: Dictionary containing the analysis results of the stage.
+            DStabilityResult: The analysis results of the stage.
 
         Raises:
             ValueError: No results or calculationsettings available
         """
+        if stage_id is None:
+            stage_id = self.current_stage
+
         result = self._get_result_substructure(stage_id)
-        return result  # TODO snake_case keys?
+        return result
 
     def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
         if self.datastructure.has_result(stage_id):
