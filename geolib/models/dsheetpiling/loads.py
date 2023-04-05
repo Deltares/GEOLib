@@ -239,10 +239,6 @@ class NormalForce(BaseDataClass):
 
 
 class SoilDisplacement(BaseDataClass):
-    """Non Uniform Load."""
-
-
-class Earthquake(BaseDataClass):
-    """Non Uniform Load."""
+    """Soil Displacement Load."""
 
     force: float  # g

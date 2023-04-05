@@ -1,21 +1,20 @@
-.. _dstability:
+.. _dgeoflow:
 
-D-Stability
+D-Geo Flow
 ========================
 
-D-Stability model
+D-Geo Flow model
 -----------------
 
 .. autosummary::
    :toctree: ../_autosummary
    :recursive:
 
-   geolib.models.dstability
+   geolib.models.dgeoflow
 
 Tutorial
 --------
-You can find the D-Stability tutorial here: :doc:`../../community/tutorial_dstability`
-
+You can find the D-Geo Flow tutorial here: :doc:`../../community/tutorial_dgeoflow`
 
 Geometry
 --------
@@ -38,7 +37,7 @@ only generated the 4 corner points, a valid geometry is generated, however unexp
     from geolib.geometry import Point
     from pathlib import Path
 
-    ds = geolib.DStabilityModel()
+    ds = geolib.DGeoFlowModel()
 
     clay_points = [Point(x=-50, z=-10),
                    Point(x=-50, z=-5),

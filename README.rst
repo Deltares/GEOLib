@@ -66,6 +66,13 @@ Running flake8, mypy is also recommended. For mypy use:
 
     $ mypy --config-file pyproject.toml geolib
 
+Running standard linters is advised:
+
+.. code-block:: bash
+
+    $ poetry run isort .
+    $ poetry run black .
+
 
 Documentation
 -------------
@@ -154,3 +161,13 @@ Windows-based Docker image
     $ docker build -t geolib-windows:0.0.1 -f Dockerfiles/dev/Dockerfile-windows .
     $ docker tag geolib-windows:0.0.1 deltares/geolib-windows:0.0.1
     $ git push
+
+Code linter
+-----------------------
+
+In order to run code cleanup/linter use the following commands:
+
+.. code-block:: bash
+
+    $ poetry run isort .
+    $ poetry run black .

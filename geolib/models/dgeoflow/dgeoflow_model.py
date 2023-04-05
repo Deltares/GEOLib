@@ -231,7 +231,7 @@ class DGeoFlowModel(BaseModel):
         Returns:
             int: id of the added layer
         """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
+        scenario_id = scenario_id if scenario_id is not None else self.current_scenario
 
         if not self.datastructure.has_scenario(scenario_id):
             raise IndexError(f"scenario {scenario_id} is not available")
@@ -274,7 +274,7 @@ class DGeoFlowModel(BaseModel):
         Returns:
             int: id of the added meshproperties collection
         """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
+        scenario_id = scenario_id if scenario_id is not None else self.current_scenario
         meshpropertiescollection = self.datastructure.mesh_properties[scenario_id]
 
         persistable_layer = self.get_layer(scenario_id, layer_id)
@@ -305,7 +305,7 @@ class DGeoFlowModel(BaseModel):
         Returns:
             int: id of the boundary conditions collection
         """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
+        scenario_id = scenario_id if scenario_id is not None else self.current_scenario
         boundary_conditions = self.datastructure.boundary_conditions[scenario_id]
 
         boundary_condition_id = self._get_next_id()

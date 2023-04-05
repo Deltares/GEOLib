@@ -1,8 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import Any, List, Optional, Type, Union
-from typing import BinaryIO
+from typing import Any, BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, PositiveFloat
 from pydantic.types import confloat, conint
@@ -23,7 +22,6 @@ from .internal import (
     Water,
 )
 from .loads import (
-    Earthquake,
     HorizontalLineLoad,
     Moment,
     NormalForce,
@@ -85,7 +83,8 @@ class WoodenSheetPileModelType(BaseModelType):
     method: Optional[LateralEarthPressureMethod] = None
     check_vertical_balance: Optional[bool] = None
     verification: Optional[bool] = None
-    elastic_calculation: Optional[bool] = None
+    elastic_calculation: bool = True
+    wooden_sheetpiling: bool = True
 
     @property
     def model(self) -> ModelType:
@@ -116,10 +115,13 @@ class DiaphragmModelType(BaseModelType):
     method: Optional[LateralEarthPressureMethod] = None
     check_vertical_balance: Optional[bool] = None
     verification: Optional[bool] = None
+    elastic_calculation: bool = False
+    diepwand_calculation: bool = True
+
 
     @property
     def model(self) -> ModelType:
-        return ModelType.DIAPHRAGM_WALL
+        return ModelType.SHEET_PILING
 
 
 class DSheetPilingModel(BaseModel):
@@ -401,18 +403,18 @@ class DSheetPilingModel(BaseModel):
             HorizontalLineLoad,
             NormalForce,
             SoilDisplacement,
-            Earthquake,
             UniformLoad,
         ],
         stage_id: int,
     ):
-        """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake
+        """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad
 
         Args:
-            load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or Earthquake.
-            Note that SoilDisplacement and Earthquake are only valid for a Pile construction.
+            load: Add a load with the types of Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad.
             stage_id: Load is added to this stage.
 
+        Note: SoilDisplacement and UniformLoad are only valid for a sheetpiling construction.
+        
         Raises:
             ValueError: When non-existing stage_id is passed.
             ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.

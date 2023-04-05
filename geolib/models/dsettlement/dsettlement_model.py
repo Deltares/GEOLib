@@ -3,8 +3,7 @@ from datetime import timedelta
 from operator import attrgetter
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import BinaryIO
-from typing import List, Optional, Type, Union
+from typing import BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, validate_arguments
 from pydantic.types import PositiveInt, confloat, conint, constr
