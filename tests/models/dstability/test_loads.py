@@ -314,8 +314,8 @@ class TestDStabilityModelAddLoad:
         soil_layer_id = 15
         soil_layers_id = 20
 
-        dstability_model.datastructure.stages[stage_id].LoadsId = str(loads_id)
-        dstability_model.datastructure.stages[stage_id].SoilLayersId = str(soil_layers_id)
+        dstability_model.datastructure.scenarios[stage_id].LoadsId = str(loads_id)
+        dstability_model.datastructure.scenarios[stage_id].SoilLayersId = str(soil_layers_id)
         dstability_model.datastructure.loads[stage_id].Id = str(loads_id)
         dstability_model.datastructure.soillayers[stage_id].Id = str(soil_layers_id)
         dstability_model.datastructure.soillayers[stage_id].SoilLayers.append(
@@ -378,8 +378,8 @@ class TestDStabilityModelAddSoilLayerConsolidations:
         soil_layer_id_b = 16
         soil_layers_id = 20
 
-        dstability_model.datastructure.stages[stage_id].LoadsId = str(loads_id)
-        dstability_model.datastructure.stages[stage_id].SoilLayersId = str(soil_layers_id)
+        dstability_model.datastructure.scenarios[stage_id].LoadsId = str(loads_id)
+        dstability_model.datastructure.scenarios[stage_id].SoilLayersId = str(soil_layers_id)
         dstability_model.datastructure.loads[stage_id].Id = str(loads_id)
         dstability_model.datastructure.soillayers[stage_id].Id = str(soil_layers_id)
         dstability_model.datastructure.soillayers[stage_id].SoilLayers.append(

@@ -31,9 +31,9 @@ class TestDStabilityInternal:
         assert dm is not None
 
         # 3. Unlink a foreign key
-        stage = dm.datastructure.stages[0]
+        stage = dm.datastructure.scenarios[0]
         stage.GeometryId = -1
-        dm.datastructure.stages[0] = stage
+        dm.datastructure.scenarios[0] = stage
 
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):
@@ -92,23 +92,23 @@ class TestDStabilityInternal:
         assert dm.datastructure
 
     @pytest.mark.unittest
-    def test_add_empty_stage(self):
+    def test_add_empty_scenario(self):
         # Setup
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dstability/"))
-            / "default_stages.stix"
+            / "default_scenarios.stix"
         )
         dm = DStabilityModel(filename=None)
         unique_start_id = 512
 
         # Test
-        stage_id, unique_id = dm.datastructure.add_default_stage(
+        scenario_id, unique_id = dm.datastructure.add_default_scenario(
             label="Second default", notes="", unique_start_id=unique_start_id
         )
         dm.serialize(test_output_filepath)  # For manual testing
 
         # Verify
-        assert stage_id == 1
+        assert scenario_id == 1
         assert unique_id > unique_start_id
 
     @pytest.mark.unittest

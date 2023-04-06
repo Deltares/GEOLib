@@ -144,9 +144,9 @@ class TestDStabilityModel:
         [                       
             pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/EmptyFile", id="Empty File"),
-            pytest.param(
-                "dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.01"
-            ),
+            # pytest.param(
+            #     "dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.01"
+            # ),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):

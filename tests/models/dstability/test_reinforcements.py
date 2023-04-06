@@ -93,7 +93,7 @@ class TestForbiddenLine:
         stage_id = stage_id or 0
         reinforcements_id = 10
 
-        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(
+        dstability_model.datastructure.scenarios[stage_id].ReinforcementsId = str(
             reinforcements_id
         )
         forbiddenline = _get_forbidden_line
@@ -162,7 +162,7 @@ class TestGeotextile:
         stage_id = stage_id or 0
         reinforcements_id = 10
 
-        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(
+        dstability_model.datastructure.scenarios[stage_id].ReinforcementsId = str(
             reinforcements_id
         )
         geotextile = _get_geotextile
@@ -242,7 +242,7 @@ class TestNail:
         stage_id = stage_id or 0
         reinforcements_id = 10
 
-        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(
+        dstability_model.datastructure.scenarios[stage_id].ReinforcementsId = str(
             reinforcements_id
         )
 

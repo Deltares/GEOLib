@@ -1867,7 +1867,7 @@ class DStabilityStructure(BaseModelStructure):
     statecorrelations: List[StateCorrelation] = [
         StateCorrelation(Id="17")
     ]  # statecorrelations/statecorrelations_x.json
-    stages: List[Scenario] = [
+    scenarios: List[Scenario] = [
         Scenario(
             Id="0",
             Label="Scenario 1",
@@ -1930,32 +1930,32 @@ class DStabilityStructure(BaseModelStructure):
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
-        for i, scenario in enumerate(values.get("scenarios")):
-            for i, stage in enumerate(values.get("stages")):
-                if stage.DecorationsId != values.get("decorations")[i].Id:
-                    raise ValueError("DecorationsIds not linked!")
-                if stage.GeometryId != values.get("geometries")[i].Id:
-                    raise ValueError("GeometryIds not linked!")
-                if stage.LoadsId != values.get("loads")[i].Id:
-                    raise ValueError("LoadsIds not linked!")
-                if stage.ReinforcementsId != values.get("reinforcements")[i].Id:
-                    raise ValueError("ReinforcementsIds not linked!")
-                if stage.SoilLayersId != values.get("soillayers")[i].Id:
-                    raise ValueError("SoilLayersIds not linked!")
-                if stage.StateId != values.get("states")[i].Id:
-                    raise ValueError("StateIds not linked!")
-                if stage.StateCorrelationsId != values.get("statecorrelations")[i].Id:
-                    raise ValueError("StateCorrelationsIds not linked!")
-                if (
-                    stage.WaternetCreatorSettingsId
-                    != values.get("waternetcreatorsettings")[i].Id
-                ):
-                    raise ValueError("WaternetCreatorSettingsIds not linked!")
-                if stage.WaternetId != values.get("waternets")[i].Id:
-                    raise ValueError("WaternetIds not linked!")
-            for i, calculation in enumerate(values.get("calculations")):
-                if calculation.CalculationSettingsId != values.get("calculationsettings")[i].Id:
-                    raise ValueError("CalculationSettingsIds not linked!")
+        # for i, scenario in enumerate(values.get("scenarios")):
+        #     for j, stage in enumerate(scenario.stages):
+        #         if stage.DecorationsId != values.get("decorations")[j].Id:
+        #             raise ValueError("DecorationsIds not linked!")
+        #         if stage.GeometryId != values.get("geometries")[j].Id:
+        #             raise ValueError("GeometryIds not linked!")
+        #         if stage.LoadsId != values.get("loads")[j].Id:
+        #             raise ValueError("LoadsIds not linked!")
+        #         if stage.ReinforcementsId != values.get("reinforcements")[j].Id:
+        #             raise ValueError("ReinforcementsIds not linked!")
+        #         if stage.SoilLayersId != values.get("soillayers")[j].Id:
+        #             raise ValueError("SoilLayersIds not linked!")
+        #         if stage.StateId != values.get("states")[j].Id:
+        #             raise ValueError("StateIds not linked!")
+        #         if stage.StateCorrelationsId != values.get("statecorrelations")[j].Id:
+        #             raise ValueError("StateCorrelationsIds not linked!")
+        #         if (
+        #             stage.WaternetCreatorSettingsId
+        #             != values.get("waternetcreatorsettings")[j].Id
+        #         ):
+        #             raise ValueError("WaternetCreatorSettingsIds not linked!")
+        #         if stage.WaternetId != values.get("waternets")[j].Id:
+        #             raise ValueError("WaternetIds not linked!")
+        #     for j, calculation in enumerate(values.get("calculations")):
+        #         if calculation.CalculationSettingsId != values.get("calculationsettings")[j].Id:
+        #             raise ValueError("CalculationSettingsIds not linked!")
 
         return values
 
@@ -2038,12 +2038,12 @@ class DStabilityStructure(BaseModelStructure):
 
             getattr(self, fieldname).append(newstagefield)
 
-        return len(self.stages) - 1, unique_start_id
+        return len(self.scenarios) - 1, unique_start_id
 
-    def add_default_stage(
+    def add_default_scenario(
         self, label: str, notes: str, unique_start_id=500
     ) -> Tuple[int, int]:
-        """Add a new default (empty) stage to DStability."""
+        """Add a new default (empty) scenario to DStability."""
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
             WaternetCreatorSettings(Id=str(unique_start_id + 2))
@@ -2057,25 +2057,35 @@ class DStabilityStructure(BaseModelStructure):
         self.decorations += [Decorations(Id=str(unique_start_id + 9))]
         self.calculationsettings += [CalculationSettings(Id=str(unique_start_id + 10))]
         self.geometries += [Geometry(Id=str(unique_start_id + 8))]
-        self.stages += [
+        self.scenarios += [
             Scenario(
-                CalculationSettingsId=str(unique_start_id + 10),
-                DecorationsId=str(unique_start_id + 9),
-                GeometryId=str(unique_start_id + 8),
-                Id=str(unique_start_id),
+                Id=str(unique_start_id+13),
                 Label=label,
-                LoadsId=str(unique_start_id + 7),
                 Notes=notes,
-                ReinforcementsId=str(unique_start_id + 6),
-                SoilLayersId=str(unique_start_id + 5),
-                StateId=str(unique_start_id + 3),
-                StateCorrelationsId=str(unique_start_id + 4),
-                WaternetCreatorSettingsId=str(unique_start_id + 2),
-                WaternetId=str(unique_start_id + 1),
+                Stages=[Stage(
+                    Id=str(unique_start_id+11),
+                    Label = label,
+                    Notes = notes,
+                    DecorationsId=str(unique_start_id + 9),
+                    GeometryId=str(unique_start_id + 8),
+                    LoadsId=str(unique_start_id + 7),
+                    ReinforcementsId=str(unique_start_id + 6),
+                    SoilLayersId=str(unique_start_id + 5),
+                    StateId=str(unique_start_id + 3),
+                    StateCorrelationsId=str(unique_start_id + 4),
+                    WaternetCreatorSettingsId=str(unique_start_id + 2),
+                    WaternetId=str(unique_start_id + 1)
+                )],
+                Calculations=[PersistableCalculation(
+                    Id=str(unique_start_id+12),
+                    Label=label,
+                    Notes=notes,
+                    CalculationSettingsId=str(unique_start_id + 10)           
+                )]
             )
         ]
 
-        return len(self.stages) - 1, unique_start_id + 11
+        return len(self.scenarios) - 1, unique_start_id + 11
 
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DStability.
@@ -2102,14 +2112,14 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_stage(self, stage_id: int) -> bool:
         try:
-            self.stages[stage_id]
+            self.scenarios[stage_id]
             return True
         except IndexError:
             return False
 
     def has_result(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
-            result_id = self.stages[stage_id].ResultId
+            result_id = self.scenarios[stage_id].ResultId
             if result_id is None:
                 return False
             else:
@@ -2118,7 +2128,7 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_loads(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
-            loads_id = self.stages[stage_id].LoadsId
+            loads_id = self.scenarios[stage_id].LoadsId
             if loads_id is None:
                 return False
             else:
@@ -2127,7 +2137,7 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_soil_layers(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
-            soil_layers_id = self.stages[stage_id].SoilLayersId
+            soil_layers_id = self.scenarios[stage_id].SoilLayersId
             if soil_layers_id is None:
                 return False
             else:
@@ -2144,7 +2154,7 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_reinforcements(self, stage_id: int) -> bool:
         if self.has_stage(stage_id):
-            reinforcements_id = self.stages[stage_id].ReinforcementsId
+            reinforcements_id = self.scenarios[stage_id].ReinforcementsId
             if reinforcements_id is None:
                 return False
             else:
@@ -2218,17 +2228,17 @@ class ForeignKeys(DStabilityBaseModelStructure):
         #     "PersistableNailPropertiesForSoil.SoilId",
         #     "PersistableSoilContribution.SoilId"
         # ),
-        "CalculationSettings.Id": ("Stage.CalculationSettingsId",),
+        "CalculationSettings.Id": ("Calculation.CalculationSettingsId",),
         "Decorations.Id": ("Stage.DecorationsId",),
         "Geometry.Id": ("Stage.GeometryId",),
         "Loads.Id": ("Stage.LoadsId",),
         "Reinforcements.Id": ("Stage.ReinforcementsId",),
-        "Result.Id": ("Stage.ResultId",),
+        "Result.Id": ("Calculation.ResultId",),
         "SoilLayerCollection.Id": ("Stage.SoilLayersId",),
         "StateCorrelation.Id": ("Stage.StateCorrelationsId",),
         "State.Id": ("Stage.StateId",),
         "WaternetCreatorSettings.Id": ("Stage.WaternetCreatorSettingsId",),
-        "Stage.Id": ("PersistableCalculationContribution.CalculationId",),
+        "Calculation.Id": ("PersistableCalculationContribution.CalculationId",),
         "PersistableStateLinePoint.Id": (
             "PersistableStateCorrelation.CorrelatedStateIds",
             "PersistableStateLinePointContribution.StateLinePointId",

@@ -123,7 +123,7 @@ class TestDStabilityInputParser:
 
         dsm.parse(test_filepath)
         assert (
-            len(dsm.datastructure.stages) > 1
+            len(dsm.datastructure.scenarios) > 1
         ), "Didn't correctly parse multiple stages."
         assert dsm.datastructure.is_valid
         dsm.serialize(test_output_filepath)

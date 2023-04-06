@@ -176,7 +176,7 @@ def _get_dstability_model():
     ]
 
     # Set stages and calculationsettings to empty lists since to overwrite the defaults.
-    model.datastructure.stages = []
+    model.datastructure.scenarios = []
     model.datastructure.calculationsettings = []
 
     for i, (analysis_type, calculation_type, result_attribute, result_class) in enumerate(
@@ -186,7 +186,7 @@ def _get_dstability_model():
         result_id = str(
             100 + i
         )  # This way result id's and stage id's don't overlap.  # TODO research if that matters.
-        model.datastructure.stages.append(Scenario(Id=stage_id, ResultId=result_id))
+        model.datastructure.scenarios.append(Scenario(Id=stage_id, ResultId=result_id))
         model.datastructure.calculationsettings.append(
             CalculationSettings(
                 AnalysisType=analysis_type, CalculationType=calculation_type
@@ -274,7 +274,7 @@ class TestDStabilityResults:
     def test_output_isinstance_list(self, _get_dstability_model: DStabilityModel):
         model = _get_dstability_model
 
-        model.datastructure.stages.append(Stage(Id="200", ResultId=None))
+        model.datastructure.scenarios.append(Stage(Id="200", ResultId=None))
 
         output = model.output
         assert isinstance(output, list)

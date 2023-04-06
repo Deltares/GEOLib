@@ -108,7 +108,7 @@ class DStabilityModel(BaseModel):
             else:
                 return None
 
-        all_stage_ids = [stage.Id for stage in self.datastructure.stages]
+        all_stage_ids = [stage.Id for stage in self.datastructure.scenarios]
         return [_get_result_or_none(stage_id=stage_id) for stage_id in all_stage_ids]
 
     def has_result(self, stage_id: int) -> bool:
@@ -144,7 +144,7 @@ class DStabilityModel(BaseModel):
 
     def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
         if self.datastructure.has_result(stage_id):
-            result_id = self.datastructure.stages[stage_id].ResultId
+            result_id = self.datastructure.scenarios[stage_id].ResultId
             calculation_settings = self.datastructure.calculationsettings[stage_id]
             analysis_type = calculation_settings.AnalysisType
             calculation_type = calculation_settings.CalculationType
@@ -217,7 +217,7 @@ class DStabilityModel(BaseModel):
             the id of the new stage
         """
         new_id = self._get_next_id()
-        new_stage_id, new_unique_id = self.datastructure.add_default_stage(
+        new_stage_id, new_unique_id = self.datastructure.add_default_scenario(
             label, notes, new_id
         )
 
@@ -249,7 +249,7 @@ class DStabilityModel(BaseModel):
 
     @property
     def stages(self) -> List[Scenario]:
-        return self.datastructure.stages
+        return self.datastructure.scenarios
 
     def add_point(self, point: Point, stage=None) -> int:
         """Add point, which should be unique in the model and return the created point id."""
