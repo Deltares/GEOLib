@@ -218,10 +218,14 @@ class DStabilitySpencerAnalysisMethod(DStabilityAnalysisMethod):
 
     _analysis_type: AnalysisType = AnalysisType.SPENCER
     slipplane: List[Point]
+    slip_plane_constraints: DStabilityGeneticSlipPlaneConstraints = (
+        DStabilityGeneticSlipPlaneConstraints()
+    )
 
     def _to_internal_datastructure(self) -> PersistableSpencerSettings:
         return PersistableSpencerSettings(
-            SlipPlane=[PersistablePoint(X=point.x, Z=point.z) for point in self.slipplane]
+            SlipPlane=[PersistablePoint(X=point.x, Z=point.z) for point in self.slipplane],
+            SlipPlaneConstraints=self.slip_plane_constraints._to_internal_datastructure()
         )
 
 

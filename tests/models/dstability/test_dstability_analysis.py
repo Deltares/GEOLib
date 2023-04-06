@@ -10,6 +10,7 @@ from geolib.models.dstability.analysis import (
     DStabilityBishopAnalysisMethod,
     DStabilityBishopBruteForceAnalysisMethod,
     DStabilityCircle,
+    DStabilityGeneticSlipPlaneConstraints,
     DStabilitySearchArea,
     DStabilitySearchGrid,
     DStabilitySlipPlaneConstraints,
@@ -163,12 +164,12 @@ class TestDStabilityAnalysis:
         dstability_model.parse(test_input_filepath)
         bishop_brute_force_analysis = DStabilityBishopBruteForceAnalysisMethod(
             search_grid=DStabilitySearchGrid(
-                bottom_left=Point(x=20.43, z=18.150000000000002),
+                bottom_left=Point(x=20.43, z=18.15),
                 number_of_points_in_x=17,
                 number_of_points_in_z=10,
                 space=1.0,
             ),
-            bottom_tangent_line_z=2.8900000000000006,
+            bottom_tangent_line_z=2.89,
             number_of_tangent_lines=16,
             space_tangent_lines=0.5,
         )
@@ -201,7 +202,11 @@ class TestDStabilityAnalysis:
                 Point(x=12.61, z=6.24),
                 Point(x=21.23, z=5.44),
                 Point(x=25.0, z=7.54),
-            ]
+            ],
+            slip_plane_constraints=DStabilityGeneticSlipPlaneConstraints(
+            minimum_angle_between_slices=120.0,
+            minimum_thrust_line_percentage_inside_slices=80.0
+            )
         )
         assert (
             dstability_model.datastructure.calculationsettings[0].Spencer

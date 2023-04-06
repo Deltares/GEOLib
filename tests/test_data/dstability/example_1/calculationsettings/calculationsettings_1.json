@@ -1,35 +1,38 @@
 {
   "Id": "53",
-  "AnalysisType": "Bishop",
+  "AnalysisType": "BishopBruteForce",
   "CalculationType": "Deterministic",
-  "ModelFactorMean": 1.0,
-  "ModelFactorStandardDeviation": 0.0,
+  "ModelFactorMean": 1.05,
+  "ModelFactorStandardDeviation": 0.033,
   "Bishop": {
     "Label": null,
     "Notes": null,
     "Circle": {
       "Center": {
-        "X": 45.0,
-        "Z": 25.0
+        "X": 23.7,
+        "Z": 24.6
       },
-      "Radius": 23.4
+      "Radius": 28.0
     }
   },
   "BishopBruteForce": {
     "SearchGrid": {
       "Label": null,
       "Notes": null,
-      "BottomLeft": null,
+      "BottomLeft": {
+        "X": 20.43,
+        "Z": 18.150000000000002
+      },
       "Space": 1.0,
-      "NumberOfPointsInX": 1,
-      "NumberOfPointsInZ": 1
+      "NumberOfPointsInX": 17,
+      "NumberOfPointsInZ": 10
     },
     "TangentLines": {
       "Label": null,
       "Notes": null,
-      "BottomTangentLineZ": "NaN",
+      "BottomTangentLineZ": 2.8900000000000006,
       "Space": 0.5,
-      "NumberOfTangentLines": 1
+      "NumberOfTangentLines": 16
     },
     "GridEnhancements": {
       "ExtrapolateSearchSpace": true
@@ -51,13 +54,13 @@
     "Notes": null,
     "SlipPlane": {
       "FirstCircleCenter": {
-        "X": "NaN",
-        "Z": "NaN"
+        "X": 6.73,
+        "Z": 17.54
       },
-      "FirstCircleRadius": "NaN",
+      "FirstCircleRadius": 13.599830881301427,
       "SecondCircleCenter": {
-        "X": "NaN",
-        "Z": "NaN"
+        "X": 21.23,
+        "Z": 9.98
       }
     }
   },
@@ -65,30 +68,36 @@
     "SearchAreaA": {
       "Label": null,
       "Notes": null,
-      "TopLeft": null,
-      "Width": 0.0,
-      "Height": 0.0
+      "TopLeft": {
+        "X": 4.3100000000000005,
+        "Z": 19.97
+      },
+      "Width": 4.9499999999999993,
+      "Height": 5.1099999999999994
     },
     "SearchAreaB": {
       "Label": null,
       "Notes": null,
-      "TopLeft": null,
-      "Width": 0.0,
-      "Height": 0.0
+      "TopLeft": {
+        "X": 19.31,
+        "Z": 11.35
+      },
+      "Width": 4.7900000000000027,
+      "Height": 2.08
     },
     "TangentArea": {
       "Label": null,
       "Notes": null,
-      "TopZ": null,
-      "Height": 0.0
+      "TopZ": 9.43,
+      "Height": 6.5399999999999991
     },
     "SlipPlaneConstraints": {
       "IsSizeConstraintsEnabled": false,
       "MinimumSlipPlaneDepth": 0.0,
       "MinimumSlipPlaneLength": 0.0,
       "IsZoneAConstraintsEnabled": false,
-      "XLeftZoneA": 0.0,
-      "WidthZoneA": 0.0,
+      "XLeftZoneA": -5.0,
+      "WidthZoneA": -5.0,
       "IsZoneBConstraintsEnabled": false,
       "XLeftZoneB": 0.0,
       "WidthZoneB": 0.0
@@ -98,7 +107,32 @@
   "Spencer": {
     "Label": null,
     "Notes": null,
-    "SlipPlane": null,
+    "SlipPlane": [
+      {
+        "X": -9.5,
+        "Z": 10.94
+      },
+      {
+        "X": -6.71,
+        "Z": 8.79
+      },
+      {
+        "X": 4.15,
+        "Z": 6.56
+      },
+      {
+        "X": 12.61,
+        "Z": 6.24
+      },
+      {
+        "X": 21.23,
+        "Z": 5.44
+      },
+      {
+        "X": 25.0,
+        "Z": 7.54
+      }
+    ],
     "SlipPlaneConstraints": {
       "IsEnabled": false,
       "MinimumAngleBetweenSlices": 120.0,
@@ -108,8 +142,42 @@
   "SpencerGenetic": {
     "Label": null,
     "Notes": null,
-    "SlipPlaneA": null,
-    "SlipPlaneB": null,
+    "SlipPlaneA": [
+      {
+        "X": -1.997,
+        "Z": 12.075
+      },
+      {
+        "X": 3.83,
+        "Z": 9.27
+      },
+      {
+        "X": 10.05,
+        "Z": 9.11
+      },
+      {
+        "X": 16.5,
+        "Z": 8.93
+      }
+    ],
+    "SlipPlaneB": [
+      {
+        "X": -9.5,
+        "Z": 10.94
+      },
+      {
+        "X": 0.64,
+        "Z": 5.76
+      },
+      {
+        "X": 15.96,
+        "Z": 4.48
+      },
+      {
+        "X": 25.0,
+        "Z": 7.54
+      }
+    ],
     "SlipPlaneConstraints": {
       "IsEnabled": false,
       "MinimumAngleBetweenSlices": 0.0,
