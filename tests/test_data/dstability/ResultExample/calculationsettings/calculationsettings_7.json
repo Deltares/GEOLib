@@ -1,18 +1,18 @@
 {
-  "Id": "194",
-  "AnalysisType": "UpliftVan",
+  "Id": "203",
+  "AnalysisType": "Bishop",
   "CalculationType": "Probabilistic",
   "ModelFactorMean": 1.05,
   "ModelFactorStandardDeviation": 0.033,
   "Bishop": {
-    "Label": null,
-    "Notes": null,
+    "Label": "Circle",
+    "Notes": "The one and only",
     "Circle": {
       "Center": {
-        "X": "NaN",
-        "Z": "NaN"
+        "X": 23.7,
+        "Z": 24.6
       },
-      "Radius": "NaN"
+      "Radius": 28.7
     }
   },
   "BishopBruteForce": {
@@ -47,15 +47,17 @@
     }
   },
   "UpliftVan": {
+    "Label": null,
+    "Notes": null,
     "SlipPlane": {
       "FirstCircleCenter": {
-        "X": 27.369,
-        "Z": 27.157
+        "X": "NaN",
+        "Z": "NaN"
       },
-      "FirstCircleRadius": 32.155,
+      "FirstCircleRadius": "NaN",
       "SecondCircleCenter": {
-        "X": 52.214,
-        "Z": 9.88
+        "X": "NaN",
+        "Z": "NaN"
       }
     }
   },
@@ -96,7 +98,12 @@
   "Spencer": {
     "Label": null,
     "Notes": null,
-    "SlipPlane": null
+    "SlipPlane": null,
+    "SlipPlaneConstraints": {
+      "IsEnabled": false,
+      "MinimumAngleBetweenSlices": 120.0,
+      "MinimumThrustLinePercentageInsideSlices": 80.0
+    }
   },
   "SpencerGenetic": {
     "Label": null,
@@ -110,5 +117,5 @@
     },
     "OptionsType": "Default"
   },
-  "ContentVersion": "1"
+  "ContentVersion": "2"
 }

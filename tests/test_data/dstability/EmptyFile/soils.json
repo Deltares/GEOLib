@@ -1,47 +1,66 @@
 {
   "Soils": [
     {
-      "Id": "1",
+      "Id": "3",
       "Name": "Embankment new",
       "Notes": "",
       "Code": "H_Aa_ht_new",
       "IsProbabilistic": false,
       "VolumetricWeightAbovePhreaticLevel": 19.3,
       "VolumetricWeightBelowPhreaticLevel": 19.3,
-      "ShearStrengthModelTypeAbovePhreaticLevel": "CPhi",
+      "ShearStrengthModelTypeAbovePhreaticLevel": "MohrCoulombAdvanced",
       "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 7.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 7.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 30.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 30.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 7.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 30.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.26,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.26,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -55,47 +74,66 @@
       }
     },
     {
-      "Id": "2",
+      "Id": "4",
       "Name": "Embankment old",
       "Notes": "",
       "Code": "H_Aa_ht_old",
       "IsProbabilistic": false,
       "VolumetricWeightAbovePhreaticLevel": 18.0,
       "VolumetricWeightBelowPhreaticLevel": 18.0,
-      "ShearStrengthModelTypeAbovePhreaticLevel": "CPhi",
+      "ShearStrengthModelTypeAbovePhreaticLevel": "MohrCoulombAdvanced",
       "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 7.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 7.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 30.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 30.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 7.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 30.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.26,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.26,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -109,7 +147,7 @@
       }
     },
     {
-      "Id": "3",
+      "Id": "5",
       "Name": "Embankment dry",
       "Notes": "",
       "Code": "Embankment dry",
@@ -118,38 +156,57 @@
       "VolumetricWeightBelowPhreaticLevel": 18.0,
       "ShearStrengthModelTypeAbovePhreaticLevel": "SuTable",
       "ShearStrengthModelTypeBelowPhreaticLevel": "SuTable",
-      "Cohesion": "NaN",
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": "NaN",
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": "NaN",
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": "NaN",
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": "NaN",
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": "NaN",
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": "NaN",
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": "NaN",
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": "NaN",
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": "NaN",
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": "NaN",
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": "NaN",
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 0.8,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -204,7 +261,7 @@
       }
     },
     {
-      "Id": "4",
+      "Id": "6",
       "Name": "Clay, shallow",
       "Notes": "",
       "Code": "H_Rk_k_shallow",
@@ -213,146 +270,57 @@
       "VolumetricWeightBelowPhreaticLevel": 14.8,
       "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
       "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatio": 0.23,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
-      "SuTable": {
-        "StrengthIncreaseExponent": 1.0,
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.23,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
         "StrengthIncreaseExponentStochasticParameter": {
           "IsProbabilistic": false,
           "Mean": 1.0,
           "StandardDeviation": 0.0
         },
-        "SuTablePoints": [],
-        "IsSuTableProbabilistic": false,
-        "SuTableVariationCoefficient": 0.0
-      }
-    },
-    {
-      "Id": "5",
-      "Name": "Clay, deep",
-      "Notes": "",
-      "Code": "H_Rk_k_deep",
-      "IsProbabilistic": false,
-      "VolumetricWeightAbovePhreaticLevel": 15.6,
-      "VolumetricWeightBelowPhreaticLevel": 15.6,
-      "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
-      "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatio": 0.23,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
-      "SuTable": {
-        "StrengthIncreaseExponent": 1.0,
-        "StrengthIncreaseExponentStochasticParameter": {
-          "IsProbabilistic": false,
-          "Mean": 1.0,
-          "StandardDeviation": 0.0
-        },
-        "SuTablePoints": [],
-        "IsSuTableProbabilistic": false,
-        "SuTableVariationCoefficient": 0.0
-      }
-    },
-    {
-      "Id": "6",
-      "Name": "Organic clay",
-      "Notes": "",
-      "Code": "H_Rk_ko",
-      "IsProbabilistic": false,
-      "VolumetricWeightAbovePhreaticLevel": 13.9,
-      "VolumetricWeightBelowPhreaticLevel": 13.9,
-      "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
-      "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatio": 0.24,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.85,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -367,46 +335,65 @@
     },
     {
       "Id": "7",
-      "Name": "Peat, shallow",
+      "Name": "Clay, deep",
       "Notes": "",
-      "Code": "H_vhv_v",
+      "Code": "H_Rk_k_deep",
       "IsProbabilistic": false,
-      "VolumetricWeightAbovePhreaticLevel": 10.1,
-      "VolumetricWeightBelowPhreaticLevel": 10.1,
+      "VolumetricWeightAbovePhreaticLevel": 15.6,
+      "VolumetricWeightBelowPhreaticLevel": 15.6,
       "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
       "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.23,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.3,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -421,46 +408,65 @@
     },
     {
       "Id": "8",
-      "Name": "Peat, deep",
+      "Name": "Organic clay",
       "Notes": "",
-      "Code": "H_vbv_v",
+      "Code": "H_Rk_ko",
       "IsProbabilistic": false,
-      "VolumetricWeightAbovePhreaticLevel": 11.0,
-      "VolumetricWeightBelowPhreaticLevel": 11.0,
+      "VolumetricWeightAbovePhreaticLevel": 13.9,
+      "VolumetricWeightBelowPhreaticLevel": 13.9,
       "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
       "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.24,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.85,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.27,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -475,46 +481,65 @@
     },
     {
       "Id": "9",
-      "Name": "Sand",
+      "Name": "Peat, shallow",
       "Notes": "",
-      "Code": "Sand",
+      "Code": "H_vhv_v",
       "IsProbabilistic": false,
-      "VolumetricWeightAbovePhreaticLevel": 18.0,
-      "VolumetricWeightBelowPhreaticLevel": 20.0,
-      "ShearStrengthModelTypeAbovePhreaticLevel": "CPhi",
-      "ShearStrengthModelTypeBelowPhreaticLevel": "CPhi",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "VolumetricWeightAbovePhreaticLevel": 10.1,
+      "VolumetricWeightBelowPhreaticLevel": 10.1,
+      "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
+      "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 30.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.3,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.0,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.0,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -529,46 +554,65 @@
     },
     {
       "Id": "10",
-      "Name": "Clay with silt",
+      "Name": "Peat, deep",
       "Notes": "",
-      "Code": "P_Rk_k&s",
+      "Code": "H_vbv_v",
       "IsProbabilistic": false,
-      "VolumetricWeightAbovePhreaticLevel": 18.0,
-      "VolumetricWeightBelowPhreaticLevel": 18.0,
+      "VolumetricWeightAbovePhreaticLevel": 11.0,
+      "VolumetricWeightBelowPhreaticLevel": 11.0,
       "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
       "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.27,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.22,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -583,46 +627,65 @@
     },
     {
       "Id": "11",
-      "Name": "Sand with clay",
+      "Name": "Sand",
       "Notes": "",
-      "Code": "H_Ro_z&k",
+      "Code": "Sand",
       "IsProbabilistic": false,
       "VolumetricWeightAbovePhreaticLevel": 18.0,
-      "VolumetricWeightBelowPhreaticLevel": 18.0,
-      "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
-      "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
-      "Cohesion": 0.0,
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "VolumetricWeightBelowPhreaticLevel": 20.0,
+      "ShearStrengthModelTypeAbovePhreaticLevel": "MohrCoulombAdvanced",
+      "ShearStrengthModelTypeBelowPhreaticLevel": "MohrCoulombAdvanced",
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 30.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": 0.0,
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 30.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": 0.0,
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.0,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.0,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": 0.22,
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": 0.9,
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 1.0,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -637,6 +700,152 @@
     },
     {
       "Id": "12",
+      "Name": "Clay with silt",
+      "Notes": "",
+      "Code": "P_Rk_k&s",
+      "IsProbabilistic": false,
+      "VolumetricWeightAbovePhreaticLevel": 18.0,
+      "VolumetricWeightBelowPhreaticLevel": 18.0,
+      "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
+      "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
+      },
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
+      },
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.22,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
+      },
+      "SuTable": {
+        "StrengthIncreaseExponent": 1.0,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "SuTablePoints": [],
+        "IsSuTableProbabilistic": false,
+        "SuTableVariationCoefficient": 0.0
+      }
+    },
+    {
+      "Id": "13",
+      "Name": "Sand with clay",
+      "Notes": "",
+      "Code": "H_Ro_z&k",
+      "IsProbabilistic": false,
+      "VolumetricWeightAbovePhreaticLevel": 18.0,
+      "VolumetricWeightBelowPhreaticLevel": 18.0,
+      "ShearStrengthModelTypeAbovePhreaticLevel": "Su",
+      "ShearStrengthModelTypeBelowPhreaticLevel": "Su",
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
+      },
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": 0.0,
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": 0.0,
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": 0.0,
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
+      },
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": 0.22,
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": 0.9,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
+      },
+      "SuTable": {
+        "StrengthIncreaseExponent": 1.0,
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "SuTablePoints": [],
+        "IsSuTableProbabilistic": false,
+        "SuTableVariationCoefficient": 0.0
+      }
+    },
+    {
+      "Id": "14",
       "Name": "Dilatent clay",
       "Notes": "",
       "Code": "Dilatent clay",
@@ -645,38 +854,57 @@
       "VolumetricWeightBelowPhreaticLevel": 18.0,
       "ShearStrengthModelTypeAbovePhreaticLevel": "SuTable",
       "ShearStrengthModelTypeBelowPhreaticLevel": "SuTable",
-      "Cohesion": "NaN",
-      "CohesionStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombClassicShearStrengthModel": {
+        "Cohesion": "NaN",
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": "NaN",
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false
       },
-      "FrictionAngle": "NaN",
-      "FrictionAngleStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "MohrCoulombAdvancedShearStrengthModel": {
+        "Cohesion": "NaN",
+        "CohesionStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "FrictionAngle": "NaN",
+        "FrictionAngleStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "CohesionAndFrictionAngleCorrelated": false,
+        "Dilatancy": "NaN",
+        "DilatancyStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        }
       },
-      "CohesionAndFrictionAngleCorrelated": false,
-      "Dilatancy": "NaN",
-      "DilatancyStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
+      "SuShearStrengthModel": {
+        "ShearStrengthRatio": "NaN",
+        "ShearStrengthRatioStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "StrengthIncreaseExponent": "NaN",
+        "StrengthIncreaseExponentStochasticParameter": {
+          "IsProbabilistic": false,
+          "Mean": 1.0,
+          "StandardDeviation": 0.0
+        },
+        "ShearStrengthRatioAndShearStrengthExponentCorrelated": false
       },
-      "ShearStrengthRatio": "NaN",
-      "ShearStrengthRatioStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "StrengthIncreaseExponent": "NaN",
-      "StrengthIncreaseExponentStochasticParameter": {
-        "IsProbabilistic": false,
-        "Mean": 1.0,
-        "StandardDeviation": 0.0
-      },
-      "ShearStrengthRatioAndShearStrengthExponentCorrelated": false,
       "SuTable": {
         "StrengthIncreaseExponent": 0.8,
         "StrengthIncreaseExponentStochasticParameter": {
@@ -703,5 +931,5 @@
       }
     }
   ],
-  "ContentVersion": "1"
+  "ContentVersion": "2"
 }

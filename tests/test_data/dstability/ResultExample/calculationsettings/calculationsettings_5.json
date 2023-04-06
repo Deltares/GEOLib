@@ -1,12 +1,12 @@
 {
-  "Id": "192",
-  "AnalysisType": "UpliftVan",
-  "CalculationType": "Deterministic",
+  "Id": "201",
+  "AnalysisType": "UpliftVanParticleSwarm",
+  "CalculationType": "Design",
   "ModelFactorMean": 1.0,
   "ModelFactorStandardDeviation": 0.0,
   "Bishop": {
-    "Label": "",
-    "Notes": "",
+    "Label": null,
+    "Notes": null,
     "Circle": {
       "Center": {
         "X": "NaN",
@@ -47,47 +47,55 @@
     }
   },
   "UpliftVan": {
+    "Label": null,
+    "Notes": null,
     "SlipPlane": {
       "FirstCircleCenter": {
-        "X": 29.626,
-        "Z": 29.133
+        "X": "NaN",
+        "Z": "NaN"
       },
-      "FirstCircleRadius": 34.132999999999996,
+      "FirstCircleRadius": "NaN",
       "SecondCircleCenter": {
-        "X": 49.866,
-        "Z": 12.57
+        "X": "NaN",
+        "Z": "NaN"
       }
     }
   },
   "UpliftVanParticleSwarm": {
     "SearchAreaA": {
-      "Label": "",
-      "Notes": "",
-      "TopLeft": null,
-      "Width": 0.0,
-      "Height": 0.0
+      "Label": "h",
+      "Notes": "j",
+      "TopLeft": {
+        "X": 9.6,
+        "Z": 21.4
+      },
+      "Width": 13.0,
+      "Height": 8.9
     },
     "SearchAreaB": {
-      "Label": "",
-      "Notes": "",
-      "TopLeft": null,
-      "Width": 0.0,
-      "Height": 0.0
+      "Label": "k",
+      "Notes": "l",
+      "TopLeft": {
+        "X": 36.6,
+        "Z": 12.4
+      },
+      "Width": 13.5,
+      "Height": 4.4
     },
     "TangentArea": {
-      "Label": "",
-      "Notes": "",
-      "TopZ": null,
-      "Height": 0.0
+      "Label": null,
+      "Notes": null,
+      "TopZ": 1.3,
+      "Height": 6.2
     },
     "SlipPlaneConstraints": {
-      "IsSizeConstraintsEnabled": false,
+      "IsSizeConstraintsEnabled": true,
       "MinimumSlipPlaneDepth": 0.0,
       "MinimumSlipPlaneLength": 0.0,
-      "IsZoneAConstraintsEnabled": false,
+      "IsZoneAConstraintsEnabled": true,
       "XLeftZoneA": 0.0,
       "WidthZoneA": 0.0,
-      "IsZoneBConstraintsEnabled": false,
+      "IsZoneBConstraintsEnabled": true,
       "XLeftZoneB": 0.0,
       "WidthZoneB": 0.0
     },
@@ -96,7 +104,12 @@
   "Spencer": {
     "Label": null,
     "Notes": null,
-    "SlipPlane": null
+    "SlipPlane": null,
+    "SlipPlaneConstraints": {
+      "IsEnabled": false,
+      "MinimumAngleBetweenSlices": 120.0,
+      "MinimumThrustLinePercentageInsideSlices": 80.0
+    }
   },
   "SpencerGenetic": {
     "Label": null,
@@ -110,5 +123,5 @@
     },
     "OptionsType": "Default"
   },
-  "ContentVersion": "1"
+  "ContentVersion": "2"
 }

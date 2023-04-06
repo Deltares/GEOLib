@@ -1,31 +1,28 @@
 {
-  "Id": "187",
-  "AnalysisType": "UpliftVan",
-  "CalculationType": "Deterministic",
+  "Id": "196",
+  "AnalysisType": "Bishop",
+  "CalculationType": "Design",
   "ModelFactorMean": 1.0,
   "ModelFactorStandardDeviation": 0.0,
   "Bishop": {
-    "Label": null,
-    "Notes": null,
+    "Label": "Label",
+    "Notes": "ABc",
     "Circle": {
       "Center": {
-        "X": "NaN",
-        "Z": "NaN"
+        "X": 20.0,
+        "Z": 30.0
       },
-      "Radius": "NaN"
+      "Radius": 40.0
     }
   },
   "BishopBruteForce": {
     "SearchGrid": {
       "Label": null,
       "Notes": null,
-      "BottomLeft": {
-        "X": 23.7,
-        "Z": 23.49
-      },
-      "Space": 2.0,
-      "NumberOfPointsInX": 50,
-      "NumberOfPointsInZ": 30
+      "BottomLeft": null,
+      "Space": 1.0,
+      "NumberOfPointsInX": 1,
+      "NumberOfPointsInZ": 1
     },
     "TangentLines": {
       "Label": null,
@@ -50,6 +47,8 @@
     }
   },
   "UpliftVan": {
+    "Label": null,
+    "Notes": null,
     "SlipPlane": {
       "FirstCircleCenter": {
         "X": "NaN",
@@ -99,7 +98,12 @@
   "Spencer": {
     "Label": null,
     "Notes": null,
-    "SlipPlane": null
+    "SlipPlane": null,
+    "SlipPlaneConstraints": {
+      "IsEnabled": false,
+      "MinimumAngleBetweenSlices": 120.0,
+      "MinimumThrustLinePercentageInsideSlices": 80.0
+    }
   },
   "SpencerGenetic": {
     "Label": null,
@@ -113,5 +117,5 @@
     },
     "OptionsType": "Default"
   },
-  "ContentVersion": "1"
+  "ContentVersion": "2"
 }
