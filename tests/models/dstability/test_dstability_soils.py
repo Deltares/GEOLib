@@ -148,6 +148,39 @@ class TestDStabilitySoil:
             == 35.0
         )
 
+    def test_dstability_get_soil(self):
+        dstability_model = DStabilityModel(filename=None)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
+        soil_1 = Soil(
+            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+        )
+
+        dstability_model.add_soil(soil_1)
+
+        soil = dstability_model.soils.get_soil("Test")
+
+        assert soil.Id == soil_1.id
+        assert soil.Name == soil_1.name
+        assert soil.Code == soil_1.code
+        assert soil.MohrCoulombAdvancedShearStrengthModel.Cohesion == soil_1.mohr_coulomb_parameters.cohesion.mean
+        assert soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle == soil_1.mohr_coulomb_parameters.friction_angle.mean
+        
+    def test_dstability_get_global_soil(self):
+        dstability_model = DStabilityModel(filename=None)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
+        soil_1 = Soil(
+            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+        )
+        dstability_model.add_soil(soil_1)
+
+        global_soil = dstability_model.soils.get_global_soil("Test")
+
+        assert global_soil.id == soil_1.id
+        assert global_soil.name == soil_1.name
+        assert global_soil.code == soil_1.code
+        assert global_soil.mohr_coulomb_parameters.cohesion == soil_1.mohr_coulomb_parameters.cohesion
+        assert global_soil.mohr_coulomb_parameters.friction_angle == soil_1.mohr_coulomb_parameters.friction_angle
+
     def test_has_10_default_soils(self):
         dstability_model = DStabilityModel(filename=None)
         assert len(dstability_model.soils.Soils) == 10

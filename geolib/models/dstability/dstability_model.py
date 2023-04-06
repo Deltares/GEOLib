@@ -345,7 +345,7 @@ class DStabilityModel(BaseModel):
 
         # add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
-        soillayerscollection.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.id)
+        soillayerscollection.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.Id)
         return int(persistable_layer.Id)
 
     def add_head_line(

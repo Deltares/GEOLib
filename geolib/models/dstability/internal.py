@@ -511,8 +511,8 @@ class ShearStrengthModelTypePhreaticLevelInternal(Enum):
 
     def to_global_shear_strength_model(self):
         transform_dictionary = {
-            "MohrCoulombAdvanced": "Mohr_Coulomb_Advanced",
-            "MohrCoulombClassic": "Mohr_Coulomb_Classic",
+            "MohrCoulombAdvanced": "Mohr_Coulomb",
+            "MohrCoulombClassic": "Mohr_Coulomb",
             "None": "None",
             "Su": "SHANSEP",
             "SuTable": "SuTable",
@@ -794,7 +794,7 @@ class SoilCollection(DStabilitySubStructure):
         ):
             # SHANSEP model is selected so the StrengthIncreaseExponentStochasticParameter from persistable_soil should be used
             return self.__to_global_stochastic_parameter(
-                persistable_soil.StrengthIncreaseExponentStochasticParameter
+                persistable_soil.SuShearStrengthModel.StrengthIncreaseExponentStochasticParameter
             )
         elif (
             persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.value == "SuTable"
@@ -817,15 +817,15 @@ class SoilCollection(DStabilitySubStructure):
 
         mohr_coulomb_parameters = MohrCoulombParameters(
             cohesion=self.__to_global_stochastic_parameter(
-                persistable_soil.CohesionStochasticParameter
+                persistable_soil.MohrCoulombAdvancedShearStrengthModel.CohesionStochasticParameter
             ),
             friction_angle=self.__to_global_stochastic_parameter(
-                persistable_soil.FrictionAngleStochasticParameter
+                persistable_soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngleStochasticParameter
             ),
             dilatancy_angle=self.__to_global_stochastic_parameter(
-                persistable_soil.DilatancyStochasticParameter
+                persistable_soil.MohrCoulombAdvancedShearStrengthModel.DilatancyStochasticParameter
             ),
-            cohesion_and_friction_angle_correlated=persistable_soil.CohesionAndFrictionAngleCorrelated,
+            cohesion_and_friction_angle_correlated=persistable_soil.MohrCoulombAdvancedShearStrengthModel.CohesionAndFrictionAngleCorrelated,
         )
 
         strength_increase_exponent = self.__determine_strength_increase_exponent(
@@ -833,10 +833,10 @@ class SoilCollection(DStabilitySubStructure):
         )
         undrained_parameters = UndrainedParameters(
             shear_strength_ratio=self.__to_global_stochastic_parameter(
-                persistable_soil.ShearStrengthRatioStochasticParameter
+                persistable_soil.SuShearStrengthModel.ShearStrengthRatioStochasticParameter
             ),
             strength_increase_exponent=strength_increase_exponent,
-            shear_strength_ratio_and_shear_strength_exponent_correlated=persistable_soil.ShearStrengthRatioAndShearStrengthExponentCorrelated,
+            shear_strength_ratio_and_shear_strength_exponent_correlated=persistable_soil.SuShearStrengthModel.ShearStrengthRatioAndShearStrengthExponentCorrelated,
             su_table=persistable_soil.SuTable.to_global_su_table(),
             probabilistic_su_table=persistable_soil.SuTable.IsSuTableProbabilistic,
             su_table_variation_coefficient=persistable_soil.SuTable.SuTableVariationCoefficient,
@@ -862,7 +862,23 @@ class SoilCollection(DStabilitySubStructure):
             undrained_parameters=undrained_parameters,
         )
 
-    def get_soil(self, code: str) -> Soil:
+    def get_soil(self, code: str) -> PersistableSoil:
+        """
+        Get soil by the given code.
+
+        Args:
+            code (str): code of the soil
+
+        Returns:
+            Soil: the soil object
+        """
+        for persistable_soil in self.Soils:
+            if persistable_soil.Code == code:
+                return persistable_soil
+
+        raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
+    
+    def get_global_soil(self, code: str) -> Soil:
         """
         Get soil by the given code.
 
