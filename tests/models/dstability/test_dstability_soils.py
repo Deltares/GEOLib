@@ -46,13 +46,13 @@ class TestDStabilitySoil:
 
         # assert defaults
         assert (
-            dstability_model.datastructure.soils.get_soil(
+            dstability_model.datastructure.soils.get_global_soil(
                 "Test1"
             ).shear_strength_model_above_phreatic_level.value
             == ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB.value
         )
         assert (
-            dstability_model.datastructure.soils.get_soil(
+            dstability_model.datastructure.soils.get_global_soil(
                 "Test1"
             ).shear_strength_model_below_phreatic_level.value
             == ShearStrengthModelTypePhreaticLevel.SHANSEP.value
@@ -60,13 +60,13 @@ class TestDStabilitySoil:
 
         # assert changed values
         assert (
-            dstability_model.datastructure.soils.get_soil(
+            dstability_model.datastructure.soils.get_global_soil(
                 "Test2"
             ).shear_strength_model_below_phreatic_level.value
             == ShearStrengthModelTypePhreaticLevel.MOHR_COULOMB.value
         )
         assert (
-            dstability_model.datastructure.soils.get_soil(
+            dstability_model.datastructure.soils.get_global_soil(
                 "Test2"
             ).shear_strength_model_above_phreatic_level.value
             == ShearStrengthModelTypePhreaticLevel.SHANSEP.value
@@ -74,13 +74,13 @@ class TestDStabilitySoil:
 
         # assert changed values
         assert (
-            dstability_model.datastructure.soils.get_soil(
+            dstability_model.datastructure.soils.get_global_soil(
                 "Test3"
             ).shear_strength_model_below_phreatic_level.value
             == ShearStrengthModelTypePhreaticLevel.NONE.value
         )
         assert (
-            dstability_model.datastructure.soils.get_soil(
+            dstability_model.datastructure.soils.get_global_soil(
                 "Test3"
             ).shear_strength_model_above_phreatic_level.value
             == ShearStrengthModelTypePhreaticLevel.NONE.value
@@ -101,7 +101,7 @@ class TestDStabilitySoil:
         dstability_model.edit_soil(code=soil_1.code, cohesion=2.0, friction_angle=35)
         assert (
             pytest.approx(
-                dstability_model.soils.get_soil(
+                dstability_model.soils.get_global_soil(
                     "Test"
                 ).mohr_coulomb_parameters.cohesion.mean
             )
