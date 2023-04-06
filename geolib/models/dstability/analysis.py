@@ -192,7 +192,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
     )
     bottom_tangent_line_z: float
     number_of_tangent_lines: PositiveInt
-    space_tangent_lines: confloat(gt=0)
+    space_tangent_lines: confloat(gt=0) # type: ignore
 
     def _to_internal_datastructure(self) -> PersistableBishopBruteForceSettings:
         return PersistableBishopBruteForceSettings(

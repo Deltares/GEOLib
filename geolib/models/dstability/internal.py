@@ -1946,29 +1946,33 @@ class DStabilityStructure(BaseModelStructure):
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
         """TODO Include more fk relations, left for another issue."""
-        for i, scenario in enumerate(values.get("scenarios")):
-            for j, stage in enumerate(scenario.Stages):
-                if stage.DecorationsId != values.get("decorations")[j].Id:
+        stage_count = 0
+        calculation_count = 0
+        for _, scenario in enumerate(values.get("scenarios")):
+            for _, stage in enumerate(scenario.Stages):
+                if stage.DecorationsId != values.get("decorations")[stage_count].Id:
                     raise ValueError("DecorationsIds not linked!")
-                if stage.GeometryId != values.get("geometries")[j].Id:
+                if stage.GeometryId != values.get("geometries")[stage_count].Id:
                     raise ValueError("GeometryIds not linked!")
-                if stage.LoadsId != values.get("loads")[j].Id:
+                if stage.LoadsId != values.get("loads")[stage_count].Id:
                     raise ValueError("LoadsIds not linked!")
-                if stage.ReinforcementsId != values.get("reinforcements")[j].Id:
+                if stage.ReinforcementsId != values.get("reinforcements")[stage_count].Id:
                     raise ValueError("ReinforcementsIds not linked!")
-                if stage.SoilLayersId != values.get("soillayers")[j].Id:
+                if stage.SoilLayersId != values.get("soillayers")[stage_count].Id:
                     raise ValueError("SoilLayersIds not linked!")
-                if stage.StateId != values.get("states")[j].Id:
+                if stage.StateId != values.get("states")[stage_count].Id:
                     raise ValueError("StateIds not linked!")
-                if stage.StateCorrelationsId != values.get("statecorrelations")[j].Id:
+                if stage.StateCorrelationsId != values.get("statecorrelations")[stage_count].Id:
                     raise ValueError("StateCorrelationsIds not linked!")
-                if (stage.WaternetCreatorSettingsId != values.get("waternetcreatorsettings")[j].Id):
+                if (stage.WaternetCreatorSettingsId != values.get("waternetcreatorsettings")[stage_count].Id):
                     raise ValueError("WaternetCreatorSettingsIds not linked!")
-                if stage.WaternetId != values.get("waternets")[j].Id:
+                if stage.WaternetId != values.get("waternets")[stage_count].Id:
                     raise ValueError("WaternetIds not linked!")
-            for j, calculation in enumerate(scenario.Calculations):
-                if calculation.CalculationSettingsId != values.get("calculationsettings")[j].Id:
+                stage_count += 1
+            for _, calculation in enumerate(scenario.Calculations):
+                if calculation.CalculationSettingsId != values.get("calculationsettings")[calculation_count].Id:
                     raise ValueError("CalculationSettingsIds not linked!")
+                calculation_count += 1
 
         return values
 
