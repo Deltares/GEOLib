@@ -842,7 +842,7 @@ class DStabilityModel(BaseModel):
 
         If exclude_soil_layer_id is provided, that specific soil layer id is not included in the consolidations.
         """
-        if self.datastructure.has_soil_layers(stage_index):
+        if self.datastructure.has_soil_layers(scenario_index, stage_index):
             soil_layer_ids = self._get_soil_layers(scenario_index, stage_index).get_ids(
                 exclude_soil_layer_id
             )
