@@ -408,7 +408,10 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # change some parameters
-        dm.edit_soil("HV", cohesion=2.0, friction_angle=17.5)
+        hv_soil = dm.get_soil("HV")
+        hv_soil.MohrCoulombAdvancedShearStrengthModel.Cohesion = 2.0
+        hv_soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle = 17.5
+
         path = outputdir / "test_edited_soil.stix"
         dm.serialize(path)
 
@@ -593,8 +596,8 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # Soil correlation
-        soil_id_one = dm.soils.get_soil("H_Ro_z&k").id
-        soil_id_two = dm.soils.get_soil("Sand").id
+        soil_id_one = dm.soils.get_soil("H_Ro_z&k").Id
+        soil_id_two = dm.soils.get_soil("Sand").Id
 
         dm.add_soil_correlation([soil_id_one, soil_id_two])
         path = outputdir / "test_soil_correlation.stix"

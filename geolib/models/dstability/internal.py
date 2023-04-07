@@ -882,6 +882,22 @@ class SoilCollection(DStabilitySubStructure):
                 return persistable_soil
 
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
+    
+    def get_soil_by_name(self, name: str) -> PersistableSoil:
+        """
+        Get soil by the given name.
+
+        Args:
+            code (str): name of the soil
+
+        Returns:
+            Soil: the soil object
+        """
+        for persistable_soil in self.Soils:
+            if persistable_soil.Name == name:
+                return persistable_soil
+
+        raise ValueError(f"Soil name '{name}' not found in the SoilCollection")
 
     def get_global_soil(self, code: str) -> Soil:
         """
@@ -898,58 +914,6 @@ class SoilCollection(DStabilitySubStructure):
                 return self.__internal_soil_to_global_soil(persistable_soil)
 
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
-
-    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
-        """
-        Update a soil.
-
-        Args:
-            code (str): code of the soil.
-            kwargs (dict): dictionary with argument names and values
-
-        Returns:
-            PersistableSoil: the edited soil
-        """
-
-        for persistable_soil in self.Soils:
-            if persistable_soil.Code == code:
-                return self.edit_persistable_soil(
-                    persistable_soil=persistable_soil, kwargs=kwargs
-                )
-        raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
-
-    def edit_soil_by_name(
-        self, name: Optional[str] = None, **kwargs: dict
-    ) -> PersistableSoil:
-        """
-        Update a soil, searching by name. This method will edit the first occurence of the name
-        if it is used multiple times.
-
-        Args:
-            name (str): name of the soil.
-            kwargs (dict): dictionary with argument names and values
-
-        Returns:
-            PersistableSoil: the edited soil
-        """
-
-        for persistable_soil in self.Soils:
-            if persistable_soil.Name == name:
-                return self.edit_persistable_soil(
-                    persistable_soil=persistable_soil, kwargs=kwargs
-                )
-        raise ValueError(f"Soil name '{name}' not found in the SoilCollection")
-
-    def edit_persistable_soil(self, persistable_soil: PersistableSoil, kwargs: dict):
-        for k, v in kwargs.items():
-            try:
-                setattr(persistable_soil, snake_to_camel(k), v)
-                k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
-                if hasattr(persistable_soil, k_stochastic):
-                    getattr(persistable_soil, k_stochastic).Mean = v
-            except AttributeError:
-                raise ValueError(f"Unknown soil parameter {k}.")
-        return persistable_soil
 
 
 # Reinforcements

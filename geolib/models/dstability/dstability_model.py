@@ -476,6 +476,30 @@ class DStabilityModel(BaseModel):
         soil = self.soils.get_soil(soil_code)
         soil_layers.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.Id)
         return int(persistable_layer.Id)
+    
+    def get_soil(self, code: str) -> PersistableSoil:
+        """
+        Gets an existing soil with the given soil code.
+
+        Args:
+            code (str): the code of the soil
+
+        Returns:
+            PersistableSoil: the soil
+        """
+        return self.soils.get_soil(code=code)
+    
+    def get_soil_by_name(self, name: str) -> PersistableSoil:
+        """
+        Gets an existing soil with the given soil name.
+
+        Args:
+            name (str): the name of the soil
+
+        Returns:
+            PersistableSoil: the soil
+        """
+        return self.soils.get_soil_by_name(name=name)
 
     def add_head_line(
         self,
