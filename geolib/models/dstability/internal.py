@@ -381,7 +381,6 @@ class Stage(DStabilitySubStructure):
     StateId: Optional[str]
     WaternetCreatorSettingsId: Optional[str]
     WaternetId: Optional[str]
-    ContentVersion: Optional[str] = "2"
 
 
 class PersistableCalculation(DStabilityBaseModelStructure):
@@ -2036,7 +2035,8 @@ class DStabilityStructure(BaseModelStructure):
         self.loads += [Loads(Id=str(unique_start_id + 7))]
         self.decorations += [Decorations(Id=str(unique_start_id + 9))]
         self.geometries += [Geometry(Id=str(unique_start_id + 8))]
-        self.scenarios[scenario_index].Stages += Stage(
+
+        new_stage = Stage(
             Id=str(stage_id),
             Label=label,
             Notes=notes,
@@ -2050,8 +2050,9 @@ class DStabilityStructure(BaseModelStructure):
             WaternetCreatorSettingsId=str(unique_start_id + 2),
             WaternetId=str(unique_start_id + 1),
         )
+        self.scenarios[scenario_index].Stages.append(new_stage)
 
-        return len(self.scenarios) - 1, stage_id
+        return len(self.scenarios[scenario_index].Stages) - 1, stage_id
 
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DStability.

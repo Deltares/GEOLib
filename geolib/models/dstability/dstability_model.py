@@ -357,7 +357,7 @@ class DStabilityModel(BaseModel):
         return new_scenario_id
 
     def add_stage(
-        self, scenario_index: int, label: str, notes: str, set_current=True
+        self, scenario_index: int, label: str = "Stage", notes: str = "", set_current=True
     ) -> int:
         """Add a new stage to the model at the given scenario index.
 
@@ -405,7 +405,7 @@ class DStabilityModel(BaseModel):
         return new_calculation_id
 
     @property
-    def stages(self) -> List[Scenario]:
+    def scenarios(self) -> List[Scenario]:
         return self.datastructure.scenarios
 
     def add_soil(self, soil: Soil) -> int:
