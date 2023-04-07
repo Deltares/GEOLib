@@ -11,7 +11,7 @@ class TestDStabilitySoil:
         soil_1 = Soil(name="Test", code="Test")
 
         dstability_model.add_soil(soil_1)
-        assert dstability_model.soils.has_soilcode("Test") is True
+        assert dstability_model.soils.has_soil_code("Test") is True
 
         with pytest.raises(ValueError) as _:
             soil_2 = Soil(name="AnotherTest", code="Test")

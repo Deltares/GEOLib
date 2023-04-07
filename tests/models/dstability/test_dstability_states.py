@@ -104,17 +104,17 @@ class TestDStabilityStates:
         dstability_model.parse(test_input_filepath)
 
         expected_state_point = DStabilityStatePoint(
-            id=27,
-            layer_id=14,
+            id=53,
+            layer_id=30,
             label="SP 1",
-            point=Point(x=4.26, z=7.67),
-            stress=DStabilityStress(),
+            point=Point(x=45.0, z=4.0),
+            stress=DStabilityStress(pop=10.0),
         )
         expected_persistable_state_point = (
             expected_state_point._to_internal_datastructure()
         )
         assert (
-            dstability_model.datastructure.states[0].StatePoints[0]
+            dstability_model._get_state(2, 0).StatePoints[0]
             == expected_persistable_state_point
         )
 
@@ -122,7 +122,7 @@ class TestDStabilityStates:
     @pytest.mark.parametrize(
         "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
     )
-    def test_given_data_statelines_equal(self, dir_path: str):
+    def test_given_data_state_lines_equal(self, dir_path: str):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dstability_model = DStabilityModel()
@@ -135,18 +135,16 @@ class TestDStabilityStates:
         dstability_model.parse(test_input_filepath)
 
         points = [
-            Point(x=-8.8, z=3.5),
-            Point(x=-1.4, z=1.0),
-            Point(x=10.6, z=1.0),
-            Point(x=20.0, z=4.0),
+            Point(x=20.0, z=0.0),
+            Point(x=70.0, z=0.0)
         ]
 
         state_line_point = DStabilityStateLinePoint(
-            id=28,
+            id=54,
             label="SP 2",
-            above=DStabilityStress(),
-            below=DStabilityStress(),
-            x=15.718,
+            above=DStabilityStress(pop=20),
+            below=DStabilityStress(pop=30),
+            x=35.0,
         )
 
         expected_state_line = PersistableStateLine(
@@ -154,5 +152,5 @@ class TestDStabilityStates:
             Values=[state_line_point._to_internal_datastructure()],
         )
         assert (
-            dstability_model.datastructure.states[0].StateLines[0] == expected_state_line
+            dstability_model._get_state(2, 0).StateLines[0] == expected_state_line
         )
