@@ -14,14 +14,20 @@ class DStabilityValidator(BaseValidator):
 
     def is_valid_stages(self) -> bool:
         """Number of stages should be the same:"""
+
+        stage_count = 0
+        for scenario in self.ds.scenarios:
+            for _ in scenario.Stages:
+                stage_count += 1
+
         lengths_set = set()
         valid = True
         for key, value in (
-            (k, v) for k, v in self.ds.dict().items() if "result" not in k
+            (k, v) for k, v in self.ds.dict().items() if "result" not in k and "scenarios" not in k and "calculationsettings" not in k
         ):  # Results not required for stage validity.
             if isinstance(value, list):
                 lengths_set.add(len(value))
-                if len(lengths_set) > 1:
+                if len(value) > stage_count:
                     logger.error(
                         f"{self.is_valid_stages.__doc__} {key} has different number of stages: {len(value)}."
                     )
@@ -33,13 +39,16 @@ class DStabilityValidator(BaseValidator):
     def is_valid_layer_loads(self) -> bool:
         """Each layer load must have a consolidation degree for each soil layer"""
         for scenario_index, _ in enumerate(self.ds.scenarios):
-            for stage_id, _ in enumerate(self.ds.scenarios[scenario_index]):
+            for stage_index, _ in enumerate(self.ds.scenarios[scenario_index].Stages):
                 soil_layer_ids: Set[str] = {
-                    layer.LayerId for layer in self.ds.soillayers[stage_id].SoilLayers
+                    layer.LayerId for layer in self.ds._get_soil_layers(scenario_index, stage_index).SoilLayers
                 }
 
+                if len(soil_layer_ids) == 0:
+                    return True
+
                 layer_load_layer_ids: Set[str] = set()
-                for layer_load in self.ds.loads[stage_id].LayerLoads:
+                for layer_load in self.ds._get_loads(scenario_index, stage_index).LayerLoads:
                     layer_load_layer_ids.add(layer_load.LayerId)
 
                     consolidation_layer_id_references: Set[str] = set()

@@ -2184,6 +2184,32 @@ class DStabilityStructure(BaseModelStructure):
             else:
                 return True
         return False
+    
+    def _get_soil_layers(self, scenario_index: int, stage_index: int):
+        soil_layers_id = (
+            self.scenarios[scenario_index].Stages[stage_index].SoilLayersId
+        )
+
+        for soil_layers in self.soillayers:
+            if soil_layers.Id == soil_layers_id:
+                return soil_layers
+
+        raise ValueError(
+            f"No soil layers found for stage {stage_index} in scenario {scenario_index}."
+        )
+
+    def _get_loads(self, scenario_index: int, stage_index: int):
+        loads_id = (
+            self.scenarios[scenario_index].Stages[stage_index].LoadsId
+        )
+
+        for loads in self.loads:
+            if loads.Id == loads_id:
+                return loads
+
+        raise ValueError(
+            f"No loads found for stage {stage_index} in scenario {scenario_index}."
+        )
 
     def get_result_substructure(
         self, analysis_type: AnalysisTypeEnum, calculation_type: CalculationTypeEnum

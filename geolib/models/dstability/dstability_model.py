@@ -261,17 +261,7 @@ class DStabilityModel(BaseModel):
         )
 
     def _get_soil_layers(self, scenario_index: int, stage_index: int):
-        soil_layers_id = (
-            self.datastructure.scenarios[scenario_index].Stages[stage_index].SoilLayersId
-        )
-
-        for soil_layers in self.datastructure.soillayers:
-            if soil_layers.Id == soil_layers_id:
-                return soil_layers
-
-        raise ValueError(
-            f"No soil layers found for stage {stage_index} in scenario {scenario_index}."
-        )
+        return self.datastructure._get_soil_layers(scenario_index, stage_index)
 
     def _get_waternet(self, scenario_index: int, stage_index: int):
         waternet_id = (
@@ -315,17 +305,7 @@ class DStabilityModel(BaseModel):
         )
 
     def _get_loads(self, scenario_index: int, stage_index: int):
-        loads_id = (
-            self.datastructure.scenarios[scenario_index].Stages[stage_index].LoadsId
-        )
-
-        for loads in self.datastructure.loads:
-            if loads.Id == loads_id:
-                return loads
-
-        raise ValueError(
-            f"No loads found for stage {stage_index} in scenario {scenario_index}."
-        )
+        return self.datastructure._get_loads(scenario_index, stage_index)
 
     def _get_reinforcements(self, scenario_index: int, stage_index: int):
         reinforcements_id = (

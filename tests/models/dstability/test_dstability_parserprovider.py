@@ -23,7 +23,7 @@ class TestDStabilityInputParser:
         "dir_path",
         [
             pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
+            pytest.param("dstability/Tutorial_v2023_1", id="Tutorial DStability 20.2.1"),
         ],
     )
     def test_dstability_parse_directory(self, dir_path: str):
@@ -52,8 +52,8 @@ class TestDStabilityInputParser:
         # 1. Set up test model
         input_parser = DStabilityZipParser()
         test_filepath = (
-            Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
-            / "Tutorial.stix"
+            Path(TestUtils.get_local_test_data_dir("dstability/"))
+            / "example_1.stix"
         )
         test_output_dir = Path(
             TestUtils.get_output_test_data_dir("dstability/serialized")
@@ -114,7 +114,7 @@ class TestDStabilityInputParser:
         dsm = DStabilityModel()
         test_filepath = (
             Path(TestUtils.get_local_test_data_dir("dstability"))
-            / "Tutorial_v20_2_1.stix"
+            / "Tutorial_v2023_1.stix"
         )
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dstability"))
