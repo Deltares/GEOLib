@@ -1264,46 +1264,15 @@ class BaseVerificationStructureProperties(DSeriesRepeatedGroupedProperties):
     points_on_sheetpile: Optional[List[PointsOnSheetpile]]
     construction_stage: Optional[List[OutputConstructionStage]]
 
-    resume: Optional[Resume]
-    warning: Optional[str]
-    error: Optional[str]
-
-    # TODO Check how many optional variations exist
-    basis_step_of_step_9____1_per_anchor: Optional[str]
-    verify_anchor_force_step_9____1_based_on_step_6____5: Optional[str]
-    verify_anchor_force_step_9____1_based_on_step_6____3: Optional[str]
-
     @classmethod
     def get_list_field_names(cls) -> List[str]:
         return ["points_on_sheetpile", "construction_stage"]
 
 
-class VerifyAnchorForce(BaseVerificationStructureProperties):
-    anchor_number: Optional[int]
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
-    construction_stage: Optional[List[OutputConstructionStage]]
-    resume: Optional[Resume]
-
-
-class VerifySheetpileData(DSeriesStructure):
-    verify_deformation: Optional[BaseVerificationStructureProperties]
-    verify_moment_low_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_moment_high_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_low_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_high_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_anchor_force: Optional[VerifyAnchorForce]
-    resume: Optional[Resume]
-    factors_for_verification: Optional[str]
-
-
 class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     @classmethod
     def get_list_field_names(cls) -> List[str]:
-        return ["verify_sheetpile_data", "points_on_sheetpile", "construction_stage"]
+        return ["points_on_sheetpile", "construction_stage"]
 
     @classmethod
     def parse_text(cls, text):
@@ -1311,79 +1280,63 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
 
     calculation_type: str
 
-    # Sheetpile calculation
+    # General data
     sheet_pile_elements: Optional[str]
-    design_sheetpile_length: Optional[DesignSheetpileLength]
-    verify_sheetpile_data: Optional[List[VerifySheetpileData]]
+    calculated_displacements: Optional[str]
+
+    # Standard, Kranz and Reliability calculation
     points_on_sheetpile: Optional[List[PointsOnSheetpile]]
     construction_stage: Optional[List[OutputConstructionStage]]
 
-    # Vibration calculation
+    # Design Sheet Pile Length calculation
+    design_sheetpile_length: Optional[DesignSheetpileLength]
+
+    # Settlement by Vibration calculation
     settlement_by_vibration: Optional[str]
 
-    # Verification calculation
-    # TODO Split further based on A/B grouping
+    # Verify calculation including Overall Stability calculation
     overall_partial_factor_set: Optional[str]
     factors_for_overall_stability: Optional[str]
     overall_stability_results: Optional[str]
 
-    calculation_overview: Optional[str]
-    number_of_verifications: Optional[str]
-    maximum_moment_effect_included: Optional[str]
-    verify_deformation_serviceability_limit_state: Optional[str]
+    # Verify calculation according to CUR or EC7-NL with method B
+    factors_for_verification: Optional[str]
 
-    eurocode_2: Optional[str]
-    eurocode_3: Optional[str]
-    eurocode_1_set_1: Optional[str]
-    eurocode_1_set_2: Optional[str]
-    eurocode_belgium_set_1: Optional[str]
-    eurocode_belgium_set_2: Optional[str]
+    # Verify calculation according to CUR or EC7-NL
+    verify_step_6____5_serviceability_limit_state: Optional[BaseVerificationStructureProperties]
+    verify_step_6____5_multiplied_by_factor: Optional[BaseVerificationStructureProperties]
+    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
+        BaseVerificationStructureProperties]
+    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
+        BaseVerificationStructureProperties]
+    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
+        BaseVerificationStructureProperties]
+    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
+        BaseVerificationStructureProperties]
     cur_anchor_force_results: Optional[CurAnchorForceResults]
-    warning_list: Optional[str]
-    warning: Optional[str]
-    error: Optional[str]
 
-    calculated_displacements: Optional[str]
+    # Verify calculation according to EC7-BE or EC7-General
+    verify_deformation_serviceability_limit_state: Optional[BaseVerificationStructureProperties]
+    eurocode_1_set_1: Optional[BaseVerificationStructureProperties]
+    eurocode_1_set_2: Optional[BaseVerificationStructureProperties]
+    eurocode_2: Optional[BaseVerificationStructureProperties]
+    eurocode_3: Optional[BaseVerificationStructureProperties]
+    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties]
+    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties]
+
+    # Kranz calculation
     angles_kranz_calculation: Optional[str]
     kranz_calculation: Optional[str]
     kranz_diagram_results: Optional[str]
 
-    # Verifications, duplicated for all verifications.
-    verify_deformation: Optional[BaseVerificationStructureProperties]
-    verify_moment_low_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_moment_high_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_low_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_high_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_anchor_force: Optional[BaseVerificationStructureProperties]
+    # Resumes
     resume: Optional[Resume]
-    supports_resume: Optional[str]
     anchors_and_struts_resume: Optional[str]
-    cur_anchor_force_results: Optional[str]
+    supports_resume: Optional[str]
     maximum_anchor_force: Optional[str]
     maximum_summary_results: Optional[str]
     warnings: Optional[str]
     errors: Optional[str]
-    factors_for_verification: Optional[str]
-
-    # Special types defined based on test_geolib_173 (issue GeoLib #173)
-    verify_step_6____5_serviceability_limit_state: Optional[str]
-    verify_step_6____5_multiplied_by_factor: Optional[str]
-    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
-        str
-    ]
-    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
-        str
-    ]
-    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
-        str
-    ]
-    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
-        str
-    ]
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):
