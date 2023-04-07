@@ -15,6 +15,8 @@ from pydantic import ValidationError, conlist, root_validator, validator
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
+from geolib.models.dstability.loads import Consolidation, DStabilityLoad
+from geolib.models.dstability.reinforcements import DStabilityReinforcement
 from geolib.soils import Soil
 from geolib.utils import snake_to_camel
 
@@ -74,8 +76,8 @@ class DStabilitySubStructure(DStabilityBaseModelStructure):
 
 # waternet schema
 class PersistablePoint(DStabilityBaseModelStructure):
-    X: Optional[float] = "NaN"
-    Z: Optional[float] = "NaN"
+    X: Optional[Union[float,str]] = "NaN"
+    Z: Optional[Union[float,str]] = "NaN"
 
 
 class PersistableHeadLine(DStabilityBaseModelStructure):
@@ -178,18 +180,18 @@ class Waternet(DStabilitySubStructure):
 
 
 class PersistableDitchCharacteristics(DStabilityBaseModelStructure):
-    DitchBottomEmbankmentSide: Optional[float] = "NaN"
-    DitchBottomLandSide: Optional[float] = "NaN"
-    DitchEmbankmentSide: Optional[float] = "NaN"
-    DitchLandSide: Optional[float] = "NaN"
+    DitchBottomEmbankmentSide: Optional[Union[float,str]] = "NaN"
+    DitchBottomLandSide: Optional[Union[float,str]] = "NaN"
+    DitchEmbankmentSide: Optional[Union[float,str]] = "NaN"
+    DitchLandSide: Optional[Union[float,str]] = "NaN"
 
 
 class PersistableEmbankmentCharacteristics(DStabilityBaseModelStructure):
-    EmbankmentToeLandSide: Optional[float] = "NaN"
-    EmbankmentToeWaterSide: Optional[float] = "NaN"
-    EmbankmentTopLandSide: Optional[float] = "NaN"
-    EmbankmentTopWaterSide: Optional[float] = "NaN"
-    ShoulderBaseLandSide: Optional[float] = "NaN"
+    EmbankmentToeLandSide: Optional[Union[float,str]] = "NaN"
+    EmbankmentToeWaterSide: Optional[Union[float,str]] = "NaN"
+    EmbankmentTopLandSide: Optional[Union[float,str]] = "NaN"
+    EmbankmentTopWaterSide: Optional[Union[float,str]] = "NaN"
+    ShoulderBaseLandSide: Optional[Union[float,str]] = "NaN"
 
 
 class EmbankmentSoilScenarioEnum(str, Enum):
@@ -205,10 +207,10 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     AdjustForUplift: Optional[bool] = False
     AquiferInsideAquitardLayerId: Optional[str]
     AquiferLayerId: Optional[str]
-    AquiferLayerInsideAquitardLeakageLengthInwards: Optional[float] = "NaN"
-    AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[float] = "NaN"
-    AquitardHeadLandSide: Optional[float] = "NaN"
-    AquitardHeadWaterSide: Optional[float] = "NaN"
+    AquiferLayerInsideAquitardLeakageLengthInwards: Optional[Union[float,str]] = "NaN"
+    AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[Union[float,str]] = "NaN"
+    AquitardHeadLandSide: Optional[Union[float,str]] = "NaN"
+    AquitardHeadWaterSide: Optional[Union[float,str]] = "NaN"
     ContentVersion: Optional[str] = "1"
     DitchCharacteristics: Optional[
         PersistableDitchCharacteristics
@@ -217,24 +219,24 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     EmbankmentCharacteristics: Optional[
         PersistableEmbankmentCharacteristics
     ] = PersistableEmbankmentCharacteristics()
-    EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = "ClayEmbankmentOnClay"
+    EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = EmbankmentSoilScenarioEnum.CLAY_EMBANKMENT_ON_CLAY
     Id: Optional[str]
-    InitialLevelEmbankmentTopLandSide: Optional[float] = "NaN"
-    InitialLevelEmbankmentTopWaterSide: Optional[float] = "NaN"
-    IntrusionLength: Optional[float] = "NaN"
+    InitialLevelEmbankmentTopLandSide: Optional[Union[float,str]] = "NaN"
+    InitialLevelEmbankmentTopWaterSide: Optional[Union[float,str]] = "NaN"
+    IntrusionLength: Optional[Union[float,str]] = "NaN"
     IsAquiferLayerInsideAquitard: Optional[bool] = False
     IsDitchPresent: Optional[bool] = False
     IsDrainageConstructionPresent: Optional[bool] = False
-    MeanWaterLevel: Optional[float] = "NaN"
-    NormativeWaterLevel: Optional[float] = "NaN"
-    OffsetEmbankmentToeLandSide: Optional[float] = "NaN"
-    OffsetEmbankmentTopLandSide: Optional[float] = "NaN"
-    OffsetEmbankmentTopWaterSide: Optional[float] = "NaN"
-    OffsetShoulderBaseLandSide: Optional[float] = "NaN"
-    PleistoceneLeakageLengthInwards: Optional[float] = "NaN"
-    PleistoceneLeakageLengthOutwards: Optional[float] = "NaN"
+    MeanWaterLevel: Optional[Union[float,str]] = "NaN"
+    NormativeWaterLevel: Optional[Union[float,str]] = "NaN"
+    OffsetEmbankmentToeLandSide: Optional[Union[float,str]] = "NaN"
+    OffsetEmbankmentTopLandSide: Optional[Union[float,str]] = "NaN"
+    OffsetEmbankmentTopWaterSide: Optional[Union[float,str]] = "NaN"
+    OffsetShoulderBaseLandSide: Optional[Union[float,str]] = "NaN"
+    PleistoceneLeakageLengthInwards: Optional[Union[float,str]] = "NaN"
+    PleistoceneLeakageLengthOutwards: Optional[Union[float,str]] = "NaN"
     UseDefaultOffsets: Optional[bool] = True
-    WaterLevelHinterland: Optional[float] = "NaN"
+    WaterLevelHinterland: Optional[Union[float,str]] = "NaN"
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1003,7 +1005,7 @@ class Reinforcements(DStabilitySubStructure):
     Nails: List[PersistableNail] = []
 
     def add_reinforcement(
-        self, reinforcement: "DStabilityReinforcement"
+        self, reinforcement: DStabilityReinforcement
     ) -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
         internal_datastructure = reinforcement._to_internal_datastructure()
         plural_class_name = f"{reinforcement.__class__.__name__}s"
@@ -1129,7 +1131,7 @@ class Loads(DStabilitySubStructure):
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
 
     def add_load(
-        self, load: "DStabilityLoad", consolidations: List["Consolidation"]
+        self, load: DStabilityLoad, consolidations: List[Consolidation]
     ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
         internal_datastructure = load.to_internal_datastructure()
 
@@ -1273,7 +1275,7 @@ class Decorations(DStabilitySubStructure):
 
 class PersistableCircle(DStabilityBaseModelStructure):
     Center: Optional[PersistablePoint] = PersistablePoint()
-    Radius: Optional[float] = "NaN"
+    Radius: Optional[Union[float,str]] = "NaN"
 
 
 class PersistableBishopSettings(DStabilityBaseModelStructure):
@@ -1287,8 +1289,8 @@ class PersistableGridEnhancements(DStabilityBaseModelStructure):
 
 
 class NullablePersistablePoint(DStabilityBaseModelStructure):
-    X: Optional[float] = "NaN"
-    Z: Optional[float] = "NaN"
+    X: Optional[Union[float,str]] = "NaN"
+    Z: Optional[Union[float,str]] = "NaN"
 
 
 class PersistableSearchGrid(DStabilityBaseModelStructure):
@@ -1313,7 +1315,7 @@ class PersistableSlipPlaneConstraints(DStabilityBaseModelStructure):
 
 
 class PersistableTangentLines(DStabilityBaseModelStructure):
-    BottomTangentLineZ: Optional[float] = "NaN"
+    BottomTangentLineZ: Optional[Union[float,str]] = "NaN"
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     NumberOfTangentLines: Optional[int] = 1
@@ -1376,7 +1378,7 @@ class PersistableSpencerGeneticSettings(DStabilityBaseModelStructure):
 
 class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
     FirstCircleCenter: Optional[NullablePersistablePoint] = NullablePersistablePoint()
-    FirstCircleRadius: Optional[float] = "NaN"
+    FirstCircleRadius: Optional[Union[float,str]] = "NaN"
     SecondCircleCenter: Optional[NullablePersistablePoint] = NullablePersistablePoint()
 
 
@@ -1994,13 +1996,15 @@ class DStabilityStructure(BaseModelStructure):
         ]
 
     def get_stage_specific_fields(
-        self, scenario_index=0, stage_index=0
+        self,
+        scenario_index=0, 
+        stage_index=0
     ) -> Generator[Tuple[str, DStabilitySubStructure], None, None]:
         """Yield stage specific fields for given stage."""
         for fieldname in self.stage_specific_fields:
             field = getattr(self, fieldname)
 
-            stage_index = 0
+            stage_counter = 0
             for i, scenario in enumerate(self.scenarios):
                 if i == scenario_index:
                     scenario_found = True
@@ -2009,9 +2013,9 @@ class DStabilityStructure(BaseModelStructure):
 
                 for j, _ in enumerate(scenario.Stages):
                     if j == stage_index and scenario_found:
-                        yield fieldname, field[stage_index]
+                        yield fieldname, field[stage_counter]
                     
-                    stage_index += 1
+                    stage_counter += 1
 
     @property
     def calculation_specific_fields(self):
@@ -2020,24 +2024,26 @@ class DStabilityStructure(BaseModelStructure):
         ]
 
     def get_calculation_specific_fields(
-        self, scenario=0, calculation=0
+        self, 
+        scenario_index=0, 
+        calculation_index=0
     ) -> Generator[Tuple[str, DStabilitySubStructure], None, None]:
         """Yield calculation specific fields for given calculation."""
         for fieldname in self.calculation_specific_fields:
             field = getattr(self, fieldname)
 
-            calculation_index = 0
+            calculation_counter = 0
             for i, scenario in enumerate(self.scenarios):
-                if i == scenario:
+                if i == scenario_index:
                     scenario_found = True
                 else:
                     scenario_found = False
 
-                for j, calculation in enumerate(scenario.Calculations):
-                    calculation_index += 1
+                for j, _ in enumerate(scenario.Calculations):
+                    calculation_counter += 1
 
-                    if j == calculation and scenario_found:
-                        yield fieldname, field[calculation_index]
+                    if j == calculation_index and scenario_found:
+                        yield fieldname, field[calculation_counter]
 
     def renumber_fk_fields(self, instance, mapping: Dict, unique_id: int) -> int:
         """Replace id (foreign key) fields on instance based on a mapping and unique id."""
@@ -2289,7 +2295,7 @@ class DStabilityStructure(BaseModelStructure):
         return False
 
     def has_soil_layer(self, scenario_index: int, stage_index: int, soil_layer_id: int) -> bool:
-        if self.has_soil_layers(scenario_index, stage_index, soil_layer_id):
+        if self.has_soil_layers(scenario_index, stage_index):
             for layer in self.soillayers[stage_index].SoilLayers:
                 if str(soil_layer_id) == layer.LayerId:
                     return True
