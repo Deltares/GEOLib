@@ -732,9 +732,9 @@ class DFoundationsNenPileResults(DFoundationsInlineProperties):
 
 class DFoundationsGlobalNenResults(DFoundationsInlineProperties):
     wd1b: float
-    betad1b: float
     w2d: float
-    betad2: float
+    reciprocal_max_relative_rotation_calc_1B: float
+    reciprocal_max_relative_rotation_calc_2: float
 
 
 class DFoundationsVerificationResults(DSeriesStructure):
@@ -766,6 +766,8 @@ class DFoundationsCalculationWarnings(DSeriesTreeStructure):
     is_warning_sf_slope_not_relevant_given: Bool
     is_warning_nen_sf_placement_depth_too_deep: Bool
     is_warning_nen_sf_placement_depth_too_shallow: Bool
+    is_warning_nen_bp_positive_skin_friction_zone_given: Bool
+    is_warning_sf_foundation_level_for_punch_to_deep_for_slope_given: Bool
 
 
 class DFoundationsDumpfileOutputStructure(DSeriesStructure):

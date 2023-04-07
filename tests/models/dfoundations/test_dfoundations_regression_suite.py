@@ -38,7 +38,7 @@ class TestRegressionSuite:
 
     @pytest.mark.unittest
     def test_regression_issue8(self):
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
-        test_file = test_folder / "issue8.fod"
+        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations/benchmarks"))
+        test_file = test_folder / "bm1-1a.fod"
         ds = DFoundationsModel()
         ds.parse(test_file)

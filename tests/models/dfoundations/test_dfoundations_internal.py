@@ -387,9 +387,9 @@ class TestInternalOutputDFoundations:
     global_nen_results = (
         "[GLOBAL NEN RESULTS]\n"
         + "0.063203 = wd1B\n"
-        + "0.009173 = Betad1B\n"
         + "0.024783 = w2d\n"
-        + "0.003441 = Betad2\n"
+        + "0.009173 = ReciprocalMaxRelativeRotationCalc1B\n"
+        + "0.003441 = ReciprocalMaxRelativeRotationCalc2\n"
         + "[END OF GLOBAL NEN RESULTS]"
     )
 
@@ -400,9 +400,9 @@ class TestInternalOutputDFoundations:
         + "0.066 = wreq1b\n"
         + "0.022 = wreq2\n"
         + "0 = Stiffness\n"
-        + "0.010000 = Betadreq1B\n"
+        + "0.010000 = ReciprocalMaxRelativeRotationReqULS\n"
         + "1 = GT = 1B\n"
-        + "0.003333 = Betadreq2\n"
+        + "0.003333 = ReciprocalMaxRelativeRotationReqSLS\n"
         + "[END OF DEMANDS NEN-EN]\n"
         + f"{nen_pile_results}\n"
         + "[END OF VERIFICATION RESULTS]"
@@ -421,6 +421,8 @@ class TestInternalOutputDFoundations:
             + "0 = IsWarningSFSlopeNotRelevantGiven (1=true, 0=false)\n"
             + "0 = IsWarningNENSFPlacementDepthTooDeep (1=true, 0=false)\n"
             + "0 = IsWarningNENSFPlacementDepthTooShallow (1=true, 0=false)\n"
+            + "1 = FIsWarningNENBPPositiveSkinFrictionZoneGiven (1=true, 0=false)\n"
+            + "0 = FIsWarningSFFoundationLevelForPunchToDeepForSlopeGiven(1 = true, 0 = false)\n"
             + "[END OF CALCULATION WARNINGS]"
     )
 
@@ -548,9 +550,9 @@ class TestInternalOutputDFoundations:
         parsed_structure = DFoundationsGlobalNenResults.parse_text(group_text)
         # 3. Verify results
         assert parsed_structure.wd1b == 0.063203
-        assert parsed_structure.betad1b == 0.009173
         assert parsed_structure.w2d == 0.024783
-        assert parsed_structure.betad2 == 0.003441
+        assert parsed_structure.reciprocal_max_relative_rotation_calc_1B == 0.009173
+        assert parsed_structure.reciprocal_max_relative_rotation_calc_2 == 0.003441
 
     @pytest.mark.integrationtest
     def test_given_calculation_parameters_bearing_piles_ec_7_when_parse_then_returns_structure(
@@ -640,7 +642,7 @@ class TestInternalOutputDFoundations:
             ),
         ],
     )
-    def test_given_all_dfoundationsstructure_fixtures_when_parse_dfoundationtype_then_returns_as_property(
+    def test_given_all_dfoundations_structure_fixtures_when_parse_dfoundations_type_then_returns_as_property(
         self,
         text_to_parse: str,
         property_name: str,
