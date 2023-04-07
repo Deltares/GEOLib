@@ -33,7 +33,7 @@ class StochasticParameter(SoilBaseModel):
     """
 
     is_probabilistic: bool = False
-    mean: Optional[float] = 0
+    mean: Optional[float] = None
     standard_deviation: Optional[float] = 0
     distribution_type: Optional[DistributionType] = DistributionType.Normal
     correlation_coefficient: Optional[float] = None

@@ -553,40 +553,40 @@ class PersistableSuTable(DStabilityBaseModelStructure):
 
 
 class PersistableMohrCoulombClassicShearStrengthModel(DStabilityBaseModelStructure):
-    Cohesion: float = 0.0
+    Cohesion: Optional[float] = 0.0
     CohesionAndFrictionAngleCorrelated: bool = False
     CohesionStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    FrictionAngle: float = 0.0
+    FrictionAngle: Optional[float] = 0.0
     FrictionAngleStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
 
 
 class PersistableMohrCoulombAdvancedShearStrengthModel(DStabilityBaseModelStructure):
-    Cohesion: float = 0.0
+    Cohesion: Optional[float] = 0.0
     CohesionAndFrictionAngleCorrelated: bool = False
     CohesionStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    Dilatancy: float = 0.0
+    Dilatancy: Optional[float] = 0.0
     DilatancyStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    FrictionAngle: float = 0.0
+    FrictionAngle: Optional[float] = 0.0
     FrictionAngleStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
 
 
 class PersistableSuShearStrengthModel(DStabilityBaseModelStructure):
-    ShearStrengthRatio: float = 0.0
+    ShearStrengthRatio: Optional[float] = 0.0
     ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
     ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    StrengthIncreaseExponent: float = 1.0
+    StrengthIncreaseExponent: Optional[float] = 1.0
     StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
