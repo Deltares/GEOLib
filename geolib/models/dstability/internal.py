@@ -312,8 +312,10 @@ class State(DStabilitySubStructure):
         self,
         points: List[PersistablePoint],
         state_points: List[PersistableStateLinePoint],
-    ):
+    ) -> PersistableStateLine:
+        state_line = PersistableStateLine(Points=points, Values=state_points)
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
+        return state_line
 
     def get_state(
         self, state_id: int
@@ -747,7 +749,7 @@ class SoilCollection(DStabilitySubStructure):
     def structure_name(cls) -> str:
         return "soils"
 
-    def has_soilcode(self, code: str) -> bool:
+    def has_soil_code(self, code: str) -> bool:
         """
         Checks if the soilcode is available in the current soil list.
 
