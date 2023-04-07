@@ -86,68 +86,6 @@ class TestDStabilitySoil:
             == ShearStrengthModelTypePhreaticLevel.NONE.value
         )
 
-    def test_dstability_edit_soil(self):
-        dstability_model = DStabilityModel(filename=None)
-        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
-        soil_1 = Soil(
-            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
-        )
-        added_soil_id = dstability_model.add_soil(soil_1)
-
-        assert added_soil_id == "22"
-        assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
-        assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
-
-        dstability_model.edit_soil(code=soil_1.code, cohesion=2.0, friction_angle=35)
-        assert (
-            pytest.approx(
-                dstability_model.soils.get_global_soil(
-                    "Test"
-                ).mohr_coulomb_parameters.cohesion.mean
-            )
-            == 2.0
-        )
-        assert (
-            pytest.approx(
-                dstability_model.soils.get_soil(
-                    "Test"
-                ).mohr_coulomb_parameters.friction_angle.mean
-            )
-            == 35.0
-        )
-
-    def test_dstability_edit_soil_by_name(self):
-        dstability_model = DStabilityModel(filename=None)
-        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
-        soil_1 = Soil(
-            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
-        )
-        added_soil_id = dstability_model.add_soil(soil_1)
-
-        assert added_soil_id == "22"
-        assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
-        assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
-
-        dstability_model.edit_soil_by_name(
-            name=soil_1.name, cohesion=2.0, friction_angle=35
-        )
-        assert (
-            pytest.approx(
-                dstability_model.soils.get_soil(
-                    "Test"
-                ).mohr_coulomb_parameters.cohesion.mean
-            )
-            == 2.0
-        )
-        assert (
-            pytest.approx(
-                dstability_model.soils.get_soil(
-                    "Test"
-                ).mohr_coulomb_parameters.friction_angle.mean
-            )
-            == 35.0
-        )
-
     def test_dstability_get_soil(self):
         dstability_model = DStabilityModel(filename=None)
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
@@ -170,6 +108,36 @@ class TestDStabilitySoil:
             soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle
             == soil_1.mohr_coulomb_parameters.friction_angle.mean
         )
+
+    def test_dstability_get_soil_and_edit(self):
+        dstability_model = DStabilityModel(filename=None)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
+        soil_1 = Soil(
+            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+        )
+
+        dstability_model.add_soil(soil_1)
+
+        soil = dstability_model.soils.get_soil("Test")
+
+        assert soil.Id == soil_1.id
+        assert soil.Name == soil_1.name
+        assert soil.Code == soil_1.code
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.Cohesion
+            == soil_1.mohr_coulomb_parameters.cohesion.mean
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle
+            == soil_1.mohr_coulomb_parameters.friction_angle.mean
+        )
+
+        soil.MohrCoulombAdvancedShearStrengthModel.Cohesion = 99.0
+        soil.SuShearStrengthModel.ShearStrengthRatio = 13.0
+
+        soil = dstability_model.soils.get_soil("Test")
+        assert soil.MohrCoulombAdvancedShearStrengthModel.Cohesion == 99.0
+        assert soil.SuShearStrengthModel.ShearStrengthRatio == 13.0
 
     def test_dstability_get_global_soil(self):
         dstability_model = DStabilityModel(filename=None)

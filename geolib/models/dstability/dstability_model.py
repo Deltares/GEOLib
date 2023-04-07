@@ -424,27 +424,6 @@ class DStabilityModel(BaseModel):
         self.current_id = new_unique_id
         return new_calculation_id
 
-    def copy_stage(self, label: str, notes: str, set_current=True) -> int:
-        """Copy an existing stage and add it to the model.
-
-        Args:
-            label: Label for the stage
-            notes: Notes for the stage
-            set_current: Whether to make the new stage the current stage.
-
-        Returns:
-            the id of the new stage
-        """
-        new_id = self._get_next_id()
-        new_stage_index, new_unique_id = self.datastructure.duplicate_stage(
-            self.current_stage, label, notes, new_id
-        )
-
-        if set_current:
-            self.current_stage = new_stage_index
-        self.current_id = new_unique_id
-        return new_stage_index
-
     @property
     def stages(self) -> List[Scenario]:
         return self.datastructure.scenarios
@@ -465,33 +444,6 @@ class DStabilityModel(BaseModel):
         soil.id = self._get_next_id()
         dstability_soil = self.soils.add_soil(soil)
         return dstability_soil.Id
-
-    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
-        """
-        Edit an existing soil with parameter names based on the soil class members
-
-        Args:
-            code (str): the code of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
-
-        Returns:
-            PersistableSoil: the edited soil
-        """
-        return self.soils.edit_soil(code, **kwargs)
-
-    def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
-        """
-        Edit an existing soil with parameter names based on the soil class members.
-        This method will edit the first occurrence of the name if the name is used multiple times.
-
-        Args:
-            name (str): the name of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
-
-        Returns:
-            PersistableSoil: the edited soil
-        """
-        return self.soils.edit_soil_by_name(name, **kwargs)
 
     @property
     def points(self):

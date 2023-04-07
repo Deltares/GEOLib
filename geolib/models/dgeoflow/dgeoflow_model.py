@@ -138,31 +138,6 @@ class DGeoFlowModel(BaseModel):
         if isinstance(location, Path):
             self.filename = location
 
-    def copy_scenario(self, label: str, notes: str, set_current=True) -> int:
-        """Copy an existing scenario and add it to the model.
-
-        Args:
-            label: Label for the scenario
-            notes: Notes for the scenario
-            set_current: Whether to make the new scenario the current scenario.
-
-        Returns:
-            the id of the new scenario
-        """
-        new_id = self._get_next_id()
-        new_scenario_id, new_unique_id = self.datastructure.duplicate_scenario(
-            self.current_scenario, label, notes, new_id
-        )
-
-        if set_current:
-            self.current_scenario = new_scenario_id
-            self.current_scenario_index += 1
-        self.current_id = new_unique_id
-        return new_scenario_id
-
-    def add_point(self, point: Point, scenario=None) -> int:
-        """Add point, which should be unique in the model and return the created point id."""
-
     def add_soil(self, soil: Soil) -> int:
         """
         Add a new soil to the model. The code must be unique, the id will be generated

@@ -64,29 +64,6 @@ class TestDStabilityInternal:
         # Verify result
         assert "PersistableHeadLine" in child_classes
 
-    @pytest.mark.acceptance
-    @only_teamcity
-    def test_duplicate_stage(self):
-
-        # Setup
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
-        test_output_filepath = (
-            Path(TestUtils.get_output_test_data_dir("dstability/"))
-            / "duplicate_stages.stix"
-        )
-        dm = DStabilityModel()
-        dm.parse(test_filepath)
-
-        # Test
-        dm.datastructure.duplicate_stage(
-            0, 0, label="Second default", notes="", unique_start_id=500
-        )
-        dm.serialize(test_output_filepath)
-
-        # Verify correct execution
-        dm.execute()
-        assert dm.datastructure
-
     @pytest.mark.unittest
     def test_add_empty_scenario(self):
         # Setup

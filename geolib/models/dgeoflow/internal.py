@@ -776,83 +776,8 @@ class DGeoFlowStructure(BaseModelStructure):
                 raise ValueError("SoilLayersIds not linked!")
         return values
 
-    @property
-    def stage_specific_fields(self):
-        return [
-            "soillayers",
-            "geometries",
-            "boundaryconditions",
-            "meshproperties",
-            "scenarios",
-        ]
-
-    def get_scenario_specific_fields(self, stage=0) -> Tuple[str, DGeoFlowSubStructure]:
-        """Yield stage specific fields for given stage."""
-        for fieldname in self.stage_specific_fields:
-            field = getattr(self, fieldname)
-            if len(field) > stage:
-                yield fieldname, field[stage]
-
-    def renumber_fk_fields(self, instance, mapping: Dict, unique_id: int) -> int:
-        """Replace id (foreign key) fields on instance based on a mapping and unique id."""
-        fk = ForeignKeys()
-        fkfields = fk.class_fields
-
-        def get_correct_key(key, mapping):
-            if key not in mapping:
-                nonlocal unique_id
-                mapping[key] = unique_id
-                unique_id += 1
-            return mapping[key]
-
-        for fkfield in fkfields.get(instance.__class__.__name__, []):
-            value = getattr(instance, fkfield)
-            if isinstance(value, (list, set, tuple)):
-                setattr(
-                    instance,
-                    fkfield,
-                    [get_correct_key(x, mapping) for x in value],
-                )
-            if isinstance(value, (int, float, str)):
-                setattr(instance, fkfield, get_correct_key(value, mapping))
-
-        return unique_id
-
-    def duplicate_scenario(
-        self, current_scenario: int, label: str, notes: str, unique_start_id: int
-    ):
-        """Duplicates an existing scenario.
-        Copies the specific scenario fields for a scenario and renumbers all Ids,
-        taking into account foreign keys by using the same renumbering.
-        """
-
-        old_to_new = {}
-        for fieldname, scenario_field in self.get_scenario_specific_fields(
-            current_scenario
-        ):
-            new_scenario_fields = scenario_field.copy(deep=True)
-
-            # Renumber the upper class
-            unique_start_id = self.renumber_fk_fields(
-                new_scenario_fields, old_to_new, unique_start_id
-            )
-            # Renumber all children
-            for class_instance in children(new_scenario_fields):
-                unique_start_id = self.renumber_fk_fields(
-                    class_instance, old_to_new, unique_start_id
-                )
-
-            # Update the stage with extra supplied fields
-            if fieldname == "stages":
-                new_scenario_fields.Label = label
-                new_scenario_fields.Notes = notes
-
-            getattr(self, fieldname).append(new_scenario_fields)
-
-        return len(self.stages) - 1, unique_start_id
-
     def add_default_scenario(
-        self, label: str, notes: str, unique_start_id=500
+        self, label: str="Scenario 1", notes: str="", unique_start_id=500
     ) -> Tuple[int, int]:
         """Add a new default (empty) scenario to DGeoFlow."""
 
@@ -866,7 +791,8 @@ class DGeoFlowStructure(BaseModelStructure):
         self.scenarios += [
             Scenario(
                 Id=str(str(unique_start_id + 7)),
-                Label="Scenario 1",
+                Label=label,
+                Notes=notes,
                 GeometryId=str(unique_start_id + 4),
                 SoilLayersId=str(unique_start_id + 1),
                 Calculations=[
