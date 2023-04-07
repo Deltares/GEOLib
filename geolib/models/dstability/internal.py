@@ -15,8 +15,6 @@ from pydantic import ValidationError, conlist, root_validator, validator
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
-from geolib.models.dstability.loads import Consolidation, DStabilityLoad
-from geolib.models.dstability.reinforcements import DStabilityReinforcement
 from geolib.soils import Soil
 from geolib.utils import snake_to_camel
 
@@ -1005,7 +1003,7 @@ class Reinforcements(DStabilitySubStructure):
     Nails: List[PersistableNail] = []
 
     def add_reinforcement(
-        self, reinforcement: DStabilityReinforcement
+        self, reinforcement: "DStabilityReinforcement"
     ) -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
         internal_datastructure = reinforcement._to_internal_datastructure()
         plural_class_name = f"{reinforcement.__class__.__name__}s"
@@ -1131,7 +1129,7 @@ class Loads(DStabilitySubStructure):
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
 
     def add_load(
-        self, load: DStabilityLoad, consolidations: List[Consolidation]
+        self, load: "DStabilityLoad", consolidations: List["Consolidation"]
     ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
         internal_datastructure = load.to_internal_datastructure()
 
