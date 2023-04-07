@@ -53,7 +53,7 @@ class TestDStabilityGeometry:
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
-        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 6
+        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 2
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
@@ -71,16 +71,14 @@ class TestDStabilityGeometry:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
         expected_polygon_coords = [
-            (150.0, -5.0),
-            (150.0, -15.0),
-            (-100, -15.0),
-            (-100.0, -2.0),
-            (-9.0, -2.0),
-            (-1.0, -3.0),
-            (11.0, -3.0),
-            (20.0, -5.0),
+            (70.0, 0.0),
+            (20.0, 0.0),
+            (20.0, 10.0),
+            (30.0, 10.0),
+            (50.0, 10.0),
+            (70.0, 10.0)
         ]
 
-        layer = dstability_model.datastructure.geometries[0].Layers[0]
+        layer = dstability_model.datastructure.geometries[3].Layers[0]
         found_polygon_coords = [(p.X, p.Z) for p in layer.Points]
         assert expected_polygon_coords == found_polygon_coords

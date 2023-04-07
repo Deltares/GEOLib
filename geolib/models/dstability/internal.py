@@ -1988,18 +1988,54 @@ class DStabilityStructure(BaseModelStructure):
             "reinforcements",
             "loads",
             "decorations",
-            "calculationsettings",
             "geometries",
         ]
 
     def get_stage_specific_fields(
-        self, stage=0
+        self, scenario_index=0, stage_index=0
     ) -> Generator[Tuple[str, DStabilitySubStructure], None, None]:
         """Yield stage specific fields for given stage."""
         for fieldname in self.stage_specific_fields:
             field = getattr(self, fieldname)
-            if len(field) > stage:
-                yield fieldname, field[stage]
+
+            stage_index = 0
+            for i, scenario in enumerate(self.scenarios):
+                if i == scenario_index:
+                    scenario_found = True
+                else:
+                    scenario_found = False
+
+                for j, _ in enumerate(scenario.Stages):
+                    if j == stage_index and scenario_found:
+                        yield fieldname, field[stage_index]
+                    
+                    stage_index += 1
+
+    @property
+    def calculation_specific_fields(self):
+        return [
+            "calculationsettings",
+        ]
+
+    def get_calculation_specific_fields(
+        self, scenario=0, calculation=0
+    ) -> Generator[Tuple[str, DStabilitySubStructure], None, None]:
+        """Yield calculation specific fields for given calculation."""
+        for fieldname in self.calculation_specific_fields:
+            field = getattr(self, fieldname)
+
+            calculation_index = 0
+            for i, scenario in enumerate(self.scenarios):
+                if i == scenario:
+                    scenario_found = True
+                else:
+                    scenario_found = False
+
+                for j, calculation in enumerate(scenario.Calculations):
+                    calculation_index += 1
+
+                    if j == calculation and scenario_found:
+                        yield fieldname, field[calculation_index]
 
     def renumber_fk_fields(self, instance, mapping: Dict, unique_id: int) -> int:
         """Replace id (foreign key) fields on instance based on a mapping and unique id."""
@@ -2027,7 +2063,7 @@ class DStabilityStructure(BaseModelStructure):
         return unique_id
 
     def duplicate_stage(
-        self, current_stage: int, label: str, notes: str, unique_start_id: int
+        self, scenario_index: int, stage_to_duplicate: int, label: str, notes: str, unique_start_id: int
     ):
         """Duplicates an existing stage.
         Copies the specific stage fields for a stage and renumbers all Ids,
@@ -2035,25 +2071,56 @@ class DStabilityStructure(BaseModelStructure):
         """
 
         old_to_new = {}
-        for fieldname, stagefield in self.get_stage_specific_fields(current_stage):
-            newstagefield = stagefield.copy(deep=True)
+        for fieldname, stagefield in self.get_stage_specific_fields(scenario_index, stage_to_duplicate):
+            new_stage_field = stagefield.copy(deep=True)
 
             # Renumber the upper class
             unique_start_id = self.renumber_fk_fields(
-                newstagefield, old_to_new, unique_start_id
+                new_stage_field, old_to_new, unique_start_id
             )
             # Renumber all children
-            for classinstance in children(newstagefield):
+            for classinstance in children(new_stage_field):
                 unique_start_id = self.renumber_fk_fields(
                     classinstance, old_to_new, unique_start_id
                 )
 
             # Update the stage with extra supplied fields
             if fieldname == "stages":
-                newstagefield.Label = label
-                newstagefield.Notes = notes
+                new_stage_field.Label = label
+                new_stage_field.Notes = notes
 
-            getattr(self, fieldname).append(newstagefield)
+            getattr(self, fieldname).append(new_stage_field)
+
+        return len(self.scenarios[scenario_index].Stages) - 1, unique_start_id
+    
+    def duplicate_calculation(
+        self, scenario_index: int, calculation_to_duplicate: int, label: str, notes: str, unique_start_id: int
+    ):
+        """Duplicates an existing calculation.
+        Copies the specific calculation fields for a calculation and renumbers all Ids,
+        taking into account foreign keys by using the same renumbering.
+        """
+
+        old_to_new = {}
+        for fieldname, calculationfield in self.get_calculation_specific_fields(scenario_index, calculation_to_duplicate):
+            new_calculation_field = calculationfield.copy(deep=True)
+
+            # Renumber the upper class
+            unique_start_id = self.renumber_fk_fields(
+                new_calculation_field, old_to_new, unique_start_id
+            )
+            # Renumber all children
+            for classinstance in children(new_calculation_field):
+                unique_start_id = self.renumber_fk_fields(
+                    classinstance, old_to_new, unique_start_id
+                )
+
+            # Update the calculation with extra supplied fields
+            if fieldname == "calculations":
+                new_calculation_field.Label = label
+                new_calculation_field.Notes = notes
+
+            getattr(self, fieldname).append(new_calculation_field)
 
         return len(self.scenarios) - 1, unique_start_id
 

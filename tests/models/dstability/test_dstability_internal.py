@@ -21,7 +21,7 @@ class TestDStabilityInternal:
     def test_dstability_fk_validation(self):
         # 1. Set up test model
         test_input_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/example_1/Tutorial.stix")
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
         )
         dm = DStabilityModel(filename=None)
         dm.parse(test_input_filepath)
@@ -31,9 +31,9 @@ class TestDStabilityInternal:
         assert dm is not None
 
         # 3. Unlink a foreign key
-        stage = dm.datastructure.scenarios[0]
+        stage = dm.datastructure.scenarios[0].Stages[0]
         stage.GeometryId = -1
-        dm.datastructure.scenarios[0] = stage
+        dm.datastructure.scenarios[0].Stages[0] = stage
 
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):
@@ -44,16 +44,16 @@ class TestDStabilityInternal:
         fk = ForeignKeys()
         mapping = fk.class_fields
 
-        # Validate "Stage" has 12 Id like fields defined
+        # Validate "Stage" has 9 Id like fields defined
         assert "Stage" in mapping
-        assert len(mapping["Stage"]) == 12
+        assert len(mapping["Stage"]) == 9
 
     @pytest.mark.unittest
     def test_find_subclass_from_children(self):
         # Setup
         dm = DStabilityModel()
         test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_v20_2_1")
+            TestUtils.get_local_test_data_dir("dstability/example_1")
         )
         dm.parse(test_filepath)
 
@@ -72,7 +72,7 @@ class TestDStabilityInternal:
 
         # Setup
         test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_v20_2_1")
+            TestUtils.get_local_test_data_dir("dstability/example_1")
         )
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dstability/"))
@@ -83,7 +83,7 @@ class TestDStabilityInternal:
 
         # Test
         dm.datastructure.duplicate_stage(
-            0, label="Second default", notes="", unique_start_id=500
+            0, 0, label="Second default", notes="", unique_start_id=500
         )
         dm.serialize(test_output_filepath)
 
