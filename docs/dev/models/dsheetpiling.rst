@@ -48,7 +48,7 @@ Geometry
 Output
 ------
 
-The output structure of D-SheetPiling is complex and dependent on the chosen calculation options.
+The output structure of D-Sheet Piling is complex and dependent on the chosen calculation options.
 Since we can't create helper functions that will fit every users need, we show here how you could
 do it yourself, for finding the class :class:`geolib.models.dsheetpiling.internal.MomentsForcesDisplacements`:
 
@@ -57,34 +57,45 @@ Note that the calculation type is a property of the internal D-SheetPiling outpu
 (:attr:`~geolib.models.dsheetpiling.internal.DSheetPilingOutputStructure.calculation_type`).
 In each step it is assumed you'll provide the stage_id, which is just a list index.
 
-    - For Standard, Reliability analysis, Allowable Anchor Force, the MomentsForcesDisplacements can be accessed in the following way:
+    - For Standard, Kranz and Reliability Analysis, the MomentsForcesDisplacements can be accessed in the following way:
 
     .. code-block:: python
 
         datastructure.output.construction_stage[stage_id].moments_forces_displacements
 
 
-    - For Verify Sheet Piling according to CUR Method A the following instances can be used to access the data. In this case the five instances represent the 5 different CUR verification steps:
+    - For Verify Sheet Piling according to CUR or EC7-NL the following instances can be used to access the data. In this case the five instances represent the 5 different CUR verification steps:
 
     .. code-block:: python
 
-        datastructure.output.verify_deformation.construction_stage[stage_id].moments_forces_displacements 
-        datastructure.output.verify_moment_low_angle_of_subgr_reac.construction_stage[stage_id].moments_forces_displacements
-        datastructure.output.verify_moment_high_angle_of_subgr_reac.construction_stage[stage_id].moments_forces_displacements
-        datastructure.output.verify_low_mod_with_alt_passive_waterlevel.construction_stage[stage_id].moments_forces_displacements
-        datastructure.output.verify_high_mod_with_alt_passive_waterlevel.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.verify_step_6____5_serviceability_limit_state.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.verify_step_6____5_multiplied_by_factor.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level.construction_stage[stage_id].moments_forces_displacements
 
 
-    - Similarly for Verify Sheet Piling according to CUR Method B:
+    - Similarly for Verify Sheet Piling according to EC7-BE:
 
     .. code-block:: python
 
+        datastructure.output.verify_deformation_serviceability_limit_state.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.eurocode_belgium_set_1.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.eurocode_belgium_set_2.construction_stage[stage_id].moments_forces_displacements
 
-        datastructure.output.verify_sheetpile_data[stage_id].verify_deformation.construction_stage[-1].moments_forces_displacements 
-        datastructure.output.verify_sheetpile_data[stage_id].verify_moment_low_angle_of_subgr_reac.construction_stage[-1].moments_forces_displacements
-        datastructure.output.verify_sheetpile_data[stage_id].verify_moment_high_angle_of_subgr_reac.construction_stage[-1].moments_forces_displacements
-        datastructure.output.verify_sheetpile_data[stage_id].verify_low_mod_with_alt_passive_waterlevel.construction_stage[-1].moments_forces_displacements
-        datastructure.output.verify_sheetpile_data[stage_id].verify_high_mod_with_alt_passive_waterlevel.construction_stage[-1].moments_forces_displacements
+
+    - Similarly for Verify Sheet Piling according to EC7-General:
+
+    .. code-block:: python
+
+        datastructure.output.verify_deformation_serviceability_limit_state.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.eurocode_1_set_1.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.eurocode_1_set_2.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.eurocode_2.construction_stage[stage_id].moments_forces_displacements
+        datastructure.output.eurocode_3.construction_stage[stage_id].moments_forces_displacements
+
+
 
 Each of the in between datastructures is documented below. It's advised to use these structures instead of just calling .dict(), as your editor
 can help with autocompletion and validation.
@@ -95,9 +106,7 @@ can help with autocompletion and validation.
 .. autoclass:: geolib.models.dsheetpiling.internal.DesignSheetpileLength
 .. autoclass:: geolib.models.dsheetpiling.internal.PointsOnSheetpile
 .. autoclass:: geolib.models.dsheetpiling.internal.BaseVerificationStructureProperties
-.. autoclass:: geolib.models.dsheetpiling.internal.VerifySheetpileData
 .. autoclass:: geolib.models.dsheetpiling.internal.Resume
-.. autoclass:: geolib.models.dsheetpiling.internal.VerifyAnchorForce
 .. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthInfo
 .. autoclass:: geolib.models.dsheetpiling.internal.DesignLengthCalculation
 .. autoclass:: geolib.models.dsheetpiling.internal.SideOutput
