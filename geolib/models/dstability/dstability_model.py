@@ -63,7 +63,9 @@ class DStabilityModel(BaseModel):
     .stix files
     """
 
+    current_scenario: int = -1
     current_stage: int = -1
+    current_calculation: int = -1
     datastructure: DStabilityStructure = DStabilityStructure()
     current_id: int = -1
 
@@ -102,33 +104,40 @@ class DStabilityModel(BaseModel):
 
     @property
     def output(self) -> List[DStabilityResult]:
-        def _get_result_or_none(stage_id) -> DStabilityResult:
-            if self.has_result(stage_id=int(stage_id)):
-                return self.get_result(stage_id=int(stage_id))
+        def _get_result_or_none(scenario_index, calculation_index) -> DStabilityResult:
+            if self.has_result(scenario_index=int(scenario_index), calculation_index=int(calculation_index)):
+                return self.get_result(scenario_index=int(scenario_index), calculation_index=int(calculation_index))
             else:
                 return None
 
-        all_stage_ids = [stage.Id for stage in self.datastructure.scenarios]
-        return [_get_result_or_none(stage_id=stage_id) for stage_id in all_stage_ids]
+        all_results = []
 
-    def has_result(self, stage_id: int) -> bool:
+        for scenario_index, scenario in enumerate(self.datastructure.scenarios):
+            for calculation_index, _ in enumerate(scenario.Calculations):
+                all_results.append(_get_result_or_none(scenario_index=scenario_index, calculation_index=calculation_index))
+        
+        return all_results
+
+    def has_result(self, scenario_index: int, calculation_index: int) -> bool:
         """
-        Returns whether a stage has a result.
+        Returns whether a calculation has a result.
 
         Args:
-            stage_id (int): Id of a stage.
+            scenario_index (int): Id of a scenario.
+            calculation_index (int): Id of a calculation.
 
         Returns:
-            bool: Value indicating whether the stage has a result.
+            bool: Value indicating whether the calculation has a result.
         """
-        return self.datastructure.has_result(stage_id)
+        return self.datastructure.has_result(scenario_index, calculation_index)
 
-    def get_result(self, stage_id: Optional[int] = None) -> DStabilityResult:
+    def get_result(self, scenario_index: Optional[int] = None, calculation_index: Optional[int] = None) -> DStabilityResult:
         """
-        Returns the results of a stage. Calculation results are based on analysis type and calculation type.
+        Returns the results of a calculation. Calculation results are based on analysis type and calculation type.
 
         Args:
-            stage_id (Optional[int]): Id of a stage, if None is supplied the result of the current stage is returned.
+            scenario_id (Optional[int]): Id of a scenario, if None is supplied the result of the current scenario is returned.
+            calculation_id (Optional[int]): Id of a calculation, if None is supplied the result of the current calculation is returned.
 
         Returns:
             DStabilityResult: The analysis results of the stage.
@@ -136,16 +145,18 @@ class DStabilityModel(BaseModel):
         Raises:
             ValueError: No results or calculationsettings available
         """
-        if stage_id is None:
-            stage_id = self.current_stage
+        if calculation_index is None:
+            calculation_index = self.current_calculation
+        if scenario_index is None:
+            scenario_index = self.current_scenario
 
-        result = self._get_result_substructure(stage_id)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result
 
-    def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
-        if self.datastructure.has_result(stage_id):
-            result_id = self.datastructure.scenarios[stage_id].ResultId
-            calculation_settings = self.datastructure.calculationsettings[stage_id]
+    def _get_result_substructure(self, scenario_index: int, calculation_index: int) -> DStabilityResult:
+        if self.datastructure.has_result(scenario_index, calculation_index):
+            result_id = self.datastructure.scenarios[scenario_index].Calculations[calculation_index].ResultId
+            calculation_settings = self._get_calculation_settings(scenario_index, calculation_index)
             analysis_type = calculation_settings.AnalysisType
             calculation_type = calculation_settings.CalculationType
 
@@ -157,42 +168,53 @@ class DStabilityModel(BaseModel):
                 if result.Id == result_id:
                     return result
 
-        raise ValueError(f"No result found for result id {stage_id}")
+        raise ValueError(f"No result found for result id {calculation_index}")
+
+    def _get_calculation_settings(self, scenario_index: int, calculation_index: int):
+        calculation_settings_id = self.datastructure.scenarios[scenario_index].Calculations[calculation_index].CalculationSettingsId
+
+        for calculation_settings in self.datastructure.calculationsettings:
+            if calculation_settings.Id is calculation_settings_id:
+                return calculation_settings
+        
+        raise ValueError(f"No calculation settings found for calculation {calculation_index} in scenario {scenario_index}.")
 
     def get_slipcircle_result(
-        self, stage_id: int
+        self, scenario_index: int, calculation_index: int
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
 
         Args:
-            stage_id (int): stage for which to get the available results
+            scenario_index (int): scenario for which to get the available results
+            calculation_index (int): calculation for which to get the available results
 
         Returns:
-            Dict: dictionary of the available slipcircles per model for the given stage
+            Dict: dictionary of the available slipcircles per model for the given calculation
 
         Raises:
-            ValueError: Result is not available for provided stage id
+            ValueError: Result is not available for provided scenario and calculation index
             AttributeError: When the result has no slipcircle. Try get the slipplane
         """
-        result = self._get_result_substructure(stage_id)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result.get_slipcircle_output()
 
-    def get_slipplane_result(self, stage_id: int = 0) -> SpencerSlipPlaneResult:
+    def get_slipplane_result(self, scenario_index: int, calculation_index: int = 0) -> SpencerSlipPlaneResult:
         """
-        Get the slipplanes of the calculations result of a stage.
+        Get the slipplanes of the calculations result of a calculation.
 
         Args:
-            stage_id (int): stage for which to get the available results
+            scenario_index (int): scenario for which to get the available results
+            calculation_index (int): calculation for which to get the available results
 
         Returns:
-            dict: dictionary of the available slip planes per model for the given stage
+            dict: dictionary of the available slip planes per model for the given calculation
 
         Raises:
-            ValueError: Result is not available for provided stage id
+            ValueError: Result is not available for provided scenario and calculation index
             AttributeError: When the result has no slipplane. Try get the slipcircle
         """
-        result = self._get_result_substructure(stage_id)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result.get_slipplane_output()
 
     def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
@@ -205,26 +227,73 @@ class DStabilityModel(BaseModel):
         if isinstance(location, Path):
             self.filename = location
 
-    def add_stage(self, label: str, notes: str, set_current=True) -> int:
-        """Add a new stage to the model.
+    def add_scenario(self, label: str, notes: str, set_current=True) -> int:
+        """Add a new scenario to the model.
 
         Args:
-            label: Label for the stage
-            notes: Notes for the stage
+            label: Label for the scenario.
+            notes: Notes for the scenario.
+            set_current: Whether to make the new scenario the current scenario.
+
+        Returns:
+            the id of the new stage
+        """
+        new_id = self._get_next_id()
+        new_scenario_id, new_unique_id = self.datastructure.add_default_scenario(
+            label, notes, new_id
+        )
+
+        if set_current:
+            self.current_scenario = new_scenario_id
+            self.current_stage = 0
+            self.current_calculation = 0
+
+        self.current_id = new_unique_id
+        return new_scenario_id
+    
+    def add_stage(self, scenario_index: int, label: str, notes: str, set_current=True) -> int:
+        """Add a new stage to the model at the given scenario index.
+
+        Args:
+            scenario_index: The scenario index to add the stage to.
+            label: Label for the stage.
+            notes: Notes for the stage.
             set_current: Whether to make the new stage the current stage.
 
         Returns:
             the id of the new stage
         """
         new_id = self._get_next_id()
-        new_stage_id, new_unique_id = self.datastructure.add_default_scenario(
-            label, notes, new_id
+        new_stage_id, new_unique_id = self.datastructure.add_default_stage(
+            scenario_index, label, notes, new_id
         )
 
         if set_current:
             self.current_stage = new_stage_id
         self.current_id = new_unique_id
         return new_stage_id
+    
+    def add_calculation(self, scenario_index: int,label: str, notes: str, set_current=True) -> int:
+        """Add a new calculation to the model.
+
+        Args:
+            scenario_index: The scenario index to add the calculation to.
+            label: Label for the calculation.
+            notes: Notes for the calculation.
+            set_current: Whether to make the new calculation the current calculation.
+
+        Returns:
+            the id of the new stage
+        """
+        new_id = self._get_next_id()
+        new_calculation_id, new_unique_id = self.datastructure.add_default_calculation(
+            scenario_index, label, notes, new_id
+        )
+
+        if set_current:
+            self.current_calculation = new_calculation_id
+        self.current_id = new_unique_id
+        return new_calculation_id
 
     def copy_stage(self, label: str, notes: str, set_current=True) -> int:
         """Copy an existing stage and add it to the model.
@@ -308,7 +377,8 @@ class DStabilityModel(BaseModel):
         soil_code: str,
         label: str = "",
         notes: str = "",
-        stage_id: int = None,
+        scenario_index: int = None,
+        stage_index: int = None,
     ) -> int:
         """
         Add a soil layer to the model
@@ -318,18 +388,20 @@ class DStabilityModel(BaseModel):
             soil_code (str): code of the soil for this layer
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
-            stage_id (int): stage to add to, defaults to 0
+            scenario_index (int): scenario to add to, defaults to the current scenario
+            stage_index (int): stage to add to, defaults to the current stage
 
         Returns:
             int: id of the added layer
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = scenario_index if scenario_index is not None else self.current_scenario
+        stage_index = stage_index if stage_index is not None else self.current_stage
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        if not self.datastructure.has_stage(scenario_index=scenario_index, stage_index=stage_index):
+            raise IndexError(f"Scenario {scenario_index} stage {stage_index} is not available")
 
-        geometry = self.datastructure.geometries[stage_id]
-        soillayerscollection = self.datastructure.soillayers[stage_id]
+        geometry = self.datastructure.geometries[stage_index]
+        soillayerscollection = self.datastructure.soillayers[stage_index]
 
         # do we have this soil code?
         if not self.soils.has_soilcode(soil_code):
@@ -354,7 +426,8 @@ class DStabilityModel(BaseModel):
         label: str = "",
         notes: str = "",
         is_phreatic_line: bool = False,
-        stage_id: int = None,
+        scenario_index: int = None,
+        stage_index: int = None,
     ) -> int:
         """
         Add head line to the model
@@ -364,17 +437,19 @@ class DStabilityModel(BaseModel):
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
             is_phreatic_line (bool): set as phreatic line, defaults to False
-            stage_id (int): stage to add to, defaults to current stage
+            scenario_index (int): scenario to add to, defaults to the current scenario
+            stage_index (int): stage to add to, defaults to the current stage
 
         Returns:
             bool: id of the added headline
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = scenario_index if scenario_index is not None else self.current_scenario
+        stage_index = stage_index if stage_index is not None else self.current_stage
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        if not self.datastructure.has_stage(scenario_index=scenario_index,stage_index=stage_index):
+            raise IndexError(f"Scenario {scenario_index} stage {stage_index} is not available")
 
-        waternet = self.waternets[stage_id]
+        waternet = self.waternets[stage_index]
 
         persistable_headline = waternet.add_head_line(
             str(self._get_next_id()), label, notes, points, is_phreatic_line
@@ -674,23 +749,29 @@ class DStabilityModel(BaseModel):
         """
         self.soil_correlations.add_soil_correlation(list_correlated_soil_ids)
 
-    def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
+    def set_model(self, 
+                  analysis_method: DStabilityAnalysisMethod, 
+                  scenario_index: int=None,
+                  stage_index: int=None):
         """Sets the model and applies the given parameters
 
         Args:
             analysis_method (DStabilityAnalysisMethod): A subclass of DStabilityAnalysisMethod.
-            stage_id: Id used to identify the stage to which the analysis method is linked.
+            scenario_index: Id used to identify the stage to which the analysis method is linked.
+            scenario_index (int): scenario to add to, defaults to the current scenario
+            stage_index (int): stage to add to, defaults to the current stage
 
         Raises:
             ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod,
             an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = scenario_index if scenario_index is not None else self.current_scenario
+        stage_index = stage_index if stage_index is not None else self.current_stage
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        if not self.datastructure.has_stage(scenario_index=scenario_index, stage_index=stage_index):
+            raise IndexError(f"Scenario {scenario_index} stage {stage_index} is not available")
 
-        calculationsettings = self.datastructure.calculationsettings[stage_id]
+        calculationsettings = self.datastructure.calculationsettings[stage_index]
 
         _analysis_method_mapping = {
             AnalysisType.BISHOP: calculationsettings.set_bishop,

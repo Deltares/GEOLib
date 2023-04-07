@@ -53,7 +53,7 @@ class TestDStabilityGeometry:
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
-        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 6
+        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 2
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(

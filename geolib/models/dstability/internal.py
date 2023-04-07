@@ -2058,9 +2058,14 @@ class DStabilityStructure(BaseModelStructure):
         return len(self.scenarios) - 1, unique_start_id
 
     def add_default_scenario(
-        self, label: str, notes: str, unique_start_id=500
+        self, label: str, notes: str, unique_start_id: Optional[int]=None
     ) -> Tuple[int, int]:
         """Add a new default (empty) scenario to DStability."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
+
+        scenario_id = unique_start_id + 13
+
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
             WaternetCreatorSettings(Id=str(unique_start_id + 2))
@@ -2076,7 +2081,7 @@ class DStabilityStructure(BaseModelStructure):
         self.geometries += [Geometry(Id=str(unique_start_id + 8))]
         self.scenarios += [
             Scenario(
-                Id=str(unique_start_id+13),
+                Id=str(scenario_id),
                 Label=label,
                 Notes=notes,
                 Stages=[Stage(
@@ -2102,7 +2107,45 @@ class DStabilityStructure(BaseModelStructure):
             )
         ]
 
-        return len(self.scenarios) - 1, unique_start_id + 11
+        return len(self.scenarios) - 1, scenario_id
+    
+    def add_default_stage(
+        self, scenario_index: int, label: str, notes: str, unique_start_id: Optional[int]=None
+    ) -> Tuple[int, int]:
+        """Add a new default (empty) stage to DStability."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
+
+        stage_id = unique_start_id + 13
+
+        self.waternets += [Waternet(Id=str(unique_start_id + 1))]
+        self.waternetcreatorsettings += [
+            WaternetCreatorSettings(Id=str(unique_start_id + 2))
+        ]
+        self.states += [State(Id=str(unique_start_id + 3))]
+        self.statecorrelations += [StateCorrelation(Id=str(unique_start_id + 4))]
+        self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
+        self.soilcorrelation: SoilCorrelation = SoilCorrelation()
+        self.reinforcements += [Reinforcements(Id=str(unique_start_id + 6))]
+        self.loads += [Loads(Id=str(unique_start_id + 7))]
+        self.decorations += [Decorations(Id=str(unique_start_id + 9))]
+        self.geometries += [Geometry(Id=str(unique_start_id + 8))]
+        self.scenarios[scenario_index].Stages += Stage(
+                    Id=str(stage_id),
+                    Label = label,
+                    Notes = notes,
+                    DecorationsId=str(unique_start_id + 9),
+                    GeometryId=str(unique_start_id + 8),
+                    LoadsId=str(unique_start_id + 7),
+                    ReinforcementsId=str(unique_start_id + 6),
+                    SoilLayersId=str(unique_start_id + 5),
+                    StateId=str(unique_start_id + 3),
+                    StateCorrelationsId=str(unique_start_id + 4),
+                    WaternetCreatorSettingsId=str(unique_start_id + 2),
+                    WaternetId=str(unique_start_id + 1)
+                )
+
+        return len(self.scenarios) - 1, stage_id
 
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DStability.
@@ -2127,51 +2170,66 @@ class DStabilityStructure(BaseModelStructure):
     def validator(self):
         return DStabilityValidator(self)
 
-    def has_stage(self, stage_id: int) -> bool:
+    def has_stage(self, scenario_index: int, stage_index: int) -> bool:
         try:
-            self.scenarios[stage_id]
+            self.scenarios[scenario_index].Stages[stage_index]
             return True
         except IndexError:
             return False
 
-    def has_result(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            result_id = self.scenarios[stage_id].ResultId
+    def has_calculation(self, scenario_index: int, calculation_index: int) -> bool:
+        try:
+            self.scenarios[scenario_index].Calculations[calculation_index]
+            return True
+        except IndexError:
+            return False
+
+    def has_scenario(self, scenario_index: int) -> bool:
+        try:
+            self.scenarios[scenario_index]
+            return True
+        except IndexError:
+            return False
+
+
+    def has_result(self, scenario_index: int, calculation_index: int) -> bool:
+        if self.has_calculation(scenario_index, calculation_index):
+            result_id = self.scenarios[scenario_index].Calculations[calculation_index].ResultId
             if result_id is None:
                 return False
             else:
                 return True
         return False
 
-    def has_loads(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            loads_id = self.scenarios[stage_id].LoadsId
+    def has_loads(self, scenario_index: int, stage_index: int) -> bool:
+        if self.has_stage(scenario_index, stage_index):
+            loads_id = self.scenarios[scenario_index].Stages[stage_index].LoadsId
             if loads_id is None:
                 return False
             else:
                 return True
         return False
 
-    def has_soil_layers(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            soil_layers_id = self.scenarios[stage_id].SoilLayersId
+    def has_soil_layers(self, scenario_index: int, stage_index: int) -> bool:
+        if self.has_stage(scenario_index, stage_index):
+            soil_layers_id = self.scenarios[scenario_index].Stages[stage_index].SoilLayersId
             if soil_layers_id is None:
                 return False
             else:
                 return True
         return False
 
-    def has_soil_layer(self, stage_id: int, soil_layer_id: int) -> bool:
-        if self.has_soil_layers(stage_id):
-            for layer in self.soillayers[stage_id].SoilLayers:
+    def has_soil_layer(self, scenario_index: int, stage_index: int, soil_layer_id: int) -> bool:
+        if self.has_soil_layers(scenario_index, stage_index, soil_layer_id):
+            for layer in self.soillayers[stage_index].SoilLayers:
                 if str(soil_layer_id) == layer.LayerId:
                     return True
             return False
         return False
 
-    def has_reinforcements(self, stage_id: int) -> bool:
-        if self.has_stage(stage_id):
-            reinforcements_id = self.scenarios[stage_id].ReinforcementsId
+    def has_reinforcements(self, scenario_index: int, stage_index: int) -> bool:
+        if self.has_stage(scenario_index, stage_index):
+            reinforcements_id = self.scenarios[scenario_index].Stages[stage_index].ReinforcementsId
             if reinforcements_id is None:
                 return False
             else:
