@@ -192,7 +192,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
     )
     bottom_tangent_line_z: float
     number_of_tangent_lines: PositiveInt
-    space_tangent_lines: confloat(gt=0) # type: ignore
+    space_tangent_lines: confloat(gt=0)  # type: ignore
 
     def _to_internal_datastructure(self) -> PersistableBishopBruteForceSettings:
         return PersistableBishopBruteForceSettings(
@@ -224,8 +224,10 @@ class DStabilitySpencerAnalysisMethod(DStabilityAnalysisMethod):
 
     def _to_internal_datastructure(self) -> PersistableSpencerSettings:
         return PersistableSpencerSettings(
-            SlipPlane=[PersistablePoint(X=point.x, Z=point.z) for point in self.slipplane],
-            SlipPlaneConstraints=self.slip_plane_constraints._to_internal_datastructure()
+            SlipPlane=[
+                PersistablePoint(X=point.x, Z=point.z) for point in self.slipplane
+            ],
+            SlipPlaneConstraints=self.slip_plane_constraints._to_internal_datastructure(),
         )
 
 

@@ -141,7 +141,7 @@ class TestDStabilityModel:
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
         "dir_path",
-        [                       
+        [
             pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/EmptyFile", id="Empty File"),
             # pytest.param(

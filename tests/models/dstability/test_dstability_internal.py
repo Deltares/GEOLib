@@ -52,9 +52,7 @@ class TestDStabilityInternal:
     def test_find_subclass_from_children(self):
         # Setup
         dm = DStabilityModel()
-        test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/example_1")
-        )
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
         dm.parse(test_filepath)
 
         # Verify expecations
@@ -71,9 +69,7 @@ class TestDStabilityInternal:
     def test_duplicate_stage(self):
 
         # Setup
-        test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/example_1")
-        )
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dstability/"))
             / "duplicate_stages.stix"

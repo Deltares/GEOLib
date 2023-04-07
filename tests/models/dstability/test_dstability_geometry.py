@@ -76,7 +76,7 @@ class TestDStabilityGeometry:
             (20.0, 10.0),
             (30.0, 10.0),
             (50.0, 10.0),
-            (70.0, 10.0)
+            (70.0, 10.0),
         ]
 
         layer = dstability_model.datastructure.geometries[3].Layers[0]

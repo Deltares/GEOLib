@@ -50,7 +50,9 @@ class TestDStabilityModel:  # TODO move to test_dsettlementmodel
         reinforcement = NotaDStabilityReinforcement()
 
         with pytest.raises(ValueError):
-            dstability_model.add_reinforcement(reinforcement=reinforcement, scenario_index=0, stage_index=0)
+            dstability_model.add_reinforcement(
+                reinforcement=reinforcement, scenario_index=0, stage_index=0
+            )
 
 
 class TestForbiddenLine:
@@ -78,7 +80,9 @@ class TestForbiddenLine:
         forbiddenline = _get_forbidden_line
 
         with pytest.raises(ValueError):
-            dstability_model.add_reinforcement(reinforcement=forbiddenline, scenario_index=0, stage_index=100)
+            dstability_model.add_reinforcement(
+                reinforcement=forbiddenline, scenario_index=0, stage_index=100
+            )
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
@@ -94,7 +98,9 @@ class TestForbiddenLine:
 
         forbiddenline = _get_forbidden_line
 
-        dstability_model.add_reinforcement(reinforcement=forbiddenline, scenario_index=0, stage_index=stage_index)
+        dstability_model.add_reinforcement(
+            reinforcement=forbiddenline, scenario_index=0, stage_index=stage_index
+        )
 
         forbidden_lines_datastructure = dstability_model.datastructure.reinforcements[
             stage_index
@@ -160,7 +166,9 @@ class TestGeotextile:
         geotextile = _get_geotextile
         geotextile.label = "geotextile1"
 
-        dstability_model.add_reinforcement(reinforcement=geotextile, stage_index=stage_index)
+        dstability_model.add_reinforcement(
+            reinforcement=geotextile, stage_index=stage_index
+        )
 
         geotextiles_datastructure = dstability_model.datastructure.reinforcements[
             stage_index
@@ -234,7 +242,9 @@ class TestNail:
         stage_index = stage_index or 0
         nail = _get_nail
 
-        dstability_model.add_reinforcement(reinforcement=nail, scenario_index=0, stage_index=stage_index)
+        dstability_model.add_reinforcement(
+            reinforcement=nail, scenario_index=0, stage_index=stage_index
+        )
 
         nails_datastructure = dstability_model.datastructure.reinforcements[
             stage_index

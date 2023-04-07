@@ -14,11 +14,11 @@ from geolib.models.dstability.internal import (
     PersistableCalculation,
     PersistableCircle,
     PersistablePoint,
+    Scenario,
     SpencerGeneticAlgorithmResult,
     SpencerReliabilityResult,
     SpencerResult,
     SpencerSlipPlaneResult,
-    Scenario,
     UpliftVanParticleSwarmResult,
     UpliftVanReliabilityResult,
     UpliftVanResult,
@@ -184,14 +184,21 @@ def _get_dstability_model():
         test_cases
     ):
         calculation_id = str(i)
-        result_id = str(
-            100 + i
+        result_id = str(100 + i)
+        calculation_settings_id = str(200 + i)
+        model.datastructure.scenarios[0].Calculations.append(
+            PersistableCalculation(
+                Id=calculation_id,
+                CalculationSettingsId=calculation_settings_id,
+                ResultId=result_id,
+            )
         )
-        calculation_settings_id = str(
-            200 + i
-        )
-        model.datastructure.scenarios[0].Calculations.append(PersistableCalculation(Id=calculation_id, CalculationSettingsId=calculation_settings_id, ResultId=result_id))
-        model.datastructure.calculationsettings.append(CalculationSettings(Id=calculation_settings_id, AnalysisType=analysis_type, CalculationType=calculation_type)
+        model.datastructure.calculationsettings.append(
+            CalculationSettings(
+                Id=calculation_settings_id,
+                AnalysisType=analysis_type,
+                CalculationType=calculation_type,
+            )
         )
         getattr(model.datastructure, result_attribute).append(
             result_class(result_id=result_id)
@@ -207,7 +214,9 @@ class TestDStabilityResults:
 
         amount_of_calculations = len(model.datastructure.scenarios[0].Calculations)
         with pytest.raises(ValueError):
-            model.get_result(scenario_index=0, calculation_index=amount_of_calculations + 1)
+            model.get_result(
+                scenario_index=0, calculation_index=amount_of_calculations + 1
+            )
 
     @pytest.mark.unittest
     def test_get_result(self, _get_dstability_model):
@@ -237,7 +246,9 @@ class TestDStabilityResults:
 
         for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
 
-            result_substructure = model._get_result_substructure(scenario_index=0, calculation_index=i)
+            result_substructure = model._get_result_substructure(
+                scenario_index=0, calculation_index=i
+            )
 
             if isinstance(
                 result_substructure,
@@ -246,7 +257,9 @@ class TestDStabilityResults:
                 with pytest.raises(AttributeError):
                     model.get_slipcircle_result(scenario_index=0, calculation_index=i)
             else:
-                slipplane_result = model.get_slipcircle_result(scenario_index=0, calculation_index=i)
+                slipplane_result = model.get_slipcircle_result(
+                    scenario_index=0, calculation_index=i
+                )
 
                 assert isinstance(
                     slipplane_result, (BishopSlipCircleResult, UpliftVanSlipCircleResult)
@@ -258,7 +271,9 @@ class TestDStabilityResults:
 
         for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
 
-            result_substructure = model._get_result_substructure(scenario_index=0, calculation_index=i)
+            result_substructure = model._get_result_substructure(
+                scenario_index=0, calculation_index=i
+            )
 
             if not isinstance(
                 result_substructure,
@@ -267,7 +282,9 @@ class TestDStabilityResults:
                 with pytest.raises(AttributeError):
                     model.get_slipplane_result(scenario_index=0, calculation_index=i)
             else:
-                slipplane_result = model.get_slipplane_result(scenario_index=0, calculation_index=i)
+                slipplane_result = model.get_slipplane_result(
+                    scenario_index=0, calculation_index=i
+                )
 
                 assert isinstance(slipplane_result, SpencerSlipPlaneResult)
 
@@ -275,7 +292,9 @@ class TestDStabilityResults:
     def test_output_isinstance_list(self, _get_dstability_model: DStabilityModel):
         model = _get_dstability_model
 
-        model.datastructure.scenarios[0].Calculations.append(PersistableCalculation(Id="200", ResultId=None))
+        model.datastructure.scenarios[0].Calculations.append(
+            PersistableCalculation(Id="200", ResultId=None)
+        )
 
         output = model.output
         assert isinstance(output, list)
@@ -287,7 +306,9 @@ class TestDStabilityResults:
         assert output[9] is None
 
     @pytest.mark.unittest
-    def test_get_result_with_none_is_current_calculation_result(self, _get_dstability_model: DStabilityModel):
+    def test_get_result_with_none_is_current_calculation_result(
+        self, _get_dstability_model: DStabilityModel
+    ):
         model = _get_dstability_model
         model.current_scenario = 0
         model.current_calculation = 2
@@ -296,7 +317,9 @@ class TestDStabilityResults:
         assert isinstance(output, UpliftVanParticleSwarmResult)
 
     @pytest.mark.unittest
-    def test_get_result_with_id_is_expected_spencer_result(self, _get_dstability_model: DStabilityModel):
+    def test_get_result_with_id_is_expected_spencer_result(
+        self, _get_dstability_model: DStabilityModel
+    ):
         model = _get_dstability_model
         output = model.get_result(0, 3)
         assert isinstance(output, SpencerResult)

@@ -118,7 +118,6 @@ class DiaphragmModelType(BaseModelType):
     elastic_calculation: bool = False
     diepwand_calculation: bool = True
 
-
     @property
     def model(self) -> ModelType:
         return ModelType.SHEET_PILING
@@ -414,7 +413,7 @@ class DSheetPilingModel(BaseModel):
             stage_id: Load is added to this stage.
 
         Note: SoilDisplacement and UniformLoad are only valid for a sheetpiling construction.
-        
+
         Raises:
             ValueError: When non-existing stage_id is passed.
             ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.

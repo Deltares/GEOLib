@@ -134,10 +134,7 @@ class TestDStabilityStates:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
 
-        points = [
-            Point(x=20.0, z=0.0),
-            Point(x=70.0, z=0.0)
-        ]
+        points = [Point(x=20.0, z=0.0), Point(x=70.0, z=0.0)]
 
         state_line_point = DStabilityStateLinePoint(
             id=54,
@@ -151,6 +148,4 @@ class TestDStabilityStates:
             Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
             Values=[state_line_point._to_internal_datastructure()],
         )
-        assert (
-            dstability_model._get_state(2, 0).StateLines[0] == expected_state_line
-        )
+        assert dstability_model._get_state(2, 0).StateLines[0] == expected_state_line

@@ -533,7 +533,7 @@ class Soil(SoilBaseModel):
             "Id": self.id,
             "Name": self.name,
             "Code": self.code,
-            "MohrCoulombAdvancedShearStrengthModel" : {
+            "MohrCoulombAdvancedShearStrengthModel": {
                 "Cohesion": self.mohr_coulomb_parameters.cohesion.mean,
                 "CohesionStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.cohesion
@@ -548,7 +548,7 @@ class Soil(SoilBaseModel):
                     self.mohr_coulomb_parameters.dilatancy_angle
                 ),
             },
-            "ShansepShearStrengthModel" : {
+            "ShansepShearStrengthModel": {
                 "ShearStrengthRatio": self.undrained_parameters.shear_strength_ratio.mean,
                 "ShearStrengthRatioStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.undrained_parameters.shear_strength_ratio

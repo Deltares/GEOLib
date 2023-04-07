@@ -204,9 +204,9 @@ class TestDStabilityAnalysis:
                 Point(x=25.0, z=7.54),
             ],
             slip_plane_constraints=DStabilityGeneticSlipPlaneConstraints(
-            minimum_angle_between_slices=120.0,
-            minimum_thrust_line_percentage_inside_slices=80.0
-            )
+                minimum_angle_between_slices=120.0,
+                minimum_thrust_line_percentage_inside_slices=80.0,
+            ),
         )
         assert (
             dstability_model.datastructure.calculationsettings[0].Spencer
