@@ -190,7 +190,7 @@ class TestDStabilityModel:
             assert dm.execute()
 
     @pytest.mark.integrationtest
-    def test_add_default_stage(self):
+    def test_add_stage(self):
         # Setup
         dm = DStabilityModel()
         dm.add_layer(
@@ -206,9 +206,50 @@ class TestDStabilityModel:
         # Test
         new_stage_id = dm.add_stage(0, "new stage")
 
-        # Assert new stage has default (empty geometry)
+        # Assert new stage has default values (empty geometry)
         assert new_stage_id == 1
+
+        assert dm.scenarios[0].Stages != None
         assert len(dm.scenarios[0].Stages) == 2
+        assert len(dm.datastructure.geometries[-1].Layers) == 0
+
+    @pytest.mark.integrationtest
+    def test_add_calculation(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.datastructure.calculationsettings[-1].AnalysisType = AnalysisTypeEnum.SPENCER_GENETIC
+
+        # Test
+        new_stage_id = dm.add_calculation(0, "new stage")
+
+        # Assert new stage has default values (empty geometry)
+        assert new_stage_id == 1
+
+        assert dm.scenarios[0].Calculations != None
+        assert len(dm.scenarios[0].Calculations) == 2
+        assert dm.datastructure.calculationsettings[-1].AnalysisType == AnalysisTypeEnum.BISHOP_BRUTE_FORCE
+
+    @pytest.mark.integrationtest
+    def test_add_scenario(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        # Test
+        new_scenario_id = dm.add_scenario("new scenario")
+
+        # Assert new scenario has default values (empty geometry)
+        assert new_scenario_id == 1
+
+        assert len(dm.scenarios) == 2
         assert len(dm.datastructure.geometries[-1].Layers) == 0
 
     @pytest.mark.unittest

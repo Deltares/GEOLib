@@ -332,7 +332,7 @@ class DStabilityModel(BaseModel):
         if isinstance(location, Path):
             self.filename = location
 
-    def add_scenario(self, label: str, notes: str, set_current=True) -> int:
+    def add_scenario(self, label: str = "Scenario", notes: str = "", set_current: bool = True) -> int:
         """Add a new scenario to the model.
 
         Args:
@@ -381,7 +381,7 @@ class DStabilityModel(BaseModel):
         return new_stage_index
 
     def add_calculation(
-        self, scenario_index: int, label: str, notes: str, set_current=True
+        self, scenario_index: int, label: str = "Calculation", notes: str = "", set_current: bool = True
     ) -> int:
         """Add a new calculation to the model.
 
@@ -418,12 +418,14 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added soil
         """
+        if soil.code == None:
+            raise ValueError("Soil.code may not be None")
         if self.soils.has_soil_code(soil.code):
             raise ValueError(f"The soil with code {soil.code} is already defined.")
 
-        soil.id = self._get_next_id()
+        soil.id = str(self._get_next_id())
         dstability_soil = self.soils.add_soil(soil)
-        return dstability_soil.Id
+        return int(dstability_soil.Id)
 
     @property
     def points(self):

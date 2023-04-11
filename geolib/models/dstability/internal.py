@@ -107,7 +107,7 @@ class Waternet(DStabilitySubStructure):
 
     Id: Optional[str]
     ContentVersion: Optional[str] = "1"
-    PhreaticLineId: Optional[str]
+    PhreaticLineId: Optional[str] = None
     HeadLines: List[PersistableHeadLine] = []
     ReferenceLines: List[PersistableReferenceLine] = []
     UnitWeightWater: Optional[float] = 9.81
@@ -203,8 +203,8 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     """waternetcreatorsettings/waternetcreatorsettings_x.json"""
 
     AdjustForUplift: Optional[bool] = False
-    AquiferInsideAquitardLayerId: Optional[str]
-    AquiferLayerId: Optional[str]
+    AquiferInsideAquitardLayerId: Optional[str] = None
+    AquiferLayerId: Optional[str] = None
     AquiferLayerInsideAquitardLeakageLengthInwards: Optional[Union[float, str]] = "NaN"
     AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[Union[float, str]] = "NaN"
     AquitardHeadLandSide: Optional[Union[float, str]] = "NaN"
@@ -2050,9 +2050,44 @@ class DStabilityStructure(BaseModelStructure):
             WaternetCreatorSettingsId=str(unique_start_id + 2),
             WaternetId=str(unique_start_id + 1),
         )
-        self.scenarios[scenario_index].Stages.append(new_stage)
 
-        return len(self.scenarios[scenario_index].Stages) - 1, stage_id
+        scenario = self.scenarios[scenario_index]
+        
+        if scenario.Stages is None:
+            scenario.Stages = []
+
+        scenario.Stages.append(new_stage)
+        return len(scenario.Stages) - 1, stage_id
+    
+    def add_default_calculation(
+        self,
+        scenario_index: int,
+        label: str,
+        notes: str,
+        unique_start_id: Optional[int] = None,
+    ) -> Tuple[int, int]:
+        """Add a new default (empty) calculation to DStability."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
+
+        calculation_id = unique_start_id + 13
+
+        self.calculationsettings += [CalculationSettings(Id=str(unique_start_id + 1))]
+
+        new_calculation = PersistableCalculation(
+            Id=str(calculation_id),
+            Label=label,
+            Notes=notes,
+            CalculationSettingsId=str(unique_start_id + 1)
+        )
+
+        scenario = self.scenarios[scenario_index]
+
+        if scenario.Calculations is None:
+            scenario.Calculations = []
+
+        scenario.Calculations.append(new_calculation)
+        return len(scenario.Calculations) - 1, calculation_id
 
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DStability.
@@ -2079,14 +2114,24 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_stage(self, scenario_index: int, stage_index: int) -> bool:
         try:
-            self.scenarios[scenario_index].Stages[stage_index]
+            scenario = self.scenarios[scenario_index]
+
+            if scenario.Stages is None:
+                return False
+            
+            scenario.Stages[stage_index]
             return True
         except IndexError:
             return False
 
     def has_calculation(self, scenario_index: int, calculation_index: int) -> bool:
         try:
-            self.scenarios[scenario_index].Calculations[calculation_index]
+            scenario = self.scenarios[scenario_index]
+
+            if scenario.Calculations is None:
+                return False
+            
+            scenario.Calculations[calculation_index]
             return True
         except IndexError:
             return False
@@ -2100,8 +2145,13 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_result(self, scenario_index: int, calculation_index: int) -> bool:
         if self.has_calculation(scenario_index, calculation_index):
+            scenario = self.scenarios[scenario_index]
+
+            if scenario.Calculations is None:
+                return False
+            
             result_id = (
-                self.scenarios[scenario_index].Calculations[calculation_index].ResultId
+                scenario.Calculations[calculation_index].ResultId
             )
             if result_id is None:
                 return False
@@ -2111,7 +2161,12 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_loads(self, scenario_index: int, stage_index: int) -> bool:
         if self.has_stage(scenario_index, stage_index):
-            loads_id = self.scenarios[scenario_index].Stages[stage_index].LoadsId
+            scenario = self.scenarios[scenario_index]
+
+            if scenario.Stages is None:
+                return False
+            
+            loads_id = scenario.Stages[stage_index].LoadsId
             if loads_id is None:
                 return False
             else:
@@ -2120,8 +2175,13 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_soil_layers(self, scenario_index: int, stage_index: int) -> bool:
         if self.has_stage(scenario_index, stage_index):
+            scenario = self.scenarios[scenario_index]
+
+            if scenario.Stages is None:
+                return False
+            
             soil_layers_id = (
-                self.scenarios[scenario_index].Stages[stage_index].SoilLayersId
+                scenario.Stages[stage_index].SoilLayersId
             )
             if soil_layers_id is None:
                 return False
@@ -2141,8 +2201,13 @@ class DStabilityStructure(BaseModelStructure):
 
     def has_reinforcements(self, scenario_index: int, stage_index: int) -> bool:
         if self.has_stage(scenario_index, stage_index):
+            scenario = self.scenarios[scenario_index]
+
+            if scenario.Stages is None:
+                return False
+            
             reinforcements_id = (
-                self.scenarios[scenario_index].Stages[stage_index].ReinforcementsId
+                scenario.Stages[stage_index].ReinforcementsId
             )
             if reinforcements_id is None:
                 return False
