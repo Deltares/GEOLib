@@ -357,12 +357,12 @@ class DStabilityModel(BaseModel):
         return new_scenario_id
 
     def add_stage(
-        self, scenario_index: int, label: str = "Stage", notes: str = "", set_current=True
+        self, scenario_index: Optional[int] = None, label: str = "Stage", notes: str = "", set_current=True
     ) -> int:
         """Add a new stage to the model at the given scenario index.
 
         Args:
-            scenario_index: The scenario index to add the stage to.
+            scenario_index: The scenario index to add the stage to, defaults to the current scenario.
             label: Label for the stage.
             notes: Notes for the stage.
             set_current: Whether to make the new stage the current stage.
@@ -370,6 +370,10 @@ class DStabilityModel(BaseModel):
         Returns:
             the id of the new stage
         """
+        scenario_index = (
+            scenario_index if scenario_index is not None else self.current_scenario
+        )
+
         new_id = self._get_next_id()
         new_stage_index, new_unique_id = self.datastructure.add_default_stage(
             scenario_index, label, notes, new_id
@@ -381,12 +385,12 @@ class DStabilityModel(BaseModel):
         return new_stage_index
 
     def add_calculation(
-        self, scenario_index: int, label: str = "Calculation", notes: str = "", set_current: bool = True
+        self, scenario_index: Optional[int] = None, label: str = "Calculation", notes: str = "", set_current: bool = True
     ) -> int:
         """Add a new calculation to the model.
 
         Args:
-            scenario_index: The scenario index to add the calculation to.
+            scenario_index: The scenario index to add the calculation to, defaults to the current scenario.
             label: Label for the calculation.
             notes: Notes for the calculation.
             set_current: Whether to make the new calculation the current calculation.
@@ -394,6 +398,10 @@ class DStabilityModel(BaseModel):
         Returns:
             the id of the new stage
         """
+        scenario_index = (
+            scenario_index if scenario_index is not None else self.current_scenario
+        )
+
         new_id = self._get_next_id()
         new_calculation_id, new_unique_id = self.datastructure.add_default_calculation(
             scenario_index, label, notes, new_id

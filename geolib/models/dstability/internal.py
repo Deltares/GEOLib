@@ -1914,43 +1914,36 @@ class DStabilityStructure(BaseModelStructure):
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
-        """TODO Include more fk relations, left for another issue."""
-        stage_count = 0
-        calculation_count = 0
+
+        def list_has_id(values, id):
+            for entry in values:
+                if entry.Id == id:
+                    return True
+            return False
+
         for _, scenario in enumerate(values.get("scenarios")):
             for _, stage in enumerate(scenario.Stages):
-                if stage.DecorationsId != values.get("decorations")[stage_count].Id:
+                if not list_has_id(values.get("decorations"), stage.DecorationsId):
                     raise ValueError("DecorationsIds not linked!")
-                if stage.GeometryId != values.get("geometries")[stage_count].Id:
+                if not list_has_id(values.get("geometries"), stage.GeometryId):
                     raise ValueError("GeometryIds not linked!")
-                if stage.LoadsId != values.get("loads")[stage_count].Id:
+                if not list_has_id(values.get("loads"), stage.LoadsId):
                     raise ValueError("LoadsIds not linked!")
-                if stage.ReinforcementsId != values.get("reinforcements")[stage_count].Id:
+                if not list_has_id(values.get("reinforcements"), stage.ReinforcementsId):
                     raise ValueError("ReinforcementsIds not linked!")
-                if stage.SoilLayersId != values.get("soillayers")[stage_count].Id:
+                if not list_has_id(values.get("soillayers"), stage.SoilLayersId):
                     raise ValueError("SoilLayersIds not linked!")
-                if stage.StateId != values.get("states")[stage_count].Id:
+                if not list_has_id(values.get("states"), stage.StateId):
                     raise ValueError("StateIds not linked!")
-                if (
-                    stage.StateCorrelationsId
-                    != values.get("statecorrelations")[stage_count].Id
-                ):
+                if not list_has_id(values.get("statecorrelations"), stage.StateCorrelationsId):
                     raise ValueError("StateCorrelationsIds not linked!")
-                if (
-                    stage.WaternetCreatorSettingsId
-                    != values.get("waternetcreatorsettings")[stage_count].Id
-                ):
+                if not list_has_id(values.get("waternetcreatorsettings"), stage.WaternetCreatorSettingsId):
                     raise ValueError("WaternetCreatorSettingsIds not linked!")
-                if stage.WaternetId != values.get("waternets")[stage_count].Id:
+                if not list_has_id(values.get("waternets"), stage.WaternetId):
                     raise ValueError("WaternetIds not linked!")
-                stage_count += 1
             for _, calculation in enumerate(scenario.Calculations):
-                if (
-                    calculation.CalculationSettingsId
-                    != values.get("calculationsettings")[calculation_count].Id
-                ):
+                if not list_has_id(values.get("calculationsettings"), calculation.CalculationSettingsId):
                     raise ValueError("CalculationSettingsIds not linked!")
-                calculation_count += 1
 
         return values
 
@@ -1984,8 +1977,8 @@ class DStabilityStructure(BaseModelStructure):
                 Stages=[
                     Stage(
                         Id=str(unique_start_id + 11),
-                        Label=label,
-                        Notes=notes,
+                        Label="Stage 1",
+                        Notes="",
                         DecorationsId=str(unique_start_id + 9),
                         GeometryId=str(unique_start_id + 8),
                         LoadsId=str(unique_start_id + 7),
@@ -2000,8 +1993,8 @@ class DStabilityStructure(BaseModelStructure):
                 Calculations=[
                     PersistableCalculation(
                         Id=str(unique_start_id + 12),
-                        Label=label,
-                        Notes=notes,
+                        Label="Calculation 1",
+                        Notes="",
                         CalculationSettingsId=str(unique_start_id + 10),
                     )
                 ],

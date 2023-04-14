@@ -190,6 +190,37 @@ class TestDStabilityModel:
             assert dm.execute()
 
     @pytest.mark.integrationtest
+    def test_add_multiple_stages_and_calculations(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        dm.add_scenario("New Scenario", "From GEOLib", set_current=True)
+
+        dm.add_stage(label="New Stage 1", set_current=True)
+        dm.add_calculation(label="New Calculation 1", set_current=True)
+
+        dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
+        dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+
+        dm.add_stage(scenario_index=1, label="New Stage 3", set_current=True)
+        dm.add_calculation(scenario_index=1, label="New Calculation 3", set_current=True)
+
+        assert len(dm.scenarios) == 2
+        assert len(dm.scenarios[0].Stages) == 2
+        assert len(dm.scenarios[0].Calculations) == 2
+        assert len(dm.scenarios[1].Stages) == 3
+        assert len(dm.scenarios[1].Calculations) == 3
+
+    @pytest.mark.integrationtest
     def test_add_stage(self):
         # Setup
         dm = DStabilityModel()
