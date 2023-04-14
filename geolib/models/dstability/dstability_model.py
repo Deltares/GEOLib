@@ -413,14 +413,14 @@ class DStabilityModel(BaseModel):
         )
 
         new_id = self._get_next_id()
-        new_calculation_id, new_unique_id = self.datastructure.add_default_calculation(
+        new_calculation_index, new_unique_id = self.datastructure.add_default_calculation(
             scenario_index, label, notes, new_id
         )
 
         if set_current:
-            self.current_calculation = new_calculation_id
+            self.current_calculation = new_calculation_index
         self.current_id = new_unique_id
-        return new_calculation_id
+        return new_calculation_index
 
     @property
     def scenarios(self) -> List[Scenario]:

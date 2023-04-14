@@ -776,41 +776,110 @@ class DGeoFlowStructure(BaseModelStructure):
                 raise ValueError("SoilLayersIds not linked!")
         return values
 
+    @root_validator(skip_on_failure=True, allow_reuse=True)
+    def ensure_validity_foreign_keys(cls, values):
+        def list_has_id(values, id):
+            for entry in values:
+                if entry.Id == id:
+                    return True
+            return False
+
+        for _, scenario in enumerate(values.get("scenarios")):
+            for _, stage in enumerate(scenario.Stages):
+                if not list_has_id(
+                    values.get("boundary_conditions"), stage.BoundaryConditionCollectionId
+                ):
+                    raise ValueError("BoundaryConditionCollectionIds not linked!")
+
+            if not list_has_id(values.get("geometries"), scenario.GeometryId):
+                raise ValueError("GeometryIds not linked!")
+            if not list_has_id(values.get("soillayers"), scenario.SoilLayersId):
+                raise ValueError("SoilLayersIds not linked!")
+
+        return values
+
     def add_default_scenario(
-        self, label: str = "Scenario 1", notes: str = "", unique_start_id=500
+        self, label: str, notes: str, unique_start_id: Optional[int] = None
     ) -> Tuple[int, int]:
         """Add a new default (empty) scenario to DGeoFlow."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
 
+        scenario_id = unique_start_id + 7
         self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 1))]
         self.mesh_properties += [MeshProperty(Id=str(unique_start_id + 2))]
-        self.geometries += [Geometry(Id=str(unique_start_id + 4))]
+        self.geometries += [Geometry(Id=str(unique_start_id + 3))]
         self.boundary_conditions += [
-            BoundaryConditionCollection(Id=str(unique_start_id + 5))
+            BoundaryConditionCollection(Id=str(unique_start_id + 4))
         ]
 
         self.scenarios += [
             Scenario(
-                Id=str(str(unique_start_id + 7)),
+                Id=str(scenario_id),
                 Label=label,
                 Notes=notes,
-                GeometryId=str(unique_start_id + 4),
+                GeometryId=str(unique_start_id + 3),
                 SoilLayersId=str(unique_start_id + 1),
-                Calculations=[
-                    PersistableCalculation(
-                        Id=str(unique_start_id + 6), Label="Calculation 1"
-                    )
-                ],
+                Calculations=[PersistableCalculation(Label="Calculation 1")],
                 Stages=[
                     PersistableStage(
-                        Id=str(unique_start_id + 6),
                         Label="Stage 1",
-                        BoundaryConditionCollectionId=str(unique_start_id + 5),
+                        BoundaryConditionCollectionId=str(unique_start_id + 4),
                     )
                 ],
             )
         ]
 
-        return len(self.scenarios) - 1, unique_start_id + 11
+        return len(self.scenarios) - 1, scenario_id
+
+    def add_default_stage(
+        self,
+        scenario_index: int,
+        label: str,
+        notes: str,
+        unique_start_id: Optional[int] = None,
+    ) -> int:
+        """Add a new default (empty) stage to DStability."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
+
+        self.boundary_conditions += [
+            BoundaryConditionCollection(Id=str(unique_start_id + 1))
+        ]
+
+        new_stage = PersistableStage(
+            Label=label,
+            Notes=notes,
+            BoundaryConditionCollectionId=str(unique_start_id + 1),
+        )
+
+        scenario = self.scenarios[scenario_index]
+
+        if scenario.Stages is None:
+            scenario.Stages = []
+
+        scenario.Stages.append(new_stage)
+        return len(scenario.Stages) - 1
+
+    def add_default_calculation(
+        self,
+        scenario_index: int,
+        label: str,
+        notes: str,
+    ) -> int:
+        """Add a new default (empty) calculation to DStability."""
+
+        new_calculation = PersistableCalculation(
+            Label=label, Notes=notes, CalculationType=CalculationTypeEnum.GROUNDWATER_FLOW
+        )
+
+        scenario = self.scenarios[scenario_index]
+
+        if scenario.Calculations is None:
+            scenario.Calculations = []
+
+        scenario.Calculations.append(new_calculation)
+        return len(scenario.Calculations) - 1
 
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DGeoFlow.

@@ -378,3 +378,94 @@ class TestDGeoFlowModel:
         assert dm.datastructure.critical_head_results[0].Elements[10].NodeResults[0].TotalPorePressure == 208.968  # type: ignore
         assert dm.datastructure.critical_head_results[0].PipeLength == 29.0
         assert dm.datastructure.critical_head_results[0].CriticalHead == 17.5
+
+    @pytest.mark.integrationtest
+    def test_add_multiple_stages_and_calculations(self):
+        # Setup
+        dm = DGeoFlowModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        dm.add_scenario("New Scenario", "From GEOLib", set_current=True)
+
+        dm.add_stage(label="New Stage 1", set_current=True)
+        dm.add_calculation(label="New Calculation 1", set_current=True)
+
+        dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
+        dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+
+        dm.add_stage(scenario_index=1, label="New Stage 3", set_current=True)
+        dm.add_calculation(scenario_index=1, label="New Calculation 3", set_current=True)
+
+        assert len(dm.scenarios) == 2
+        assert len(dm.scenarios[0].Stages) == 2
+        assert len(dm.scenarios[0].Calculations) == 2
+        assert len(dm.scenarios[1].Stages) == 3
+        assert len(dm.scenarios[1].Calculations) == 3
+
+    @pytest.mark.integrationtest
+    def test_add_stage(self):
+        # Setup
+        dm = DGeoFlowModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        # Test
+        new_stage_id = dm.add_stage(0, "new stage")
+
+        # Assert new stage has default values (empty geometry)
+        assert new_stage_id == 1
+
+        assert dm.scenarios[0].Stages != None
+        assert len(dm.scenarios[0].Stages) == 2
+
+    @pytest.mark.integrationtest
+    def test_add_calculation(self):
+        # Setup
+        dm = DGeoFlowModel()
+
+        # Test
+        new_stage_id = dm.add_calculation(0, "new stage")
+
+        # Assert new stage has default values (empty geometry)
+        assert new_stage_id == 1
+
+        assert dm.scenarios[0].Calculations != None
+        assert len(dm.scenarios[0].Calculations) == 2
+
+    @pytest.mark.integrationtest
+    def test_add_scenario(self):
+        # Setup
+        dm = DGeoFlowModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        # Test
+        new_scenario_id = dm.add_scenario("new scenario")
+
+        # Assert new scenario has default values (empty geometry)
+        assert new_scenario_id == 1
+
+        assert len(dm.scenarios) == 2
+        assert len(dm.datastructure.geometries[-1].Layers) == 0
