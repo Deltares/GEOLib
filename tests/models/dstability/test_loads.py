@@ -314,7 +314,9 @@ class TestDStabilityModelAddLoad:
         soil_layer_id = 15
         soil_layers_id = 20
 
-        dstability_model.datastructure.scenarios[0].Stages[stage_id].LoadsId = str(loads_id)
+        dstability_model.datastructure.scenarios[0].Stages[stage_id].LoadsId = str(
+            loads_id
+        )
         dstability_model.datastructure.scenarios[0].Stages[stage_id].SoilLayersId = str(
             soil_layers_id
         )
@@ -366,7 +368,9 @@ class TestDStabilityModelAddSoilLayerConsolidations:
         soil_layer_id_b = 16
         soil_layers_id = 20
 
-        dstability_model.datastructure.scenarios[0].Stages[stage_id].LoadsId = str(loads_id)
+        dstability_model.datastructure.scenarios[0].Stages[stage_id].LoadsId = str(
+            loads_id
+        )
         dstability_model.datastructure.scenarios[0].Stages[stage_id].SoilLayersId = str(
             soil_layers_id
         )

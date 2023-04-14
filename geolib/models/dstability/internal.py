@@ -881,7 +881,7 @@ class SoilCollection(DStabilitySubStructure):
                 return persistable_soil
 
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
-    
+
     def get_soil_by_name(self, name: str) -> PersistableSoil:
         """
         Get soil by the given name.
@@ -1914,7 +1914,6 @@ class DStabilityStructure(BaseModelStructure):
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
-
         def list_has_id(values, id):
             for entry in values:
                 if entry.Id == id:
@@ -1935,14 +1934,20 @@ class DStabilityStructure(BaseModelStructure):
                     raise ValueError("SoilLayersIds not linked!")
                 if not list_has_id(values.get("states"), stage.StateId):
                     raise ValueError("StateIds not linked!")
-                if not list_has_id(values.get("statecorrelations"), stage.StateCorrelationsId):
+                if not list_has_id(
+                    values.get("statecorrelations"), stage.StateCorrelationsId
+                ):
                     raise ValueError("StateCorrelationsIds not linked!")
-                if not list_has_id(values.get("waternetcreatorsettings"), stage.WaternetCreatorSettingsId):
+                if not list_has_id(
+                    values.get("waternetcreatorsettings"), stage.WaternetCreatorSettingsId
+                ):
                     raise ValueError("WaternetCreatorSettingsIds not linked!")
                 if not list_has_id(values.get("waternets"), stage.WaternetId):
                     raise ValueError("WaternetIds not linked!")
             for _, calculation in enumerate(scenario.Calculations):
-                if not list_has_id(values.get("calculationsettings"), calculation.CalculationSettingsId):
+                if not list_has_id(
+                    values.get("calculationsettings"), calculation.CalculationSettingsId
+                ):
                     raise ValueError("CalculationSettingsIds not linked!")
 
         return values
@@ -2045,13 +2050,13 @@ class DStabilityStructure(BaseModelStructure):
         )
 
         scenario = self.scenarios[scenario_index]
-        
+
         if scenario.Stages is None:
             scenario.Stages = []
 
         scenario.Stages.append(new_stage)
         return len(scenario.Stages) - 1, stage_id
-    
+
     def add_default_calculation(
         self,
         scenario_index: int,
@@ -2071,7 +2076,7 @@ class DStabilityStructure(BaseModelStructure):
             Id=str(calculation_id),
             Label=label,
             Notes=notes,
-            CalculationSettingsId=str(unique_start_id + 1)
+            CalculationSettingsId=str(unique_start_id + 1),
         )
 
         scenario = self.scenarios[scenario_index]
@@ -2111,7 +2116,7 @@ class DStabilityStructure(BaseModelStructure):
 
             if scenario.Stages is None:
                 return False
-            
+
             scenario.Stages[stage_index]
             return True
         except IndexError:
@@ -2123,7 +2128,7 @@ class DStabilityStructure(BaseModelStructure):
 
             if scenario.Calculations is None:
                 return False
-            
+
             scenario.Calculations[calculation_index]
             return True
         except IndexError:
@@ -2142,10 +2147,8 @@ class DStabilityStructure(BaseModelStructure):
 
             if scenario.Calculations is None:
                 return False
-            
-            result_id = (
-                scenario.Calculations[calculation_index].ResultId
-            )
+
+            result_id = scenario.Calculations[calculation_index].ResultId
             if result_id is None:
                 return False
             else:
@@ -2158,7 +2161,7 @@ class DStabilityStructure(BaseModelStructure):
 
             if scenario.Stages is None:
                 return False
-            
+
             loads_id = scenario.Stages[stage_index].LoadsId
             if loads_id is None:
                 return False
@@ -2172,10 +2175,8 @@ class DStabilityStructure(BaseModelStructure):
 
             if scenario.Stages is None:
                 return False
-            
-            soil_layers_id = (
-                scenario.Stages[stage_index].SoilLayersId
-            )
+
+            soil_layers_id = scenario.Stages[stage_index].SoilLayersId
             if soil_layers_id is None:
                 return False
             else:
@@ -2198,20 +2199,16 @@ class DStabilityStructure(BaseModelStructure):
 
             if scenario.Stages is None:
                 return False
-            
-            reinforcements_id = (
-                scenario.Stages[stage_index].ReinforcementsId
-            )
+
+            reinforcements_id = scenario.Stages[stage_index].ReinforcementsId
             if reinforcements_id is None:
                 return False
             else:
                 return True
         return False
-    
+
     def _get_soil_layers(self, scenario_index: int, stage_index: int):
-        soil_layers_id = (
-            self.scenarios[scenario_index].Stages[stage_index].SoilLayersId
-        )
+        soil_layers_id = self.scenarios[scenario_index].Stages[stage_index].SoilLayersId
 
         for soil_layers in self.soillayers:
             if soil_layers.Id == soil_layers_id:
@@ -2222,9 +2219,7 @@ class DStabilityStructure(BaseModelStructure):
         )
 
     def _get_loads(self, scenario_index: int, stage_index: int):
-        loads_id = (
-            self.scenarios[scenario_index].Stages[stage_index].LoadsId
-        )
+        loads_id = self.scenarios[scenario_index].Stages[stage_index].LoadsId
 
         for loads in self.loads:
             if loads.Id == loads_id:

@@ -332,7 +332,9 @@ class DStabilityModel(BaseModel):
         if isinstance(location, Path):
             self.filename = location
 
-    def add_scenario(self, label: str = "Scenario", notes: str = "", set_current: bool = True) -> int:
+    def add_scenario(
+        self, label: str = "Scenario", notes: str = "", set_current: bool = True
+    ) -> int:
         """Add a new scenario to the model.
 
         Args:
@@ -357,7 +359,11 @@ class DStabilityModel(BaseModel):
         return new_scenario_id
 
     def add_stage(
-        self, scenario_index: Optional[int] = None, label: str = "Stage", notes: str = "", set_current=True
+        self,
+        scenario_index: Optional[int] = None,
+        label: str = "Stage",
+        notes: str = "",
+        set_current=True,
     ) -> int:
         """Add a new stage to the model at the given scenario index.
 
@@ -385,7 +391,11 @@ class DStabilityModel(BaseModel):
         return new_stage_index
 
     def add_calculation(
-        self, scenario_index: Optional[int] = None, label: str = "Calculation", notes: str = "", set_current: bool = True
+        self,
+        scenario_index: Optional[int] = None,
+        label: str = "Calculation",
+        notes: str = "",
+        set_current: bool = True,
     ) -> int:
         """Add a new calculation to the model.
 
@@ -486,7 +496,7 @@ class DStabilityModel(BaseModel):
         soil = self.soils.get_soil(soil_code)
         soil_layers.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.Id)
         return int(persistable_layer.Id)
-    
+
     def get_soil(self, code: str) -> PersistableSoil:
         """
         Gets an existing soil with the given soil code.
@@ -498,7 +508,7 @@ class DStabilityModel(BaseModel):
             PersistableSoil: the soil
         """
         return self.soils.get_soil(code=code)
-    
+
     def get_soil_by_name(self, name: str) -> PersistableSoil:
         """
         Gets an existing soil with the given soil name.

@@ -248,7 +248,9 @@ class TestDStabilityModel:
     def test_add_calculation(self):
         # Setup
         dm = DStabilityModel()
-        dm.datastructure.calculationsettings[-1].AnalysisType = AnalysisTypeEnum.SPENCER_GENETIC
+        dm.datastructure.calculationsettings[
+            -1
+        ].AnalysisType = AnalysisTypeEnum.SPENCER_GENETIC
 
         # Test
         new_stage_id = dm.add_calculation(0, "new stage")
@@ -258,7 +260,10 @@ class TestDStabilityModel:
 
         assert dm.scenarios[0].Calculations != None
         assert len(dm.scenarios[0].Calculations) == 2
-        assert dm.datastructure.calculationsettings[-1].AnalysisType == AnalysisTypeEnum.BISHOP_BRUTE_FORCE
+        assert (
+            dm.datastructure.calculationsettings[-1].AnalysisType
+            == AnalysisTypeEnum.BISHOP_BRUTE_FORCE
+        )
 
     @pytest.mark.integrationtest
     def test_add_scenario(self):
@@ -680,23 +685,33 @@ class TestDStabilityModel:
     @pytest.mark.integrationtest
     def test_su_table_version_parsing(self):
         dm = DStabilityModel()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1.stix"))
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
+        )
 
         dm.parse(test_filepath)
 
         soil_su_table = dm.get_soil("H_Aa_ht_old")
-        assert soil_su_table.ShearStrengthModelTypeBelowPhreaticLevel == ShearStrengthModelTypePhreaticLevelInternal.SUTABLE
-        assert soil_su_table.ShearStrengthModelTypeAbovePhreaticLevel == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+        assert (
+            soil_su_table.ShearStrengthModelTypeBelowPhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SUTABLE
+        )
+        assert (
+            soil_su_table.ShearStrengthModelTypeAbovePhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+        )
         assert len(soil_su_table.SuTable.SuTablePoints) == 4
 
     @pytest.mark.integrationtest
     def test_su_table_version_input(self):
         dm = DStabilityModel()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1.stix"))
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
+        )
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
         )
-        
+
         dm.parse(test_filepath)
 
         soil = Soil()
@@ -726,7 +741,7 @@ class TestDStabilityModel:
             Point(x=74.2, z=-1),
             Point(x=71, z=-0.4),
         ]
-        
+
         dm.add_soil(soil)
         dm.add_layer(points=new_layer, soil_code=soil.code)
 
@@ -734,9 +749,14 @@ class TestDStabilityModel:
         dm.serialize(test_output_filepath)
         # test that the file was written correctly
         soil_su_table = dm.get_soil("su soil")
-        assert soil_su_table.ShearStrengthModelTypeBelowPhreaticLevel == ShearStrengthModelTypePhreaticLevelInternal.SUTABLE
-        assert soil_su_table.ShearStrengthModelTypeAbovePhreaticLevel == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
         assert (
-            len(soil_su_table.SuTable.SuTablePoints)
-            == len(soil.undrained_parameters.su_table)
+            soil_su_table.ShearStrengthModelTypeBelowPhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SUTABLE
+        )
+        assert (
+            soil_su_table.ShearStrengthModelTypeAbovePhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+        )
+        assert len(soil_su_table.SuTable.SuTablePoints) == len(
+            soil.undrained_parameters.su_table
         )

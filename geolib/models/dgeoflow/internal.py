@@ -777,7 +777,7 @@ class DGeoFlowStructure(BaseModelStructure):
         return values
 
     def add_default_scenario(
-        self, label: str="Scenario 1", notes: str="", unique_start_id=500
+        self, label: str = "Scenario 1", notes: str = "", unique_start_id=500
     ) -> Tuple[int, int]:
         """Add a new default (empty) scenario to DGeoFlow."""
 

@@ -52,8 +52,7 @@ class TestDStabilityInputParser:
         # 1. Set up test model
         input_parser = DStabilityZipParser()
         test_filepath = (
-            Path(TestUtils.get_local_test_data_dir("dstability/"))
-            / "example_1.stix"
+            Path(TestUtils.get_local_test_data_dir("dstability/")) / "example_1.stix"
         )
         test_output_dir = Path(
             TestUtils.get_output_test_data_dir("dstability/serialized")

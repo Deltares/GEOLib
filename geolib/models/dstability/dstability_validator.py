@@ -23,7 +23,11 @@ class DStabilityValidator(BaseValidator):
         lengths_set = set()
         valid = True
         for key, value in (
-            (k, v) for k, v in self.ds.dict().items() if "result" not in k and "scenarios" not in k and "calculationsettings" not in k
+            (k, v)
+            for k, v in self.ds.dict().items()
+            if "result" not in k
+            and "scenarios" not in k
+            and "calculationsettings" not in k
         ):  # Results not required for stage validity.
             if isinstance(value, list):
                 lengths_set.add(len(value))
@@ -41,14 +45,19 @@ class DStabilityValidator(BaseValidator):
         for scenario_index, _ in enumerate(self.ds.scenarios):
             for stage_index, _ in enumerate(self.ds.scenarios[scenario_index].Stages):
                 soil_layer_ids: Set[str] = {
-                    layer.LayerId for layer in self.ds._get_soil_layers(scenario_index, stage_index).SoilLayers
+                    layer.LayerId
+                    for layer in self.ds._get_soil_layers(
+                        scenario_index, stage_index
+                    ).SoilLayers
                 }
 
                 if len(soil_layer_ids) == 0:
                     return True
 
                 layer_load_layer_ids: Set[str] = set()
-                for layer_load in self.ds._get_loads(scenario_index, stage_index).LayerLoads:
+                for layer_load in self.ds._get_loads(
+                    scenario_index, stage_index
+                ).LayerLoads:
                     layer_load_layer_ids.add(layer_load.LayerId)
 
                     consolidation_layer_id_references: Set[str] = set()
