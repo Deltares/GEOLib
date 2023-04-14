@@ -48,7 +48,7 @@ Geometry
 Output
 ------
 
-The output structure of D-Sheet Piling is complex and dependent on the chosen calculation options.
+The output structure of D-Sheet Piling is complex and depends on the selected calculation options.
 Since we can't create helper functions that will fit every users need, we show here how you could
 do it yourself, for finding the class :class:`geolib.models.dsheetpiling.internal.MomentsForcesDisplacements`:
 

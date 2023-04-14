@@ -214,7 +214,7 @@ is used. Two surface are initialised in this case and are added in the first sta
         surface=ground_level_minus_7_meter_surface, side=Side.LEFT, stage_id=stage_id
     )
 
-8. The water level are defined in the same way with initialising the class :class:`~geolib.models.dsheetpiling.water_level.WaterLevel`
+8. The water level is defined in the same way with initialising the class :class:`~geolib.models.dsheetpiling.water_level.WaterLevel`
 and then adding it to the model using the function :meth:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_head_line`.
 
 .. code-block:: python
@@ -256,8 +256,8 @@ also needs to be initialised and added to the model.
         calculation_options_per_stage=calc_options_per_stage, stage_id=stage_id
     )
 
-Overall stability calculation are initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions`.
-Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids begins from 1.
+Overall stability calculation is initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions`.
+Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids starts at 1.
 
 .. code-block:: python
 
@@ -269,7 +269,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     model.set_calculation_options(calculation_options=calc_options)   
 
 Kranz anchor strength calculation is initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions`.
-Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids begins from 1.
+Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids starts at 1.
 
 .. code-block:: python
 
@@ -277,7 +277,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     model.set_calculation_options(calculation_options=calc_options)   
 
 Design calculation is initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions`.
-Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids begins from 1.
+Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids starts at 1.
 
 .. code-block:: python  
 
