@@ -26,7 +26,7 @@ otherwise GEOLib will not start. The executables are expected in the following l
 - *CONSOLE_FOLDER*/"DStabilityConsole/D-Stability Console.exe"
 - *CONSOLE_FOLDER*/"DGeoFlowConsole/DGeoFlow Console.exe"
 
-It can also be set by a **CONSOLE_FOLDER** environment variable. The enviroment variable will
+It can also be set by a **CONSOLE_FOLDER** environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.
 
 The defaults are as follows::
@@ -90,7 +90,7 @@ Console usage
 -------------
 
 If you wish to use these consoles without Python on the command line, 
-note that all except for the DStability console require the "/b" flag, i.e.::
+note that all except for the D-Stability and D-Geo Flow consoles require the "/b" flag, i.e.::
 
     $ DFoundations/DFoundations.exe /b "folder_or_file"
 
