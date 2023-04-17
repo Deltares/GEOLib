@@ -293,7 +293,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     model.set_calculation_options(calculation_options=calc_options)
 
 10. After defining these basic inputs the calculation can be run, but won't be so useful. Several loads, supports and anchors can be defined.
-The following section list the way they can be initialised. The stage_id input here refers to the Python input which starts from 0.
+The following section lists the way they can be initialised. The stage_id input here refers to the Python input which starts from 0.
 
 .. code-block:: python
 
@@ -364,7 +364,7 @@ The following section list the way they can be initialised. The stage_id input h
     )
     model.add_load(load=normal_force, stage_id=0)
 
-11. To run the model first the model needs to be serialised. To do that define a 
+11. To run the model first the model needs to be serialised. To do that define an
 output file name and call the function :meth:`geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.serialize`.
 
 .. code-block:: python
