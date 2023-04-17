@@ -104,7 +104,7 @@ class TestDStabilityStates:
         dstability_model.parse(test_input_filepath)
 
         expected_state_point = DStabilityStatePoint(
-            id=53,
+            id=55,
             layer_id=30,
             label="SP 1",
             point=Point(x=45.0, z=4.0),
@@ -137,7 +137,7 @@ class TestDStabilityStates:
         points = [Point(x=20.0, z=0.0), Point(x=70.0, z=0.0)]
 
         state_line_point = DStabilityStateLinePoint(
-            id=54,
+            id=56,
             label="SP 2",
             above=DStabilityStress(pop=20),
             below=DStabilityStress(pop=30),
