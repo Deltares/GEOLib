@@ -1545,6 +1545,7 @@ class BishopReliabilityResult(DStabilitySubStructure):
     FailureProbability: Optional[float] = None
     Id: Optional[str] = None
     ReliabilityIndex: Optional[float] = None
+    DistanceToConvergence: Optional[float] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
         List[Optional[PersistableCalculationContribution]]
@@ -1571,7 +1572,39 @@ class BishopReliabilityResult(DStabilitySubStructure):
                 f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
             )
 
+class BishopBruteForceReliabilityResult(DStabilitySubStructure):
+    Circle: Optional[PersistableCircle] = None
+    Converged: Optional[bool] = None
+    FailureProbability: Optional[float] = None
+    Id: Optional[str] = None
+    ReliabilityIndex: Optional[float] = None
+    DistanceToConvergence: Optional[float] = None
+    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
+    CalculationContributions: Optional[
+        List[Optional[PersistableCalculationContribution]]
+    ] = None
+    StateLinePointContributions: Optional[
+        List[Optional[PersistableStateLinePointContribution]]
+    ] = None
+    StatePointContributions: Optional[
+        List[Optional[PersistableStatePointContribution]]
+    ] = None
 
+    @classmethod
+    def structure_group(cls) -> str:
+        return "results/bishopbruteforcereliability/"
+
+    def get_slipcircle_output(self) -> BishopSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return BishopSlipCircleResult(
+                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+            )
+        except (ValidationError, AttributeError):
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
+        
 class BishopResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
     FactorOfSafety: Optional[float] = None
@@ -1672,6 +1705,7 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     FailureProbability: Optional[float] = None
     Id: Optional[str] = None
     ReliabilityIndex: Optional[float] = None
+    DistanceToConvergence: Optional[float] = None
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
@@ -1699,6 +1733,38 @@ class SpencerReliabilityResult(DStabilitySubStructure):
                 f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
             )
 
+class SpencerGeneticReliabilityResult(DStabilitySubStructure):
+    Converged: Optional[bool] = None
+    FailureProbability: Optional[float] = None
+    Id: Optional[str] = None
+    ReliabilityIndex: Optional[float] = None
+    DistanceToConvergence: Optional[float] = None
+    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
+    CalculationContributions: Optional[
+        List[Optional[PersistableCalculationContribution]]
+    ] = None
+    StateLinePointContributions: Optional[
+        List[Optional[PersistableStateLinePointContribution]]
+    ] = None
+    StatePointContributions: Optional[
+        List[Optional[PersistableStatePointContribution]]
+    ] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "results/spencergeneticreliability/"
+
+    def get_slipplane_output(self) -> SpencerSlipPlaneResult:
+        """Get condensed slipplane data"""
+        try:
+            return SpencerSlipPlaneResult(
+                slipplane=[Point(x=p.X, z=p.Z) for p in self.SlipPlane]
+            )
+        except (ValidationError, TypeError):
+            raise ValueError(
+                f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
+            )
 
 class SpencerResult(DStabilitySubStructure):
     FactorOfSafety: Optional[float] = None
@@ -1758,6 +1824,7 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
     ReliabilityIndex: Optional[float] = None
+    DistanceToConvergence: Optional[float] = None
     RightCenter: Optional[PersistablePoint] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
@@ -1774,6 +1841,45 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     @classmethod
     def structure_group(cls) -> str:
         return "results/upliftvanreliability/"
+
+    def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
+        """Get condensed slipcircle data"""
+        try:
+            return UpliftVanSlipCircleResult(
+                x_left=self.LeftCenter.X,
+                z_left=self.LeftCenter.Z,
+                x_right=self.RightCenter.X,
+                z_right=self.RightCenter.Z,
+                z_tangent=self.TangentLine,
+            )
+        except (ValidationError, AttributeError):
+            raise ValueError(
+                f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
+            )
+        
+class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
+    Converged: Optional[bool] = None
+    FailureProbability: Optional[float] = None
+    Id: Optional[str] = None
+    LeftCenter: Optional[PersistablePoint] = None
+    ReliabilityIndex: Optional[float] = None
+    DistanceToConvergence: Optional[float] = None
+    RightCenter: Optional[PersistablePoint] = None
+    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
+    CalculationContributions: Optional[
+        List[Optional[PersistableCalculationContribution]]
+    ] = None
+    StateLinePointContributions: Optional[
+        List[Optional[PersistableStateLinePointContribution]]
+    ] = None
+    StatePointContributions: Optional[
+        List[Optional[PersistableStatePointContribution]]
+    ] = None
+    TangentLine: Optional[float] = None
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "results/upliftvanparticleswarmreliability/"
 
     def get_slipcircle_output(self) -> UpliftVanSlipCircleResult:
         """Get condensed slipcircle data"""
@@ -1824,11 +1930,14 @@ DStabilityResult = Union[
     UpliftVanResult,
     UpliftVanParticleSwarmResult,
     UpliftVanReliabilityResult,
+    UpliftVanParticleSwarmReliabilityResult,
     SpencerGeneticAlgorithmResult,
     SpencerReliabilityResult,
+    SpencerGeneticReliabilityResult,
     SpencerResult,
     BishopBruteForceResult,
     BishopReliabilityResult,
+    BishopBruteForceReliabilityResult,
     BishopResult,
     None,
 ]

@@ -82,6 +82,7 @@ class TestDStabilityModel:
         "filepath",
         [
             pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.1"),
         ],
     )
@@ -108,6 +109,7 @@ class TestDStabilityModel:
         "dir_path",
         [
             pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.1"),
         ],
     )
@@ -140,11 +142,9 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/ResultExample", id="Result Example"),
             pytest.param("dstability/EmptyFile", id="Empty File"),
-            # pytest.param(
-            #     "dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.01"
-            # ),
+            pytest.param("dstability/example_1", id="Example File"),
+            pytest.param("dstability/Tutorial_v2023_1", id="Tutorial 2023.01 File"),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):
@@ -361,7 +361,7 @@ class TestDStabilityModel:
         dm.parse(test_filepath)
         assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
 
-    def test_get_slipeplane(self):
+    def test_get_slip_plane(self):
         test_filepath = Path(
             TestUtils.get_local_test_data_dir("dstability/test_dstab_full.stix")
         )
