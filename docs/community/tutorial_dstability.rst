@@ -292,6 +292,7 @@ the added item will be set as the default for future calls to the DStabilityMode
 be added to the current scenario. 
 
 .. code-block:: python
+    
     # add new scenario (and activate it)
     dm.add_scenario("New Scenario", "From GEOLib", set_current=True)
 
