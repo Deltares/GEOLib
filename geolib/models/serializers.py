@@ -1,4 +1,5 @@
-from typing import Any, Dict
+from pathlib import Path
+from typing import Any, BinaryIO, Dict, Union
 
 from pydantic import FilePath
 
@@ -10,10 +11,16 @@ class BaseSerializer(BaseDataClass):
 
     ds: Dict[str, Any]
 
-    def render(self):
+    def render(self) -> str:
         return str(self.ds)
 
-    def write(self, filename: FilePath):
-        """Test."""
-        with open(filename, "w") as io:
-            io.write(self.render())
+    def write(self, filename: Union[FilePath, BinaryIO]):
+        """Write serialized model to Filepath or BytesIO buffer"""
+        # if filename is pathlike, open file (in text mode) and write str
+        if isinstance(filename, Path):
+            with open(filename, "w", encoding="cp1252") as io:
+                io.write(self.render())
+
+        # if filename is opened file (in binary mode) or BytesIO object, write render as bytes
+        else:
+            filename.write(self.render().encode("cp1252"))

@@ -40,7 +40,7 @@ class Soil(DSeriesUnmappedNameProperties):
     soilmaxvoidratio: confloat(ge=0.0, le=1.0) = 0.800
     soilcohesion: confloat(ge=0.0, le=1000.0) = 30.00
     soilphi: confloat(ge=0.0, le=89.0)
-    soilcu: confloat(ge=0.0, le=1000.0)
+    soilcu: confloat(ge=0.0, le=1000.0) = 0.00
     soilmaxconeresisttype: MaxConeResistType = MaxConeResistType.STANDARD
     soilmaxconeresist: confloat(ge=0.0, le=1000000.0) = 0.00
     soilusetension: Bool = Bool.TRUE

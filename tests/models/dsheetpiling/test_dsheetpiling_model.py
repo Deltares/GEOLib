@@ -1,5 +1,6 @@
 import logging
 import os
+from io import BytesIO
 from pathlib import Path
 from typing import List, Type
 
@@ -282,6 +283,18 @@ class TestDsheetPilingModel:
         with pytest.raises(Exception):
             assert df.execute()
 
+    @pytest.mark.unittest
+    def test_execute_console_with_bytesio_raises_exception(self):
+        # 1. Set up test data.
+        df = DSheetPilingModel()
+
+        output_file = BytesIO()
+        df.serialize(output_file)
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert df.execute()
+
     @pytest.mark.parametrize(
         "reverse_elements",
         [
@@ -419,7 +432,7 @@ class TestDsheetPilingModel:
             pytest.param(SheetModelType, 0, id="Sheet model"),
             pytest.param(WoodenSheetPileModelType, 0, id="Wooden sheet model"),
             pytest.param(SinglePileModelType, 1, id="Single pile model"),
-            pytest.param(DiaphragmModelType, 2, id="Diaphragm model"),
+            pytest.param(DiaphragmModelType, 0, id="Diaphragm model"),
         ],
     )
     def test_set_model(self, modeltype, expected_model_value: int):
@@ -762,6 +775,20 @@ class TestDsheetPilingModel:
         model.serialize(output_test_file)
 
         assert output_test_file.is_file()
+
+    def test_intialized_model_can_be_serialized_bytesio(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_file = BytesIO()
+
+        # 2. Verify initial expectations
+        model = DSheetPilingModel()
+        assert isinstance(model, DSheetPilingModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert isinstance(output_test_file, BytesIO)
 
     @pytest.mark.integrationtest
     def test_add_surcharge_load(self, model: DSheetPilingModel):

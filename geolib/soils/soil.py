@@ -265,8 +265,8 @@ class SoilStiffnessParameters(SoilBaseModel):
 
 
 class ModulusSubgradeReaction(IntEnum):
-    MENARD = 0
-    MANUAL = 1
+    MANUAL = 0
+    MENARD = 1
 
 
 class LambdaType(IntEnum):
@@ -801,11 +801,13 @@ class Soil(SoilBaseModel):
     def _to_dgeoflow(self):
         from geolib.models.dgeoflow.internal import PersistableSoil as DGeoFlowSoil
 
+        self.set_all_stochastic_parameters()
+
         kwargs = {
             "Id": self.id,
             "Name": self.name,
             "Code": self.code,
-            "HorizontalPermeability": self.storage_parameters.horizontal_permeability,
-            "VerticalPermeability": self.storage_parameters.vertical_permeability,
+            "HorizontalPermeability": self.storage_parameters.horizontal_permeability.mean,
+            "VerticalPermeability": self.storage_parameters.vertical_permeability.mean,
         }
         return self.__transfer_soil_dict_to_model(kwargs, DGeoFlowSoil())

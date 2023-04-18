@@ -1,6 +1,7 @@
 import os
 import pathlib
 import shutil
+from io import BytesIO
 from pathlib import Path
 
 import pytest
@@ -25,6 +26,7 @@ from geolib.models.dstability.internal import (
     AnalysisTypeEnum,
     CalculationTypeEnum,
     DStabilityStructure,
+    PersistableStochasticParameter,
 )
 from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
@@ -43,6 +45,36 @@ class TestDStabilityModel:
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
             "" + "DStabilityModel does not instantiate BaseModel"
         )
+
+    def test_intialized_model_can_be_serialized(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dstability"))
+        filename = "serialized_from_intialized_model.stix"
+        output_test_file = output_test_folder / filename
+
+        # 2. Verify initial expectations
+        model = DStabilityModel()
+        assert isinstance(model, DStabilityModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert output_test_file.is_file()
+
+    def test_intialized_model_can_be_serialized_bytesio(self):
+        """Internal datastructure should be serializable from a intialized model"""
+        # 1. setup test
+        output_test_file = BytesIO()
+
+        # 2. Verify initial expectations
+        model = DStabilityModel()
+        assert isinstance(model, DStabilityModel)
+
+        # 3. Run test.
+        model.serialize(output_test_file)
+
+        assert isinstance(output_test_file, BytesIO)
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
@@ -142,6 +174,27 @@ class TestDStabilityModel:
 
         # 3. Verify model output has been parsed
         assert model
+
+    @pytest.mark.unittest
+    def test_execute_console_without_filename_raises_exception(self):
+        # 1. Set up test data.
+        dm = DStabilityModel()
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert dm.execute()
+
+    @pytest.mark.unittest
+    def test_execute_console_with_bytesio_raises_exception(self):
+        # 1. Set up test data.
+        dm = DStabilityModel()
+
+        output_file = BytesIO()
+        dm.serialize(output_file)
+
+        # 2. Run test
+        with pytest.raises(Exception):
+            assert dm.execute()
 
     @pytest.mark.integrationtest
     def test_add_default_stage(self):
@@ -259,7 +312,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert pytest.approx(dm.output.FactorOfSafety, rel=1e-3) == 0.723
+        assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
 
     def test_get_slipeplane(self):
         test_filepath = Path(
@@ -267,7 +320,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert len(dm.output.SlipPlane) == 5
+        assert len(dm.output[-1].SlipPlane) == 5
 
     @pytest.mark.acceptance
     @only_teamcity
@@ -526,13 +579,27 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # state point
-        dm.add_state_point(
+        id_state_one = dm.add_state_point(
             DStabilityStatePoint(
                 layer_id=layer_ids[2],  # HV layer
                 point=Point(x=0, z=-2.5),
+                is_probabilistic=True,
+                stress=DStabilityStress(
+                    pop=10.0,
+                    stochastic_parameter=PersistableStochasticParameter(
+                        IsProbabilistic=True, Mean=43, StandardDeviation=10
+                    ),
+                ),
+            )
+        )
+        id_state_two = dm.add_state_point(
+            DStabilityStatePoint(
+                layer_id=layer_ids[0],  # Sand layer
+                point=Point(x=0, z=-15),
                 stress=DStabilityStress(pop=10.0),
             )
         )
+
         path = outputdir / "test_state_point.stix"
         dm.serialize(path)
 
@@ -545,7 +612,21 @@ class TestDStabilityModel:
                 )
             ],
         )
+
         path = outputdir / "test_state_line.stix"
+        dm.serialize(path)
+
+        # State correlation
+        dm.add_state_correlation([id_state_one, id_state_two])
+        path = outputdir / "test_state_correlation.stix"
+        dm.serialize(path)
+
+        # Soil correlation
+        soil_id_one = dm.soils.get_soil("H_Ro_z&k").id
+        soil_id_two = dm.soils.get_soil("Sand").id
+
+        dm.add_soil_correlation([soil_id_one, soil_id_two])
+        path = outputdir / "test_soil_correlation.stix"
         dm.serialize(path)
 
         # 3. Verify model output has been parsed

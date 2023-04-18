@@ -32,12 +32,12 @@ class LateralEarthPressureMethodStage(IntEnum):
 class ModelType(IntEnum):
     """Represents the model types from D-Sheet Piling using the same integer values used in the application.
 
-    The Model type determines the kind of calculation that's performed on the construction.
+    The Model type determines the kind of construction: single pile or sheet piling.
+    Note that the model type SHEET_PILING includes sheet piling, wooden sheet piling and diaphragm wall.
     """
 
     SHEET_PILING = 0
     SINGLE_PILE = 1
-    DIAPHRAGM_WALL = 2
 
 
 class SinglePileLoadOptions(Enum):
@@ -167,8 +167,8 @@ class GrainType(IntEnum):
 
 
 class ModulusSubgradeReaction(IntEnum):
-    MENARD = 0
-    MANUAL = 1
+    MANUAL = 0
+    MENARD = 1
 
 
 class EarthPressureCoefficients(IntEnum):

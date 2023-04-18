@@ -2,7 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
 
 from pydantic import DirectoryPath, FilePath
 
@@ -20,7 +20,10 @@ from .internal import (
     DStabilityResult,
     DStabilityStructure,
     PersistablePoint,
+    PersistableSoil,
+    PersistableStateCorrelation,
     SoilCollection,
+    SoilCorrelation,
     SpencerSlipPlaneResult,
     Stage,
     UpliftVanSlipCircleResult,
@@ -81,6 +84,10 @@ class DStabilityModel(BaseModel):
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
         return self.datastructure.soils
 
+    @property
+    def soil_correlations(self) -> SoilCorrelation:
+        return self.datastructure.soilcorrelation
+
     def _get_next_id(self) -> int:
         self.current_id += 1
         return self.current_id
@@ -94,25 +101,46 @@ class DStabilityModel(BaseModel):
         return self.datastructure.waternets
 
     @property
-    def output(self) -> DStabilityResult:
-        # TODO Make something that works for all stages
-        return self.get_result(self.current_stage)
+    def output(self) -> List[DStabilityResult]:
+        def _get_result_or_none(stage_id) -> DStabilityResult:
+            if self.has_result(stage_id=int(stage_id)):
+                return self.get_result(stage_id=int(stage_id))
+            else:
+                return None
 
-    def get_result(self, stage_id: int) -> Dict:
+        all_stage_ids = [stage.Id for stage in self.datastructure.stages]
+        return [_get_result_or_none(stage_id=stage_id) for stage_id in all_stage_ids]
+
+    def has_result(self, stage_id: int) -> bool:
         """
-        Returns the results of a stage. Calculation results are based on analysis type and calculation type.
+        Returns whether a stage has a result.
 
         Args:
             stage_id (int): Id of a stage.
 
         Returns:
-            dict: Dictionary containing the analysis results of the stage.
+            bool: Value indicating whether the stage has a result.
+        """
+        return self.datastructure.has_result(stage_id)
+
+    def get_result(self, stage_id: Optional[int] = None) -> DStabilityResult:
+        """
+        Returns the results of a stage. Calculation results are based on analysis type and calculation type.
+
+        Args:
+            stage_id (Optional[int]): Id of a stage, if None is supplied the result of the current stage is returned.
+
+        Returns:
+            DStabilityResult: The analysis results of the stage.
 
         Raises:
             ValueError: No results or calculationsettings available
         """
+        if stage_id is None:
+            stage_id = self.current_stage
+
         result = self._get_result_substructure(stage_id)
-        return result  # TODO snake_case keys?
+        return result
 
     def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
         if self.datastructure.has_result(stage_id):
@@ -167,14 +195,15 @@ class DStabilityModel(BaseModel):
         result = self._get_result_substructure(stage_id)
         return result.get_slipplane_output()
 
-    def serialize(self, location: Union[FilePath, DirectoryPath]):
+    def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
         """Support serializing to directory while developing for debugging purposes."""
-        if not location.is_dir():
-            serializer = DStabilityInputZipSerializer(ds=self.datastructure)
-        else:
+        if isinstance(location, Path) and location.is_dir():
             serializer = DStabilityInputSerializer(ds=self.datastructure)
+        else:
+            serializer = DStabilityInputZipSerializer(ds=self.datastructure)
         serializer.write(location)
-        self.filename = location
+        if isinstance(location, Path):
+            self.filename = location
 
     def add_stage(self, label: str, notes: str, set_current=True) -> int:
         """Add a new stage to the model.
@@ -240,20 +269,34 @@ class DStabilityModel(BaseModel):
 
         soil.id = self._get_next_id()
         persistant_soil = self.soils.add_soil(soil)
-        return persistant_soil.Code
+        return persistant_soil.Id
 
-    def edit_soil(self, code: str, **kwargs: dict) -> None:
+    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
         """
         Edit an existing soil with parameter names based on the soil class members
 
         Args:
             code (str): the code of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angel=25.0'
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
 
         Returns:
-            bool: True for succes, False otherwise
+            PersistableSoil: the edited soil
         """
         return self.soils.edit_soil(code, **kwargs)
+
+    def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
+        """
+        Edit an existing soil with parameter names based on the soil class members.
+        This method will edit the first occurence of the name if the name is used multiple times.
+
+        Args:
+            name (str): the name of the soil
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
+
+        Returns:
+            PersistableSoil: the edited soil
+        """
+        return self.soils.edit_soil_by_name(name, **kwargs)
 
     @property
     def points(self):
@@ -280,7 +323,7 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added layer
         """
-        stage_id = stage_id if stage_id else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -326,7 +369,7 @@ class DStabilityModel(BaseModel):
         Returns:
             bool: id of the added headline
         """
-        stage_id = stage_id if stage_id else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -361,7 +404,7 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added reference line
         """
-        stage_id = stage_id if stage_id else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -396,7 +439,7 @@ class DStabilityModel(BaseModel):
         Todo:
             Check if point lies within the given layer
         """
-        stage_id = stage_id if stage_id else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -439,7 +482,7 @@ class DStabilityModel(BaseModel):
         #    let op dat points.xmin <= x <= points.xmax
         # 4. voeg de PersistableStateLine toe aan de interne datastructuur
         # 5. geef de id terug
-        stage_id = stage_id if stage_id else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")
@@ -459,6 +502,29 @@ class DStabilityModel(BaseModel):
             persistable_state_line_points.append(state_point._to_internal_datastructure())
 
         states.add_state_line(persistable_points, persistable_state_line_points)
+
+    def add_state_correlation(
+        self, correlated_state_ids: List[int], stage_id: int = None
+    ):
+
+        stage_id = stage_id if stage_id is not None else self.current_stage
+
+        if not self.datastructure.has_stage(stage_id):
+            raise IndexError(f"stage {stage_id} is not available")
+
+        state_correlations = self.datastructure.statecorrelations[stage_id]
+
+        for state_id in correlated_state_ids:
+            try:
+                _ = self.datastructure.states[stage_id].get_state(state_id)
+            except ValueError:
+                raise ValueError(f"No state point with id '{state_id} in this geometry")
+
+        persistable_state_correlation = PersistableStateCorrelation(
+            CorrelatedStateIds=correlated_state_ids, IsFullyCorrelated=True
+        )
+
+        state_correlations.add_state_correlation(persistable_state_correlation)
 
     def add_load(
         self,
@@ -600,6 +666,14 @@ class DStabilityModel(BaseModel):
                 f"No reinforcements found for stage found with id {stage_id}"
             )
 
+    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+        """Add a soil correlation to the model.
+
+        Args:
+            list_correlated_soil_ids: A list of soil ids that are correlated.
+        """
+        self.soil_correlations.add_soil_correlation(list_correlated_soil_ids)
+
     def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
         """Sets the model and applies the given parameters
 
@@ -611,7 +685,7 @@ class DStabilityModel(BaseModel):
             ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod,
             an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id else self.current_stage
+        stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):
             raise IndexError(f"stage {stage_id} is not available")

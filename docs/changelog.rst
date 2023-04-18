@@ -1,6 +1,31 @@
 Changelog
 =========
-- :release:`0.2.2 <2022-10-31>`
+- :release:`0.5.1 <2023-04-04>`
+- :feature:`-` Add optional parameter for stage_id to DStabilityModel.get_result (#114)
+
+- :release:`0.5.0 <2023-04-03>`
+- :feature:`-` Breaking change: D-Stability output property now returns the results for all stages.
+- :feature:`-` Add methods to D-Stability model: add_state_correlation, add_soil_correlation.
+- :bug:`-` Cannot add features to default stage 0 (#95) 
+- :bug:`-` D-Stability cant set the stochastic properties of a pop parameter (#104)
+- :bug:`-` Increased maximum length of pile name to 100 characters (#105)
+- :bug:`-` Remove Earthquake from D-SheetPiling (#107)
+- :bug:`-` The wall types Wooden Sheet Piling and Diaphragm Wall are not correctly defined (#111)
+ 
+- :release:`0.4.0 <2023-01-24>`
+- :feature:`-` Add extra method for D-Stability and D-Geo Flow to look up a Soil by name and edit it. By yida-tao. 👍
+- :feature:`-` Add official support for Python 3.11.
+
+- :release:`0.3.0 <2023-01-06>`
+- :feature:`-` Add support for serializing to a BytesIO buffer. (Issue #68) By Mbweehuizen. 👍
+
+- :release:`0.2.4 <2022-12-08>`
+- :bug:`-` Return generated soil id when using add_soil method in D-Stability and D-Geo Flow. (Issue #64)
+
+- :release:`0.2.3 <2022-12-05>`
+- :bug:`-` Set default value for Cu (0.0) in D-Foundations.
+
+- :release:`0.2.2 <2022-11-28>`
 - :feature:`-` Set dates in project info for D-Geo Flow and D-Stability. By yurnih. 👍
 - :feature:`-` Update python package dependencies.
 - :support:`-` Various documentation improvements.

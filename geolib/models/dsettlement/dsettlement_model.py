@@ -3,7 +3,7 @@ from datetime import timedelta
 from operator import attrgetter
 from pathlib import Path
 from subprocess import CompletedProcess, run
-from typing import List, Optional, Type, Union
+from typing import BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, validate_arguments
 from pydantic.types import PositiveInt, confloat, conint, constr
@@ -82,7 +82,7 @@ class DSettlementModel(BaseModel):
     def console_flags(self) -> List[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
-    def serialize(self, filename: FilePath):
+    def serialize(self, filename: Union[FilePath, BinaryIO]):
         """
         Serialize and pre-process
         Args:
@@ -92,7 +92,9 @@ class DSettlementModel(BaseModel):
 
         serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
         serializer.write(filename)
-        self.filename = filename
+
+        if isinstance(filename, Path):
+            self.filename = filename
 
     def add_soil(self, soil_input: Soil_Input) -> None:
         """Soil is converted in the internal structure and added in soil_collection."""

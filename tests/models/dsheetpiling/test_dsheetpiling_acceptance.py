@@ -927,10 +927,9 @@ class TestDsheetPilingAcceptance:
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
-        modeltype = SheetModelType(
+        modeltype = WoodenSheetPileModelType(
             method=LateralEarthPressureMethod.MIXED,
             check_vertical_balance=False,
-            trildens_calculation=True,
             verification=True,
         )
         model.set_model(modeltype)
@@ -1235,10 +1234,9 @@ class TestDsheetPilingAcceptance:
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
-        modeltype = SheetModelType(
+        modeltype = DiaphragmModelType(
             method=LateralEarthPressureMethod.MIXED,
             check_vertical_balance=False,
-            trildens_calculation=True,
             verification=True,
         )
         model.set_model(modeltype)
@@ -1260,14 +1258,14 @@ class TestDsheetPilingAcceptance:
         plastic_properties_1 = FullPlasticCalculationProperties(
             eI_branch_2_positive=20000,
             eI_branch_2_negative=20000,
-            moment_point_1_positive=0,
-            moment_point_1_negative=0,
-            plastic_moment_positive=0,
-            plastic_moment_negative=0,
+            moment_point_1_positive=100,
+            moment_point_1_negative=100,
+            plastic_moment_positive=300,
+            plastic_moment_negative=300,
             eI_branch_3_positive=20000,
-            moment_point_2_positive=0,
+            moment_point_2_positive=200,
             eI_branch_3_negative=20000,
-            moment_point_2_negative=0,
+            moment_point_2_negative=200,
         )
         sheet_element_1 = DiaphragmWall(
             name="AZ 13",
@@ -1290,14 +1288,14 @@ class TestDsheetPilingAcceptance:
         plastic_properties_2 = FullPlasticCalculationProperties(
             eI_branch_2_positive=30000,
             eI_branch_2_negative=30000,
-            moment_point_1_positive=1,
-            moment_point_1_negative=1,
-            plastic_moment_positive=1,
-            plastic_moment_negative=1,
+            moment_point_1_positive=150,
+            moment_point_1_negative=100,
+            plastic_moment_positive=350,
+            plastic_moment_negative=120,
             eI_branch_3_positive=30000,
-            moment_point_2_positive=1,
+            moment_point_2_positive=250,
             eI_branch_3_negative=30000,
-            moment_point_2_negative=1,
+            moment_point_2_negative=110,
         )
         sheet_element_2 = DiaphragmWall(
             name="AZ 14",

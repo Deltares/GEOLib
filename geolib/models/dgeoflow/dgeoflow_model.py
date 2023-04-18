@@ -2,7 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
 
 from pydantic import DirectoryPath, FilePath
 
@@ -18,6 +18,7 @@ from .internal import (
     DGeoFlowResult,
     DGeoFlowStructure,
     GroundwaterFlowResult,
+    PersistableSoil,
     PersistableSoilLayer,
     PipeLengthResult,
     PipeTrajectory,
@@ -126,14 +127,16 @@ class DGeoFlowModel(BaseModel):
 
         raise ValueError(f"No result found for result id {scenario_index}")
 
-    def serialize(self, location: Union[FilePath, DirectoryPath]):
+    def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
         """Support serializing to directory while developing for debugging purposes."""
-        if not location.is_dir():
-            serializer = DGeoFlowInputZipSerializer(ds=self.datastructure)
-        else:
+        if isinstance(location, Path) and location.is_dir():
             serializer = DGeoFlowInputSerializer(ds=self.datastructure)
+        else:
+            serializer = DGeoFlowInputZipSerializer(ds=self.datastructure)
         serializer.write(location)
-        self.filename = location
+
+        if isinstance(location, Path):
+            self.filename = location
 
     def copy_scenario(self, label: str, notes: str, set_current=True) -> int:
         """Copy an existing scenario and add it to the model.
@@ -175,20 +178,33 @@ class DGeoFlowModel(BaseModel):
 
         soil.id = self._get_next_id()
         persistant_soil = self.soils.add_soil(soil)
-        return persistant_soil.Code
+        return persistant_soil.Id
 
-    def edit_soil(self, code: str, **kwargs: dict) -> None:
+    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
         """
         Edit an existing soil with parameter names based on the soil class members
 
         Args:
             code (str): the code of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angel=25.0'
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
 
         Returns:
-            bool: True for succes, False otherwise
+            PersistableSoil: the edited soil
         """
         return self.soils.edit_soil(code, **kwargs)
+
+    def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
+        """
+        Edit an existing soil with parameter names based on the soil class members
+
+        Args:
+            name (str): the name of the soil
+            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
+
+        Returns:
+            PersistableSoil: the edited soil
+        """
+        return self.soils.edit_soil_by_name(name, **kwargs)
 
     @property
     def points(self):
@@ -215,7 +231,7 @@ class DGeoFlowModel(BaseModel):
         Returns:
             int: id of the added layer
         """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
+        scenario_id = scenario_id if scenario_id is not None else self.current_scenario
 
         if not self.datastructure.has_scenario(scenario_id):
             raise IndexError(f"scenario {scenario_id} is not available")
@@ -258,7 +274,7 @@ class DGeoFlowModel(BaseModel):
         Returns:
             int: id of the added meshproperties collection
         """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
+        scenario_id = scenario_id if scenario_id is not None else self.current_scenario
         meshpropertiescollection = self.datastructure.mesh_properties[scenario_id]
 
         persistable_layer = self.get_layer(scenario_id, layer_id)
@@ -289,7 +305,7 @@ class DGeoFlowModel(BaseModel):
         Returns:
             int: id of the boundary conditions collection
         """
-        scenario_id = scenario_id if scenario_id else self.current_scenario
+        scenario_id = scenario_id if scenario_id is not None else self.current_scenario
         boundary_conditions = self.datastructure.boundary_conditions[scenario_id]
 
         boundary_condition_id = self._get_next_id()

@@ -90,14 +90,47 @@ class TestDStabilitySoil:
         dstability_model = DStabilityModel(filename=None)
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
         soil_1 = Soil(
-            name="Test", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
         )
-        code = dstability_model.add_soil(soil_1)
+        added_soil_id = dstability_model.add_soil(soil_1)
 
+        assert added_soil_id == "22"
         assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
         assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
 
-        dstability_model.edit_soil(code=code, cohesion=2.0, friction_angle=35)
+        dstability_model.edit_soil(code=soil_1.code, cohesion=2.0, friction_angle=35)
+        assert (
+            pytest.approx(
+                dstability_model.soils.get_soil(
+                    "Test"
+                ).mohr_coulomb_parameters.cohesion.mean
+            )
+            == 2.0
+        )
+        assert (
+            pytest.approx(
+                dstability_model.soils.get_soil(
+                    "Test"
+                ).mohr_coulomb_parameters.friction_angle.mean
+            )
+            == 35.0
+        )
+
+    def test_dstability_edit_soil_by_name(self):
+        dstability_model = DStabilityModel(filename=None)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
+        soil_1 = Soil(
+            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+        )
+        added_soil_id = dstability_model.add_soil(soil_1)
+
+        assert added_soil_id == "22"
+        assert soil_1.mohr_coulomb_parameters.cohesion.mean == 1.0
+        assert soil_1.mohr_coulomb_parameters.friction_angle.mean == 20.0
+
+        dstability_model.edit_soil_by_name(
+            name=soil_1.name, cohesion=2.0, friction_angle=35
+        )
         assert (
             pytest.approx(
                 dstability_model.soils.get_soil(

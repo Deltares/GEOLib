@@ -1,3 +1,7 @@
+"""
+The internal data model structure.
+"""
+
 import json
 from collections import defaultdict
 from datetime import date, datetime
@@ -311,6 +315,15 @@ class State(DStabilitySubStructure):
     ):
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
 
+    def get_state(
+        self, state_id: int
+    ) -> Union[PersistableStatePoint, PersistableStateLine]:
+        for state in self.StatePoints + self.StateLines:
+            if state.Id == str(state_id):
+                return state
+
+        raise ValueError(f"State point with id {state_id} not found")
+
 
 # statecorrelation
 
@@ -334,6 +347,11 @@ class StateCorrelation(DStabilitySubStructure):
     ContentVersion: Optional[str] = "1"
     Id: Optional[str]
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
+
+    def add_state_correlation(
+        self, state_correlation: PersistableStateCorrelation
+    ) -> None:
+        self.StateCorrelations.append(state_correlation)
 
 
 class Stage(DStabilitySubStructure):
@@ -442,6 +460,20 @@ class SoilCorrelation(DStabilitySubStructure):
     @classmethod
     def structure_name(cls) -> str:
         return "soilcorrelations"
+
+    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+        """
+        Add a new soil correlation to the model.
+
+        Args:
+            list_correlated_soil_ids (List[str]): a list of soil ids that are correlated
+
+        Returns:
+            None
+        """
+        self.SoilCorrelations.append(
+            PersistableSoilCorrelation(CorrelatedSoilIds=list_correlated_soil_ids)
+        )
 
 
 class ShearStrengthModelTypePhreaticLevelInternal(Enum):
@@ -804,27 +836,52 @@ class SoilCollection(DStabilitySubStructure):
         Update a soil.
 
         Args:
-            code (str): code of the soil
-            kwargs (dict): dictionary with agument names and values
+            code (str): code of the soil.
+            kwargs (dict): dictionary with argument names and values
 
         Returns:
             PersistableSoil: the edited soil
         """
+
         for persistable_soil in self.Soils:
             if persistable_soil.Code == code:
-                for k, v in kwargs.items():
-                    try:
-                        setattr(persistable_soil, snake_to_camel(k), v)
-
-                        k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
-                        if hasattr(persistable_soil, k_stochastic):
-                            getattr(persistable_soil, k_stochastic).Mean = v
-                    except AttributeError:
-                        raise ValueError(f"Unknown soil parameter {k}.")
-
-                return persistable_soil
-
+                return self.edit_persistable_soil(
+                    persistable_soil=persistable_soil, kwargs=kwargs
+                )
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
+
+    def edit_soil_by_name(
+        self, name: Optional[str] = None, **kwargs: dict
+    ) -> PersistableSoil:
+        """
+        Update a soil, searching by name. This method will edit the first occurence of the name
+        if it is used multiple times.
+
+        Args:
+            name (str): name of the soil.
+            kwargs (dict): dictionary with argument names and values
+
+        Returns:
+            PersistableSoil: the edited soil
+        """
+
+        for persistable_soil in self.Soils:
+            if persistable_soil.Name == name:
+                return self.edit_persistable_soil(
+                    persistable_soil=persistable_soil, kwargs=kwargs
+                )
+        raise ValueError(f"Soil name '{name}' not found in the SoilCollection")
+
+    def edit_persistable_soil(self, persistable_soil: PersistableSoil, kwargs: dict):
+        for k, v in kwargs.items():
+            try:
+                setattr(persistable_soil, snake_to_camel(k), v)
+                k_stochastic = f"{snake_to_camel(k)}StochasticParameter"
+                if hasattr(persistable_soil, k_stochastic):
+                    getattr(persistable_soil, k_stochastic).Mean = v
+            except AttributeError:
+                raise ValueError(f"Unknown soil parameter {k}.")
+        return persistable_soil
 
 
 # Reinforcements
@@ -1733,7 +1790,9 @@ DStabilityResult = Union[
     BishopBruteForceResult,
     BishopReliabilityResult,
     BishopResult,
+    None
 ]
+
 
 ###########################
 # INPUT AND OUTPUT COMBINED
