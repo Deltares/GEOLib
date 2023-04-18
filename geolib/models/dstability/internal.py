@@ -1733,7 +1733,7 @@ class SpencerReliabilityResult(DStabilitySubStructure):
                 f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
             )
 
-class SpencerGeneticReliabilityResult(DStabilitySubStructure):
+class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
     FailureProbability: Optional[float] = None
     Id: Optional[str] = None
@@ -1933,7 +1933,7 @@ DStabilityResult = Union[
     UpliftVanParticleSwarmReliabilityResult,
     SpencerGeneticAlgorithmResult,
     SpencerReliabilityResult,
-    SpencerGeneticReliabilityResult,
+    SpencerGeneticAlgorithmReliabilityResult,
     SpencerResult,
     BishopBruteForceResult,
     BishopReliabilityResult,
@@ -2014,12 +2014,15 @@ class DStabilityStructure(BaseModelStructure):
     uplift_van_results: List[UpliftVanResult] = []
     uplift_van_particle_swarm_results: List[UpliftVanParticleSwarmResult] = []
     uplift_van_reliability_results: List[UpliftVanReliabilityResult] = []
+    uplift_van_particle_swarm_reliability_results: List[UpliftVanParticleSwarmReliabilityResult] = []
+    spencer_results: List[SpencerResult] = []
     spencer_genetic_algorithm_results: List[SpencerGeneticAlgorithmResult] = []
     spencer_reliability_results: List[SpencerReliabilityResult] = []
-    spencer_results: List[SpencerResult] = []
+    spencer_genetic_algorithm_reliability_results: List[SpencerGeneticAlgorithmReliabilityResult] = []
+    bishop_results: List[BishopResult] = []
     bishop_bruteforce_results: List[BishopBruteForceResult] = []
     bishop_reliability_results: List[BishopReliabilityResult] = []
-    bishop_results: List[BishopResult] = []
+    bishop_bruteforce_reliability_results: List[BishopBruteForceReliabilityResult] = []
 
     @root_validator(skip_on_failure=True, allow_reuse=True)
     def ensure_validity_foreign_keys(cls, values):
@@ -2349,11 +2352,11 @@ class DStabilityStructure(BaseModelStructure):
             },
             AnalysisTypeEnum.UPLIFT_VAN_PARTICLE_SWARM: {
                 "non_probabilistic": self.uplift_van_particle_swarm_results,
-                "probabilistic": self.uplift_van_reliability_results,
+                "probabilistic": self.uplift_van_particle_swarm_reliability_results,
             },
             AnalysisTypeEnum.SPENCER_GENETIC: {
                 "non_probabilistic": self.spencer_genetic_algorithm_results,
-                "probabilistic": self.spencer_reliability_results,
+                "probabilistic": self.spencer_genetic_algorithm_reliability_results,
             },
             AnalysisTypeEnum.SPENCER: {
                 "non_probabilistic": self.spencer_results,
@@ -2361,7 +2364,7 @@ class DStabilityStructure(BaseModelStructure):
             },
             AnalysisTypeEnum.BISHOP_BRUTE_FORCE: {
                 "non_probabilistic": self.bishop_bruteforce_results,
-                "probabilistic": self.bishop_reliability_results,
+                "probabilistic": self.bishop_bruteforce_reliability_results,
             },
             AnalysisTypeEnum.BISHOP: {
                 "non_probabilistic": self.bishop_results,
