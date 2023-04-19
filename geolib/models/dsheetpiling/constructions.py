@@ -13,7 +13,7 @@ class PileProperties(BaseDataClass):
      material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
      elastic_stiffness_ei  : Stiffness of the section per running meter.
      section_bottom_level  : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
-     mr_char_el : Characterictic elastic moment without safety factors.
+     mr_char_el : Characteristic elastic moment without safety factors.
      material_factor_gamma_m  : The partial safety factor \u03B3 m should be defined, only if the User defined material type
      is selected. Otherwise, the program will automatically apply the following factors
      (acc. to the corresponding Eurocode) to calculate the design allowable moment
@@ -84,7 +84,7 @@ class SheetPileProperties(BaseDataClass):
      acting_width : The acting width can be used when the effective width changes along the sheet piling. D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads, supports and reactions, except the normal force.
      elastic_stiffness_ei : Stiffness of the section per running meter.
      section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
-     mr_char_el: Characterictic elastic moment without safety factors.
+     mr_char_el: Characteristic elastic moment without safety factors.
      material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type is selected. Otherwise, the program will automatically apply the following factors (acc. to the corresponding Eurocode) to calculate the design allowable moment:
 
         * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)

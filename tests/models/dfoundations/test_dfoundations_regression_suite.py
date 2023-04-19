@@ -6,11 +6,13 @@ from teamcity import is_running_under_teamcity
 from geolib.models import DFoundationsModel
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dfoundations/benchmarks"
+
 
 class TestRegressionSuite:
 
     input_testdata = TestUtils.get_test_files_from_local_test_dir(
-        "dfoundations/benchmarks", "*.fod"
+        test_file_directory, "*.fod"
     )
     input_testdata_ids = [str(input_file.stem) for input_file in input_testdata]
 
@@ -21,7 +23,7 @@ class TestRegressionSuite:
         # 1. Set up test data
         filename = test_file.stem
         output_test_folder = Path(
-            TestUtils.get_output_test_data_dir("dfoundations/benchmarks")
+            TestUtils.get_output_test_data_dir(test_file_directory)
         )
         output_test_file = output_test_folder / (filename + ".json")
         ds = DFoundationsModel()
@@ -38,7 +40,7 @@ class TestRegressionSuite:
 
     @pytest.mark.unittest
     def test_regression_issue8(self):
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.fod"
         ds = DFoundationsModel()
         ds.parse(test_file)

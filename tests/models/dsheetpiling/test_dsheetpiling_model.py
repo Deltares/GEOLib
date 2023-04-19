@@ -94,6 +94,19 @@ def model() -> DSheetPilingModel:
     return model
 
 
+def get_problem_description(ds_value, errors, od_value):
+    # try getting better description of the problem
+    od_dict = od_value.dict()
+    for key, value in ds_value.dict().items():
+        if key not in od_dict.keys():
+            errors.append(f"Input key {key} not present in output")
+        if value != od_dict[key]:
+            mismatch = " - ".join(
+                [k for k in value.keys() if value[k] != od_dict[key][k]]
+            )
+            errors.append(f"Values differ for {key}: ({mismatch})")
+
+
 class TestDsheetPilingModel:
     @pytest.mark.unittest
     @pytest.mark.workinprogress
@@ -176,19 +189,9 @@ class TestDsheetPilingModel:
             if ds_value != od_value:
                 logging.warning(f"UNEQUAL: {ds_value} != {od_value}")
                 try:
-                    # try getting better description of the problem
-                    od_dict = od_value.dict()
-                    for key, value in ds_value.dict().items():
-                        if key not in od_dict.keys():
-                            errors.append(f"Input key {key} not present in output")
-                        if value != od_dict[key]:
-                            mismatch = " - ".join(
-                                [k for k in value.keys() if value[k] != od_dict[key][k]]
-                            )
-                            errors.append(f"Values differ for {key}: ({mismatch})")
+                    get_problem_description(ds_value, errors, od_value)
                 except:
-                    pass
-                errors.append(f"Values for key {ds_key} differ from parsed to serialized")
+                    errors.append(f"Values for key {ds_key} differ from parsed to serialized")
         if errors:
             pytest.fail(f"Failed with the following {errors}")
 

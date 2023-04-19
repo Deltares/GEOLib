@@ -330,7 +330,7 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
         """
 
         def split_line(text: str) -> List[str]:
-            parts = re.split(" |\t", text.strip())
+            parts = re.split("[ \t]", text.strip())
             return list(filter(lambda part: part != "", parts))
 
         table_text = list(DSerieParser.parse_list_group(text).values())[0]
