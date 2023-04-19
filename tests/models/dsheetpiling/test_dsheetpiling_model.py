@@ -95,7 +95,6 @@ def model() -> DSheetPilingModel:
 
 
 def get_problem_description(ds_value, errors, od_value):
-    # try getting better description of the problem
     od_dict = od_value.dict()
     for key, value in ds_value.dict().items():
         if key not in od_dict.keys():
@@ -188,10 +187,7 @@ class TestDsheetPilingModel:
             od_value = output_datastructure[ds_key]
             if ds_value != od_value:
                 logging.warning(f"UNEQUAL: {ds_value} != {od_value}")
-                try:
-                    get_problem_description(ds_value, errors, od_value)
-                except:
-                    errors.append(f"Values for key {ds_key} differ from parsed to serialized")
+                get_problem_description(ds_value, errors, od_value)
         if errors:
             pytest.fail(f"Failed with the following {errors}")
 
