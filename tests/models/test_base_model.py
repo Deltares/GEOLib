@@ -75,8 +75,8 @@ class TestBaseModel:
         "model,filename,modelname",
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
-            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
             (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
         ],
     )
@@ -115,8 +115,8 @@ class TestBaseModel:
         "model,filename,modelname",
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
-            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
             (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
         ],
     )
@@ -159,8 +159,8 @@ class TestBaseModel:
         "model,filename,modelname",
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
-            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
             (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
         ],
     )

@@ -19,14 +19,8 @@ class SoilTypeNl(IntEnum):
     CLAY = 3
     PEAT = 4
     SANDYLOAM = 5
-
-
-class SoilTypeBe(IntEnum):
-    GRAVEL = 0
-    SAND = 1
-    LOAM = 2
-    CLAY = 3
-    PEAT = 4
+    TERTCLAY = 6
+    CLAYEYSAND = 7
 
 
 class MaxConeResistType(IntEnum):
@@ -38,7 +32,6 @@ class Soil(DSeriesUnmappedNameProperties):
     name: constr(min_length=1, max_length=25)
     soilcolor: int = 10871211  # could be color
     soilsoiltype: SoilTypeNl = SoilTypeNl.SAND
-    soilbelgiansoiltype: SoilTypeBe = SoilTypeBe.SAND
     soilgamdry: confloat(ge=0.0, le=100) = 20.00
     soilgamwet: confloat(ge=0.0, le=100) = 20.00
     soilinitialvoidratio: confloat(ge=0.0, le=20.0) = 0.001001

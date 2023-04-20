@@ -4,7 +4,7 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import BinaryIO, List, Optional, Type, Union
 
-from pydantic import FilePath, confloat
+from pydantic import FilePath, confloat, conint
 
 from geolib.geometry import Point
 from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
@@ -48,9 +48,9 @@ class ModelOptions(BaseDataClass):
 
     # Transformation
     max_allowed_settlement_lim_state_str: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_str: confloat(ge=0.0001, le=10000) = 0.0001
+    max_allowed_rel_rotation_lim_state_str: conint(ge=1, le=10000) = 100
     max_allowed_settlement_lim_state_serv: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_serv: confloat(ge=0.0001, le=10000) = 0.0001
+    max_allowed_rel_rotation_lim_state_serv: conint(ge=1, le=10000) = 300
 
     # Factors
     factor_xi3: Optional[confloat(ge=0.01, le=10)] = None
@@ -151,7 +151,7 @@ class DFoundationsModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DFoundationsConsole/DFoundationsConsole.exe")
+        return Path("DFoundations/DFoundations.exe")
 
     @property
     def console_flags(self) -> List[str]:
