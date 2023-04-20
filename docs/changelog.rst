@@ -1,5 +1,8 @@
 Changelog
 =========
+- :release:`0.6.0 <2023-04-20>`
+- :feature:`-` Add support for D-Sheet Piling & D-Foundations 23.1 (#115)
+
 - :release:`0.5.1 <2023-04-04>`
 - :feature:`-` Add optional parameter for stage_id to DStabilityModel.get_result (#114)
 
