@@ -10,7 +10,7 @@ Tutorial D-Sheet Piling
 
     model = DSheetPilingModel()
 
-2. The type of model should be then defined. There are 4 different types of models that can be implemented in D-Sheetpiling.
+2. The type of model should be then defined. There are 4 different types of models that can be implemented in D-Sheet Piling.
 The :class:`~geolib.models.dsheetpiling.dsheetpiling_model.SheetModelType`, :class:`~geolib.models.dsheetpiling.dsheetpiling_model.WoodenSheetPileModelType`,
 :class:`~geolib.models.dsheetpiling.dsheetpiling_model.SinglePileModelType` and :class:`~geolib.models.dsheetpiling.dsheetpiling_model.DiaphragmModelType`.
 
@@ -23,7 +23,7 @@ Initialise as follows:
     )
     model.set_model(modeltype)
 
-3. After defining we will define the (required) sheet properties.
+3. After defining the type of model, we will define the (required) sheet properties.
 
 .. code-block:: python
 
@@ -39,7 +39,6 @@ Initialise as follows:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
 
@@ -67,12 +66,11 @@ as two sections cannot have the same bottom level.
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(name="AZ 13", sheet_pile_properties=sheet_pile_properties_2)
 
-These two sheet element can finally be added to the construction with the following command.
+These two sheet elements can finally be added to the construction with the following command.
 The elements can be added in a form of a list when the construction is set.
 
 .. code-block:: python
@@ -96,7 +94,7 @@ function (the ``stage_id``) in a variable. This ``stage_id`` variable can be use
         pile_top_displacement=0.01,
     )
 
-5. Then the soils should be defined. In this case three types of soils materials will be defined. 
+5. Then the soils should be defined. In this case three types of soil materials will be defined.
 To define a soil material the class :class:`~geolib.soils.Soil` should be initialised. For more information see the
 other :ref:`soil_tut`.
 
@@ -171,7 +169,7 @@ In the same way all the other materials can be defined and added to the model.
     for soil in (soil_peat, soil_sand):
         model.add_soil(soil)
 
-6. After defining all the soil materials the profiles can be defined for the D-SheetPing calculation.
+6. After defining all the soil materials the profiles can be defined for the D-Sheet Piling calculation.
 A soil profile in GEOLIB is essentially a collection of soil layers. A soil layer can be initialised 
 from the class :class:`~geolib.models.dsheetpiling.profiles.SoilLayer` and requires as 
 inputs the top position of the layer and the name of the soil material. Note that the soil materials,
@@ -216,7 +214,7 @@ is used. Two surface are initialised in this case and are added in the first sta
         surface=ground_level_minus_7_meter_surface, side=Side.LEFT, stage_id=stage_id
     )
 
-8. The water level are defined in the same way with initialiasing the class :class:`~geolib.models.dsheetpiling.water_level.WaterLevel`
+8. The water level is defined in the same way with initialising the class :class:`~geolib.models.dsheetpiling.water_level.WaterLevel`
 and then adding it to the model using the function :meth:`~geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.add_head_line`.
 
 .. code-block:: python
@@ -258,8 +256,8 @@ also needs to be initialised and added to the model.
         calculation_options_per_stage=calc_options_per_stage, stage_id=stage_id
     )
 
-Overal stability calculation are initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions`.
-Note that the input of the stage refers to the stage numbering as it is defined in D-SheetPing where the numbering of the stage ids begins from 1.
+Overall stability calculation is initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions`.
+Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids starts at 1.
 
 .. code-block:: python
 
@@ -271,7 +269,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     model.set_calculation_options(calculation_options=calc_options)   
 
 Kranz anchor strength calculation is initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions`.
-Note that the input of the stage refers to the stage numbering as it is defined in D-SheetPing where the numbering of the stage ids begins from 1.
+Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids starts at 1.
 
 .. code-block:: python
 
@@ -279,7 +277,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     model.set_calculation_options(calculation_options=calc_options)   
 
 Design calculation is initialised with class :class:`~geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions`.
-Note that the input of the stage refers to the stage numbering as it is defined in D-SheetPing where the numbering of the stage ids begins from 1.
+Note that the input of the stage refers to the stage numbering as it is defined in D-Sheet Piling where the numbering of the stage ids starts at 1.
 
 .. code-block:: python  
 
@@ -295,7 +293,7 @@ Note that the input of the stage refers to the stage numbering as it is defined 
     model.set_calculation_options(calculation_options=calc_options)
 
 10. After defining these basic inputs the calculation can be run, but won't be so useful. Several loads, supports and anchors can be defined.
-The following section list the way they can be initialised. The stage_id input here refers to the Python input which starts from 0.
+The following section lists the way they can be initialised. The stage_id input here refers to the Python input which starts from 0.
 
 .. code-block:: python
 
@@ -366,7 +364,7 @@ The following section list the way they can be initialised. The stage_id input h
     )
     model.add_load(load=normal_force, stage_id=0)
 
-11. To run the model first the model needs to be serialised. To do that define a 
+11. To run the model first the model needs to be serialised. To do that define an
 output file name and call the function :meth:`geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel.serialize`.
 
 .. code-block:: python
@@ -375,7 +373,7 @@ output file name and call the function :meth:`geolib.models.dsheetpiling.dsheetp
     input_test_file = Path("Tutorial.shi")
     model.serialize(input_test_file)
 
-12. Finally the execute function can be called to run the model in D-SheetPiling
+12. Finally the execute function can be called to run the model in D-Sheet Piling
 
 .. code-block:: python
 

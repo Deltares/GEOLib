@@ -63,14 +63,14 @@ file in your working directory. The second is to specify environment variables.<
 <p>This configuration variable points to the folder in which the consoles are placed (each in its own subfolder).</p>
 <p>Note that the <em>CONSOLE_FOLDER</em> variable has to point to an existing path,
 otherwise GEOLib will not start. The executables are expected in the following locations:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DFoundationsConsole/DFoundationsConsole.exe&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DFoundations/DFoundations.exe&quot;</span>
 <span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DSettlementConsole/DSettlementConsole.exe&quot;</span>
-<span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DSheetPilingConsole/DSheetPilingConsole.exe&quot;</span>
+<span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DSheetPiling/DSheetPiling.exe&quot;</span>
 <span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DStabilityConsole/D-Stability Console.exe&quot;</span>
 <span class="o">-</span> <span class="o">*</span><span class="n">CONSOLE_FOLDER</span><span class="o">*/</span><span class="s2">&quot;DGeoFlowConsole/DGeoFlow Console.exe&quot;</span>
 </pre></div>
 </div>
-<p>It can also be set by a <strong>CONSOLE_FOLDER</strong> environment variable. The enviroment variable will
+<p>It can also be set by a <strong>CONSOLE_FOLDER</strong> environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.</p>
 <p>The defaults are as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -130,8 +130,8 @@ from <a class="reference external" href="https://download.deltares.nl/en/lmadmin
 <section id="console-usage">
 <h2>Console usage<a class="headerlink" href="#console-usage" title="Permalink to this headline">¶</a></h2>
 <p>If you wish to use these consoles without Python on the command line,
-note that all except for the DStability console require the “/b” flag, i.e.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ DFoundationsConsole/DFoundationsConsole.exe /b &quot;folder_or_file&quot;
+note that all except for the D-Stability and D-Geo Flow consoles require the “/b” flag, i.e.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ DFoundations/DFoundations.exe /b &quot;folder_or_file&quot;
 </pre></div>
 </div>
 <p>Note that you can only execute these files from the commandline, double clicking on them in Explorer won’t work.</p>
@@ -143,8 +143,8 @@ note that all except for the DStability console require the “/b” flag, i.e.:
 At the moment that version number is:</p>
 <ul class="simple">
 <li><p>D-Settlement <strong>19.1</strong></p></li>
-<li><p>D-Foundations <strong>19.1</strong></p></li>
-<li><p>D-SheetPiling <strong>19.3</strong></p></li>
+<li><p>D-Foundations <strong>23.1</strong></p></li>
+<li><p>D-SheetPiling <strong>23.1</strong></p></li>
 <li><p>D-Stability <strong>2022.01.2</strong></p></li>
 <li><p>D-Geo flow <strong>2022.01</strong></p></li>
 </ul>
