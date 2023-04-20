@@ -81,7 +81,7 @@ class Profile(BaseDataClass):
             "excess_pore_pressure_top": float = 0.0  # [kN/m3]
             "excess_pore_pressure_bottom": float = 0.0  # [kN/m3]
             "ocr_value": float = 1.0  # [-]
-            "reduction_core_resistance": int = 0  # [%]
+            "reduction_core_resistance": float = 0.0  # [%]
         },]
 
     """

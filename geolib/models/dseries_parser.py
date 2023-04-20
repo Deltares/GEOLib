@@ -103,10 +103,10 @@ class DSeriesStructure(BaseModelStructure):
             # If the body is a List[string], we should check
             # whether we can parse it further.
             elif (
-                field in kwargs
-                and isinstance(kwargs[field], list)
-                and len(kwargs[field]) > 0
-                and isinstance(kwargs[field][0], str)
+                    field in kwargs
+                    and isinstance(kwargs[field], list)
+                    and len(kwargs[field]) > 0
+                    and isinstance(kwargs[field][0], str)
             ):
                 body = kwargs[field]
 
@@ -308,9 +308,49 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
 
     @classmethod
     def parse_text(cls, text):
-        unwrapped_text = DSerieParser.parse_group_as_dict(text)
-        return super().parse_text(list(unwrapped_text.values())[0])
+        """Parses a Table wrapped in another group such as:
+        [TABLE]
+        DataCount = x followed by
+        [END OF TABLE]  directly when x = 0 or, when x > 0, by
+        [COLUMN INDICATION]
+        A
+        B
+        [END OF COLUMN INDICATION]
+        [DATA]
+        1 1
+        2 2
+        [END OF DATA]
+        [END OF TABLE]
 
+        Args:
+            text (str): Wrapped table group to parse.
+
+        Returns:
+            DSerieStructure: Parsed structure.
+        """
+
+        def split_line(text: str) -> List[str]:
+            parts = re.split("[ \t]", text.strip())
+            return list(filter(lambda part: part != "", parts))
+
+        table_text = list(DSerieParser.parse_list_group(text).values())[0]
+        table_data = list(DSerieParser.parse_list_group(table_text).values())
+        if len(table_data) == 0:
+            values_dict_list = table_data;
+            collection_property_name = list(cls.__fields__.items())[0][0]
+            return cls(**{collection_property_name: values_dict_list})
+        else:
+            # Expected two groups (column_indication and data)
+            keys = table_data[0].split("\n")
+            keys = [make_key(j) for j in keys]
+
+            values_dict_list = [
+                dict(zip(keys, values))
+                for values in map(split_line, table_data[1].split("\n"))
+            ]
+            collection_property_name = list(cls.__fields__.items())[0][0]
+
+        return cls(**{collection_property_name: values_dict_list})
 
 class DSerieOldTableStructure(DSeriesStructure):
     @classmethod
@@ -500,7 +540,7 @@ class DSeriesInlineProperties(DSeriesStructure):
         ]
         header_lines = cls.header_lines()
         for idx, (key, value) in enumerate(
-            DSerieParser.parse_group(text, loose_properties=True)
+                DSerieParser.parse_group(text, loose_properties=True)
         ):
             if idx < header_lines:
                 continue
@@ -728,8 +768,8 @@ class DSeriesRepeatedGroupedProperties(DSeriesStructure):
         generated_dict = {}
         no_key_group_values = []
         for group_key, group_values in groupby(
-            list(DSerieParser.parse_group(text, loose_properties=True)),
-            lambda key_value: key_value[0],
+                list(DSerieParser.parse_group(text, loose_properties=True)),
+                lambda key_value: key_value[0],
         ):
             filtered_values = [value for key, value in group_values]
             if not group_key:
@@ -863,7 +903,7 @@ class DSeriesTreeStructure(DSeriesStructure):
 
     @classmethod
     def parse_text_lines(
-        cls, text_lines: List[List[str]]
+            cls, text_lines: List[List[str]]
     ) -> Tuple[DSeriesStructure, int]:
         """Parses a list of strings into the properties of a structure.
         Example:
@@ -883,7 +923,7 @@ class DSeriesTreeStructure(DSeriesStructure):
         """
 
         def get_list_values(
-            struct_idx: int, field_name: str, text_lines: list
+                struct_idx: int, field_name: str, text_lines: list
         ) -> Tuple[DSeriesStructure, int]:
             """Auxiliar method to either parse as a DSeriesStructure or as a list of
             any different object.
@@ -918,9 +958,9 @@ class DSeriesTreeStructure(DSeriesStructure):
             field = unpack_if_union(field)
             # if the current property is a list, then extract the next line values.
             if (
-                is_list(field)
-                or issubclass(field, list)
-                or is_structure_collection(field)
+                    is_list(field)
+                    or issubclass(field, list)
+                    or is_structure_collection(field)
             ):
                 lines_to_parse = cls.get_next_property_text_lines(text_lines[lines_read:])
                 parsed_tuple = get_list_values(struct_idx, field_name, lines_to_parse)
@@ -954,7 +994,7 @@ class DSeriesTreeStructure(DSeriesStructure):
 
     @classmethod
     def get_tree_structure_read_lines(
-        cls, parsed_tuple: Tuple[DSeriesStructure, int]
+            cls, parsed_tuple: Tuple[DSeriesStructure, int]
     ) -> Tuple[DSeriesStructure, int]:
         """Allows inherited classes to override how many lines have been actually been read
         for a given parsed structure based on the cls being instantiated.
@@ -1016,7 +1056,7 @@ class DSeriesTreeStructurePropertiesInGroups(DSeriesTreeStructure):
 
     @classmethod
     def get_tree_structure_read_lines(
-        cls, parsed_tuple: Tuple[DSeriesStructure, int]
+            cls, parsed_tuple: Tuple[DSeriesStructure, int]
     ) -> Tuple[DSeriesStructure, int]:
         # Only one line is meant to be read as parsed_text_lines is mapped 1:1 lines-properties.
         return parsed_tuple[0], 1
@@ -1067,7 +1107,7 @@ class DSeriesTreeStructureCollection(DSeriesStructure):
 
     @classmethod
     def parse_collection_type(
-        cls, collecion_type: Type, lines: list
+            cls, collecion_type: Type, lines: list
     ) -> Tuple[DSeriesStructure, int]:
         return collecion_type.parse_text_lines(lines)
 
@@ -1103,7 +1143,7 @@ class DSeriesMatrixTreeStructureCollection(DSeriesTreeStructureCollection):
     # but not object creation.
     @classmethod
     def parse_collection_type(
-        cls, collecion_type: Type, lines: list
+            cls, collecion_type: Type, lines: list
     ) -> Tuple[DSeriesStructure, int]:
         parsed_structure, _ = collecion_type.parse_text_lines(
             [[line] for line in lines[0]]
@@ -1177,7 +1217,7 @@ class DSerieParser(BaseParser):
 
     @staticmethod
     def parse_group(
-        text_lines: str, loose_properties: bool = False, unique_keys: bool = False
+            text_lines: str, loose_properties: bool = False, unique_keys: bool = False
     ) -> Iterable[Tuple[str, str]]:
         """Parses a text with headers such as [GROUP] and [END OF GROUP] and
         yields each property of the group as a Tuple[property name, value].
@@ -1250,9 +1290,9 @@ class DSerieParser(BaseParser):
 
     @staticmethod
     def parse_list_group(
-        text: str,
-        exceptions=["vertical", "soil", "residual_settlements"],
-        skipped_keys=[],
+            text: str,
+            exceptions=["vertical", "soil", "residual_settlements"],
+            skipped_keys=[],
     ) -> Dict[str, Union[List[str], str]]:
         """Method to parse several groups in a sli/sld file that can include repeated groups.
 
@@ -1458,7 +1498,7 @@ def is_structure_collection(field: Type) -> bool:
 
 
 def read_property_as_list(
-    field_name: str, field: Type, text_lines: list
+        field_name: str, field: Type, text_lines: list
 ) -> Tuple[List[DSeriesStructure], int]:
     """Reads a property containing a collection of values represented as
     a list of strings.
@@ -1487,7 +1527,7 @@ def read_property_as_list(
         lines_to_parse = text_lines[lines_read:]
         if issubclass(field, DSeriesTreeStructureCollection):
             # If its an encapsuled collection, number of lines needs to be given.
-            lines_to_parse = text_lines[lines_read - 1 :]
+            lines_to_parse = text_lines[lines_read - 1:]
 
         if is_structure_collection(field):
             parsed_values, iteration_lines = field.parse_text_lines(lines_to_parse)

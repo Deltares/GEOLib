@@ -20,13 +20,13 @@ This configuration variable points to the folder in which the consoles are place
 Note that the *CONSOLE_FOLDER* variable has to point to an existing path,
 otherwise GEOLib will not start. The executables are expected in the following locations::
 
-- *CONSOLE_FOLDER*/"DFoundationsConsole/DFoundationsConsole.exe"
+- *CONSOLE_FOLDER*/"DFoundations/DFoundations.exe"
 - *CONSOLE_FOLDER*/"DSettlementConsole/DSettlementConsole.exe"
-- *CONSOLE_FOLDER*/"DSheetPilingConsole/DSheetPilingConsole.exe"
+- *CONSOLE_FOLDER*/"DSheetPiling/DSheetPiling.exe"
 - *CONSOLE_FOLDER*/"DStabilityConsole/D-Stability Console.exe"
 - *CONSOLE_FOLDER*/"DGeoFlowConsole/DGeoFlow Console.exe"
 
-It can also be set by a **CONSOLE_FOLDER** environment variable. The enviroment variable will
+It can also be set by a **CONSOLE_FOLDER** environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.
 
 The defaults are as follows::
@@ -90,9 +90,9 @@ Console usage
 -------------
 
 If you wish to use these consoles without Python on the command line, 
-note that all except for the DStability console require the "/b" flag, i.e.::
+note that all except for the D-Stability and D-Geo Flow consoles require the "/b" flag, i.e.::
 
-    $ DFoundationsConsole/DFoundationsConsole.exe /b "folder_or_file"
+    $ DFoundations/DFoundations.exe /b "folder_or_file"
 
 Note that you can only execute these files from the commandline, double clicking on them in Explorer won't work.
 
@@ -105,8 +105,8 @@ GEOLib only supports the files used by the D-Serie / D-GEO Suite consoles and th
 At the moment that version number is:
 
 * D-Settlement **19.1**
-* D-Foundations **19.1**
-* D-SheetPiling **19.3**
+* D-Foundations **23.1**
+* D-SheetPiling **23.1**
 * D-Stability **2022.01.2**
 * D-Geo flow **2022.01**
 

@@ -3,14 +3,13 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import Any, BinaryIO, List, Optional, Type, Union
 
-from pydantic import FilePath, PositiveFloat
-from pydantic.types import confloat, conint
-
 from geolib.geometry import Point
 from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
 from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
+from pydantic import FilePath, PositiveFloat
+from pydantic.types import confloat, conint
 
 from .calculation_options import CalculationOptions, CalculationOptionsPerStage
 from .dsheetpiling_parserprovider import DSheetPilingParserProvider
@@ -41,7 +40,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     PassiveSide,
@@ -141,7 +140,7 @@ class DSheetPilingModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DSheetPilingConsole/DSheetPilingConsole.exe")
+        return Path("DSheetPiling/DSheetPiling.exe")
 
     @property
     def console_flags(self) -> List[str]:
@@ -159,8 +158,8 @@ class DSheetPilingModel(BaseModel):
         ds = self.datastructure.input_data.dict()
         ds.update(
             {
-                "version": self.datastructure.version.dict(),
-                "version_externals": self.datastructure.version_externals.dict(),
+                "version": self.datastructure.input_data.version.dict(),
+                "version_externals": self.datastructure.input_data.version_externals.dict(),
             }
         )
         serializer = DSheetPilingInputSerializer(ds=ds)
@@ -173,7 +172,7 @@ class DSheetPilingModel(BaseModel):
         _map_method_b_available = {
             VerifyType.CUR: self.datastructure.input_data.calculation_options.curmethod,
             VerifyType.EC7NL: self.datastructure.input_data.calculation_options.ec7nlmethod,
-            VerifyType.EC7BE: self.datastructure.input_data.calculation_options.nbmethod,
+            VerifyType.EC7BE: self.datastructure.input_data.calculation_options.ec7bemethod,
         }
         if (
             self.datastructure.input_data.calculation_options.inputcalculationtype
