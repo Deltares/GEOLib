@@ -52,7 +52,7 @@ class TestDStabilityInternal:
     def test_find_subclass_from_children(self):
         # Setup
         dm = DStabilityModel()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1"))
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/example_1.stix"))
         dm.parse(test_filepath)
 
         # Verify expecations

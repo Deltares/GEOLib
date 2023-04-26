@@ -89,11 +89,11 @@ class TestDStabilityStates:
     # todo > add test to read the example and see if the statepoint and lines are read
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_statepoints_equal(self, dir_path: str):
+    def test_given_data_statepoints_equal(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -120,11 +120,11 @@ class TestDStabilityStates:
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_state_lines_equal(self, dir_path: str):
+    def test_given_data_state_lines_equal(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
