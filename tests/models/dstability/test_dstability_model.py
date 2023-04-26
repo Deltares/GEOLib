@@ -81,9 +81,9 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "filepath",
         [
-            pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/ResultExample", id="Result Example"),
-            pytest.param("dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.1"),
+            pytest.param("dstability/example_1.stix", id="Input Structure"),
+            pytest.param("dstability/ResultExample.stix", id="Result Example"),
+            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -91,14 +91,20 @@ class TestDStabilityModel:
     ):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(filepath))
+
+        test_output_file_path = Path(
+            TestUtils.get_output_test_data_dir("dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type", clean_dir=True)
+        )
+        TestUtils.extract_zip_to_output_test_data_dir(str(test_input_filepath), "dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type")
+
         dstability_model = DStabilityModel(filename=None)
 
         # 2. Verify initial expectations.
-        assert os.path.exists(test_input_filepath)
+        assert os.path.exists(test_output_file_path)
         assert dstability_model is not None
 
         # 3. Run test.
-        dstability_model.parse(test_input_filepath)
+        dstability_model.parse(test_output_file_path)
 
         # 4. Verify final expectations.
         assert dstability_model.is_valid
@@ -108,9 +114,9 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/ResultExample", id="Result Example"),
-            pytest.param("dstability/Tutorial_v2023_1", id="Tutorial DStability 2023.1"),
+            pytest.param("dstability/example_1.stix", id="Input Structure"),
+            pytest.param("dstability/ResultExample.stix", id="Result Example"),
+            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"),
         ],
     )
     def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
@@ -142,9 +148,9 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/EmptyFile", id="Empty File"),
-            pytest.param("dstability/example_1", id="Example File"),
-            pytest.param("dstability/Tutorial_v2023_1", id="Tutorial 2023.01 File"),
+            pytest.param("dstability/EmptyFile.stix", id="Empty File"),
+            pytest.param("dstability/example_1.stix", id="Example File"),
+            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial 2023.01 File"),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):

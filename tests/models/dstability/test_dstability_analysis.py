@@ -115,11 +115,11 @@ class TestDStabilityAnalysis:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_parse_bishop_settings(self, dir_path: str):
+    def test_parse_bishop_settings(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -140,11 +140,11 @@ class TestDStabilityAnalysis:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_parse_bishop_brute_force_settings(self, dir_path: str):
+    def test_parse_bishop_brute_force_settings(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -171,11 +171,11 @@ class TestDStabilityAnalysis:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_parse_spencer_settings(self, dir_path: str):
+    def test_parse_spencer_settings(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -206,11 +206,11 @@ class TestDStabilityAnalysis:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_parse_spencer_genetic_settings(self, dir_path: str):
+    def test_parse_spencer_genetic_settings(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -241,11 +241,11 @@ class TestDStabilityAnalysis:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_parse_upliftvan_settings(self, dir_path: str):
+    def test_parse_upliftvan_settings(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -270,11 +270,11 @@ class TestDStabilityAnalysis:
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_parse_upliftvan_particle_swarm_settings(self, dir_path: str):
+    def test_parse_upliftvan_particle_swarm_settings(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
