@@ -118,7 +118,7 @@ async def calculate_dstabilitymodel(
     return execute(model, background_tasks)
 
 
-@app.post("/calculate/dsettlementmodels")
+@app.post("/calculate/dsettlementmodels", response_model=None)
 async def calculate_many_dsettlementmodels(
     models: conlist(DSettlementModel, min_items=1),
     background_tasks: BackgroundTasks,
@@ -127,7 +127,7 @@ async def calculate_many_dsettlementmodels(
     return execute_many(models, background_tasks)
 
 
-@app.post("/calculate/dfoundationsmodels")
+@app.post("/calculate/dfoundationsmodels", response_model=None)
 async def calculate_many_dfoundationsmodel(
     models: conlist(DFoundationsModel, min_items=1),
     background_tasks: BackgroundTasks,
@@ -136,7 +136,7 @@ async def calculate_many_dfoundationsmodel(
     return execute_many(models, background_tasks)
 
 
-@app.post("/calculate/dsheetpilingmodels")
+@app.post("/calculate/dsheetpilingmodels", response_model=None)
 async def calculate_many_dsheetpilingmodel(
     models: conlist(DSheetPilingModel, min_items=1),
     background_tasks: BackgroundTasks,
@@ -145,7 +145,7 @@ async def calculate_many_dsheetpilingmodel(
     return execute_many(models, background_tasks)
 
 
-@app.post("/calculate/dstabilitymodels")
+@app.post("/calculate/dstabilitymodels", response_model=None)
 async def calculate_many_dstabilitymodel(
     models: conlist(DStabilityModel, min_items=1),
     background_tasks: BackgroundTasks,
