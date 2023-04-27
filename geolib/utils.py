@@ -1,3 +1,7 @@
+"""
+Common utility methods used within GEOLib.
+"""
+
 import csv
 import logging
 import re

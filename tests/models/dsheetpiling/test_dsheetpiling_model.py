@@ -5,8 +5,6 @@ from pathlib import Path
 from typing import List, Type
 
 import pytest
-from teamcity import is_running_under_teamcity
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -79,8 +77,10 @@ from geolib.models.dsheetpiling.supports import (
 from geolib.models.dsheetpiling.surface import Surface
 from geolib.models.dsheetpiling.water_level import WaterLevel
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
+from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dsheetpiling/benchmarks"
 
 @pytest.fixture
 def model() -> DSheetPilingModel:
@@ -92,6 +92,18 @@ def model() -> DSheetPilingModel:
         method_right=LateralEarthPressureMethodStage.KA_KO_KP,
     )
     return model
+
+
+def get_problem_description(ds_value, errors, od_value):
+    od_dict = od_value.dict()
+    for key, value in ds_value.dict().items():
+        if key not in od_dict.keys():
+            errors.append(f"Input key {key} not present in output")
+        if value != od_dict[key]:
+            mismatch = " - ".join(
+                [k for k in value.keys() if value[k] != od_dict[key][k]]
+            )
+            errors.append(f"Values differ for {key}: ({mismatch})")
 
 
 class TestDsheetPilingModel:
@@ -116,7 +128,7 @@ class TestDsheetPilingModel:
         self, filename: Path, structure: Type
     ):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
         ds = DSheetPilingModel()
 
@@ -136,9 +148,9 @@ class TestDsheetPilingModel:
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -172,9 +184,10 @@ class TestDsheetPilingModel:
             if not (ds_key in output_keys):
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
-            if not (ds_value == output_datastructure[ds_key]):
-                logging.warning(f"UNEQUAL: {ds_value} != {output_datastructure[ds_key]}")
-                errors.append(f"Values for key {ds_key} differ from parsed to serialized")
+            od_value = output_datastructure[ds_key]
+            if ds_value != od_value:
+                logging.warning(f"UNEQUAL: {ds_value} != {od_value}")
+                get_problem_description(ds_value, errors, od_value)
         if errors:
             pytest.fail(f"Failed with the following {errors}")
 
@@ -184,14 +197,14 @@ class TestDsheetPilingModel:
         [pytest.param(Path("bm1-1.shi"), id="Input file")],
     )
     def test_writing_anchors_large_values(self, filename: Path):
-        """Test for bug in which very large values overlapped eachother
+        """Test for bug in which very large values overlapped each other
         in the .shi output, resulting in an invalid file.
         """
 
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -227,23 +240,38 @@ class TestDsheetPilingModel:
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         df = DSheetPilingModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsheetpiling"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1.shi"
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
-        output_test_file = output_test_folder / "test.shi"
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        serialized_input_test_file = output_test_folder / "test.shi"
 
+        # 2. Verify initial expectations.
+        assert test_file.is_file()
+
+        # 3. Run test.
         df.parse(test_file)
-        df.serialize(output_test_file)
+        df.serialize(serialized_input_test_file)
+        assert serialized_input_test_file.is_file()
+        df.filename = serialized_input_test_file
+        df.execute()
+
+        # 3. Verify return code of 0 (indicates successful run)
+        assert df.datastructure
+
+    @pytest.mark.acceptance
+    @only_teamcity
+    def test_import_output(self):
+        # 1. Set up test data.
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_file = output_test_folder / "test.shd"
 
         # 2. Verify initial expectations.
         assert output_test_file.is_file()
 
         # 3. Run test.
-        df.filename = output_test_file
-        df.execute()
-
-        # 3. Verify return code of 0 (indicates successful run)
-        assert df.datastructure
+        output_text = output_test_file.read_text()
+        output_structure = DSheetPilingDumpStructure.parse_text(output_text)
+        assert output_structure
 
     @pytest.mark.unittest
     def test_execute_console_without_filename_raises_exception(self):
@@ -403,7 +431,7 @@ class TestDsheetPilingModel:
             pytest.param(SheetModelType, 0, id="Sheet model"),
             pytest.param(WoodenSheetPileModelType, 0, id="Wooden sheet model"),
             pytest.param(SinglePileModelType, 1, id="Single pile model"),
-            pytest.param(DiaphragmModelType, 2, id="Diaphragm model"),
+            pytest.param(DiaphragmModelType, 0, id="Diaphragm model"),
         ],
     )
     def test_set_model(self, modeltype, expected_model_value: int):
@@ -732,9 +760,9 @@ class TestDsheetPilingModel:
             model.add_anchor_or_strut(support="not a support object", stage_id=stage_id)
 
     def test_intialized_model_can_be_serialized(self):
-        """Internal datastructure should be serializable from a intialized model"""
+        """Internal datastructure should be serializable from an initialized model"""
         # 1. setup test
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
         filename = "serialized_from_intialized_model.shi"
         output_test_file = output_test_folder / filename
 

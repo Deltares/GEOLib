@@ -1,24 +1,24 @@
-DUMP FILE FOR D-SHEET PILING CONSOLE
+DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    : Stichting Deltares 
 
-DATE       : 7/7/2020
-TIME       : 5:37:32 PM
-FILENAME   : C:\Users\Smyrniou\Stichting Deltares\Maarten Pronk - D-Sheet Voorbeelden\D-Sheet - Benchmarks\bm3-7b.shd
-CREATED BY : D-Sheet Piling Console version 19.3.500.28970
+DATE       : 4/6/2023
+TIME       : 3:38:20 PM
+FILENAME   : D:\pvcsprojects\applications\DSheetPiling\trunk\data\Benchmarks\bm3-7b.shd
+CREATED BY : D-Sheet Piling version 23.1.1.40517
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
+[INPUT DATA]
 [VERSION]
-Soil=1007
-D-Sheet Piling=1026
+Soil=1010
+D-Sheet Piling=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=19.1.1.23469
-DGSCPTipUI.dll=19.1.1.23469
+DGSCPTipCalc.dll=21.3.1.35380
+DGSCPTipUI.dll=21.3.1.35380
 [END OF VERSION EXTERNALS]
 
-[INPUT DATA]
 [SOIL COLLECTION]
     1 = number of items
 [SOIL]
@@ -33,11 +33,8 @@ SoilEModMenard=0.01
 SoilCohesion=0.00
 SoilPhi=0.00
 SoilDelta=0.00
-SoilCuTop=0.00
-SoilCuBottom=0.00
-SoilCuBearingCapacityFactor=4.10
+SoilIsDeltaAngleAutomaticallyCalculated=0
 SoilOCR=1.00
-SoilDrained=0
 SoilPermeabKx=1.00000E-03
 SoilStdCohesion=0.00
 SoilStdPhi=0.00
@@ -75,7 +72,6 @@ SoilDefaultElasticity=1
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 
-
 [RUN IDENTIFICATION]
 Benchmark D-Sheet Piling 3-7b
 Horizontal pressure due to surcharge load
@@ -86,7 +82,6 @@ Horizontal pressure due to surcharge load
 0 : Sheet piling
 1 : C, phi, delta soil parameters
 0 : Verification = FALSE
-0 : EC7-SE visible = FALSE
 0 : Pile loaded by forces
 0 : Pile loaded by user defined soil displacements
 0 : Probabilistic = FALSE
@@ -113,7 +108,6 @@ SheetPilingElementEI=2.429000E+05
 SheetPilingElementWidth=1.00
 SheetPilingElementLevel=-10.00
 SheetPilingElementHeight=400
-SheetPilingElementCoatingArea=1.35
 SheetPilingPileWidth=1.00
 SheetPilingElementSectionArea=170
 SheetPilingElementResistingMoment=0
@@ -136,10 +130,7 @@ DiaphragmWallPosMomElastoPlastic=0.00
 DiaphragmWallNegEIElastoPlastic2=2.000000E+04
 DiaphragmWallNegMomElastoPlastic=0.00
 WoodenSheetPilingElementE=0.000000E+00
-WoodenSheetPilingElementEISLS=0.000000E+00
-WoodenSheetPilingElementEIULS=0.000000E+00
 WoodenSheetPilingElementCharacFlexuralStrength=0.00
-WoodenSheetPilingElementKH=1.30
 WoodenSheetPilingElementKSys=1.15
 WoodenSheetPilingElementKDef=2.00
 WoodenSheetPilingElementPsi2Eff=1.00
@@ -151,13 +142,21 @@ WoodenSheetPilingElementKModE=0.80
 [END OF SHEET PILING]
 
 [COMBINED WALL]
+CombinedWallAreNeutralAxesOfPilesAndSheetPilesCoinciding=1
+CombinedWallDistanceBetweenNeutralAxisPilesAndSystemBoundary=0.000
+CombinedWallDistanceBetweenNeutralAxisSheetPilesAndSystemBoundary=0.000
+CombinedWallDistanceBetweenPlasticNeutralAxisPilesAndSystemBoundary=0.000
+CombinedWallDistanceBetweenPlasticNeutralAxisSheetPilesAndSystemBoundary=0.000
 CombinedWallPilesName=
 CombinedWallPilesMaterialType=1
 CombinedWallPilesBottomLevel=0.00
 CombinedWallPilesEI=1.0000E+05
-CombinedWallPilesDiameter=1.00
+CombinedWallPilesWidth=1.00
 CombinedWallPilesMaxMoment=0.00
 CombinedWallPilesMaxPlasticMoment=0.00
+CombinedWallPilesElasticSectionModulus=0.00
+CombinedWallPilesPlasticSectionModulus=0.00
+CombinedWallPilesYieldStrength=0.00
 CombinedWallPilesSectionArea=0.00
 CombinedWallSheetPilesName=
 CombinedWallSheetPilesMaterialType=1
@@ -165,9 +164,7 @@ CombinedWallSheetPilesBottomLevel=0.00
 CombinedWallSheetPilesEI=1.0000E+05
 CombinedWallSheetPilesWidth=1.00
 CombinedWallSheetPilesHeight=1.00
-CombinedWallSheetPilesMaxMoment=0.00
-CombinedWallSheetPilesMaxPlasticMoment=0.00
-CombinedWallSheetPilesCoatingArea=0.00
+CombinedWallSheetPilesYieldStrength=0.00
 CombinedWallSheetPilesSectionArea=0.00
 CombinedWallNumberOfSheetPiles=3
 [END OF COMBINED WALL]
@@ -204,10 +201,6 @@ SurchargeLoadDistribution=2
 [WATER]
  10.00  Unit weight of water
 [END OF WATER]
-
-[EARTH QUAKE]
-  0.00  
-[END OF EARTH QUAKE]
 
 [SOIL PROFILES]
   1 Number of spring characteristics curves
@@ -286,9 +279,7 @@ StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=1
 StageVerifyEC7NADNL=0
 StageAnchorFactorEC7NADNL=1.000
-StageVerifyEC7NADB=0
-StagePartialFactorSetEC7NADSE=0
-StageVerifyEC7NADSE=0
+StageVerifyEC7NADBE=0
 [END OF STAGE]
 [END OF CALCULATION OPTIONS PER STAGE]
 
@@ -296,7 +287,6 @@ StageVerifyEC7NADSE=0
 CalcFirstStageInitial=0
 CalcMinorNodesOn=1
 CalcReduceDeltas=1
-CalcEmpiricalFactorStressType=0
 InputCalculationType=0
 IsVibrationCalculation=0
 AllowableAnchorForceCalculationType=0
@@ -310,12 +300,10 @@ DesignType=0
 DesignEuroCodePartialFactorSet=0
 DesignPartialFactorSetEC7NADNL=1
 DesignEC7NLMethod=0
-DesignPartialFactorSetEC7NADB=0
-DesignEC7BMethod=0
+DesignPartialFactorSetEC7NADBE=0
+DesignEC7BEMethod=0
 DesignPartialFactorSet=0
 DesignCURMethod=0
-DesignPartialFactorSetEC7NADSE=0
-DesignEC7SEMethod=0
 VerifyType=0
 EuroCodePartialFactorSet=0
 EuroCodeOverallStability=0
@@ -323,45 +311,32 @@ EC7NLMethod=0
 EC7NLOverallPartialFactorSet=1
 EC7NLOverallAnchorFactor=1.000
 EC7NADNLOverallStability=0
-EC7BOverallStability=0
-NBMethod=0
+EC7BEOverallStability=0
+EC7BEMethod=0
 CURMethod=0
 CUROverallPartialFactorSet=0
 CUROverallAnchorFactor=1.000
 CUROverallStability=0
-EC7SEMethod=0
-EC7SEOverallPartialFactorSet=0
-EC7NADSEOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=0
 OverallStabilityType=0
+StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=1
-StabilityEC7BPartialFactorSet=0
+StabilityEC7BEPartialFactorSet=0
 StabilityCURPartialFactorSet=0
-StabilityEC7SEPartialFactorSet=0
-OverallStabilityDrained=1
 [PARTIAL FACTORS EUROCODE DA1 SET1]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.100
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -378,26 +353,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA1 SET1]
 [PARTIAL FACTORS EUROCODE DA1 SET2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -414,26 +380,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA1 SET2]
 [PARTIAL FACTORS EUROCODE DA2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.100
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.400
@@ -450,26 +407,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA2]
 [PARTIAL FACTORS EUROCODE DA3]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.350
 ConstructLoadFactorVarUnfavCalc=1.500
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -486,26 +434,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA3]
 [PARTIAL FACTORS EC7 NL 0]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.050
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -522,26 +461,17 @@ FactorRepValuesMDPmax=1.200
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 NL 0]
 [PARTIAL FACTORS EC7 NL 1]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.215
 ConstructLoadFactorVarUnfavCalc=1.350
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.150
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -558,26 +488,17 @@ FactorRepValuesMDPmax=1.200
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EC7 NL 1]
 [PARTIAL FACTORS EC7 NL 2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.350
 ConstructLoadFactorVarUnfavCalc=1.500
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.050
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.175
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -594,26 +515,17 @@ FactorRepValuesMDPmax=1.200
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EC7 NL 2]
 [PARTIAL FACTORS EC7 NL 3]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.250
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.485
 ConstructLoadFactorVarUnfavCalc=1.650
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.100
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.200
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -629,27 +541,18 @@ OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=1.350
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EC7 NL 3]
-[PARTIAL FACTORS EC7 B SET1]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
+[PARTIAL FACTORS EC7 BE SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.100
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -664,28 +567,19 @@ OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS EC7 B SET1]
-[PARTIAL FACTORS EC7 B SET2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
+[END OF PARTIAL FACTORS EC7 BE SET1]
+[PARTIAL FACTORS EC7 BE SET2]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -700,28 +594,19 @@ OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS EC7 B SET2]
+[END OF PARTIAL FACTORS EC7 BE SET2]
 [PARTIAL FACTORS CUR I]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.050
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -738,26 +623,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS CUR I]
 [PARTIAL FACTORS CUR II]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.150
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -774,26 +650,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS CUR II]
 [PARTIAL FACTORS CUR III]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.250
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.100
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.200
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -809,114 +676,6 @@ OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS CUR III]
-[PARTIAL FACTORS EC7 SE VK1]
-SafetyFactorGammaD=0.83
-SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.000
-LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.100
-LoadFactorVarUnfavMultiply=1.400
-LoadFactorPermUnfavCalc=0.913
-LoadFactorVarUnfavCalc=1.162
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.350
-ConstructLoadFactorVarUnfavMultiply=1.500
-ConstructLoadFactorPermUnfavCalc=1.120
-ConstructLoadFactorVarUnfavCalc=1.245
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.300
-MaterialFactorUndrainedShearStrength=1.500
-MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.000
-ResistanceFactor=1.000
-GeometryIncRetainingHeight=0.00
-GeometryMaxIncRetainingHeight=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.300
-OverallStabilityFactorTgPhi=1.300
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
-VerticalBalanceGammaMb=1.300
-[END OF PARTIAL FACTORS EC7 SE VK1]
-[PARTIAL FACTORS EC7 SE VK2]
-SafetyFactorGammaD=0.91
-SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.000
-LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.100
-LoadFactorVarUnfavMultiply=1.400
-LoadFactorPermUnfavCalc=1.001
-LoadFactorVarUnfavCalc=1.274
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.350
-ConstructLoadFactorVarUnfavMultiply=1.500
-ConstructLoadFactorPermUnfavCalc=1.228
-ConstructLoadFactorVarUnfavCalc=1.365
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.300
-MaterialFactorUndrainedShearStrength=1.500
-MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.000
-ResistanceFactor=1.000
-GeometryIncRetainingHeight=0.00
-GeometryMaxIncRetainingHeight=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.300
-OverallStabilityFactorTgPhi=1.300
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
-VerticalBalanceGammaMb=1.300
-[END OF PARTIAL FACTORS EC7 SE VK2]
-[PARTIAL FACTORS EC7 SE VK3]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.000
-LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.100
-LoadFactorVarUnfavMultiply=1.400
-LoadFactorPermUnfavCalc=1.100
-LoadFactorVarUnfavCalc=1.400
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.350
-ConstructLoadFactorVarUnfavMultiply=1.500
-ConstructLoadFactorPermUnfavCalc=1.350
-ConstructLoadFactorVarUnfavCalc=1.500
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.300
-MaterialFactorUndrainedShearStrength=1.500
-MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.000
-ResistanceFactor=1.000
-GeometryIncRetainingHeight=0.00
-GeometryMaxIncRetainingHeight=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.300
-OverallStabilityFactorTgPhi=1.300
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
-VerticalBalanceGammaMb=1.300
-[END OF PARTIAL FACTORS EC7 SE VK3]
 [END OF CALCULATION OPTIONS]
 
 [PROBABILISTIC CALCULATION OPTIONS]
@@ -936,15 +695,13 @@ ReliabilityStage=0
 [END OF PROBABILISTIC CONTROL PARAMETERS]
 
 [END OF INPUT DATA]
-
 [OUTPUT DATA]
 [CALCULATION TYPE]
 Standard
 [END OF CALCULATION TYPE]
-
 [SHEET PILE ELEMENTS]
-1 : Number of elements
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Elastic stiffness EI including reduction factor
 Stiffness EI 2nd branch positive of M-Kappa diagram
@@ -959,17 +716,19 @@ Reduction factor on EI
 Reduction factor on moment
 Maximum allowed moment short term wooden pile
 Maximum allowed moment long term wooden pile
+Wooden height factor
+Stiffness EI at SLS for wooden sheet pile
+Stiffness EI at ULS for wooden sheet pile
 Explanation of reduction
 [END OF COLUMN INDICATION]
 [DATA]
-  242900.00000  20000.00000  20000.00000  20000.00000  20000.00000   0.000   0.000      0.00    -10.00  1.00  1.00   0.000   0.000 '-'
+  242900.00000  20000.00000  20000.00000  20000.00000  20000.00000   0.000   0.000      0.00    -10.00  1.00  1.00   0.000   0.000   0.822      0.00000      0.00000 '-'
 [END OF DATA]
 [END OF TABLE]
 [END OF SHEET PILE ELEMENTS]
-
 [POINTS ON SHEETPILE]
-126 : Number of nodes
 [TABLE]
+DataCount=126
 [COLUMN INDICATION]
 Depth
 [END OF COLUMN INDICATION]
@@ -1103,13 +862,14 @@ Depth
 [END OF DATA]
 [END OF TABLE]
 [END OF POINTS ON SHEETPILE]
-
 [CONSTRUCTION STAGE]
-1 : Construction stage number
-2 : Number of iterations
+StageNumber=1
+CalculationStatus=0
+IterationCount=2
+PartialFactorSet=4
 [SURCHARGE DATA]
-4 : Number of items
 [TABLE]
+DataCount=4
 [COLUMN INDICATION]
 Index
 Side (0=left, 1=right)
@@ -1126,30 +886,36 @@ Is favorable (0=false, 1=true)
 [END OF DATA]
 [END OF TABLE]
 [END OF SURCHARGE DATA]
-
-[BREUK DATA]
+[PASSIVE SIDE DATA]
+    1 : IsPassiveSideDeterminedAutomatically
+    0 : IsLeftSidePassive
+    0 : IsPassiveSideRelevant
+[END OF PASSIVE SIDE DATA]
+[SOIL COLLAPSE DATA]
   100.00 : Percentage mobilized resistance left
   100.00 : Percentage mobilized resistance right
-  109.30 : Effective left
-  109.30 : Effective right
+   54.65 : Effective left
+   54.65 : Effective right
     0.00 : Water pressure left
     0.00 : Water pressure right
-  109.30 : Max passive effect. resistance left
-  109.30 : Max passive effect. resistance right
-    0.00 : Max passive moment left
-    0.00 : Max passive moment right
-    0.00 : Max mobilized passive moment left
-    0.00 : Max mobilized passive moment right
+   54.65 : Max effective resistance left
+   54.65 : Max effective resistance right
+    0.00 : Max moment left
+    0.00 : Max moment right
+    0.00 : Max mobilized moment left
+    0.00 : Max mobilized moment right
     0.00 : Vertical force left
     0.00 : Vertical force right
+     0.0 : Max mobilized moment percentage left
+     0.0 : Max mobilized moment percentage right
     0.00 : Level of single support
     1 : Node of single support
     0 : Moment present
-    0 : Active side
-[END OF BREUK DATA]
-
+    0 : IsLeftSidePassive
+[END OF SOIL COLLAPSE DATA]
 [MOMENTS FORCES DISPLACEMENTS]
 [TABLE]
+DataCount=126
 [COLUMN INDICATION]
 Moment
 Shear force
@@ -1285,26 +1051,22 @@ Displacements
 [END OF DATA]
 [END OF TABLE]
 [END OF MOMENTS FORCES DISPLACEMENTS]
-
 [SIDE]
 Rightside
 [CALCULATION METHOD]
 Method c,phi,delta
 [END OF CALCULATION METHOD]
-
 [WATER LEVEL]
      -100.00
 [END OF WATER LEVEL]
-
 [SURFACE]
 1 : Number of surface points
         0.00         0.00
 [END OF SURFACE]
-
 [SOIL PROFILE FOR SHEET PILING MODEL]
 1
-1 : Number of layers
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1318,22 +1080,18 @@ Angle of internal friction
 Coeff. of active earth pressure
 Coeff. of neutral earth pressure
 Coeff. of passive earth pressure
-Undrained shear strength top (Su top)
-Undrained shear strength bottom (Su bottom)
-Bearing capacity factor for Su (Ncb)
-Soil behaviour (0=Undrained; 1=Drained)
 Layer name
 [END OF COLUMN INDICATION]
 [DATA]
-    10.00    0.00    0.00    0.00    0.00          0.00    0.00    0.00    0.00    0.00    0.00    4.00         0.00         0.00    4.10 0 'Soil'
+    10.00    0.00    0.00    0.00    0.00          0.00    0.00    0.00    0.00    0.00    0.00    4.00 'Soil'
 [END OF DATA]
 [END OF TABLE]
-
 [MULTILINEAR BRANCHES]
 1 : Number of branches for spring characteristics
 1 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1345,39 +1103,11 @@ Modulus of subgrade reaction bottom
 [END OF DATA]
 [END OF TABLE]
 [END OF MODULUS OF SUBGRADE REACTION]
-[PERCENTAGE OF PASSIVE SOIL PRESSURE]
-[TABLE]
-[COLUMN INDICATION]
-Layer
-Index
-Percentage
-[END OF COLUMN INDICATION]
-[DATA]
-[END OF DATA]
-[END OF TABLE]
-[END OF PERCENTAGE OF PASSIVE SOIL PRESSURE]
 [END OF MULTILINEAR BRANCHES]
-
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
-
-[SLIDE PLANE]
-0 : Number of slide planes
-[TABLE]
-[COLUMN INDICATION]
-Slide plane position
-Theta min
-Theta max
-Q min
-Q max
-[END OF COLUMN INDICATION]
-[DATA]
-[END OF DATA]
-[END OF TABLE]
-[END OF SLIDE PLANE]
-
 [LAMBDAS]
-125 : Number of Lambdas 
 [TABLE]
+DataCount=125
 [COLUMN INDICATION]
 Position
 Vertical stress
@@ -1516,10 +1246,9 @@ Lambda passive
 [END OF DATA]
 [END OF TABLE]
 [END OF LAMBDAS]
-
 [PRESSURES]
-126 : Number of nodes
 [TABLE]
+DataCount=126
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -1530,171 +1259,165 @@ Percentage of mobilisation
 Status character
 [END OF COLUMN INDICATION]
 [DATA]
-     0.04927      0.00000      0.04927      0.04927          110 100 -
-    19.70862      0.00000     19.70862     19.70862            1 100 A
-    19.49243      0.00000     19.49243     19.49243            1 100 A
-    19.25824      0.00000     19.25824     19.25824            1 100 A
-    19.02059      0.00000     19.02059     19.02059            1 100 A
-    18.84172      0.00000     18.84172     18.84172            1 100 A
-    18.72250      0.00000     18.72250     18.72250            1 100 A
-    18.54371      0.00000     18.54371     18.54371            1 100 A
-    18.30593      0.00000     18.30593     18.30593            1 100 A
-    18.06906      0.00000     18.06906     18.06906            1 100 A
-    17.83336      0.00000     17.83336     17.83336            1 100 A
-    17.65762      0.00000     17.65762     17.65762            1 100 A
-    17.54084      0.00000     17.54084     17.54084            1 100 A
-    17.36625      0.00000     17.36625     17.36625            1 100 A
-    17.13518      0.00000     17.13518     17.13518            1 100 A
-    16.90596      0.00000     16.90596     16.90596            1 100 A
-    16.67874      0.00000     16.67874     16.67874            1 100 A
-    16.50990      0.00000     16.50990     16.50990            1 100 A
-    16.39790      0.00000     16.39790     16.39790            1 100 A
-    16.23074      0.00000     16.23074     16.23074            1 100 A
-    16.01019      0.00000     16.01019     16.01019            1 100 A
-    15.79207      0.00000     15.79207     15.79207            1 100 A
-    15.57648      0.00000     15.57648     15.57648            1 100 A
-    15.41673      0.00000     15.41673     15.41673            1 100 A
-    15.31090      0.00000     15.31090     15.31090            1 100 A
-    15.15316      0.00000     15.15316     15.15316            1 100 A
-    14.94557      0.00000     14.94557     14.94557            1 100 A
-    14.74078      0.00000     14.74078     14.74078            1 100 A
-    14.53883      0.00000     14.53883     14.53883            1 100 A
-    14.38952      0.00000     14.38952     14.38952            1 100 A
-    14.29072      0.00000     14.29072     14.29072            1 100 A
-    14.14360      0.00000     14.14360     14.14360            1 100 A
-    13.95040      0.00000     13.95040     13.95040            1 100 A
-    13.76016      0.00000     13.76016     13.76016            1 100 A
-    13.57290      0.00000     13.57290     13.57290            1 100 A
-    13.43470      0.00000     13.43470     13.43470            1 100 A
-    13.34331      0.00000     13.34331     13.34331            1 100 A
-    13.20736      0.00000     13.20736     13.20736            1 100 A
-    13.02909      0.00000     13.02909     13.02909            1 100 A
-    12.85380      0.00000     12.85380     12.85380            1 100 A
-    12.68150      0.00000     12.68150     12.68150            1 100 A
-    12.55450      0.00000     12.55450     12.55450            1 100 A
-    12.47057      0.00000     12.47057     12.47057            1 100 A
-    12.34578      0.00000     12.34578     12.34578            1 100 A
-    12.18232      0.00000     12.18232     12.18232            1 100 A
-    12.02177      0.00000     12.02177     12.02177            1 100 A
-    11.86410      0.00000     11.86410     11.86410            1 100 A
-    11.74798      0.00000     11.74798     11.74798            1 100 A
-    11.67127      0.00000     11.67127     11.67127            1 100 A
-    11.55726      0.00000     11.55726     11.55726            1 100 A
-    11.40803      0.00000     11.40803     11.40803            1 100 A
-    11.26155      0.00000     11.26155     11.26155            1 100 A
-    11.11778      0.00000     11.11778     11.11778            1 100 A
-    11.01195      0.00000     11.01195     11.01195            1 100 A
-    10.94206      0.00000     10.94206     10.94206            1 100 A
-    10.83821      0.00000     10.83821     10.83821            1 100 A
-    10.70232      0.00000     10.70232     10.70232            1 100 A
-    10.56899      0.00000     10.56899     10.56899            1 100 A
-    10.43816      0.00000     10.43816     10.43816            1 100 A
-    10.34189      0.00000     10.34189     10.34189            1 100 A
-    10.27831      0.00000     10.27831     10.27831            1 100 A
-    10.18385      0.00000     10.18385     10.18385            1 100 A
-    10.06027      0.00000     10.06027     10.06027            1 100 A
-     9.93903      0.00000      9.93903      9.93903            1 100 A
-     9.82008      0.00000      9.82008      9.82008            1 100 A
-     9.73254      0.00000      9.73254      9.73254            1 100 A
-     9.67473      0.00000      9.67473      9.67473            1 100 A
-     9.58885      0.00000      9.58885      9.58885            1 100 A
-     9.47649      0.00000      9.47649      9.47649            1 100 A
-     9.36625      0.00000      9.36625      9.36625            1 100 A
-     9.25807      0.00000      9.25807      9.25807            1 100 A
-     9.17846      0.00000      9.17846      9.17846            1 100 A
-     9.12588      0.00000      9.12588      9.12588            1 100 A
-     9.04776      0.00000      9.04776      9.04776            1 100 A
-     8.94554      0.00000      8.94554      8.94554            1 100 A
-     8.84522      0.00000      8.84522      8.84522            1 100 A
-     8.74677      0.00000      8.74677      8.74677            1 100 A
-     8.67429      0.00000      8.67429      8.67429            1 100 A
-     8.62642      0.00000      8.62642      8.62642            1 100 A
-     8.55528      0.00000      8.55528      8.55528            1 100 A
-     8.46217      0.00000      8.46217      8.46217            1 100 A
-     8.37077      0.00000      8.37077      8.37077            1 100 A
-     8.28104      0.00000      8.28104      8.28104            1 100 A
-     8.21496      0.00000      8.21496      8.21496            1 100 A
-     8.17131      0.00000      8.17131      8.17131            1 100 A
-     8.10643      0.00000      8.10643      8.10643            1 100 A
-     8.02149      0.00000      8.02149      8.02149            1 100 A
-     7.93807      0.00000      7.93807      7.93807            1 100 A
-     7.85614      0.00000      7.85614      7.85614            1 100 A
-     7.79579      0.00000      7.79579      7.79579            1 100 A
-     7.75592      0.00000      7.75592      7.75592            1 100 A
-     7.69664      0.00000      7.69664      7.69664            1 100 A
-     7.61900      0.00000      7.61900      7.61900            1 100 A
-     7.54272      0.00000      7.54272      7.54272            1 100 A
-     7.46777      0.00000      7.46777      7.46777            1 100 A
-     7.41254      0.00000      7.41254      7.41254            1 100 A
-     7.37604      0.00000      7.37604      7.37604            1 100 A
-     7.32177      0.00000      7.32177      7.32177            1 100 A
-     7.25065      0.00000      7.25065      7.25065            1 100 A
-     7.18076      0.00000      7.18076      7.18076            1 100 A
-     7.11205      0.00000      7.11205      7.11205            1 100 A
-     7.06140      0.00000      7.06140      7.06140            1 100 A
-     7.02791      0.00000      7.02791      7.02791            1 100 A
-     6.97811      0.00000      6.97811      6.97811            1 100 A
-     6.91283      0.00000      6.91283      6.91283            1 100 A
-     6.84864      0.00000      6.84864      6.84864            1 100 A
-     6.78551      0.00000      6.78551      6.78551            1 100 A
-     6.73895      0.00000      6.73895      6.73895            1 100 A
-     6.70817      0.00000      6.70817      6.70817            1 100 A
-     6.66237      0.00000      6.66237      6.66237            1 100 A
-     6.60231      0.00000      6.60231      6.60231            1 100 A
-     6.54322      0.00000      6.54322      6.54322            1 100 A
-     6.48510      0.00000      6.48510      6.48510            1 100 A
-     6.44220      0.00000      6.44220      6.44220            1 100 A
-     6.41383      0.00000      6.41383      6.41383            1 100 A
-     6.37162      0.00000      6.37162      6.37162            1 100 A
-     6.31624      0.00000      6.31624      6.31624            1 100 A
-     6.26173      0.00000      6.26173      6.26173            1 100 A
-     6.20808      0.00000      6.20808      6.20808            1 100 A
-     6.16847      0.00000      6.16847      6.16847            1 100 A
-     6.14227      0.00000      6.14227      6.14227            1 100 A
-     6.10328      0.00000      6.10328      6.10328            1 100 A
-     6.05209      0.00000      6.05209      6.05209            1 100 A
-     6.00169      0.00000      6.00169      6.00169            1 100 A
-     5.95206      0.00000      5.95206      5.95206            1 100 A
-     5.91541      0.00000      5.91541      5.91541            1 100 A
+     0.02464      0.00000      0.02464      0.02464          110 100 -
+     9.85431      0.00000      9.85431      9.85431            1 100 A
+     9.74621      0.00000      9.74621      9.74621            1 100 A
+     9.62912      0.00000      9.62912      9.62912            1 100 A
+     9.51030      0.00000      9.51030      9.51030            1 100 A
+     9.42086      0.00000      9.42086      9.42086            1 100 A
+     9.36125      0.00000      9.36125      9.36125            1 100 A
+     9.27186      0.00000      9.27186      9.27186            1 100 A
+     9.15296      0.00000      9.15296      9.15296            1 100 A
+     9.03453      0.00000      9.03453      9.03453            1 100 A
+     8.91668      0.00000      8.91668      8.91668            1 100 A
+     8.82881      0.00000      8.82881      8.82881            1 100 A
+     8.77042      0.00000      8.77042      8.77042            1 100 A
+     8.68313      0.00000      8.68313      8.68313            1 100 A
+     8.56759      0.00000      8.56759      8.56759            1 100 A
+     8.45298      0.00000      8.45298      8.45298            1 100 A
+     8.33937      0.00000      8.33937      8.33937            1 100 A
+     8.25495      0.00000      8.25495      8.25495            1 100 A
+     8.19895      0.00000      8.19895      8.19895            1 100 A
+     8.11537      0.00000      8.11537      8.11537            1 100 A
+     8.00510      0.00000      8.00510      8.00510            1 100 A
+     7.89604      0.00000      7.89604      7.89604            1 100 A
+     7.78824      0.00000      7.78824      7.78824            1 100 A
+     7.70837      0.00000      7.70837      7.70837            1 100 A
+     7.65545      0.00000      7.65545      7.65545            1 100 A
+     7.57658      0.00000      7.57658      7.57658            1 100 A
+     7.47279      0.00000      7.47279      7.47279            1 100 A
+     7.37039      0.00000      7.37039      7.37039            1 100 A
+     7.26941      0.00000      7.26941      7.26941            1 100 A
+     7.19476      0.00000      7.19476      7.19476            1 100 A
+     7.14536      0.00000      7.14536      7.14536            1 100 A
+     7.07180      0.00000      7.07180      7.07180            1 100 A
+     6.97520      0.00000      6.97520      6.97520            1 100 A
+     6.88008      0.00000      6.88008      6.88008            1 100 A
+     6.78645      0.00000      6.78645      6.78645            1 100 A
+     6.71735      0.00000      6.71735      6.71735            1 100 A
+     6.67166      0.00000      6.67166      6.67166            1 100 A
+     6.60368      0.00000      6.60368      6.60368            1 100 A
+     6.51454      0.00000      6.51454      6.51454            1 100 A
+     6.42690      0.00000      6.42690      6.42690            1 100 A
+     6.34075      0.00000      6.34075      6.34075            1 100 A
+     6.27725      0.00000      6.27725      6.27725            1 100 A
+     6.23528      0.00000      6.23528      6.23528            1 100 A
+     6.17289      0.00000      6.17289      6.17289            1 100 A
+     6.09116      0.00000      6.09116      6.09116            1 100 A
+     6.01089      0.00000      6.01089      6.01089            1 100 A
+     5.93205      0.00000      5.93205      5.93205            1 100 A
+     5.87399      0.00000      5.87399      5.87399            1 100 A
+     5.83563      0.00000      5.83563      5.83563            1 100 A
+     5.77863      0.00000      5.77863      5.77863            1 100 A
+     5.70402      0.00000      5.70402      5.70402            1 100 A
+     5.63078      0.00000      5.63078      5.63078            1 100 A
+     5.55889      0.00000      5.55889      5.55889            1 100 A
+     5.50598      0.00000      5.50598      5.50598            1 100 A
+     5.47103      0.00000      5.47103      5.47103            1 100 A
+     5.41910      0.00000      5.41910      5.41910            1 100 A
+     5.35116      0.00000      5.35116      5.35116            1 100 A
+     5.28450      0.00000      5.28450      5.28450            1 100 A
+     5.21908      0.00000      5.21908      5.21908            1 100 A
+     5.17094      0.00000      5.17094      5.17094            1 100 A
+     5.13915      0.00000      5.13915      5.13915            1 100 A
+     5.09192      0.00000      5.09192      5.09192            1 100 A
+     5.03014      0.00000      5.03014      5.03014            1 100 A
+     4.96952      0.00000      4.96952      4.96952            1 100 A
+     4.91004      0.00000      4.91004      4.91004            1 100 A
+     4.86627      0.00000      4.86627      4.86627            1 100 A
+     4.83737      0.00000      4.83737      4.83737            1 100 A
+     4.79442      0.00000      4.79442      4.79442            1 100 A
+     4.73825      0.00000      4.73825      4.73825            1 100 A
+     4.68312      0.00000      4.68312      4.68312            1 100 A
+     4.62904      0.00000      4.62904      4.62904            1 100 A
+     4.58923      0.00000      4.58923      4.58923            1 100 A
+     4.56294      0.00000      4.56294      4.56294            1 100 A
+     4.52388      0.00000      4.52388      4.52388            1 100 A
+     4.47277      0.00000      4.47277      4.47277            1 100 A
+     4.42261      0.00000      4.42261      4.42261            1 100 A
+     4.37338      0.00000      4.37338      4.37338            1 100 A
+     4.33714      0.00000      4.33714      4.33714            1 100 A
+     4.31321      0.00000      4.31321      4.31321            1 100 A
+     4.27764      0.00000      4.27764      4.27764            1 100 A
+     4.23109      0.00000      4.23109      4.23109            1 100 A
+     4.18538      0.00000      4.18538      4.18538            1 100 A
+     4.14052      0.00000      4.14052      4.14052            1 100 A
+     4.10748      0.00000      4.10748      4.10748            1 100 A
+     4.08565      0.00000      4.08565      4.08565            1 100 A
+     4.05321      0.00000      4.05321      4.05321            1 100 A
+     4.01074      0.00000      4.01074      4.01074            1 100 A
+     3.96903      0.00000      3.96903      3.96903            1 100 A
+     3.92807      0.00000      3.92807      3.92807            1 100 A
+     3.89790      0.00000      3.89790      3.89790            1 100 A
+     3.87796      0.00000      3.87796      3.87796            1 100 A
+     3.84832      0.00000      3.84832      3.84832            1 100 A
+     3.80950      0.00000      3.80950      3.80950            1 100 A
+     3.77136      0.00000      3.77136      3.77136            1 100 A
+     3.73389      0.00000      3.73389      3.73389            1 100 A
+     3.70627      0.00000      3.70627      3.70627            1 100 A
+     3.68802      0.00000      3.68802      3.68802            1 100 A
+     3.66089      0.00000      3.66089      3.66089            1 100 A
+     3.62533      0.00000      3.62533      3.62533            1 100 A
+     3.59038      0.00000      3.59038      3.59038            1 100 A
+     3.55603      0.00000      3.55603      3.55603            1 100 A
+     3.53070      0.00000      3.53070      3.53070            1 100 A
+     3.51396      0.00000      3.51396      3.51396            1 100 A
+     3.48906      0.00000      3.48906      3.48906            1 100 A
+     3.45642      0.00000      3.45642      3.45642            1 100 A
+     3.42432      0.00000      3.42432      3.42432            1 100 A
+     3.39276      0.00000      3.39276      3.39276            1 100 A
+     3.36948      0.00000      3.36948      3.36948            1 100 A
+     3.35408      0.00000      3.35408      3.35408            1 100 A
+     3.33119      0.00000      3.33119      3.33119            1 100 A
+     3.30116      0.00000      3.30116      3.30116            1 100 A
+     3.27161      0.00000      3.27161      3.27161            1 100 A
+     3.24255      0.00000      3.24255      3.24255            1 100 A
+     3.22110      0.00000      3.22110      3.22110            1 100 A
+     3.20692      0.00000      3.20692      3.20692            1 100 A
+     3.18581      0.00000      3.18581      3.18581            1 100 A
+     3.15812      0.00000      3.15812      3.15812            1 100 A
+     3.13086      0.00000      3.13086      3.13086            1 100 A
+     3.10404      0.00000      3.10404      3.10404            1 100 A
+     3.08423      0.00000      3.08423      3.08423            1 100 A
+     3.07113      0.00000      3.07113      3.07113            1 100 A
+     3.05164      0.00000      3.05164      3.05164            1 100 A
+     3.02605      0.00000      3.02605      3.02605            1 100 A
+     3.00085      0.00000      3.00085      3.00085            1 100 A
+     2.97603      0.00000      2.97603      2.97603            1 100 A
+     2.95771      0.00000      2.95771      2.95771            1 100 A
 [END OF DATA]
 [END OF TABLE]
 [END OF PRESSURES]
-
 [FORCE FROM LAYER]
-1 : Number of layers
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Level top layer
 Force
 Layer name
 [END OF COLUMN INDICATION]
 [DATA]
-    10.00   0.000 'Soil'
+    10.00  54.648 'Soil'
 [END OF DATA]
 [END OF TABLE]
 [END OF FORCE FROM LAYER]
-
 [END OF SIDE]
-
 [SIDE]
 Leftside
 [CALCULATION METHOD]
 Method c,phi,delta
 [END OF CALCULATION METHOD]
-
 [WATER LEVEL]
      -100.00
 [END OF WATER LEVEL]
-
 [SURFACE]
 1 : Number of surface points
         0.00         0.00
 [END OF SURFACE]
-
 [SOIL PROFILE FOR SHEET PILING MODEL]
 1
-1 : Number of layers
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Level top layer
 Excess pore top
@@ -1708,22 +1431,18 @@ Angle of internal friction
 Coeff. of active earth pressure
 Coeff. of neutral earth pressure
 Coeff. of passive earth pressure
-Undrained shear strength top (Su top)
-Undrained shear strength bottom (Su bottom)
-Bearing capacity factor for Su (Ncb)
-Soil behaviour (0=Undrained; 1=Drained)
 Layer name
 [END OF COLUMN INDICATION]
 [DATA]
-    10.00    0.00    0.00    0.00    0.00          0.00    0.00    0.00    0.00    0.00    0.00    4.00         0.00         0.00    4.10 0 'Soil'
+    10.00    0.00    0.00    0.00    0.00          0.00    0.00    0.00    0.00    0.00    0.00    4.00 'Soil'
 [END OF DATA]
 [END OF TABLE]
-
 [MULTILINEAR BRANCHES]
 1 : Number of branches for spring characteristics
 1 : Number of layers
 [MODULUS OF SUBGRADE REACTION]
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Layer
 Branch
@@ -1735,39 +1454,11 @@ Modulus of subgrade reaction bottom
 [END OF DATA]
 [END OF TABLE]
 [END OF MODULUS OF SUBGRADE REACTION]
-[PERCENTAGE OF PASSIVE SOIL PRESSURE]
-[TABLE]
-[COLUMN INDICATION]
-Layer
-Index
-Percentage
-[END OF COLUMN INDICATION]
-[DATA]
-[END OF DATA]
-[END OF TABLE]
-[END OF PERCENTAGE OF PASSIVE SOIL PRESSURE]
 [END OF MULTILINEAR BRANCHES]
-
 [END OF SOIL PROFILE FOR SHEET PILING MODEL]
-
-[SLIDE PLANE]
-0 : Number of slide planes
-[TABLE]
-[COLUMN INDICATION]
-Slide plane position
-Theta min
-Theta max
-Q min
-Q max
-[END OF COLUMN INDICATION]
-[DATA]
-[END OF DATA]
-[END OF TABLE]
-[END OF SLIDE PLANE]
-
 [LAMBDAS]
-125 : Number of Lambdas 
 [TABLE]
+DataCount=125
 [COLUMN INDICATION]
 Position
 Vertical stress
@@ -1906,10 +1597,9 @@ Lambda passive
 [END OF DATA]
 [END OF TABLE]
 [END OF LAMBDAS]
-
 [PRESSURES]
-126 : Number of nodes
 [TABLE]
+DataCount=126
 [COLUMN INDICATION]
 Horizontal pressure
 Pore pressure
@@ -1920,175 +1610,189 @@ Percentage of mobilisation
 Status character
 [END OF COLUMN INDICATION]
 [DATA]
-     0.04927      0.00000      0.04927      0.04927          110 100 -
-    19.70862      0.00000     19.70862     19.70862            1 100 A
-    19.49243      0.00000     19.49243     19.49243            1 100 A
-    19.25824      0.00000     19.25824     19.25824            1 100 A
-    19.02059      0.00000     19.02059     19.02059            1 100 A
-    18.84172      0.00000     18.84172     18.84172            1 100 A
-    18.72250      0.00000     18.72250     18.72250            1 100 A
-    18.54371      0.00000     18.54371     18.54371            1 100 A
-    18.30593      0.00000     18.30593     18.30593            1 100 A
-    18.06906      0.00000     18.06906     18.06906            1 100 A
-    17.83336      0.00000     17.83336     17.83336            1 100 A
-    17.65762      0.00000     17.65762     17.65762            1 100 A
-    17.54084      0.00000     17.54084     17.54084            1 100 A
-    17.36625      0.00000     17.36625     17.36625            1 100 A
-    17.13518      0.00000     17.13518     17.13518            1 100 A
-    16.90596      0.00000     16.90596     16.90596            1 100 A
-    16.67874      0.00000     16.67874     16.67874            1 100 A
-    16.50990      0.00000     16.50990     16.50990            1 100 A
-    16.39790      0.00000     16.39790     16.39790            1 100 A
-    16.23074      0.00000     16.23074     16.23074            1 100 A
-    16.01019      0.00000     16.01019     16.01019            1 100 A
-    15.79207      0.00000     15.79207     15.79207            1 100 A
-    15.57648      0.00000     15.57648     15.57648            1 100 A
-    15.41673      0.00000     15.41673     15.41673            1 100 A
-    15.31090      0.00000     15.31090     15.31090            1 100 A
-    15.15316      0.00000     15.15316     15.15316            1 100 A
-    14.94557      0.00000     14.94557     14.94557            1 100 A
-    14.74078      0.00000     14.74078     14.74078            1 100 A
-    14.53883      0.00000     14.53883     14.53883            1 100 A
-    14.38952      0.00000     14.38952     14.38952            1 100 A
-    14.29072      0.00000     14.29072     14.29072            1 100 A
-    14.14360      0.00000     14.14360     14.14360            1 100 A
-    13.95040      0.00000     13.95040     13.95040            1 100 A
-    13.76016      0.00000     13.76016     13.76016            1 100 A
-    13.57290      0.00000     13.57290     13.57290            1 100 A
-    13.43470      0.00000     13.43470     13.43470            1 100 A
-    13.34331      0.00000     13.34331     13.34331            1 100 A
-    13.20736      0.00000     13.20736     13.20736            1 100 A
-    13.02909      0.00000     13.02909     13.02909            1 100 A
-    12.85380      0.00000     12.85380     12.85380            1 100 A
-    12.68150      0.00000     12.68150     12.68150            1 100 A
-    12.55450      0.00000     12.55450     12.55450            1 100 A
-    12.47057      0.00000     12.47057     12.47057            1 100 A
-    12.34578      0.00000     12.34578     12.34578            1 100 A
-    12.18232      0.00000     12.18232     12.18232            1 100 A
-    12.02177      0.00000     12.02177     12.02177            1 100 A
-    11.86410      0.00000     11.86410     11.86410            1 100 A
-    11.74798      0.00000     11.74798     11.74798            1 100 A
-    11.67127      0.00000     11.67127     11.67127            1 100 A
-    11.55726      0.00000     11.55726     11.55726            1 100 A
-    11.40803      0.00000     11.40803     11.40803            1 100 A
-    11.26155      0.00000     11.26155     11.26155            1 100 A
-    11.11778      0.00000     11.11778     11.11778            1 100 A
-    11.01195      0.00000     11.01195     11.01195            1 100 A
-    10.94206      0.00000     10.94206     10.94206            1 100 A
-    10.83821      0.00000     10.83821     10.83821            1 100 A
-    10.70232      0.00000     10.70232     10.70232            1 100 A
-    10.56899      0.00000     10.56899     10.56899            1 100 A
-    10.43816      0.00000     10.43816     10.43816            1 100 A
-    10.34189      0.00000     10.34189     10.34189            1 100 A
-    10.27831      0.00000     10.27831     10.27831            1 100 A
-    10.18385      0.00000     10.18385     10.18385            1 100 A
-    10.06027      0.00000     10.06027     10.06027            1 100 A
-     9.93903      0.00000      9.93903      9.93903            1 100 A
-     9.82008      0.00000      9.82008      9.82008            1 100 A
-     9.73254      0.00000      9.73254      9.73254            1 100 A
-     9.67473      0.00000      9.67473      9.67473            1 100 A
-     9.58885      0.00000      9.58885      9.58885            1 100 A
-     9.47649      0.00000      9.47649      9.47649            1 100 A
-     9.36625      0.00000      9.36625      9.36625            1 100 A
-     9.25807      0.00000      9.25807      9.25807            1 100 A
-     9.17846      0.00000      9.17846      9.17846            1 100 A
-     9.12588      0.00000      9.12588      9.12588            1 100 A
-     9.04776      0.00000      9.04776      9.04776            1 100 A
-     8.94554      0.00000      8.94554      8.94554            1 100 A
-     8.84522      0.00000      8.84522      8.84522            1 100 A
-     8.74677      0.00000      8.74677      8.74677            1 100 A
-     8.67429      0.00000      8.67429      8.67429            1 100 A
-     8.62642      0.00000      8.62642      8.62642            1 100 A
-     8.55528      0.00000      8.55528      8.55528            1 100 A
-     8.46217      0.00000      8.46217      8.46217            1 100 A
-     8.37077      0.00000      8.37077      8.37077            1 100 A
-     8.28104      0.00000      8.28104      8.28104            1 100 A
-     8.21496      0.00000      8.21496      8.21496            1 100 A
-     8.17131      0.00000      8.17131      8.17131            1 100 A
-     8.10643      0.00000      8.10643      8.10643            1 100 A
-     8.02149      0.00000      8.02149      8.02149            1 100 A
-     7.93807      0.00000      7.93807      7.93807            1 100 A
-     7.85614      0.00000      7.85614      7.85614            1 100 A
-     7.79579      0.00000      7.79579      7.79579            1 100 A
-     7.75592      0.00000      7.75592      7.75592            1 100 A
-     7.69664      0.00000      7.69664      7.69664            1 100 A
-     7.61900      0.00000      7.61900      7.61900            1 100 A
-     7.54272      0.00000      7.54272      7.54272            1 100 A
-     7.46777      0.00000      7.46777      7.46777            1 100 A
-     7.41254      0.00000      7.41254      7.41254            1 100 A
-     7.37604      0.00000      7.37604      7.37604            1 100 A
-     7.32177      0.00000      7.32177      7.32177            1 100 A
-     7.25065      0.00000      7.25065      7.25065            1 100 A
-     7.18076      0.00000      7.18076      7.18076            1 100 A
-     7.11205      0.00000      7.11205      7.11205            1 100 A
-     7.06140      0.00000      7.06140      7.06140            1 100 A
-     7.02791      0.00000      7.02791      7.02791            1 100 A
-     6.97811      0.00000      6.97811      6.97811            1 100 A
-     6.91283      0.00000      6.91283      6.91283            1 100 A
-     6.84864      0.00000      6.84864      6.84864            1 100 A
-     6.78551      0.00000      6.78551      6.78551            1 100 A
-     6.73895      0.00000      6.73895      6.73895            1 100 A
-     6.70817      0.00000      6.70817      6.70817            1 100 A
-     6.66237      0.00000      6.66237      6.66237            1 100 A
-     6.60231      0.00000      6.60231      6.60231            1 100 A
-     6.54322      0.00000      6.54322      6.54322            1 100 A
-     6.48510      0.00000      6.48510      6.48510            1 100 A
-     6.44220      0.00000      6.44220      6.44220            1 100 A
-     6.41383      0.00000      6.41383      6.41383            1 100 A
-     6.37162      0.00000      6.37162      6.37162            1 100 A
-     6.31624      0.00000      6.31624      6.31624            1 100 A
-     6.26173      0.00000      6.26173      6.26173            1 100 A
-     6.20808      0.00000      6.20808      6.20808            1 100 A
-     6.16847      0.00000      6.16847      6.16847            1 100 A
-     6.14227      0.00000      6.14227      6.14227            1 100 A
-     6.10328      0.00000      6.10328      6.10328            1 100 A
-     6.05209      0.00000      6.05209      6.05209            1 100 A
-     6.00169      0.00000      6.00169      6.00169            1 100 A
-     5.95206      0.00000      5.95206      5.95206            1 100 A
-     5.91541      0.00000      5.91541      5.91541            1 100 A
+     0.02464      0.00000      0.02464      0.02464          110 100 -
+     9.85431      0.00000      9.85431      9.85431            1 100 A
+     9.74621      0.00000      9.74621      9.74621            1 100 A
+     9.62912      0.00000      9.62912      9.62912            1 100 A
+     9.51030      0.00000      9.51030      9.51030            1 100 A
+     9.42086      0.00000      9.42086      9.42086            1 100 A
+     9.36125      0.00000      9.36125      9.36125            1 100 A
+     9.27186      0.00000      9.27186      9.27186            1 100 A
+     9.15296      0.00000      9.15296      9.15296            1 100 A
+     9.03453      0.00000      9.03453      9.03453            1 100 A
+     8.91668      0.00000      8.91668      8.91668            1 100 A
+     8.82881      0.00000      8.82881      8.82881            1 100 A
+     8.77042      0.00000      8.77042      8.77042            1 100 A
+     8.68313      0.00000      8.68313      8.68313            1 100 A
+     8.56759      0.00000      8.56759      8.56759            1 100 A
+     8.45298      0.00000      8.45298      8.45298            1 100 A
+     8.33937      0.00000      8.33937      8.33937            1 100 A
+     8.25495      0.00000      8.25495      8.25495            1 100 A
+     8.19895      0.00000      8.19895      8.19895            1 100 A
+     8.11537      0.00000      8.11537      8.11537            1 100 A
+     8.00510      0.00000      8.00510      8.00510            1 100 A
+     7.89604      0.00000      7.89604      7.89604            1 100 A
+     7.78824      0.00000      7.78824      7.78824            1 100 A
+     7.70837      0.00000      7.70837      7.70837            1 100 A
+     7.65545      0.00000      7.65545      7.65545            1 100 A
+     7.57658      0.00000      7.57658      7.57658            1 100 A
+     7.47279      0.00000      7.47279      7.47279            1 100 A
+     7.37039      0.00000      7.37039      7.37039            1 100 A
+     7.26941      0.00000      7.26941      7.26941            1 100 A
+     7.19476      0.00000      7.19476      7.19476            1 100 A
+     7.14536      0.00000      7.14536      7.14536            1 100 A
+     7.07180      0.00000      7.07180      7.07180            1 100 A
+     6.97520      0.00000      6.97520      6.97520            1 100 A
+     6.88008      0.00000      6.88008      6.88008            1 100 A
+     6.78645      0.00000      6.78645      6.78645            1 100 A
+     6.71735      0.00000      6.71735      6.71735            1 100 A
+     6.67166      0.00000      6.67166      6.67166            1 100 A
+     6.60368      0.00000      6.60368      6.60368            1 100 A
+     6.51454      0.00000      6.51454      6.51454            1 100 A
+     6.42690      0.00000      6.42690      6.42690            1 100 A
+     6.34075      0.00000      6.34075      6.34075            1 100 A
+     6.27725      0.00000      6.27725      6.27725            1 100 A
+     6.23528      0.00000      6.23528      6.23528            1 100 A
+     6.17289      0.00000      6.17289      6.17289            1 100 A
+     6.09116      0.00000      6.09116      6.09116            1 100 A
+     6.01089      0.00000      6.01089      6.01089            1 100 A
+     5.93205      0.00000      5.93205      5.93205            1 100 A
+     5.87399      0.00000      5.87399      5.87399            1 100 A
+     5.83563      0.00000      5.83563      5.83563            1 100 A
+     5.77863      0.00000      5.77863      5.77863            1 100 A
+     5.70402      0.00000      5.70402      5.70402            1 100 A
+     5.63078      0.00000      5.63078      5.63078            1 100 A
+     5.55889      0.00000      5.55889      5.55889            1 100 A
+     5.50598      0.00000      5.50598      5.50598            1 100 A
+     5.47103      0.00000      5.47103      5.47103            1 100 A
+     5.41910      0.00000      5.41910      5.41910            1 100 A
+     5.35116      0.00000      5.35116      5.35116            1 100 A
+     5.28450      0.00000      5.28450      5.28450            1 100 A
+     5.21908      0.00000      5.21908      5.21908            1 100 A
+     5.17094      0.00000      5.17094      5.17094            1 100 A
+     5.13915      0.00000      5.13915      5.13915            1 100 A
+     5.09192      0.00000      5.09192      5.09192            1 100 A
+     5.03014      0.00000      5.03014      5.03014            1 100 A
+     4.96952      0.00000      4.96952      4.96952            1 100 A
+     4.91004      0.00000      4.91004      4.91004            1 100 A
+     4.86627      0.00000      4.86627      4.86627            1 100 A
+     4.83737      0.00000      4.83737      4.83737            1 100 A
+     4.79442      0.00000      4.79442      4.79442            1 100 A
+     4.73825      0.00000      4.73825      4.73825            1 100 A
+     4.68312      0.00000      4.68312      4.68312            1 100 A
+     4.62904      0.00000      4.62904      4.62904            1 100 A
+     4.58923      0.00000      4.58923      4.58923            1 100 A
+     4.56294      0.00000      4.56294      4.56294            1 100 A
+     4.52388      0.00000      4.52388      4.52388            1 100 A
+     4.47277      0.00000      4.47277      4.47277            1 100 A
+     4.42261      0.00000      4.42261      4.42261            1 100 A
+     4.37338      0.00000      4.37338      4.37338            1 100 A
+     4.33714      0.00000      4.33714      4.33714            1 100 A
+     4.31321      0.00000      4.31321      4.31321            1 100 A
+     4.27764      0.00000      4.27764      4.27764            1 100 A
+     4.23109      0.00000      4.23109      4.23109            1 100 A
+     4.18538      0.00000      4.18538      4.18538            1 100 A
+     4.14052      0.00000      4.14052      4.14052            1 100 A
+     4.10748      0.00000      4.10748      4.10748            1 100 A
+     4.08565      0.00000      4.08565      4.08565            1 100 A
+     4.05321      0.00000      4.05321      4.05321            1 100 A
+     4.01074      0.00000      4.01074      4.01074            1 100 A
+     3.96903      0.00000      3.96903      3.96903            1 100 A
+     3.92807      0.00000      3.92807      3.92807            1 100 A
+     3.89790      0.00000      3.89790      3.89790            1 100 A
+     3.87796      0.00000      3.87796      3.87796            1 100 A
+     3.84832      0.00000      3.84832      3.84832            1 100 A
+     3.80950      0.00000      3.80950      3.80950            1 100 A
+     3.77136      0.00000      3.77136      3.77136            1 100 A
+     3.73389      0.00000      3.73389      3.73389            1 100 A
+     3.70627      0.00000      3.70627      3.70627            1 100 A
+     3.68802      0.00000      3.68802      3.68802            1 100 A
+     3.66089      0.00000      3.66089      3.66089            1 100 A
+     3.62533      0.00000      3.62533      3.62533            1 100 A
+     3.59038      0.00000      3.59038      3.59038            1 100 A
+     3.55603      0.00000      3.55603      3.55603            1 100 A
+     3.53070      0.00000      3.53070      3.53070            1 100 A
+     3.51396      0.00000      3.51396      3.51396            1 100 A
+     3.48906      0.00000      3.48906      3.48906            1 100 A
+     3.45642      0.00000      3.45642      3.45642            1 100 A
+     3.42432      0.00000      3.42432      3.42432            1 100 A
+     3.39276      0.00000      3.39276      3.39276            1 100 A
+     3.36948      0.00000      3.36948      3.36948            1 100 A
+     3.35408      0.00000      3.35408      3.35408            1 100 A
+     3.33119      0.00000      3.33119      3.33119            1 100 A
+     3.30116      0.00000      3.30116      3.30116            1 100 A
+     3.27161      0.00000      3.27161      3.27161            1 100 A
+     3.24255      0.00000      3.24255      3.24255            1 100 A
+     3.22110      0.00000      3.22110      3.22110            1 100 A
+     3.20692      0.00000      3.20692      3.20692            1 100 A
+     3.18581      0.00000      3.18581      3.18581            1 100 A
+     3.15812      0.00000      3.15812      3.15812            1 100 A
+     3.13086      0.00000      3.13086      3.13086            1 100 A
+     3.10404      0.00000      3.10404      3.10404            1 100 A
+     3.08423      0.00000      3.08423      3.08423            1 100 A
+     3.07113      0.00000      3.07113      3.07113            1 100 A
+     3.05164      0.00000      3.05164      3.05164            1 100 A
+     3.02605      0.00000      3.02605      3.02605            1 100 A
+     3.00085      0.00000      3.00085      3.00085            1 100 A
+     2.97603      0.00000      2.97603      2.97603            1 100 A
+     2.95771      0.00000      2.95771      2.95771            1 100 A
 [END OF DATA]
 [END OF TABLE]
 [END OF PRESSURES]
-
 [FORCE FROM LAYER]
-1 : Number of layers
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Level top layer
 Force
 Layer name
 [END OF COLUMN INDICATION]
 [DATA]
-    10.00   0.000 'Soil'
+    10.00  54.648 'Soil'
 [END OF DATA]
 [END OF TABLE]
 [END OF FORCE FROM LAYER]
-
 [END OF SIDE]
-
 [END OF CONSTRUCTION STAGE]
-
 [RESUME]
-1 : Number of stages
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Moment
-Shear force
+ShearForce
 Displacement
-Percentage mobilized moment
-Percentage mobilized resistance
-Stage
-Verification type
-Partial factor type
-Vertical balance result
-Vertical result direction
-Status
+PercentageMobilizedMoment
+PercentageMobilizedResistance
+StageNumber
+VerificationType
+PartialFactorSet
+RepresentativeFactor
+VerticalBalanceResult
+CalculationStatus
 [END OF COLUMN INDICATION]
 [DATA]
-     0.00000      0.00000      0.00000      0.00000    100.00000     1    15     4 0 0     0
+     0.00000      0.00000      0.00000      0.00000    100.00000     1    12     4   1.000 0     0
 [END OF DATA]
 [END OF TABLE]
 [END OF RESUME]
-
+[MAXIMUM SUMMARY RESULTS]
+MaximumMoment=0.00000
+MaximumShearForce=0.00000
+MaximumDisplacement=0.00000
+MaximumPercentageMobilisedMoment=0.00000
+MaximumPercentageMobilisedResistance=100.00000
+VerticalBalanceSummary=0
+AllStagesAreStable=1
+[END OF MAXIMUM SUMMARY RESULTS]
+[WARNINGS]
+[TABLE]
+DataCount=0
+[END OF TABLE]
+[END OF WARNINGS]
+[ERRORS]
+[TABLE]
+DataCount=0
+[END OF TABLE]
+[END OF ERRORS]
 [END OF OUTPUT DATA]
 [END OF DUMPFILE]

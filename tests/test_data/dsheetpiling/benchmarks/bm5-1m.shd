@@ -1,24 +1,24 @@
-DUMP FILE FOR D-SHEET PILING CONSOLE
+DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    : Stichting Deltares 
 
-DATE       : 7/7/2020
-TIME       : 5:41:30 PM
-FILENAME   : C:\Users\Smyrniou\Stichting Deltares\Maarten Pronk - D-Sheet Voorbeelden\D-Sheet - Benchmarks\bm5-1m.shd
-CREATED BY : D-Sheet Piling Console version 19.3.500.28970
+DATE       : 4/6/2023
+TIME       : 3:47:07 PM
+FILENAME   : D:\pvcsprojects\applications\DSheetPiling\trunk\data\Benchmarks\bm5-1m.shd
+CREATED BY : D-Sheet Piling version 23.1.1.40517
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
+[INPUT DATA]
 [VERSION]
-Soil=1007
-D-Sheet Piling=1026
+Soil=1010
+D-Sheet Piling=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=19.1.1.23469
-DGSCPTipUI.dll=19.1.1.23469
+DGSCPTipCalc.dll=21.3.1.35380
+DGSCPTipUI.dll=21.3.1.35380
 [END OF VERSION EXTERNALS]
 
-[INPUT DATA]
 [SOIL COLLECTION]
     4 = number of items
 [SOIL]
@@ -33,11 +33,8 @@ SoilEModMenard=0.01
 SoilCohesion=12.50
 SoilPhi=21.00
 SoilDelta=14.00
-SoilCuTop=0.00
-SoilCuBottom=0.00
-SoilCuBearingCapacityFactor=4.10
+SoilIsDeltaAngleAutomaticallyCalculated=0
 SoilOCR=1.00
-SoilDrained=0
 SoilPermeabKx=1.00000E-03
 SoilStdCohesion=0.00
 SoilStdPhi=0.00
@@ -85,11 +82,8 @@ SoilEModMenard=0.01
 SoilCohesion=5.00
 SoilPhi=24.50
 SoilDelta=18.00
-SoilCuTop=0.00
-SoilCuBottom=0.00
-SoilCuBearingCapacityFactor=4.10
+SoilIsDeltaAngleAutomaticallyCalculated=0
 SoilOCR=1.00
-SoilDrained=0
 SoilPermeabKx=1.00000E-03
 SoilStdCohesion=0.00
 SoilStdPhi=0.00
@@ -137,11 +131,8 @@ SoilEModMenard=0.01
 SoilCohesion=0.00
 SoilPhi=31.00
 SoilDelta=24.00
-SoilCuTop=0.00
-SoilCuBottom=0.00
-SoilCuBearingCapacityFactor=4.10
+SoilIsDeltaAngleAutomaticallyCalculated=0
 SoilOCR=1.00
-SoilDrained=0
 SoilPermeabKx=1.00000E-03
 SoilStdCohesion=0.00
 SoilStdPhi=0.00
@@ -189,11 +180,8 @@ SoilEModMenard=0.01
 SoilCohesion=0.00
 SoilPhi=37.00
 SoilDelta=24.00
-SoilCuTop=0.00
-SoilCuBottom=0.00
-SoilCuBearingCapacityFactor=4.10
+SoilIsDeltaAngleAutomaticallyCalculated=0
 SoilOCR=1.00
-SoilDrained=0
 SoilPermeabKx=1.00000E-03
 SoilStdCohesion=0.00
 SoilStdPhi=0.00
@@ -231,7 +219,6 @@ SoilDefaultElasticity=1
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 
-
 [RUN IDENTIFICATION]
 Benchmark D-Sheet Piling 5-1m
 Overall Stability
@@ -242,8 +229,7 @@ EC 7 - B - set 2
 0 : Sheet piling
 2 : Mixed
 1 : Verification = TRUE
-0 : EC7-SE visible = FALSE
-1 : Pile loaded by calculated soil displacements
+1 : Pile loaded by soil displacements
 1 : Pile loaded by calculated soil displacements
 0 : Probabilistic = FALSE
 0 : Check vertical balance = FALSE
@@ -269,7 +255,6 @@ SheetPilingElementEI=4.137000E+04
 SheetPilingElementWidth=1.00
 SheetPilingElementLevel=-14.00
 SheetPilingElementHeight=303
-SheetPilingElementCoatingArea=1.23
 SheetPilingPileWidth=0.67
 SheetPilingElementSectionArea=137
 SheetPilingElementResistingMoment=1300
@@ -292,10 +277,7 @@ DiaphragmWallPosMomElastoPlastic=0.00
 DiaphragmWallNegEIElastoPlastic2=2.000000E+04
 DiaphragmWallNegMomElastoPlastic=0.00
 WoodenSheetPilingElementE=0.000000E+00
-WoodenSheetPilingElementEISLS=0.000000E+00
-WoodenSheetPilingElementEIULS=0.000000E+00
 WoodenSheetPilingElementCharacFlexuralStrength=0.00
-WoodenSheetPilingElementKH=1.30
 WoodenSheetPilingElementKSys=1.15
 WoodenSheetPilingElementKDef=2.00
 WoodenSheetPilingElementPsi2Eff=1.00
@@ -307,13 +289,21 @@ WoodenSheetPilingElementKModE=0.80
 [END OF SHEET PILING]
 
 [COMBINED WALL]
+CombinedWallAreNeutralAxesOfPilesAndSheetPilesCoinciding=1
+CombinedWallDistanceBetweenNeutralAxisPilesAndSystemBoundary=0.000
+CombinedWallDistanceBetweenNeutralAxisSheetPilesAndSystemBoundary=0.000
+CombinedWallDistanceBetweenPlasticNeutralAxisPilesAndSystemBoundary=0.000
+CombinedWallDistanceBetweenPlasticNeutralAxisSheetPilesAndSystemBoundary=0.000
 CombinedWallPilesName=
 CombinedWallPilesMaterialType=1
 CombinedWallPilesBottomLevel=-10.00
 CombinedWallPilesEI=1.0000E+05
-CombinedWallPilesDiameter=1.00
+CombinedWallPilesWidth=1.00
 CombinedWallPilesMaxMoment=0.00
 CombinedWallPilesMaxPlasticMoment=0.00
+CombinedWallPilesElasticSectionModulus=0.00
+CombinedWallPilesPlasticSectionModulus=0.00
+CombinedWallPilesYieldStrength=0.00
 CombinedWallPilesSectionArea=0.00
 CombinedWallSheetPilesName=
 CombinedWallSheetPilesMaterialType=1
@@ -321,9 +311,7 @@ CombinedWallSheetPilesBottomLevel=-5.00
 CombinedWallSheetPilesEI=1.0000E+05
 CombinedWallSheetPilesWidth=1.00
 CombinedWallSheetPilesHeight=1.00
-CombinedWallSheetPilesMaxMoment=0.00
-CombinedWallSheetPilesMaxPlasticMoment=0.00
-CombinedWallSheetPilesCoatingArea=0.00
+CombinedWallSheetPilesYieldStrength=0.00
 CombinedWallSheetPilesSectionArea=0.00
 CombinedWallNumberOfSheetPiles=3
 [END OF COMBINED WALL]
@@ -419,10 +407,6 @@ SurchargeLoadDistribution=2
 [WATER]
  10.00  Unit weight of water
 [END OF WATER]
-
-[EARTH QUAKE]
-  0.00  
-[END OF EARTH QUAKE]
 
 [SOIL PROFILES]
   1 Number of spring characteristics curves
@@ -609,9 +593,7 @@ StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=1
 StageVerifyEC7NADNL=0
 StageAnchorFactorEC7NADNL=1.000
-StageVerifyEC7NADB=0
-StagePartialFactorSetEC7NADSE=0
-StageVerifyEC7NADSE=0
+StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
 StagePartialFactorSetCUR=0
@@ -620,9 +602,7 @@ StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=1
 StageVerifyEC7NADNL=0
 StageAnchorFactorEC7NADNL=1.000
-StageVerifyEC7NADB=0
-StagePartialFactorSetEC7NADSE=0
-StageVerifyEC7NADSE=0
+StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
 StagePartialFactorSetCUR=0
@@ -631,9 +611,7 @@ StageAnchorFactor=1.200
 StagePartialFactorSetEC7NADNL=1
 StageVerifyEC7NADNL=1
 StageAnchorFactorEC7NADNL=1.200
-StageVerifyEC7NADB=0
-StagePartialFactorSetEC7NADSE=0
-StageVerifyEC7NADSE=0
+StageVerifyEC7NADBE=0
 [END OF STAGE]
 [END OF CALCULATION OPTIONS PER STAGE]
 
@@ -641,7 +619,6 @@ StageVerifyEC7NADSE=0
 CalcFirstStageInitial=0
 CalcMinorNodesOn=0
 CalcReduceDeltas=1
-CalcEmpiricalFactorStressType=0
 InputCalculationType=4
 IsVibrationCalculation=0
 AllowableAnchorForceCalculationType=0
@@ -655,12 +632,10 @@ DesignType=1
 DesignEuroCodePartialFactorSet=0
 DesignPartialFactorSetEC7NADNL=1
 DesignEC7NLMethod=0
-DesignPartialFactorSetEC7NADB=0
-DesignEC7BMethod=0
+DesignPartialFactorSetEC7NADBE=0
+DesignEC7BEMethod=0
 DesignPartialFactorSet=2
 DesignCURMethod=0
-DesignPartialFactorSetEC7NADSE=0
-DesignEC7SEMethod=0
 VerifyType=0
 EuroCodePartialFactorSet=1
 EuroCodeOverallStability=0
@@ -668,45 +643,32 @@ EC7NLMethod=0
 EC7NLOverallPartialFactorSet=1
 EC7NLOverallAnchorFactor=1.200
 EC7NADNLOverallStability=0
-EC7BOverallStability=0
-NBMethod=0
+EC7BEOverallStability=0
+EC7BEMethod=0
 CURMethod=1
 CUROverallPartialFactorSet=2
 CUROverallAnchorFactor=1.400
 CUROverallStability=0
-EC7SEMethod=0
-EC7SEOverallPartialFactorSet=0
-EC7NADSEOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=2
 OverallStabilityType=4
+StabilityExport=1
 StabilityEuroCodePartialFactorSet=3
 StabilityEC7NLPartialFactorSet=2
-StabilityEC7BPartialFactorSet=1
+StabilityEC7BEPartialFactorSet=1
 StabilityCURPartialFactorSet=2
-StabilityEC7SEPartialFactorSet=0
-OverallStabilityDrained=1
 [PARTIAL FACTORS EUROCODE DA1 SET1]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.350
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.500
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.100
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -723,26 +685,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA1 SET1]
 [PARTIAL FACTORS EUROCODE DA1 SET2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -759,26 +712,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA1 SET2]
 [PARTIAL FACTORS EUROCODE DA2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.350
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.500
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.100
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.400
@@ -795,26 +739,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA2]
 [PARTIAL FACTORS EUROCODE DA3]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.350
 ConstructLoadFactorVarUnfavCalc=1.500
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -831,26 +766,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.250
 [END OF PARTIAL FACTORS EUROCODE DA3]
 [PARTIAL FACTORS EC7 NL 0]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.050
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -867,26 +793,17 @@ FactorRepValuesMDPmax=1.200
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 NL 0]
 [PARTIAL FACTORS EC7 NL 1]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.215
 ConstructLoadFactorVarUnfavCalc=1.350
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.150
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.150
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -903,26 +820,17 @@ FactorRepValuesMDPmax=1.200
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 NL 1]
 [PARTIAL FACTORS EC7 NL 2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.350
 ConstructLoadFactorVarUnfavCalc=1.500
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.175
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -939,26 +847,17 @@ FactorRepValuesMDPmax=1.200
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 NL 2]
 [PARTIAL FACTORS EC7 NL 3]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.250
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.485
 ConstructLoadFactorVarUnfavCalc=1.650
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.400
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.200
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -974,27 +873,18 @@ OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=1.350
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS EC7 NL 3]
-[PARTIAL FACTORS EC7 B SET1]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
+[PARTIAL FACTORS EC7 BE SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.100
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.000
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -1009,28 +899,19 @@ OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS EC7 B SET1]
-[PARTIAL FACTORS EC7 B SET2]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
+[END OF PARTIAL FACTORS EC7 BE SET1]
+[PARTIAL FACTORS EC7 BE SET2]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.250
 MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
@@ -1045,28 +926,19 @@ OverallStabilityFactorTgPhi=1.500
 OverallStabilityFactorUnitWeight=0.800
 FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS EC7 B SET2]
+[END OF PARTIAL FACTORS EC7 BE SET2]
 [PARTIAL FACTORS CUR I]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.050
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -1083,26 +955,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS CUR I]
 [PARTIAL FACTORS CUR II]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.150
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -1119,26 +982,17 @@ FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS CUR II]
 [PARTIAL FACTORS CUR III]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.250
 LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.000
-LoadFactorVarUnfavMultiply=1.000
-LoadFactorPermUnfavCalc=0.000
-LoadFactorVarUnfavCalc=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.000
-ConstructLoadFactorVarUnfavMultiply=1.000
 ConstructLoadFactorPermUnfavCalc=1.000
 ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.100
-MaterialFactorUndrainedShearStrength=1.000
 MaterialFactorTgPhi=1.200
 MaterialFactorSubgradeReaction=1.300
 ResistanceFactor=1.000
@@ -1154,114 +1008,6 @@ OverallStabilityFactorUnitWeight=1.000
 FactorRepValuesMDPmax=0.000
 VerticalBalanceGammaMb=1.200
 [END OF PARTIAL FACTORS CUR III]
-[PARTIAL FACTORS EC7 SE VK1]
-SafetyFactorGammaD=0.83
-SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.000
-LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.100
-LoadFactorVarUnfavMultiply=1.400
-LoadFactorPermUnfavCalc=0.913
-LoadFactorVarUnfavCalc=1.162
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.350
-ConstructLoadFactorVarUnfavMultiply=1.500
-ConstructLoadFactorPermUnfavCalc=1.120
-ConstructLoadFactorVarUnfavCalc=1.245
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.300
-MaterialFactorUndrainedShearStrength=1.500
-MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.000
-ResistanceFactor=1.000
-GeometryIncRetainingHeight=0.00
-GeometryMaxIncRetainingHeight=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.300
-OverallStabilityFactorTgPhi=1.300
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
-VerticalBalanceGammaMb=1.300
-[END OF PARTIAL FACTORS EC7 SE VK1]
-[PARTIAL FACTORS EC7 SE VK2]
-SafetyFactorGammaD=0.91
-SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.000
-LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.100
-LoadFactorVarUnfavMultiply=1.400
-LoadFactorPermUnfavCalc=1.001
-LoadFactorVarUnfavCalc=1.274
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.350
-ConstructLoadFactorVarUnfavMultiply=1.500
-ConstructLoadFactorPermUnfavCalc=1.228
-ConstructLoadFactorVarUnfavCalc=1.365
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.300
-MaterialFactorUndrainedShearStrength=1.500
-MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.000
-ResistanceFactor=1.000
-GeometryIncRetainingHeight=0.00
-GeometryMaxIncRetainingHeight=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.300
-OverallStabilityFactorTgPhi=1.300
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
-VerticalBalanceGammaMb=1.300
-[END OF PARTIAL FACTORS EC7 SE VK2]
-[PARTIAL FACTORS EC7 SE VK3]
-SafetyFactorGammaD=1.00
-SafetyFactorEta=1.00
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.000
-LoadFactorVarFav=0.000
-LoadFactorPermUnfavMultiply=1.100
-LoadFactorVarUnfavMultiply=1.400
-LoadFactorPermUnfavCalc=1.100
-LoadFactorVarUnfavCalc=1.400
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavMultiply=1.350
-ConstructLoadFactorVarUnfavMultiply=1.500
-ConstructLoadFactorPermUnfavCalc=1.350
-ConstructLoadFactorVarUnfavCalc=1.500
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.300
-MaterialFactorUndrainedShearStrength=1.500
-MaterialFactorTgPhi=1.300
-MaterialFactorSubgradeReaction=1.000
-ResistanceFactor=1.000
-GeometryIncRetainingHeight=0.00
-GeometryMaxIncRetainingHeight=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.300
-OverallStabilityFactorTgPhi=1.300
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
-VerticalBalanceGammaMb=1.300
-[END OF PARTIAL FACTORS EC7 SE VK3]
 [END OF CALCULATION OPTIONS]
 
 [PROBABILISTIC CALCULATION OPTIONS]
@@ -1281,15 +1027,13 @@ ReliabilityStage=0
 [END OF PROBABILISTIC CONTROL PARAMETERS]
 
 [END OF INPUT DATA]
-
 [OUTPUT DATA]
 [CALCULATION TYPE]
 Overall Stability
 [END OF CALCULATION TYPE]
-
 [SHEET PILE ELEMENTS]
-1 : Number of elements
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Elastic stiffness EI including reduction factor
 Stiffness EI 2nd branch positive of M-Kappa diagram
@@ -1304,17 +1048,19 @@ Reduction factor on EI
 Reduction factor on moment
 Maximum allowed moment short term wooden pile
 Maximum allowed moment long term wooden pile
+Wooden height factor
+Stiffness EI at SLS for wooden sheet pile
+Stiffness EI at ULS for wooden sheet pile
 Explanation of reduction
 [END OF COLUMN INDICATION]
 [DATA]
-   41370.00000  20000.00000  20000.00000  20000.00000  20000.00000 559.000   0.000      0.00    -14.00  1.00  1.00   0.000   0.000 '-'
+   41370.00000  20000.00000  20000.00000  20000.00000  20000.00000 559.000   0.000      0.00    -14.00  1.00  1.00   0.000   0.000   0.869      0.00000      0.00000 '-'
 [END OF DATA]
 [END OF TABLE]
 [END OF SHEET PILE ELEMENTS]
-
 [FACTORS FOR OVERALL STABILITY]
-1 : Number of stability calculations
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Stage
 Partial factor set
@@ -1329,12 +1075,12 @@ Factor on unit weight stability
 [END OF DATA]
 [END OF TABLE]
 [END OF FACTORS FOR OVERALL STABILITY]
-
 [OVERALL STABILITY RESULTS]
-1 : Number of stability calculations
 [TABLE]
+DataCount=1
 [COLUMN INDICATION]
 Construction stage
+Partial factor set
 Stability factor
 X center point
 Y center point
@@ -1343,10 +1089,9 @@ X surface left
 X surface right
 [END OF COLUMN INDICATION]
 [DATA]
- 3    2.059  -2.000   6.000  20.100 -17.330  17.184
+ 3 13    2.059  -2.000   6.000  20.100 -17.330  17.184
 [END OF DATA]
 [END OF TABLE]
 [END OF OVERALL STABILITY RESULTS]
-
 [END OF OUTPUT DATA]
 [END OF DUMPFILE]

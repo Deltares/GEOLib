@@ -1,3 +1,8 @@
+"""
+Module containing the common soil object definition.
+"""
+
+
 from .soil import (
     BjerrumParameters,
     ConeResistance,

@@ -1,8 +1,7 @@
 from enum import Enum, IntEnum
 
-from pydantic import conint
-
 from geolib.models import BaseDataClass
+from pydantic import conint
 
 
 class LateralEarthPressureMethod(IntEnum):
@@ -33,12 +32,12 @@ class LateralEarthPressureMethodStage(IntEnum):
 class ModelType(IntEnum):
     """Represents the model types from D-Sheet Piling using the same integer values used in the application.
 
-    The Model type determines the kind of calculation that's performed on the construction.
+    The Model type determines the kind of construction: single pile or sheet piling.
+    Note that the model type SHEET_PILING includes sheet piling, wooden sheet piling and diaphragm wall.
     """
 
     SHEET_PILING = 0
     SINGLE_PILE = 1
-    DIAPHRAGM_WALL = 2
 
 
 class SinglePileLoadOptions(Enum):
@@ -119,9 +118,10 @@ class PartialFactorSetEC7NADNL(IntEnum):
     RC1 = 1
     RC2 = 2
     RC3 = 3
+    SLS = 4
 
 
-class PartialFactorSetEC7NADB(IntEnum):
+class PartialFactorSetEC7NADBE(IntEnum):
     SET1 = 0
     SET2 = 1
 
@@ -131,6 +131,7 @@ class PartialFactorSetCUR(IntEnum):
     CLASSI = 0
     CLASSII = 1
     CLASSIII = 2
+    SLS = 3
 
 
 class PartialFactorCalculationType(IntEnum):

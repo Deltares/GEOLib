@@ -3,9 +3,6 @@ import random
 from pathlib import Path
 
 import pytest
-from pydantic.color import Color
-from teamcity import is_running_under_teamcity
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -92,12 +89,15 @@ from geolib.soils import (
     Soil,
     SoilType,
 )
+from pydantic.color import Color
+from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dsheetpiling/acceptance"
 
 class TestDsheetPilingAcceptance:
+    # @only_teamcity
     @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -114,6 +114,7 @@ class TestDsheetPilingAcceptance:
                     cur_stability_stage=0,
                     overall_stability_type=DesignType.CUR,
                     stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    stability_export=True
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -136,7 +137,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -161,7 +162,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_1 = Sheet(
@@ -179,7 +179,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(
@@ -198,6 +197,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.mohr_coulomb_parameters.cohesion = 10
         soil_clay.mohr_coulomb_parameters.friction_angle = 17
         soil_clay.mohr_coulomb_parameters.friction_angle_interface = 11
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_clay.shell_factor = 1
         soil_clay.soil_state.ocr_layer = 1
         soil_clay.soil_classification_parameters.grain_type = GrainType.FINE
@@ -214,6 +214,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.mohr_coulomb_parameters.cohesion = 2
         soil_peat.mohr_coulomb_parameters.friction_angle = 20
         soil_peat.mohr_coulomb_parameters.friction_angle_interface = 0
+        soil_peat.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = False
         soil_peat.shell_factor = 1
         soil_peat.soil_state.ocr_layer = 1
         soil_peat.soil_classification_parameters.grain_type = GrainType.FINE
@@ -230,6 +231,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.mohr_coulomb_parameters.cohesion = 0
         soil_sand.mohr_coulomb_parameters.friction_angle = 35
         soil_sand.mohr_coulomb_parameters.friction_angle_interface = 27
+        soil_sand.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_sand.shell_factor = 1
         soil_sand.soil_state.ocr_layer = 1
         soil_sand.soil_classification_parameters.grain_type = GrainType.FINE
@@ -391,8 +393,14 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+        # 5. For OverallStabilityCalculationOptions a STI file should be present because StabilityExport is True
+        if isinstance(calc_options, OverallStabilityCalculationOptions):
+            output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+            output_test_file = output_test_folder / f"{test_name_with_id} (1).sti"
+            assert output_test_file.exists(), "STI file not found."
+
+    # @only_teamcity
     @pytest.mark.acceptance
-    @only_teamcity
     def test_run_sheet_model_acceptance_multiple_stages(self, request):
         # 0. Set up test data.
         model = DSheetPilingModel()
@@ -422,7 +430,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_1 = Sheet(
@@ -440,7 +447,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(
@@ -459,6 +465,7 @@ class TestDsheetPilingAcceptance:
         soil_clay.mohr_coulomb_parameters.cohesion = 10
         soil_clay.mohr_coulomb_parameters.friction_angle = 17
         soil_clay.mohr_coulomb_parameters.friction_angle_interface = 11
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_clay.shell_factor = 1
         soil_clay.soil_state.ocr_layer = 1
         soil_clay.soil_classification_parameters.grain_type = GrainType.FINE
@@ -475,6 +482,7 @@ class TestDsheetPilingAcceptance:
         soil_peat.mohr_coulomb_parameters.cohesion = 2
         soil_peat.mohr_coulomb_parameters.friction_angle = 20
         soil_peat.mohr_coulomb_parameters.friction_angle_interface = 0
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = False
         soil_peat.shell_factor = 1
         soil_peat.soil_state.ocr_layer = 1
         soil_peat.soil_classification_parameters.grain_type = GrainType.FINE
@@ -491,6 +499,7 @@ class TestDsheetPilingAcceptance:
         soil_sand.mohr_coulomb_parameters.cohesion = 0
         soil_sand.mohr_coulomb_parameters.friction_angle = 35
         soil_sand.mohr_coulomb_parameters.friction_angle_interface = 27
+        soil_sand.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = True
         soil_sand.shell_factor = 1
         soil_sand.soil_state.ocr_layer = 1
         soil_sand.soil_classification_parameters.grain_type = GrainType.FINE
@@ -642,8 +651,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    # @only_teamcity
     @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "modeltype",
         [
@@ -668,7 +677,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -864,7 +873,7 @@ class TestDsheetPilingAcceptance:
         ):
             model.execute()
 
-            # 4. Verify successfull parsing of output datastructure
+            # 4. Verify successful parsing of output datastructure
             assert model.datastructure
             assert model.datastructure.is_valid
             with open(
@@ -874,8 +883,8 @@ class TestDsheetPilingAcceptance:
                     model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
                 )
 
+    # @only_teamcity
     @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -914,14 +923,13 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
-        modeltype = SheetModelType(
+        modeltype = WoodenSheetPileModelType(
             method=LateralEarthPressureMethod.MIXED,
             check_vertical_balance=False,
-            trildens_calculation=True,
             verification=True,
         )
         model.set_model(modeltype)
@@ -939,7 +947,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         wooden_pile_properties = WoodenSheetPileProperties(
@@ -970,7 +977,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(
@@ -1184,8 +1190,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    # @only_teamcity
     @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -1224,14 +1230,13 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
-        modeltype = SheetModelType(
+        modeltype = DiaphragmModelType(
             method=LateralEarthPressureMethod.MIXED,
             check_vertical_balance=False,
-            trildens_calculation=True,
             verification=True,
         )
         model.set_model(modeltype)
@@ -1253,14 +1258,14 @@ class TestDsheetPilingAcceptance:
         plastic_properties_1 = FullPlasticCalculationProperties(
             eI_branch_2_positive=20000,
             eI_branch_2_negative=20000,
-            moment_point_1_positive=0,
-            moment_point_1_negative=0,
-            plastic_moment_positive=0,
-            plastic_moment_negative=0,
+            moment_point_1_positive=100,
+            moment_point_1_negative=100,
+            plastic_moment_positive=300,
+            plastic_moment_negative=300,
             eI_branch_3_positive=20000,
-            moment_point_2_positive=0,
+            moment_point_2_positive=200,
             eI_branch_3_negative=20000,
-            moment_point_2_negative=0,
+            moment_point_2_negative=200,
         )
         sheet_element_1 = DiaphragmWall(
             name="AZ 13",
@@ -1283,14 +1288,14 @@ class TestDsheetPilingAcceptance:
         plastic_properties_2 = FullPlasticCalculationProperties(
             eI_branch_2_positive=30000,
             eI_branch_2_negative=30000,
-            moment_point_1_positive=1,
-            moment_point_1_negative=1,
-            plastic_moment_positive=1,
-            plastic_moment_negative=1,
+            moment_point_1_positive=150,
+            moment_point_1_negative=100,
+            plastic_moment_positive=350,
+            plastic_moment_negative=120,
             eI_branch_3_positive=30000,
-            moment_point_2_positive=1,
+            moment_point_2_positive=250,
             eI_branch_3_negative=30000,
-            moment_point_2_negative=1,
+            moment_point_2_negative=110,
         )
         sheet_element_2 = DiaphragmWall(
             name="AZ 14",
@@ -1503,8 +1508,8 @@ class TestDsheetPilingAcceptance:
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
             json.dump(model.datastructure.dict(), outfile, ensure_ascii=False, indent=4)
 
+    # @only_teamcity
     @pytest.mark.acceptance
-    @only_teamcity
     @pytest.mark.parametrize(
         "calc_options",
         [
@@ -1543,7 +1548,7 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -1569,7 +1574,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_pile_plastic_properties_1 = SheetPileModelPlasticCalculationProperties(
@@ -1594,7 +1598,6 @@ class TestDsheetPilingAcceptance:
             reduction_factor_on_ei=1,
             section_area=137,
             elastic_section_modulus_w_el=1300,
-            coating_area=1.23,
             height=303.0,
         )
         sheet_element_2 = Sheet(

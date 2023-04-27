@@ -68,8 +68,8 @@ class TestDSheetpilingWithNumberOfRowsTable:
         class test_structure(DSheetpilingWithNumberOfRowsTable):
             test_structure: List[Dict[str, float]]
 
-        text_to_parse = """2 : Number of nodes
-            [TABLE]
+        text_to_parse = """[TABLE]
+            DataCount=2
             [COLUMN INDICATION]
             A
             B

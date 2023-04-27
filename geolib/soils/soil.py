@@ -77,9 +77,8 @@ class MohrCoulombParameters(SoilBaseModel):
     cohesion: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     dilatancy_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     friction_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    friction_angle_interface: Optional[
-        Union[float, StochasticParameter]
-    ] = StochasticParameter()
+    friction_angle_interface: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    is_delta_angle_automatically_calculated: Optional[bool] = None
     cohesion_and_friction_angle_correlated: Optional[bool] = None
 
 
@@ -375,7 +374,8 @@ class SoilType(IntEnum):
     CLAY = 3
     PEAT = 4
     SANDY_LOAM = 5
-
+    TERTCLAY = 6
+    CLAYEYSAND = 7
 
 class Soil(SoilBaseModel):
     """Soil Material."""
@@ -405,7 +405,6 @@ class Soil(SoilBaseModel):
     use_probabilistic_defaults: Optional[bool] = False
     soil_type_settlement_by_vibrations: Optional[SoilType] = SoilType.SAND
     soil_type_nl: Optional[SoilType] = SoilType.SAND
-    soil_type_be: Optional[SoilType] = SoilType.SAND
     soil_state: Optional[SoilState] = SoilState()
     shear_strength_model_above_phreatic_level: Optional[
         ShearStrengthModelTypePhreaticLevel
@@ -574,7 +573,6 @@ class Soil(SoilBaseModel):
             name=self.name,
             soilcolor=self.color.to_internal(),
             soilsoiltype=self.soil_type_nl,
-            soilbelgiansoiltype=self.soil_type_be,
             soilgamdry=self.soil_weight_parameters.unsaturated_weight.mean,
             soilgamwet=self.soil_weight_parameters.saturated_weight.mean,
             soilinitialvoidratio=self.soil_classification_parameters.initial_void_ratio.mean,
@@ -762,6 +760,7 @@ class Soil(SoilBaseModel):
             soilcohesion=self.mohr_coulomb_parameters.cohesion.mean,
             soilphi=self.mohr_coulomb_parameters.friction_angle.mean,
             soildelta=self.mohr_coulomb_parameters.friction_angle_interface.mean,
+            soilisdeltaangleautomaticallycalculated=self.mohr_coulomb_parameters.is_delta_angle_automatically_calculated,
             soilocr=self.soil_state.ocr_layer.mean,
             soilpermeabkx=self.storage_parameters.horizontal_permeability.mean,
             soilstdcohesion=self.mohr_coulomb_parameters.cohesion.standard_deviation,

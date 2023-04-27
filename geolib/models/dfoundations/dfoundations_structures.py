@@ -56,16 +56,18 @@ class DFoundationsTableWrapper(DSeriesStructure):
     @classmethod
     def parse_text(cls, text):
         """Parses a Table wrapped in another group such as:
-        [TABLE GROUP]
+        [TABLE]
+        DataCount = x followed by
+        [END OF TABLE]  directly when x = 0 or, when x > 0, by
         [COLUMN INDICATION]
         A
         B
         [END OF COLUMN INDICATION]
-        [GROUP DATA]
+        [DATA]
         1 1
         2 2
-        [END OF GROUP DATA]
-        [END OF TABLE GROUP]
+        [END OF DATA]
+        [END OF TABLE]
 
         Args:
             text (str): Wrapped table group to parse.
@@ -80,13 +82,19 @@ class DFoundationsTableWrapper(DSeriesStructure):
 
         table_text = list(DSerieParser.parse_list_group(text).values())[0]
         table_data = list(DSerieParser.parse_list_group(table_text).values())
-        # Expected two groups (column_indication and data)
-        keys = table_data[0].split("\n")
-        values_dict_list = [
+        if len(table_data) == 0:
+            values_dict_list = table_data;
+            collection_property_name = list(cls.__fields__.items())[0][0]
+            return cls(**{collection_property_name: values_dict_list})
+        else:
+            # Expected two groups (column_indication and data)
+            keys = table_data[0].split("\n")
+            values_dict_list = [
             dict(zip(keys, values))
             for values in map(split_line, table_data[1].split("\n"))
-        ]
-        collection_property_name = list(cls.__fields__.items())[0][0]
+            ]
+            collection_property_name = list(cls.__fields__.items())[0][0]
+
         return cls(**{collection_property_name: values_dict_list})
 
 

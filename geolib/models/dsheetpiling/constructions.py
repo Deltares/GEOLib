@@ -13,7 +13,7 @@ class PileProperties(BaseDataClass):
      material_type : Select the material of the sheet piling element : User defined, Steel, Concrete, Wood, Synthetic.
      elastic_stiffness_ei  : Stiffness of the section per running meter.
      section_bottom_level  : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
-     mr_char_el : Characterictic elastic moment without safety factors.
+     mr_char_el : Characteristic elastic moment without safety factors.
      material_factor_gamma_m  : The partial safety factor \u03B3 m should be defined, only if the User defined material type
      is selected. Otherwise, the program will automatically apply the following factors
      (acc. to the corresponding Eurocode) to calculate the design allowable moment
@@ -84,7 +84,7 @@ class SheetPileProperties(BaseDataClass):
      acting_width : The acting width can be used when the effective width changes along the sheet piling. D-SHEET PILING uses the acting width as a multiplication factor for the sheet piling stiffness and all loads, supports and reactions, except the normal force.
      elastic_stiffness_ei : Stiffness of the section per running meter.
      section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
-     mr_char_el: Characterictic elastic moment without safety factors.
+     mr_char_el: Characteristic elastic moment without safety factors.
      material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type is selected. Otherwise, the program will automatically apply the following factors (acc. to the corresponding Eurocode) to calculate the design allowable moment:
 
         * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
@@ -100,7 +100,6 @@ class SheetPileProperties(BaseDataClass):
 
      reduction_factor_on_maximum_moment : The reduction factor applied to the maximum allowable moment
      reduction_factor_on_ei : Reduction factor applied on the stiffness EI of the pile.
-     coating_area : The area of coating of the sheet piling (> 1). This is defined as the
      length of the perimeter of the sheet piling section per running meter of wall [m2/m2 wall].
 
      height : The thickness of the sheet piling profile [mm].
@@ -117,9 +116,8 @@ class SheetPileProperties(BaseDataClass):
     acting_width: Optional[float] = None
     section_bottom_level: Optional[
         float
-    ] = None  # TODO important paramter, shouldn't be default
+    ] = None  # TODO important parameter, shouldn't be default
     height: Optional[int] = 400  # value is defined in mm
-    coating_area: Optional[float] = None
     width_of_sheet_piles: Optional[float] = None
     section_area: Optional[int] = None
     elastic_section_modulus_w_el: Optional[int] = None
@@ -313,7 +311,6 @@ class Sheet(BaseDataClass):
             sheetpilingelementwidth=self.sheet_pile_properties.acting_width,
             sheetpilingelementlevel=self.sheet_pile_properties.section_bottom_level,
             sheetpilingelementheight=self.sheet_pile_properties.height,
-            sheetpilingelementcoatingarea=self.sheet_pile_properties.coating_area,
             sheetpilingpilewidth=self.sheet_pile_properties.width_of_sheet_piles,
             sheetpilingelementsectionarea=self.sheet_pile_properties.section_area,
             sheetpilingelementresistingmoment=self.sheet_pile_properties.elastic_section_modulus_w_el,
