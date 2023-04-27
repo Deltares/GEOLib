@@ -628,7 +628,6 @@ class TestDSeriesWrappedTableStructure:
 
 
 class TestDSeriesInlineProperties:
-
     test_values = {"property_1": 42, "property_2": 24, "property_3": 4.2}
 
     valid_inline_properties = "property_1 = 42\n" + "property_2 = 24"

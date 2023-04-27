@@ -1,7 +1,8 @@
 from enum import Enum, IntEnum
 
-from geolib.models import BaseDataClass
 from pydantic import conint
+
+from geolib.models import BaseDataClass
 
 
 class LateralEarthPressureMethod(IntEnum):

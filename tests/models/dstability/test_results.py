@@ -288,7 +288,6 @@ class TestDStabilityResults:
         model = _get_dstability_model
 
         for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
-
             result_substructure = model._get_result_substructure(
                 scenario_index=0, calculation_index=i
             )
@@ -313,7 +312,6 @@ class TestDStabilityResults:
         model = _get_dstability_model
 
         for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
-
             result_substructure = model._get_result_substructure(
                 scenario_index=0, calculation_index=i
             )

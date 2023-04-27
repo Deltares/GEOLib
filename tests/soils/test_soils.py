@@ -13,7 +13,6 @@ from geolib.soils import (
 class TestSoils:
     @pytest.mark.unittest
     def test_set_stochastic_parameters_from_float(self):
-
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=2)
         soil = Soil(mohr_coulomb_parameters=mohr_coulomb_parameters)
         soil.set_stochastic_parameters(soil.mohr_coulomb_parameters)
@@ -24,7 +23,6 @@ class TestSoils:
 
     @pytest.mark.unittest
     def test_set_stochastic_parameters_from_stochastic_parameter(self):
-
         mohr_coulomb_parameters = MohrCoulombParameters()
 
         mohr_coulomb_parameters.cohesion.mean = 2

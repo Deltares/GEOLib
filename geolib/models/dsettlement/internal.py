@@ -175,7 +175,6 @@ class Curves(DSeriesTreeStructureCollection):
         return curve
 
     def create_curves(self, sorted_points: List[DSeriePoint]) -> List[Curve]:
-
         new_curves = [
             self.create_curve(sorted_points[i], sorted_points[i + 1])
             for i in range(len(sorted_points) - 1)
@@ -271,7 +270,6 @@ class Layers(DSeriesTreeStructureCollection):
     layers: List[Layer] = []
 
     def add_layer(self, layer: Layer):
-
         if layer in self.layers:
             existing_layer = self.layers[self.layers.index(layer)]
             logger.warning(

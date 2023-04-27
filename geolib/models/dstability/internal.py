@@ -2344,7 +2344,6 @@ class DStabilityStructure(BaseModelStructure):
     def get_result_substructure(
         self, analysis_type: AnalysisTypeEnum, calculation_type: CalculationTypeEnum
     ) -> List[DStabilityResult]:
-
         result_types_mapping = {
             AnalysisTypeEnum.UPLIFT_VAN: {
                 "non_probabilistic": self.uplift_van_results,

@@ -14,7 +14,6 @@ from tests.utils import TestUtils
 class TestDStabilityNaNFields:
     @pytest.mark.systemtest
     def test_nan_fields_become_string_in_json(self):
-
         test_input_filepath = Path(
             TestUtils.get_local_test_data_dir("dstability/EmptyFile.stix")
         )

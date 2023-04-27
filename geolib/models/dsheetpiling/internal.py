@@ -5,6 +5,8 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
+from pydantic import confloat, conint, conlist, constr
+
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -22,7 +24,6 @@ from geolib.models.dseries_parser import (
     DSerieVersion,
 )
 from geolib.utils import make_newline_validator
-from pydantic import confloat, conint, conlist, constr
 
 from .calculation_options import (
     CalculationOptionsPerStage as CalculationOptionsPerStageExternal,
@@ -1303,20 +1304,28 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     factors_for_verification: Optional[str]
 
     # Verify calculation according to CUR or EC7-NL
-    verify_step_6____5_serviceability_limit_state: Optional[BaseVerificationStructureProperties]
+    verify_step_6____5_serviceability_limit_state: Optional[
+        BaseVerificationStructureProperties
+    ]
     verify_step_6____5_multiplied_by_factor: Optional[BaseVerificationStructureProperties]
     verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
-        BaseVerificationStructureProperties]
+        BaseVerificationStructureProperties
+    ]
     verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
-        BaseVerificationStructureProperties]
+        BaseVerificationStructureProperties
+    ]
     verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
-        BaseVerificationStructureProperties]
+        BaseVerificationStructureProperties
+    ]
     verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
-        BaseVerificationStructureProperties]
+        BaseVerificationStructureProperties
+    ]
     cur_anchor_force_results: Optional[CurAnchorForceResults]
 
     # Verify calculation according to EC7-BE or EC7-General
-    verify_deformation_serviceability_limit_state: Optional[BaseVerificationStructureProperties]
+    verify_deformation_serviceability_limit_state: Optional[
+        BaseVerificationStructureProperties
+    ]
     eurocode_1_set_1: Optional[BaseVerificationStructureProperties]
     eurocode_1_set_2: Optional[BaseVerificationStructureProperties]
     eurocode_2: Optional[BaseVerificationStructureProperties]

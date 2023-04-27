@@ -81,7 +81,6 @@ class ComplexVerticalSubstructure(DSeriesStructure):
 
                 # duplicate group before end
                 elif currentkey == key:
-
                     # If key already exists, this is a group -> List
                     if currentkey in parsed_dict:
                         parsed_dict[currentkey] = parsed_dict[currentkey] + [

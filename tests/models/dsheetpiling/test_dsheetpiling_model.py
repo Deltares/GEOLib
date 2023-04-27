@@ -5,6 +5,8 @@ from pathlib import Path
 from typing import List, Type
 
 import pytest
+from teamcity import is_running_under_teamcity
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -77,10 +79,10 @@ from geolib.models.dsheetpiling.supports import (
 from geolib.models.dsheetpiling.surface import Surface
 from geolib.models.dsheetpiling.water_level import WaterLevel
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
-from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/benchmarks"
+
 
 @pytest.fixture
 def model() -> DSheetPilingModel:
@@ -762,7 +764,9 @@ class TestDsheetPilingModel:
     def test_intialized_model_can_be_serialized(self):
         """Internal datastructure should be serializable from an initialized model"""
         # 1. setup test
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks"))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir("dsheetpiling/benchmarks")
+        )
         filename = "serialized_from_intialized_model.shi"
         output_test_file = output_test_folder / filename
 

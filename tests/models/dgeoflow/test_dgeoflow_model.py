@@ -173,7 +173,6 @@ class TestDGeoFlowModel:
 
     @pytest.mark.acceptance
     def test_generate_groundwater_flow_model(self):
-
         dm = DGeoFlowModel()
 
         layer_1 = [

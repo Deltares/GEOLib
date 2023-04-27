@@ -21,7 +21,8 @@ def test_run_model_from_scratch_expanded():
 
     # Model options are required to be set before setting additional parameters
     model_options = gl.models.dfoundations.dfoundations_model.BearingPilesModel(
-        is_rigid=False, factor_xi3=9,
+        is_rigid=False,
+        factor_xi3=9,
         max_allowed_rel_rotation_lim_state_str=100,
         max_allowed_rel_rotation_lim_state_serv=300,
     )

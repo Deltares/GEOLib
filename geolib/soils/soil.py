@@ -77,7 +77,9 @@ class MohrCoulombParameters(SoilBaseModel):
     cohesion: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     dilatancy_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     friction_angle: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-    friction_angle_interface: Optional[Union[float, StochasticParameter]] = StochasticParameter()
+    friction_angle_interface: Optional[
+        Union[float, StochasticParameter]
+    ] = StochasticParameter()
     is_delta_angle_automatically_calculated: Optional[bool] = None
     cohesion_and_friction_angle_correlated: Optional[bool] = None
 
@@ -376,6 +378,7 @@ class SoilType(IntEnum):
     SANDY_LOAM = 5
     TERTCLAY = 6
     CLAYEYSAND = 7
+
 
 class Soil(SoilBaseModel):
     """Soil Material."""

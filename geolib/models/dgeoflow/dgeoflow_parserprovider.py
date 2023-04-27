@@ -31,7 +31,6 @@ class DGeoFlowParser(BaseParser):
 
         # Find required .json files via type hints
         for field, fieldtype in get_filtered_type_hints(self.structure):
-
             # On List types, parse a folder
             if type(fieldtype) == _GenericAlias:  # quite hacky
                 element_type, *_ = fieldtype.__args__  # use getargs in 3.8
@@ -78,7 +77,6 @@ class DGeoFlowZipParser(DGeoFlowParser):
 
     def parse(self, filepath: FilePath) -> BaseModelStructure:
         with ZipFile(filepath) as zip:
-
             # Fix backslashes in zipfile (until fixed in DGeoFlow)
             for file in zip.filelist:
                 new_filename = file.filename.replace("\\", "/")
@@ -95,7 +93,6 @@ class DGeoFlowZipParser(DGeoFlowParser):
 
 
 class DGeoFlowParserProvider(BaseParserProvider):
-
     _input_parsers = None
     _output_parsers = None
 

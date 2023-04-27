@@ -191,10 +191,14 @@ class TestDFoundationsModel:
             if not (ds_key in output_keys):
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
-            if ds_key != 'user_classification_method':
+            if ds_key != "user_classification_method":
                 if not (ds_value == output_datastructure[ds_key]):
-                    logging.warning(f"UNEQUAL: {ds_value} != {output_datastructure[ds_key]}")
-                    errors.append(f"Values for key {ds_key} differ from parsed to serialized")
+                    logging.warning(
+                        f"UNEQUAL: {ds_value} != {output_datastructure[ds_key]}"
+                    )
+                    errors.append(
+                        f"Values for key {ds_key} differ from parsed to serialized"
+                    )
         if errors:
             print(errors)
             pytest.fail(f"Failed with the following {errors}")
@@ -696,7 +700,6 @@ class TestDFoundationsModel:
     @pytest.mark.acceptance
     @only_teamcity
     def test_bearing_pile(self, create_bearing_pile, create_bearing_pile_shape):
-
         # 1. Get test information
         test_file_name = create_bearing_pile_shape[0]
         geometry_pile = create_bearing_pile_shape[1]
@@ -709,7 +712,7 @@ class TestDFoundationsModel:
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / test_file_name
-        log_output_test_file = output_test_file.with_suffix('.log')
+        log_output_test_file = output_test_file.with_suffix(".log")
 
         df.parse(test_file)
 
@@ -742,13 +745,14 @@ class TestDFoundationsModel:
         assert log_output_test_file.is_file()
         with open(log_output_test_file) as f:
             text = f.read()
-        is_text_ok = text.__contains__("Number of CPTs (0 ) is outside its limits (1 - 350)")
+        is_text_ok = text.__contains__(
+            "Number of CPTs (0 ) is outside its limits (1 - 350)"
+        )
         assert is_text_ok
 
     @pytest.mark.acceptance
     @only_teamcity
     def test_tension_pile(self, create_tension_pile, create_tension_pile_shape):
-
         # 1. Get test information
         test_file_name = create_tension_pile_shape[0]
         geometry_pile = create_tension_pile_shape[1]
@@ -761,7 +765,7 @@ class TestDFoundationsModel:
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / test_file_name
-        log_output_test_file = output_test_file.with_suffix('.log')
+        log_output_test_file = output_test_file.with_suffix(".log")
 
         df.parse(test_file)
 
@@ -824,7 +828,6 @@ class TestDFoundationsModel:
 
     @pytest.mark.integrationtest
     def test_default_soils_generated_on_model_change(self):
-
         # Setup
         df = DFoundationsModel()
         mo = BearingPilesModel(is_rigid=False, factor_xi3=9)
