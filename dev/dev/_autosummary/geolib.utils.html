@@ -4,15 +4,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>geolib.utils &#8212; geolib 0.6.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="D-Foundations" href="../models/dfoundations.html" />
@@ -49,14 +48,10 @@
           <div class="body" role="main">
             
   <section id="module-geolib.utils">
-<span id="geolib-utils"></span><h1>geolib.utils<a class="headerlink" href="#module-geolib.utils" title="Permalink to this headline">¶</a></h1>
+<span id="geolib-utils"></span><h1>geolib.utils<a class="headerlink" href="#module-geolib.utils" title="Permalink to this heading">¶</a></h1>
 <p>Common utility methods used within GEOLib.</p>
 <p class="rubric">Functions</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 </tbody>
 </table>
@@ -64,10 +59,10 @@
 <dt class="sig sig-object py" id="geolib.utils.camel_to_snake">
 <span class="sig-prename descclassname"><span class="pre">geolib.utils.</span></span><span class="sig-name descname"><span class="pre">camel_to_snake</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.utils.camel_to_snake" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
@@ -77,7 +72,7 @@
 <dt class="sig sig-object py" id="geolib.utils.csv_as_namedtuples">
 <span class="sig-prename descclassname"><span class="pre">geolib.utils.</span></span><span class="sig-name descname"><span class="pre">csv_as_namedtuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">';'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.utils.csv_as_namedtuples" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>fn</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – </p>
 </dd>
 </dl>
@@ -88,7 +83,7 @@
 <span class="sig-prename descclassname"><span class="pre">geolib.utils.</span></span><span class="sig-name descname"><span class="pre">make_newline_validator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">field_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.utils.make_newline_validator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a dynamic validator for ensuring a set number of lines.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>field_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 <li><p><strong>req_newlines</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
@@ -101,10 +96,10 @@
 <dt class="sig sig-object py" id="geolib.utils.snake_to_camel">
 <span class="sig-prename descclassname"><span class="pre">geolib.utils.</span></span><span class="sig-name descname"><span class="pre">snake_to_camel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.utils.snake_to_camel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 </dd>
 </dl>
@@ -217,7 +212,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>

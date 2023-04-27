@@ -4,15 +4,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Contributing &#8212; geolib 0.6.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="To Do" href="todo.html" />
@@ -49,12 +48,12 @@
           <div class="body" role="main">
             
   <section id="contributing">
-<span id="extend"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<span id="extend"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">¶</a></h1>
 <p>This part of the documentation covers the main components of GEOLib, including
 the external packages used with an explanation, so users know how to extend the
 GEOLib package.</p>
 <section id="structure">
-<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt>The structure of the GEOLib package follows common patterns:</dt><dd><ul class="simple">
 <li><p><cite>docs</cite> for the documentation</p></li>
@@ -77,7 +76,7 @@ structure is as follows:</p>
 you should be able to find the relevant Python file from browsing the directory tree alone.</p>
 </section>
 <section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">¶</a></h2>
 <p>When developing a new feature it’s a good practice to start with a simple test script
 that documents how you should use the new feature. The test will fail in the beginning
 because nothing is implemented or linked yet, but should be fixed in the end. This is
@@ -93,7 +92,7 @@ in your tests. Instead of testing with one string of your own making, hypothesis
 generate many strings, including empty ones for you.</p>
 </section>
 <section id="documenting">
-<h2>Documenting<a class="headerlink" href="#documenting" title="Permalink to this headline">¶</a></h2>
+<h2>Documenting<a class="headerlink" href="#documenting" title="Permalink to this heading">¶</a></h2>
 <p>We use Sphinx and thus reStructuredText <cite>.rst</cite> files to write our documentation. It is good to read the basics about
 reStructuredText: <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html</a>.</p>
 <p><strong>Always</strong> write docstrings for your classes, methods or functions. These docstrings are used
@@ -134,7 +133,7 @@ place these examples at the top of the module, like this for the <cite>dstabilit
 <p>This will automatically show up in the documentation if the whole module is imported in the <cite>docs</cite>.</p>
 </section>
 <section id="inheritance">
-<h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this heading">¶</a></h2>
 <p>GEOLib makes extensive use of inheritance. In the <cite>geolib/models</cite> folder there are several
 Python files that provide <cite>BaseModel</cite>s, <cite>BaseParser</cite>s, etc. This enables common behaviour and
 greatly reduces the amount of duplicate code, but can be confusing at first. An example, not
@@ -161,7 +160,7 @@ for a field) using only types: <a class="reference external" href="https://pydan
 Construction can be from dict and json, and vica versa. This is what we use for the internal dataclasses for each model.</p>
 </section>
 <section id="type-hinting">
-<h2>Type hinting<a class="headerlink" href="#type-hinting" title="Permalink to this headline">¶</a></h2>
+<h2>Type hinting<a class="headerlink" href="#type-hinting" title="Permalink to this heading">¶</a></h2>
 <p>GEOLib uses type hinting in all its classes and functions. This is partly used for automatic validation
 on initialization for classes by <cite>pydantic</cite>, but it’s meant for overall readability.
 Annotating your code with type hints reduces the amount of bugs by improving readability
@@ -175,7 +174,7 @@ advise to also add type hints. An example:</p>
 </div>
 </section>
 <section id="adding-requirements">
-<h2>Adding requirements<a class="headerlink" href="#adding-requirements" title="Permalink to this headline">¶</a></h2>
+<h2>Adding requirements<a class="headerlink" href="#adding-requirements" title="Permalink to this heading">¶</a></h2>
 <p>New requirements can be added using Poetry: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a>
 For example, adding a new package:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>poetry<span class="w"> </span>add<span class="w"> </span>new_package
@@ -286,7 +285,7 @@ $<span class="w"> </span>poetry<span class="w"> </span><span class="nb">export</
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>

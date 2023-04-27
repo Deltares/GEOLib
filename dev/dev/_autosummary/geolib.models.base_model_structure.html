@@ -4,15 +4,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>geolib.models.base_model_structure &#8212; geolib 0.6.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="geolib.models.dfoundations" href="geolib.models.dfoundations.html" />
@@ -49,20 +48,16 @@
           <div class="body" role="main">
             
   <section id="module-geolib.models.base_model_structure">
-<span id="geolib-models-base-model-structure"></span><h1>geolib.models.base_model_structure<a class="headerlink" href="#module-geolib.models.base_model_structure" title="Permalink to this headline">¶</a></h1>
+<span id="geolib-models-base-model-structure"></span><h1>geolib.models.base_model_structure<a class="headerlink" href="#module-geolib.models.base_model_structure" title="Permalink to this heading">¶</a></h1>
 <p class="rubric">Classes</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.base_model_structure.BaseDataClass" title="geolib.models.base_model_structure.BaseDataClass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseDataClass</span></code></a>(**data)</p></td>
 <td><p>Base class for <em>all</em> pydantic classes in GEOLib.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.base_model_structure.BaseModelStructure" title="geolib.models.base_model_structure.BaseModelStructure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseModelStructure</span></code></a>(**data)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param data</dt>
+<dt class="field-odd">param data<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
@@ -74,7 +69,7 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.base_model_structure.</span></span><span class="sig-name descname"><span class="pre">BaseDataClass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model_structure.BaseDataClass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base class for <em>all</em> pydantic classes in GEOLib.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
 </dd>
 </dl>
@@ -109,7 +104,7 @@
 <dt class="sig sig-object py" id="geolib.models.base_model_structure.BaseModelStructure">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.base_model_structure.</span></span><span class="sig-name descname"><span class="pre">BaseModelStructure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model_structure.BaseModelStructure" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>) – </p>
 </dd>
 </dl>
@@ -117,11 +112,6 @@
 <dt class="sig sig-object py" id="geolib.models.base_model_structure.BaseModelStructure.is_valid">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_valid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#geolib.models.base_model_structure.BaseModelStructure.is_valid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates the current model structure.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -129,7 +119,7 @@
 <span class="sig-name descname"><span class="pre">validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model_structure.BaseModelStructure.validator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the Validator class.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="geolib.models.validators.html#geolib.models.validators.BaseValidator" title="geolib.models.validators.BaseValidator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseValidator</span></code></a></p>
 </dd>
 </dl>
@@ -246,7 +236,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>

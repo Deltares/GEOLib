@@ -4,15 +4,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>geolib.service.main &#8212; geolib 0.6.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="geolib.soils" href="geolib.soils.html" />
@@ -49,101 +48,97 @@
           <div class="body" role="main">
             
   <section id="module-geolib.service.main">
-<span id="geolib-service-main"></span><h1>geolib.service.main<a class="headerlink" href="#module-geolib.service.main" title="Permalink to this headline">¶</a></h1>
+<span id="geolib-service-main"></span><h1>geolib.service.main<a class="headerlink" href="#module-geolib.service.main" title="Permalink to this heading">¶</a></h1>
 <p class="rubric">Functions</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.calculate_dfoundationsmodel" title="geolib.service.main.calculate_dfoundationsmodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_dfoundationsmodel</span></code></a>(model, ...[, _])</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param model</dt>
+<dt class="field-odd">param model<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.service.main.calculate_dsettlementmodel" title="geolib.service.main.calculate_dsettlementmodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_dsettlementmodel</span></code></a>(model, ...[, _])</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param model</dt>
+<dt class="field-odd">param model<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.calculate_dsheetpilingmodel" title="geolib.service.main.calculate_dsheetpilingmodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_dsheetpilingmodel</span></code></a>(model, ...[, _])</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param model</dt>
+<dt class="field-odd">param model<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.service.main.calculate_dstabilitymodel" title="geolib.service.main.calculate_dstabilitymodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_dstabilitymodel</span></code></a>(model, ...[, _])</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param model</dt>
+<dt class="field-odd">param model<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.calculate_many_dfoundationsmodel" title="geolib.service.main.calculate_many_dfoundationsmodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_many_dfoundationsmodel</span></code></a>(models, ...)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param models</dt>
+<dt class="field-odd">param models<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.service.main.calculate_many_dsettlementmodels" title="geolib.service.main.calculate_many_dsettlementmodels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_many_dsettlementmodels</span></code></a>(models, ...)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param models</dt>
+<dt class="field-odd">param models<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.calculate_many_dsheetpilingmodel" title="geolib.service.main.calculate_many_dsheetpilingmodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_many_dsheetpilingmodel</span></code></a>(models, ...)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param models</dt>
+<dt class="field-odd">param models<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.service.main.calculate_many_dstabilitymodel" title="geolib.service.main.calculate_many_dstabilitymodel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_many_dstabilitymodel</span></code></a>(models, ...)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param models</dt>
+<dt class="field-odd">param models<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.cleanup" title="geolib.service.main.cleanup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cleanup</span></code></a>(path)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param path</dt>
+<dt class="field-odd">param path<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.service.main.execute" title="geolib.service.main.execute"><code class="xref py py-obj docutils literal notranslate"><span class="pre">execute</span></code></a>(model, background_tasks)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param background_tasks</dt>
+<dt class="field-odd">param background_tasks<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.execute_many" title="geolib.service.main.execute_many"><code class="xref py py-obj docutils literal notranslate"><span class="pre">execute_many</span></code></a>(models, background_tasks)</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param models</dt>
+<dt class="field-odd">param models<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.service.main.get_current_username" title="geolib.service.main.get_current_username"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_current_username</span></code></a>([credentials])</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param credentials</dt>
+<dt class="field-odd">param credentials<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.service.main.read_current_user" title="geolib.service.main.read_current_user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_current_user</span></code></a>([username])</p></td>
 <td><p><dl class="field-list simple">
-<dt class="field-odd">param username</dt>
+<dt class="field-odd">param username<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p></dd>
 </dl>
 </p></td>
@@ -157,14 +152,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_dfoundationsmodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_dfoundationsmodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_dfoundationsmodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<a class="reference internal" href="geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a>) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a></p>
 </dd>
 </dl>
@@ -174,14 +169,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_dsettlementmodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_dsettlementmodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_dsettlementmodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<a class="reference internal" href="geolib.models.dsettlement.dsettlement_model.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a>) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="geolib.models.dsettlement.dsettlement_model.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a></p>
 </dd>
 </dl>
@@ -191,14 +186,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_dsheetpilingmodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_dsheetpilingmodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_dsheetpilingmodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<a class="reference internal" href="geolib.models.dsheetpiling.dsheetpiling_model.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSheetPilingModel</span></code></a>) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="geolib.models.dsheetpiling.dsheetpiling_model.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSheetPilingModel</span></code></a></p>
 </dd>
 </dl>
@@ -208,14 +203,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_dstabilitymodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_dstabilitymodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_dstabilitymodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<a class="reference internal" href="geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a>) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a></p>
 </dd>
 </dl>
@@ -225,14 +220,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_many_dfoundationsmodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_many_dfoundationsmodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_many_dfoundationsmodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>models</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedListValue</span></code>[<a class="reference internal" href="geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a>]) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dfoundations.dfoundations_model.html#geolib.models.dfoundations.dfoundations_model.DFoundationsModel" title="geolib.models.dfoundations.dfoundations_model.DFoundationsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFoundationsModel</span></code></a>]</p>
 </dd>
 </dl>
@@ -242,14 +237,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_many_dsettlementmodels">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_many_dsettlementmodels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_many_dsettlementmodels" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>models</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedListValue</span></code>[<a class="reference internal" href="geolib.models.dsettlement.dsettlement_model.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a>]) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dsettlement.dsettlement_model.html#geolib.models.dsettlement.dsettlement_model.DSettlementModel" title="geolib.models.dsettlement.dsettlement_model.DSettlementModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSettlementModel</span></code></a>]</p>
 </dd>
 </dl>
@@ -259,14 +254,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_many_dsheetpilingmodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_many_dsheetpilingmodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_many_dsheetpilingmodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>models</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedListValue</span></code>[<a class="reference internal" href="geolib.models.dsheetpiling.dsheetpiling_model.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSheetPilingModel</span></code></a>]) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dsheetpiling.dsheetpiling_model.html#geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel" title="geolib.models.dsheetpiling.dsheetpiling_model.DSheetPilingModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DSheetPilingModel</span></code></a>]</p>
 </dd>
 </dl>
@@ -276,14 +271,14 @@
 <dt class="sig sig-object py" id="geolib.service.main.calculate_many_dstabilitymodel">
 <em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">calculate_many_dstabilitymodel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.calculate_many_dstabilitymodel" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>models</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedListValue</span></code>[<a class="reference internal" href="geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a>]) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 <li><p><strong>_</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a>]</p>
 </dd>
 </dl>
@@ -293,7 +288,7 @@
 <dt class="sig sig-object py" id="geolib.service.main.cleanup">
 <span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">cleanup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.cleanup" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>path</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code>) – </p>
 </dd>
 </dl>
@@ -303,7 +298,7 @@
 <dt class="sig sig-object py" id="geolib.service.main.execute">
 <span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.execute" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p>
 </dd>
 </dl>
@@ -313,13 +308,13 @@
 <dt class="sig sig-object py" id="geolib.service.main.execute_many">
 <span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">execute_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_tasks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.execute_many" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>models</strong> (<a class="reference internal" href="geolib.models.base_model.html#geolib.models.base_model.BaseModelList" title="geolib.models.base_model.BaseModelList"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelList</span></code></a>) – </p></li>
 <li><p><strong>background_tasks</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BackgroundTasks</span></code>) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference internal" href="geolib.models.base_model.html#geolib.models.base_model.BaseModelList" title="geolib.models.base_model.BaseModelList"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModelList</span></code></a></p>
 </dd>
 </dl>
@@ -329,7 +324,7 @@
 <dt class="sig sig-object py" id="geolib.service.main.get_current_username">
 <span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">get_current_username</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">credentials</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(HTTPBasic)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.get_current_username" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>credentials</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">HTTPBasicCredentials</span></code>) – </p>
 </dd>
 </dl>
@@ -339,7 +334,7 @@
 <dt class="sig sig-object py" id="geolib.service.main.read_current_user">
 <span class="sig-prename descclassname"><span class="pre">geolib.service.main.</span></span><span class="sig-name descname"><span class="pre">read_current_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Depends(get_current_username)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.service.main.read_current_user" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>username</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p>
 </dd>
 </dl>
@@ -459,7 +454,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
