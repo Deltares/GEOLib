@@ -69,16 +69,6 @@ class DSeriesStructure(BaseModelStructure):
         # Remove fields that are None so defaults will be used
         kwargs = {field: value for field, value in kwargs.items() if value is not None}
 
-        if len(kwargs) > len(get_type_hints(self)):
-            a = set(kwargs.keys())
-            b = set(get_type_hints(self).keys())
-            raise ValueError(
-                f"""Got more fields than defined on model {self.__class__.__name__}:
-                parser has {a.difference(b)} fields and
-                model has {b.difference(a)} fields not set.
-                """
-            )
-
         for field, fieldtype in get_type_hints(self).items():
 
             # If the body is a string, we should check
