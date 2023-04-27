@@ -1,7 +1,8 @@
 from pathlib import Path
 
-import geolib as gl
 import pytest
+
+import geolib as gl
 from geolib.models.dsheetpiling.calculation_options import *
 from geolib.models.dsheetpiling.constructions import *
 from geolib.models.dsheetpiling.dsheetpiling_model import *
@@ -12,7 +13,7 @@ from geolib.soils import *
 from tests.utils import TestUtils
 
 test_file_directory = "dsheetpiling/bugfixes"
-benchmarks_directory = 'dsheetpiling/benchmarks'
+benchmarks_directory = "dsheetpiling/benchmarks"
 
 
 @pytest.mark.usefixtures("cleandir_dsh")

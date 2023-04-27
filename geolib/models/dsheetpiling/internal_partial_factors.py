@@ -364,4 +364,3 @@ class PartialFactorsCurIii(DSeriesInlineMappedProperties):
     overallstabilityfactorunitweight: float = 1.00
     factorrepvaluesmdpmax: float = 0.00
     verticalbalancegammamb: float = 1.25
-

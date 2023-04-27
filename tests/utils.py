@@ -18,7 +18,6 @@ only_teamcity = pytest.mark.skipif(
 
 
 class TestUtils:
-
     _name_external = "external_test_data"
     _name_local = "test_data"
     _name_output = "test_output"

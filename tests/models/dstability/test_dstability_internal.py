@@ -69,7 +69,6 @@ class TestDStabilityInternal:
     @pytest.mark.acceptance
     @only_teamcity
     def test_duplicate_stage(self):
-
         # Setup
         test_filepath = Path(
             TestUtils.get_local_test_data_dir("dstability/Tutorial_v20_2_1")

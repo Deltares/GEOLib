@@ -3,6 +3,9 @@ import random
 from pathlib import Path
 
 import pytest
+from pydantic.color import Color
+from teamcity import is_running_under_teamcity
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -89,11 +92,10 @@ from geolib.soils import (
     Soil,
     SoilType,
 )
-from pydantic.color import Color
-from teamcity import is_running_under_teamcity
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/acceptance"
+
 
 class TestDsheetPilingAcceptance:
     # @only_teamcity
@@ -114,7 +116,7 @@ class TestDsheetPilingAcceptance:
                     cur_stability_stage=0,
                     overall_stability_type=DesignType.CUR,
                     stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
-                    stability_export=True
+                    stability_export=True,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -395,7 +397,9 @@ class TestDsheetPilingAcceptance:
 
         # 5. For OverallStabilityCalculationOptions a STI file should be present because StabilityExport is True
         if isinstance(calc_options, OverallStabilityCalculationOptions):
-            output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+            output_test_folder = Path(
+                TestUtils.get_output_test_data_dir(test_file_directory)
+            )
             output_test_file = output_test_folder / f"{test_name_with_id} (1).sti"
             assert output_test_file.exists(), "STI file not found."
 

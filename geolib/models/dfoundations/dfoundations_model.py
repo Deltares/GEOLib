@@ -75,7 +75,6 @@ class ModelOptions(BaseDataClass):
 
 
 class BearingPilesModel(ModelOptions):
-
     factor_gamma_b: Optional[confloat(ge=1, le=100)] = None
     factor_gamma_s: Optional[confloat(ge=1, le=100)] = None
     factor_gamma_fnk: Optional[confloat(ge=-100, le=100)] = None

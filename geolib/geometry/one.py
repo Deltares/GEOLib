@@ -27,7 +27,6 @@ class Point(BaseDataClass):
     tolerance: float = 1e-4
 
     def __eq__(self, other):
-
         if isinstance(other, Point):
             return (
                 isclose(self.x, other.x, abs_tol=self.tolerance)

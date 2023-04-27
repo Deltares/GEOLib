@@ -50,7 +50,6 @@ class TrapeziformLoad(OtherLoad):
     xr: float = 0
 
     def _to_internal(self, time: timedelta, p: Point) -> _OtherLoad:
-
         load_values = LoadValuesTrapeziform(
             gamma=self.gamma,
             height=self.height,

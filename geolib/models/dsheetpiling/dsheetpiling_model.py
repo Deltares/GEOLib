@@ -3,13 +3,14 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import Any, BinaryIO, List, Optional, Type, Union
 
+from pydantic import FilePath, PositiveFloat
+from pydantic.types import confloat, conint
+
 from geolib.geometry import Point
 from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
 from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
-from pydantic import FilePath, PositiveFloat
-from pydantic.types import confloat, conint
 
 from .calculation_options import CalculationOptions, CalculationOptionsPerStage
 from .dsheetpiling_parserprovider import DSheetPilingParserProvider
@@ -116,7 +117,6 @@ class DiaphragmModelType(BaseModelType):
     verification: Optional[bool] = None
     elastic_calculation: bool = False
     diepwand_calculation: bool = True
-
 
     @property
     def model(self) -> ModelType:
@@ -413,7 +413,7 @@ class DSheetPilingModel(BaseModel):
             stage_id: Load is added to this stage.
 
         Note: SoilDisplacement and UniformLoad are only valid for a sheetpiling construction.
-        
+
         Raises:
             ValueError: When non-existing stage_id is passed.
             ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.

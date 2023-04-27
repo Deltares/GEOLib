@@ -1,6 +1,8 @@
-import pytest
 import shutil
 from pathlib import Path
+
+import pytest
+
 from tests.utils import TestUtils
 
 
@@ -23,4 +25,3 @@ def cleandir_dse():
     test_output_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
     #
     shutil.rmtree(test_output_folder)
-

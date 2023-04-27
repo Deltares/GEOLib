@@ -749,7 +749,6 @@ class DGeoFlowStructure(BaseModelStructure):
     def get_result_substructure(
         self, calculation_type: CalculationTypeEnum
     ) -> List[DGeoFlowResult]:
-
         result_types_mapping = {
             CalculationTypeEnum.GROUNDWATER_FLOW: self.groundwater_flow_results,
             CalculationTypeEnum.PIPE_LENGTH: self.pipe_length_results,

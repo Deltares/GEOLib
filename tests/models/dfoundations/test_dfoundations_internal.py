@@ -409,21 +409,21 @@ class TestInternalOutputDFoundations:
     )
 
     calculation_warnings = (
-            "[CALCULATION WARNINGS]\n"
-            + "1 = IsWarningF1Given (1=true, 0=false)\n"
-            + "0 = F1GreaterThan1Found (1=true, 0=false)\n"
-            + "0 = IsWarningNENDepthGiven (1=true, 0=false)\n"
-            + "1 = IsWarningSFFundWidthGiven (1=true, 0=false)\n"
-            + "0 = IsWarningSFFundLengthGiven (1=true, 0=false)\n"
-            + "0 = IsWarningSFCudGiven (1=true, 0=false)\n"
-            + "0 = IsWarningSFDeltaPhiGiven (1=true, 0=false)\n"
-            + "12 = IsWarningNENSpacingGiven (> 0 warning, 0= no warning)\n"
-            + "0 = IsWarningSFSlopeNotRelevantGiven (1=true, 0=false)\n"
-            + "0 = IsWarningNENSFPlacementDepthTooDeep (1=true, 0=false)\n"
-            + "0 = IsWarningNENSFPlacementDepthTooShallow (1=true, 0=false)\n"
-            + "1 = FIsWarningNENBPPositiveSkinFrictionZoneGiven (1=true, 0=false)\n"
-            + "0 = FIsWarningSFFoundationLevelForPunchToDeepForSlopeGiven(1 = true, 0 = false)\n"
-            + "[END OF CALCULATION WARNINGS]"
+        "[CALCULATION WARNINGS]\n"
+        + "1 = IsWarningF1Given (1=true, 0=false)\n"
+        + "0 = F1GreaterThan1Found (1=true, 0=false)\n"
+        + "0 = IsWarningNENDepthGiven (1=true, 0=false)\n"
+        + "1 = IsWarningSFFundWidthGiven (1=true, 0=false)\n"
+        + "0 = IsWarningSFFundLengthGiven (1=true, 0=false)\n"
+        + "0 = IsWarningSFCudGiven (1=true, 0=false)\n"
+        + "0 = IsWarningSFDeltaPhiGiven (1=true, 0=false)\n"
+        + "12 = IsWarningNENSpacingGiven (> 0 warning, 0= no warning)\n"
+        + "0 = IsWarningSFSlopeNotRelevantGiven (1=true, 0=false)\n"
+        + "0 = IsWarningNENSFPlacementDepthTooDeep (1=true, 0=false)\n"
+        + "0 = IsWarningNENSFPlacementDepthTooShallow (1=true, 0=false)\n"
+        + "1 = FIsWarningNENBPPositiveSkinFrictionZoneGiven (1=true, 0=false)\n"
+        + "0 = FIsWarningSFFoundationLevelForPunchToDeepForSlopeGiven(1 = true, 0 = false)\n"
+        + "[END OF CALCULATION WARNINGS]"
     )
 
     dumpfile_output = (
@@ -438,10 +438,7 @@ class TestInternalOutputDFoundations:
     )
 
     dfoundations_structure_text = (
-        "[DUMPFILE]\n"
-        + f"{input_data}\n"
-        + f"{dumpfile_output}\n"
-        + "[END OF DUMPFILE]"
+        "[DUMPFILE]\n" + f"{input_data}\n" + f"{dumpfile_output}\n" + "[END OF DUMPFILE]"
     )
 
     # endregion
@@ -481,7 +478,9 @@ class TestInternalOutputDFoundations:
         assert parsed_structure.data[0] == first_expected_value
 
     @pytest.mark.integrationtest
-    def test_given_empty_nen_average_pile_factors_text_when_parse_then_returns_empty(self):
+    def test_given_empty_nen_average_pile_factors_text_when_parse_then_returns_empty(
+        self,
+    ):
         # 1. Set up test data
         group_text = self.get_group_text(self.empty_table_block)
 

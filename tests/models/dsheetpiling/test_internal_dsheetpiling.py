@@ -1,8 +1,9 @@
 import warnings
 from typing import Callable, List
 
-import geolib.models.dsheetpiling.settings as settings
 import pytest
+
+import geolib.models.dsheetpiling.settings as settings
 from geolib.geometry import Point
 from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.calculation_options import CalculationOptionsPerStage
@@ -35,7 +36,7 @@ from geolib.models.dsheetpiling.internal import (
     SurchargeLoads,
     SurchargePoint,
     UniformLoad,
-    UniformLoads
+    UniformLoads,
 )
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
@@ -182,7 +183,9 @@ class TestInternal:
         )
         # test output
         assert len(model.calculation_options_per_stage.stageoptions) == 1
-        assert model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadbe == 1
+        assert (
+            model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadbe == 1
+        )
 
 
 class TestInternalParseInputStructure:
@@ -1013,7 +1016,8 @@ class TestInternalParseOutputStructure:
         self.validate_design_sheetpile_length(output_structure.design_sheetpile_length)
         self.validate_resume_structure(output_structure.resume)
         self.validate_base_verification_structure_properties(
-            output_structure.verify_step_6____5_serviceability_limit_state)
+            output_structure.verify_step_6____5_serviceability_limit_state
+        )
 
     def validate_design_length_calculation(
         self, design_length_calc: DesignLengthCalculation

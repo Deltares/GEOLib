@@ -9,7 +9,6 @@ from geolib.soils import MohrCoulombParameters, Soil, SoilType
 class TestNaNSoils:
     @pytest.mark.unittest
     def test_set_infinite_yields_error(self):
-
         soil = Soil()
 
         with pytest.raises(ValidationError):
@@ -27,7 +26,6 @@ class TestNaNSoils:
 
     @pytest.mark.unittest
     def test_set_cu_is_optional(self):
-
         SOIL_PARAMETERS = [
             {
                 "materiaal": "Onbekend materiaal",

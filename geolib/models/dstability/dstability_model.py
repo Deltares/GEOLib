@@ -506,7 +506,6 @@ class DStabilityModel(BaseModel):
     def add_state_correlation(
         self, correlated_state_ids: List[int], stage_id: int = None
     ):
-
         stage_id = stage_id if stage_id is not None else self.current_stage
 
         if not self.datastructure.has_stage(stage_id):

@@ -38,7 +38,6 @@ class DFoundationsOutputParser(DSerieParser):
 
 
 class DFoundationsParserProvider(BaseParserProvider):
-
     __input_parsers = None
     __output_parsers = None
 

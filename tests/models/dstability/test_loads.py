@@ -61,7 +61,6 @@ class TestConsolidation:
 
     @pytest.mark.unittest
     def test_get_consolidations_fixture_is_valid(self, _get_consolidations):
-
         consolidations = _get_consolidations
 
         assert isinstance(consolidations, List)
@@ -117,7 +116,6 @@ class TestUniformLoad:
 
     @pytest.mark.unittest
     def test_get_uniform_load_fixture_is_valid(self, _get_uniform_load):
-
         uniform_load = _get_uniform_load
 
         assert isinstance(uniform_load, UniformLoad)
@@ -211,7 +209,6 @@ class TestLineLoad:
 
     @pytest.mark.unittest
     def test_get_line_load_fixture_is_valid(self, _get_line_load):
-
         line_load = _get_line_load
 
         assert isinstance(line_load, LineLoad)

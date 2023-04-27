@@ -254,7 +254,6 @@ class TestDStabilityModel:
     @pytest.mark.acceptance
     @only_teamcity
     def test_generate_simple_model(self):
-
         dm = DStabilityModel()
 
         layer_1 = [
@@ -325,7 +324,6 @@ class TestDStabilityModel:
     @pytest.mark.acceptance
     @only_teamcity
     def test_generate_model_from_scratch(self):
-
         dm = DStabilityModel()
 
         bishop_analysis_method = DStabilityBishopAnalysisMethod(

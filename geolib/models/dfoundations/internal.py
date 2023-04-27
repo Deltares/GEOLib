@@ -222,7 +222,6 @@ class Layer(DSeriesTreeStructure):
     reduction_core_resistance: float = 0.0  # [%]
 
 
-
 class ReductionCoreResistanceEnum(IntEnum):
     SAFE = 0
     BEGEMANN = 1
@@ -428,7 +427,6 @@ class CPTList(DFoundationsCPTCollectionWrapper):
 
 
 class CalculationOptions(DSeriesNoParseSubStructure):
-
     # Rigidity of superstructure
     is_rigid: Bool = Bool.TRUE
 
@@ -788,7 +786,6 @@ class DFoundationsDumpfileOutputStructure(DSeriesStructure):
 class DFoundationsStructure(DSeriesStructure):
     input_data: DFoundationsInputStructure = DFoundationsInputStructure()
     dumpfile_output: Optional[DFoundationsDumpfileOutputStructure]
-
 
 
 class DFoundationsDumpStructure(DSeriesStructure):

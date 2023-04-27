@@ -56,7 +56,6 @@ class TestDStabilityModel:  # TODO move to test_dsettlementmodel
 class TestForbiddenLine:
     @pytest.mark.unittest
     def test_create_valid_forbiddenline(self, _get_forbidden_line):
-
         forbiddenline = _get_forbidden_line
         assert issubclass(type(forbiddenline), DStabilityReinforcement)
 
