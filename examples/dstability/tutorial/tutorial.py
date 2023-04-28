@@ -239,6 +239,13 @@ dm.serialize(Path("tutorial.stix"))
 
 dm.execute()
 
+print("Result of scenario 0, calculation 0:")
+result = dm.get_result(0, 0)
+print("Result type: " + type(result).__name__)
+print("Factor of safety: " + str(result.FactorOfSafety))
+print("Left center: " + str(result.LeftCenter))
+print("Right center: " + str(result.RightCenter))
+print("Left center: " + str(result.TangentLine))
 
 # add new scenario (and activate it)
 dm.add_scenario("New Scenario", "From GEOLib", set_current=True)

@@ -287,6 +287,18 @@ Finally the execute function can be called to run the model in D-Stability.
 
     dm.execute()
 
+In order to get the results of a calculation you can do the following for an Uplift-Van Particle Swarm analysis:
+
+.. code-block:: python
+
+    print("Result of scenario 0, calculation 0:")
+    result = dm.get_result(0, 0)
+    print("Result type: " + type(result).__name__)
+    print("Factor of safety: " + str(result.FactorOfSafety))
+    print("Left center: " + str(result.LeftCenter))
+    print("Right center: " + str(result.RightCenter))
+    print("Tangent line: " + str(result.TangentLine))
+
 You can add scenarios, stages and calculations using various methods as demonstrated below. If you set set_current to True, 
 the added item will be set as the default for future calls to the DStabilityModel. If you do not specify scenario_index, it will 
 be added to the current scenario. 
