@@ -273,7 +273,7 @@ For completeness, here follow examples for all possible models.
         ],
     )
 
-To run the model first the model needs to be serialised. To do that define a 
+To run the model first the model needs to be serialized. To do that define a 
 output file name and call the function :meth:`~geolib.models.dstability.dstability_model.DStabilityModel.serialize`.
 
 .. code-block:: python
