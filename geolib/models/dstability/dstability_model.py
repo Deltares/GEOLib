@@ -16,6 +16,7 @@ from .dstability_parserprovider import DStabilityParserProvider
 from .internal import (
     AnalysisType,
     BishopSlipCircleResult,
+    CalculationSettings,
     CalculationType,
     DStabilityResult,
     DStabilityStructure,
@@ -128,30 +129,38 @@ class DStabilityModel(BaseModel):
 
         return all_results
 
-    def has_result(self, scenario_index: int, calculation_index: int) -> bool:
+    def has_result(self, 
+                   scenario_index: Optional[int], 
+                   calculation_index: Optional[int]
+        ) -> bool:
         """
         Returns whether a calculation has a result.
 
         Args:
-            scenario_index (Optional[int]): Id of a scenario.
-            calculation_index (int): Id of a calculation.
+            scenario_index (Optional[int]): Index of a scenario, if None the current scenario is used.
+            calculation_index (Optional[int]): Index of a calculation, if None the current calculation is used.
 
         Returns:
             bool: Value indicating whether the calculation has a result.
         """
+        if calculation_index is None:
+            calculation_index = self.current_calculation
+        if scenario_index is None:
+            scenario_index = self.current_scenario
+
         return self.datastructure.has_result(scenario_index, calculation_index)
 
     def get_result(
         self,
-        scenario_index: Optional[int] = None,
-        calculation_index: Optional[int] = None,
+        scenario_index: Optional[int],
+        calculation_index: Optional[int],
     ) -> DStabilityResult:
         """
         Returns the results of a calculation. Calculation results are based on analysis type and calculation type.
 
         Args:
-            scenario_id (Optional[int]): Id of a scenario, if None is supplied the result of the current scenario is returned.
-            calculation_id (Optional[int]): Id of a calculation, if None is supplied the result of the current calculation is returned.
+            scenario_index (Optional[int]): Index of a scenario, if None is supplied the result of the current scenario is returned.
+            calculation_index (Optional[int]): Index of a calculation, if None is supplied the result of the current calculation is returned.
 
         Returns:
             DStabilityResult: The analysis results of the stage.
@@ -168,8 +177,13 @@ class DStabilityModel(BaseModel):
         return result
 
     def _get_result_substructure(
-        self, scenario_index: int, calculation_index: int
+        self, 
+        scenario_index: Optional[int], 
+        calculation_index: Optional[int]
     ) -> DStabilityResult:
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
+
         if self.datastructure.has_result(scenario_index, calculation_index):
             result_id = (
                 self.datastructure.scenarios[scenario_index]
@@ -192,7 +206,11 @@ class DStabilityModel(BaseModel):
 
         raise ValueError(f"No result found for result id {calculation_index}")
 
-    def _get_calculation_settings(self, scenario_index: int, calculation_index: int):
+    def _get_calculation_settings(
+            self, 
+            scenario_index: int, 
+            calculation_index: int
+            ) -> CalculationSettings:
         calculation_settings_id = (
             self.datastructure.scenarios[scenario_index]
             .Calculations[calculation_index]
@@ -208,17 +226,19 @@ class DStabilityModel(BaseModel):
         )
 
     def get_slipcircle_result(
-        self, scenario_index: int, calculation_index: int
+        self, 
+        scenario_index: Optional[int],
+        calculation_index: Optional[int]
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
 
         Args:
             scenario_index (Optional[int]): scenario for which to get the available results
-            calculation_index (int): calculation for which to get the available results
+            calculation_index (Optional[int]): calculation for which to get the available results
 
         Returns:
-            Dict: dictionary of the available slipcircles per model for the given calculation
+            Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]: the slipcircle for the given calculation
 
         Raises:
             ValueError: Result is not available for provided scenario and calculation index
@@ -228,17 +248,19 @@ class DStabilityModel(BaseModel):
         return result.get_slipcircle_output()
 
     def get_slipplane_result(
-        self, scenario_index: int, calculation_index: int = 0
+        self,
+          scenario_index: Optional[int], 
+          calculation_index: Optional[int]
     ) -> SpencerSlipPlaneResult:
         """
         Get the slipplanes of the calculations result of a calculation.
 
         Args:
             scenario_index (Optional[int]): scenario for which to get the available results
-            calculation_index (int): calculation for which to get the available results
+            calculation_index (Optional[int]): calculation for which to get the available results
 
         Returns:
-            dict: dictionary of the available slip planes per model for the given calculation
+            SpencerSlipPlaneResult: the slip plane for the given calculation
 
         Raises:
             ValueError: Result is not available for provided scenario and calculation index
@@ -333,14 +355,17 @@ class DStabilityModel(BaseModel):
             self.filename = location
 
     def add_scenario(
-        self, label: str = "Scenario", notes: str = "", set_current: bool = True
+        self,
+          label: str = "Scenario", 
+          notes: str = "", 
+          set_current: bool = True
     ) -> int:
         """Add a new scenario to the model.
 
         Args:
-            label: Label for the scenario.
-            notes: Notes for the scenario.
-            set_current: Whether to make the new scenario the current scenario.
+            label (str): Label for the scenario.
+            notes (str): Notes for the scenario.
+            set_current (bool): Whether to make the new scenario the current scenario.
 
         Returns:
             the id of the new stage
@@ -368,17 +393,15 @@ class DStabilityModel(BaseModel):
         """Add a new stage to the model at the given scenario index.
 
         Args:
-            scenario_index: The scenario index to add the stage to, defaults to the current scenario.
-            label: Label for the stage.
-            notes: Notes for the stage.
-            set_current: Whether to make the new stage the current stage.
+            scenario_index (Optional[int]): The scenario index to add the stage to, defaults to the current scenario.
+            label (str): Label for the stage.
+            notes (str): Notes for the stage.
+            set_current (bool): Whether to make the new stage the current stage.
 
         Returns:
             the id of the new stage
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
+        scenario_index = self.get_scenario_index(scenario_index)
 
         new_id = self._get_next_id()
         new_stage_index, new_unique_id = self.datastructure.add_default_stage(
@@ -400,17 +423,15 @@ class DStabilityModel(BaseModel):
         """Add a new calculation to the model.
 
         Args:
-            scenario_index: The scenario index to add the calculation to, defaults to the current scenario.
-            label: Label for the calculation.
-            notes: Notes for the calculation.
-            set_current: Whether to make the new calculation the current calculation.
+            scenario_index (Optional[int]): The scenario index to add the calculation to, defaults to the current scenario.
+            label (str): Label for the calculation.
+            notes (str): Notes for the calculation.
+            set_current (bool): Whether to make the new calculation the current calculation.
 
         Returns:
             the id of the new stage
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
+        scenario_index = self.get_scenario_index(scenario_index)
 
         new_id = self._get_next_id()
         new_calculation_index, new_unique_id = self.datastructure.add_default_calculation(
@@ -472,10 +493,8 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added layer
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         geometry = self._get_geometry(scenario_index, stage_index)
         soil_layers = self._get_soil_layers(scenario_index, stage_index)
@@ -544,10 +563,8 @@ class DStabilityModel(BaseModel):
         Returns:
             bool: id of the added headline
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         waternet = self._get_waternet(scenario_index, stage_index)
 
@@ -581,10 +598,8 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added reference line
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         waternet = self._get_waternet(scenario_index, stage_index)
 
@@ -615,10 +630,8 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added add_state_point
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         states = self._get_state(scenario_index, stage_index)
 
@@ -658,10 +671,8 @@ class DStabilityModel(BaseModel):
         Returns:
             PersistableStateLine: The created state line
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         states = self._get_state(scenario_index, stage_index)
 
@@ -696,10 +707,8 @@ class DStabilityModel(BaseModel):
         Returns:
             None
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         state_correlations = self._get_state_correlations(scenario_index, stage_index)
 
@@ -737,10 +746,8 @@ class DStabilityModel(BaseModel):
         Raises:
             ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_index is provided, or the datastructure is no longer valid.
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         if not issubclass(type(load), DStabilityLoad):
             raise ValueError(
@@ -783,10 +790,8 @@ class DStabilityModel(BaseModel):
         Raises:
             ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_index is provided, or the datastructure is no longer valid.
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         if self.datastructure.has_soil_layer(
             scenario_index, stage_index, soil_layer_id
@@ -824,7 +829,7 @@ class DStabilityModel(BaseModel):
             )
             return [Consolidation(layer_id=layer_id) for layer_id in soil_layer_ids]
 
-        raise ValueError(f"No soil layers found for stage id {stage_index}")
+        raise ValueError(f"No soil layers found for stage at index {stage_index}")
 
     def _verify_consolidations(
         self,
@@ -846,7 +851,7 @@ class DStabilityModel(BaseModel):
                     f"Received consolidations ({consolidation_soil_layer_ids}) should contain all soil layer ids ({soil_layer_ids})"
                 )
         else:
-            raise ValueError(f"No soil layers found for stage id {stage_index}")
+            raise ValueError(f"No soil layers found for stage at index {stage_index}")
 
     def add_reinforcement(
         self,
@@ -867,10 +872,8 @@ class DStabilityModel(BaseModel):
         Raises:
             ValueError: When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_index is provided, or the datastructure is no longer valid.
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        stage_index = stage_index if stage_index is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         if not issubclass(type(reinforcement), DStabilityReinforcement):
             raise ValueError(
@@ -911,14 +914,8 @@ class DStabilityModel(BaseModel):
             ValueError: When the provided analysis method is no subclass of DStabilityAnalysisMethod,
             an invalid stage_index is provided, the analysis method is not known or the datastructure is no longer valid.
         """
-        scenario_index = (
-            scenario_index if scenario_index is not None else self.current_scenario
-        )
-        calculation_index = (
-            calculation_index
-            if calculation_index is not None
-            else self.current_calculation
-        )
+        scenario_index = self.get_scenario_index(scenario_index)
+        calculation_index = self.get_calculation(calculation_index)
 
         calculationsettings = self._get_calculation_settings(
             scenario_index, calculation_index
@@ -941,3 +938,21 @@ class DStabilityModel(BaseModel):
             raise ValueError(
                 f"Unknown analysis method {analysis_method.analysis_type.value} found"
             )
+    
+    def get_scenario_index(self, scenario_index: Optional[int]):
+        if scenario_index is None:
+            return self.current_scenario
+        else:
+            return scenario_index
+    
+    def get_stage_index(self, stage_index: Optional[int]):
+        if stage_index is None:
+            return self.current_stage
+        else:
+            return stage_index
+        
+    def get_calculation(self, calculation_index: Optional[int]):
+        if calculation_index is None:
+            return self.current_calculation
+        else:
+            return calculation_index

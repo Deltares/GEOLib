@@ -83,7 +83,7 @@ class TestForbiddenLine:
                 reinforcement=forbiddenline, scenario_index=0, stage_index=100
             )
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "stage_index",
         [
@@ -150,7 +150,7 @@ class TestGeotextile:
         with pytest.raises(ValueError):
             dstability_model.add_reinforcement(reinforcement=geotextile, stage_index=100)
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "stage_index",
         [
@@ -228,7 +228,7 @@ class TestNail:
         with pytest.raises(ValueError):
             dstability_model.add_reinforcement(reinforcement=nail, stage_index=100)
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "stage_index",
         [
