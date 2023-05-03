@@ -130,8 +130,8 @@ class DStabilityModel(BaseModel):
         return all_results
 
     def has_result(self, 
-                   scenario_index: Optional[int], 
-                   calculation_index: Optional[int]
+                   scenario_index: Optional[int] = None, 
+                   calculation_index: Optional[int] = None
         ) -> bool:
         """
         Returns whether a calculation has a result.
@@ -227,8 +227,8 @@ class DStabilityModel(BaseModel):
 
     def get_slipcircle_result(
         self, 
-        scenario_index: Optional[int],
-        calculation_index: Optional[int]
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
@@ -249,8 +249,8 @@ class DStabilityModel(BaseModel):
 
     def get_slipplane_result(
         self,
-          scenario_index: Optional[int], 
-          calculation_index: Optional[int]
+          scenario_index: Optional[int] = None, 
+          calculation_index: Optional[int] = None
     ) -> SpencerSlipPlaneResult:
         """
         Get the slipplanes of the calculations result of a calculation.
