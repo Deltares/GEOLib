@@ -915,7 +915,7 @@ class DStabilityModel(BaseModel):
             an invalid stage_index is provided, the analysis method is not known or the datastructure is no longer valid.
         """
         scenario_index = self.get_scenario_index(scenario_index)
-        calculation_index = self.get_calculation(calculation_index)
+        calculation_index = self.get_calculation_index(calculation_index)
 
         calculationsettings = self._get_calculation_settings(
             scenario_index, calculation_index
@@ -951,7 +951,7 @@ class DStabilityModel(BaseModel):
         else:
             return stage_index
         
-    def get_calculation(self, calculation_index: Optional[int]):
+    def get_calculation_index(self, calculation_index: Optional[int]):
         if calculation_index is None:
             return self.current_calculation
         else:
