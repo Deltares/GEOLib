@@ -285,7 +285,7 @@ class TestDStabilityModelAddLoad:
         with pytest.raises(ValueError):
             dstability_model.add_load(load=load, scenario_index=0, stage_index=0)
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "stage_id",
         [

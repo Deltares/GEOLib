@@ -83,7 +83,9 @@ class TestDStabilityModel:
         [
             pytest.param("dstability/example_1.stix", id="Input Structure"),
             pytest.param("dstability/ResultExample.stix", id="Result Example"),
-            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"),
+            pytest.param(
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
+            ),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -93,9 +95,15 @@ class TestDStabilityModel:
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(filepath))
 
         test_output_file_path = Path(
-            TestUtils.get_output_test_data_dir("dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type", clean_dir=True)
+            TestUtils.get_output_test_data_dir(
+                "dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type",
+                clean_dir=True,
+            )
         )
-        TestUtils.extract_zip_to_output_test_data_dir(str(test_input_filepath), "dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type")
+        TestUtils.extract_zip_to_output_test_data_dir(
+            str(test_input_filepath),
+            "dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type",
+        )
 
         dstability_model = DStabilityModel(filename=None)
 
@@ -116,7 +124,9 @@ class TestDStabilityModel:
         [
             pytest.param("dstability/example_1.stix", id="Input Structure"),
             pytest.param("dstability/ResultExample.stix", id="Result Example"),
-            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"),
+            pytest.param(
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
+            ),
         ],
     )
     def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
@@ -195,7 +205,7 @@ class TestDStabilityModel:
         with pytest.raises(Exception):
             assert dm.execute()
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_add_multiple_stages_and_calculations(self):
         # Setup
         dm = DStabilityModel()
@@ -226,7 +236,7 @@ class TestDStabilityModel:
         assert len(dm.scenarios[1].Stages) == 3
         assert len(dm.scenarios[1].Calculations) == 3
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_add_stage(self):
         # Setup
         dm = DStabilityModel()
@@ -250,7 +260,7 @@ class TestDStabilityModel:
         assert len(dm.scenarios[0].Stages) == 2
         assert len(dm.datastructure.geometries[-1].Layers) == 0
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_add_calculation(self):
         # Setup
         dm = DStabilityModel()
@@ -271,7 +281,7 @@ class TestDStabilityModel:
             == AnalysisTypeEnum.BISHOP_BRUTE_FORCE
         )
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_add_scenario(self):
         # Setup
         dm = DStabilityModel()
@@ -686,7 +696,7 @@ class TestDStabilityModel:
         model = dm.execute()
         assert model
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_su_table_version_parsing(self):
         dm = DStabilityModel()
         test_filepath = Path(

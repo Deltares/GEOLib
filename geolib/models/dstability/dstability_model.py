@@ -129,10 +129,11 @@ class DStabilityModel(BaseModel):
 
         return all_results
 
-    def has_result(self, 
-                   scenario_index: Optional[int] = None, 
-                   calculation_index: Optional[int] = None
-        ) -> bool:
+    def has_result(
+        self,
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
+    ) -> bool:
         """
         Returns whether a calculation has a result.
 
@@ -177,9 +178,7 @@ class DStabilityModel(BaseModel):
         return result
 
     def _get_result_substructure(
-        self, 
-        scenario_index: Optional[int], 
-        calculation_index: Optional[int]
+        self, scenario_index: Optional[int], calculation_index: Optional[int]
     ) -> DStabilityResult:
         scenario_index = self.get_scenario_index(scenario_index)
         calculation_index = self.get_calculation_index(calculation_index)
@@ -207,10 +206,8 @@ class DStabilityModel(BaseModel):
         raise ValueError(f"No result found for result id {calculation_index}")
 
     def _get_calculation_settings(
-            self, 
-            scenario_index: int, 
-            calculation_index: int
-            ) -> CalculationSettings:
+        self, scenario_index: int, calculation_index: int
+    ) -> CalculationSettings:
         calculation_settings_id = (
             self.datastructure.scenarios[scenario_index]
             .Calculations[calculation_index]
@@ -226,9 +223,9 @@ class DStabilityModel(BaseModel):
         )
 
     def get_slipcircle_result(
-        self, 
+        self,
         scenario_index: Optional[int] = None,
-        calculation_index: Optional[int] = None
+        calculation_index: Optional[int] = None,
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
@@ -249,8 +246,8 @@ class DStabilityModel(BaseModel):
 
     def get_slipplane_result(
         self,
-          scenario_index: Optional[int] = None, 
-          calculation_index: Optional[int] = None
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
     ) -> SpencerSlipPlaneResult:
         """
         Get the slipplanes of the calculations result of a calculation.
@@ -355,10 +352,7 @@ class DStabilityModel(BaseModel):
             self.filename = location
 
     def add_scenario(
-        self,
-          label: str = "Scenario", 
-          notes: str = "", 
-          set_current: bool = True
+        self, label: str = "Scenario", notes: str = "", set_current: bool = True
     ) -> int:
         """Add a new scenario to the model.
 
@@ -938,19 +932,19 @@ class DStabilityModel(BaseModel):
             raise ValueError(
                 f"Unknown analysis method {analysis_method.analysis_type.value} found"
             )
-    
+
     def get_scenario_index(self, scenario_index: Optional[int]):
         if scenario_index is None:
             return self.current_scenario
         else:
             return scenario_index
-    
+
     def get_stage_index(self, stage_index: Optional[int]):
         if stage_index is None:
             return self.current_stage
         else:
             return stage_index
-        
+
     def get_calculation_index(self, calculation_index: Optional[int]):
         if calculation_index is None:
             return self.current_calculation

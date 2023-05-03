@@ -1572,6 +1572,7 @@ class BishopReliabilityResult(DStabilitySubStructure):
                 f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
             )
 
+
 class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
     Converged: Optional[bool] = None
@@ -1604,7 +1605,8 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
             raise ValueError(
                 f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
             )
-        
+
+
 class BishopResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
     FactorOfSafety: Optional[float] = None
@@ -1733,6 +1735,7 @@ class SpencerReliabilityResult(DStabilitySubStructure):
                 f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
             )
 
+
 class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
     FailureProbability: Optional[float] = None
@@ -1765,6 +1768,7 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
             raise ValueError(
                 f"Slip plane not available for {self.__class__.__name__} with id {self.Id}"
             )
+
 
 class SpencerResult(DStabilitySubStructure):
     FactorOfSafety: Optional[float] = None
@@ -1856,7 +1860,8 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
             raise ValueError(
                 f"Slipcircle not available for {self.__class__.__name__} with id {self.Id}"
             )
-        
+
+
 class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
     FailureProbability: Optional[float] = None
@@ -2014,11 +2019,15 @@ class DStabilityStructure(BaseModelStructure):
     uplift_van_results: List[UpliftVanResult] = []
     uplift_van_particle_swarm_results: List[UpliftVanParticleSwarmResult] = []
     uplift_van_reliability_results: List[UpliftVanReliabilityResult] = []
-    uplift_van_particle_swarm_reliability_results: List[UpliftVanParticleSwarmReliabilityResult] = []
+    uplift_van_particle_swarm_reliability_results: List[
+        UpliftVanParticleSwarmReliabilityResult
+    ] = []
     spencer_results: List[SpencerResult] = []
     spencer_genetic_algorithm_results: List[SpencerGeneticAlgorithmResult] = []
     spencer_reliability_results: List[SpencerReliabilityResult] = []
-    spencer_genetic_algorithm_reliability_results: List[SpencerGeneticAlgorithmReliabilityResult] = []
+    spencer_genetic_algorithm_reliability_results: List[
+        SpencerGeneticAlgorithmReliabilityResult
+    ] = []
     bishop_results: List[BishopResult] = []
     bishop_bruteforce_results: List[BishopBruteForceResult] = []
     bishop_reliability_results: List[BishopReliabilityResult] = []

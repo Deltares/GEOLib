@@ -476,7 +476,6 @@ class Soil(SoilBaseModel):
             soil_dict
         ).items():  # override default values with those of the soil
             if key in dict(model_soil).keys() and value is not None:
-
                 if type(value) is dict:
                     self.__transfer_soil_dict_to_model(value, getattr(model_soil, key))
                 else:

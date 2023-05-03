@@ -65,7 +65,7 @@ class TestUtils:
             if clean_dir:
                 shutil.rmtree(directory)
         return directory
-    
+
     @staticmethod
     def extract_zip_to_output_test_data_dir(zip_file: str, dir_name: str):
         """

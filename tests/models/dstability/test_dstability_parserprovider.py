@@ -23,7 +23,9 @@ class TestDStabilityInputParser:
         "dir_path",
         [
             pytest.param("dstability/example_1.stix", id="Input Structure"),
-            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 20.2.1"),
+            pytest.param(
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 20.2.1"
+            ),
         ],
     )
     def test_dstability_parse_directory(self, dir_path: str):
@@ -31,9 +33,13 @@ class TestDStabilityInputParser:
         input_parser = DStabilityParser()
         test_input_file_path = Path(TestUtils.get_local_test_data_dir(dir_path))
         test_output_file_path = Path(
-            TestUtils.get_output_test_data_dir("dstability/test_dstability_parse_directory", clean_dir=True)
+            TestUtils.get_output_test_data_dir(
+                "dstability/test_dstability_parse_directory", clean_dir=True
+            )
         )
-        TestUtils.extract_zip_to_output_test_data_dir(str(test_input_file_path), "dstability/test_dstability_parse_directory")
+        TestUtils.extract_zip_to_output_test_data_dir(
+            str(test_input_file_path), "dstability/test_dstability_parse_directory"
+        )
 
         # 2. Verify initial expectations
         assert os.path.exists(test_input_file_path), "Testing directory not found."
@@ -76,8 +82,7 @@ class TestDStabilityInputParser:
         # 1. Set up test model
         input_parser = DStabilityZipParser()
         test_filepath = (
-            Path(TestUtils.get_local_test_data_dir("dstability"))
-            / "example_1.stix"
+            Path(TestUtils.get_local_test_data_dir("dstability")) / "example_1.stix"
         )
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dstability"))
@@ -100,8 +105,7 @@ class TestDStabilityInputParser:
         # 1. Set up test model
         input_parser = DStabilityZipParser()
         test_filepath = (
-            Path(TestUtils.get_local_test_data_dir("dstability"))
-            / "example_1.stix"
+            Path(TestUtils.get_local_test_data_dir("dstability")) / "example_1.stix"
         )
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dstability/serialized")

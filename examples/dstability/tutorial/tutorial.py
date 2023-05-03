@@ -3,7 +3,17 @@ from geolib.models.dstability import DStabilityModel
 dm = DStabilityModel()
 
 from geolib.geometry.one import Point
-from geolib.models.dstability.analysis import DStabilityBishopAnalysisMethod, DStabilityBishopBruteForceAnalysisMethod, DStabilityCircle, DStabilitySearchArea, DStabilitySearchGrid, DStabilitySpencerAnalysisMethod, DStabilitySpencerGeneticAnalysisMethod, DStabilityUpliftVanAnalysisMethod, DStabilityUpliftVanParticleSwarmAnalysisMethod
+from geolib.models.dstability.analysis import (
+    DStabilityBishopAnalysisMethod,
+    DStabilityBishopBruteForceAnalysisMethod,
+    DStabilityCircle,
+    DStabilitySearchArea,
+    DStabilitySearchGrid,
+    DStabilitySpencerAnalysisMethod,
+    DStabilitySpencerGeneticAnalysisMethod,
+    DStabilityUpliftVanAnalysisMethod,
+    DStabilityUpliftVanParticleSwarmAnalysisMethod,
+)
 
 bishop_analysis_method = DStabilityBishopAnalysisMethod(
     circle=DStabilityCircle(center=Point(x=20, z=3), radius=15)
@@ -90,7 +100,7 @@ soil.code = "HV"
 soil.soil_weight_parameters.saturated_weight.mean = 10.2
 soil.soil_weight_parameters.unsaturated_weight.mean = 10.2
 soil.mohr_coulomb_parameters.cohesion.mean = 0.5
-soil.mohr_coulomb_parameters.friction_angle.mean = 15.0      
+soil.mohr_coulomb_parameters.friction_angle.mean = 15.0
 soil_peat_id = dm.add_soil(soil)
 
 # add layers
@@ -209,11 +219,13 @@ dm.add_reinforcement(
 )
 
 # create reinforcements FORBIDDEN LINE
-dm.add_reinforcement(
-    ForbiddenLine(start=Point(x=30.0, z=0.0), end=Point(x=30.0, z=-4.0))
-)
+dm.add_reinforcement(ForbiddenLine(start=Point(x=30.0, z=0.0), end=Point(x=30.0, z=-4.0)))
 
-from geolib.models.dstability.states import DStabilityStateLinePoint, DStabilityStatePoint, DStabilityStress
+from geolib.models.dstability.states import (
+    DStabilityStateLinePoint,
+    DStabilityStatePoint,
+    DStabilityStress,
+)
 
 # state point
 dm.add_state_point(
@@ -235,6 +247,7 @@ dm.add_state_line(
 )
 
 from pathlib import Path
+
 dm.serialize(Path("tutorial.stix"))
 
 dm.execute()

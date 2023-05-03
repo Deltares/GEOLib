@@ -16,8 +16,8 @@ from geolib.models.dstability.internal import (
     PersistableCircle,
     PersistablePoint,
     Scenario,
-    SpencerGeneticAlgorithmResult,
     SpencerGeneticAlgorithmReliabilityResult,
+    SpencerGeneticAlgorithmResult,
     SpencerReliabilityResult,
     SpencerResult,
     SpencerSlipPlaneResult,
@@ -79,7 +79,10 @@ def _uplift_van_particle_swarm_result(result_id: str) -> UpliftVanParticleSwarmR
         TangentLine=_z_tangent_line,
     )
 
-def _uplift_van_particle_swarm_reliability_result(result_id: str) -> UpliftVanParticleSwarmReliabilityResult:
+
+def _uplift_van_particle_swarm_reliability_result(
+    result_id: str,
+) -> UpliftVanParticleSwarmReliabilityResult:
     return UpliftVanParticleSwarmReliabilityResult(
         Id=result_id,
         FailureProbability=_failure_probability,
@@ -100,7 +103,10 @@ def _spencer_genetic_algorithm_result(result_id: str) -> SpencerGeneticAlgorithm
         Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_plane()
     )
 
-def _spencer_genetic_algorithm_reliability_result(result_id: str) -> SpencerGeneticAlgorithmReliabilityResult:
+
+def _spencer_genetic_algorithm_reliability_result(
+    result_id: str,
+) -> SpencerGeneticAlgorithmReliabilityResult:
     return SpencerGeneticAlgorithmReliabilityResult(
         Id=result_id, FailureProbability=_failure_probability, SlipPlane=_slip_plane()
     )
@@ -131,9 +137,14 @@ def _bishop_brute_force_result(result_id: str) -> BishopBruteForceResult:
         Id=result_id, FactorOfSafety=_valid_safety_factor, Circle=_persistable_circle()
     )
 
-def _bishop_brute_force_reliability_result(result_id: str) -> BishopBruteForceReliabilityResult:
+
+def _bishop_brute_force_reliability_result(
+    result_id: str,
+) -> BishopBruteForceReliabilityResult:
     return BishopBruteForceReliabilityResult(
-        Id=result_id, FailureProbability=_failure_probability, Circle=_persistable_circle()
+        Id=result_id,
+        FailureProbability=_failure_probability,
+        Circle=_persistable_circle(),
     )
 
 
@@ -294,7 +305,12 @@ class TestDStabilityResults:
 
             if isinstance(
                 result_substructure,
-                (SpencerReliabilityResult, SpencerResult, SpencerGeneticAlgorithmResult, SpencerGeneticAlgorithmReliabilityResult),
+                (
+                    SpencerReliabilityResult,
+                    SpencerResult,
+                    SpencerGeneticAlgorithmResult,
+                    SpencerGeneticAlgorithmReliabilityResult,
+                ),
             ):
                 with pytest.raises(AttributeError):
                     model.get_slipcircle_result(scenario_index=0, calculation_index=i)
@@ -318,7 +334,12 @@ class TestDStabilityResults:
 
             if not isinstance(
                 result_substructure,
-                (SpencerReliabilityResult, SpencerResult, SpencerGeneticAlgorithmResult, SpencerGeneticAlgorithmReliabilityResult),
+                (
+                    SpencerReliabilityResult,
+                    SpencerResult,
+                    SpencerGeneticAlgorithmResult,
+                    SpencerGeneticAlgorithmReliabilityResult,
+                ),
             ):
                 with pytest.raises(AttributeError):
                     model.get_slipplane_result(scenario_index=0, calculation_index=i)
