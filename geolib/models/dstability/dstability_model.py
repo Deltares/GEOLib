@@ -182,7 +182,7 @@ class DStabilityModel(BaseModel):
         calculation_index: Optional[int]
     ) -> DStabilityResult:
         scenario_index = self.get_scenario_index(scenario_index)
-        stage_index = self.get_stage_index(stage_index)
+        calculation_index = self.get_calculation_index(calculation_index)
 
         if self.datastructure.has_result(scenario_index, calculation_index):
             result_id = (
