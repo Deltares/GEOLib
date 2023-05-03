@@ -152,8 +152,8 @@ class DStabilityModel(BaseModel):
 
     def get_result(
         self,
-        scenario_index: Optional[int],
-        calculation_index: Optional[int],
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
     ) -> DStabilityResult:
         """
         Returns the results of a calculation. Calculation results are based on analysis type and calculation type.
