@@ -114,8 +114,30 @@
 <p>This model can read, modify and create
 .stix files</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_calculation">
+<span class="sig-name descname"><span class="pre">add_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Calculation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_calculation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new calculation to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The scenario index to add the calculation to, defaults to the current scenario.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – Label for the calculation.</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – Notes for the calculation.</p></li>
+<li><p><strong>set_current</strong> (<em>bool</em>) – Whether to make the new calculation the current calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id of the new stage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_head_line">
-<span class="sig-name descname"><span class="pre">add_head_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_phreatic_line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_head_line" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_head_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_phreatic_line</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_head_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add head line to the model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -124,7 +146,8 @@
 <li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
 <li><p><strong>is_phreatic_line</strong> (<em>bool</em>) – set as phreatic line, defaults to False</p></li>
-<li><p><strong>stage_id</strong> (<em>int</em>) – stage to add to, defaults to current stage</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -138,7 +161,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_layer">
-<span class="sig-name descname"><span class="pre">add_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_layer" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_layer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a soil layer to the model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -147,7 +170,8 @@
 <li><p><strong>soil_code</strong> (<em>str</em>) – code of the soil for this layer</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
-<li><p><strong>stage_id</strong> (<em>int</em>) – stage to add to, defaults to 0</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -161,7 +185,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_load">
-<span class="sig-name descname"><span class="pre">add_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_load" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a load to the object.</p>
 <p>The geometry should be defined before adding loads.</p>
 <p>If no consolidations are provided, a Consolidation with default values will be made for each SoilLayer.
@@ -170,12 +194,13 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>load</strong> (<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.DStabilityLoad" title="geolib.models.dstability.loads.DStabilityLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityLoad</span></code></a>) – A subclass of DStabilityLoad.</p></li>
-<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
 <li><p><strong>consolidations</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – When the provided load is no subclass of DStabilityLoad, an invalid stage_index is provided, or the datastructure is no longer valid.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -184,22 +209,8 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_point">
-<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add point, which should be unique in the model and return the created point id.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>point</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>) – </p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_reference_line">
-<span class="sig-name descname"><span class="pre">add_reference_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom_headline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_head_line_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_reference_line" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_reference_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bottom_headline_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_head_line_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_reference_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add reference line to the model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -209,7 +220,8 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <li><p><strong>top_head_line_id</strong> (<em>int</em>) – id of the headline to use as the top headline</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
-<li><p><strong>stage_id</strong> (<em>int</em>) – stage to add to, defaults to 0</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -223,13 +235,14 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_reinforcement">
-<span class="sig-name descname"><span class="pre">add_reinforcement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reinforcement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_reinforcement" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_reinforcement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reinforcement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_reinforcement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a reinforcement to the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>reinforcement</strong> (<a class="reference internal" href="geolib.models.dstability.reinforcements.html#geolib.models.dstability.reinforcements.DStabilityReinforcement" title="geolib.models.dstability.reinforcements.DStabilityReinforcement"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityReinforcement</span></code></a>) – A subclass of DStabilityReinforcement.</p></li>
-<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Id used to identify the stage to which the reinforcement is linked.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -239,7 +252,28 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dd class="field-odd"><p>int</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_id is provided, or the datastructure is no longer valid.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_index is provided, or the datastructure is no longer valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_scenario">
+<span class="sig-name descname"><span class="pre">add_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Scenario'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new scenario to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em>) – Label for the scenario.</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – Notes for the scenario.</p></li>
+<li><p><strong>set_current</strong> (<em>bool</em>) – Whether to make the new scenario the current scenario.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id of the new stage</p>
 </dd>
 </dl>
 </dd></dl>
@@ -274,7 +308,7 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations">
-<span class="sig-name descname"><span class="pre">add_soil_layer_consolidations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soil_layer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_soil_layer_consolidations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soil_layer_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_soil_layer_consolidations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add consolidations for a layer (layerload).</p>
 <p>Consolidations cannot be added when adding soil layers since in the consolidations, all other soil layers need to be referred.
 Therefore, all soillayers in a stage should be defined before setting consolidation and
@@ -284,11 +318,12 @@ the number of consolidations given should equal the amount of layers.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>soil_layer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Consolidation is set for this soil layer id.</p></li>
 <li><p><strong>consolidations</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]) – List of Consolidation. Must contain a Consolidation for every other layer.</p></li>
-<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.</p>
+<dd class="field-even"><p><strong>ValueError</strong> – When the provided load is no subclass of DStabilityLoad, an invalid stage_index is provided, or the datastructure is no longer valid.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
@@ -298,14 +333,15 @@ the number of consolidations given should equal the amount of layers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_stage">
-<span class="sig-name descname"><span class="pre">add_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_stage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a new stage to the model.</p>
+<span class="sig-name descname"><span class="pre">add_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Stage'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new stage to the model at the given scenario index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the stage</p></li>
-<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the stage</p></li>
-<li><p><strong>set_current</strong> – Whether to make the new stage the current stage.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The scenario index to add the stage to, defaults to the current scenario.</p></li>
+<li><p><strong>label</strong> (<em>str</em>) – Label for the stage.</p></li>
+<li><p><strong>notes</strong> (<em>str</em>) – Notes for the stage.</p></li>
+<li><p><strong>set_current</strong> (<em>bool</em>) – Whether to make the new stage the current stage.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -319,47 +355,57 @@ the number of consolidations given should equal the amount of layers.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_state_correlation">
-<span class="sig-name descname"><span class="pre">add_state_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">correlated_state_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_correlation" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<span class="sig-name descname"><span class="pre">add_state_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">correlated_state_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_correlation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add state correlation between the given state point ids.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>correlated_state_ids</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
-<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+<li><p><strong>correlated_state_ids</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – The state point ids to correlate.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_state_line">
-<span class="sig-name descname"><span class="pre">add_state_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_line" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_state_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add state line. From the Soils, only the state parameters are used.</p>
-<p>points are a list of points with x,z
-state_point are a list of DStabilit.. where ONLY the x is used, the Z will be calculated</p>
-<p>No result PersistableStateLine has no Id</p>
+<p>points are a list of points with x,z coordinates
+state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the Z will be calculated</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]) – </p></li>
+<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – The geometry points of the state line.</p></li>
+<li><p><strong>state_point</strong> (<em>List</em><em>[</em><a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStatePoint" title="geolib.models.dstability.states.DStabilityStatePoint"><em>DStabilityStatePoint</em></a><em>]</em>) – The list of state point values.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
 <li><p><strong>state_points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStateLinePoint" title="geolib.models.dstability.states.DStabilityStateLinePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityStateLinePoint</span></code></a>]) – </p></li>
-<li><p><strong>stage_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created state line</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableStateLine" title="geolib.models.dstability.internal.PersistableStateLine">PersistableStateLine</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_state_point">
-<span class="sig-name descname"><span class="pre">add_state_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_point" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_state_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_state_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add state point to the model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state_point</strong> (<a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStatePoint" title="geolib.models.dstability.states.DStabilityStatePoint"><em>DStabilityStatePoint</em></a>) – DStabilityStatePoint class</p></li>
-<li><p><strong>stage_id</strong> (<em>int</em>) – stage_id (int): stage to add to, defaults to the current stage</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -369,10 +415,6 @@ state_point are a list of DStabilit.. where ONLY the x is used, the Z will be ca
 <dd class="field-odd"><p>int</p>
 </dd>
 </dl>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Check if point lies within the given layer</p>
-</div>
 </dd></dl>
 
 <dl class="py property">
@@ -380,30 +422,19 @@ state_point are a list of DStabilit.. where ONLY the x is used, the Z will be ca
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">console_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.console_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.copy_stage">
-<span class="sig-name descname"><span class="pre">copy_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.copy_stage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy an existing stage and add it to the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the stage</p></li>
-<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the stage</p></li>
-<li><p><strong>set_current</strong> – Whether to make the new stage the current stage.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the id of the new stage</p>
-</dd>
-</dl>
-</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.current_calculation">
+<span class="sig-name descname"><span class="pre">current_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.current_calculation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.current_id">
 <span class="sig-name descname"><span class="pre">current_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.current_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.current_scenario">
+<span class="sig-name descname"><span class="pre">current_scenario</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.current_scenario" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -417,53 +448,25 @@ state_point are a list of DStabilit.. where ONLY the x is used, the Z will be ca
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.edit_soil">
-<span class="sig-name descname"><span class="pre">edit_soil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.edit_soil" title="Permalink to this definition">¶</a></dt>
-<dd><p>Edit an existing soil with parameter names based on the soil class members</p>
-<dl class="field-list simple">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_calculation_index">
+<span class="sig-name descname"><span class="pre">get_calculation_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_calculation_index" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>code</strong> (<em>str</em>) – the code of the soil</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angle=25.0’</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the edited soil</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.edit_soil_by_name">
-<span class="sig-name descname"><span class="pre">edit_soil_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.edit_soil_by_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Edit an existing soil with parameter names based on the soil class members.
-This method will edit the first occurence of the name if the name is used multiple times.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – the name of the soil</p></li>
-<li><p><strong>kwargs</strong> (<em>dict</em>) – the parameters and new values for example ‘cohesion=2.0, friction_angle=25.0’</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the edited soil</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
+<dd class="field-odd"><p><strong>calculation_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_result">
-<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the results of a stage. Calculation results are based on analysis type and calculation type.</p>
+<span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the results of a calculation. Calculation results are based on analysis type and calculation type.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stage_id</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Id of a stage, if None is supplied the result of the current stage is returned.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a scenario, if None is supplied the result of the current scenario is returned.</p></li>
+<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a calculation, if None is supplied the result of the current calculation is returned.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The analysis results of the stage.</p>
@@ -478,22 +481,35 @@ This method will edit the first occurence of the name if the name is used multip
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_scenario_index">
+<span class="sig-name descname"><span class="pre">get_scenario_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_scenario_index" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scenario_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_slipcircle_result">
-<span class="sig-name descname"><span class="pre">get_slipcircle_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_slipcircle_result" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_slipcircle_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_slipcircle_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the slipcircle(s) of the calculation result of a given stage.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – stage for which to get the available results</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario for which to get the available results</p></li>
+<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – calculation for which to get the available results</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>dictionary of the available slipcircles per model for the given stage</p>
+<dd class="field-even"><p>the slipcircle for the given calculation</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Dict</p>
+<dd class="field-odd"><p>Union[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopSlipCircleResult" title="geolib.models.dstability.internal.BishopSlipCircleResult">BishopSlipCircleResult</a>, <a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanSlipCircleResult" title="geolib.models.dstability.internal.UpliftVanSlipCircleResult">UpliftVanSlipCircleResult</a>]</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – Result is not available for provided stage id</p></li>
+<li><p><strong>ValueError</strong> – Result is not available for provided scenario and calculation index</p></li>
 <li><p><strong>AttributeError</strong> – When the result has no slipcircle. Try get the slipplane</p></li>
 </ul>
 </dd>
@@ -502,21 +518,24 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_slipplane_result">
-<span class="sig-name descname"><span class="pre">get_slipplane_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_slipplane_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the slipplanes of the calculations result of a stage.</p>
+<span class="sig-name descname"><span class="pre">get_slipplane_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_slipplane_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the slipplanes of the calculations result of a calculation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – stage for which to get the available results</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario for which to get the available results</p></li>
+<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – calculation for which to get the available results</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>dictionary of the available slip planes per model for the given stage</p>
+<dd class="field-even"><p>the slip plane for the given calculation</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerSlipPlaneResult" title="geolib.models.dstability.internal.SpencerSlipPlaneResult">SpencerSlipPlaneResult</a></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – Result is not available for provided stage id</p></li>
+<li><p><strong>ValueError</strong> – Result is not available for provided scenario and calculation index</p></li>
 <li><p><strong>AttributeError</strong> – When the result has no slipplane. Try get the slipcircle</p></li>
 </ul>
 </dd>
@@ -524,15 +543,62 @@ This method will edit the first occurence of the name if the name is used multip
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.has_result">
-<span class="sig-name descname"><span class="pre">has_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.has_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns whether a stage has a result.</p>
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_soil">
+<span class="sig-name descname"><span class="pre">get_soil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_soil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an existing soil with the given soil code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>stage_id</strong> (<em>int</em>) – Id of a stage.</p>
+<dd class="field-odd"><p><strong>code</strong> (<em>str</em>) – the code of the soil</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Value indicating whether the stage has a result.</p>
+<dd class="field-even"><p>the soil</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_soil_by_name">
+<span class="sig-name descname"><span class="pre">get_soil_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_soil_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets an existing soil with the given soil name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – the name of the soil</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the soil</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.PersistableSoil" title="geolib.models.dgeoflow.internal.PersistableSoil">PersistableSoil</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_stage_index">
+<span class="sig-name descname"><span class="pre">get_stage_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_stage_index" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stage_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.has_result">
+<span class="sig-name descname"><span class="pre">has_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.has_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether a calculation has a result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a scenario, if None the current scenario is used.</p></li>
+<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a calculation, if None the current calculation is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Value indicating whether the calculation has a result.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
@@ -542,7 +608,7 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.output">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanResult" title="geolib.models.dstability.internal.UpliftVanResult"><span class="pre">UpliftVanResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmResult"><span class="pre">UpliftVanParticleSwarmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanReliabilityResult" title="geolib.models.dstability.internal.UpliftVanReliabilityResult"><span class="pre">UpliftVanReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmResult"><span class="pre">SpencerGeneticAlgorithmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerReliabilityResult" title="geolib.models.dstability.internal.SpencerReliabilityResult"><span class="pre">SpencerReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerResult" title="geolib.models.dstability.internal.SpencerResult"><span class="pre">SpencerResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceResult" title="geolib.models.dstability.internal.BishopBruteForceResult"><span class="pre">BishopBruteForceResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopReliabilityResult" title="geolib.models.dstability.internal.BishopReliabilityResult"><span class="pre">BishopReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopResult" title="geolib.models.dstability.internal.BishopResult"><span class="pre">BishopResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanResult" title="geolib.models.dstability.internal.UpliftVanResult"><span class="pre">UpliftVanResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmResult"><span class="pre">UpliftVanParticleSwarmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanReliabilityResult" title="geolib.models.dstability.internal.UpliftVanReliabilityResult"><span class="pre">UpliftVanReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult"><span class="pre">UpliftVanParticleSwarmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmResult"><span class="pre">SpencerGeneticAlgorithmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerReliabilityResult" title="geolib.models.dstability.internal.SpencerReliabilityResult"><span class="pre">SpencerReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult"><span class="pre">SpencerGeneticAlgorithmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerResult" title="geolib.models.dstability.internal.SpencerResult"><span class="pre">SpencerResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceResult" title="geolib.models.dstability.internal.BishopBruteForceResult"><span class="pre">BishopBruteForceResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopReliabilityResult" title="geolib.models.dstability.internal.BishopReliabilityResult"><span class="pre">BishopReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceReliabilityResult" title="geolib.models.dstability.internal.BishopBruteForceReliabilityResult"><span class="pre">BishopBruteForceReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopResult" title="geolib.models.dstability.internal.BishopResult"><span class="pre">BishopResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Permalink to this definition">¶</a></dt>
 <dd><p>Access internal dict-like datastructure of the output.</p>
 <p>Requires a successful execute.</p>
 </dd></dl>
@@ -573,6 +639,11 @@ This method will edit the first occurence of the name if the name is used multip
 <dd><p>Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.scenarios">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scenarios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.Scenario" title="geolib.models.dstability.internal.Scenario"><span class="pre">Scenario</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.scenarios" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.serialize">
 <span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.serialize" title="Permalink to this definition">¶</a></dt>
@@ -586,20 +657,24 @@ This method will edit the first occurence of the name if the name is used multip
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.set_model">
-<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.set_model" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">analysis_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.set_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the model and applies the given parameters</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>analysis_method</strong> (<a class="reference internal" href="geolib.models.dstability.analysis.html#geolib.models.dstability.analysis.DStabilityAnalysisMethod" title="geolib.models.dstability.analysis.DStabilityAnalysisMethod"><em>DStabilityAnalysisMethod</em></a>) – A subclass of DStabilityAnalysisMethod.</p></li>
-<li><p><strong>stage_id</strong> – Id used to identify the stage to which the analysis method is linked.</p></li>
+<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – calculation to add to, defaults to the current calculation</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – When the provided analysismethod is no subclass of DStabilityAnalysisMethod,</p></li>
-<li><p><strong>an invalid stage_id is provided</strong><strong>, </strong><strong>the analysis method is not known</strong><strong> or </strong><strong>the datastructure is no longer valid.</strong> – </p></li>
+<li><p><strong>ValueError</strong> – When the provided analysis method is no subclass of DStabilityAnalysisMethod,</p></li>
+<li><p><strong>an invalid stage_index is provided</strong><strong>, </strong><strong>the analysis method is not known</strong><strong> or </strong><strong>the datastructure is no longer valid.</strong> – </p></li>
 </ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -614,11 +689,6 @@ This method will edit the first occurence of the name if the name is used multip
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soils</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilCollection" title="geolib.models.dstability.internal.SoilCollection"><span class="pre">SoilCollection</span></a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soils" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils.</p>
 </dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.stages">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stages</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.Stage" title="geolib.models.dstability.internal.Stage"><span class="pre">Stage</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.stages" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.waternets">

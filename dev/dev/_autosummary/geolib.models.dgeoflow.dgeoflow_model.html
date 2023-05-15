@@ -94,6 +94,28 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_calculation">
+<span class="sig-name descname"><span class="pre">add_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Calculation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_calculation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new calculation to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – The scenario index to add the calculation to, defaults to the current scenario.</p></li>
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the calculation.</p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the calculation.</p></li>
+<li><p><strong>set_current</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Whether to make the new calculation the current calculation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id of the new stage</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_layer">
 <span class="sig-name descname"><span class="pre">add_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_layer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a soil layer to the model</p>
@@ -139,44 +161,22 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_point">
-<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_point" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add point, which should be unique in the model and return the created point id.</p>
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_scenario">
+<span class="sig-name descname"><span class="pre">add_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Scenario'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_scenario" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new scenario to the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>point</strong> (<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>) – </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the scenario.</p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the scenario.</p></li>
+<li><p><strong>set_current</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Whether to make the new scenario the current scenario.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_scenario">
-<span class="sig-name descname"><span class="pre">add_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaryconditions_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soillayers_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meshproperties_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculations_notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculations_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_scenario" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a scenario to the model</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>int</em>) – scenario to add to, defaults to 0</p></li>
-<li><p><strong>boundaryconditions_id</strong> (<em>int</em>) – id of the boundary conditions collection to add to the scenario</p></li>
-<li><p><strong>soillayers_id</strong> (<em>int</em>) – id of the soil layers to add to the scenario</p></li>
-<li><p><strong>geometry_id</strong> (<em>int</em>) – id of the geometry to add to the scenario</p></li>
-<li><p><strong>meshproperties_id</strong> (<em>int</em>) – id of the mesh properties to add to the scenario</p></li>
-<li><p><strong>label</strong> (<em>str</em>) – label of the scenario, defaults to empty string</p></li>
-<li><p><strong>notes</strong> (<em>str</em>) – notes of the scenario, defaults to empty string</p></li>
-<li><p><strong>calculations_notes</strong> (<em>str</em>) – notes of the calculation, defaults to empty string</p></li>
-<li><p><strong>stage_notes</strong> (<em>str</em>) – notes of the stage, defaults to empty string</p></li>
-<li><p><strong>calculations_label</strong> (<em>str</em>) – label of the calculation, defaults to empty string</p></li>
-<li><p><strong>stage_label</strong> (<em>str</em>) – label of the stage, defaults to empty string</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>id of the scenario</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id of the new stage</p>
 </dd>
 </dl>
 </dd></dl>
@@ -198,6 +198,28 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_stage">
+<span class="sig-name descname"><span class="pre">add_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Stage'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.add_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new stage to the model at the given scenario index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – The scenario index to add the stage to, defaults to the current scenario.</p></li>
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the stage.</p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the stage.</p></li>
+<li><p><strong>set_current</strong> – Whether to make the new stage the current stage.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the id of the new stage</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_flags_post">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">console_flags_post</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_flags_post" title="Permalink to this definition">¶</a></dt>
@@ -207,27 +229,6 @@
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_path">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">console_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.console_path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.copy_scenario">
-<span class="sig-name descname"><span class="pre">copy_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">set_current</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.copy_scenario" title="Permalink to this definition">¶</a></dt>
-<dd><p>Copy an existing scenario and add it to the model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Label for the scenario</p></li>
-<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Notes for the scenario</p></li>
-<li><p><strong>set_current</strong> – Whether to make the new scenario the current scenario.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the id of the new scenario</p>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_calculation_index">
@@ -247,6 +248,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_scenario_index">
 <span class="sig-name descname"><span class="pre">current_scenario_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_scenario_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_stage_index">
+<span class="sig-name descname"><span class="pre">current_stage_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.current_stage_index" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -366,6 +372,11 @@
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.points" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points.</p>
 </dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.scenarios">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scenarios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.Scenario" title="geolib.models.dgeoflow.internal.Scenario"><span class="pre">Scenario</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.scenarios" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.serialize">

@@ -52,19 +52,24 @@
 <ol class="arabic simple">
 <li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/_autosummary/geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a>.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span> <span class="o">=</span> <span class="n">DStabilityModel</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability</span> <span class="kn">import</span> <span class="n">DStabilityModel</span>
+
+<span class="n">dm</span> <span class="o">=</span> <span class="n">DStabilityModel</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>2. Choose an analysis method, such as <code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityBishopAnalysisMethod</span></code> and set
 it to the model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bishop_analysis_method</span> <span class="o">=</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.geometry.one</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">geolib.models.dstability.analysis</span> <span class="kn">import</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">,</span> <span class="n">DStabilityCircle</span>
+
+<span class="n">bishop_analysis_method</span> <span class="o">=</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">(</span>
     <span class="n">circle</span><span class="o">=</span><span class="n">DStabilityCircle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">bishop_analysis_method</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For completeness, here follow examples for all possible models.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add bishop brute force</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bishop Brute Force</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
     <span class="n">DStabilityBishopBruteForceAnalysisMethod</span><span class="p">(</span>
         <span class="n">search_grid</span><span class="o">=</span><span class="n">DStabilitySearchGrid</span><span class="p">(</span>
@@ -80,7 +85,7 @@ it to the model.</p>
 <span class="p">)</span>
 
 
-<span class="c1"># add spencer</span>
+<span class="c1"># Spencer</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
     <span class="n">DStabilitySpencerAnalysisMethod</span><span class="p">(</span>
         <span class="n">slipplane</span><span class="o">=</span><span class="p">[</span>
@@ -93,7 +98,7 @@ it to the model.</p>
 <span class="p">)</span>
 
 
-<span class="c1"># add spencer genetic</span>
+<span class="c1"># Spencer Genetic</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
     <span class="n">DStabilitySpencerGeneticAnalysisMethod</span><span class="p">(</span>
         <span class="n">slip_plane_a</span><span class="o">=</span><span class="p">[</span>
@@ -112,7 +117,7 @@ it to the model.</p>
 <span class="p">)</span>
 
 
-<span class="c1"># uplift</span>
+<span class="c1"># Uplift-Van</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
     <span class="n">DStabilityUpliftVanAnalysisMethod</span><span class="p">(</span>
         <span class="n">first_circle</span><span class="o">=</span><span class="n">DStabilityCircle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mf">9.5</span><span class="p">),</span>
@@ -121,7 +126,7 @@ it to the model.</p>
 <span class="p">)</span>
 
 
-<span class="c1"># uplift particle swarm</span>
+<span class="c1"># Uplift-Van Particle Swarm</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
     <span class="n">DStabilityUpliftVanParticleSwarmAnalysisMethod</span><span class="p">(</span>
         <span class="n">search_area_a</span><span class="o">=</span><span class="n">DStabilitySearchArea</span><span class="p">(</span>
@@ -136,10 +141,12 @@ it to the model.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="3">
+<ol class="arabic simple">
 <li><p>We can then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and add it to the model. Refer to <a class="reference internal" href="tutorial_soil.html#soil-tut"><span class="std std-ref">Tutorial Soils</span></a> for more information.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils.soil</span> <span class="kn">import</span> <span class="n">Soil</span>
+
+<span class="c1"># add soil</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Soil test&quot;</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;HV&quot;</span>
@@ -228,7 +235,10 @@ it to the model.</p>
 <ol class="arabic simple" start="6">
 <li><p>What’s left to add is the creation of several types of loads.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#  add uniform load</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability.loads</span> <span class="kn">import</span> <span class="n">LineLoad</span><span class="p">,</span> <span class="n">UniformLoad</span>
+<span class="kn">from</span> <span class="nn">geolib.models.dstability.reinforcements</span> <span class="kn">import</span> <span class="n">ForbiddenLine</span><span class="p">,</span> <span class="n">Geotextile</span><span class="p">,</span> <span class="n">Nail</span>
+
+<span class="c1">#  add uniform load</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span>
     <span class="n">UniformLoad</span><span class="p">(</span>
         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;trafficload&quot;</span><span class="p">,</span>
@@ -280,9 +290,11 @@ it to the model.</p>
 </pre></div>
 </div>
 <ol class="arabic simple" start="7">
-<li><p>And we can set state points or statelines.</p></li>
+<li><p>And we can set state points or state lines.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># state point</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability.states</span> <span class="kn">import</span> <span class="n">DStabilityStateLinePoint</span><span class="p">,</span> <span class="n">DStabilityStatePoint</span><span class="p">,</span> <span class="n">DStabilityStress</span>
+
+<span class="c1"># state point</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">add_state_point</span><span class="p">(</span>
     <span class="n">DStabilityStatePoint</span><span class="p">(</span>
         <span class="n">layer_id</span><span class="o">=</span><span class="n">layer_ids</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>  <span class="c1"># HV layer</span>
@@ -302,14 +314,46 @@ it to the model.</p>
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>To run the model first the model needs to be serialised. To do that define a
+<p>To run the model first the model needs to be serialized. To do that define a
 output file name and call the function <a class="reference internal" href="../dev/_autosummary/geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel.serialize" title="geolib.models.dstability.dstability_model.DStabilityModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tutorial.stix&quot;</span><span class="p">)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tutorial.stix&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Finally the execute function can be called to run the model in D-Stability.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In order to get the results of a calculation you can do the following for an Uplift-Van Particle Swarm analysis:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Result of scenario 0, calculation 0:&quot;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Result type: &quot;</span> <span class="o">+</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Factor of safety: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">FactorOfSafety</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left center: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">LeftCenter</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right center: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">RightCenter</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tangent line: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">TangentLine</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>You can add scenarios, stages and calculations using various methods as demonstrated below. If you set set_current to True,
+the added item will be set as the default for future calls to the DStabilityModel. If you do not specify scenario_index, it will
+be added to the current scenario.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add new scenario (and activate it)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_scenario</span><span class="p">(</span><span class="s2">&quot;New Scenario&quot;</span><span class="p">,</span> <span class="s2">&quot;From GEOLib&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># add new stage to the current scenario (and activate it)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Stage 1&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># add new stage to the first scenario (and activate it)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="n">scenario_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Stage 2&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># add new stage to the first scenario (and activate it)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="n">scenario_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Stage 3&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># add new calculation to the current scenario (and activate it)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_calculation</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Calculation 1&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># add new calculation to the first scenario (and activate it)</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">add_calculation</span><span class="p">(</span><span class="n">scenario_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Calculation 2&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

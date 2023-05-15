@@ -436,18 +436,56 @@ has no suffix, but the second one has (1 =&gt; _1) etc.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_calculation">
+<span class="sig-name descname"><span class="pre">add_default_calculation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_calculation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new default (empty) calculation to DStability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_scenario">
-<span class="sig-name descname"><span class="pre">add_default_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_start_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_scenario" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_default_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_start_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_scenario" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a new default (empty) scenario to DGeoFlow.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
 <li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+<li><p><strong>unique_start_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_stage">
+<span class="sig-name descname"><span class="pre">add_default_stage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_start_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.add_default_stage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new default (empty) stage to DStability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
+<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+<li><p><strong>unique_start_id</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -461,24 +499,6 @@ has no suffix, but the second one has (1 =&gt; _1) etc.</p>
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.critical_head_results">
 <span class="sig-name descname"><span class="pre">critical_head_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#geolib.models.dgeoflow.internal.CriticalHeadResult" title="geolib.models.dgeoflow.internal.CriticalHeadResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CriticalHeadResult</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.critical_head_results" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.duplicate_scenario">
-<span class="sig-name descname"><span class="pre">duplicate_scenario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_scenario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_start_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.duplicate_scenario" title="Permalink to this definition">¶</a></dt>
-<dd><p>Duplicates an existing scenario.
-Copies the specific scenario fields for a scenario and renumbers all Ids,
-taking into account foreign keys by using the same renumbering.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>current_scenario</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
-<li><p><strong>label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
-<li><p><strong>notes</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
-<li><p><strong>unique_start_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.ensure_validity_foreign_keys">
@@ -499,17 +519,6 @@ taking into account foreign keys by using the same renumbering.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="#geolib.models.dgeoflow.internal.GroundwaterFlowResult" title="geolib.models.dgeoflow.internal.GroundwaterFlowResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">GroundwaterFlowResult</span></code></a>, <a class="reference internal" href="#geolib.models.dgeoflow.internal.PipeLengthResult" title="geolib.models.dgeoflow.internal.PipeLengthResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipeLengthResult</span></code></a>, <a class="reference internal" href="#geolib.models.dgeoflow.internal.CriticalHeadResult" title="geolib.models.dgeoflow.internal.CriticalHeadResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CriticalHeadResult</span></code></a>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.get_scenario_specific_fields">
-<span class="sig-name descname"><span class="pre">get_scenario_specific_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.get_scenario_specific_fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>Yield stage specific fields for given stage.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <a class="reference internal" href="#geolib.models.dgeoflow.internal.DGeoFlowSubStructure" title="geolib.models.dgeoflow.internal.DGeoFlowSubStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DGeoFlowSubStructure</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -601,23 +610,6 @@ Finds all existing ids, takes the max and does +1.</p>
 <span class="sig-name descname"><span class="pre">projectinfo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dgeoflow.internal.ProjectInfo" title="geolib.models.dgeoflow.internal.ProjectInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProjectInfo</span></code></a></em><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.projectinfo" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.renumber_fk_fields">
-<span class="sig-name descname"><span class="pre">renumber_fk_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.renumber_fk_fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>Replace id (foreign key) fields on instance based on a mapping and unique id.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mapping</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>) – </p></li>
-<li><p><strong>unique_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – </p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.scenarios">
 <span class="sig-name descname"><span class="pre">scenarios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#geolib.models.dgeoflow.internal.Scenario" title="geolib.models.dgeoflow.internal.Scenario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scenario</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.scenarios" title="Permalink to this definition">¶</a></dt>
@@ -636,11 +628,6 @@ Finds all existing ids, takes the max and does +1.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.soilvisualizations">
 <span class="sig-name descname"><span class="pre">soilvisualizations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dgeoflow.internal.SoilVisualisation" title="geolib.models.dgeoflow.internal.SoilVisualisation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilVisualisation</span></code></a></em><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.soilvisualizations" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="geolib.models.dgeoflow.internal.DGeoFlowStructure.stage_specific_fields">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stage_specific_fields</span></span><a class="headerlink" href="#geolib.models.dgeoflow.internal.DGeoFlowStructure.stage_specific_fields" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
