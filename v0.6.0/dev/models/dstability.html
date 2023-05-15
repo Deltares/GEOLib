@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>D-Stability &#8212; geolib 0.6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Geometry" href="../geometry.html" />
+    <link rel="prev" title="D-Sheet Piling" href="dsheetpiling.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dsheetpiling.html" title="Previous document">D-Sheet Piling</a>
+        </li>
+        <li>
+          <a href="../geometry.html" title="Next document">Geometry</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="d-stability">
+<span id="dstability"></span><h1>D-Stability<a class="headerlink" href="#d-stability" title="Permalink to this heading">¶</a></h1>
+<section id="d-stability-model">
+<h2>D-Stability model<a class="headerlink" href="#d-stability-model" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../_autosummary/geolib.models.dstability.html#module-geolib.models.dstability" title="geolib.models.dstability"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geolib.models.dstability</span></code></a></p></td>
+<td><p>The D-GEO Suite Stability (D-Stability) model definition.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading">¶</a></h2>
+<p>You can find the D-Stability tutorial here: <a class="reference internal" href="../../community/tutorial_dstability.html"><span class="doc">Tutorial D-Stability</span></a></p>
+</section>
+<section id="geometry">
+<h2>Geometry<a class="headerlink" href="#geometry" title="Permalink to this heading">¶</a></h2>
+<section id="add-layer">
+<h3>Add layer<a class="headerlink" href="#add-layer" title="Permalink to this heading">¶</a></h3>
+<p>For the geometry it is import to set the geometry points in the correct order. I.e. per polygon, set the points in
+clockwise or anticlockwise  order. Furthermore it is import to add all points which are part or touch a
+certain polygon. This procedure is automatically done when the user creates a geometry via the user interface. However
+when the user wants to create a geometry via Geolib, it is important to specify all points for each layer. An example
+is illustrated below.</p>
+<p>The following valid code will produce a correct geometry, note that the clay layer is a rectangular layer, but still
+requires 6 geometry points. This is because the dike layer touches the clay layer at two points. If the clay layer is
+only generated the 4 corner points, a valid geometry is generated, however unexpected results can occur.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geolib</span>
+<span class="kn">from</span> <span class="nn">geolib.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">geolib</span><span class="o">.</span><span class="n">DStabilityModel</span><span class="p">()</span>
+
+<span class="n">clay_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">)]</span>
+
+<span class="n">dike_points</span> <span class="o">=</span> <span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
+               <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">)]</span>
+
+<span class="n">soil_clay</span><span class="o">=</span> <span class="n">geolib</span><span class="o">.</span><span class="n">soils</span><span class="o">.</span><span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil_dike</span> <span class="o">=</span> <span class="n">geolib</span><span class="o">.</span><span class="n">soils</span><span class="o">.</span><span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil_clay</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;clay&#39;</span>
+<span class="n">soil_dike</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;dike&#39;</span>
+
+<span class="n">ds</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil_clay</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil_dike</span><span class="p">)</span>
+
+<span class="n">ds</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">clay_points</span><span class="p">,</span> <span class="n">soil_clay</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">dike_points</span><span class="p">,</span> <span class="n">soil_dike</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+
+<span class="n">ds</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;geometry_example.stix&#39;</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../_images/geometry_example.png"><img alt="../../_images/geometry_example.png" src="../../_images/geometry_example.png" style="width: 800px;" /></a>
+</section>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dsheetpiling.html" title="Previous document">D-Sheet Piling</a>
+        </li>
+        <li>
+          <a href="../geometry.html" title="Next document">Geometry</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../_autosummary/geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsettlement.html">D-Settlement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soils.html">Soils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+      <li>Previous: <a href="dsheetpiling.html" title="previous chapter">D-Sheet Piling</a></li>
+      <li>Next: <a href="../geometry.html" title="next chapter">Geometry</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

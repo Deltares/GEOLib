@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>D-Settlement &#8212; geolib 0.6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="D-Sheet Piling" href="dsheetpiling.html" />
+    <link rel="prev" title="D-Geo Flow" href="dgeoflow.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dgeoflow.html" title="Previous document">D-Geo Flow</a>
+        </li>
+        <li>
+          <a href="dsheetpiling.html" title="Next document">D-Sheet Piling</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="d-settlement">
+<span id="dsettlement"></span><h1>D-Settlement<a class="headerlink" href="#d-settlement" title="Permalink to this heading">¶</a></h1>
+<section id="d-settlement-model">
+<h2>D-Settlement model<a class="headerlink" href="#d-settlement-model" title="Permalink to this heading">¶</a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../_autosummary/geolib.models.dsettlement.html#module-geolib.models.dsettlement" title="geolib.models.dsettlement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">geolib.models.dsettlement</span></code></a></p></td>
+<td><p>The D-Series D-Settlement model definition.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="tutorial">
+<h2>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading">¶</a></h2>
+<p>You can find the D-Settlement tutorial here: <a class="reference internal" href="../../community/tutorial_dsettlement.html"><span class="doc">Tutorial D-Settlement</span></a></p>
+</section>
+<section id="geometry">
+<h2>Geometry<a class="headerlink" href="#geometry" title="Permalink to this heading">¶</a></h2>
+<section id="add-layer">
+<h3>Add layer<a class="headerlink" href="#add-layer" title="Permalink to this heading">¶</a></h3>
+<p>In order to add a layer in d-settlement it is required to first set the head lines
+and the boundaries.</p>
+<section id="add-boundary">
+<h4>Add boundary<a class="headerlink" href="#add-boundary" title="Permalink to this heading">¶</a></h4>
+<p>The only required input for adding a boundary is a list of points. The boundary needs to fullfill
+a number of requirements:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The list of points is required to range from the left side to the right side of the geometry.</p></li>
+<li><p>None of the boundaries in the geometry may cross each other (touching is allowed).</p></li>
+<li><p>Each boundary in the geometry besides the surface level and the bottom, is required to be used twice. Once as the top boundary of one layer, and another time as the bottom boundary of another layer.</p></li>
+<li><p>When you desire to set up a boundary with vertical parts, it is required to arrange the points of the boundary from left to right and from bottom to top.</p></li>
+</ul>
+</div></blockquote>
+<p>It is important that you pay attention to the above requirements, as d-settlement does not return an error when
+the above requirements are not fulfilled. Instead an unwanted geometry is generated. Below, a visual example is given of how a geometry should be created.</p>
+<a class="reference internal image-reference" href="../../_images/simple_geometry_example.png"><img alt="../../_images/simple_geometry_example.png" src="../../_images/simple_geometry_example.png" style="width: 800px;" /></a>
+<p>In the above figure, two layers and six points are shown.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>layer 1:</dt><dd><ul class="simple">
+<li><p>bottom boundary points: 1, 2</p></li>
+<li><p>top boundary points: 3, 5, 4</p></li>
+</ul>
+</dd>
+<dt>layer 2:</dt><dd><ul class="simple">
+<li><p>bottom boundary points: 3, 5, 4</p></li>
+<li><p>top boundary points: 6, 5, 4</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>Note that the top boundary of layer 1 is reused as the bottom boundary of layer 2. An easily made mistake is to first create layer 1 by adding:
+bottom boundary points: (1, 2) and top boundary points (3, 4). And then layer 2 by adding: bottom boundary points: (3, 5, 4) and top boundary points (6, 5, 4). When this mistake
+is made, it is possible that layers start overlapping each other, this is easily overseen.</p>
+<p>Below another example is given with a vertical boundary part:</p>
+<a class="reference internal image-reference" href="../../_images/geometry_example_vertical_boundary.png"><img alt="../../_images/geometry_example_vertical_boundary.png" src="../../_images/geometry_example_vertical_boundary.png" style="width: 800px;" /></a>
+<p>In the above figure, three layers and eight points are shown.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>layer 1:</dt><dd><ul class="simple">
+<li><p>bottom boundary points: 7, 8</p></li>
+<li><p>top boundary points: 1, 2, 3</p></li>
+</ul>
+</dd>
+<dt>layer 2:</dt><dd><ul class="simple">
+<li><p>bottom boundary points: 1, 2, 3</p></li>
+<li><p>top boundary points: 1, 2, 5, 4</p></li>
+</ul>
+</dd>
+<dt>layer 3:</dt><dd><ul class="simple">
+<li><p>bottom boundary points: 1, 2, 5, 4</p></li>
+<li><p>top boundary points: 4, 5, 6</p></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p>In the above example, an easily made mistake is to let boundaries cross. For example by adding bottom boundary points for
+both layer layer 2 and layer 3: (1, 2, 3). And top boundary points for layer 2: (1, 2, 5, 6); and for layer 3: (4, 5, 2, 3). In this mistake,
+the boundaries cross at point 2 and 5.</p>
+<p>Since the above example has a vertical part in the boundary (between point 2 and 5), it is important to think about the order
+in which the points are added to the boundary. Points should be ordered from left to right and from bottom to top. I.e.
+the order and point numbers of the points in the example is the only allowed possibility.</p>
+<p>Below example code is is shown on how to add boundaries in the geolib code to create the above geometry.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.geometry.one</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">geolib.models.dsettlement.dsettlement_model</span> <span class="kn">import</span> <span class="n">DSettlementModel</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>    <span class="c1">#0</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>     <span class="c1">#1</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>    <span class="c1">#2</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>      <span class="c1">#3</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mf">10.0</span><span class="p">),</span>  <span class="c1">#4</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">),</span>    <span class="c1">#5</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">),</span>     <span class="c1">#6</span>
+    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>     <span class="c1">#7</span>
+<span class="p">]</span>
+
+<span class="n">dm</span> <span class="o">=</span> <span class="n">DSettlementModel</span><span class="p">()</span>
+
+<span class="n">b1</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>              <span class="c1"># points (1, 2, 3)</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">points</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">7</span><span class="p">]])</span>              <span class="c1"># points (4, 5, 6)</span>
+<span class="n">b3</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">7</span><span class="p">]])</span>   <span class="c1"># points (1, 2, 5, 6)</span>
+<span class="n">b4</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_boundary</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">points</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">points</span><span class="p">[</span><span class="mi">6</span><span class="p">]])</span>                         <span class="c1"># points (7, 8)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="dgeoflow.html" title="Previous document">D-Geo Flow</a>
+        </li>
+        <li>
+          <a href="dsheetpiling.html" title="Next document">D-Sheet Piling</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../_autosummary/geolib.html">geolib</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../api.html#models">Models</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="dfoundations.html">D-Foundations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dgeoflow.html">D-Geo Flow</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">D-Settlement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dsheetpiling.html">D-Sheet Piling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dstability.html">D-Stability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../soils.html">Soils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api.html#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API Reference</a><ul>
+      <li>Previous: <a href="dgeoflow.html" title="previous chapter">D-Geo Flow</a></li>
+      <li>Next: <a href="dsheetpiling.html" title="next chapter">D-Sheet Piling</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

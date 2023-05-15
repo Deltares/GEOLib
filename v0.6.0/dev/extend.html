@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Contributing &#8212; geolib 0.6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="To Do" href="todo.html" />
+    <link rel="prev" title="Soils" href="soils.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="soils.html" title="Previous document">Soils</a>
+        </li>
+        <li>
+          <a href="todo.html" title="Next document">To Do</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="contributing">
+<span id="extend"></span><h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">¶</a></h1>
+<p>This part of the documentation covers the main components of GEOLib, including
+the external packages used with an explanation, so users know how to extend the
+GEOLib package.</p>
+<section id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this heading">¶</a></h2>
+<dl class="simple">
+<dt>The structure of the GEOLib package follows common patterns:</dt><dd><ul class="simple">
+<li><p><cite>docs</cite> for the documentation</p></li>
+<li><p><cite>geolib</cite> for the source of the package</p></li>
+<li><p><cite>tests</cite> for all test related code</p></li>
+</ul>
+</dd>
+</dl>
+<p>The structure of the geolib folder itself is still in flux, but the overall
+structure is as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>geometry</cite> for generic geometry classes and related functions</p></li>
+<li><p><cite>soils</cite> for generic soils and related functions</p></li>
+<li><p><cite>models</cite> for (abstract) base classes related to models and all related classes such as parsers, serializers and validators</p></li>
+<li><p><cite>models/model</cite> for the implementation of above</p></li>
+</ul>
+</div></blockquote>
+<p>Naming of files should be readable, in such a way that if you’re looking for a class
+you should be able to find the relevant Python file from browsing the directory tree alone.</p>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this heading">¶</a></h2>
+<p>When developing a new feature it’s a good practice to start with a simple test script
+that documents how you should use the new feature. The test will fail in the beginning
+because nothing is implemented or linked yet, but should be fixed in the end. This is
+also the simplest way of navigating a large complex package, instead of trying to get
+everything running in a separate script.</p>
+<p>The test package we’re using is pytest: <a class="reference external" href="https://docs.pytest.org/en/latest/">https://docs.pytest.org/en/latest/</a>. You can find
+the tests in the <cite>tests</cite> folder. For each model there’s a subfolder. When you need data,
+such as input files in your tests, you can put these in the <cite>test_data</cite> subfolder. These
+files are checked in using Git LFS.</p>
+<p>When testing user facing functions (the public API) that take simple types such as strings
+or integers, it’s good to also use Hypothesis: <a class="reference external" href="https://hypothesis.readthedocs.io/en/latest/quickstart.html">https://hypothesis.readthedocs.io/en/latest/quickstart.html</a>
+in your tests. Instead of testing with one string of your own making, hypothesis will
+generate many strings, including empty ones for you.</p>
+</section>
+<section id="documenting">
+<h2>Documenting<a class="headerlink" href="#documenting" title="Permalink to this heading">¶</a></h2>
+<p>We use Sphinx and thus reStructuredText <cite>.rst</cite> files to write our documentation. It is good to read the basics about
+reStructuredText: <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html</a>.</p>
+<p><strong>Always</strong> write docstrings for your classes, methods or functions. These docstrings are used
+automatically in the documentation. Many IDEs support generating a docstring on the fly.
+We use the Google style of docstrings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">arg1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">arg2</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Summary line.</span>
+
+<span class="sd">    Extended description of function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        arg1: Description of arg1</span>
+<span class="sd">        arg2: Description of arg2</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Description of return value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>You can find the Sphinx documentation about this style here: <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html</a></p>
+<p>To document usages or examples, the docstring of a class is often not the right place. You can
+place these examples at the top of the module, like this for the <cite>dstability_model.py</cite>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">Usage::</span>
+
+<span class="sd">    &gt;&gt;&gt; dstab = DStabilityModel.parse(&quot;test.stix&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; dstab.execute()</span>
+<span class="sd">    &gt;&gt;&gt; dstab.output</span>
+<span class="sd">    &lt;dict&gt;</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+</pre></div>
+</div>
+<p>This will automatically show up in the documentation if the whole module is imported in the <cite>docs</cite>.</p>
+</section>
+<section id="inheritance">
+<h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this heading">¶</a></h2>
+<p>GEOLib makes extensive use of inheritance. In the <cite>geolib/models</cite> folder there are several
+Python files that provide <cite>BaseModel</cite>s, <cite>BaseParser</cite>s, etc. This enables common behaviour and
+greatly reduces the amount of duplicate code, but can be confusing at first. An example, not
+all methods are defined on their children; you can <cite>execute</cite> a <cite>DSettlementModel</cite>, but the
+execute method is only defined on the <cite>BaseModel</cite> and is thus the same of all derived Models.</p>
+<p>We often inherit <cite>BaseModel</cite> (many times renamed as <cite>DataClass</cite> to distinguish it from our own
+<cite>BaseModel</cite>) from Pydantic: <a class="reference external" href="https://pydantic-docs.helpmanual.io/">https://pydantic-docs.helpmanual.io/</a>
+Pydantic combines the power of dataclasses (new in Python 3.7) with type hints and gives us way
+less boilerplate and free validation on instantiation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;John Doe&#39;</span>
+    <span class="n">signup_ts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">friends</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+</div>
+<p>Note how in the above example we need no <cite>__init__</cite> method like a dataclass. We can define
+types and defaults for fields. We can even constrain fields (specifying a range of valid options
+for a field) using only types: <a class="reference external" href="https://pydantic-docs.helpmanual.io/usage/types/#constrained-types">https://pydantic-docs.helpmanual.io/usage/types/#constrained-types</a>
+Construction can be from dict and json, and vica versa. This is what we use for the internal dataclasses for each model.</p>
+</section>
+<section id="type-hinting">
+<h2>Type hinting<a class="headerlink" href="#type-hinting" title="Permalink to this heading">¶</a></h2>
+<p>GEOLib uses type hinting in all its classes and functions. This is partly used for automatic validation
+on initialization for classes by <cite>pydantic</cite>, but it’s meant for overall readability.
+Annotating your code with type hints reduces the amount of bugs by improving readability
+and enabling the use of static code checkers such as <cite>mypy</cite>, which we also use.</p>
+<p>If the type of variables in a function is unclear in the current context we
+advise to also add type hints. An example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">some_function</span><span class="p">(</span><span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">b</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">result_with_unknown_type_from_other_function</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-requirements">
+<h2>Adding requirements<a class="headerlink" href="#adding-requirements" title="Permalink to this heading">¶</a></h2>
+<p>New requirements can be added using Poetry: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a>
+For example, adding a new package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>poetry<span class="w"> </span>add<span class="w"> </span>new_package
+</pre></div>
+</div>
+<p>It’s good to keep the <cite>requirements.txt</cite> up to date, so afterwards run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>poetry<span class="w"> </span>install
+$<span class="w"> </span>poetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-E<span class="w"> </span>server<span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span>--output<span class="w"> </span>requirements.txt<span class="w"> </span>--without-hashes
+$<span class="w"> </span>poetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-E<span class="w"> </span>server<span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span>--output<span class="w"> </span>requirements-dev.txt<span class="w"> </span>--with<span class="w"> </span>dev<span class="w"> </span>--without-hashes
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="soils.html" title="Previous document">Soils</a>
+        </li>
+        <li>
+          <a href="todo.html" title="Next document">To Do</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../community/tutorial.html">Tutorials</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#structure">Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documenting">Documenting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inheritance">Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#type-hinting">Type hinting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-requirements">Adding requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="soils.html" title="previous chapter">Soils</a></li>
+      <li>Next: <a href="todo.html" title="next chapter">To Do</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

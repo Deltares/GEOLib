@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Tutorial Soils &#8212; geolib 0.6.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial D-Foundations" href="tutorial_dfoundations.html" />
+    <link rel="prev" title="Tutorials" href="tutorial.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial.html" title="Previous document">Tutorials</a>
+        </li>
+        <li>
+          <a href="tutorial_dfoundations.html" title="Next document">Tutorial D-Foundations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="tutorial-soils">
+<span id="soil-tut"></span><h1>Tutorial Soils<a class="headerlink" href="#tutorial-soils" title="Permalink to this heading">¶</a></h1>
+<p>Soils in GEOlib are added in a generic way, this means that there is one basis soil
+class which is meant to be the input for all the separate D-Serie products.
+For this reason it is possible that the parameter locations are not as you
+are used to in the D-Serie products.</p>
+<p>Parameters in the Soil class are clustered based on physical meaning. I.e. cohesion
+and friction angle are clustered in the MohrCoulombParameters class; <code class="docutils literal notranslate"><span class="pre">reloading_swelling_constant_a</span></code>
+is stored in the <code class="docutils literal notranslate"><span class="pre">IsotacheParameters</span></code> class and permeability parameters are stored in the <code class="docutils literal notranslate"><span class="pre">StorageParameters</span></code>
+class.</p>
+<p>Since parameters are clustered in different classes as the Soil class, it is required to
+fill in parameters in these respective classes. Below an example is given on how to
+to initialise a soil with a friction angle and cohesion.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span>
+
+<span class="n">mohr_coulomb_parameters</span> <span class="o">=</span> <span class="n">MohrCoulombParameters</span><span class="p">(</span><span class="n">cohesion</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">friction_angle</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">mohr_coulomb_parameters</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Another method is to first initialise the soil and then change the values, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span> <span class="o">=</span> <span class="mi">25</span>
+</pre></div>
+</div>
+<p>Lastly, the parameters can be passed as a dictionary, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cohesion&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+          <span class="s2">&quot;friction_angle&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">}</span>
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When initialising the Soil class all values given should be parameters of the class itself.
+Otherwise an error is thrown, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Peat&quot;</span><span class="p">,</span> <span class="n">cohesion</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>will result in:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pydantic</span><span class="o">.</span><span class="n">error_wrappers</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">:</span> <span class="mi">1</span> <span class="n">validation</span> <span class="n">error</span> <span class="k">for</span> <span class="n">Soil</span>
+<span class="n">cohesion</span>
+    <span class="n">extra</span> <span class="n">fields</span> <span class="ow">not</span> <span class="n">permitted</span> <span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">value_error</span><span class="o">.</span><span class="n">extra</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That is because the cohesion value should be set through the mohr_coulomb_parameters parameter.
+Note that when the Soil class is intialised without the user defining the parameters, it will be populated with default values.</p>
+<p>Many parameters can be initialised as either a stochastic variable or a float. When the parameter
+is filled in as a floating value, the value is automatically translated to a stochastic variable with
+a mean of the input float and a standard deviation of 0. This step is required to stay
+consistent in sending parameters to the corresponding models</p>
+<p>Below three examples are given on how to input a stochastic variable in the soil.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span><span class="p">,</span> <span class="n">StochasticParameter</span>
+
+<span class="n">cohesion</span> <span class="o">=</span> <span class="n">StochasticParameter</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">mohr_coulomb_parameters</span> <span class="o">=</span> <span class="n">MohrCoulombParameters</span><span class="p">(</span><span class="n">cohesion</span><span class="o">=</span><span class="n">cohesion</span><span class="p">)</span>
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">mohr_coulomb_parameters</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cohesion&quot;</span><span class="p">:{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                        <span class="s2">&quot;standard_deviation&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}}</span>
+
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When the parameters, required for the corresponding model are set, the soil can be added
+to the soil list of the corresponding model. Note that, for non-filled in parameters, the default value is used.
+Below an example is given on how to add a soil in D-Settlement. For an overview on how to pass the complete workflow
+for each model, see the other <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorials</span></a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span>
+<span class="kn">from</span> <span class="nn">geolib.models</span> <span class="kn">import</span> <span class="n">DSettlementModel</span>
+
+<span class="n">mohr_coulomb_parameters</span> <span class="o">=</span> <span class="n">MohrCoulombParameters</span><span class="p">(</span><span class="n">cohesion</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">friction_angle</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">mohr_coulomb_parameters</span><span class="p">)</span>
+
+<span class="n">dset_model</span> <span class="o">=</span> <span class="n">DSettlementModel</span><span class="p">()</span>
+<span class="n">dset_model</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Certain soil input are enumerations. For example, “soil_type_nl” which is an input for D-Foundations. Below an example
+is shown on how to set an enumeration for the soil.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">SoilType</span>
+
+<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
+<span class="n">soil</span><span class="o">.</span><span class="n">soil_type_nl</span> <span class="o">=</span> <span class="n">SoilType</span><span class="o">.</span><span class="n">CLAY</span>
+</pre></div>
+</div>
+<p>Note that this “SoilType” enumeration is reused for three different soil parameters: “soil_type_nl”, “soil_type_be” and
+“soil_type_settlement_by_vibrations”. However only “soil_type_nl” accepts SoilType.SANDY_LOAM.</p>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="tutorial.html" title="Previous document">Tutorials</a>
+        </li>
+        <li>
+          <a href="tutorial_dfoundations.html" title="Next document">Tutorial D-Foundations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/geolib.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/setup.html">Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/server.html">Server</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial Soils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dfoundations.html">Tutorial D-Foundations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsettlement.html">Tutorial D-Settlement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dsheetpiling.html">Tutorial D-Sheet Piling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability.html">Tutorial D-Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dgeoflow.html">Tutorial D-Geo Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_multi.html">Tutorial Multiple Calculations</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/api.html">API Reference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../dev/extend.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev/todo.html">To Do</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib">@Source code</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/issues">@Issue Tracker</a></li>
+    
+    <li class="toctree-l1"><a href="https://deltares.github.io/geolib/">@Project documentation</a></li>
+    
+    <li class="toctree-l1"><a href="https://github.com/Deltares/GEOLib/releases">@Releases</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="tutorial.html">Tutorials</a><ul>
+      <li>Previous: <a href="tutorial.html" title="previous chapter">Tutorials</a></li>
+      <li>Next: <a href="tutorial_dfoundations.html" title="next chapter">Tutorial D-Foundations</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Deltares.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
