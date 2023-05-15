@@ -61,7 +61,7 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
         )
 
         transformation_dict = {
-            "Mohr_Coulomb": ShearStrengthModelTypePhreaticLevelInternal.C_PHI,
+            "Mohr_Coulomb": ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED,
             "None": ShearStrengthModelTypePhreaticLevelInternal.NONE,
             "SHANSEP": ShearStrengthModelTypePhreaticLevelInternal.SU,
             "SuTable": ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
@@ -462,8 +462,7 @@ class Soil(SoilBaseModel):
         for field in self.__fields__:
             self.set_stochastic_parameters(self.__getattribute__(field))
 
-    @staticmethod
-    def __transfer_soil_dict_to_model(soil_dict, model_soil):
+    def __transfer_soil_dict_to_model(self, soil_dict, model_soil):
         """
         Transfers items from soil dictionary to model if the item is not None
         Args:
@@ -477,7 +476,10 @@ class Soil(SoilBaseModel):
             soil_dict
         ).items():  # override default values with those of the soil
             if key in dict(model_soil).keys() and value is not None:
-                setattr(model_soil, key, value)
+                if type(value) is dict:
+                    self.__transfer_soil_dict_to_model(value, getattr(model_soil, key))
+                else:
+                    setattr(model_soil, key, value)
         return model_soil
 
     def __to_dstability_stochastic_parameter(
@@ -535,28 +537,32 @@ class Soil(SoilBaseModel):
             "Id": self.id,
             "Name": self.name,
             "Code": self.code,
-            "Cohesion": self.mohr_coulomb_parameters.cohesion.mean,
-            "CohesionStochasticParameter": self.__to_dstability_stochastic_parameter(
-                self.mohr_coulomb_parameters.cohesion
-            ),
-            "FrictionAngle": self.mohr_coulomb_parameters.friction_angle.mean,
-            "FrictionAngleStochasticParameter": self.__to_dstability_stochastic_parameter(
-                self.mohr_coulomb_parameters.friction_angle
-            ),
-            "CohesionAndFrictionAngleCorrelated": self.mohr_coulomb_parameters.cohesion_and_friction_angle_correlated,
-            "Dilatancy": self.mohr_coulomb_parameters.dilatancy_angle.mean,
-            "DilatancyStochasticParameter": self.__to_dstability_stochastic_parameter(
-                self.mohr_coulomb_parameters.dilatancy_angle
-            ),
-            "ShearStrengthRatio": self.undrained_parameters.shear_strength_ratio.mean,
-            "ShearStrengthRatioStochasticParameter": self.__to_dstability_stochastic_parameter(
-                self.undrained_parameters.shear_strength_ratio
-            ),
-            "StrengthIncreaseExponent": self.undrained_parameters.strength_increase_exponent.mean,
-            "StrengthIncreaseExponentStochasticParameter": self.__to_dstability_stochastic_parameter(
-                self.undrained_parameters.strength_increase_exponent
-            ),
-            "ShearStrengthRatioAndShearStrengthExponentCorrelated": self.undrained_parameters.shear_strength_ratio_and_shear_strength_exponent_correlated,
+            "MohrCoulombAdvancedShearStrengthModel": {
+                "Cohesion": self.mohr_coulomb_parameters.cohesion.mean,
+                "CohesionStochasticParameter": self.__to_dstability_stochastic_parameter(
+                    self.mohr_coulomb_parameters.cohesion
+                ),
+                "FrictionAngle": self.mohr_coulomb_parameters.friction_angle.mean,
+                "FrictionAngleStochasticParameter": self.__to_dstability_stochastic_parameter(
+                    self.mohr_coulomb_parameters.friction_angle
+                ),
+                "CohesionAndFrictionAngleCorrelated": self.mohr_coulomb_parameters.cohesion_and_friction_angle_correlated,
+                "Dilatancy": self.mohr_coulomb_parameters.dilatancy_angle.mean,
+                "DilatancyStochasticParameter": self.__to_dstability_stochastic_parameter(
+                    self.mohr_coulomb_parameters.dilatancy_angle
+                ),
+            },
+            "ShansepShearStrengthModel": {
+                "ShearStrengthRatio": self.undrained_parameters.shear_strength_ratio.mean,
+                "ShearStrengthRatioStochasticParameter": self.__to_dstability_stochastic_parameter(
+                    self.undrained_parameters.shear_strength_ratio
+                ),
+                "StrengthIncreaseExponent": self.undrained_parameters.strength_increase_exponent.mean,
+                "StrengthIncreaseExponentStochasticParameter": self.__to_dstability_stochastic_parameter(
+                    self.undrained_parameters.strength_increase_exponent
+                ),
+                "ShearStrengthRatioAndShearStrengthExponentCorrelated": self.undrained_parameters.shear_strength_ratio_and_shear_strength_exponent_correlated,
+            },
             "VolumetricWeightAbovePhreaticLevel": self.soil_weight_parameters.unsaturated_weight.mean,
             "VolumetricWeightBelowPhreaticLevel": self.soil_weight_parameters.saturated_weight.mean,
             "IsProbabilistic": self.is_probabilistic,

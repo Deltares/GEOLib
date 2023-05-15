@@ -50,7 +50,9 @@ class TestDStabilityModel:  # TODO move to test_dsettlementmodel
         reinforcement = NotaDStabilityReinforcement()
 
         with pytest.raises(ValueError):
-            dstability_model.add_reinforcement(reinforcement=reinforcement, stage_id=0)
+            dstability_model.add_reinforcement(
+                reinforcement=reinforcement, scenario_index=0, stage_index=0
+            )
 
 
 class TestForbiddenLine:
@@ -77,34 +79,34 @@ class TestForbiddenLine:
         forbiddenline = _get_forbidden_line
 
         with pytest.raises(ValueError):
-            dstability_model.add_reinforcement(reinforcement=forbiddenline, stage_id=100)
+            dstability_model.add_reinforcement(
+                reinforcement=forbiddenline, scenario_index=0, stage_index=100
+            )
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "stage_id",
+        "stage_index",
         [
             pytest.param(0, id="default stage id"),
-            pytest.param(None, id="no stage_id argument"),
+            pytest.param(None, id="no stage_index argument"),
         ],
     )
-    def test_add_reinforcement_forbiddenline(self, _get_forbidden_line, stage_id):
+    def test_add_reinforcement_forbiddenline(self, _get_forbidden_line, stage_index):
         dstability_model = DStabilityModel()
-        stage_id = stage_id or 0
-        reinforcements_id = 10
+        stage_index = stage_index or 0
 
-        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(
-            reinforcements_id
-        )
         forbiddenline = _get_forbidden_line
 
-        dstability_model.add_reinforcement(reinforcement=forbiddenline, stage_id=stage_id)
+        dstability_model.add_reinforcement(
+            reinforcement=forbiddenline, scenario_index=0, stage_index=stage_index
+        )
 
-        forbiddenlines_datastructure = dstability_model.datastructure.reinforcements[
-            stage_id
+        forbidden_lines_datastructure = dstability_model.datastructure.reinforcements[
+            stage_index
         ].ForbiddenLines
-        assert len(forbiddenlines_datastructure) == 1
+        assert len(forbidden_lines_datastructure) == 1
 
-        dstability_datastructure = forbiddenlines_datastructure[stage_id]
+        dstability_datastructure = forbidden_lines_datastructure[stage_index]
 
         assert isinstance(dstability_datastructure, PersistableForbiddenLine)
 
@@ -146,35 +148,33 @@ class TestGeotextile:
         geotextile = _get_geotextile
 
         with pytest.raises(ValueError):
-            dstability_model.add_reinforcement(reinforcement=geotextile, stage_id=100)
+            dstability_model.add_reinforcement(reinforcement=geotextile, stage_index=100)
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "stage_id",
+        "stage_index",
         [
             pytest.param(0, id="default stage id"),
-            pytest.param(None, id="no stage_id argument"),
+            pytest.param(None, id="no stage_index argument"),
         ],
     )
-    def test_add_reinforcement_geotextile(self, _get_geotextile, stage_id):
+    def test_add_reinforcement_geotextile(self, _get_geotextile, stage_index):
         dstability_model = DStabilityModel()
-        stage_id = stage_id or 0
-        reinforcements_id = 10
+        stage_index = stage_index or 0
 
-        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(
-            reinforcements_id
-        )
         geotextile = _get_geotextile
         geotextile.label = "geotextile1"
 
-        dstability_model.add_reinforcement(reinforcement=geotextile, stage_id=stage_id)
+        dstability_model.add_reinforcement(
+            reinforcement=geotextile, stage_index=stage_index
+        )
 
         geotextiles_datastructure = dstability_model.datastructure.reinforcements[
-            stage_id
+            stage_index
         ].Geotextiles
         assert len(geotextiles_datastructure) == 1
 
-        dstability_datastructure = geotextiles_datastructure[stage_id]
+        dstability_datastructure = geotextiles_datastructure[stage_index]
 
         assert isinstance(dstability_datastructure, PersistableGeotextile)
 
@@ -226,35 +226,31 @@ class TestNail:
         nail = _get_nail
 
         with pytest.raises(ValueError):
-            dstability_model.add_reinforcement(reinforcement=nail, stage_id=100)
+            dstability_model.add_reinforcement(reinforcement=nail, stage_index=100)
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "stage_id",
+        "stage_index",
         [
             pytest.param(0, id="default stage id"),
-            pytest.param(None, id="no stage_id argument"),
+            pytest.param(None, id="no stage_index argument"),
         ],
     )
-    def test_add_reinforcement_nail(self, _get_nail, stage_id):
+    def test_add_reinforcement_nail(self, _get_nail, stage_index):
         dstability_model = DStabilityModel()
-        stage_id = stage_id or 0
-        reinforcements_id = 10
-
-        dstability_model.datastructure.stages[stage_id].ReinforcementsId = str(
-            reinforcements_id
-        )
-
+        stage_index = stage_index or 0
         nail = _get_nail
 
-        dstability_model.add_reinforcement(reinforcement=nail, stage_id=stage_id)
+        dstability_model.add_reinforcement(
+            reinforcement=nail, scenario_index=0, stage_index=stage_index
+        )
 
         nails_datastructure = dstability_model.datastructure.reinforcements[
-            stage_id
+            stage_index
         ].Nails
         assert len(nails_datastructure) == 1
 
-        dstability_datastructure = nails_datastructure[stage_id]
+        dstability_datastructure = nails_datastructure[stage_index]
 
         assert isinstance(dstability_datastructure, PersistableNail)
 

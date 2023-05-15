@@ -6,12 +6,17 @@ Tutorial D-Stability
 
 .. code-block:: python
 
+    from geolib.models.dstability import DStabilityModel
+
     dm = DStabilityModel()
 
 2. Choose an analysis method, such as :class:`~geolib.models.dstability.DStabilityBishopAnalysisMethod` and set
 it to the model.
 
 .. code-block:: python
+
+    from geolib.geometry.one import Point
+    from geolib.models.dstability.analysis import DStabilityBishopAnalysisMethod, DStabilityCircle
 
     bishop_analysis_method = DStabilityBishopAnalysisMethod(
         circle=DStabilityCircle(center=Point(x=20, z=3), radius=15)
@@ -23,7 +28,7 @@ For completeness, here follow examples for all possible models.
 
 .. code-block:: python
 
-    # add bishop brute force
+    # Bishop Brute Force
     dm.set_model(
         DStabilityBishopBruteForceAnalysisMethod(
             search_grid=DStabilitySearchGrid(
@@ -39,7 +44,7 @@ For completeness, here follow examples for all possible models.
     )
 
 
-    # add spencer
+    # Spencer
     dm.set_model(
         DStabilitySpencerAnalysisMethod(
             slipplane=[
@@ -52,7 +57,7 @@ For completeness, here follow examples for all possible models.
     )
 
 
-    # add spencer genetic
+    # Spencer Genetic
     dm.set_model(
         DStabilitySpencerGeneticAnalysisMethod(
             slip_plane_a=[
@@ -71,7 +76,7 @@ For completeness, here follow examples for all possible models.
     )
 
 
-    # uplift
+    # Uplift-Van
     dm.set_model(
         DStabilityUpliftVanAnalysisMethod(
             first_circle=DStabilityCircle(center=Point(x=5, z=5), radius=9.5),
@@ -80,7 +85,7 @@ For completeness, here follow examples for all possible models.
     )
 
 
-    # uplift particle swarm
+    # Uplift-Van Particle Swarm
     dm.set_model(
         DStabilityUpliftVanParticleSwarmAnalysisMethod(
             search_area_a=DStabilitySearchArea(
@@ -95,9 +100,11 @@ For completeness, here follow examples for all possible models.
     )
 
 
-3. We can then create a :class:`~geolib.soils.Soil` and add it to the model. Refer to :ref:`soil_tut` for more information.
+1. We can then create a :class:`~geolib.soils.Soil` and add it to the model. Refer to :ref:`soil_tut` for more information.
 
 .. code-block:: python
+
+    from geolib.soils.soil import Soil
 
     # add soil
     soil = Soil()
@@ -188,6 +195,9 @@ For completeness, here follow examples for all possible models.
 
 .. code-block:: python
 
+    from geolib.models.dstability.loads import LineLoad, UniformLoad
+    from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
+    
     #  add uniform load
     dm.add_load(
         UniformLoad(
@@ -238,9 +248,11 @@ For completeness, here follow examples for all possible models.
         ForbiddenLine(start=Point(x=30.0, z=0.0), end=Point(x=30.0, z=-4.0))
     )
 
-7. And we can set state points or statelines.
+7. And we can set state points or state lines.
 
 .. code-block:: python
+
+    from geolib.models.dstability.states import DStabilityStateLinePoint, DStabilityStatePoint, DStabilityStress
 
     # state point
     dm.add_state_point(
@@ -261,16 +273,52 @@ For completeness, here follow examples for all possible models.
         ],
     )
 
-To run the model first the model needs to be serialised. To do that define a 
+To run the model first the model needs to be serialized. To do that define a 
 output file name and call the function :meth:`~geolib.models.dstability.dstability_model.DStabilityModel.serialize`.
 
 .. code-block:: python
 
     from pathlib import Path
-    dm.serialize(Path("tutorial.stix")
+    dm.serialize(Path("tutorial.stix"))
 
 Finally the execute function can be called to run the model in D-Stability.
 
 .. code-block:: python
 
     dm.execute()
+
+In order to get the results of a calculation you can do the following for an Uplift-Van Particle Swarm analysis:
+
+.. code-block:: python
+
+    print("Result of scenario 0, calculation 0:")
+    result = dm.get_result(0, 0)
+    print("Result type: " + type(result).__name__)
+    print("Factor of safety: " + str(result.FactorOfSafety))
+    print("Left center: " + str(result.LeftCenter))
+    print("Right center: " + str(result.RightCenter))
+    print("Tangent line: " + str(result.TangentLine))
+
+You can add scenarios, stages and calculations using various methods as demonstrated below. If you set set_current to True, 
+the added item will be set as the default for future calls to the DStabilityModel. If you do not specify scenario_index, it will 
+be added to the current scenario. 
+
+.. code-block:: python
+    
+    # add new scenario (and activate it)
+    dm.add_scenario("New Scenario", "From GEOLib", set_current=True)
+
+    # add new stage to the current scenario (and activate it)
+    dm.add_stage(label="New Stage 1", set_current=True)
+
+    # add new stage to the first scenario (and activate it)
+    dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
+
+    # add new stage to the first scenario (and activate it)
+    dm.add_stage(scenario_index=0, label="New Stage 3", set_current=True)
+
+    # add new calculation to the current scenario (and activate it)
+    dm.add_calculation(label="New Calculation 1", set_current=True)
+
+    # add new calculation to the first scenario (and activate it)
+    dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)

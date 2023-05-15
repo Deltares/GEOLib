@@ -27,6 +27,7 @@ from geolib.models.dstability.internal import (
     CalculationTypeEnum,
     DStabilityStructure,
     PersistableStochasticParameter,
+    ShearStrengthModelTypePhreaticLevelInternal,
 )
 from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
@@ -80,11 +81,11 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "filepath",
         [
-            pytest.param("dstability/example_1", id="Input Structure"),
+            pytest.param("dstability/example_1.stix", id="Input Structure"),
+            pytest.param("dstability/ResultExample.stix", id="Result Example"),
             pytest.param(
-                "dstability/example_1/Tutorial.stix", id="Input Structure for zip"
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
             ),
-            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -92,14 +93,26 @@ class TestDStabilityModel:
     ):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(filepath))
+
+        test_output_file_path = Path(
+            TestUtils.get_output_test_data_dir(
+                "dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type",
+                clean_dir=True,
+            )
+        )
+        TestUtils.extract_zip_to_output_test_data_dir(
+            str(test_input_filepath),
+            "dstability/test_given_datadir_when_parse_then_datastructure_of_expected_type",
+        )
+
         dstability_model = DStabilityModel(filename=None)
 
         # 2. Verify initial expectations.
-        assert os.path.exists(test_input_filepath)
+        assert os.path.exists(test_output_file_path)
         assert dstability_model is not None
 
         # 3. Run test.
-        dstability_model.parse(test_input_filepath)
+        dstability_model.parse(test_output_file_path)
 
         # 4. Verify final expectations.
         assert dstability_model.is_valid
@@ -109,8 +122,11 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
+            pytest.param("dstability/example_1.stix", id="Input Structure"),
+            pytest.param("dstability/ResultExample.stix", id="Result Example"),
+            pytest.param(
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
+            ),
         ],
     )
     def test_given_data_when_parseandserialize_then_doesnotraise(self, dir_path: str):
@@ -139,19 +155,12 @@ class TestDStabilityModel:
         )
 
     @pytest.mark.systemtest
-    @pytest.mark.skipif(
-        not is_running_under_teamcity(), reason="Console test only installed on TC."
-    )
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/example_1", id="Input Structure"),
-            pytest.param("dstability/Tutorial_v20_2_1", id="Tutorial DStability 20.2.1"),
-            pytest.param(
-                "dstability/Tutorial_v2022_1_1", id="Tutorial DStability 2022.01"
-            ),
-            pytest.param("dstability/ResultExample", id="Result Example"),
-            pytest.param("dstability/EmptyFile", id="Empty File"),
+            pytest.param("dstability/EmptyFile.stix", id="Empty File"),
+            pytest.param("dstability/example_1.stix", id="Example File"),
+            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial 2023.01 File"),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):
@@ -196,8 +205,39 @@ class TestDStabilityModel:
         with pytest.raises(Exception):
             assert dm.execute()
 
-    @pytest.mark.integrationtest
-    def test_add_default_stage(self):
+    @pytest.mark.unittest
+    def test_add_multiple_stages_and_calculations(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        dm.add_scenario("New Scenario", "From GEOLib", set_current=True)
+
+        dm.add_stage(label="New Stage 1", set_current=True)
+        dm.add_calculation(label="New Calculation 1", set_current=True)
+
+        dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
+        dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+
+        dm.add_stage(scenario_index=1, label="New Stage 3", set_current=True)
+        dm.add_calculation(scenario_index=1, label="New Calculation 3", set_current=True)
+
+        assert len(dm.scenarios) == 2
+        assert len(dm.scenarios[0].Stages) == 2
+        assert len(dm.scenarios[0].Calculations) == 2
+        assert len(dm.scenarios[1].Stages) == 3
+        assert len(dm.scenarios[1].Calculations) == 3
+
+    @pytest.mark.unittest
+    def test_add_stage(self):
         # Setup
         dm = DStabilityModel()
         dm.add_layer(
@@ -211,15 +251,38 @@ class TestDStabilityModel:
         )
 
         # Test
-        new_stage_id = dm.add_stage("new stage", "")
+        new_stage_id = dm.add_stage(0, "new stage")
 
-        # Assert new stage has default (empty geometry)
+        # Assert new stage has default values (empty geometry)
         assert new_stage_id == 1
-        assert len(dm.stages) == 2
+
+        assert dm.scenarios[0].Stages != None
+        assert len(dm.scenarios[0].Stages) == 2
         assert len(dm.datastructure.geometries[-1].Layers) == 0
 
-    @pytest.mark.integrationtest
-    def test_copy_stage(self):
+    @pytest.mark.unittest
+    def test_add_calculation(self):
+        # Setup
+        dm = DStabilityModel()
+        dm.datastructure.calculationsettings[
+            -1
+        ].AnalysisType = AnalysisTypeEnum.SPENCER_GENETIC
+
+        # Test
+        new_stage_id = dm.add_calculation(0, "new stage")
+
+        # Assert new stage has default values (empty geometry)
+        assert new_stage_id == 1
+
+        assert dm.scenarios[0].Calculations != None
+        assert len(dm.scenarios[0].Calculations) == 2
+        assert (
+            dm.datastructure.calculationsettings[-1].AnalysisType
+            == AnalysisTypeEnum.BISHOP_BRUTE_FORCE
+        )
+
+    @pytest.mark.unittest
+    def test_add_scenario(self):
         # Setup
         dm = DStabilityModel()
         dm.add_layer(
@@ -233,12 +296,13 @@ class TestDStabilityModel:
         )
 
         # Test
-        new_stage_id = dm.copy_stage("new stage", "")
+        new_scenario_id = dm.add_scenario("new scenario")
 
-        # Assert new stage has default (empty geometry)
-        assert new_stage_id == 1
-        assert len(dm.stages) == 2
-        assert len(dm.datastructure.geometries[-1].Layers) == 1
+        # Assert new scenario has default values (empty geometry)
+        assert new_scenario_id == 1
+
+        assert len(dm.scenarios) == 2
+        assert len(dm.datastructure.geometries[-1].Layers) == 0
 
     @pytest.mark.unittest
     def test_gen_unique_id(self):
@@ -252,7 +316,6 @@ class TestDStabilityModel:
         assert new_id == max_id_after_initialization_of_dstability_structure
 
     @pytest.mark.acceptance
-    @only_teamcity
     def test_generate_simple_model(self):
         dm = DStabilityModel()
 
@@ -313,7 +376,7 @@ class TestDStabilityModel:
         dm.parse(test_filepath)
         assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
 
-    def test_get_slipeplane(self):
+    def test_get_slip_plane(self):
         test_filepath = Path(
             TestUtils.get_local_test_data_dir("dstability/test_dstab_full.stix")
         )
@@ -322,7 +385,6 @@ class TestDStabilityModel:
         assert len(dm.output[-1].SlipPlane) == 5
 
     @pytest.mark.acceptance
-    @only_teamcity
     def test_generate_model_from_scratch(self):
         dm = DStabilityModel()
 
@@ -435,7 +497,10 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # change some parameters
-        dm.edit_soil("HV", cohesion=2.0, friction_angle=17.5)
+        hv_soil = dm.get_soil("HV")
+        hv_soil.MohrCoulombAdvancedShearStrengthModel.Cohesion = 2.0
+        hv_soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle = 17.5
+
         path = outputdir / "test_edited_soil.stix"
         dm.serialize(path)
 
@@ -620,8 +685,8 @@ class TestDStabilityModel:
         dm.serialize(path)
 
         # Soil correlation
-        soil_id_one = dm.soils.get_soil("H_Ro_z&k").id
-        soil_id_two = dm.soils.get_soil("Sand").id
+        soil_id_one = dm.soils.get_soil("H_Ro_z&k").Id
+        soil_id_two = dm.soils.get_soil("Sand").Id
 
         dm.add_soil_correlation([soil_id_one, soil_id_two])
         path = outputdir / "test_soil_correlation.stix"
@@ -631,42 +696,38 @@ class TestDStabilityModel:
         model = dm.execute()
         assert model
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     def test_su_table_version_parsing(self):
-        # initialize model
         dm = DStabilityModel()
-        # stix input file path
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
-        # stix output file path
-        test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
         )
-        # parse existing files
+
         dm.parse(test_filepath)
-        # test that the file was read correctly
-        soil_su_table = dm.input.soils.get_soil("H_Aa_ht_old")
-        assert soil_su_table.shear_strength_model_below_phreatic_level.value == "SuTable"
+
+        soil_su_table = dm.get_soil("H_Aa_ht_old")
         assert (
-            soil_su_table.shear_strength_model_above_phreatic_level.value
-            == "Mohr_Coulomb"
+            soil_su_table.ShearStrengthModelTypeBelowPhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SUTABLE
         )
-        assert soil_su_table.undrained_parameters.su_table
+        assert (
+            soil_su_table.ShearStrengthModelTypeAbovePhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+        )
+        assert len(soil_su_table.SuTable.SuTablePoints) == 4
 
     @pytest.mark.integrationtest
     def test_su_table_version_input(self):
-        # initialize model
         dm = DStabilityModel()
-        # stix input file path
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dstability/Example.stix"))
-        # stix output file path
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
+        )
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
         )
-        # parse existing files
+
         dm.parse(test_filepath)
-        # change waterlevels
-        # add su table values for soil
-        # add soil
+
         soil = Soil()
         soil.name = "Soil test"
         soil.code = "su soil"
@@ -694,19 +755,22 @@ class TestDStabilityModel:
             Point(x=74.2, z=-1),
             Point(x=71, z=-0.4),
         ]
-        soil_undrained_id = dm.add_soil(soil)
-        layer_id = dm.add_layer(points=new_layer, soil_code=soil.code)
+
+        dm.add_soil(soil)
+        dm.add_layer(points=new_layer, soil_code=soil.code)
 
         # output changed file
         dm.serialize(test_output_filepath)
         # test that the file was written correctly
-        soil_su_table = dm.input.soils.get_soil("su soil")
-        assert soil_su_table.shear_strength_model_below_phreatic_level.value == "SuTable"
+        soil_su_table = dm.get_soil("su soil")
         assert (
-            soil_su_table.shear_strength_model_above_phreatic_level.value
-            == "Mohr_Coulomb"
+            soil_su_table.ShearStrengthModelTypeBelowPhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SUTABLE
         )
         assert (
-            soil_su_table.undrained_parameters.su_table
-            == soil.undrained_parameters.su_table
+            soil_su_table.ShearStrengthModelTypeAbovePhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+        )
+        assert len(soil_su_table.SuTable.SuTablePoints) == len(
+            soil.undrained_parameters.su_table
         )

@@ -22,6 +22,7 @@ from .internal import (
     PersistableSoilLayer,
     PipeLengthResult,
     PipeTrajectory,
+    Scenario,
     SoilCollection,
     SoilLayerCollection,
 )
@@ -43,6 +44,7 @@ class DGeoFlowModel(BaseModel):
 
     current_scenario: int = -1
     current_scenario_index: int = 0
+    current_stage_index: int = 0
     current_calculation_index: int = 0
     datastructure: DGeoFlowStructure = DGeoFlowStructure()
     current_id: int = -1
@@ -137,31 +139,6 @@ class DGeoFlowModel(BaseModel):
 
         if isinstance(location, Path):
             self.filename = location
-
-    def copy_scenario(self, label: str, notes: str, set_current=True) -> int:
-        """Copy an existing scenario and add it to the model.
-
-        Args:
-            label: Label for the scenario
-            notes: Notes for the scenario
-            set_current: Whether to make the new scenario the current scenario.
-
-        Returns:
-            the id of the new scenario
-        """
-        new_id = self._get_next_id()
-        new_scenario_id, new_unique_id = self.datastructure.duplicate_scenario(
-            self.current_scenario, label, notes, new_id
-        )
-
-        if set_current:
-            self.current_scenario = new_scenario_id
-            self.current_scenario_index += 1
-        self.current_id = new_unique_id
-        return new_scenario_id
-
-    def add_point(self, point: Point, scenario=None) -> int:
-        """Add point, which should be unique in the model and return the created point id."""
 
     def add_soil(self, soil: Soil) -> int:
         """
@@ -315,57 +292,96 @@ class DGeoFlowModel(BaseModel):
 
         return boundary_condition_id
 
+    @property
+    def scenarios(self) -> List[Scenario]:
+        return self.datastructure.scenarios
+
     def add_scenario(
-        self,
-        scenario_index: int = None,
-        boundaryconditions_id: int = None,
-        soillayers_id: int = None,
-        geometry_id: int = None,
-        meshproperties_id: int = None,
-        label: str = "",
-        notes: str = "",
-        calculations_notes: str = "",
-        stage_notes: str = "",
-        calculations_label: str = None,
-        stage_label: str = None,
+        self, label: str = "Scenario", notes: str = "", set_current: bool = True
     ) -> int:
-        """
-        Add a scenario to the model
+        """Add a new scenario to the model.
 
         Args:
-            scenario_index (int): scenario to add to, defaults to 0
-            boundaryconditions_id (int): id of the boundary conditions collection to add to the scenario
-            soillayers_id (int): id of the soil layers to add to the scenario
-            geometry_id (int): id of the geometry to add to the scenario
-            meshproperties_id (int): id of the mesh properties to add to the scenario
-            label (str): label of the scenario, defaults to empty string
-            notes (str): notes of the scenario, defaults to empty string
-            calculations_notes (str): notes of the calculation, defaults to empty string
-            stage_notes (str): notes of the stage, defaults to empty string
-            calculations_label (str): label of the calculation, defaults to empty string
-            stage_label (str): label of the stage, defaults to empty string
+            label: Label for the scenario.
+            notes: Notes for the scenario.
+            set_current: Whether to make the new scenario the current scenario.
 
         Returns:
-            int: id of the scenario
+            the id of the new stage
         """
-
-        scenarios = self.datastructure.scenarios[scenario_index]
-
-        scenarios.Label = label
-        scenarios.Notes = notes
-        scenarios.GeometryId = geometry_id
-        scenarios.SoilLayersId = soillayers_id
-        scenarios.add_calculation(
-            label=calculations_label,
-            notes=calculations_notes,
-            mesh_properties_id=meshproperties_id,
+        new_id = self._get_next_id()
+        new_scenario_id, new_unique_id = self.datastructure.add_default_scenario(
+            label, notes, new_id
         )
-        scenarios.add_stage(
-            label=stage_label,
-            notes=stage_notes,
-            boundaryconditions_collection_id=boundaryconditions_id,
+
+        if set_current:
+            self.current_scenario = new_scenario_id
+            self.current_stage_index = 0
+            self.current_calculation_index = 0
+
+        self.current_id = new_unique_id
+        return new_scenario_id
+
+    def add_stage(
+        self,
+        scenario_index: Optional[int] = None,
+        label: str = "Stage",
+        notes: str = "",
+        set_current=True,
+    ) -> int:
+        """Add a new stage to the model at the given scenario index.
+
+        Args:
+            scenario_index: The scenario index to add the stage to, defaults to the current scenario.
+            label: Label for the stage.
+            notes: Notes for the stage.
+            set_current: Whether to make the new stage the current stage.
+
+        Returns:
+            the id of the new stage
+        """
+        scenario_index = (
+            scenario_index if scenario_index is not None else self.current_scenario
         )
-        return int(scenarios.Id)
+
+        new_id = self._get_next_id()
+        new_stage_index = self.datastructure.add_default_stage(
+            scenario_index, label, notes, new_id
+        )
+
+        if set_current:
+            self.current_stage_index = new_stage_index
+        return new_stage_index
+
+    def add_calculation(
+        self,
+        scenario_index: Optional[int] = None,
+        label: str = "Calculation",
+        notes: str = "",
+        set_current: bool = True,
+    ) -> int:
+        """Add a new calculation to the model.
+
+        Args:
+            scenario_index: The scenario index to add the calculation to, defaults to the current scenario.
+            label: Label for the calculation.
+            notes: Notes for the calculation.
+            set_current: Whether to make the new calculation the current calculation.
+
+        Returns:
+            the id of the new stage
+        """
+        scenario_index = (
+            scenario_index if scenario_index is not None else self.current_scenario
+        )
+
+        new_calculation_index = self.datastructure.add_default_calculation(
+            scenario_index, label, notes
+        )
+
+        if set_current:
+            self.current_calculation_index = new_calculation_index
+        return new_calculation_index
 
     def set_calculation_type(
         self,

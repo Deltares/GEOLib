@@ -5,19 +5,23 @@ import pytest
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import (
     AnalysisType,
+    BishopBruteForceReliabilityResult,
     BishopBruteForceResult,
     BishopReliabilityResult,
     BishopResult,
     BishopSlipCircleResult,
     CalculationSettings,
     CalculationType,
+    PersistableCalculation,
     PersistableCircle,
     PersistablePoint,
+    Scenario,
+    SpencerGeneticAlgorithmReliabilityResult,
     SpencerGeneticAlgorithmResult,
     SpencerReliabilityResult,
     SpencerResult,
     SpencerSlipPlaneResult,
-    Stage,
+    UpliftVanParticleSwarmReliabilityResult,
     UpliftVanParticleSwarmResult,
     UpliftVanReliabilityResult,
     UpliftVanResult,
@@ -76,6 +80,18 @@ def _uplift_van_particle_swarm_result(result_id: str) -> UpliftVanParticleSwarmR
     )
 
 
+def _uplift_van_particle_swarm_reliability_result(
+    result_id: str,
+) -> UpliftVanParticleSwarmReliabilityResult:
+    return UpliftVanParticleSwarmReliabilityResult(
+        Id=result_id,
+        FailureProbability=_failure_probability,
+        LeftCenter=_left_center_persistable_point(),
+        RightCenter=_right_center_persistable_point(),
+        TangentLine=_z_tangent_line,
+    )
+
+
 def _spencer_result(result_id: str) -> SpencerResult:
     return SpencerResult(
         Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_plane()
@@ -85,6 +101,14 @@ def _spencer_result(result_id: str) -> SpencerResult:
 def _spencer_genetic_algorithm_result(result_id: str) -> SpencerGeneticAlgorithmResult:
     return SpencerGeneticAlgorithmResult(
         Id=result_id, FactorOfSafety=_valid_safety_factor, SlipPlane=_slip_plane()
+    )
+
+
+def _spencer_genetic_algorithm_reliability_result(
+    result_id: str,
+) -> SpencerGeneticAlgorithmReliabilityResult:
+    return SpencerGeneticAlgorithmReliabilityResult(
+        Id=result_id, FailureProbability=_failure_probability, SlipPlane=_slip_plane()
     )
 
 
@@ -108,14 +132,24 @@ def _bishop_reliability_result(result_id: str) -> BishopReliabilityResult:
     )
 
 
-def _bishop_bruce_force_result(result_id: str) -> BishopBruteForceResult:
+def _bishop_brute_force_result(result_id: str) -> BishopBruteForceResult:
     return BishopBruteForceResult(
         Id=result_id, FactorOfSafety=_valid_safety_factor, Circle=_persistable_circle()
     )
 
 
+def _bishop_brute_force_reliability_result(
+    result_id: str,
+) -> BishopBruteForceReliabilityResult:
+    return BishopBruteForceReliabilityResult(
+        Id=result_id,
+        FailureProbability=_failure_probability,
+        Circle=_persistable_circle(),
+    )
+
+
 @pytest.fixture
-def _get_dstability_model():
+def _get_dstability_model() -> DStabilityModel:
     model = DStabilityModel(filename=None)
 
     test_cases = [
@@ -138,6 +172,12 @@ def _get_dstability_model():
             _uplift_van_particle_swarm_result,
         ),
         (
+            AnalysisType.UPLIFT_VAN_PARTICLE_SWARM,
+            CalculationType.PROBABILISTIC,
+            "uplift_van_particle_swarm_reliability_results",
+            _uplift_van_particle_swarm_reliability_result,
+        ),
+        (
             AnalysisType.SPENCER,
             CalculationType.DETERMINISTIC,
             "spencer_results",
@@ -156,6 +196,12 @@ def _get_dstability_model():
             _spencer_genetic_algorithm_result,
         ),
         (
+            AnalysisType.SPENCER_GENETIC,
+            CalculationType.PROBABILISTIC,
+            "spencer_genetic_algorithm_reliability_results",
+            _spencer_genetic_algorithm_reliability_result,
+        ),
+        (
             AnalysisType.BISHOP,
             CalculationType.DETERMINISTIC,
             "bishop_results",
@@ -171,25 +217,38 @@ def _get_dstability_model():
             AnalysisType.BISHOP_BRUTE_FORCE,
             CalculationType.DETERMINISTIC,
             "bishop_bruteforce_results",
-            _bishop_bruce_force_result,
+            _bishop_brute_force_result,
+        ),
+        (
+            AnalysisType.BISHOP_BRUTE_FORCE,
+            CalculationType.PROBABILISTIC,
+            "bishop_bruteforce_reliability_results",
+            _bishop_brute_force_reliability_result,
         ),
     ]
 
     # Set stages and calculationsettings to empty lists since to overwrite the defaults.
-    model.datastructure.stages = []
+    model.datastructure.scenarios = [Scenario(Id=str(999))]
     model.datastructure.calculationsettings = []
 
     for i, (analysis_type, calculation_type, result_attribute, result_class) in enumerate(
         test_cases
     ):
-        stage_id = str(i)
-        result_id = str(
-            100 + i
-        )  # This way result id's and stage id's don't overlap.  # TODO research if that matters.
-        model.datastructure.stages.append(Stage(Id=stage_id, ResultId=result_id))
+        calculation_id = str(i)
+        result_id = str(100 + i)
+        calculation_settings_id = str(200 + i)
+        model.datastructure.scenarios[0].Calculations.append(
+            PersistableCalculation(
+                Id=calculation_id,
+                CalculationSettingsId=calculation_settings_id,
+                ResultId=result_id,
+            )
+        )
         model.datastructure.calculationsettings.append(
             CalculationSettings(
-                AnalysisType=analysis_type, CalculationType=calculation_type
+                Id=calculation_settings_id,
+                AnalysisType=analysis_type,
+                CalculationType=calculation_type,
             )
         )
         getattr(model.datastructure, result_attribute).append(
@@ -204,29 +263,34 @@ class TestDStabilityResults:
     def test_stage_not_available_raises_value_error(self, _get_dstability_model):
         model = _get_dstability_model
 
-        amount_of_stages = len(model.datastructure.stages)
+        amount_of_calculations = len(model.datastructure.scenarios[0].Calculations)
         with pytest.raises(ValueError):
-            model.get_result(amount_of_stages + 1)
+            model.get_result(
+                scenario_index=0, calculation_index=amount_of_calculations + 1
+            )
 
     @pytest.mark.unittest
-    def test_get_result(self, _get_dstability_model):
+    def test_get_result(self, _get_dstability_model: DStabilityModel):
         model = _get_dstability_model
 
-        for i, _ in enumerate(model.datastructure.stages):
-            result = model.get_result(stage_id=i)
+        for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
+            result = model.get_result(scenario_index=0, calculation_index=i)
 
             assert isinstance(
                 result,
                 (
                     UpliftVanParticleSwarmResult,
+                    UpliftVanParticleSwarmReliabilityResult,
                     UpliftVanReliabilityResult,
                     UpliftVanResult,
                     SpencerResult,
                     SpencerReliabilityResult,
                     SpencerGeneticAlgorithmResult,
+                    SpencerGeneticAlgorithmReliabilityResult,
                     BishopResult,
                     BishopReliabilityResult,
                     BishopBruteForceResult,
+                    BishopBruteForceReliabilityResult,
                 ),
             )
 
@@ -234,17 +298,26 @@ class TestDStabilityResults:
     def test_get_slipcircle_result(self, _get_dstability_model):
         model = _get_dstability_model
 
-        for i, _ in enumerate(model.datastructure.stages):
-            result_substructure = model._get_result_substructure(stage_id=i)
+        for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
+            result_substructure = model._get_result_substructure(
+                scenario_index=0, calculation_index=i
+            )
 
             if isinstance(
                 result_substructure,
-                (SpencerReliabilityResult, SpencerResult, SpencerGeneticAlgorithmResult),
+                (
+                    SpencerReliabilityResult,
+                    SpencerResult,
+                    SpencerGeneticAlgorithmResult,
+                    SpencerGeneticAlgorithmReliabilityResult,
+                ),
             ):
                 with pytest.raises(AttributeError):
-                    model.get_slipcircle_result(stage_id=i)
+                    model.get_slipcircle_result(scenario_index=0, calculation_index=i)
             else:
-                slipplane_result = model.get_slipcircle_result(stage_id=i)
+                slipplane_result = model.get_slipcircle_result(
+                    scenario_index=0, calculation_index=i
+                )
 
                 assert isinstance(
                     slipplane_result, (BishopSlipCircleResult, UpliftVanSlipCircleResult)
@@ -254,17 +327,26 @@ class TestDStabilityResults:
     def test_get_slipplane_result(self, _get_dstability_model):
         model = _get_dstability_model
 
-        for i, _ in enumerate(model.datastructure.stages):
-            result_substructure = model._get_result_substructure(stage_id=i)
+        for i, _ in enumerate(model.datastructure.scenarios[0].Calculations):
+            result_substructure = model._get_result_substructure(
+                scenario_index=0, calculation_index=i
+            )
 
             if not isinstance(
                 result_substructure,
-                (SpencerReliabilityResult, SpencerResult, SpencerGeneticAlgorithmResult),
+                (
+                    SpencerReliabilityResult,
+                    SpencerResult,
+                    SpencerGeneticAlgorithmResult,
+                    SpencerGeneticAlgorithmReliabilityResult,
+                ),
             ):
                 with pytest.raises(AttributeError):
-                    model.get_slipplane_result(stage_id=i)
+                    model.get_slipplane_result(scenario_index=0, calculation_index=i)
             else:
-                slipplane_result = model.get_slipplane_result(stage_id=i)
+                slipplane_result = model.get_slipplane_result(
+                    scenario_index=0, calculation_index=i
+                )
 
                 assert isinstance(slipplane_result, SpencerSlipPlaneResult)
 
@@ -272,30 +354,34 @@ class TestDStabilityResults:
     def test_output_isinstance_list(self, _get_dstability_model: DStabilityModel):
         model = _get_dstability_model
 
-        model.datastructure.stages.append(Stage(Id="200", ResultId=None))
+        model.datastructure.scenarios[0].Calculations.append(
+            PersistableCalculation(Id="200", ResultId=None)
+        )
 
         output = model.output
         assert isinstance(output, list)
-        assert len(output) == 10
+        assert len(output) == 13
 
         assert isinstance(output[0], UpliftVanResult)
         assert isinstance(output[1], UpliftVanReliabilityResult)
         assert isinstance(output[2], UpliftVanParticleSwarmResult)
-        assert output[9] is None
+        assert output[12] is None
 
     @pytest.mark.unittest
-    def test_get_result_with_none_is_current_stage(
+    def test_get_result_with_none_is_current_calculation_result(
         self, _get_dstability_model: DStabilityModel
     ):
         model = _get_dstability_model
-        model.current_stage = 2
+        model.current_scenario = 0
+        model.current_calculation = 2
+
         output = model.get_result()
         assert isinstance(output, UpliftVanParticleSwarmResult)
 
     @pytest.mark.unittest
-    def test_get_result_with_id_is_stage_result(
+    def test_get_result_with_id_is_expected_spencer_result(
         self, _get_dstability_model: DStabilityModel
     ):
         model = _get_dstability_model
-        output = model.get_result(3)
-        assert isinstance(output, SpencerResult)
+        output = model.get_result(0, 3)
+        assert isinstance(output, UpliftVanParticleSwarmReliabilityResult)

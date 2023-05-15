@@ -775,115 +775,110 @@ class DGeoFlowStructure(BaseModelStructure):
                 raise ValueError("SoilLayersIds not linked!")
         return values
 
-    @property
-    def stage_specific_fields(self):
-        return [
-            "soillayers",
-            "geometries",
-            "boundaryconditions",
-            "meshproperties",
-            "scenarios",
-        ]
+    @root_validator(skip_on_failure=True, allow_reuse=True)
+    def ensure_validity_foreign_keys(cls, values):
+        def list_has_id(values, id):
+            for entry in values:
+                if entry.Id == id:
+                    return True
+            return False
 
-    def get_scenario_specific_fields(self, stage=0) -> Tuple[str, DGeoFlowSubStructure]:
-        """Yield stage specific fields for given stage."""
-        for fieldname in self.stage_specific_fields:
-            field = getattr(self, fieldname)
-            if len(field) > stage:
-                yield fieldname, field[stage]
+        for _, scenario in enumerate(values.get("scenarios")):
+            for _, stage in enumerate(scenario.Stages):
+                if not list_has_id(
+                    values.get("boundary_conditions"), stage.BoundaryConditionCollectionId
+                ):
+                    raise ValueError("BoundaryConditionCollectionIds not linked!")
 
-    def renumber_fk_fields(self, instance, mapping: Dict, unique_id: int) -> int:
-        """Replace id (foreign key) fields on instance based on a mapping and unique id."""
-        fk = ForeignKeys()
-        fkfields = fk.class_fields
+            if not list_has_id(values.get("geometries"), scenario.GeometryId):
+                raise ValueError("GeometryIds not linked!")
+            if not list_has_id(values.get("soillayers"), scenario.SoilLayersId):
+                raise ValueError("SoilLayersIds not linked!")
 
-        def get_correct_key(key, mapping):
-            if key not in mapping:
-                nonlocal unique_id
-                mapping[key] = unique_id
-                unique_id += 1
-            return mapping[key]
-
-        for fkfield in fkfields.get(instance.__class__.__name__, []):
-            value = getattr(instance, fkfield)
-            if isinstance(value, (list, set, tuple)):
-                setattr(
-                    instance,
-                    fkfield,
-                    [get_correct_key(x, mapping) for x in value],
-                )
-            if isinstance(value, (int, float, str)):
-                setattr(instance, fkfield, get_correct_key(value, mapping))
-
-        return unique_id
-
-    def duplicate_scenario(
-        self, current_scenario: int, label: str, notes: str, unique_start_id: int
-    ):
-        """Duplicates an existing scenario.
-        Copies the specific scenario fields for a scenario and renumbers all Ids,
-        taking into account foreign keys by using the same renumbering.
-        """
-
-        old_to_new = {}
-        for fieldname, scenario_field in self.get_scenario_specific_fields(
-            current_scenario
-        ):
-            new_scenario_fields = scenario_field.copy(deep=True)
-
-            # Renumber the upper class
-            unique_start_id = self.renumber_fk_fields(
-                new_scenario_fields, old_to_new, unique_start_id
-            )
-            # Renumber all children
-            for class_instance in children(new_scenario_fields):
-                unique_start_id = self.renumber_fk_fields(
-                    class_instance, old_to_new, unique_start_id
-                )
-
-            # Update the stage with extra supplied fields
-            if fieldname == "stages":
-                new_scenario_fields.Label = label
-                new_scenario_fields.Notes = notes
-
-            getattr(self, fieldname).append(new_scenario_fields)
-
-        return len(self.stages) - 1, unique_start_id
+        return values
 
     def add_default_scenario(
-        self, label: str, notes: str, unique_start_id=500
+        self, label: str, notes: str, unique_start_id: Optional[int] = None
     ) -> Tuple[int, int]:
         """Add a new default (empty) scenario to DGeoFlow."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
 
+        scenario_id = unique_start_id + 7
         self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 1))]
         self.mesh_properties += [MeshProperty(Id=str(unique_start_id + 2))]
-        self.geometries += [Geometry(Id=str(unique_start_id + 4))]
+        self.geometries += [Geometry(Id=str(unique_start_id + 3))]
         self.boundary_conditions += [
-            BoundaryConditionCollection(Id=str(unique_start_id + 5))
+            BoundaryConditionCollection(Id=str(unique_start_id + 4))
         ]
 
         self.scenarios += [
             Scenario(
-                Id=str(str(unique_start_id + 7)),
-                Label="Scenario 1",
-                GeometryId=str(unique_start_id + 4),
+                Id=str(scenario_id),
+                Label=label,
+                Notes=notes,
+                GeometryId=str(unique_start_id + 3),
                 SoilLayersId=str(unique_start_id + 1),
-                Calculations=[
-                    PersistableCalculation(
-                        Id=str(unique_start_id + 6), Label="Calculation 1"
-                    )
-                ],
+                Calculations=[PersistableCalculation(Label="Calculation 1")],
                 Stages=[
                     PersistableStage(
-                        Id=str(unique_start_id + 6),
                         Label="Stage 1",
-                        BoundaryConditionCollectionId=str(unique_start_id + 5),
+                        BoundaryConditionCollectionId=str(unique_start_id + 4),
                     )
                 ],
             )
         ]
 
-        return len(self.scenarios) - 1, unique_start_id + 11
+        return len(self.scenarios) - 1, scenario_id
+
+    def add_default_stage(
+        self,
+        scenario_index: int,
+        label: str,
+        notes: str,
+        unique_start_id: Optional[int] = None,
+    ) -> int:
+        """Add a new default (empty) stage to DStability."""
+        if unique_start_id is None:
+            unique_start_id = self.get_unique_id()
+
+        self.boundary_conditions += [
+            BoundaryConditionCollection(Id=str(unique_start_id + 1))
+        ]
+
+        new_stage = PersistableStage(
+            Label=label,
+            Notes=notes,
+            BoundaryConditionCollectionId=str(unique_start_id + 1),
+        )
+
+        scenario = self.scenarios[scenario_index]
+
+        if scenario.Stages is None:
+            scenario.Stages = []
+
+        scenario.Stages.append(new_stage)
+        return len(scenario.Stages) - 1
+
+    def add_default_calculation(
+        self,
+        scenario_index: int,
+        label: str,
+        notes: str,
+    ) -> int:
+        """Add a new default (empty) calculation to DStability."""
+
+        new_calculation = PersistableCalculation(
+            Label=label, Notes=notes, CalculationType=CalculationTypeEnum.GROUNDWATER_FLOW
+        )
+
+        scenario = self.scenarios[scenario_index]
+
+        if scenario.Calculations is None:
+            scenario.Calculations = []
+
+        scenario.Calculations.append(new_calculation)
+        return len(scenario.Calculations) - 1
 
     def get_unique_id(self) -> int:
         """Return unique id that can be used in DGeoFlow.

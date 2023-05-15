@@ -40,11 +40,11 @@ class TestDStabilityGeometry:
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_contains_num_soillayers(self, dir_path: str):
+    def test_given_data_contains_num_soillayers(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -53,15 +53,15 @@ class TestDStabilityGeometry:
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
-        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 6
+        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 2
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_soillayer_polygon_points_equal(self, dir_path: str):
+    def test_given_data_soillayer_polygon_points_equal(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -71,16 +71,14 @@ class TestDStabilityGeometry:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
         expected_polygon_coords = [
-            (150.0, -5.0),
-            (150.0, -15.0),
-            (-100, -15.0),
-            (-100.0, -2.0),
-            (-9.0, -2.0),
-            (-1.0, -3.0),
-            (11.0, -3.0),
-            (20.0, -5.0),
+            (70.0, 0.0),
+            (20.0, 0.0),
+            (20.0, 10.0),
+            (30.0, 10.0),
+            (50.0, 10.0),
+            (70.0, 10.0),
         ]
 
-        layer = dstability_model.datastructure.geometries[0].Layers[0]
+        layer = dstability_model.datastructure.geometries[3].Layers[0]
         found_polygon_coords = [(p.X, p.Z) for p in layer.Points]
         assert expected_polygon_coords == found_polygon_coords

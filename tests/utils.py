@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 from pathlib import Path
 from typing import List
@@ -52,7 +53,7 @@ class TestUtils:
         ]
 
     @staticmethod
-    def get_output_test_data_dir(dir_name: str):
+    def get_output_test_data_dir(dir_name: str, clean_dir: bool = False):
         """
         Returns the full path of a directory containing generated
         data from the tests. If it does not exist it creates it.
@@ -60,7 +61,21 @@ class TestUtils:
         directory = TestUtils.get_test_data_dir(dir_name, TestUtils._name_output)
         if not os.path.exists(directory):
             os.makedirs(directory)
+        else:
+            if clean_dir:
+                shutil.rmtree(directory)
         return directory
+
+    @staticmethod
+    def extract_zip_to_output_test_data_dir(zip_file: str, dir_name: str):
+        """
+        Extracts a zip file to the test data directory.
+        """
+        import zipfile
+
+        zip_ref = zipfile.ZipFile(zip_file, "r")
+        zip_ref.extractall(TestUtils.get_output_test_data_dir(dir_name))
+        zip_ref.close()
 
     @staticmethod
     def get_local_test_data_dir(dir_name: str):

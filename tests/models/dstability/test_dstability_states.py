@@ -89,11 +89,11 @@ class TestDStabilityStates:
     # todo > add test to read the example and see if the statepoint and lines are read
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_statepoints_equal(self, dir_path: str):
+    def test_given_data_statepoints_equal(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -104,27 +104,27 @@ class TestDStabilityStates:
         dstability_model.parse(test_input_filepath)
 
         expected_state_point = DStabilityStatePoint(
-            id=27,
-            layer_id=14,
+            id=55,
+            layer_id=30,
             label="SP 1",
-            point=Point(x=4.26, z=7.67),
-            stress=DStabilityStress(),
+            point=Point(x=45.0, z=4.0),
+            stress=DStabilityStress(pop=10.0),
         )
         expected_persistable_state_point = (
             expected_state_point._to_internal_datastructure()
         )
         assert (
-            dstability_model.datastructure.states[0].StatePoints[0]
+            dstability_model._get_state(2, 0).StatePoints[0]
             == expected_persistable_state_point
         )
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_statelines_equal(self, dir_path: str):
+    def test_given_data_state_lines_equal(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -134,25 +134,18 @@ class TestDStabilityStates:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
 
-        points = [
-            Point(x=-8.8, z=3.5),
-            Point(x=-1.4, z=1.0),
-            Point(x=10.6, z=1.0),
-            Point(x=20.0, z=4.0),
-        ]
+        points = [Point(x=20.0, z=0.0), Point(x=70.0, z=0.0)]
 
         state_line_point = DStabilityStateLinePoint(
-            id=28,
+            id=56,
             label="SP 2",
-            above=DStabilityStress(),
-            below=DStabilityStress(),
-            x=15.718,
+            above=DStabilityStress(pop=20),
+            below=DStabilityStress(pop=30),
+            x=35.0,
         )
 
         expected_state_line = PersistableStateLine(
             Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
             Values=[state_line_point._to_internal_datastructure()],
         )
-        assert (
-            dstability_model.datastructure.states[0].StateLines[0] == expected_state_line
-        )
+        assert dstability_model._get_state(2, 0).StateLines[0] == expected_state_line
