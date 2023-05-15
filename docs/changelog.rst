@@ -3,7 +3,7 @@ Changelog
 - :release:`1.0.0 <2023-05-15>`
 - :feature:`-` Add support for D-Stability 2023.01 (#112). This release drops support for D-Stability 2022.01 and older.
 - :feature:`-` Removed support for Python 3.7, minimum supported Python version is now 3.8.
-- 
+
 - :release:`0.6.0 <2023-04-20>`
 - :feature:`-` Add support for D-Sheet Piling & D-Foundations 23.1 (#115)
 
