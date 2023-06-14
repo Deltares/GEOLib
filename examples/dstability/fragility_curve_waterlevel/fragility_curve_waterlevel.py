@@ -16,7 +16,7 @@ def find_phreatic_line(waternet: Waternet) -> PersistableHeadLine:
     for headline in waternet.HeadLines:
         if headline.Id == waternet.PhreaticLineId:
             return headline
-    raise Exception("No phreatic line found")
+    raise ValueError("No phreatic line found")
 
 
 def calculate_fragility_curve(input_file, z_start, z_end, z_step) -> pd.DataFrame:
@@ -58,33 +58,32 @@ def calculate_fragility_curve(input_file, z_start, z_end, z_step) -> pd.DataFram
         # Find phreatic line and set new water level
         phreatic_line = find_phreatic_line(dm.datastructure.waternets[0])
         headline_points = phreatic_line.Points
-        if headline_points is not None:
-            if headline_points[0] is not None:
-                headline_points[0].Z = new_z
+        if headline_points is not None and headline_points[0] is not None:
+            headline_points[0].Z = new_z
 
-        # Serialize and execute
-        output_file = output_folder / (input_file_path.stem + "_" + str(new_z) + input_file_path.suffix)
-        dm.serialize(Path(output_file))
-        dm.execute()
+            # Serialize and execute
+            output_file = output_folder / (input_file_path.stem + "_" + str(new_z) + input_file_path.suffix)
+            dm.serialize(Path(output_file))
+            dm.execute()
 
-        # Get result
-        result = dm.get_result(0, 0)
-        print("Result of Z level: " + str(phreatic_line.Points[0].Z))
-        print("Reliability index: " + str(result.ReliabilityIndex))
+            # Get result
+            result = dm.get_result(0, 0)
+            print("Result of Z level: " + str(phreatic_line.Points[0].Z))
+            print("Reliability index: " + str(result.ReliabilityIndex))
 
-        # Add result to dataframe
-        df.loc[i] = [
-            phreatic_line.Points[0].Z,
-            result.ReliabilityIndex,
-            output_file,
-        ]
+            # Add result to dataframe
+            df.loc[i] = [
+                phreatic_line.Points[0].Z,
+                result.ReliabilityIndex,
+                output_file,
+            ]
 
     return df
 
 
 if __name__ == "__main__":
     # Define input file and water level range
-    input_file = "examples\\dstability\\tutorial\\fc.stix"
+    input_file = "examples\\dstability\\fragility_curve_waterlevel\\fc.stix"
     z_start = -7
     z_end = -3
     z_step = 0.5
