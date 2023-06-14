@@ -4,6 +4,9 @@ from enum import Enum
 from pathlib import Path
 from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
 
+from shapely.ops import polygonize
+from shapely.geometry import LineString, Point, Polygon
+
 from pydantic import DirectoryPath, FilePath
 
 from geolib.geometry import Point
@@ -20,6 +23,7 @@ from .internal import (
     CalculationType,
     DStabilityResult,
     DStabilityStructure,
+    PersistableLayer,
     PersistablePoint,
     PersistableSoil,
     PersistableStateCorrelation,
@@ -464,6 +468,34 @@ class DStabilityModel(BaseModel):
     def points(self):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
 
+
+    def connect_polygons(self, p1, p2):
+        ls1 = LineString(p1.exterior.coords)
+        ls2 = LineString(p2.exterior.coords)
+        union = ls1.union(ls2)
+        result = [geom for geom in polygonize(union)]
+        if len(result) == 2:
+            return result[0], result[1]
+        else:
+            return p1, p2
+
+    def add_layer_and_connect_points(self, current_layers: List[PersistableLayer], new_layer: PersistableLayer):
+        current_layers.append(new_layer)
+        for layer in current_layers:
+            if layer != new_layer and self.to_shapely_polygon(layer.Points).exterior.intersects(self.to_shapely_polygon(new_layer).exterior):
+                p1, p2 = self.connect_polygons(layer, new_layer)
+                current_layers[current_layers.index(layer)].Points = self.to_dstability_points(p1.exterior)
+                current_layers[current_layers.index(new_layer)].Points = self.to_dstability_points(p2.exterior)
+
+    def to_shapely_linestring(self, points: List[Point]) -> LineString:
+        return LineString([(p.x, p.y) for p in points])
+    
+    def to_shapely_polygon(self, points: List[Point]) -> Polygon:
+        return Polygon([(p.x, p.y) for p in points])
+    
+    def to_dstability_points(self, points: List[Point]) -> List[Point]:
+        return [Point(p.x, p.y) for p in points]
+    
     def add_layer(
         self,
         points: List[Point],
@@ -501,9 +533,12 @@ class DStabilityModel(BaseModel):
 
         # add the layer to the geometry
         # the checks on the validity of the points are done in the PersistableLayer class
-        persistable_layer = geometry.add_layer(
-            id=str(self._get_next_id()), label=label, points=points, notes=notes
-        )
+
+        new_layer = PersistableLayer(Id=str(self._get_next_id()), label=label, points=points, notes=notes)
+
+        self.add_layer_and_connect_points(geometry.Layers, new_layer)
+
+        persistable_layer = geometry.Layers.append(new_layer)
 
         # add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
