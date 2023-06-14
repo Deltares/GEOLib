@@ -470,31 +470,31 @@ class DStabilityModel(BaseModel):
 
 
     def connect_polygons(self, p1, p2):
-        ls1 = LineString(p1.exterior.coords)
-        ls2 = LineString(p2.exterior.coords)
+        ls1 = self.to_shapely_linestring(p1.Points)
+        ls2 = self.to_shapely_linestring(p2.Points)
         union = ls1.union(ls2)
         result = [geom for geom in polygonize(union)]
         if len(result) == 2:
             return result[0], result[1]
         else:
-            return p1, p2
+            return ls1, ls2
 
     def add_layer_and_connect_points(self, current_layers: List[PersistableLayer], new_layer: PersistableLayer):
         current_layers.append(new_layer)
         for layer in current_layers:
-            if layer != new_layer and self.to_shapely_polygon(layer.Points).exterior.intersects(self.to_shapely_polygon(new_layer).exterior):
+            if layer != new_layer and self.to_shapely_polygon(layer.Points).exterior.intersects(self.to_shapely_polygon(new_layer.Points).exterior):
                 p1, p2 = self.connect_polygons(layer, new_layer)
-                current_layers[current_layers.index(layer)].Points = self.to_dstability_points(p1.exterior)
-                current_layers[current_layers.index(new_layer)].Points = self.to_dstability_points(p2.exterior)
+                current_layers[current_layers.index(layer)].Points = self.to_dstability_points(p1)
+                current_layers[current_layers.index(new_layer)].Points = self.to_dstability_points(p2)
 
     def to_shapely_linestring(self, points: List[Point]) -> LineString:
-        return LineString([(p.x, p.y) for p in points])
+        return LineString([(p.X, p.Z) for p in points])
     
     def to_shapely_polygon(self, points: List[Point]) -> Polygon:
-        return Polygon([(p.x, p.y) for p in points])
+        return Polygon([(p.X, p.Z) for p in points])
     
-    def to_dstability_points(self, points: List[Point]) -> List[Point]:
-        return [Point(p.x, p.y) for p in points]
+    def to_dstability_points(self, shapely_object: Union[LineString, Polygon]) -> List[PersistablePoint]:
+        return [PersistablePoint(X = p[0], Z = p[1]) for p in list(shapely_object.coords)]
     
     def add_layer(
         self,
@@ -534,16 +534,16 @@ class DStabilityModel(BaseModel):
         # add the layer to the geometry
         # the checks on the validity of the points are done in the PersistableLayer class
 
-        new_layer = PersistableLayer(Id=str(self._get_next_id()), label=label, points=points, notes=notes)
+        new_layer = PersistableLayer(Id=str(self._get_next_id()), Label=label, Points=[PersistablePoint(X=p.x, Z=p.z) for p in points], Notes=notes)
 
         self.add_layer_and_connect_points(geometry.Layers, new_layer)
 
-        persistable_layer = geometry.Layers.append(new_layer)
+        geometry.Layers.append(new_layer)
 
         # add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
-        soil_layers.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.Id)
-        return int(persistable_layer.Id)
+        soil_layers.add_soillayer(layer_id=new_layer.Id, soil_id=soil.Id)
+        return int(new_layer.Id)
 
     def get_soil(self, code: str) -> PersistableSoil:
         """
