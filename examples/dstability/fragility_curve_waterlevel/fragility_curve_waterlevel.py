@@ -84,18 +84,22 @@ def calculate_fragility_curve(input_file, z_start, z_end, z_step) -> pd.DataFram
 if __name__ == "__main__":
     # Define input file and water level range
     input_file = "examples\\dstability\\fragility_curve_waterlevel\\fc.stix"
-    z_start = -7
-    z_end = -3
-    z_step = 0.5
+    z_start = -20
+    z_end = 5
+    z_step = 4
 
     # Calculate fragility curve
     df = calculate_fragility_curve(input_file, z_start, z_end, z_step)
 
     # Save dataframe to csv in subfolder of input file
-    df.to_csv(Path(input_file).parent / "output" / "fragility_curve.csv")
+    output_folder = Path(input_file).parent / "output"
+    df.to_csv(output_folder / "fragility_curve.csv")
 
-    # Plot fragility curve as line and show points
-    plt.plot(df["Waterlevel"], df["Beta"], marker="o")
+    # Plot fragility curve
+    plt.plot(df["Waterlevel"], df["Beta"], "o-")
     plt.xlabel("Water level [m]")
-    plt.ylabel("Reliability index [-]")
+    plt.ylabel("Reliability index")
+    plt.title("Fragility curve")
+    plt.grid()
+    plt.savefig(output_folder / "fragility_curve.png")
     plt.show()
