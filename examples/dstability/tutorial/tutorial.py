@@ -118,8 +118,6 @@ layer_2 = [
 ]
 layer_3 = [
     Point(x=-50, z=0),
-    Point(x=-10, z=0),
-    Point(x=30, z=0),
     Point(x=50, z=0),
     Point(x=50, z=-5),
     Point(x=-50, z=-5),
@@ -138,7 +136,7 @@ layers_and_soils = [
 ]
 layer_ids = []
 for layer, soil in layers_and_soils:
-    layer_id = dm.add_layer(layer, soil)
+    layer_id = dm.add_layer(layer, soil, label=soil)
     layer_ids.append(layer_id)
 
 # add phreatic line

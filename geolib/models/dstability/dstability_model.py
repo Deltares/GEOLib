@@ -475,7 +475,7 @@ class DStabilityModel(BaseModel):
         union = ls1.union(ls2)
         result = [geom for geom in polygonize(union)]
         if len(result) == 2:
-            return result[0], result[1]
+            return result[0].exterior, result[1].exterior
         else:
             return ls1, ls2
 
@@ -488,13 +488,22 @@ class DStabilityModel(BaseModel):
                 current_layers[current_layers.index(new_layer)].Points = self.to_dstability_points(p2)
 
     def to_shapely_linestring(self, points: List[Point]) -> LineString:
-        return LineString([(p.X, p.Z) for p in points])
+        points = [(p.X, p.Z) for p in points]
+        points.append(points[0])
+        return LineString(points)
     
     def to_shapely_polygon(self, points: List[Point]) -> Polygon:
         return Polygon([(p.X, p.Z) for p in points])
     
     def to_dstability_points(self, shapely_object: Union[LineString, Polygon]) -> List[PersistablePoint]:
-        return [PersistablePoint(X = p[0], Z = p[1]) for p in list(shapely_object.coords)]
+        persistable_points = [PersistablePoint(X = p[0], Z = p[1]) for p in list(shapely_object.coords)]
+        # remove duplicate points
+        persistable_points = [i for n, i in enumerate(persistable_points) if i not in persistable_points[n + 1:]]
+        # remove last point if it is the same as the first
+        if persistable_points[0] == persistable_points[-1]:
+            persistable_points.pop(-1)
+            
+        return persistable_points
     
     def add_layer(
         self,
@@ -537,8 +546,6 @@ class DStabilityModel(BaseModel):
         new_layer = PersistableLayer(Id=str(self._get_next_id()), Label=label, Points=[PersistablePoint(X=p.x, Z=p.z) for p in points], Notes=notes)
 
         self.add_layer_and_connect_points(geometry.Layers, new_layer)
-
-        geometry.Layers.append(new_layer)
 
         # add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
