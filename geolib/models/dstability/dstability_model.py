@@ -6,6 +6,7 @@ from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
 
 from shapely.ops import polygonize
 from shapely.geometry import LineString, Point, Polygon
+from shapely.validation import make_valid
 
 from pydantic import DirectoryPath, FilePath
 
@@ -468,43 +469,6 @@ class DStabilityModel(BaseModel):
     def points(self):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
 
-
-    def connect_polygons(self, p1, p2):
-        ls1 = self.to_shapely_linestring(p1.Points)
-        ls2 = self.to_shapely_linestring(p2.Points)
-        union = ls1.union(ls2)
-        result = [geom for geom in polygonize(union)]
-        if len(result) == 2:
-            return result[0].exterior, result[1].exterior
-        else:
-            return ls1, ls2
-
-    def add_layer_and_connect_points(self, current_layers: List[PersistableLayer], new_layer: PersistableLayer):
-        current_layers.append(new_layer)
-        for layer in current_layers:
-            if layer != new_layer and self.to_shapely_polygon(layer.Points).exterior.intersects(self.to_shapely_polygon(new_layer.Points).exterior):
-                p1, p2 = self.connect_polygons(layer, new_layer)
-                current_layers[current_layers.index(layer)].Points = self.to_dstability_points(p1)
-                current_layers[current_layers.index(new_layer)].Points = self.to_dstability_points(p2)
-
-    def to_shapely_linestring(self, points: List[Point]) -> LineString:
-        points = [(p.X, p.Z) for p in points]
-        points.append(points[0])
-        return LineString(points)
-    
-    def to_shapely_polygon(self, points: List[Point]) -> Polygon:
-        return Polygon([(p.X, p.Z) for p in points])
-    
-    def to_dstability_points(self, shapely_object: Union[LineString, Polygon]) -> List[PersistablePoint]:
-        persistable_points = [PersistablePoint(X = p[0], Z = p[1]) for p in list(shapely_object.coords)]
-        # remove duplicate points
-        persistable_points = [i for n, i in enumerate(persistable_points) if i not in persistable_points[n + 1:]]
-        # remove last point if it is the same as the first
-        if persistable_points[0] == persistable_points[-1]:
-            persistable_points.pop(-1)
-            
-        return persistable_points
-    
     def add_layer(
         self,
         points: List[Point],
@@ -534,23 +498,105 @@ class DStabilityModel(BaseModel):
         geometry = self._get_geometry(scenario_index, stage_index)
         soil_layers = self._get_soil_layers(scenario_index, stage_index)
 
-        # do we have this soil code?
+        # Check if we have the soil code
         if not self.soils.has_soil_code(soil_code):
             raise ValueError(
                 f"The soil with code {soil_code} is not defined in the soil collection."
             )
 
-        # add the layer to the geometry
-        # the checks on the validity of the points are done in the PersistableLayer class
+        # Make sure the points are valid
+        persistable_points = self.make_points_valid(points)
 
-        new_layer = PersistableLayer(Id=str(self._get_next_id()), Label=label, Points=[PersistablePoint(X=p.x, Z=p.z) for p in points], Notes=notes)
+        # Create the new layer
+        new_layer = PersistableLayer(
+            Id=str(self._get_next_id()),
+            Label=label,
+            Points=persistable_points,
+            Notes=notes,
+        )
 
+        # Add the layer to the geometry
         self.add_layer_and_connect_points(geometry.Layers, new_layer)
 
-        # add the connection between the layer and the soil to soillayers
+        # Add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
         soil_layers.add_soillayer(layer_id=new_layer.Id, soil_id=soil.Id)
         return int(new_layer.Id)
+
+    def make_points_valid(self, points: List[Point]) -> List[PersistablePoint]:
+        fixed = make_valid(self.geolib_points_to_shapely_polygon(points))
+        return self.to_dstability_points(fixed)
+
+    def connect_layers(self, layer1: PersistableLayer, layer2: PersistableLayer):
+        """Connects two polygons by adding a the missing points on the polygon edges. Returns the two new polygons."""
+        linestring1 = self.to_shapely_linestring(layer1.Points)
+        linestring2 = self.to_shapely_linestring(layer2.Points)
+        union = linestring1.union(linestring2)
+        result = [geom for geom in polygonize(union)]
+        if len(result) == 2:
+            return result[0].exterior, result[1].exterior
+        else:
+            return linestring1, linestring2
+
+    def add_layer_and_connect_points(
+        self, current_layers: List[PersistableLayer], new_layer: PersistableLayer
+    ):
+        """Adds a new layer to the list of layers and connects the points of the new layer to the existing layers."""
+
+        current_layers.append(new_layer)
+        for layer in current_layers:
+            if layer != new_layer and self.dstability_points_to_shapely_polygon(
+                layer.Points
+            ).exterior.intersects(
+                self.dstability_points_to_shapely_polygon(new_layer.Points).exterior
+            ):
+                linestring1, linestring2 = self.connect_layers(layer, new_layer)
+                current_layers[
+                    current_layers.index(layer)
+                ].Points = self.to_dstability_points(linestring1)
+                current_layers[
+                    current_layers.index(new_layer)
+                ].Points = self.to_dstability_points(linestring2)
+
+    def to_shapely_linestring(self, points: List[PersistablePoint]) -> LineString:
+        converted_points = [(p.X, p.Z) for p in points]
+        converted_points.append(converted_points[0])
+        return LineString(converted_points)
+
+    def dstability_points_to_shapely_polygon(
+        self, points: List[PersistablePoint]
+    ) -> Polygon:
+        return Polygon([(p.X, p.Z) for p in points])
+
+    def geolib_points_to_shapely_polygon(self, points: List[Point]) -> Polygon:
+        return Polygon([(p.x, p.z) for p in points])
+
+    def to_dstability_points(
+        self, shapely_object: Union[LineString, Polygon]
+    ) -> List[PersistablePoint]:
+        if isinstance(shapely_object, LineString):
+            coords = shapely_object.coords
+        elif isinstance(shapely_object, Polygon):
+            coords = shapely_object.exterior.coords
+        else:
+            raise ValueError(
+                "shapely_object must be a LineString or Polygon, not {}".format(
+                    type(shapely_object)
+                )
+            )
+
+        persistable_points = [PersistablePoint(X=p[0], Z=p[1]) for p in list(coords)]
+        # remove duplicate points
+        persistable_points = [
+            i
+            for n, i in enumerate(persistable_points)
+            if i not in persistable_points[n + 1 :]
+        ]
+        # remove last point if it is the same as the first
+        if persistable_points[0] == persistable_points[-1]:
+            persistable_points.pop(-1)
+
+        return persistable_points
 
     def get_soil(self, code: str) -> PersistableSoil:
         """
