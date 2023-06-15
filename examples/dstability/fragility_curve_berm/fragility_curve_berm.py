@@ -4,12 +4,22 @@ from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from geolib.models.dstability.analysis import DStabilityAnalysisMethod, DStabilityBishopAnalysisMethod, DStabilityCircle
+from geolib.models.dstability.analysis import (
+    DStabilityBishopAnalysisMethod,
+    DStabilityCircle,
+)
 from geolib.models.dstability.internal import CalculationTypeEnum
 
 
-def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points, length_start, length_end, length_step) -> pd.DataFrame:
-    '''
+def calculate_fragility_curve(
+    input_file,
+    fixed_berm_points,
+    varying_berm_points,
+    length_start,
+    length_end,
+    length_step,
+) -> pd.DataFrame:
+    """
     Calculate the fragility curve for a given input file and berm length range.
 
     :param input_file: Input file
@@ -19,10 +29,10 @@ def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points
     :param length_end: End of berm length range
     :param length_step: Step size of berm length range
     :return: Dataframe with results
-    '''
+    """
 
     # Prepare dataframe
-    df = pd.DataFrame(columns=["BermLength", "Beta", "Filename"])
+    df = pd.DataFrame(columns=["BermLength", "Circle", "Layers", "Beta", "Filename"])
 
     input_file_path = Path(input_file)
     output_folder = input_file_path.parent / "output"
@@ -44,12 +54,16 @@ def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points
         new_length = length_start + i * length_step
 
         # Add new berm
-        updated_berm_points = [Point(x=point.x + new_length, z=point.z) for point in varying_berm_points]
+        updated_berm_points = [
+            Point(x=point.x + new_length, z=point.z) for point in varying_berm_points
+        ]
         new_berm_points = fixed_berm_points + updated_berm_points
         dm.add_layer(new_berm_points, "Sand", "Berm")
 
         # Serialize and execute
-        output_file = output_folder / (input_file_path.stem + "_" + str(new_length) + input_file_path.suffix)
+        output_file = output_folder / (
+            input_file_path.stem + "_" + str(new_length) + input_file_path.suffix
+        )
         dm.serialize(Path(output_file))
         dm.execute()
 
@@ -58,9 +72,15 @@ def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points
         circle = result.Circle
 
         # Set resulting circle on Bishop Single Probabilistic calculation
-        bishop_analysis_method = DStabilityBishopAnalysisMethod(circle=DStabilityCircle(center=Point(x=circle.Center.X, z=circle.Center.Z), radius=circle.Radius))
+        bishop_analysis_method = DStabilityBishopAnalysisMethod(
+            circle=DStabilityCircle(
+                center=Point(x=circle.Center.X, z=circle.Center.Z), radius=circle.Radius
+            )
+        )
         dm.set_model(bishop_analysis_method)
-        dm.datastructure.calculationsettings[0].CalculationType = CalculationTypeEnum.PROBABILISTIC
+        dm.datastructure.calculationsettings[
+            0
+        ].CalculationType = CalculationTypeEnum.PROBABILISTIC
 
         # Re-calculate to get Reliability Index
         dm.serialize(Path(output_file))
@@ -69,10 +89,12 @@ def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points
 
         print("Result of berm length: " + str(new_length))
         print("Reliability index: " + str(result.ReliabilityIndex))
-        
+
         # Add result to dataframe
         df.loc[i] = [
             new_length,
+            circle,
+            dm.datastructure.geometries[0],
             result.ReliabilityIndex,
             output_file,
         ]
@@ -85,7 +107,7 @@ if __name__ == "__main__":
     input_file = "examples\\dstability\\fragility_curve_berm\\fc.stix"
     z_start = 1
     z_end = 20
-    z_step = 2
+    z_step = 4
 
     fixed_berm_points = [
         Point(x=70, z=-10),
@@ -98,7 +120,9 @@ if __name__ == "__main__":
     ]
 
     # Calculate fragility curve
-    df = calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points, z_start, z_end, z_step)
+    df = calculate_fragility_curve(
+        input_file, fixed_berm_points, varying_berm_points, z_start, z_end, z_step
+    )
 
     # Save dataframe to csv in subfolder of input file
     output_folder = Path(input_file).parent / "output"
@@ -111,4 +135,48 @@ if __name__ == "__main__":
     plt.title("Fragility curve")
     plt.grid()
     plt.savefig(output_folder / "fragility_curve.png")
-    plt.show()
+    plt.clf()
+
+    # Draw geometry and circle for each berm length
+    for i in range(len(df)):
+        layers = df.loc[i, "Layers"]
+        x_min = 9999
+        x_max = -9999
+        z_min = 9999
+        z_max = -9999
+
+        for layer in layers.Layers:
+            df_points = pd.DataFrame(columns=["X", "Z"])
+            for point in layer.Points:
+                df_points.loc[len(df_points)] = [point.X, point.Z]
+            df_points.loc[len(df_points)] = [layer.Points[0].X, layer.Points[0].Z]
+
+            plt.plot(df_points["X"], df_points["Z"], color="black")
+
+            x_min = min(x_min, df_points["X"].min())
+            x_max = max(x_max, df_points["X"].max())
+            z_min = min(z_min, df_points["Z"].min())
+            z_max = max(z_max, df_points["Z"].max())
+
+        # zoom to extent of all layers
+        plt.xlim(x_min - 5, x_max + 5)
+        plt.ylim(z_min - 5, z_max + 5)
+
+        circle = df.loc[i, "Circle"]
+        plt.plot(circle.Center.X, circle.Center.Z, "o", color="black")
+        plt.gca().add_patch(
+            plt.Circle(
+                (circle.Center.X, circle.Center.Z),
+                circle.Radius,
+                color="black",
+                fill=False,
+            )
+        )
+
+        plt.xlabel("X [m]")
+        plt.ylabel("Z [m]")
+        plt.title("Fragility curve")
+        plt.grid()
+        filename = "fragility_curve_layers_" + str(df.loc[i, "BermLength"]) + ".png"
+        plt.savefig(output_folder / filename)
+        plt.clf()
