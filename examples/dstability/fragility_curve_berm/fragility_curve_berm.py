@@ -4,6 +4,9 @@ from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from geolib.models.dstability.analysis import DStabilityAnalysisMethod, DStabilityBishopAnalysisMethod, DStabilityCircle
+from geolib.models.dstability.internal import CalculationTypeEnum
+
 
 def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points, length_start, length_end, length_step) -> pd.DataFrame:
     '''
@@ -36,9 +39,11 @@ def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points
     for i in range(int((length_end - length_start) / length_step)):
         dm = DStabilityModel()
         dm.parse(input_file_path)
-        # Calculate new water level
+
+        # Calculate new berm length
         new_length = length_start + i * length_step
 
+        # Add new berm
         updated_berm_points = [Point(x=point.x + new_length, z=point.z) for point in varying_berm_points]
         new_berm_points = fixed_berm_points + updated_berm_points
         dm.add_layer(new_berm_points, "Sand", "Berm")
@@ -48,11 +53,23 @@ def calculate_fragility_curve(input_file, fixed_berm_points, varying_berm_points
         dm.serialize(Path(output_file))
         dm.execute()
 
-        # Get result
+        # Calculate result using Bishop Brute Force method configured in fc.stix
         result = dm.get_result(0, 0)
+        circle = result.Circle
+
+        # Set resulting circle on Bishop Single Probabilistic calculation
+        bishop_analysis_method = DStabilityBishopAnalysisMethod(circle=DStabilityCircle(center=Point(x=circle.Center.X, z=circle.Center.Z), radius=circle.Radius))
+        dm.set_model(bishop_analysis_method)
+        dm.datastructure.calculationsettings[0].CalculationType = CalculationTypeEnum.PROBABILISTIC
+
+        # Re-calculate to get Reliability Index
+        dm.serialize(Path(output_file))
+        dm.execute()
+        result = dm.get_result(0, 0)
+
         print("Result of berm length: " + str(new_length))
         print("Reliability index: " + str(result.ReliabilityIndex))
-
+        
         # Add result to dataframe
         df.loc[i] = [
             new_length,
