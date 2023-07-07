@@ -1,8 +1,7 @@
 import abc
-import re
 from enum import Enum
 from pathlib import Path
-from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO, List, Optional, Set, Type, Union
 
 from shapely.ops import polygonize
 from shapely.geometry import LineString, Point, Polygon
@@ -11,17 +10,15 @@ from shapely.validation import make_valid
 from pydantic import DirectoryPath, FilePath
 
 from geolib.geometry import Point
-from geolib.models import BaseDataClass, BaseModel
+from geolib.models import BaseModel
 from geolib.soils import Soil
 
-from ...utils import camel_to_snake, snake_to_camel
 from .analysis import DStabilityAnalysisMethod
 from .dstability_parserprovider import DStabilityParserProvider
 from .internal import (
     AnalysisType,
     BishopSlipCircleResult,
     CalculationSettings,
-    CalculationType,
     DStabilityResult,
     DStabilityStructure,
     PersistableLayer,
@@ -524,15 +521,19 @@ class DStabilityModel(BaseModel):
         return int(new_layer.Id)
 
     def make_points_valid(self, points: List[Point]) -> List[PersistablePoint]:
-        fixed = make_valid(self.geolib_points_to_shapely_polygon(points))
-        return self.to_dstability_points(fixed)
+        valid_points = make_valid(self.geolib_points_to_shapely_polygon(points))
+        return self.to_dstability_points(valid_points)
 
     def connect_layers(self, layer1: PersistableLayer, layer2: PersistableLayer):
         """Connects two polygons by adding a the missing points on the polygon edges. Returns the two new polygons."""
         linestring1 = self.to_shapely_linestring(layer1.Points)
         linestring2 = self.to_shapely_linestring(layer2.Points)
+
+        # Create a union of the two polygons and polygonize it creating two connected polygons
         union = linestring1.union(linestring2)
         result = [geom for geom in polygonize(union)]
+
+        # If the result has two polygons, we return them, otherwise we return the original polygons
         if len(result) == 2:
             return result[0].exterior, result[1].exterior
         else:
@@ -544,19 +545,18 @@ class DStabilityModel(BaseModel):
         """Adds a new layer to the list of layers and connects the points of the new layer to the existing layers."""
 
         current_layers.append(new_layer)
+
+        # Check if the new layer intersects with any of the existing layers
         for layer in current_layers:
-            if layer != new_layer and self.dstability_points_to_shapely_polygon(
-                layer.Points
-            ).exterior.intersects(
-                self.dstability_points_to_shapely_polygon(new_layer.Points).exterior
-            ):
+            if layer != new_layer and self.dstability_points_to_shapely_polygon(layer.Points).exterior.intersects(
+                self.dstability_points_to_shapely_polygon(new_layer.Points).exterior):
+                
+                # If it does, connect the layers
                 linestring1, linestring2 = self.connect_layers(layer, new_layer)
-                current_layers[
-                    current_layers.index(layer)
-                ].Points = self.to_dstability_points(linestring1)
-                current_layers[
-                    current_layers.index(new_layer)
-                ].Points = self.to_dstability_points(linestring2)
+
+                # Update the points of the layers
+                current_layers[current_layers.index(layer)].Points = self.to_dstability_points(linestring1)
+                current_layers[current_layers.index(new_layer)].Points = self.to_dstability_points(linestring2)
 
     def to_shapely_linestring(self, points: List[PersistablePoint]) -> LineString:
         converted_points = [(p.X, p.Z) for p in points]
@@ -586,13 +586,15 @@ class DStabilityModel(BaseModel):
             )
 
         persistable_points = [PersistablePoint(X=p[0], Z=p[1]) for p in list(coords)]
-        # remove duplicate points
+
+        # Remove duplicate points
         persistable_points = [
             i
             for n, i in enumerate(persistable_points)
             if i not in persistable_points[n + 1 :]
         ]
-        # remove last point if it is the same as the first
+
+        # Remove last point if it is the same as the first
         if persistable_points[0] == persistable_points[-1]:
             persistable_points.pop(-1)
 
