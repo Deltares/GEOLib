@@ -151,3 +151,46 @@ class TestDStabilityGeometry:
         ]
 
         assert dstability_model.datastructure.geometries[0].Layers[0].Points == expected_layer
+
+    @pytest.mark.unittest
+    def test_multiple_layers_with_missing_points_on_edge_are_fixed(self):
+        layer1 = [
+            Point(x=0, z=0),
+            Point(x=100, z=0),
+            Point(x=100, z=10),
+            Point(x=0, z=10),
+        ]
+
+        layer2 = [
+            Point(x=10, z=10),
+            Point(x=20, z=10),
+            Point(x=20, z=20),
+            Point(x=10, z=20),
+        ]
+
+        layer3 = [
+            Point(x=25, z=10),
+            Point(x=20, z=15),
+            Point(x=25, z=20),
+            Point(x=30, z=15),
+            Point(x=30, z=10),
+        ]
+
+        dstability_model = DStabilityModel()
+        dstability_model.add_soil(Soil(code="Peat"))
+        dstability_model.add_layer(points=layer1, soil_code="Peat", label="L1")
+        dstability_model.add_layer(points=layer2, soil_code="Peat", label="L2")
+        dstability_model.add_layer(points=layer3, soil_code="Peat", label="L3")
+
+        expected_layer = [
+            PersistablePoint(X=100, Z=0),
+            PersistablePoint(X=0, Z=0),
+            PersistablePoint(X=0, Z=10),
+            PersistablePoint(X=10, Z=10),
+            PersistablePoint(X=20, Z=10),
+            PersistablePoint(X=25, Z=10),
+            PersistablePoint(X=30, Z=10),
+            PersistablePoint(X=100, Z=10),
+        ]
+
+        assert dstability_model.datastructure.geometries[0].Layers[0].Points == expected_layer
