@@ -13,6 +13,7 @@ from .internal import (
     PersistableConsolidation,
     PersistableLineLoad,
     PersistablePoint,
+    PersistableTree,
     PersistableUniformLoad,
 )
 
@@ -80,10 +81,19 @@ class LineLoad(DStabilityLoad):
 class TreeLoad(DStabilityLoad):
     """Inherits :class:`~geolib.models.dstability.loads.DStabilityLoad`."""
 
-    height: float
+    tree_top_location: Point
     wind_force: float
     width_of_root_zone: float
     angle_of_distribution: float
+
+    def to_internal_datastructure(self) -> PersistableTree:
+        return PersistableTree(
+            Label=self.label,
+            Location=PersistablePoint(X=self.tree_top_location.x, Z=self.tree_top_location.z),
+            Force=self.wind_force,
+            RootZoneWidth=self.width_of_root_zone,
+            Spread=self.angle_of_distribution,
+        )
 
 
 class Earthquake(DStabilityLoad):
