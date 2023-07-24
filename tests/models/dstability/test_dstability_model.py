@@ -29,7 +29,7 @@ from geolib.models.dstability.internal import (
     PersistableStochasticParameter,
     ShearStrengthModelTypePhreaticLevelInternal,
 )
-from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
+from geolib.models.dstability.loads import Consolidation, LineLoad, TreeLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
 from geolib.models.dstability.states import (
     DStabilityStateLinePoint,
@@ -514,7 +514,20 @@ class TestDStabilityModel:
                 angle_of_distribution=45,
             )
         )
+
         path = outputdir / "test_uniformload.stix"
+        dm.serialize(path)
+
+        dm.add_load(
+            TreeLoad(
+                tree_top_location=Point(x=2.0, z=12.0),
+                width_of_root_zone=10.0,
+                wind_force=20.0,
+                angle_of_distribution=30.0,
+            )
+        )
+        
+        path = outputdir / "test_tree.stix"
         dm.serialize(path)
 
         # add line load
