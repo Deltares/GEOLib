@@ -1,6 +1,6 @@
 Changelog
 =========
-- :release:`1.1.0 <2023-10-18>`	
+- :release:`1.1.0 <2023-07-24>`	
 - :feature:`-` Add support for a TreeLoad to be added to the model (#130)
 
 - :release:`1.0.1 <2023-06-14>`
