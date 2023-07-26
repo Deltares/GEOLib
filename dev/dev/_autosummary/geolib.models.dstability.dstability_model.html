@@ -183,6 +183,20 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_layer_and_connect_points">
+<span class="sig-name descname"><span class="pre">add_layer_and_connect_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_layer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_layer_and_connect_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new layer to the list of layers and connects the points of the new layer to the existing layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_layers</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a>]) – </p></li>
+<li><p><strong>new_layer</strong> (<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.add_load">
 <span class="sig-name descname"><span class="pre">add_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.add_load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a load to the object.</p>
@@ -416,6 +430,20 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.connect_layers">
+<span class="sig-name descname"><span class="pre">connect_layers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.connect_layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connects two polygons by adding a the missing points on the polygon edges. Returns the two new polygons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer1</strong> (<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a>) – </p></li>
+<li><p><strong>layer2</strong> (<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.console_path">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">console_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.console_path" title="Permalink to this definition">¶</a></dt>
@@ -445,6 +473,32 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.datastructure">
 <span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.DStabilityStructure" title="geolib.models.dstability.internal.DStabilityStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityStructure</span></code></a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.datastructure" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.dstability_points_to_shapely_polygon">
+<span class="sig-name descname"><span class="pre">dstability_points_to_shapely_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.dstability_points_to_shapely_polygon" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.geolib_points_to_shapely_polygon">
+<span class="sig-name descname"><span class="pre">geolib_points_to_shapely_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.geolib_points_to_shapely_polygon" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_calculation_index">
@@ -605,6 +659,19 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.make_points_valid">
+<span class="sig-name descname"><span class="pre">make_points_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.make_points_valid" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.output">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanResult" title="geolib.models.dstability.internal.UpliftVanResult"><span class="pre">UpliftVanResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmResult"><span class="pre">UpliftVanParticleSwarmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanReliabilityResult" title="geolib.models.dstability.internal.UpliftVanReliabilityResult"><span class="pre">UpliftVanReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult"><span class="pre">UpliftVanParticleSwarmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmResult"><span class="pre">SpencerGeneticAlgorithmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerReliabilityResult" title="geolib.models.dstability.internal.SpencerReliabilityResult"><span class="pre">SpencerReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult"><span class="pre">SpencerGeneticAlgorithmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerResult" title="geolib.models.dstability.internal.SpencerResult"><span class="pre">SpencerResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceResult" title="geolib.models.dstability.internal.BishopBruteForceResult"><span class="pre">BishopBruteForceResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopReliabilityResult" title="geolib.models.dstability.internal.BishopReliabilityResult"><span class="pre">BishopReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceReliabilityResult" title="geolib.models.dstability.internal.BishopBruteForceReliabilityResult"><span class="pre">BishopBruteForceReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopResult" title="geolib.models.dstability.internal.BishopResult"><span class="pre">BishopResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Permalink to this definition">¶</a></dt>
@@ -687,6 +754,32 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.soils">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">soils</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilCollection" title="geolib.models.dstability.internal.SoilCollection"><span class="pre">SoilCollection</span></a></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.soils" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.to_dstability_points">
+<span class="sig-name descname"><span class="pre">to_dstability_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapely_object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.to_dstability_points" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shapely_object</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LineString</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code>]) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.to_shapely_linestring">
+<span class="sig-name descname"><span class="pre">to_shapely_linestring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.to_shapely_linestring" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>points</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]) – </p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">LineString</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py property">
