@@ -1094,7 +1094,7 @@ class Loads(DStabilitySubStructure):
 
     def add_load(
         self, load: "DStabilityLoad", consolidations: List["Consolidation"]
-    ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
+    ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad, PersistableTree]:
         internal_datastructure = load.to_internal_datastructure()
 
         # Add consolidations if the load supports it
@@ -1106,6 +1106,8 @@ class Loads(DStabilitySubStructure):
         target = load.__class__.__name__
         if target == "Earthquake":
             setattr(self, target, internal_datastructure)
+        if target == "TreeLoad":
+            getattr(self, "Trees").append(internal_datastructure)
         else:
             target += "s"
             getattr(self, target).append(internal_datastructure)
