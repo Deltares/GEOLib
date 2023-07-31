@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "d-geolib"
-version = "1.0.1"
+version = "1.1.0"
 description = "Python wrappers around the input and output files of the Deltares D-Serie and D-GEO Suite models"
 authors = ["Maarten Pronk <maarten.pronk@deltares.nl>", "Deltares"]
 license = "MIT"
@@ -14,7 +14,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0.0"
-pydantic = {version = "^1.10.7", extras = ["dotenv"]}
+pydantic = "^1.10.7"
 zipp = "^3.15.0"
 fastapi = {version = "^0.95.1", optional = true}
 uvicorn = {version = "^0.21.1", optional = true}
@@ -22,7 +22,8 @@ requests = "^2.29.0"
 jinja2 = "^3.1.2"
 httpx = {version = "^0.24.0", optional = true}
 starlette = "^0.26.1"
-matplotlib = ">=3.7.2"
+shapely = "^2.0.1"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 teamcity-messages = "^1.32"
@@ -72,7 +73,7 @@ profile = "black"
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.0.1"
+version = "1.1.0"
 tag_format = "v$major.$minor.$patch$prerelease"
 version_files = [
     "pyproject.toml:^version",

@@ -82,9 +82,9 @@ Note that for setting lower levels than the default warning level, you have to c
 Consoles
 --------
 
-You can download the consoles `here <https://download.deltares.nl/en/download/geolib/>`_, 
+You can download the consoles `here <https://download.deltares.nl/geolib>`_, 
 with the given password. You also need to download the license manager
-from `here <https://download.deltares.nl/en/lmadmin/>`_ and install the given license using the "Add License File" program.
+from `here <https://download.deltares.nl/en/license-manager>`_ and install the given license using the "Add License File" program.
 
 Console usage
 -------------
