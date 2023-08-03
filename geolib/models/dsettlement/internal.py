@@ -954,7 +954,7 @@ class DSettlementStructure(DSeriesStructure):
                 check_that_x_in_verticals = True
         if not (check_that_x_in_verticals):
             raise ValueError(
-                f"The x-coordinate of point_of_vertical does not correspond to an existing vertical."
+                "The x-coordinate of point_of_vertical does not correspond to an existing vertical."
             )
 
     def get_headlines_for_layers(self):
