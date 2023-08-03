@@ -1,4 +1,5 @@
 import abc
+import re
 from enum import Enum
 from pathlib import Path
 from typing import BinaryIO, List, Optional, Set, Type, Union
@@ -7,21 +8,24 @@ from shapely.ops import polygonize
 from shapely.geometry import LineString, Point, Polygon
 from shapely.validation import make_valid
 
+import matplotlib.pyplot as plt
+
 from pydantic import DirectoryPath, FilePath
 
 from geolib.geometry import Point
 from geolib.models import BaseModel
 from geolib.soils import Soil
 
+from ...utils import camel_to_snake, snake_to_camel
 from .analysis import DStabilityAnalysisMethod
 from .dstability_parserprovider import DStabilityParserProvider
 from .internal import (
     AnalysisType,
     BishopSlipCircleResult,
     CalculationSettings,
+    CalculationType,
     DStabilityResult,
     DStabilityStructure,
-    PersistableLayer,
     PersistablePoint,
     PersistableSoil,
     PersistableStateCorrelation,
@@ -31,6 +35,9 @@ from .internal import (
     SpencerSlipPlaneResult,
     UpliftVanSlipCircleResult,
     Waternet,
+    PersistableLayer,
+    SoilLayerCollection,
+    SoilVisualisation
 )
 from .loads import Consolidation, DStabilityLoad
 from .reinforcements import DStabilityReinforcement
@@ -550,7 +557,7 @@ class DStabilityModel(BaseModel):
         for layer in current_layers:
             if layer != new_layer and self.dstability_points_to_shapely_polygon(layer.Points).exterior.intersects(
                 self.dstability_points_to_shapely_polygon(new_layer.Points).exterior):
-                
+
                 # If it does, connect the layers
                 linestring1, linestring2 = self.connect_layers(layer, new_layer)
 
@@ -1040,3 +1047,41 @@ class DStabilityModel(BaseModel):
             return self.current_calculation
         else:
             return calculation_index
+
+    @staticmethod
+    def get_soil_id_from_layer_id(layers: SoilLayerCollection, layer_id: str) -> Union[str, None]:
+        for layer in layers.SoilLayers:
+            if layer.LayerId == layer_id:
+                return layer.SoilId
+        return None
+
+    @staticmethod
+    def get_color_from_soil_id(soil_visualizations: SoilVisualisation, soil_id: str) -> str:
+        for soil_visualization in soil_visualizations.SoilVisualizations:
+            if soil_visualization.SoilId == soil_id:
+                return soil_visualization.Color
+        return "#000000"
+
+    def _get_color_of_layer(self, layers_collection: SoilLayerCollection ,  layer: PersistableLayer) -> str:
+        layer_id = layer.Id
+        # use the layer id to get the soil type id
+        soil_type_id = DStabilityModel.get_soil_id_from_layer_id(layers_collection, layer_id)
+        # get the color of the soil type
+        color = DStabilityModel.get_color_from_soil_id(self.input.soilvisualizations, soil_type_id)
+        return color.replace("#80", "#")
+
+    def plot(self, scenario_index: Optional[int] = None, stage_index: Optional[int] = None):
+        geometry = self._get_geometry(scenario_index, stage_index)
+        layers_collection = self._get_soil_layers(scenario_index, stage_index)
+        fig, ax = plt.subplots()
+        # loop over the layers
+        for layer in geometry.Layers:
+            # get list of x and y coordinates
+            x = [p.X for p in layer.Points]
+            y = [p.Z for p in layer.Points]
+            # get color of layer
+            color = self._get_color_of_layer(layers_collection, layer)
+            # create a polygon
+            ax.fill(x, y, color=color)
+        plt.axis('off')
+        return fig, ax

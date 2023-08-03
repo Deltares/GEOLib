@@ -3,6 +3,8 @@ import pathlib
 import shutil
 from io import BytesIO
 from pathlib import Path
+import matplotlib.pyplot as plt
+import numpy as np
 
 import pytest
 from teamcity import is_running_under_teamcity
@@ -728,6 +730,22 @@ class TestDStabilityModel:
             == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
         )
         assert len(soil_su_table.SuTable.SuTablePoints) == 4
+
+    @pytest.mark.unittest
+    def test_plot(self):
+        # read a model
+        dm = DStabilityModel()
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
+        )
+        dm.parse(test_filepath)
+        # test initial expectations
+        assert dm
+        assert dm.soils
+        # plot the model
+        fig, ax = dm.plot(0, 0)
+        assert fig
+        assert ax
 
     @pytest.mark.integrationtest
     def test_su_table_version_input(self):
