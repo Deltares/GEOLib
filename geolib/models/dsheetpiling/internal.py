@@ -908,7 +908,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         model.
         """
         if not isinstance(self.model, Model):
-            raise ValueError(f"Model is a string; set model first")
+            raise ValueError("Model is a string; set model first")
         if stage_method is None:
             return self.model.method
         error = ValueError(
@@ -932,7 +932,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         method_right: LateralEarthPressureMethodStage,
     ) -> None:
         if not isinstance(self.model, Model):
-            raise ValueError(f"Model is a string; set model first")
+            raise ValueError("Model is a string; set model first")
         if self.model.model == ModelType.SINGLE_PILE:
             if method_left != method_right:
                 raise ValueError(
@@ -1102,7 +1102,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         elif isinstance(load, UniformLoad):
             self.add_uniform_load(load=load, stage_id=stage_id)
         else:
-            raise ValueError(f"This type of load is not yet supported")
+            raise ValueError("This type of load is not yet supported")
 
     def add_uniform_load(self, stage_id: int, load: UniformLoad) -> None:
         self.is_valid_unique_load_names(
