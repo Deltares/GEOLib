@@ -666,7 +666,7 @@ class Soil(SoilBaseModel):
             "soilstdpop": self.soil_state.pop_layer.standard_deviation,
             "soilstdpermeabilityhorfactor": self.storage_parameters.permeability_horizontal_factor.standard_deviation,
             "soilstdinitialvoidratio": self.soil_classification_parameters.initial_void_ratio.standard_deviation,
-            "soilstdpermeabilitystrainmodulus": None,
+            "soilstdpermeabilitystrainmodulus": self.storage_parameters.permeability_strain_type.standard_deviation,
             "soilstdlimitstress": None,
             "soilstdcp": self.koppejan_parameters.primary_Cp.standard_deviation,
             "soilstdcp1": self.koppejan_parameters.primary_Cp_point.standard_deviation,
