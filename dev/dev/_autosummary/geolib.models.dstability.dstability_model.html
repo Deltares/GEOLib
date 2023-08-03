@@ -511,6 +511,22 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_color_from_soil_id">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_color_from_soil_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">soil_visualizations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">soil_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_color_from_soil_id" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>soil_visualizations</strong> (<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilVisualisation" title="geolib.models.dstability.internal.SoilVisualisation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilVisualisation</span></code></a>) – </p></li>
+<li><p><strong>soil_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_result">
 <span class="sig-name descname"><span class="pre">get_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calculation_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the results of a calculation. Calculation results are based on analysis type and calculation type.</p>
@@ -630,6 +646,22 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_soil_id_from_layer_id">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_soil_id_from_layer_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_soil_id_from_layer_id" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layers</strong> (<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SoilLayerCollection" title="geolib.models.dstability.internal.SoilLayerCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoilLayerCollection</span></code></a>) – </p></li>
+<li><p><strong>layer_id</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.get_stage_index">
 <span class="sig-name descname"><span class="pre">get_stage_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stage_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.get_stage_index" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -695,6 +727,19 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scenario_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stage_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.plot" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scenario_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+<li><p><strong>stage_index</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
