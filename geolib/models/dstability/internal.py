@@ -2,13 +2,12 @@
 The internal data model structure.
 """
 
-import json
 from collections import defaultdict
 from datetime import date, datetime
 from enum import Enum
 from itertools import chain
 from math import isfinite
-from typing import Dict, Generator, List, Optional, Set, Tuple, Union
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 from pydantic import ValidationError, conlist, root_validator, validator
 
@@ -16,7 +15,6 @@ from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.soils import Soil
-from geolib.utils import snake_to_camel
 
 from .dstability_validator import DStabilityValidator
 from .utils import children
@@ -106,7 +104,7 @@ class Waternet(DStabilitySubStructure):
         return "waternets"
 
     Id: Optional[str]
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     PhreaticLineId: Optional[str] = None
     HeadLines: List[PersistableHeadLine] = []
     ReferenceLines: List[PersistableReferenceLine] = []
@@ -209,7 +207,7 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[Union[float, str]] = "NaN"
     AquitardHeadLandSide: Optional[Union[float, str]] = "NaN"
     AquitardHeadWaterSide: Optional[Union[float, str]] = "NaN"
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     DitchCharacteristics: Optional[
         PersistableDitchCharacteristics
     ] = PersistableDitchCharacteristics()
@@ -302,7 +300,7 @@ class State(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "states"
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str]
     StateLines: List[PersistableStateLine] = []
     StatePoints: List[PersistableStatePoint] = []
@@ -348,7 +346,7 @@ class StateCorrelation(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "statecorrelations"
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str]
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
 
@@ -431,7 +429,7 @@ class PersistableSoilVisualization(DStabilityBaseModelStructure):
 
 
 class SoilVisualisation(DStabilityBaseModelStructure):
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
 
     @classmethod
@@ -455,7 +453,7 @@ class SoilLayerCollection(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "soillayers"
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str]
     SoilLayers: List[PersistableSoilLayer] = []
 
@@ -481,7 +479,7 @@ class PersistableSoilCorrelation(DStabilityBaseModelStructure):
 class SoilCorrelation(DStabilitySubStructure):
     """soilcorrelations.json"""
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     SoilCorrelations: Optional[List[Optional[PersistableSoilCorrelation]]] = []
 
     @classmethod
@@ -620,7 +618,7 @@ class PersistableSoil(DStabilityBaseModelStructure):
 class SoilCollection(DStabilitySubStructure):
     """soils.json"""
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Soils: List[PersistableSoil] = [
         PersistableSoil(
             Id="2",
@@ -963,7 +961,7 @@ class Reinforcements(DStabilitySubStructure):
     """reinforcements/reinforcements_x.json"""
 
     Id: Optional[str]
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     ForbiddenLines: List[PersistableForbiddenLine] = []
     Geotextiles: List[PersistableGeotextile] = []
     Nails: List[PersistableNail] = []
@@ -983,7 +981,7 @@ class ProjectInfo(DStabilitySubStructure):
     Analyst: Optional[str] = ""
     ApplicationCreated: Optional[str] = ""
     ApplicationModified: Optional[str] = ""
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Created: Optional[date] = datetime.now().date()
     CrossSection: Optional[str] = ""
     Date: Optional[date] = datetime.now().date()
@@ -1021,7 +1019,7 @@ class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
 class NailProperties(DStabilitySubStructure):
     """nailpropertiesforsoils.json"""
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     NailPropertiesForSoils: Optional[
         List[Optional[PersistableNailPropertiesForSoil]]
     ] = []
@@ -1087,7 +1085,7 @@ class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
     Id: Optional[str]
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Earthquake: Optional[PersistableEarthquake] = PersistableEarthquake()
     LayerLoads: Optional[List[Optional[PersistableLayerLoad]]] = []
     LineLoads: Optional[List[Optional[PersistableLineLoad]]] = []
@@ -1096,7 +1094,7 @@ class Loads(DStabilitySubStructure):
 
     def add_load(
         self, load: "DStabilityLoad", consolidations: List["Consolidation"]
-    ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]:
+    ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad, PersistableTree]:
         internal_datastructure = load.to_internal_datastructure()
 
         # Add consolidations if the load supports it
@@ -1108,6 +1106,8 @@ class Loads(DStabilitySubStructure):
         target = load.__class__.__name__
         if target == "Earthquake":
             setattr(self, target, internal_datastructure)
+        if target == "TreeLoad":
+            getattr(self, "Trees").append(internal_datastructure)
         else:
             target += "s"
             getattr(self, target).append(internal_datastructure)
@@ -1152,7 +1152,7 @@ class Geometry(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "geometries"
 
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str]
     Layers: List[PersistableLayer] = []
 
@@ -1229,7 +1229,7 @@ class Decorations(DStabilitySubStructure):
     """decorations/decorations_x.json."""
 
     Elevations: Optional[List[Optional[PersistableElevation]]] = []
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Excavations: Optional[List[Optional[PersistableExcavation]]] = []
     Id: Optional[str]
 
@@ -1391,7 +1391,7 @@ class CalculationSettings(DStabilitySubStructure):
         PersistableBishopBruteForceSettings
     ] = PersistableBishopBruteForceSettings()
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.DETERMINISTIC
-    ContentVersion: Optional[str] = "1"
+    ContentVersion: Optional[str] = "2"
     Id: Optional[str] = "19"
     ModelFactorMean: Optional[float] = 1.05
     ModelFactorStandardDeviation: Optional[float] = 0.033
