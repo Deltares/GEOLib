@@ -1094,7 +1094,9 @@ class Loads(DStabilitySubStructure):
 
     def add_load(
         self, load: "DStabilityLoad", consolidations: List["Consolidation"]
-    ) -> Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad, PersistableTree]:
+    ) -> Union[
+        PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad, PersistableTree
+    ]:
         internal_datastructure = load.to_internal_datastructure()
 
         # Add consolidations if the load supports it

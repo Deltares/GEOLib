@@ -111,12 +111,15 @@ class TestDStabilityGeometry:
             PersistablePoint(X=40, Z=-20),
             PersistablePoint(X=30, Z=-20),
             PersistablePoint(X=20, Z=-20),
-            PersistablePoint(X=-50,Z=-20),
-            PersistablePoint(X=-50,Z=-10),
-            PersistablePoint(X=20,Z=-10),
+            PersistablePoint(X=-50, Z=-20),
+            PersistablePoint(X=-50, Z=-10),
+            PersistablePoint(X=20, Z=-10),
         ]
 
-        assert dstability_model.datastructure.geometries[0].Layers[0].Points == expected_layer
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )
 
     @pytest.mark.unittest
     def test_layer_with_missing_points_on_edge_are_fixed(self):
@@ -150,7 +153,10 @@ class TestDStabilityGeometry:
             PersistablePoint(X=50, Z=-10),
         ]
 
-        assert dstability_model.datastructure.geometries[0].Layers[0].Points == expected_layer
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )
 
     @pytest.mark.unittest
     def test_multiple_layers_with_missing_points_on_edge_are_fixed(self):
@@ -193,4 +199,7 @@ class TestDStabilityGeometry:
             PersistablePoint(X=100, Z=10),
         ]
 
-        assert dstability_model.datastructure.geometries[0].Layers[0].Points == expected_layer
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )

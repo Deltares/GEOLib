@@ -1,16 +1,12 @@
 import os
-import pathlib
 import shutil
 from io import BytesIO
 from pathlib import Path
-import matplotlib.pyplot as plt
-import numpy as np
 
 import pytest
-from teamcity import is_running_under_teamcity
 
 from geolib.geometry.one import Point
-from geolib.models import BaseModel, BaseModelStructure
+from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.analysis import (
     DStabilityBishopAnalysisMethod,
@@ -31,7 +27,7 @@ from geolib.models.dstability.internal import (
     PersistableStochasticParameter,
     ShearStrengthModelTypePhreaticLevelInternal,
 )
-from geolib.models.dstability.loads import Consolidation, LineLoad, TreeLoad, UniformLoad
+from geolib.models.dstability.loads import LineLoad, TreeLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
 from geolib.models.dstability.states import (
     DStabilityStateLinePoint,
@@ -39,7 +35,7 @@ from geolib.models.dstability.states import (
     DStabilityStress,
 )
 from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil, SuTablePoint
-from tests.utils import TestUtils, only_teamcity
+from tests.utils import TestUtils
 
 
 class TestDStabilityModel:
@@ -528,7 +524,7 @@ class TestDStabilityModel:
                 angle_of_distribution=30.0,
             )
         )
-        
+
         path = outputdir / "test_tree.stix"
         dm.serialize(path)
 

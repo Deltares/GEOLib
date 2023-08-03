@@ -36,6 +36,7 @@ def _get_line_load() -> LineLoad:
         angle_of_distribution=45,
     )
 
+
 @pytest.fixture
 def _get_tree_load() -> TreeLoad:
     return TreeLoad(
