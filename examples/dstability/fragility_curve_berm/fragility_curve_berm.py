@@ -1,5 +1,6 @@
 from pathlib import Path
-
+import sys
+sys.path.insert(1, 'C:/CheckOut/GEOLib')
 import matplotlib.pyplot as plt
 import pandas as pd
 
