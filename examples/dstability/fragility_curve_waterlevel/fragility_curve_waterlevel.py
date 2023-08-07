@@ -1,18 +1,19 @@
-from geolib.models.dstability import DStabilityModel
 from pathlib import Path
-import pandas as pd
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.internal import PersistableHeadLine, Waternet
 
 
 def find_phreatic_line(waternet: Waternet) -> PersistableHeadLine:
-    '''
+    """
     Find the phreatic line in a given waternet.
 
     :param waternet: Waternet to search in
     :return: Phreatic line
-    '''
+    """
     for headline in waternet.HeadLines:
         if headline.Id == waternet.PhreaticLineId:
             return headline
@@ -20,7 +21,7 @@ def find_phreatic_line(waternet: Waternet) -> PersistableHeadLine:
 
 
 def calculate_fragility_curve(input_file, z_start, z_end, z_step) -> pd.DataFrame:
-    '''
+    """
     Calculate the fragility curve for a given input file and a range of water levels.
 
     This method will raise the first point of the water level by the given step size.
@@ -30,7 +31,7 @@ def calculate_fragility_curve(input_file, z_start, z_end, z_step) -> pd.DataFram
     :param z_end: End of the water level range
     :param z_step: Step size of the water level range
     :return: Dataframe with the water level and the corresponding reliability index
-    '''
+    """
 
     # Prepare dataframe
     df = pd.DataFrame(columns=["Waterlevel", "Beta", "Filename"])
@@ -62,7 +63,9 @@ def calculate_fragility_curve(input_file, z_start, z_end, z_step) -> pd.DataFram
             headline_points[0].Z = new_z
 
             # Serialize and execute
-            output_file = output_folder / (input_file_path.stem + "_" + str(new_z) + input_file_path.suffix)
+            output_file = output_folder / (
+                input_file_path.stem + "_" + str(new_z) + input_file_path.suffix
+            )
             dm.serialize(Path(output_file))
             dm.execute()
 

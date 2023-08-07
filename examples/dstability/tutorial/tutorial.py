@@ -118,8 +118,6 @@ layer_2 = [
 ]
 layer_3 = [
     Point(x=-50, z=0),
-    Point(x=-10, z=0),
-    Point(x=30, z=0),
     Point(x=50, z=0),
     Point(x=50, z=-5),
     Point(x=-50, z=-5),
@@ -138,7 +136,7 @@ layers_and_soils = [
 ]
 layer_ids = []
 for layer, soil in layers_and_soils:
-    layer_id = dm.add_layer(layer, soil)
+    layer_id = dm.add_layer(layer, soil, label=soil)
     layer_ids.append(layer_id)
 
 # add phreatic line
@@ -170,7 +168,7 @@ dm.add_reference_line(
     top_head_line_id=sand_head_line_id,
 )
 
-from geolib.models.dstability.loads import LineLoad, UniformLoad
+from geolib.models.dstability.loads import LineLoad, TreeLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
 
 #  add uniform load
@@ -191,6 +189,15 @@ dm.add_load(
         angle=0.0,
         magnitude=10.0,
         angle_of_distribution=45.0,
+    )
+)
+
+dm.add_load(
+    TreeLoad(
+        tree_top_location=Point(x=2.0, z=2.0),
+        width_of_root_zone=10.0,
+        wind_force=20.0,
+        angle_of_distribution=30.0,
     )
 )
 

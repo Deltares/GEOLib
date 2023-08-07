@@ -77,10 +77,8 @@ you. It includes in depth guide how to go about extending GEOLib.
 There are no more guides. You are now guideless.
 Good luck.
 
-Changelog
----------
+Releases & Changelog
+--------------------
 
-.. toctree::
-   :maxdepth: 3
+https://github.com/Deltares/GEOLib/releases
 
-   changelog

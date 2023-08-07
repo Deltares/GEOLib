@@ -1,14 +1,12 @@
 import os
-import pathlib
 import shutil
 from io import BytesIO
 from pathlib import Path
 
 import pytest
-from teamcity import is_running_under_teamcity
 
 from geolib.geometry.one import Point
-from geolib.models import BaseModel, BaseModelStructure
+from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.analysis import (
     DStabilityBishopAnalysisMethod,
@@ -29,7 +27,7 @@ from geolib.models.dstability.internal import (
     PersistableStochasticParameter,
     ShearStrengthModelTypePhreaticLevelInternal,
 )
-from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
+from geolib.models.dstability.loads import LineLoad, TreeLoad, UniformLoad
 from geolib.models.dstability.reinforcements import ForbiddenLine, Geotextile, Nail
 from geolib.models.dstability.states import (
     DStabilityStateLinePoint,
@@ -37,7 +35,7 @@ from geolib.models.dstability.states import (
     DStabilityStress,
 )
 from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil, SuTablePoint
-from tests.utils import TestUtils, only_teamcity
+from tests.utils import TestUtils
 
 
 class TestDStabilityModel:
@@ -514,7 +512,20 @@ class TestDStabilityModel:
                 angle_of_distribution=45,
             )
         )
+
         path = outputdir / "test_uniformload.stix"
+        dm.serialize(path)
+
+        dm.add_load(
+            TreeLoad(
+                tree_top_location=Point(x=2.0, z=12.0),
+                width_of_root_zone=10.0,
+                wind_force=20.0,
+                angle_of_distribution=30.0,
+            )
+        )
+
+        path = outputdir / "test_tree.stix"
         dm.serialize(path)
 
         # add line load
@@ -715,6 +726,22 @@ class TestDStabilityModel:
             == ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
         )
         assert len(soil_su_table.SuTable.SuTablePoints) == 4
+
+    @pytest.mark.unittest
+    def test_plot(self):
+        # read a model
+        dm = DStabilityModel()
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/example_1.stix")
+        )
+        dm.parse(test_filepath)
+        # test initial expectations
+        assert dm
+        assert dm.soils
+        # plot the model
+        fig, ax = dm.plot(0, 0)
+        assert fig
+        assert ax
 
     @pytest.mark.integrationtest
     def test_su_table_version_input(self):

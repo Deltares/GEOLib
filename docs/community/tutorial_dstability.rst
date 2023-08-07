@@ -322,3 +322,14 @@ be added to the current scenario.
 
     # add new calculation to the first scenario (and activate it)
     dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+
+The GEOLib package also contains functionality to plot a D-Stability model. To plot the model you can use the following code:
+
+.. code-block:: python
+
+    import matplotlib.pyplot as plt
+
+    scenario_id = 0
+    stage_id = 0
+    fig, ax = dm.plot_model(scenario_id, stage_id)
+    plt.show()

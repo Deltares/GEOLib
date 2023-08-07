@@ -9,9 +9,10 @@ from geolib.models.dstability.internal import (
     PersistableLayerLoad,
     PersistableLineLoad,
     PersistableSoilLayer,
+    PersistableTree,
     PersistableUniformLoad,
 )
-from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
+from geolib.models.dstability.loads import Consolidation, LineLoad, TreeLoad, UniformLoad
 
 
 @pytest.fixture
@@ -32,6 +33,17 @@ def _get_line_load() -> LineLoad:
         location=Point(x=0, z=0),
         magnitude=10,
         angle=0,
+        angle_of_distribution=45,
+    )
+
+
+@pytest.fixture
+def _get_tree_load() -> TreeLoad:
+    return TreeLoad(
+        label="this is a tree load",
+        tree_top_location=Point(x=20, z=10),
+        wind_force=10,
+        width_of_root_zone=2,
         angle_of_distribution=45,
     )
 
@@ -270,6 +282,21 @@ class TestLineLoad:
         assert line_load.magnitude == internal_datastructure.Magnitude
         assert line_load.angle == internal_datastructure.Angle
         assert line_load.angle_of_distribution == internal_datastructure.Spread
+
+    @pytest.mark.unittest
+    def test_tree_to_internal_datastructure(self, _get_tree_load):
+        tree = _get_tree_load
+
+        internal_datastructure = tree.to_internal_datastructure()
+
+        assert isinstance(internal_datastructure, PersistableTree)
+
+        assert tree.label == internal_datastructure.Label
+        assert tree.tree_top_location.x == internal_datastructure.Location.X
+        assert tree.tree_top_location.z == internal_datastructure.Location.Z
+        assert tree.wind_force == internal_datastructure.Force
+        assert tree.width_of_root_zone == internal_datastructure.RootZoneWidth
+        assert tree.angle_of_distribution == internal_datastructure.Spread
 
 
 class TestDStabilityModelAddLoad:
