@@ -76,7 +76,7 @@ class DSettlementModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DSettlementConsole/DSettlementConsole.exe")
+        return Path("DSettlement/DSettlement.exe")
 
     @property
     def console_flags(self) -> List[str]:
