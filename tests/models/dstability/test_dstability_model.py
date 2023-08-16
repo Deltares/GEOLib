@@ -280,6 +280,33 @@ class TestDStabilityModel:
         )
 
     @pytest.mark.unittest
+    def test_add_excavation(self):
+        dm = DStabilityModel()
+        dm.add_layer(
+            [
+                Point(x=-50, z=-10),
+                Point(x=50, z=-10),
+                Point(x=50, z=-20),
+                Point(x=-50, z=-20),
+            ],
+            "Sand",
+        )
+
+        dm.add_excavation(
+            points=[
+                Point(x=-20, z=-10),
+                Point(x=-10, z=-15),
+                Point(x=10, z=-15),
+                Point(x=20, z=-10),
+            ],
+            label="sample excavation",
+        )
+
+        ex = dm._get_excavations(0, 0)
+        assert len(ex) == 1
+        assert len(ex[0].Points) == 4
+
+    @pytest.mark.unittest
     def test_add_scenario(self):
         # Setup
         dm = DStabilityModel()
