@@ -1235,6 +1235,9 @@ class Decorations(DStabilitySubStructure):
     Excavations: Optional[List[Optional[PersistableExcavation]]] = []
     Id: Optional[str]
 
+    def add_excavation(self, excavation: PersistableExcavation):
+        self.Excavations.append(excavation)
+
 
 # Calculation Settings
 
@@ -2339,6 +2342,17 @@ class DStabilityStructure(BaseModelStructure):
 
         raise ValueError(
             f"No soil layers found for stage {stage_index} in scenario {scenario_index}."
+        )
+
+    def _get_excavations(self, scenario_index: int, stage_index: int):
+        decorations_id = self.scenarios[scenario_index].Stages[stage_index].DecorationsId
+
+        for decoration in self.decorations:
+            if decoration.Id == decorations_id:
+                return decoration.Excavations
+
+        raise ValueError(
+            f"No excavations found for stage {stage_index} in scenario {scenario_index}."
         )
 
     def _get_loads(self, scenario_index: int, stage_index: int):

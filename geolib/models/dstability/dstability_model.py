@@ -25,6 +25,7 @@ from .internal import (
     PersistablePoint,
     PersistableSoil,
     PersistableStateCorrelation,
+    PersistableExcavation,
     Scenario,
     SoilCollection,
     SoilCorrelation,
@@ -326,6 +327,9 @@ class DStabilityModel(BaseModel):
         raise ValueError(
             f"No state correlations found for stage {stage_index} in scenario {scenario_index}."
         )
+
+    def _get_excavations(self, scenario_index: int, stage_index: int):
+        return self.datastructure._get_excavations(scenario_index, stage_index)
 
     def _get_loads(self, scenario_index: int, stage_index: int):
         return self.datastructure._get_loads(scenario_index, stage_index)
@@ -815,6 +819,24 @@ class DStabilityModel(BaseModel):
         )
 
         state_correlations.add_state_correlation(persistable_state_correlation)
+
+    def add_excavation(
+        self,
+        points: List[Point],
+        label: str,
+        notes: str = "",
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
+    ):
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
+
+        persistable_excavation = PersistableExcavation(
+            Label=label,
+            Notes=notes,
+            Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
+        )
+        self._get_excavations(scenario_index, stage_index).append(persistable_excavation)
 
     def add_load(
         self,
