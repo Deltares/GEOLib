@@ -25,7 +25,7 @@ class Test_DSettlementInputParser:
     @pytest.fixture
     def parsed_dsettlement_testfile(self):
         # 1. Define test data
-        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
+        test_folder = TestUtils.get_local_test_data_dir("dsettlement/benchmarks")
         test_file = pathlib.Path(os.path.join(test_folder, "bm1-1.sli"))
         parser = DSettlementInputParser()
         parsed_structure = None

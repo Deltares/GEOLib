@@ -1014,10 +1014,13 @@ class ResidualSettlements(DSerieOldTableStructure):
     # TODO LIst[Dict[str, float]] but can be empty which now gives a validation error
     residualsettlements: List[Dict[str, float]]
 
+class CalculationSettings(DSeriesStructure):
+    is_secondary_swelling_used: bool = False
 
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
 
+    calculation_settings: Optional[CalculationSettings]
     verticals_count: int
     vertical: List[Vertical]
     residual_settlements: List[ResidualSettlements]

@@ -65,14 +65,16 @@ from geolib.soils import (
 )
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dsettlement/benchmarks"
 
 class TestDSettlementModel:
     def setup_dsettlement_model(self):
         """Setup base structure from parsed file while
         we can't initialize one from scratch yet."""
-        p = Path("tests/test_data/dsettlement/bm1-1.sli")
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         ds = DSettlementModel()
-        ds.parse(p)
+        ds.parse(test_file)
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
         return ds
@@ -124,7 +126,7 @@ class TestDSettlementModel:
     )
     def test_given_filepath_when_parse_then_does_not_raise(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
         ds = DSettlementModel()
 
@@ -141,7 +143,7 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_parse_output(self):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement/benchmarks"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1.sld"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
         output_test_file = output_test_folder / "results.json"
@@ -195,12 +197,13 @@ class TestDSettlementModel:
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         dm = DSettlementModel()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test.sli"
         )
 
-        dm.parse(test_filepath)
+        dm.parse(test_file)
         dm.serialize(test_output_filepath)
 
         # 2. Verify initial expectations.
@@ -345,8 +348,8 @@ class TestDSettlementModel:
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
-        test_file = test_folder / filename
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement"))
         output_test_file = output_test_folder / filename
         ds = DSettlementModel()
@@ -585,15 +588,14 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_parse_probabilistic_data(self):
         # todo work in progress
-        test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dsettlement/benchmarks/bm3-15c.sli")
-        )
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm3-15c.sli"
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement"))
             / "test_parse_probabilistic_data.sli"
         )
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
         assert ds.datastructure.probabilistic_data.is_reliability_calculation.value == 1
         assert ds.datastructure.probabilistic_data.maximum_drawings == 1000
         assert ds.datastructure.probabilistic_data.maximum_iterations == 30
@@ -606,13 +608,14 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_add_boundary_with_probabilistic_serialize(self):
         # todo work in progress
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement"))
             / "test_boundaries_with_probabilistic_serialize.sli"
         )
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
 
         # initialize geometry
         ds.datastructure.geometry_data = GeometryData()
@@ -643,13 +646,14 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_add_boundary_serialize(self):
         # todo work in progress
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement"))
             / "test_boundaries.sli"
         )
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
 
         # initialize geometry
         ds.datastructure.geometry_data = GeometryData()
@@ -667,9 +671,10 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_add_layer(self):
         # todo work in progress
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
 
         # initialize geometry
         ds.datastructure.geometry_data = GeometryData()
@@ -703,9 +708,10 @@ class TestDSettlementModel:
 
     @pytest.mark.integrationtest
     def test_parse_soil_name_spaces(self):
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
 
         # Assert correct parsing of soil name with spaces
         assert (
@@ -716,12 +722,13 @@ class TestDSettlementModel:
     @pytest.mark.systemtest
     def test_add_layer_serialize(self):
         # setup data
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_layers.sli"
         )
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
 
         # initialize geometry
         ds.datastructure.geometry_data.points = Points()
@@ -1637,13 +1644,14 @@ class TestDSettlementModel:
     @pytest.mark.integrationtest
     def test_add_vertical_drain_serialize(self):
         # todo work in progress
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dsettlement/bm1-1.sli"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
+        test_file = test_folder / "bm1-1.sli"
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement"))
             / "test_vertical_drain.sli"
         )
         ds = DSettlementModel()
-        ds.parse(test_filepath)
+        ds.parse(test_file)
 
         # initialize geometry
         ds.datastructure.geometry_data = GeometryData()

@@ -128,3 +128,7 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soilhorizontalbehaviourtype: HorizontalBehaviourType = HorizontalBehaviourType.Elastic
     soilelasticity: float = 1000
     soildefaultelasticity: Bool = Bool.TRUE
+    soilsecondaryswellingreduced: Bool = Bool.FALSE
+    soilsecondaryswellingfactor = 0.5
+    soilunloadingstressratio = 2.0
+
