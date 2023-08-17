@@ -114,7 +114,7 @@ class TestBaseModel:
     @pytest.mark.parametrize(
         "model,filename,modelname",
         [
-            (DSettlementModel, "bm1-1.sli", "dsettlement"),
+            (DSettlementModel, "bm1-1.sli", "dsettlement/benchmarks"),
             (DStabilityModel, "Tutorial_v2023_1.stix", "dstability"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
             (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
@@ -158,7 +158,7 @@ class TestBaseModel:
     @pytest.mark.parametrize(
         "model,filename,modelname",
         [
-            (DSettlementModel, "bm1-1.sli", "dsettlement"),
+            (DSettlementModel, "bm1-1.sli", "dsettlement/benchmarks"),
             (DStabilityModel, "Tutorial_v2023_1.stix", "dstability"),
             (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
             (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
