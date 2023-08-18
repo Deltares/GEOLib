@@ -137,7 +137,7 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # 4. Verify final expectations.
-        assert ds.datastructure.version == Version()
+        assert ds.datastructure.input_data.version == Version()
         assert isinstance(ds.datastructure, DSettlementStructure)
 
     @pytest.mark.integrationtest
@@ -253,7 +253,7 @@ class TestDSettlementModel:
         ds.serialize(test_output_filepath)
 
         # assert if time steps are in data structure
-        assert ds.datastructure.residual_times.time_steps == days
+        assert ds.datastructure.input_data.residual_times.time_steps == days
 
     @pytest.mark.integrationtest
     def test_get_layer_headlines_util(self):
@@ -261,7 +261,7 @@ class TestDSettlementModel:
         ds = self.setup_dsettlement_model()
 
         # Verify return structure and headline.top, headline.bottom for each layer
-        headlines = ds.datastructure.get_headlines_for_layers()
+        headlines = ds.datastructure.input_data.get_headlines_for_layers()
         assert headlines == [[1, 1], [1, 1]]
 
     @pytest.mark.integrationtest
@@ -274,18 +274,18 @@ class TestDSettlementModel:
         )
 
         # Verify expecatations
-        assert isinstance(ds.datastructure.water_loads, str)
+        assert isinstance(ds.datastructure.input_data.water_loads, str)
 
         # Add water load
         ds.add_water_load("test", timedelta(days=5), 1)
 
         # Verify resulting datastructure
-        assert not isinstance(ds.datastructure.water_loads, str)
-        assert len(ds.datastructure.water_loads.waterloads) == 1
-        assert ds.datastructure.water_loads.waterloads[0].name == "test"
-        assert ds.datastructure.water_loads.waterloads[0].time == 5
-        assert ds.datastructure.water_loads.waterloads[0].phreatic_line == 1
-        assert ds.datastructure.water_loads.waterloads[0].headlines == [[1, 1], [1, 1]]
+        assert not isinstance(ds.datastructure.input_data.water_loads, str)
+        assert len(ds.datastructure.input_data.water_loads.waterloads) == 1
+        assert ds.datastructure.input_data.water_loads.waterloads[0].name == "test"
+        assert ds.datastructure.input_data.water_loads.waterloads[0].time == 5
+        assert ds.datastructure.input_data.water_loads.waterloads[0].phreatic_line == 1
+        assert ds.datastructure.input_data.water_loads.waterloads[0].headlines == [[1, 1], [1, 1]]
 
         # For manual verification
         ds.serialize(test_output_filepath)
@@ -333,13 +333,12 @@ class TestDSettlementModel:
         ds.serialize(test_output_filepath)
 
         # check if data were in datastructure
-        assert ds.datastructure.verticals.total_mesh == 100
-        assert ds.datastructure.verticals.locations[0].X == 0
-        assert ds.datastructure.verticals.locations[0].Y == 0
-        assert ds.datastructure.verticals.locations[0].Z == 1
-        assert ds.datastructure.verticals.locations[1].X == 2
-        assert ds.datastructure.verticals.locations[1].Y == 0
-        assert ds.datastructure.verticals.locations[1].Z == 3
+        assert ds.datastructure.input_data.verticals.locations[0].X == 0
+        assert ds.datastructure.input_data.verticals.locations[0].Y == 0
+        assert ds.datastructure.input_data.verticals.locations[0].Z == 1
+        assert ds.datastructure.input_data.verticals.locations[1].X == 2
+        assert ds.datastructure.input_data.verticals.locations[1].Y == 0
+        assert ds.datastructure.input_data.verticals.locations[1].Z == 3
 
     @pytest.mark.systemtest
     @pytest.mark.parametrize(
@@ -366,11 +365,11 @@ class TestDSettlementModel:
         # 4.1. Verify final expectations.
         assert ds.datastructure, "No data has been generated."
         assert isinstance(ds.datastructure, DSettlementStructure)
-        input_datastructure = dict(ds.datastructure)
+        input_datastructure = dict(ds.datastructure.input_data)
 
         # 4.2. Read the generated data.
         assert output_test_file.is_file()
-        output_datastructure = dict(DSettlementModel().parse(output_test_file))
+        output_datastructure = dict(DSettlementModel().parse(output_test_file).input_data)
         assert not (
             input_datastructure is output_datastructure
         ), "Both references are the same."
@@ -491,7 +490,7 @@ class TestDSettlementModel:
         assert created_boundary.id == b_id
         assert len(created_boundary.curves) == 1, "There should be 1 curve created."
 
-        curve = model.datastructure.geometry_data.get_curve(created_boundary.curves[0])
+        curve = model.datastructure.input_data.geometry_data.get_curve(created_boundary.curves[0])
         assert curve.points == expected_result
 
     @pytest.mark.integrationtest
@@ -506,14 +505,14 @@ class TestDSettlementModel:
 
         ds = DSettlementModel()
         ds.datastructure = DSettlementStructure()
-        print(ds.datastructure.geometry_data)
+        print(ds.datastructure.input_data.geometry_data)
         b_id = ds.add_boundary(
             [point1, point2],
             use_probabilistic_defaults=False,
             stdv=0.05,
             distribution_boundaries=DistributionType.Normal,
         )
-        print(ds.datastructure.geometry_data)
+        print(ds.datastructure.input_data.geometry_data)
 
         assert b_id == 0
         assert len(ds.boundaries.boundaries) == 1
@@ -544,20 +543,20 @@ class TestDSettlementModel:
         assert len(ds.boundaries.boundaries) == 3
 
         # 3. Sort
-        ds.datastructure.geometry_data.sort_boundaries()
+        ds.datastructure.input_data.geometry_data.sort_boundaries()
 
         # 4. Verify final expectations.
         assert ds.boundaries.boundaries[0].id == 0
         assert ds.boundaries.boundaries[1].id == 1
         assert (
-            ds.datastructure.geometry_data.distribution_boundaries.distributionboundaries
+            ds.datastructure.input_data.geometry_data.distribution_boundaries.distributionboundaries
             == [
                 DistributionType.Undefined,
                 DistributionType.Normal,
                 DistributionType.Normal,
             ]
         )
-        assert ds.datastructure.geometry_data.stdv_boundaries.stdvboundaries == [
+        assert ds.datastructure.input_data.geometry_data.stdv_boundaries.stdvboundaries == [
             0.0,
             0.05,
             0.6,
@@ -596,12 +595,12 @@ class TestDSettlementModel:
         )
         ds = DSettlementModel()
         ds.parse(test_file)
-        assert ds.datastructure.probabilistic_data.is_reliability_calculation.value == 1
-        assert ds.datastructure.probabilistic_data.maximum_drawings == 1000
-        assert ds.datastructure.probabilistic_data.maximum_iterations == 30
-        assert ds.datastructure.probabilistic_data.reliability_x_co__ordinate == 0.0
+        assert ds.datastructure.input_data.probabilistic_data.is_reliability_calculation.value == 1
+        assert ds.datastructure.input_data.probabilistic_data.maximum_drawings == 1000
+        assert ds.datastructure.input_data.probabilistic_data.maximum_iterations == 30
+        assert ds.datastructure.input_data.probabilistic_data.reliability_x_co__ordinate == 0.0
         assert (
-            ds.datastructure.probabilistic_data.reliability_type
+            ds.datastructure.input_data.probabilistic_data.reliability_type
             == InternalProbabilisticCalculationType.FOSMOrDeterministic
         )
 
@@ -618,7 +617,7 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # initialize geometry
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
 
@@ -656,7 +655,7 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # initialize geometry
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
 
@@ -677,7 +676,7 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # initialize geometry
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
 
@@ -715,8 +714,8 @@ class TestDSettlementModel:
 
         # Assert correct parsing of soil name with spaces
         assert (
-            ds.datastructure.soil_collection.soil[0].name
-            == ds.datastructure.geometry_data.layers.layers[0].material
+            ds.datastructure.input_data.soil_collection.soil[0].name
+            == ds.datastructure.input_data.geometry_data.layers.layers[0].material
         )
 
     @pytest.mark.systemtest
@@ -731,10 +730,10 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # initialize geometry
-        ds.datastructure.geometry_data.points = Points()
-        ds.datastructure.geometry_data.curves = Curves()
-        ds.datastructure.geometry_data.boundaries = Boundaries()
-        ds.datastructure.geometry_data.layers = Layers()
+        ds.datastructure.input_data.geometry_data.points = Points()
+        ds.datastructure.input_data.geometry_data.curves = Curves()
+        ds.datastructure.input_data.geometry_data.boundaries = Boundaries()
+        ds.datastructure.input_data.geometry_data.layers = Layers()
 
         # set up the vertical locations
         point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
@@ -976,7 +975,7 @@ class TestDSettlementModel:
     def test_piezo_lines(self):
         # Setup date
         ds = self.setup_dsettlement_model()
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_piezo.sli"
         )
@@ -992,31 +991,31 @@ class TestDSettlementModel:
         list3 = [point5, point6]
 
         # Verify defaults
-        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == 0
+        assert ds.datastructure.input_data.geometry_data.phreatic_line.phreatic_line == 0
 
         # Verify add_head_line
         h_id = ds.add_head_line(points=list1, is_phreatic=True)
         assert ds.points[
-            ds.datastructure.geometry_data.curves[
+            ds.datastructure.input_data.geometry_data.curves[
                 ds.headlines.piezolines[0].curves[0]
             ].points[0]
         ] == DSeriePoint.from_point(point1)
-        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == h_id
-        assert ds.datastructure.geometry_data.points[
-            ds.datastructure.geometry_data.curves[
-                ds.datastructure.geometry_data.piezo_lines.piezolines[0].curves[0]
+        assert ds.datastructure.input_data.geometry_data.phreatic_line.phreatic_line == h_id
+        assert ds.datastructure.input_data.geometry_data.points[
+            ds.datastructure.input_data.geometry_data.curves[
+                ds.datastructure.input_data.geometry_data.piezo_lines.piezolines[0].curves[0]
             ].points[1]
         ] == DSeriePoint.from_point(point2)
 
         # Add another headline, verify phreatic line changed
         h_id2 = ds.add_head_line(points=list2, is_phreatic=True)
         assert h_id2 != h_id
-        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == h_id2
+        assert ds.datastructure.input_data.geometry_data.phreatic_line.phreatic_line == h_id2
 
         # Add another headline with duplicate points, should still be added
         h_id3 = ds.add_head_line(points=list3)
         assert h_id3 != h_id2
-        assert ds.datastructure.geometry_data.phreatic_line.phreatic_line == h_id2
+        assert ds.datastructure.input_data.geometry_data.phreatic_line.phreatic_line == h_id2
         assert len(ds.points.points) == 6
 
         # Serialize resulting structure
@@ -1076,7 +1075,7 @@ class TestDSettlementModel:
 
     def test_set_model(self):
         ds = self.setup_dsettlement_model()
-        ds.datastructure.model = Model()
+        ds.datastructure.input_data.model = Model()
         ds.set_model(
             SoilModel.ISOTACHE,
             ConsolidationModel.TERZAGHI,
@@ -1091,15 +1090,15 @@ class TestDSettlementModel:
         )
 
         # Check if all options are in data structure
-        assert ds.datastructure.model.soil_model == SoilModel.ISOTACHE
-        assert ds.datastructure.model.consolidation_model == ConsolidationModel.TERZAGHI
-        assert ds.datastructure.model.dimension == Dimension.TWO_D
-        assert ds.datastructure.model.strain_type == StrainType.LINEAR
-        assert ds.datastructure.model.is_vertical_drains == Bool.TRUE
-        assert ds.datastructure.model.is_probabilistic == Bool.TRUE
-        assert ds.datastructure.model.is_horizontal_displacements == Bool.TRUE
-        assert ds.datastructure.model.is_secondary_swelling == Bool.TRUE
-        assert ds.datastructure.model.is_waspan == Bool.TRUE
+        assert ds.datastructure.input_data.model.soil_model == SoilModel.ISOTACHE
+        assert ds.datastructure.input_data.model.consolidation_model == ConsolidationModel.TERZAGHI
+        assert ds.datastructure.input_data.model.dimension == Dimension.TWO_D
+        assert ds.datastructure.input_data.model.strain_type == StrainType.LINEAR
+        assert ds.datastructure.input_data.model.is_vertical_drains == Bool.TRUE
+        assert ds.datastructure.input_data.model.is_probabilistic == Bool.TRUE
+        assert ds.datastructure.input_data.model.is_horizontal_displacements == Bool.TRUE
+        assert ds.datastructure.input_data.model.is_secondary_swelling == Bool.TRUE
+        assert ds.datastructure.input_data.model.is_waspan == Bool.TRUE
 
     @pytest.mark.systemtest
     def test_serialize_model(self):
@@ -1109,7 +1108,7 @@ class TestDSettlementModel:
             Path(TestUtils.get_output_test_data_dir("dsettlement")) / "test_model.sli"
         )
 
-        ds.datastructure.model = Model()
+        ds.datastructure.input_data.model = Model()
         ds.serialize(test_output_filepath)
 
     @pytest.mark.integrationtest
@@ -1117,7 +1116,7 @@ class TestDSettlementModel:
         ds = self.setup_dsettlement_model()
 
         ds.set_any_calculation_options()
-        calculation_options = ds.datastructure.calculation_options
+        calculation_options = ds.datastructure.input_data.calculation_options
 
         assert (
             calculation_options.precon_pressure_within_layer
@@ -1202,7 +1201,7 @@ class TestDSettlementModel:
             is_predict_settlements_omitting_additional_load_steps=Bool.TRUE,
         )
 
-        calculation_options = ds.datastructure.calculation_options
+        calculation_options = ds.datastructure.input_data.calculation_options
 
         assert (
             calculation_options.precon_pressure_within_layer
@@ -1258,19 +1257,19 @@ class TestDSettlementModel:
         # Check if imaginary surface layer is initialized
         ds.set_any_calculation_options(is_imaginary_surface=True)
 
-        assert ds.datastructure.calculation_options.is_imaginary_surface == Bool.TRUE
-        assert ds.datastructure.calculation_options.imaginary_surface_layer == 1
+        assert ds.datastructure.input_data.calculation_options.is_imaginary_surface == Bool.TRUE
+        assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer == 1
 
         # Check if imaginary surface layer is not overwritten with default value
         ds.set_any_calculation_options(imaginary_surface_layer=3)
 
-        assert ds.datastructure.calculation_options.imaginary_surface_layer == 3
+        assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer == 3
 
         # Check if imaginary surface layer is removed
         ds.set_any_calculation_options(is_imaginary_surface=False)
 
-        assert ds.datastructure.calculation_options.is_imaginary_surface == Bool.FALSE
-        assert ds.datastructure.calculation_options.imaginary_surface_layer is None
+        assert ds.datastructure.input_data.calculation_options.is_imaginary_surface == Bool.FALSE
+        assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer is None
 
     @pytest.mark.systemtest
     def test_serialize_calculation_options(self):
@@ -1490,22 +1489,22 @@ class TestDSettlementModel:
         # set vertical drains
         ds.set_vertical_drain(test_drain)
         # check final expectations
-        assert ds.datastructure.vertical_drain.drain_type == test_drain.drain_type
-        assert ds.datastructure.vertical_drain.range_from == test_drain.range_from
-        assert ds.datastructure.vertical_drain.range_to == test_drain.range_to
+        assert ds.datastructure.input_data.vertical_drain.drain_type == test_drain.drain_type
+        assert ds.datastructure.input_data.vertical_drain.range_from == test_drain.range_from
+        assert ds.datastructure.input_data.vertical_drain.range_to == test_drain.range_to
         assert (
-            ds.datastructure.vertical_drain.bottom_position == test_drain.bottom_position
+            ds.datastructure.input_data.vertical_drain.bottom_position == test_drain.bottom_position
         )
         assert (
-            ds.datastructure.vertical_drain.center_to_center
+            ds.datastructure.input_data.vertical_drain.center_to_center
             == test_drain.center_to_center
         )
-        assert ds.datastructure.vertical_drain.width == test_drain.width
-        assert ds.datastructure.vertical_drain.diameter == 0.1
-        assert ds.datastructure.vertical_drain.thickness == 0.003
-        assert ds.datastructure.vertical_drain.grid == test_drain.grid
+        assert ds.datastructure.input_data.vertical_drain.width == test_drain.width
+        assert ds.datastructure.input_data.vertical_drain.diameter == 0.1
+        assert ds.datastructure.input_data.vertical_drain.thickness == 0.003
+        assert ds.datastructure.input_data.vertical_drain.grid == test_drain.grid
         assert (
-            ds.datastructure.vertical_drain.start_of_drainage
+            ds.datastructure.input_data.vertical_drain.start_of_drainage
             == test_drain.schedule.start_of_drainage.days
         )
 
@@ -1546,34 +1545,34 @@ class TestDSettlementModel:
         # set vertical drains
         ds.set_vertical_drain(test_drain)
         # check final expectations
-        assert ds.datastructure.vertical_drain.drain_type == test_drain.drain_type
-        assert ds.datastructure.vertical_drain.range_from == test_drain.range_from
-        assert ds.datastructure.vertical_drain.range_to == test_drain.range_to
+        assert ds.datastructure.input_data.vertical_drain.drain_type == test_drain.drain_type
+        assert ds.datastructure.input_data.vertical_drain.range_from == test_drain.range_from
+        assert ds.datastructure.input_data.vertical_drain.range_to == test_drain.range_to
         assert (
-            ds.datastructure.vertical_drain.bottom_position == test_drain.bottom_position
+            ds.datastructure.input_data.vertical_drain.bottom_position == test_drain.bottom_position
         )
         assert (
-            ds.datastructure.vertical_drain.center_to_center
+            ds.datastructure.input_data.vertical_drain.center_to_center
             == test_drain.center_to_center
         )
-        assert ds.datastructure.vertical_drain.diameter == test_drain.diameter
-        assert ds.datastructure.vertical_drain.width == 0.1
-        assert ds.datastructure.vertical_drain.thickness == 0.003
-        assert ds.datastructure.vertical_drain.grid == test_drain.grid
+        assert ds.datastructure.input_data.vertical_drain.diameter == test_drain.diameter
+        assert ds.datastructure.input_data.vertical_drain.width == 0.1
+        assert ds.datastructure.input_data.vertical_drain.thickness == 0.003
+        assert ds.datastructure.input_data.vertical_drain.grid == test_drain.grid
         assert (
-            ds.datastructure.vertical_drain.start_of_drainage
+            ds.datastructure.input_data.vertical_drain.start_of_drainage
             == test_drain.schedule.start_of_drainage.days
         )
         assert (
-            ds.datastructure.vertical_drain.begin_time == test_drain.schedule.begin_time
+            ds.datastructure.input_data.vertical_drain.begin_time == test_drain.schedule.begin_time
         )
-        assert ds.datastructure.vertical_drain.end_time == test_drain.schedule.end_time
+        assert ds.datastructure.input_data.vertical_drain.end_time == test_drain.schedule.end_time
         assert (
-            ds.datastructure.vertical_drain.under_pressure_for_strips_and_columns
+            ds.datastructure.input_data.vertical_drain.under_pressure_for_strips_and_columns
             == test_drain.schedule.underpressure
         )
         assert (
-            ds.datastructure.vertical_drain.tube_pressure_during_dewatering
+            ds.datastructure.input_data.vertical_drain.tube_pressure_during_dewatering
             == test_drain.schedule.tube_pressure_during_dewatering
         )
 
@@ -1617,28 +1616,28 @@ class TestDSettlementModel:
         # set vertical drains
         ds.set_vertical_drain(test_drain)
         # check final expectations
-        assert ds.datastructure.vertical_drain.drain_type == test_drain.drain_type
-        assert ds.datastructure.vertical_drain.range_from == test_drain.range_from
-        assert ds.datastructure.vertical_drain.range_to == test_drain.range_to
+        assert ds.datastructure.input_data.vertical_drain.drain_type == test_drain.drain_type
+        assert ds.datastructure.input_data.vertical_drain.range_from == test_drain.range_from
+        assert ds.datastructure.input_data.vertical_drain.range_to == test_drain.range_to
         assert (
-            ds.datastructure.vertical_drain.bottom_position == test_drain.bottom_position
+            ds.datastructure.input_data.vertical_drain.bottom_position == test_drain.bottom_position
         )
         assert (
-            ds.datastructure.vertical_drain.center_to_center
+            ds.datastructure.input_data.vertical_drain.center_to_center
             == test_drain.center_to_center
         )
-        assert ds.datastructure.vertical_drain.width == test_drain.width
-        assert ds.datastructure.vertical_drain.thickness == test_drain.thickness
-        assert ds.datastructure.vertical_drain.grid == test_drain.grid
-        assert ds.datastructure.vertical_drain.time == [
+        assert ds.datastructure.input_data.vertical_drain.width == test_drain.width
+        assert ds.datastructure.input_data.vertical_drain.thickness == test_drain.thickness
+        assert ds.datastructure.input_data.vertical_drain.grid == test_drain.grid
+        assert ds.datastructure.input_data.vertical_drain.time == [
             onetime.days for onetime in test_drain.schedule.time
         ]
         assert (
-            ds.datastructure.vertical_drain.underpressure
+            ds.datastructure.input_data.vertical_drain.underpressure
             == test_drain.schedule.underpressure
         )
         assert (
-            ds.datastructure.vertical_drain.water_level == test_drain.schedule.water_level
+            ds.datastructure.input_data.vertical_drain.water_level == test_drain.schedule.water_level
         )
 
     @pytest.mark.integrationtest
@@ -1654,7 +1653,7 @@ class TestDSettlementModel:
         ds.parse(test_file)
 
         # initialize geometry
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
 
