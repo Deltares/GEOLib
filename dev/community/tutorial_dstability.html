@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tutorial D-Stability &#8212; geolib 1.3.0 documentation</title>
+    <title>Tutorials D-Stability &#8212; geolib 1.3.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b3523f8e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8cc7f55d" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=3d533f9b"></script>
@@ -13,7 +13,7 @@
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial Fragility Curve D-Stability" href="tutorial_dstability_fragility_curve.html" />
+    <link rel="next" title="Creating a D-Stability model" href="tutorial_dstability_general.html" />
     <link rel="prev" title="Tutorial D-Sheet Piling" href="tutorial_dsheetpiling.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -36,7 +36,7 @@
           <a href="tutorial_dsheetpiling.html" title="Previous document">Tutorial D-Sheet Piling</a>
         </li>
         <li>
-          <a href="tutorial_dstability_fragility_curve.html" title="Next document">Tutorial Fragility Curve D-Stability</a>
+          <a href="tutorial_dstability_general.html" title="Next document">Creating a D-Stability model</a>
           &rarr;
         </li>
     </ul>
@@ -46,323 +46,14 @@
 
           <div class="body" role="main">
             
-  <section id="tutorial-d-stability">
-<h1>Tutorial D-Stability<a class="headerlink" href="#tutorial-d-stability" title="Permalink to this heading">¶</a></h1>
-<ol class="arabic simple">
-<li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/_autosummary/geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a>.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability</span> <span class="kn">import</span> <span class="n">DStabilityModel</span>
-
-<span class="n">dm</span> <span class="o">=</span> <span class="n">DStabilityModel</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>2. Choose an analysis method, such as <code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityBishopAnalysisMethod</span></code> and set
-it to the model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.geometry.one</span> <span class="kn">import</span> <span class="n">Point</span>
-<span class="kn">from</span> <span class="nn">geolib.models.dstability.analysis</span> <span class="kn">import</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">,</span> <span class="n">DStabilityCircle</span>
-
-<span class="n">bishop_analysis_method</span> <span class="o">=</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">(</span>
-    <span class="n">circle</span><span class="o">=</span><span class="n">DStabilityCircle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="p">)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span><span class="n">bishop_analysis_method</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>For completeness, here follow examples for all possible models.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bishop Brute Force</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
-    <span class="n">DStabilityBishopBruteForceAnalysisMethod</span><span class="p">(</span>
-        <span class="n">search_grid</span><span class="o">=</span><span class="n">DStabilitySearchGrid</span><span class="p">(</span>
-            <span class="n">bottom_left</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-            <span class="n">number_of_points_in_x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-            <span class="n">number_of_points_in_z</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-            <span class="n">space</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">bottom_tangent_line_z</span><span class="o">=-</span><span class="mf">6.0</span><span class="p">,</span>
-        <span class="n">number_of_tangent_lines</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-        <span class="n">space_tangent_lines</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-
-<span class="c1"># Spencer</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
-    <span class="n">DStabilitySpencerAnalysisMethod</span><span class="p">(</span>
-        <span class="n">slipplane</span><span class="o">=</span><span class="p">[</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">3</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mf">4.5</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-
-<span class="c1"># Spencer Genetic</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
-    <span class="n">DStabilitySpencerGeneticAnalysisMethod</span><span class="p">(</span>
-        <span class="n">slip_plane_a</span><span class="o">=</span><span class="p">[</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">4</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
-        <span class="p">],</span>
-        <span class="n">slip_plane_b</span><span class="o">=</span><span class="p">[</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">3</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">6</span><span class="p">),</span>
-            <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
-        <span class="p">],</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-
-<span class="c1"># Uplift-Van</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
-    <span class="n">DStabilityUpliftVanAnalysisMethod</span><span class="p">(</span>
-        <span class="n">first_circle</span><span class="o">=</span><span class="n">DStabilityCircle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mf">9.5</span><span class="p">),</span>
-        <span class="n">second_circle_center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-
-<span class="c1"># Uplift-Van Particle Swarm</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">set_model</span><span class="p">(</span>
-    <span class="n">DStabilityUpliftVanParticleSwarmAnalysisMethod</span><span class="p">(</span>
-        <span class="n">search_area_a</span><span class="o">=</span><span class="n">DStabilitySearchArea</span><span class="p">(</span>
-            <span class="n">height</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">top_left</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.0</span>
-        <span class="p">),</span>
-        <span class="n">search_area_b</span><span class="o">=</span><span class="n">DStabilitySearchArea</span><span class="p">(</span>
-            <span class="n">height</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">top_left</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">35.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mf">5.0</span>
-        <span class="p">),</span>
-        <span class="n">tangent_area_height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
-        <span class="n">tangent_area_top_z</span><span class="o">=-</span><span class="mf">4.5</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple">
-<li><p>We can then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and add it to the model. Refer to <a class="reference internal" href="tutorial_soil.html#soil-tut"><span class="std std-ref">Tutorial Soils</span></a> for more information.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils.soil</span> <span class="kn">import</span> <span class="n">Soil</span>
-
-<span class="c1"># add soil</span>
-<span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
-<span class="n">soil</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Soil test&quot;</span>
-<span class="n">soil</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;HV&quot;</span>
-<span class="n">soil</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">saturated_weight</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">10.2</span>
-<span class="n">soil</span><span class="o">.</span><span class="n">soil_weight_parameters</span><span class="o">.</span><span class="n">unsaturated_weight</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">10.2</span>
-<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">friction_angle</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">15.0</span>
-<span class="n">soil_peat_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_soil</span><span class="p">(</span><span class="n">soil</span><span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li><p>Afterwards we create several layers and choose a soil for them.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add layers</span>
-<span class="n">layer_1</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">20</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">layer_2</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">layer_3</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">5</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">embankment</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">layers_and_soils</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">(</span><span class="n">layer_1</span><span class="p">,</span> <span class="s2">&quot;Sand&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="n">layer_2</span><span class="p">,</span> <span class="s2">&quot;H_Ro_z&amp;k&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="n">layer_3</span><span class="p">,</span> <span class="s2">&quot;HV&quot;</span><span class="p">),</span>
-    <span class="p">(</span><span class="n">embankment</span><span class="p">,</span> <span class="s2">&quot;H_Aa_ht_old&quot;</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="n">layer_ids</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">soil</span> <span class="ow">in</span> <span class="n">layers_and_soils</span><span class="p">:</span>
-    <span class="n">layer_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">soil</span><span class="p">)</span>
-    <span class="n">layer_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_id</span><span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="5">
-<li><p>With the geometry defined, let’s add the headlines. One of these can be set as the phreatic line.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add phreatic line</span>
-<span class="n">phreatic_line_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_head_line</span><span class="p">(</span>
-    <span class="n">points</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
-        <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-        <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
-        <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
-    <span class="p">],</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Phreatic Line&quot;</span><span class="p">,</span>
-    <span class="n">is_phreatic_line</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># add headline for deep sand</span>
-<span class="n">sand_head_line_id</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">add_head_line</span><span class="p">(</span>
-    <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)],</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Hydraulic head in sandlayer&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">dm</span><span class="o">.</span><span class="n">add_reference_line</span><span class="p">(</span>
-    <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">3</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">3</span><span class="p">)],</span>
-    <span class="n">bottom_headline_id</span><span class="o">=</span><span class="n">phreatic_line_id</span><span class="p">,</span>
-    <span class="n">top_head_line_id</span><span class="o">=</span><span class="n">phreatic_line_id</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_reference_line</span><span class="p">(</span>
-    <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">10</span><span class="p">)],</span>
-    <span class="n">bottom_headline_id</span><span class="o">=</span><span class="n">sand_head_line_id</span><span class="p">,</span>
-    <span class="n">top_head_line_id</span><span class="o">=</span><span class="n">sand_head_line_id</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="6">
-<li><p>What’s left to add is the creation of several types of loads.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability.loads</span> <span class="kn">import</span> <span class="n">LineLoad</span><span class="p">,</span> <span class="n">UniformLoad</span>
-<span class="kn">from</span> <span class="nn">geolib.models.dstability.reinforcements</span> <span class="kn">import</span> <span class="n">ForbiddenLine</span><span class="p">,</span> <span class="n">Geotextile</span><span class="p">,</span> <span class="n">Nail</span>
-
-<span class="c1">#  add uniform load</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span>
-    <span class="n">UniformLoad</span><span class="p">(</span>
-        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;trafficload&quot;</span><span class="p">,</span>
-        <span class="n">start</span><span class="o">=</span><span class="mf">6.5</span><span class="p">,</span>
-        <span class="n">end</span><span class="o">=</span><span class="mf">9.0</span><span class="p">,</span>
-        <span class="n">magnitude</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span>
-        <span class="n">angle_of_distribution</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># add line load</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span>
-    <span class="n">LineLoad</span><span class="p">(</span>
-        <span class="n">location</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">),</span>
-        <span class="n">angle</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">magnitude</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
-        <span class="n">angle_of_distribution</span><span class="o">=</span><span class="mf">45.0</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># create reinforcements NAIL</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_reinforcement</span><span class="p">(</span>
-    <span class="n">Nail</span><span class="p">(</span>
-        <span class="n">location</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
-        <span class="n">direction</span><span class="o">=</span><span class="mf">15.0</span><span class="p">,</span>
-        <span class="n">horizontal_spacing</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
-        <span class="n">length</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
-        <span class="n">grout_diameter</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
-        <span class="n">max_pull_force</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
-        <span class="n">plastic_moment</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
-        <span class="n">bending_stiffness</span><span class="o">=</span><span class="mf">100.0</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># create reinforcements GEOTEXTILE</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_reinforcement</span><span class="p">(</span>
-    <span class="n">Geotextile</span><span class="p">(</span>
-        <span class="n">start</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
-        <span class="n">end</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span>
-        <span class="n">effective_tensile_strength</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
-        <span class="n">reduction_area</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># create reinforcements FORBIDDEN LINE</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_reinforcement</span><span class="p">(</span>
-    <span class="n">ForbiddenLine</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mf">4.0</span><span class="p">))</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="7">
-<li><p>And we can set state points or state lines.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability.states</span> <span class="kn">import</span> <span class="n">DStabilityStateLinePoint</span><span class="p">,</span> <span class="n">DStabilityStatePoint</span><span class="p">,</span> <span class="n">DStabilityStress</span>
-
-<span class="c1"># state point</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_state_point</span><span class="p">(</span>
-    <span class="n">DStabilityStatePoint</span><span class="p">(</span>
-        <span class="n">layer_id</span><span class="o">=</span><span class="n">layer_ids</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>  <span class="c1"># HV layer</span>
-        <span class="n">point</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mf">2.5</span><span class="p">),</span>
-        <span class="n">stress</span><span class="o">=</span><span class="n">DStabilityStress</span><span class="p">(</span><span class="n">pop</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span>
-    <span class="p">)</span>
-<span class="p">)</span>
-
-<span class="c1"># state line</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_state_line</span><span class="p">(</span>
-    <span class="n">points</span><span class="o">=</span><span class="p">[</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=-</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">2</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">z</span><span class="o">=-</span><span class="mi">2</span><span class="p">)],</span>
-    <span class="n">state_points</span><span class="o">=</span><span class="p">[</span>
-        <span class="n">DStabilityStateLinePoint</span><span class="p">(</span>
-            <span class="n">above</span><span class="o">=</span><span class="n">DStabilityStress</span><span class="p">(</span><span class="n">pop</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span> <span class="n">below</span><span class="o">=</span><span class="n">DStabilityStress</span><span class="p">(</span><span class="n">pop</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="mi">20</span>
-        <span class="p">)</span>
-    <span class="p">],</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-<p>To run the model first the model needs to be serialized. To do that define a
-output file name and call the function <a class="reference internal" href="../dev/_autosummary/geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel.serialize" title="geolib.models.dstability.dstability_model.DStabilityModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tutorial.stix&quot;</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Finally the execute function can be called to run the model in D-Stability.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dm</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>In order to get the results of a calculation you can do the following for an Uplift-Van Particle Swarm analysis:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Result of scenario 0, calculation 0:&quot;</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Result type: &quot;</span> <span class="o">+</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Factor of safety: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">FactorOfSafety</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left center: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">LeftCenter</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Right center: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">RightCenter</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tangent line: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">TangentLine</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>You can add scenarios, stages and calculations using various methods as demonstrated below. If you set set_current to True,
-the added item will be set as the default for future calls to the DStabilityModel. If you do not specify scenario_index, it will
-be added to the current scenario.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add new scenario (and activate it)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_scenario</span><span class="p">(</span><span class="s2">&quot;New Scenario&quot;</span><span class="p">,</span> <span class="s2">&quot;From GEOLib&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># add new stage to the current scenario (and activate it)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Stage 1&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># add new stage to the first scenario (and activate it)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="n">scenario_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Stage 2&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># add new stage to the first scenario (and activate it)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_stage</span><span class="p">(</span><span class="n">scenario_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Stage 3&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># add new calculation to the current scenario (and activate it)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_calculation</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Calculation 1&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># add new calculation to the first scenario (and activate it)</span>
-<span class="n">dm</span><span class="o">.</span><span class="n">add_calculation</span><span class="p">(</span><span class="n">scenario_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;New Calculation 2&quot;</span><span class="p">,</span> <span class="n">set_current</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The GEOLib package also contains functionality to plot a D-Stability model. To plot the model you can use the following code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="n">scenario_id</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">stage_id</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">dm</span><span class="o">.</span><span class="n">plot_model</span><span class="p">(</span><span class="n">scenario_id</span><span class="p">,</span> <span class="n">stage_id</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
+  <section id="tutorials-d-stability">
+<h1>Tutorials D-Stability<a class="headerlink" href="#tutorials-d-stability" title="Permalink to this heading">¶</a></h1>
+<p>This section contains tutorials on how to use the D-Stability module.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_dstability_general.html">Creating a D-Stability model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial_dstability_fragility_curve.html">Creating a Fragility Curve</a></li>
+</ul>
 </div>
 </section>
 
@@ -377,7 +68,7 @@ be added to the current scenario.</p>
           <a href="tutorial_dsheetpiling.html" title="Previous document">Tutorial D-Sheet Piling</a>
         </li>
         <li>
-          <a href="tutorial_dstability_fragility_curve.html" title="Next document">Tutorial Fragility Curve D-Stability</a>
+          <a href="tutorial_dstability_general.html" title="Next document">Creating a D-Stability model</a>
           &rarr;
         </li>
     </ul>
@@ -415,8 +106,12 @@ be added to the current scenario.</p>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_dfoundations.html">Tutorial D-Foundations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_dsettlement.html">Tutorial D-Settlement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_dsheetpiling.html">Tutorial D-Sheet Piling</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial D-Stability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability_fragility_curve.html">Tutorial Fragility Curve D-Stability</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorials D-Stability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial_dstability_general.html">Creating a D-Stability model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial_dstability_fragility_curve.html">Creating a Fragility Curve</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_dstability_fragility_curve.html">Creating a Fragility Curve</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_dgeoflow.html">Tutorial D-Geo Flow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_multi.html">Tutorial Multiple Calculations</a></li>
 </ul>
@@ -449,7 +144,7 @@ be added to the current scenario.</p>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="tutorial.html">Tutorials</a><ul>
       <li>Previous: <a href="tutorial_dsheetpiling.html" title="previous chapter">Tutorial D-Sheet Piling</a></li>
-      <li>Next: <a href="tutorial_dstability_fragility_curve.html" title="next chapter">Tutorial Fragility Curve D-Stability</a></li>
+      <li>Next: <a href="tutorial_dstability_general.html" title="next chapter">Creating a D-Stability model</a></li>
   </ul></li>
   </ul></li>
 </ul>
