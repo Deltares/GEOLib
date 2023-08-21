@@ -154,8 +154,7 @@ saved.
 This tutorial's base file fc.stix and source code can be 
 obtained `here <https://github.com/Deltares/GEOLib/tree/master/examples/dstability/fragility_curve_berm>`_.
 
-Determining final failure probability ("integrating out" load uncertainty)
---------------------------------------------------------------------------
+**Determining final failure probability ("integrating out" load uncertainty)**
 
 As a final step, the reliability measure of the levee is calculated by combining the conditional failure probability (fragility curve) with the load statistics (in this case, water level statistics). This step is often called "integrating out" because the next integral must be solved: 
 
