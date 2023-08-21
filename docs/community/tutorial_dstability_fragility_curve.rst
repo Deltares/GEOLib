@@ -13,7 +13,7 @@ of failure as a function of load. In the case of levee macrostability, the water
 used for this purpose. These curves will later be used to include the uncertainties in the water level 
 in the reliability measures of the dike.
 
-After establishing the base macrostability model as a .stix file, the designer may manually evaluate a 
+After establishing the base macrostability model as a .stix file, the designer may manually evaluate a 
 few situations and generate the associated reliability index (:math:`\beta`) as fragility points. In this 
 section, we describe an alternative method in which the GEOLib Python package can automate these 
 operations and extract the fragility curve. The syntax has been enhanced to incorporate water level 
