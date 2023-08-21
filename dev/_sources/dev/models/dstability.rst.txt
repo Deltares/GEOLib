@@ -16,6 +16,8 @@ Tutorial
 --------
 You can find the D-Stability tutorial here: :doc:`../../community/tutorial_dstability`
 
+A tutorial for making a fragility curve using D-Stability can be found here: :doc:`../../community/tutorial_dstability_fragility_curve`
+
 
 Geometry
 --------
