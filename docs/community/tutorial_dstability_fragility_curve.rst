@@ -1,7 +1,7 @@
 .. tutorialdstabilityfragilitycurve:
 
-Tutorial Fragility Curve D-Stability
-====================================
+Creating a Fragility Curve
+==========================
 
 The main purpose of this example is to demonstrate how to utilize the GEOLib Python package to construct 
 a fragility curve depending on various water levels. 
