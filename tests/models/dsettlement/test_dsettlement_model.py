@@ -1087,7 +1087,6 @@ class TestDSettlementModel:
             True,
             True,
             True,
-            True,
         )
 
         # Check if all options are in data structure
@@ -1520,7 +1519,6 @@ class TestDSettlementModel:
             True,
             True,
             True,
-            True,
         )
         test_drain = VerticalDrain(
             drain_type=DrainType.COLUMN,
@@ -1583,7 +1581,6 @@ class TestDSettlementModel:
             ConsolidationModel.TERZAGHI,
             True,
             StrainType.LINEAR,
-            True,
             True,
             True,
             True,
@@ -1683,7 +1680,6 @@ class TestDSettlementModel:
             ConsolidationModel.TERZAGHI,
             True,
             StrainType.LINEAR,
-            True,
             True,
             True,
             True,
