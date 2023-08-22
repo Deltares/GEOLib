@@ -426,7 +426,6 @@ class TestDSettlementAcceptance:
             is_probabilistic=False,
             is_horizontal_displacements=False,
             is_secondary_swelling=True,  # TODO document this parameter
-            is_waspan=False,  # TODO document this parameter
         )
 
         path = self.outputdir / "test_set_model.sli"

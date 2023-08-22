@@ -639,7 +639,6 @@ class Model(DSeriesNoParseSubStructure):
     is_probabilistic: Bool = Bool.FALSE
     is_horizontal_displacements: Bool = Bool.FALSE
     is_secondary_swelling: Bool = Bool.FALSE
-    is_waspan: Bool = Bool.FALSE
 
 
 class PreconPressureWithinLayer(Enum):

@@ -1099,7 +1099,6 @@ class TestDSettlementModel:
         assert ds.datastructure.input_data.model.is_probabilistic == Bool.TRUE
         assert ds.datastructure.input_data.model.is_horizontal_displacements == Bool.TRUE
         assert ds.datastructure.input_data.model.is_secondary_swelling == Bool.TRUE
-        assert ds.datastructure.input_data.model.is_waspan == Bool.TRUE
 
     @pytest.mark.systemtest
     def test_serialize_model(self):
@@ -1303,7 +1302,6 @@ class TestDSettlementModel:
                 is_probabilistic=False,
                 is_horizontal_displacements=False,
                 is_secondary_swelling=False,
-                is_waspan=True,
             )
             p1 = Point(x=-50, z=0.0)
             p2 = Point(x=-10, z=0.0)
@@ -1472,7 +1470,6 @@ class TestDSettlementModel:
             is_probabilistic=True,
             is_horizontal_displacements=True,
             is_secondary_swelling=True,
-            is_waspan=True,
         )
         test_schedule = ScheduleValuesOff(
             start_of_drainage=timedelta(days=1), phreatic_level_in_drain=2
@@ -1715,7 +1712,6 @@ class TestDSettlementModel:
             is_probabilistic=True,
             is_horizontal_displacements=False,
             is_secondary_swelling=False,
-            is_waspan=False,
         )
         p1 = Point(x=-50, z=0.0)
         p2 = Point(x=-10, z=0.0)
