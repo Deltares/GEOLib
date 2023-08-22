@@ -2,17 +2,29 @@ INPUT FILE FOR D-SETTLEMENT
 ==============================================================================
 COMPANY    : 
 
-DATE       : 30-4-2020
-TIME       : 17:51:59
-FILENAME   : C:\Users\pronk_mn\Desktop\2dgeom_with10.sli
-CREATED BY : D-Settlement version 19.1.2.26123
+DATE       : 18-08-2023
+TIME       : 16:03:03
+FILENAME   : D:\src\GEOLib\tests\test_data\dsettlement\2dgeom_with10.sli
+CREATED BY : D-Settlement version 23.2.1.41674
 ==========================    BEGINNING OF DATA     ==========================
+[INPUT DATA]
 [VERSION]
-Soil=1005
-Geometry=1000
-D-Settlement=1007
+Soil=1011
+Geometry=1002
+D-Settlement=1011
 [END OF VERSION]
 
+[MODEL]
+1 : Dimension = 2D
+0 : Calculation type = Darcy
+2 : Model = Isotache
+1 : Strain type = Natural
+1 : Vertical drains = TRUE
+0 : Fit for settlement plate = FALSE
+0 : Probabilistic = FALSE
+0 : Horizontal displacements = FALSE
+0 : Secondary swelling = FALSE
+[END OF MODEL]
 [SOIL COLLECTION]
     9 = number of items
 [SOIL]
@@ -21,8 +33,6 @@ SoilColor=11527841
 SoilGamDry=7.80
 SoilGamWet=14.40
 SoilInitialVoidRatio=0.001001
-SoilCohesion=25.00
-SoilPhi=22.50
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -30,9 +40,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=47.50
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=7.000E-04
 SoilPermeabilityHorFactor=1.000
@@ -133,8 +145,6 @@ SoilColor=11526561
 SoilGamDry=9.10
 SoilGamWet=15.50
 SoilInitialVoidRatio=0.001001
-SoilCohesion=30.00
-SoilPhi=25.00
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -142,9 +152,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=63.50
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=6.000E-05
 SoilPermeabilityHorFactor=1.000
@@ -245,8 +257,6 @@ SoilColor=12839841
 SoilGamDry=5.90
 SoilGamWet=13.30
 SoilInitialVoidRatio=0.001001
-SoilCohesion=2.00
-SoilPhi=32.50
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -254,9 +264,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=85.00
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=5.300E-05
 SoilPermeabilityHorFactor=1.000
@@ -357,8 +369,6 @@ SoilColor=10871201
 SoilGamDry=9.90
 SoilGamWet=16.00
 SoilInitialVoidRatio=0.001001
-SoilCohesion=25.00
-SoilPhi=17.50
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -366,9 +376,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=35.60
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=2.700E-04
 SoilPermeabilityHorFactor=1.000
@@ -469,8 +481,6 @@ SoilColor=6045349
 SoilGamDry=2.50
 SoilGamWet=10.50
 SoilInitialVoidRatio=0.001001
-SoilCohesion=10.00
-SoilPhi=15.00
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -478,9 +488,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=151.00
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=7.900E-04
 SoilPermeabilityHorFactor=4.000
@@ -581,8 +593,6 @@ SoilColor=711919
 SoilGamDry=18.00
 SoilGamWet=20.00
 SoilInitialVoidRatio=0.256082
-SoilCohesion=0.00
-SoilPhi=30.00
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -590,9 +600,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=0.00
-SoilLimitStress=1.00
 SoilDrained=1
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=1.000E-08
 SoilPermeabilityHorFactor=1.000
@@ -693,8 +705,6 @@ SoilColor=2679279
 SoilGamDry=15.70
 SoilGamWet=19.50
 SoilInitialVoidRatio=0.256082
-SoilCohesion=0.00
-SoilPhi=40.00
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -702,9 +712,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=20.00
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=1.300E-04
 SoilPermeabilityHorFactor=1.000
@@ -805,8 +817,6 @@ SoilColor=2679279
 SoilGamDry=14.40
 SoilGamWet=18.70
 SoilInitialVoidRatio=0.256082
-SoilCohesion=0.00
-SoilPhi=40.00
 SoilPreconIsotacheType=2
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -814,9 +824,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=91.40
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=7.200E-04
 SoilPermeabilityHorFactor=1.000
@@ -917,8 +929,6 @@ SoilColor=16777215
 SoilGamDry=0.01
 SoilGamWet=0.02
 SoilInitialVoidRatio=0.000000
-SoilCohesion=0.00
-SoilPhi=0.00
 SoilPreconIsotacheType=0
 SoilPreconKoppejanType=0
 SoilUseEquivalentAge=0
@@ -926,9 +936,11 @@ SoilEquivalentAge=0.00E+00
 SoilPc=0.00E+00
 SoilOCR=1.30
 SoilPOP=10.00
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.00E+01
 SoilPermeabilityVer=5.000E-02
 SoilPermeabilityHorFactor=3.000
@@ -1025,10 +1037,6 @@ SoilDefaultElasticity=1
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 [GEOMETRY DATA]
-[ACCURACY]
-        0.0010
-[END OF ACCURACY]
-
 [POINTS]
      49  - Number of geometry points -
        1          0.000         -5.400          0.000
@@ -1329,13 +1337,6 @@ SoilDefaultElasticity=1
    1 - Number of the piezometric level line acting as phreatic line -
 [END OF PHREATIC LINE]
 
-[WORLD CO-ORDINATES]
-          0.000 - X world 1 -
-          0.000 - Y world 1 -
-          0.000 - X world 2 -
-          0.000 - Y world 2 -
-[END OF WORLD CO-ORDINATES]
-
 [LAYERS]
   13 - Number of layers -
      1 - Layer number, next line is material of layer
@@ -1418,31 +1419,13 @@ SoilDefaultElasticity=1
       12 - Boundarynumber at bottom of layer
 [END OF LAYERS]
 
-[LAYERLOADS]
- - Layers which are loads -
-
-[END OF LAYERLOADS]
-
 [END OF GEOMETRY DATA]
 [RUN IDENTIFICATION]
 Tutorial 5 for MSettle
 Enforced dewatering by sand screens (IFCO)
 
 [END OF RUN IDENTIFICATION]
-[MODEL]
-1 : Dimension = 2D
-0 : Calculation type = Darcy
-2 : Model = Isotache
-1 : Strain type = Natural
-1 : Vertical drains = TRUE
-0 : Fit for settlement plate = FALSE
-0 : Probabilistic = FALSE
-0 : Horizontal displacements = FALSE
-0 : Secondary swelling = FALSE
-0 : Waspan = FALSE
-[END OF MODEL]
 [VERTICALS]
-    100 = total Mesh
     1 = number of items
        0.000        0.000 = X, Z
 [END OF VERTICALS]
@@ -1523,29 +1506,6 @@ Superelevation
 1 : Number of items
 0.05
 [END OF FILTER BAND WIDTH]
-[PORE PRESSURE METERS]
-    0 = number of items
-[END OF PORE PRESSURE METERS]
-[NON-UNIFORM LOADS PORE PRESSURES]
-    5 = number of items
-Non-uniform load (3)
-       0.000 = Top of heightening
-Non-uniform load (2)
-       0.000 = Top of heightening
-Non-uniform load (1)
-       0.000 = Top of heightening
-Non-uniform load (4)
-       0.000 = Top of heightening
-Non-uniform load (5)
-       0.000 = Top of heightening
-[END OF NON-UNIFORM LOADS PORE PRESSURES]
-[OTHER LOADS PORE PRESSURES]
-    0 = number of items
-[END OF OTHER LOADS PORE PRESSURES]
-[CALCULATION OPTIONS PORE PRESSURES]
-1 : Shear stress = TRUE
-1 : calculation method of lateral stress ratio (k0) = Nu
-[END OF CALCULATION OPTIONS PORE PRESSURES]
 [VERTICAL DRAIN]
 2 : Flow type = 
      -10.200 = Bottom position
@@ -1639,13 +1599,8 @@ Fit Required Correlation Coefficient=0.990
 Is Fit Calculation=0
 Fit Vertical Number=-1
 [END OF FIT CALCULATION]
-[EPS]
-        0.00 = Dry unit weight
-        0.00 = Saturated unit weight
-        0.00 = Load
-        0.00 = Height above surface
-[END OF EPS]
 [FIT]
     0 = number of items
 [END OF FIT]
+[END OF INPUT DATA]
 [END OF INPUT FILE]

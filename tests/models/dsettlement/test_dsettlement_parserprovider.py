@@ -48,13 +48,12 @@ class Test_DSettlementInputParser:
     ):
         # 1. Define test data.
         geometry_data_key = "geometry_data"
-        parsed_structure = parsed_dsettlement_testfile
+        parsed_structure = parsed_dsettlement_testfile.input_data
         keys_in_structure = {
             "points": Points,
             "curves": Curves,
             "boundaries": Boundaries,
             "layers": Layers,
-            "world_co__ordinates": str,
         }
 
         # 2. Verify expectations.
@@ -86,7 +85,7 @@ class Test_DSettlementInputParser:
         piezo_lines_key = "piezo_lines"
         piezolines_key = "piezolines"
         expected_piezolines_curves = [[4]]
-        parsed_structure = parsed_dsettlement_testfile
+        parsed_structure = parsed_dsettlement_testfile.input_data
 
         # 2. Verify final expectations.
         parsed_struct_asdict = dict(parsed_structure)
@@ -197,7 +196,7 @@ class Test_DSettlementInputParser:
 
         # 4. Verify expectations
         assert parsed_model, "No structure was parsed."
-        parsed_boundaries = parsed_model.geometry_data.boundaries
+        parsed_boundaries = parsed_model.input_data.geometry_data.boundaries
         assert len(parsed_boundaries.boundaries) == len(expected_values)
         for struct_id, expected_value in enumerate(expected_values):
             assert parsed_boundaries.boundaries[struct_id].id == struct_id
