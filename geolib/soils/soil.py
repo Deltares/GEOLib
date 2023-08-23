@@ -552,7 +552,7 @@ class Soil(SoilBaseModel):
                     self.mohr_coulomb_parameters.dilatancy_angle
                 ),
             },
-            "ShansepShearStrengthModel": {
+            "SuShearStrengthModel": {
                 "ShearStrengthRatio": self.undrained_parameters.shear_strength_ratio.mean,
                 "ShearStrengthRatioStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.undrained_parameters.shear_strength_ratio
