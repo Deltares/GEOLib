@@ -1423,7 +1423,7 @@ def split_line_elements(text: str) -> List[str]:
 def get_line_property_value(text: str, reversed_key: bool) -> str:
     """Returns the property value representation in the dseries files
     assuming is delimited by either ':' or '='.
-    tutorials:
+    Examples:
         Given (reversed_key = True):
             4.2 : property_value
             4.2 = property_value
@@ -1446,7 +1446,7 @@ def get_line_property_value(text: str, reversed_key: bool) -> str:
 
 def get_line_property_key_value(text: str, reversed_key: bool) -> Tuple[str, str]:
     """Returns the unformatted key and formatted value for a given line.
-    tutorials:
+    Examples:
         reversed_key = False
         key= value 123 -> key, value
         reversed_key = True
