@@ -642,3 +642,26 @@ class TestDSettlementAcceptance:
         # Verify geometry is correct and we can parse output
         dm.execute()  # will raise on execution error
         assert dm.datastructure
+
+    @pytest.mark.acceptance
+    def test_run_fit(self):
+        # 1. Set up test data
+        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
+        test_file = pathlib.Path(os.path.join(test_folder, "BeforeFit.sli"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement/acceptancetest/"))
+        output_test_inputfile = output_test_folder / ("FitCalculation.sli")
+        dm = DSettlementModel()
+
+        # 2. Verify initial expectations
+        assert test_file.exists()
+
+        # 3. Parse test file
+        dm.parse(test_file)
+
+        # 4. Set fit calculation
+        dm.datastructure.input_data.fit_calculation.is_fit_calculation = Bool.TRUE
+        dm.datastructure.input_data.fit_calculation.fit_vertical_number = 1
+        dm.serialize(output_test_inputfile)
+
+        # 4. Run fit calculation (includes parsing of output file)
+        model = dm.execute()

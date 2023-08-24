@@ -358,7 +358,12 @@ Is Reliability Calculation={{probabilistic_data.is_reliability_calculation.value
 {{ fit_options }}
 [END OF FIT OPTIONS]
 [FIT CALCULATION]
+{% if fit_calculation is mapping -%}
+Is Fit Calculation={{ fit_calculation.is_fit_calculation.value }}
+Fit Vertical Number={{fit_calculation.fit_vertical_number}}
+{% else %}
 {{ fit_calculation }}
+{% endif %}
 [END OF FIT CALCULATION]
 [FIT]
 {{ fit }}

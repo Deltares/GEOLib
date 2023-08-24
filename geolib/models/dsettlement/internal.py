@@ -757,6 +757,11 @@ class InternalProbabilisticCalculationType(IntEnum):
     BandWidthAndProbabilityOfFailureMonteCarlo = 2
 
 
+class FitCalculation(DSeriesInlineMappedProperties):
+    is_fit_calculation: Bool = Bool.FALSE
+    fit_vertical_number: conint(ge=0, le=1000) = 0
+
+
 class ProbabilisticData(DSeriesInlineMappedProperties):
     reliability_x_co__ordinate: float = 0
     residual_settlement: confloat(ge=0, le=1000) = 1
@@ -892,12 +897,7 @@ class DSettlementInputStructure(DSeriesStructure):
         Fit Required Correlation Coefficient=0.990
         """
     )
-    fit_calculation: str = cleandoc(
-        """
-        Is Fit Calculation=0
-        Fit Vertical Number=-1
-        """
-    )
+    fit_calculation: FitCalculation = FitCalculation()
     fit: str = ZERO_ITEMS
 
     # Custom validator
@@ -980,8 +980,10 @@ class ResidualSettlements(DSerieOldTableStructure):
     # TODO LIst[Dict[str, float]] but can be empty which now gives a validation error
     residualsettlements: List[Dict[str, float]]
 
+
 class CalculationSettings(DSeriesStructure):
     is_secondary_swelling_used: bool = False
+
 
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
@@ -993,11 +995,13 @@ class Results(DSeriesRepeatedGroupedProperties):
     dissipation_in_layers: Optional[str]
     reliability_calculation_results: Optional[str]
 
+
 class DSettlementOutputStructure(DSeriesStructure):
     """Representation of complete .sld file, inherting
     the structure of the .sli file as well."""
     results: Results
     input_data: DSettlementInputStructure
+
 
 class DSettlementStructure(DSeriesStructure):
     input_data: DSettlementInputStructure = DSettlementInputStructure()
