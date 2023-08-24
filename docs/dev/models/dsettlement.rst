@@ -22,13 +22,13 @@ Geometry
 Add layer
 _________
 
-In order to add a layer in d-settlement it is required to first set the head lines
+In order to add a layer in D-Settlement it is required to first set the head lines
 and the boundaries.
 
 Add boundary
 ............
 
-The only required input for adding a boundary is a list of points. The boundary needs to fullfill
+The only required input for adding a boundary is a list of points. The boundary needs to fulfill
 a number of requirements:
 
     - The list of points is required to range from the left side to the right side of the geometry.
@@ -36,7 +36,7 @@ a number of requirements:
     - Each boundary in the geometry besides the surface level and the bottom, is required to be used twice. Once as the top boundary of one layer, and another time as the bottom boundary of another layer.
     - When you desire to set up a boundary with vertical parts, it is required to arrange the points of the boundary from left to right and from bottom to top.
 
-It is important that you pay attention to the above requirements, as d-settlement does not return an error when
+It is important that you pay attention to the above requirements, as D-Settlement does not return an error when
 the above requirements are not fulfilled. Instead an unwanted geometry is generated. Below, a visual example is given of how a geometry should be created.
 
 ..  image:: /figures/dsettlement/simple_geometry_example.png
