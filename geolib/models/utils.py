@@ -9,7 +9,7 @@ if sys.version_info < (3, 9):
     def get_args(tp):
         """Get type arguments with all substitutions performed.
         For unions, basic simplifications used by Union constructor are performed.
-        tutorials::
+        Examples::
             get_args(Dict[str, int]) == (str, int)
             get_args(int) == ()
             get_args(Union[int, Union[T, int], str][int]) == (int, str)
