@@ -128,7 +128,7 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soilhorizontalbehaviourtype: HorizontalBehaviourType = HorizontalBehaviourType.Elastic
     soilelasticity: float = 1000
     soildefaultelasticity: Bool = Bool.TRUE
-    soilsecondaryswellingreduced: Bool = Bool.FALSE
-    soilsecondaryswellingfactor: float = 0.5
-    soilunloadingstressratio: float = 2.0
+    soilsecondaryswellingreduced: Bool = Bool.FALSE # Secondary Swelling is only available in Evaluation version (Deltares only)
+    soilsecondaryswellingfactor: float = 0.5 # Secondary Swelling is only available in Evaluation version (Deltares only)
+    soilunloadingstressratio: float = 2.0 # Secondary Swelling is only available in Evaluation version (Deltares only)
 
