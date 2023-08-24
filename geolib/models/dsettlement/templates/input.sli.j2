@@ -6,6 +6,7 @@ TIME       : {{ timestamp.strftime('%H:%M:%S') }}
 FILENAME   : {{ output_fn }}
 CREATED BY : GEOLib version {{ glversion }}
 ==========================    BEGINNING OF DATA     ==========================
+[INPUT DATA]
 [VERSION]
 {% if version is mapping %}
 Soil={{ version.soil }}
@@ -16,6 +17,22 @@ D-Settlement={{ version.d__settlement }}
 {% endif %}
 [END OF VERSION]
 
+[MODEL]
+{% if model is mapping -%}
+{{ model.dimension.value }} : Dimension = {{ model.dimension.name }}
+{{ model.consolidation_model.value }} : Calculation type = {{ model.consolidation_model.name }}
+{{ model.soil_model.value }} : Model = {{ model.soil_model.name }}
+{{ model.strain_type.value }} : Strain type = {{ model.strain_type.name }}
+{{ model.is_vertical_drains.value }} : Vertical drains = {{ model.is_vertical_drains.name }}
+{{ model.is_fit_for_settlement_plate.value }} : Fit for settlement plate = {{ model.is_fit_for_settlement_plate.name }}
+{{ model.is_probabilistic.value }} : Probabilistic = {{ model.is_probabilistic.name }}
+{{ model.is_horizontal_displacements.value }} : Horizontal displacements = {{ model.is_horizontal_displacements.name }}
+{{ model.is_secondary_swelling.value }} : Secondary swelling = {{ model.is_secondary_swelling.name }}
+{{ model.is_waspan.value }} : Waspan = {{ model.is_waspan.name }}
+{% else -%}
+{{ model }}
+{% endif %}
+[END OF MODEL]
 [SOIL COLLECTION]
 {% if soil_collection is mapping %}
     {{ soil_collection.soil|length }} = number of items
@@ -32,13 +49,7 @@ D-Settlement={{ version.d__settlement }}
 {{ soil_collection }}
 {% endif %}
 [END OF SOIL COLLECTION]
-
 [GEOMETRY DATA]
-
-[ACCURACY]
-{{ geometry_data.accuracy.accuracy }}
-[END OF ACCURACY]
-
 [POINTS]
 {% if geometry_data.points is mapping %}
 {{ '{:>4}'.format( geometry_data.points.points|length) }}  - Number of geometry points -
@@ -142,10 +153,6 @@ D-Settlement={{ version.d__settlement }}
 {{ geometry_data.phreatic_line.phreatic_line }} - Number of the piezometric level line acting as phreatic line -
 [END OF PHREATIC LINE]
 
-[WORLD CO-ORDINATES]
-{{ geometry_data.world_co__ordinates }}
-[END OF WORLD CO-ORDINATES]
-
 [LAYERS]
 {% if geometry_data.layers is mapping %}
   {{ geometry_data.layers.layers|length }} - Number of layers -
@@ -162,36 +169,12 @@ D-Settlement={{ version.d__settlement }}
 {% endif %}
 [END OF LAYERS]
 
-[LAYERLOADS]
-{{ geometry_data.layerloads }}
-[END OF LAYERLOADS]
-
 [END OF GEOMETRY DATA]
-
 [RUN IDENTIFICATION]
 {{ run_identification }}
 [END OF RUN IDENTIFICATION]
-
-[MODEL]
-{% if model is mapping -%}
-{{ model.dimension.value }} : Dimension = {{ model.dimension.name }}
-{{ model.consolidation_model.value }} : Calculation type = {{ model.consolidation_model.name }}
-{{ model.soil_model.value }} : Model = {{ model.soil_model.name }}
-{{ model.strain_type.value }} : Strain type = {{ model.strain_type.name }}
-{{ model.is_vertical_drains.value }} : Vertical drains = {{ model.is_vertical_drains.name }}
-{{ model.is_fit_for_settlement_plate.value }} : Fit for settlement plate = {{ model.is_fit_for_settlement_plate.name }}
-{{ model.is_probabilistic.value }} : Probabilistic = {{ model.is_probabilistic.name }}
-{{ model.is_horizontal_displacements.value }} : Horizontal displacements = {{ model.is_horizontal_displacements.name }}
-{{ model.is_secondary_swelling.value }} : Secondary swelling = {{ model.is_secondary_swelling.name }}
-{{ model.is_waspan.value }} : Waspan = {{ model.is_waspan.name }}
-{% else -%}
-{{ model }}
-{% endif %}
-[END OF MODEL]
-
 [VERTICALS]
 {% if verticals is mapping %}
-    {{ verticals.total_mesh }} = total Mesh
     {{ verticals.locations|length }} = number of items
 {% for location in verticals.locations %}
        {{ location.X}}        {{ location.Z }} = X, Z
@@ -200,11 +183,9 @@ D-Settlement={{ version.d__settlement }}
 {{ verticals }}
 {% endif %}
 [END OF VERTICALS]
-
 [WATER]
 {{ water }}
 [END OF WATER]
-
 [NON-UNIFORM LOADS]
 {% if non__uniform_loads is mapping %}
     {{ non__uniform_loads.loads|length }} = number of items
@@ -220,7 +201,6 @@ D-Settlement={{ version.d__settlement }}
 {{ non__uniform_loads }}
 {% endif %}
 [END OF NON-UNIFORM LOADS]
-
 [WATER LOADS]
 {% if water_loads is mapping %}
     {{ water_loads.waterloads|length }} = number of items
@@ -238,7 +218,6 @@ D-Settlement={{ version.d__settlement }}
 {{ water_loads }}
 {% endif %}
 [END OF WATER LOADS]
-
 [OTHER LOADS]
 {% if other_loads.loads is mapping %}
 {{ other_loads.loads|length }} = number of items
@@ -273,7 +252,6 @@ D-Settlement={{ version.d__settlement }}
 {{ other_loads }}
 {% endif %}
 [END OF OTHER LOADS]
-
 [CALCULATION OPTIONS]
 {% if calculation_options is mapping -%}
 {{ calculation_options.precon_pressure_within_layer.value }} : Precon. pressure within a layer = {{ calculation_options.precon_pressure_within_layer.name }}
@@ -311,7 +289,6 @@ D-Settlement={{ version.d__settlement }}
 {{ calculation_options }}
 {% endif -%}
 [END OF CALCULATION OPTIONS]
-
 [RESIDUAL TIMES]
 {% if residual_times is mapping %}
 {{ residual_times.time_steps | length }} : Number of items
@@ -322,27 +299,9 @@ D-Settlement={{ version.d__settlement }}
 {{ residual_times }}
 {% endif %}
 [END OF RESIDUAL TIMES]
-
 [FILTER BAND WIDTH]
 {{ filter_band_width }}
 [END OF FILTER BAND WIDTH]
-
-[PORE PRESSURE METERS]
-{{ pore_pressure_meters }}
-[END OF PORE PRESSURE METERS]
-
-[NON-UNIFORM LOADS PORE PRESSURES]
-{{ non__uniform_loads_pore_pressures }}
-[END OF NON-UNIFORM LOADS PORE PRESSURES]
-
-[OTHER LOADS PORE PRESSURES]
-{{ other_loads_pore_pressures }}
-[END OF OTHER LOADS PORE PRESSURES]
-
-[CALCULATION OPTIONS PORE PRESSURES]
-{{ calculation_options_pore_pressures }}
-[END OF CALCULATION OPTIONS PORE PRESSURES]
-
 [VERTICAL DRAIN]
 {% if vertical_drain is mapping %}
 {{ vertical_drain.drain_type.value }} : Flow type
@@ -381,7 +340,6 @@ D-Settlement={{ version.d__settlement }}
 {{ vertical_drain }}
 {% endif %}
 [END OF VERTICAL DRAIN]
-
 [PROBABILISTIC DATA]
 {% if probabilistic_data is mapping %}
 Reliability X Co-ordinate={{"%10.3f"|format(probabilistic_data.reliability_x_co__ordinate)}}
@@ -394,25 +352,17 @@ Is Reliability Calculation={{probabilistic_data.is_reliability_calculation.value
 {{ probabilistic_data }}
 {% endif %}
 [END OF PROBABILISTIC DATA]
-
 [PROBABILISTIC DEFAULTS]
 {{ probabilistic_defaults }}
 [END OF PROBABILISTIC DEFAULTS]
-
 [FIT OPTIONS]
 {{ fit_options }}
 [END OF FIT OPTIONS]
-
 [FIT CALCULATION]
 {{ fit_calculation }}
 [END OF FIT CALCULATION]
-
-[EPS]
-{{ eps }}
-[END OF EPS]
-
 [FIT]
 {{ fit }}
 [END OF FIT]
-
+[END OF INPUT DATA]
 [END OF INPUT FILE]

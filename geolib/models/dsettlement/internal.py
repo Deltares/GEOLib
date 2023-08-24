@@ -101,9 +101,9 @@ class SoilCollection(DSeriesStructureCollection):
 
 
 class Version(DSerieVersion):
-    soil: int = 1005
-    geometry: int = 1000
-    d__settlement: int = 1007
+    soil: int = 1011
+    geometry: int = 1002
+    d__settlement: int = 1011
 
 
 class Points(DSeriesMatrixTreeStructureCollection):
@@ -363,10 +363,6 @@ class DistributionBoundaries(DSerieListStructure):
             )
 
 
-class Accuracy(DSeriesUnmappedNameProperties):
-    accuracy: confloat(ge=1e-10) = 1e-3
-
-
 class PhreaticLine(DSeriesUnmappedNameProperties):
     phreatic_line: conint(ge=0, lt=99) = 0
 
@@ -374,7 +370,6 @@ class PhreaticLine(DSeriesUnmappedNameProperties):
 class GeometryData(DSeriesStructure):
     """Representation of [GEOMETRY DATA] group."""
 
-    accuracy: Accuracy = Accuracy()
     points: Points = Points()
     curves: Curves = Curves()
     boundaries: Boundaries = Boundaries()
@@ -385,16 +380,7 @@ class GeometryData(DSeriesStructure):
     distribution_boundaries: DistributionBoundaries = DistributionBoundaries()
     piezo_lines: PiezoLines = PiezoLines()
     phreatic_line: PhreaticLine = PhreaticLine()
-    world_co__ordinates: str = cleandoc(
-        """
-          0.000 - X world 1 -
-          0.000 - Y world 1 -
-          0.000 - X world 2 -
-          0.000 - Y world 2 -
-          """
-    )
     layers: Layers = Layers()
-    layerloads: str = ""
 
     def boundary_area_above_horizontal(self, boundary: Boundary, y: float = 0.0) -> float:
         """Area above horizontal line defined by y-coordinate."""
@@ -539,8 +525,6 @@ class ResidualTimes(DSeriesNoParseSubStructure):
 class Verticals(DSeriesNoParseSubStructure):
     """Representation of [VERTICALS] group."""
 
-    # total mesh is default value that is written in sli file but not read
-    total_mesh: int = 100
     locations: List[DSeriePoint] = []
 
 
@@ -823,7 +807,7 @@ class ProbabilisticData(DSeriesInlineMappedProperties):
         return map_values[reliability_type.value]
 
 
-class DSettlementStructure(DSeriesStructure):
+class DSettlementInputStructure(DSeriesStructure):
     """Representation of complete .sli file."""
 
     version: Version = Version()
@@ -843,15 +827,6 @@ class DSettlementStructure(DSeriesStructure):
         """
         1 : Number of items
         0.05
-        """
-    )
-    pore_pressure_meters: str = ZERO_ITEMS
-    non__uniform_loads_pore_pressures: str = ZERO_ITEMS
-    other_loads_pore_pressures: str = ZERO_ITEMS
-    calculation_options_pore_pressures: str = cleandoc(
-        """
-        1 : Shear stress = TRUE
-        1 : calculation method of lateral stress ratio (k0) = Nu
         """
     )
     vertical_drain: Union[VerticalDrain, str] = VerticalDrain()
@@ -922,14 +897,6 @@ class DSettlementStructure(DSeriesStructure):
         """
         Is Fit Calculation=0
         Fit Vertical Number=-1
-        """
-    )
-    eps: str = cleandoc(
-        """
-        0.00 = Dry unit weight
-        0.00 = Saturated unit weight
-        0.00 = Load
-        0.00 = Height above surface
         """
     )
     fit: str = ZERO_ITEMS
@@ -1014,10 +981,12 @@ class ResidualSettlements(DSerieOldTableStructure):
     # TODO LIst[Dict[str, float]] but can be empty which now gives a validation error
     residualsettlements: List[Dict[str, float]]
 
+class CalculationSettings(DSeriesStructure):
+    is_secondary_swelling_used: bool = False
 
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
-
+    calculation_settings: Optional[CalculationSettings]
     verticals_count: int
     vertical: List[Vertical]
     residual_settlements: List[ResidualSettlements]
@@ -1025,10 +994,12 @@ class Results(DSeriesRepeatedGroupedProperties):
     dissipation_in_layers: Optional[str]
     reliability_calculation_results: Optional[str]
 
-
 class DSettlementOutputStructure(DSeriesStructure):
     """Representation of complete .sld file, inherting
     the structure of the .sli file as well."""
-
     results: Results
-    input_data: DSettlementStructure
+    input_data: DSettlementInputStructure
+
+class DSettlementStructure(DSeriesStructure):
+    input_data: DSettlementInputStructure = DSettlementInputStructure()
+    output_data: Optional[Results] = None
