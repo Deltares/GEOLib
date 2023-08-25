@@ -8,14 +8,17 @@ from geolib.models.dsettlement.internal import DSettlementStructure
 from geolib.models.dsettlement.internal_soil import PreconType
 from geolib.soils import Soil, SoilClassificationParameters, StateType
 
+from tests.utils import TestUtils
+
 
 class TestSoil_Internal:
     @pytest.fixture
     def default_soil(self):
         # 1. Set up test data.
-        p = Path("tests/test_data/dsettlement/bm1-1.sli")
+        test_folder = Path(TestUtils.get_local_test_data_dir("dsettlement/benchmarks"))
+        test_file = test_folder / "bm1-1.sli"
         ds = DSettlementModel()
-        ds.parse(p)
+        ds.parse(test_file)
         # 2. Verify initial expectations.
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)

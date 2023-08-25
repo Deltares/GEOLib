@@ -88,9 +88,9 @@ class DSettlementModel(BaseModel):
         Args:
             filename:
         """
-        self.datastructure.geometry_data.pre_process()
+        self.datastructure.input_data.geometry_data.pre_process()
 
-        serializer = DSettlementInputSerializer(ds=self.datastructure.dict())
+        serializer = DSettlementInputSerializer(ds=self.datastructure.input_data.dict())
         serializer.write(filename)
 
         if isinstance(filename, Path):
@@ -99,7 +99,7 @@ class DSettlementModel(BaseModel):
     def add_soil(self, soil_input: Soil_Input) -> None:
         """Soil is converted in the internal structure and added in soil_collection."""
         soil_new = soil_input._to_dsettlement()
-        self.datastructure.soil_collection.add_soil_if_unique(soil_new)
+        self.datastructure.input_data.soil_collection.add_soil_if_unique(soil_new)
 
     # 1.2.3 Models
     def set_model(
@@ -133,15 +133,15 @@ class DSettlementModel(BaseModel):
         Returns:
             Model
         """
-        if isinstance(self.datastructure.calculation_options, str):
+        if isinstance(self.datastructure.input_data.calculation_options, str):
             logger.warning("Calculation options are overwritten")
-            self.datastructure.calculation_options = CalculationOptions()
+            self.datastructure.input_data.calculation_options = CalculationOptions()
 
-        if isinstance(self.datastructure.model, str):
+        if isinstance(self.datastructure.input_data.model, str):
             logger.warning("Model options are overwritten")
-            self.datastructure.model = Model()
+            self.datastructure.input_data.model = Model()
 
-        model_options = self.datastructure.model
+        model_options = self.datastructure.input_data.model
 
         model_options.dimension = (
             Dimension.TWO_D if is_two_dimensional else Dimension.ONE_D
@@ -196,45 +196,45 @@ class DSettlementModel(BaseModel):
         Returns:
             calculation options
         """
-        if isinstance(self.datastructure.calculation_options, str):
+        if isinstance(self.datastructure.input_data.calculation_options, str):
             logger.warning("Calculation options are overwritten")
-            self.datastructure.calculation_options = CalculationOptions()
+            self.datastructure.input_data.calculation_options = CalculationOptions()
 
-        if isinstance(self.datastructure.model, str):
+        if isinstance(self.datastructure.input_data.model, str):
             logger.warning("Model options are overwritten")
-            self.datastructure.model = Model()
+            self.datastructure.input_data.model = Model()
 
-        calculation_options = self.datastructure.calculation_options.dict()
+        calculation_options = self.datastructure.input_data.calculation_options.dict()
         calculation_options.update(**kwargs)
-        self.datastructure.calculation_options = CalculationOptions.set_options(
+        self.datastructure.input_data.calculation_options = CalculationOptions.set_options(
             **calculation_options
         )
 
         return calculation_options
 
     @property
-    def accuracy(self):
-        return self.datastructure.geometry_data.accuracy
+    def input(self):
+        return self.datastructure.input_data
 
     @property
     def curves(self):
-        return self.datastructure.geometry_data.curves
+        return self.datastructure.input_data.geometry_data.curves
 
     @property
     def boundaries(self):
-        return self.datastructure.geometry_data.boundaries
+        return self.datastructure.input_data.geometry_data.boundaries
 
     @property
     def use_probabilistic_defaults_boundaries(self):
-        return self.datastructure.geometry_data.use_probabilistic_defaults_boundaries
+        return self.datastructure.input_data.geometry_data.use_probabilistic_defaults_boundaries
 
     @property
     def stdv_boundaries(self):
-        return self.datastructure.geometry_data.stdv_boundaries
+        return self.datastructure.input_data.geometry_data.stdv_boundaries
 
     @property
     def distribution_boundaries(self):
-        return self.datastructure.geometry_data.distribution_boundaries
+        return self.datastructure.input_data.geometry_data.distribution_boundaries
 
     def set_probabilistic_data(
         self,
@@ -271,9 +271,9 @@ class DSettlementModel(BaseModel):
             is_reliability_calculation : set to True if a probabilistic calculation should be performed.
 
         """
-        self.datastructure.check_x_in_vertical(point_of_vertical=point_of_vertical)
-        self.datastructure.probabilistic_data = (
-            self.datastructure.probabilistic_data.set_probabilistic_data(
+        self.datastructure.input_data.check_x_in_vertical(point_of_vertical=point_of_vertical)
+        self.datastructure.input_data.probabilistic_data = (
+            self.datastructure.input_data.probabilistic_data.set_probabilistic_data(
                 point_of_vertical=point_of_vertical,
                 residual_settlement=residual_settlement,
                 maximum_number_of_samples=maximum_number_of_samples,
@@ -295,7 +295,7 @@ class DSettlementModel(BaseModel):
         """Add boundary to model."""
         # Divide points into curves and boundary
         # Check point uniqueness
-        tolerance = self.accuracy.accuracy
+        tolerance = 0.001
         points = [
             self.points.add_point_if_unique(
                 DSeriePoint.from_point(point), tolerance=tolerance
@@ -316,11 +316,11 @@ class DSettlementModel(BaseModel):
     @property
     def points(self):
         """Enables easy access to the points in the internal dict-like datastructure. Also enables edit/delete for individual points."""
-        return self.datastructure.geometry_data.points
+        return self.datastructure.input_data.geometry_data.points
 
     @property
     def headlines(self):
-        return self.datastructure.geometry_data.piezo_lines
+        return self.datastructure.input_data.geometry_data.piezo_lines
 
     def add_head_line(self, points: List[Point], is_phreatic=False) -> int:
         """Add head line to model."""
@@ -335,12 +335,12 @@ class DSettlementModel(BaseModel):
 
         piezo_line = self.headlines.create_piezoline(curves)
         if is_phreatic:
-            self.datastructure.geometry_data.phreatic_line.phreatic_line = piezo_line.id
+            self.datastructure.input_data.geometry_data.phreatic_line.phreatic_line = piezo_line.id
         return piezo_line.id
 
     @property
     def layers(self):
-        return self.datastructure.geometry_data.layers
+        return self.datastructure.input_data.geometry_data.layers
 
     def add_layer(
         self,
@@ -381,7 +381,7 @@ class DSettlementModel(BaseModel):
     @property
     def other_loads(self):
         """Enables easy access to the other loads in the internal dict-like datastructure."""
-        return self.datastructure.other_loads
+        return self.datastructure.input_data.other_loads
 
     def add_other_load(
         self,
@@ -395,13 +395,13 @@ class DSettlementModel(BaseModel):
         internal_other_load = other_load._to_internal(time, point)
         if isinstance(self.other_loads, str):
             logger.warning("Replacing unparsed OtherLoads!")
-            self.datastructure.other_loads = OtherLoads()
+            self.datastructure.input_data.other_loads = OtherLoads()
         self.other_loads.add_load(name, internal_other_load)
 
     @property
     def non_uniform_loads(self):
         """Enables easy access to the non-uniform loads in the internal dict-like datastructure."""
-        return self.datastructure.non__uniform_loads
+        return self.datastructure.input_data.non__uniform_loads
 
     def add_non_uniform_load(
         self,
@@ -437,7 +437,7 @@ class DSettlementModel(BaseModel):
 
         if isinstance(self.non_uniform_loads, str):
             logger.warning("Replacing unparsed NonUniformLoads!")
-            self.datastructure.non__uniform_loads = NonUniformLoads()
+            self.datastructure.input_data.non__uniform_loads = NonUniformLoads()
         self.non_uniform_loads.add_load(name, non_uniform_load)
 
     def add_water_load(self, name: str, time: timedelta, phreatic_line_id: int):
@@ -445,11 +445,11 @@ class DSettlementModel(BaseModel):
 
         Edit the head lines for each layer with `create layer`.
         """
-        if isinstance(self.datastructure.water_loads, str):
+        if isinstance(self.datastructure.input_data.water_loads, str):
             logger.warning("Replacing unparsed [WATER LOADS]!")
-            self.datastructure.water_loads = WaterLoads()
-        headlines = self.datastructure.get_headlines_for_layers()
-        self.datastructure.water_loads.add_waterload(
+            self.datastructure.input_data.water_loads = WaterLoads()
+        headlines = self.datastructure.input_data.get_headlines_for_layers()
+        self.datastructure.input_data.water_loads.add_waterload(
             name, time.days, phreatic_line_id, headlines
         )
 
@@ -468,7 +468,7 @@ class DSettlementModel(BaseModel):
         residual_times = ResidualTimes(
             time_steps=[timestep.days for timestep in time_steps]
         )
-        self.datastructure.residual_times = residual_times
+        self.datastructure.input_data.residual_times = residual_times
 
     def set_verticals(self, locations: List[Point]) -> None:
         """
@@ -480,16 +480,15 @@ class DSettlementModel(BaseModel):
         """
         points = [DSeriePoint.from_point(point) for point in locations]
         verticals = Verticals(locations=points)
-        self.datastructure.verticals = verticals
+        self.datastructure.input_data.verticals = verticals
 
     def set_vertical_drain(self, verticaldrain: VerticalDrain):
-        if self.datastructure.model.is_vertical_drains:
-            self.datastructure.vertical_drain = verticaldrain._to_internal()
+        if self.datastructure.input_data.model.is_vertical_drains:
+            self.datastructure.input_data.vertical_drain = verticaldrain._to_internal()
         else:
             raise ValueError(
                 "If you wish to add a vertical drain then value is_vertical_drains for the model should be True"
             )
-
     @property
     def output(self) -> Results:
         """Access internal dict-like datastructure of the output.
