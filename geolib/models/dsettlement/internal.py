@@ -760,7 +760,7 @@ class InternalProbabilisticCalculationType(IntEnum):
 
 class FitCalculation(DSeriesInlineMappedProperties):
     is_fit_calculation: Bool = Bool.FALSE
-    fit_vertical_number: conint(ge=0, le=1000) = 0
+    fit_vertical_number: conint(ge=-1, le=1000) = 0
 
 
 class ProbabilisticData(DSeriesInlineMappedProperties):
