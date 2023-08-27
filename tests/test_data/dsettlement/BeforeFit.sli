@@ -2,10 +2,10 @@ INPUT FILE FOR D-SETTLEMENT
 ==============================================================================
 COMPANY    : 
 
-DATE       : 24-08-2023
-TIME       : 16:17:17
+DATE       : 27-08-2023
+TIME       : 18:47:13
 FILENAME   : D:\src\GEOLib\tests\test_data\dsettlement\BeforeFit.sli
-CREATED BY : D-Settlement version 23.2.1.41762
+CREATED BY : D-Settlement version 23.2.1.41764
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
@@ -19,8 +19,8 @@ D-Settlement=1011
 0 : Calculation type = Darcy
 1 : Model = NEN - Bjerrum
 0 : Strain type = Linear
-1 : Vertical drains = TRUE
-1 : Fit for settlement plate = TRUE
+0 : Vertical drains = FALSE
+0 : Fit for settlement plate = FALSE
 0 : Probabilistic = FALSE
 0 : Horizontal displacements = FALSE
 0 : Secondary swelling = FALSE
@@ -485,7 +485,7 @@ SoilDefaultElasticity=1
 
 [END OF GEOMETRY DATA]
 [RUN IDENTIFICATION]
-Tutorial 3 for MSettle
+Test file
 Settlement plate fit
 
 [END OF RUN IDENTIFICATION]
@@ -645,7 +645,7 @@ Sand
 1.000000000E+000 = Reference time
 0 : Dissipation = FALSE
       50.000 = X co-ordinate dissipation
-1 : Use fit factors = TRUE
+0 : Use fit factors = FALSE
       50.000 = X co-ordinate fit
 0 : Predict settlements omitting additional loadsteps = FALSE
 [END OF CALCULATION OPTIONS]
@@ -758,8 +758,8 @@ ProbDefLayerStd=0.10
 ProbDefLayerDist=0
 [END OF PROBABILISTIC DEFAULTS]
 [FIT OPTIONS]
-Fit Maximum Number of Iterations=2
-Fit Required Iteration Accuracy=0.0010000000
+Fit Maximum Number of Iterations=5
+Fit Required Iteration Accuracy=0.0001000000
 Fit Required Correlation Coefficient=0.990
 [END OF FIT OPTIONS]
 [FIT CALCULATION]

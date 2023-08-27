@@ -570,7 +570,7 @@ class TestDSettlementAcceptance:
         dm.serialize(path)
 
     @pytest.mark.acceptance
-    @pytest.mark.xfail  #   Wrong soils for now
+    @pytest.mark.xfail  # Wrong soils for now
     @only_teamcity
     def test_sorting_vertical_layer_boundaries(self):
         """
@@ -658,10 +658,23 @@ class TestDSettlementAcceptance:
         # 3. Parse test file
         dm.parse(test_file)
 
-        # 4. Set fit calculation
-        dm.datastructure.input_data.fit_calculation.is_fit_calculation = Bool.TRUE
-        dm.datastructure.input_data.fit_calculation.fit_vertical_number = 1
+        # 4. Select fit model option
+        assert not dm.datastructure.input_data.model.is_fit_for_settlement_plate
+        dm.datastructure.input_data.model.is_fit_for_settlement_plate = Bool.TRUE
+
+        # 5. Select vertical and fit calculation
+        assert dm.fit_calculation.fit_vertical_number == 0
+        dm.fit_calculation.fit_vertical_number = 1
+        assert not dm.fit_calculation.is_fit_calculation
+        dm.fit_calculation.is_fit_calculation = Bool.TRUE
+
+        # 6. Select fit iteration options
+        # assert dm.fit_options.fit_max_iterations == 5
+        # assert dm.fit_options.fit_required_iteration_accuracy == 0.0001
+        # assert dm.fit_options.fit_required_correlation_coefficient == 0.99
+
+        # 7. Serialize file
         dm.serialize(output_test_inputfile)
 
-        # 4. Run fit calculation (includes parsing of output file)
+        # 8. Run fit calculation (includes parsing of output file)
         model = dm.execute()

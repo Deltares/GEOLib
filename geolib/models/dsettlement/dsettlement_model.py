@@ -233,6 +233,14 @@ class DSettlementModel(BaseModel):
     def distribution_boundaries(self):
         return self.datastructure.input_data.geometry_data.distribution_boundaries
 
+    @property
+    def fit_options(self):
+        return self.datastructure.input_data.fit_options
+
+    @property
+    def fit_calculation(self):
+        return self.datastructure.input_data.fit_calculation
+
     def set_probabilistic_data(
         self,
         point_of_vertical: Point,

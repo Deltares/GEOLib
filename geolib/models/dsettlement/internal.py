@@ -15,6 +15,7 @@ from geolib.models.dseries_parser import (
     DSerieMatrixStructure,
     DSerieOldTableStructure,
     DSeriesInlineMappedProperties,
+    DSeriesInlineReversedProperties,
     DSeriesMatrixTreeStructureCollection,
     DSeriesNoParseSubStructure,
     DSeriesRepeatedGroupedProperties,
@@ -608,28 +609,28 @@ class OtherLoads(DSeriesNoParseSubStructure):
             return None
 
 
-class Dimension(Enum):
+class Dimension(IntEnum):
     ONE_D = 0
     TWO_D = 1
 
 
-class ConsolidationModel(Enum):
+class ConsolidationModel(IntEnum):
     DARCY = 0
     TERZAGHI = 1
 
 
-class SoilModel(Enum):
+class SoilModel(IntEnum):
     NEN_KOPPEJAN = 0
     NEN_BJERRUM = 1
     ISOTACHE = 2
 
 
-class StrainType(Enum):
+class StrainType(IntEnum):
     LINEAR = 0
     NATURAL = 1
 
 
-class Model(DSeriesNoParseSubStructure):
+class Model(DSeriesInlineReversedProperties):
     dimension: Dimension = Dimension.TWO_D
     consolidation_model: ConsolidationModel = ConsolidationModel.DARCY
     soil_model: SoilModel = SoilModel.NEN_KOPPEJAN
@@ -819,7 +820,7 @@ class DSettlementInputStructure(DSeriesStructure):
     geometry_data: GeometryData = GeometryData()
     geometry_1d_data: Optional[str]
     run_identification: str = 2 * "\n"
-    model: Union[Model, str] = Model()
+    model: Model = Model()
     verticals: Union[Verticals, str] = Verticals()
     water: Union[float, str] = 9.81
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()

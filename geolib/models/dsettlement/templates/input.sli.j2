@@ -19,10 +19,10 @@ D-Settlement={{ version.d__settlement }}
 
 [MODEL]
 {% if model is mapping -%}
-{{ model.dimension.value }} : Dimension = {{ model.dimension.name }}
-{{ model.consolidation_model.value }} : Calculation type = {{ model.consolidation_model.name }}
-{{ model.soil_model.value }} : Model = {{ model.soil_model.name }}
-{{ model.strain_type.value }} : Strain type = {{ model.strain_type.name }}
+{{ model.dimension.value }} : Dimension = {{ {0: '1D', 1: '2D'}[model.dimension.value] }}
+{{ model.consolidation_model.value }} : Calculation type = {{ {0 : 'Darcy', 1 : 'Terzaghi'}[model.consolidation_model.value] }}
+{{ model.soil_model.value }} : Model = {{ {0: 'NEN - Koppejan', 1: 'NEN - Bjerrum', 2: 'Isotache'}[model.soil_model.value] }}
+{{ model.strain_type.value }} : Strain type = {{ {0: 'Linear', 1: 'Natural'}[model.strain_type.value] }}
 {{ model.is_vertical_drains.value }} : Vertical drains = {{ model.is_vertical_drains.name }}
 {{ model.is_fit_for_settlement_plate.value }} : Fit for settlement plate = {{ model.is_fit_for_settlement_plate.name }}
 {{ model.is_probabilistic.value }} : Probabilistic = {{ model.is_probabilistic.name }}
@@ -359,7 +359,7 @@ Is Reliability Calculation={{probabilistic_data.is_reliability_calculation.value
 [END OF FIT OPTIONS]
 [FIT CALCULATION]
 {% if fit_calculation is mapping -%}
-Is Fit Calculation={{ fit_calculation.is_fit_calculation.value }}
+Is Fit Calculation={{fit_calculation.is_fit_calculation.value}}
 Fit Vertical Number={{fit_calculation.fit_vertical_number}}
 {% else %}
 {{ fit_calculation }}
