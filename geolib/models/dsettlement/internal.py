@@ -729,7 +729,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     is_predict_settlements_omitting_additional_load_steps: Bool = Bool.FALSE
 
     @classmethod
-    def set_options(cls, **kwargs):
+    def set_imaginary_surface_options(cls, **kwargs):
         cls_instance = cls(**kwargs)
         if cls_instance.is_imaginary_surface == Bool.FALSE:
             cls_instance.imaginary_surface_layer = None
