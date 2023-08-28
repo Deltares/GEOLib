@@ -1,6 +1,7 @@
 import logging
 import os
 import pathlib
+import shutil
 from datetime import timedelta
 from pathlib import Path
 from typing import List
@@ -650,6 +651,10 @@ class TestDSettlementAcceptance:
         test_file = pathlib.Path(os.path.join(test_folder, "BeforeFit.sli"))
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement/acceptancetest/"))
         output_test_inputfile = output_test_folder / ("FitCalculation.sli")
+        source = pathlib.Path(os.path.join(test_folder, "FitMeasurement.txt"))
+        dest = pathlib.Path(os.path.join(output_test_folder, "FitMeasurement.txt"))
+        shutil.copyfile(source, dest)
+
         dm = DSettlementModel()
 
         # 2. Verify initial expectations
