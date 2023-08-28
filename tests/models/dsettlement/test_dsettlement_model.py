@@ -575,7 +575,6 @@ class TestDSettlementModel:
     def test_parse_probabilistic_data(self):
         # todo work in progress
         test_file = test_data_path / benchmarks_folder / "bm3-15c.sli"
-        # test_output_filepath = output_test_path / "test_parse_probabilistic_data.sli"
         ds = DSettlementModel()
         ds.parse(test_file)
         assert ds.datastructure.probabilistic_data.is_reliability_calculation.value == 1
