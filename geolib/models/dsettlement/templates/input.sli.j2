@@ -355,7 +355,13 @@ Is Reliability Calculation={{probabilistic_data.is_reliability_calculation.value
 {{ probabilistic_defaults }}
 [END OF PROBABILISTIC DEFAULTS]
 [FIT OPTIONS]
+{% if fit_options is mapping -%}
+Fit Maximum Number of Iterations={{fit_options.fit_maximum_number_of_iterations}}
+Fit Required Iteration Accuracy={{fit_options.fit_required_iteration_accuracy}}
+Fit Required Correlation Coefficient={{fit_options.fit_required_correlation_coefficient}}
+{% else %}
 {{ fit_options }}
+{% endif %}
 [END OF FIT OPTIONS]
 [FIT CALCULATION]
 {% if fit_calculation is mapping -%}

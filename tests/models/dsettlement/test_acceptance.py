@@ -657,6 +657,7 @@ class TestDSettlementAcceptance:
 
         # 3. Parse test file
         dm.parse(test_file)
+        fit_origin = list(dm.datastructure.input_data.fit.split("\n"))
 
         # 4. Select fit model option
         assert not dm.datastructure.input_data.model.is_fit_for_settlement_plate
@@ -669,12 +670,27 @@ class TestDSettlementAcceptance:
         dm.fit_calculation.is_fit_calculation = Bool.TRUE
 
         # 6. Select fit iteration options
-        # assert dm.fit_options.fit_max_iterations == 5
-        # assert dm.fit_options.fit_required_iteration_accuracy == 0.0001
-        # assert dm.fit_options.fit_required_correlation_coefficient == 0.99
+        assert dm.fit_options.fit_maximum_number_of_iterations == 5
+        dm.fit_options.fit_maximum_number_of_iterations = 2
+        assert dm.fit_options.fit_required_iteration_accuracy == 0.0001
+        dm.fit_options.fit_required_iteration_accuracy = 0.001
+        assert dm.fit_options.fit_required_correlation_coefficient == 0.99
+        dm.fit_options.fit_required_correlation_coefficient = 0.9
 
         # 7. Serialize file
         dm.serialize(output_test_inputfile)
 
         # 8. Run fit calculation (includes parsing of output file)
-        model = dm.execute()
+        result = dm.execute()
+
+        # 9. Check that a fit calculation was performed,
+        # by checking a few lines in the FIT block in the INPUT part of the output file
+        assert fit_origin[33].strip() == '50.000 = X co-ordinate'
+        assert fit_origin[56].strip() == '1      1.000      1.000     10.000 Factor 0: selected, current, previous, weight'
+        assert fit_origin[67].strip() == '0.000 = Coefficient of determination  -'
+        assert fit_origin[68].strip() == '0.19 = Imperfection  m'
+        fit = list(result.input.fit.split("\n"))
+        assert fit[33].strip() == '50.000 = X co-ordinate'
+        assert fit[56].strip() == '1      1.051      1.000     10.000 Factor 0: selected, current, previous, weight'
+        assert fit[67].strip() == '0.841 = Coefficient of determination  -'
+        assert fit[68].strip() == '0.50 = Imperfection  m'

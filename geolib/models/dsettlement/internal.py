@@ -758,6 +758,12 @@ class InternalProbabilisticCalculationType(IntEnum):
     BandWidthAndProbabilityOfFailureMonteCarlo = 2
 
 
+class FitOptions(DSeriesInlineMappedProperties):
+    fit_maximum_number_of_iterations: conint(ge=0, le=100) = 5
+    fit_required_iteration_accuracy: confloat(ge=0, le=1) = 0.0001
+    fit_required_correlation_coefficient: confloat(ge=0, le=1) = 0.99
+
+
 class FitCalculation(DSeriesInlineMappedProperties):
     is_fit_calculation: Bool = Bool.FALSE
     fit_vertical_number: conint(ge=-1, le=1000) = 0
@@ -891,13 +897,7 @@ class DSettlementInputStructure(DSeriesStructure):
         ProbDefLayerDist=0
         """
     )
-    fit_options: str = cleandoc(
-        """
-        Fit Maximum Number of Iterations=5
-        Fit Required Iteration Accuracy=0.0001000000
-        Fit Required Correlation Coefficient=0.990
-        """
-    )
+    fit_options: FitOptions = FitOptions()
     fit_calculation: FitCalculation = FitCalculation()
     fit: str = ZERO_ITEMS
 
