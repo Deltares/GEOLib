@@ -70,6 +70,9 @@ benchmarks_folder = "benchmarks"
 test_file_name_bm1 = "bm1-1.sli"
 test_file_path_bm1 = test_data_path / benchmarks_folder / test_file_name_bm1
 
+output_test_path = Path(TestUtils.get_output_test_data_dir("dsettlement"))
+
+
 class TestDSettlementModel:
     def setup_dsettlement_model(self):
         """Setup base structure from parsed file while
@@ -936,7 +939,7 @@ class TestDSettlementModel:
     def test_piezo_lines(self):
         # Setup date
         ds = self.setup_dsettlement_model()
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         test_output_filepath = output_test_path / "test_piezo.sli"
 
         point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
