@@ -638,6 +638,7 @@ class Model(DSeriesNoParseSubStructure):
     is_fit_for_settlement_plate: Bool = Bool.FALSE
     is_probabilistic: Bool = Bool.FALSE
     is_horizontal_displacements: Bool = Bool.FALSE
+    # Secondary Swelling is only available in Evaluation version (Deltares only)
     is_secondary_swelling: Bool = Bool.FALSE
     is_waspan: Bool = Bool.FALSE
 
@@ -982,6 +983,7 @@ class ResidualSettlements(DSerieOldTableStructure):
     residualsettlements: List[Dict[str, float]]
 
 class CalculationSettings(DSeriesStructure):
+    # Secondary Swelling is only available in Evaluation version (Deltares only)
     is_secondary_swelling_used: bool = False
 
 class Results(DSeriesRepeatedGroupedProperties):
@@ -995,7 +997,7 @@ class Results(DSeriesRepeatedGroupedProperties):
     reliability_calculation_results: Optional[str]
 
 class DSettlementOutputStructure(DSeriesStructure):
-    """Representation of complete .sld file, inherting
+    """Representation of complete .sld file, inheriting
     the structure of the .sli file as well."""
     results: Results
     input_data: DSettlementInputStructure
