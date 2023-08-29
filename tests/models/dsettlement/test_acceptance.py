@@ -426,7 +426,7 @@ class TestDSettlementAcceptance:
             is_fit_for_settlement_plate=False,
             is_probabilistic=False,
             is_horizontal_displacements=False,
-            is_secondary_swelling=True,  # TODO document this parameter
+            is_secondary_swelling=True,
         )
 
         path = self.outputdir / "test_set_model.sli"

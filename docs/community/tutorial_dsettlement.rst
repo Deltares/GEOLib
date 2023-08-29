@@ -11,7 +11,7 @@ Tutorial D-Settlement
 
     dm = gl.DSettlementModel()
 
-2. Bases on the model the function :func:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model`. Here the calculation model options can be set.
+2. The constitutive model, the consolidation model and the options are defined using the function :func:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model`. Here the calculation model options can be set.
 
 .. code-block:: python
 
@@ -24,8 +24,7 @@ Tutorial D-Settlement
         is_fit_for_settlement_plate=False,
         is_probabilistic=False,
         is_horizontal_displacements=False,
-        is_secondary_swelling=False,
-        is_waspan=True,
+        is_secondary_swelling=False
     )
 
 3. Then the geometry of the model should be defined by setting up the points which will make up the full geometry.
@@ -182,7 +181,7 @@ using :func:`~geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_v
     # set vertical drains
     dm.set_vertical_drain(test_drain)
 
-6. For a D-Settlement calculation to be performed at least one  load should be defined.
+6. To perform a D-Settlement calculation at least one load should be defined.
 In this case a non uniform load is added to the model.
 
 .. code-block:: python
