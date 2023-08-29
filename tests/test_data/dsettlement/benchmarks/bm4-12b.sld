@@ -2,18 +2,29 @@ Dump file for D-Settlement : Settlement of soil.
 ==============================================================================
 COMPANY    : 
 
-DATE       : 8-3-2019
-TIME       : 16:04:10
-FILENAME   : D:\DSettlement\Test Results DSettlement\Benchmarks Branch\bm4-12b.sld
-CREATED BY : D-Settlement version 19.1.1.23743
+DATE       : 10/08/2023
+TIME       : 07:53:00
+FILENAME   : C:\Deltares\D-Settlement\Benchmarks\bm4-12b.sld
+CREATED BY : D-Settlement version 23.2.1.41674
 ==========================    BEGINNING OF DATA     ==========================
-[Input Data]
+[INPUT DATA]
 [VERSION]
-Soil=1005
-Geometry=1000
-D-Settlement=1007
+Soil=1011
+Geometry=1002
+D-Settlement=1011
 [END OF VERSION]
 
+[MODEL]
+0 : Dimension = 1D
+0 : Calculation type = Darcy
+2 : Model = Isotache
+1 : Strain type = Natural
+0 : Vertical drains = FALSE
+0 : Fit for settlement plate = FALSE
+0 : Probabilistic = FALSE
+0 : Horizontal displacements = FALSE
+0 : Secondary swelling = FALSE
+[END OF MODEL]
 [SOIL COLLECTION]
     1 = number of items
 [SOIL]
@@ -22,8 +33,6 @@ SoilColor=16575398
 SoilGamDry=14.00
 SoilGamWet=14.00
 SoilInitialVoidRatio=0.000000
-SoilCohesion=0.00
-SoilPhi=0.00
 SoilPreconIsotacheType=0
 SoilPreconKoppejanType=1
 SoilUseEquivalentAge=1
@@ -31,9 +40,11 @@ SoilEquivalentAge=4.32E+06
 SoilPc=1.50E+01
 SoilOCR=2.87
 SoilPOP=10.00
-SoilLimitStress=1.00
 SoilDrained=0
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=0.50
+SoilUnloadingStressRatio=2.00
 SoilCv=1.44E-06
 SoilPermeabilityVer=8.640E-04
 SoilPermeabilityHorFactor=3.000
@@ -149,20 +160,7 @@ Benchmark MSettle 4-12b
 Influence of the creep rate reference time
 Tau_0 = 1440 (i.e. Time unit = Minutes)
 [END OF RUN IDENTIFICATION]
-[MODEL]
-0 : Dimension = 1D
-0 : Calculation type = Darcy
-2 : Model = Isotache
-1 : Strain type = Natural
-0 : Vertical drains = FALSE
-0 : Fit for settlement plate = FALSE
-0 : Probabilistic = FALSE
-0 : Horizontal displacements = FALSE
-0 : Secondary swelling = FALSE
-0 : Waspan = FALSE
-[END OF MODEL]
 [VERTICALS]
-    100 = total Mesh
     1 = number of items
        0.000        0.000 = X, Z
 [END OF VERTICALS]
@@ -242,37 +240,6 @@ Superelevation
 1 : Number of items
 0.05
 [END OF FILTER BAND WIDTH]
-[PORE PRESSURE METERS]
-    0 = number of items
-[END OF PORE PRESSURE METERS]
-[NON-UNIFORM LOADS PORE PRESSURES]
-    0 = number of items
-[END OF NON-UNIFORM LOADS PORE PRESSURES]
-[OTHER LOADS PORE PRESSURES]
-    9 = number of items
-Initila load
-       0.000 = Top of heightening
-Load step 1
-       0.000 = Top of heightening
-Load step 2
-       0.000 = Top of heightening
-Load step 3
-       0.000 = Top of heightening
-Load step 4
-       0.000 = Top of heightening
-Load step 5
-       0.000 = Top of heightening
-Load step 6
-       0.000 = Top of heightening
-Load step 7
-       0.000 = Top of heightening
-Load step 8
-       0.000 = Top of heightening
-[END OF OTHER LOADS PORE PRESSURES]
-[CALCULATION OPTIONS PORE PRESSURES]
-1 : Shear stress = TRUE
-1 : calculation method of lateral stress ratio (k0) = Nu
-[END OF CALCULATION OPTIONS PORE PRESSURES]
 [VERTICAL DRAIN]
 0 : Flow type = Radial
        0.000 = Bottom position
@@ -366,18 +333,15 @@ Fit Required Correlation Coefficient=0.990
 Is Fit Calculation=0
 Fit Vertical Number=-1
 [END OF FIT CALCULATION]
-[EPS]
-        0.00 = Dry unit weight
-        0.00 = Saturated unit weight
-        0.00 = Load
-        0.00 = Height above surface
-[END OF EPS]
 [FIT]
     0 = number of items
 [END OF FIT]
-[End of Input Data]
+[END OF INPUT DATA]
 
 [Results]
+[CALCULATION SETTINGS]
+IsSecondarySwellingUsed=0
+[END OF CALCULATION SETTINGS]
 [Verticals Count]
 1
 [End of Verticals Count]

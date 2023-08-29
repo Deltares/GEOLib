@@ -33,6 +33,9 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soillimitstress: float = 0  # fixed value
     soildrained: Bool = Bool.FALSE
     soilapasapproximationbycpcs: Bool = Bool.FALSE
+    soilsecondaryswellingreduced: Bool = Bool.FALSE
+    soilsecondaryswellingfactor: float = 0.5
+    soilunloadingstressratio: float = 2.0
     soilcv: float = 1e-12
     soilpermeabilityver: float = 0.00000001
     soilpermeabilityhorfactor: float = 1
