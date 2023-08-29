@@ -104,7 +104,7 @@ Each D-Serie / D-GEO Suite release can slightly change the structure of the inpu
 GEOLib only supports the files used by the D-Serie / D-GEO Suite consoles and thus the consoles specific version number.
 At the moment that version number is:
 
-* D-Settlement **19.1**
+* D-Settlement **23.2**
 * D-Foundations **23.1**
 * D-SheetPiling **23.1**
 * D-Stability **2023.01**
