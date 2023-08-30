@@ -658,7 +658,7 @@ class Model(DSeriesNoParseSubStructure):
     is_waspan: Bool = Bool.FALSE
 
 
-class PreconPressureWithinLayer(Enum):
+class PreconPressureWithinLayer(IntEnum):
     CONSTANT_NO_CORRECTION = 0
     CONSTANT_CORRECTION_T0 = 1
     CONSTANT_CORRECTION_ALL_T = 2
