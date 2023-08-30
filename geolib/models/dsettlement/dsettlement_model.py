@@ -215,7 +215,7 @@ class DSettlementModel(BaseModel):
         if options.is_imaginary_surface \
                 and (options.imaginary_surface_layer < 1 or
                      options.imaginary_surface_layer > self.layers.layers.__len__()):
-            raise ValueError("The index of imaginary_surface_layer refers to a not existing index layer.")
+            raise ValueError("The index of imaginary_surface_layer refers to a nonexistent layer index.")
 
         return calculation_options
 
