@@ -165,7 +165,7 @@ class DSettlementModel(BaseModel):
         Args:
             precon_pressure_within_layer (PreconPressureWithinLayer): type of preconsolidation pressure within the layer
             is_imaginary_surface (bool): true if imaginary surface
-            imaginary_surface_layer (PositivInt): index of layer
+            imaginary_surface_layer (PositivInt): index of the layer whose top acts as the imaginary surface
             is_submerging (bool): true if submerging
             use_end_time_for_fit (bool): true if end time should be used for fit
             is_maintain_profile (bool): true if profile should be maintained
@@ -206,9 +206,16 @@ class DSettlementModel(BaseModel):
 
         calculation_options = self.datastructure.calculation_options.dict()
         calculation_options.update(**kwargs)
-        self.datastructure.calculation_options = CalculationOptions.set_options(
+        self.datastructure.calculation_options = CalculationOptions.set_imaginary_surface_options(
             **calculation_options
         )
+
+        """Check that the given layer index refers to an existing index layer"""
+        options = self.datastructure.calculation_options
+        if options.is_imaginary_surface \
+                and (options.imaginary_surface_layer < 1 or
+                     options.imaginary_surface_layer > self.layers.layers.__len__()):
+            raise ValueError("The index of imaginary_surface_layer refers to a nonexistent layer index.")
 
         return calculation_options
 

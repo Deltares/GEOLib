@@ -276,22 +276,22 @@ D-Settlement={{ version.d__settlement }}
 
 [CALCULATION OPTIONS]
 {% if calculation_options is mapping -%}
-{{ calculation_options.precon_pressure_within_layer.value }} : Precon. pressure within a layer = {{ calculation_options.precon_pressure_within_layer.name }}
+{{ calculation_options.precon_pressure_within_layer.value }} : Precon. pressure within a layer = {{ {0: 'Constant (constant in the layers)', 1: 'Constant, correction at t=0 [days]', 2: 'Constant, correction at every step', 3: 'Variable (parallel to eff. stress)', 4: 'Variable, correction at t=0 [days]',  5: 'Variable, correction at every step'}[calculation_options.precon_pressure_within_layer.value] }}
 {{ calculation_options.is_imaginary_surface.value }} : Imaginary surface = {{ calculation_options.is_imaginary_surface.name }}
 {% if calculation_options.imaginary_surface_layer is not none %}
-{{ calculation_options.imaginary_surface_layer.value }} : Imaginary surface layer =  {{ calculation_options.imaginary_surface_layer.name }}
+{{ calculation_options.imaginary_surface_layer }} = Imaginary surface layer
 {% endif %}
-{{ calculation_options.is_submerging.value }} : Submerging =  {{ calculation_options.is_submerging.name }}
-{{ calculation_options.use_end_time_for_fit.value }} : Use end time for fit =  {{ calculation_options.use_end_time_for_fit.name }}
-{{ calculation_options.is_maintain_profile.value }} : Maintain profile =  {{ calculation_options.is_maintain_profile.name }}
+{{ calculation_options.is_submerging.value }} : Submerging = {{ calculation_options.is_submerging.name }}
+{{ calculation_options.use_end_time_for_fit.value }} : Use end time for fit = {{ calculation_options.use_end_time_for_fit.name }}
+{{ calculation_options.is_maintain_profile.value }} : Maintain profile = {{ calculation_options.is_maintain_profile.name }}
 {{ calculation_options.maintain_profile_material_name }}
-{{ calculation_options.maintain_profile_time }} = Time {{ calculation_options.maintain_profile_material_name }}
-{{ calculation_options.maintain_profile_gamma_dry }} = Gamma dry {{ calculation_options.maintain_profile_material_name }}
-{{ calculation_options.maintain_profile_gamma_wet }} = Gamma wet {{ calculation_options.maintain_profile_material_name }}
+{{ calculation_options.maintain_profile_time }} = Time superelevation
+{{ calculation_options.maintain_profile_gamma_dry }} = Gamma dry superelevation
+{{ calculation_options.maintain_profile_gamma_wet }} = Gamma wet superelevation
 {{ calculation_options.dispersion_conditions_layer_boundaries_top.value }} : Dispersion conditions layer boundaries top = {{ calculation_options.dispersion_conditions_layer_boundaries_top.name }}
 {{ calculation_options.dispersion_conditions_layer_boundaries_bottom.value }} : Dispersion conditions layer boundaries bottom = {{ calculation_options.dispersion_conditions_layer_boundaries_bottom.name }}
-{{ calculation_options.stress_distribution_soil.value }}  : Stress distribution soil = {{ calculation_options.stress_distribution_soil.name }}
-{{ calculation_options.stress_distribution_loads.value }}  : Stress distribution loads = {{ calculation_options.stress_distribution_loads.name }}
+{{ calculation_options.stress_distribution_soil.value }} : Stress distribution soil = {{ calculation_options.stress_distribution_soil.name }}
+{{ calculation_options.stress_distribution_loads.value }} : Stress distribution loads = {{ calculation_options.stress_distribution_loads.name }}
 {{ calculation_options.iteration_stop_criteria_submerging }} = Iteration stop criteria submerging [m]
 {{ calculation_options.iteration_stop_criteria_submerging_layer_height }} = Iteration stop criteria submerging minimum layer height [m]
 {{ calculation_options.maximum_iteration_steps_for_submerging }} = Maximum iteration steps for submerging

@@ -70,9 +70,10 @@ class TestDSettlementModel:
     def setup_dsettlement_model(self):
         """Setup base structure from parsed file while
         we can't initialize one from scratch yet."""
-        p = Path("tests/test_data/dsettlement/bm1-1.sli")
+        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
+        test_file = pathlib.Path(os.path.join(test_folder, "bm1-1.sli"))
         ds = DSettlementModel()
-        ds.parse(p)
+        ds.parse(test_file)
         assert ds.datastructure is not None
         assert isinstance(ds.datastructure, DSettlementStructure)
         return ds
@@ -1255,15 +1256,21 @@ class TestDSettlementModel:
         assert ds.datastructure.calculation_options.imaginary_surface_layer == 1
 
         # Check if imaginary surface layer is not overwritten with default value
-        ds.set_any_calculation_options(imaginary_surface_layer=3)
+        ds.set_any_calculation_options(imaginary_surface_layer=2)
 
-        assert ds.datastructure.calculation_options.imaginary_surface_layer == 3
+        assert ds.datastructure.calculation_options.imaginary_surface_layer == 2
 
         # Check if imaginary surface layer is removed
         ds.set_any_calculation_options(is_imaginary_surface=False)
 
         assert ds.datastructure.calculation_options.is_imaginary_surface == Bool.FALSE
         assert ds.datastructure.calculation_options.imaginary_surface_layer is None
+
+        # Check that an error message is raised when the index layer is invalid
+        with pytest.raises(Exception):
+            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=0)
+        with pytest.raises(Exception):
+            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=3)
 
     @pytest.mark.systemtest
     def test_serialize_calculation_options(self):
