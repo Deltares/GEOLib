@@ -1243,7 +1243,7 @@ class TestDSettlementModel:
     class TestDSettlementAcceptance:
         def test_dsettlement_acceptance(self):
             """Acceptance test for D-Settlement serialisation"""
-            test_output_filepath = output_test_path / "acceptance"
+            test_output_filepath = Path(TestUtils.get_output_test_data_dir(output_test_path / "acceptance/"))
 
             dm = DSettlementModel()
             dm.set_model(
@@ -1645,7 +1645,7 @@ class TestDSettlementModel:
     def test_dsettlement_acceptance_probabilistic(self):
         """Setup base structure from parsed file while
         we can't initialize one from scratch yet."""
-        test_output_filepath = output_test_path / "acceptance"
+        test_output_filepath = Path(TestUtils.get_output_test_data_dir(output_test_path / "acceptance/"))
 
         dm = DSettlementModel()
         dm.set_model(
