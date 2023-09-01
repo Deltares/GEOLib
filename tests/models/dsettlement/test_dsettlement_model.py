@@ -1219,15 +1219,21 @@ class TestDSettlementModel:
         assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer == 1
 
         # Check if imaginary surface layer is not overwritten with default value
-        ds.set_any_calculation_options(imaginary_surface_layer=3)
+        ds.set_any_calculation_options(imaginary_surface_layer=2)
 
-        assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer == 3
+        assert ds.datastructure.calculation_options.imaginary_surface_layer == 2
 
         # Check if imaginary surface layer is removed
         ds.set_any_calculation_options(is_imaginary_surface=False)
 
         assert ds.datastructure.input_data.calculation_options.is_imaginary_surface == Bool.FALSE
         assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer is None
+
+        # Check that an error message is raised when the index layer is invalid
+        with pytest.raises(Exception):
+            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=0)
+        with pytest.raises(Exception):
+            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=3)
 
     @pytest.mark.systemtest
     def test_serialize_calculation_options(self):
