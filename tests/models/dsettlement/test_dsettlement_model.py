@@ -1221,7 +1221,7 @@ class TestDSettlementModel:
         # Check if imaginary surface layer is not overwritten with default value
         ds.set_any_calculation_options(imaginary_surface_layer=2)
 
-        assert ds.datastructure.calculation_options.imaginary_surface_layer == 2
+        assert ds.datastructure.input_data.calculation_options.imaginary_surface_layer == 2
 
         # Check if imaginary surface layer is removed
         ds.set_any_calculation_options(is_imaginary_surface=False)
