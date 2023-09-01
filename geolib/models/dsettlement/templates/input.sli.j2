@@ -19,16 +19,15 @@ D-Settlement={{ version.d__settlement }}
 
 [MODEL]
 {% if model is mapping -%}
-{{ model.dimension.value }} : Dimension = {{ model.dimension.name }}
-{{ model.consolidation_model.value }} : Calculation type = {{ model.consolidation_model.name }}
-{{ model.soil_model.value }} : Model = {{ model.soil_model.name }}
-{{ model.strain_type.value }} : Strain type = {{ model.strain_type.name }}
+{{ model.dimension.value }} : Dimension = {{ {0: '1D', 1: '2D'}[model.dimension.value] }}
+{{ model.consolidation_model.value }} : Calculation type = {{ {0 : 'Darcy', 1 : 'Terzaghi'}[model.consolidation_model.value] }}
+{{ model.soil_model.value }} : Model = {{ {0: 'NEN - Koppejan', 1: 'NEN - Bjerrum', 2: 'Isotache'}[model.soil_model.value] }}
+{{ model.strain_type.value }} : Strain type = {{ {0: 'Linear', 1: 'Natural'}[model.strain_type.value] }}
 {{ model.is_vertical_drains.value }} : Vertical drains = {{ model.is_vertical_drains.name }}
 {{ model.is_fit_for_settlement_plate.value }} : Fit for settlement plate = {{ model.is_fit_for_settlement_plate.name }}
 {{ model.is_probabilistic.value }} : Probabilistic = {{ model.is_probabilistic.name }}
 {{ model.is_horizontal_displacements.value }} : Horizontal displacements = {{ model.is_horizontal_displacements.name }}
 {{ model.is_secondary_swelling.value }} : Secondary swelling = {{ model.is_secondary_swelling.name }}
-{{ model.is_waspan.value }} : Waspan = {{ model.is_waspan.name }}
 {% else -%}
 {{ model }}
 {% endif %}
@@ -356,10 +355,21 @@ Is Reliability Calculation={{probabilistic_data.is_reliability_calculation.value
 {{ probabilistic_defaults }}
 [END OF PROBABILISTIC DEFAULTS]
 [FIT OPTIONS]
+{% if fit_options is mapping -%}
+Fit Maximum Number of Iterations={{fit_options.fit_maximum_number_of_iterations}}
+Fit Required Iteration Accuracy={{fit_options.fit_required_iteration_accuracy}}
+Fit Required Correlation Coefficient={{fit_options.fit_required_correlation_coefficient}}
+{% else %}
 {{ fit_options }}
+{% endif %}
 [END OF FIT OPTIONS]
 [FIT CALCULATION]
+{% if fit_calculation is mapping -%}
+Is Fit Calculation={{fit_calculation.is_fit_calculation.value}}
+Fit Vertical Number={{fit_calculation.fit_vertical_number}}
+{% else %}
 {{ fit_calculation }}
+{% endif %}
 [END OF FIT CALCULATION]
 [FIT]
 {{ fit }}

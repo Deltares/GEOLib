@@ -15,6 +15,7 @@ from geolib.models.dseries_parser import (
     DSerieMatrixStructure,
     DSerieOldTableStructure,
     DSeriesInlineMappedProperties,
+    DSeriesInlineReversedProperties,
     DSeriesMatrixTreeStructureCollection,
     DSeriesNoParseSubStructure,
     DSeriesRepeatedGroupedProperties,
@@ -608,28 +609,28 @@ class OtherLoads(DSeriesNoParseSubStructure):
             return None
 
 
-class Dimension(Enum):
+class Dimension(IntEnum):
     ONE_D = 0
     TWO_D = 1
 
 
-class ConsolidationModel(Enum):
+class ConsolidationModel(IntEnum):
     DARCY = 0
     TERZAGHI = 1
 
 
-class SoilModel(Enum):
+class SoilModel(IntEnum):
     NEN_KOPPEJAN = 0
     NEN_BJERRUM = 1
     ISOTACHE = 2
 
 
-class StrainType(Enum):
+class StrainType(IntEnum):
     LINEAR = 0
     NATURAL = 1
 
 
-class Model(DSeriesNoParseSubStructure):
+class Model(DSeriesInlineReversedProperties):
     dimension: Dimension = Dimension.TWO_D
     consolidation_model: ConsolidationModel = ConsolidationModel.DARCY
     soil_model: SoilModel = SoilModel.NEN_KOPPEJAN
@@ -640,7 +641,6 @@ class Model(DSeriesNoParseSubStructure):
     is_horizontal_displacements: Bool = Bool.FALSE
     # Secondary Swelling is only available in Evaluation version (Deltares only)
     is_secondary_swelling: Bool = Bool.FALSE
-    is_waspan: Bool = Bool.FALSE
 
 
 class PreconPressureWithinLayer(Enum):
@@ -759,6 +759,17 @@ class InternalProbabilisticCalculationType(IntEnum):
     BandWidthAndProbabilityOfFailureMonteCarlo = 2
 
 
+class FitOptions(DSeriesInlineMappedProperties):
+    fit_maximum_number_of_iterations: conint(ge=0, le=100) = 5
+    fit_required_iteration_accuracy: confloat(ge=0, le=1) = 0.0001
+    fit_required_correlation_coefficient: confloat(ge=0, le=1) = 0.99
+
+
+class FitCalculation(DSeriesInlineMappedProperties):
+    is_fit_calculation: Bool = Bool.FALSE
+    fit_vertical_number: conint(ge=-1, le=1000) = 0  # index (zero-based)
+
+
 class ProbabilisticData(DSeriesInlineMappedProperties):
     reliability_x_co__ordinate: float = 0
     residual_settlement: confloat(ge=0, le=1000) = 1
@@ -816,7 +827,7 @@ class DSettlementInputStructure(DSeriesStructure):
     geometry_data: GeometryData = GeometryData()
     geometry_1d_data: Optional[str]
     run_identification: str = 2 * "\n"
-    model: Union[Model, str] = Model()
+    model: Model = Model()
     verticals: Union[Verticals, str] = Verticals()
     water: Union[float, str] = 9.81
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
@@ -887,19 +898,8 @@ class DSettlementInputStructure(DSeriesStructure):
         ProbDefLayerDist=0
         """
     )
-    fit_options: str = cleandoc(
-        """
-        Fit Maximum Number of Iterations=5
-        Fit Required Iteration Accuracy=0.0001000000
-        Fit Required Correlation Coefficient=0.990
-        """
-    )
-    fit_calculation: str = cleandoc(
-        """
-        Is Fit Calculation=0
-        Fit Vertical Number=-1
-        """
-    )
+    fit_options: FitOptions = FitOptions()
+    fit_calculation: FitCalculation = FitCalculation()
     fit: str = ZERO_ITEMS
 
     # Custom validator
@@ -982,9 +982,11 @@ class ResidualSettlements(DSerieOldTableStructure):
     # TODO LIst[Dict[str, float]] but can be empty which now gives a validation error
     residualsettlements: List[Dict[str, float]]
 
+
 class CalculationSettings(DSeriesStructure):
     # Secondary Swelling is only available in Evaluation version (Deltares only)
     is_secondary_swelling_used: bool = False
+
 
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
@@ -996,11 +998,13 @@ class Results(DSeriesRepeatedGroupedProperties):
     dissipation_in_layers: Optional[str]
     reliability_calculation_results: Optional[str]
 
+
 class DSettlementOutputStructure(DSeriesStructure):
     """Representation of complete .sld file, inheriting
     the structure of the .sli file as well."""
     results: Results
     input_data: DSettlementInputStructure
+
 
 class DSettlementStructure(DSeriesStructure):
     input_data: DSettlementInputStructure = DSettlementInputStructure()

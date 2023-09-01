@@ -72,6 +72,7 @@ test_file_path_bm1 = test_data_path / benchmarks_folder / test_file_name_bm1
 
 output_test_path = Path(TestUtils.get_output_test_data_dir("dsettlement"))
 
+
 class TestDSettlementModel:
     def setup_dsettlement_model(self):
         """Setup base structure from parsed file while
@@ -938,7 +939,7 @@ class TestDSettlementModel:
     def test_piezo_lines(self):
         # Setup date
         ds = self.setup_dsettlement_model()
-        ds.datastructure.geometry_data = GeometryData()
+        ds.datastructure.input_data.geometry_data = GeometryData()
         test_output_filepath = output_test_path / "test_piezo.sli"
 
         point1 = Point(id=1, x=0.0, y=0.0, z=0.0)
@@ -1047,7 +1048,6 @@ class TestDSettlementModel:
             True,
             True,
             True,
-            True,
         )
 
         # Check if all options are in data structure
@@ -1059,7 +1059,6 @@ class TestDSettlementModel:
         assert ds.datastructure.input_data.model.is_probabilistic == Bool.TRUE
         assert ds.datastructure.input_data.model.is_horizontal_displacements == Bool.TRUE
         assert ds.datastructure.input_data.model.is_secondary_swelling == Bool.TRUE
-        assert ds.datastructure.input_data.model.is_waspan == Bool.TRUE
 
     @pytest.mark.systemtest
     def test_serialize_model(self):
@@ -1244,7 +1243,7 @@ class TestDSettlementModel:
     class TestDSettlementAcceptance:
         def test_dsettlement_acceptance(self):
             """Acceptance test for D-Settlement serialisation"""
-            test_output_filepath = output_test_path / "acceptance"
+            test_output_filepath = Path(TestUtils.get_output_test_data_dir(output_test_path / "acceptance/"))
 
             dm = DSettlementModel()
             dm.set_model(
@@ -1257,7 +1256,6 @@ class TestDSettlementModel:
                 is_probabilistic=False,
                 is_horizontal_displacements=False,
                 is_secondary_swelling=False,
-                is_waspan=True,
             )
             p1 = Point(x=-50, z=0.0)
             p2 = Point(x=-10, z=0.0)
@@ -1426,7 +1424,6 @@ class TestDSettlementModel:
             is_probabilistic=True,
             is_horizontal_displacements=True,
             is_secondary_swelling=True,
-            is_waspan=True,
         )
         test_schedule = ScheduleValuesOff(
             start_of_drainage=timedelta(days=1), phreatic_level_in_drain=2
@@ -1472,7 +1469,6 @@ class TestDSettlementModel:
             ConsolidationModel.TERZAGHI,
             True,
             StrainType.LINEAR,
-            True,
             True,
             True,
             True,
@@ -1540,7 +1536,6 @@ class TestDSettlementModel:
             ConsolidationModel.TERZAGHI,
             True,
             StrainType.LINEAR,
-            True,
             True,
             True,
             True,
@@ -1641,7 +1636,6 @@ class TestDSettlementModel:
             True,
             True,
             True,
-            True,
         )
         ds.set_vertical_drain(test_drain)
         ds.serialize(test_output_filepath)
@@ -1651,7 +1645,7 @@ class TestDSettlementModel:
     def test_dsettlement_acceptance_probabilistic(self):
         """Setup base structure from parsed file while
         we can't initialize one from scratch yet."""
-        test_output_filepath = output_test_path / "acceptance"
+        test_output_filepath = Path(TestUtils.get_output_test_data_dir(output_test_path / "acceptance/"))
 
         dm = DSettlementModel()
         dm.set_model(
@@ -1664,7 +1658,6 @@ class TestDSettlementModel:
             is_probabilistic=True,
             is_horizontal_displacements=False,
             is_secondary_swelling=False,
-            is_waspan=False,
         )
         p1 = Point(x=-50, z=0.0)
         p2 = Point(x=-10, z=0.0)

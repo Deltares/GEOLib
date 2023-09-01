@@ -113,7 +113,6 @@ class DSettlementModel(BaseModel):
         is_probabilistic: bool,
         is_horizontal_displacements: bool,
         is_secondary_swelling: bool,
-        is_waspan: bool,
     ):
         """
         Sets the D-settlement Model. Initializes CalculationOptions and Model if the type is str
@@ -128,7 +127,6 @@ class DSettlementModel(BaseModel):
             is_probabilistic (bool): true if probabilistic calculation should be made
             is_horizontal_displacements (bool): true if horizontal displacements should be calculated
             is_secondary_swelling (bool): true if secondary swelling is present
-            is_waspan (bool): true if waspan
 
         Returns:
             Model
@@ -154,7 +152,6 @@ class DSettlementModel(BaseModel):
         model_options.is_probabilistic = is_probabilistic
         model_options.is_horizontal_displacements = is_horizontal_displacements
         model_options.is_secondary_swelling = is_secondary_swelling
-        model_options.is_waspan = is_waspan
 
         return model_options
 
@@ -235,6 +232,14 @@ class DSettlementModel(BaseModel):
     @property
     def distribution_boundaries(self):
         return self.datastructure.input_data.geometry_data.distribution_boundaries
+
+    @property
+    def fit_options(self):
+        return self.datastructure.input_data.fit_options
+
+    @property
+    def fit_calculation(self):
+        return self.datastructure.input_data.fit_calculation
 
     def set_probabilistic_data(
         self,
