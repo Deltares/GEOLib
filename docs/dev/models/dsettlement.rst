@@ -25,18 +25,16 @@ To perform a fit for settlement plate calculation, the following settings are re
 .. code-block:: python
 
     # In the model settings, the fit option must be activated:
-    dm.set_model(is_fit_for_settlement_plate=True)
-    # or
     DSettlementModel().datastructure.input_data.model.is_fit_for_settlement_plate = Bool.TRUE
 
     # In the fit calculation, the fit must be activated and the vertical along which the fit is performed must be defined:
     dm.fit_calculation.fit_vertical_number = 1
     dm.fit_calculation.is_fit_calculation = Bool.TRUE
 
-Note that fit_vertical_number corresponds to the (zero-based) index of vertical:
+Note that fit_vertical_number corresponds to the (zero-based) index of the vertical:
 the first vertical has index 0, the second vertical index 1, etc...
 
-Make sure that the measurement file (text file) defined in DSettlementModel().datastructure.input_data.fit is present next to the input file.
+Make sure that the measurement file (text file) defined in DSettlementModel().datastructure.input_data.fit is present.
 
 As results of the fit calculation,
 the fit factors of the selected soil properties and the coefficient of determination are available in
