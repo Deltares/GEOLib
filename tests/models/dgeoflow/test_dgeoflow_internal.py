@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
-from pydantic import ValidationError
+from geolib.pydantic import ValidationError
 
 from geolib.models.dgeoflow import DGeoFlowModel
 from geolib.models.dgeoflow.internal import (

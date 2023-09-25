@@ -2,10 +2,9 @@ from enum import Enum, IntEnum
 from math import isfinite
 from typing import List, Optional, Union
 
-from pydantic import validator
-
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic import validator
 
 from .soil_utils import Color
 

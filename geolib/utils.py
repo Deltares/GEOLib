@@ -9,7 +9,7 @@ from collections import namedtuple
 from pathlib import Path
 from typing import Any
 
-from pydantic import validator
+from geolib.pydantic import validator
 
 _CAMEL_TO_SNAKE_PATTERN = re.compile(r"(?<!^)(?=[A-Z])")
 

@@ -1,5 +1,5 @@
 import pytest
-from pydantic import ValidationError
+from geolib.pydantic import ValidationError
 from teamcity import is_running_under_teamcity
 
 from geolib.soils import (

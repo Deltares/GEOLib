@@ -2,9 +2,8 @@ import abc
 from enum import Enum
 from typing import Dict, List, Optional, Type, Union
 
-from pydantic import PositiveInt, confloat
-
 from geolib.models import BaseDataClass
+from geolib.pydantic.types import PositiveInt, confloat
 
 from ...geometry.one import Point
 from ...utils import snake_to_camel

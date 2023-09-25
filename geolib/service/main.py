@@ -1,13 +1,12 @@
 import secrets
 import shutil
 import uuid
-from pathlib import Path, PosixPath, WindowsPath
+from pathlib import Path
 from typing import Dict, List, Type, Union
 
 import pydantic.json
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from pydantic import ValidationError, conlist
 from starlette import status
 from starlette.responses import JSONResponse
 
@@ -21,11 +20,8 @@ from geolib.models import (
     DStabilityModel,
 )
 from geolib.models.meta import MetaData
-
-# Fixes for custom serialization
-pydantic.json.ENCODERS_BY_TYPE[Path] = str
-pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
-pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
+from geolib.pydantic import ValidationError
+from geolib.pydantic.types import conlist
 
 settings = MetaData()
 app = FastAPI()
@@ -82,76 +78,76 @@ def execute(model, background_tasks: BackgroundTasks):
         background_tasks.add_task(cleanup, unique_folder)
 
 
-@app.post("/calculate/dsettlementmodel", response_model=None)
-async def calculate_dsettlementmodel(
-    model: DSettlementModel,
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> DSettlementModel:
-    return execute(model, background_tasks)
+# @app.post("/calculate/dsettlementmodel", response_model=None)
+# async def calculate_dsettlementmodel(
+#     model: DSettlementModel,
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> DSettlementModel:
+#     return execute(model, background_tasks)
 
 
-@app.post("/calculate/dfoundationsmodel", response_model=None)
-async def calculate_dfoundationsmodel(
-    model: DFoundationsModel,
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> DFoundationsModel:
-    return execute(model, background_tasks)
+# @app.post("/calculate/dfoundationsmodel", response_model=None)
+# async def calculate_dfoundationsmodel(
+#     model: DFoundationsModel,
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> DFoundationsModel:
+#     return execute(model, background_tasks)
 
 
-@app.post("/calculate/dsheetpilingmodel", response_model=None)
-async def calculate_dsheetpilingmodel(
-    model: DSheetPilingModel,
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> DSheetPilingModel:
-    return execute(model, background_tasks)
+# @app.post("/calculate/dsheetpilingmodel", response_model=None)
+# async def calculate_dsheetpilingmodel(
+#     model: DSheetPilingModel,
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> DSheetPilingModel:
+#     return execute(model, background_tasks)
 
 
-@app.post("/calculate/dstabilitymodel", response_model=None)
-async def calculate_dstabilitymodel(
-    model: DStabilityModel,
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> DStabilityModel:
-    return execute(model, background_tasks)
+# @app.post("/calculate/dstabilitymodel", response_model=None)
+# async def calculate_dstabilitymodel(
+#     model: DStabilityModel,
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> DStabilityModel:
+#     return execute(model, background_tasks)
 
 
-@app.post("/calculate/dsettlementmodels", response_model=None)
-async def calculate_many_dsettlementmodels(
-    models: conlist(DSettlementModel, min_items=1),
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> List[DSettlementModel]:
-    return execute_many(models, background_tasks)
+# @app.post("/calculate/dsettlementmodels", response_model=None)
+# async def calculate_many_dsettlementmodels(
+#     models: conlist(DSettlementModel, min_items=1),
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> List[DSettlementModel]:
+#     return execute_many(models, background_tasks)
 
 
-@app.post("/calculate/dfoundationsmodels", response_model=None)
-async def calculate_many_dfoundationsmodel(
-    models: conlist(DFoundationsModel, min_items=1),
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> List[DFoundationsModel]:
-    return execute_many(models, background_tasks)
+# @app.post("/calculate/dfoundationsmodels", response_model=None)
+# async def calculate_many_dfoundationsmodel(
+#     models: conlist(DFoundationsModel, min_items=1),
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> List[DFoundationsModel]:
+#     return execute_many(models, background_tasks)
 
 
-@app.post("/calculate/dsheetpilingmodels", response_model=None)
-async def calculate_many_dsheetpilingmodel(
-    models: conlist(DSheetPilingModel, min_items=1),
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> List[DSheetPilingModel]:
-    return execute_many(models, background_tasks)
+# @app.post("/calculate/dsheetpilingmodels", response_model=None)
+# async def calculate_many_dsheetpilingmodel(
+#     models: conlist(DSheetPilingModel, min_items=1),
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> List[DSheetPilingModel]:
+#     return execute_many(models, background_tasks)
 
 
-@app.post("/calculate/dstabilitymodels", response_model=None)
-async def calculate_many_dstabilitymodel(
-    models: conlist(DStabilityModel, min_items=1),
-    background_tasks: BackgroundTasks,
-    _: str = Depends(get_current_username),
-) -> List[DStabilityModel]:
-    return execute_many(models, background_tasks)
+# @app.post("/calculate/dstabilitymodels", response_model=None)
+# async def calculate_many_dstabilitymodel(
+#     models: conlist(DStabilityModel, min_items=1),
+#     background_tasks: BackgroundTasks,
+#     _: str = Depends(get_current_username),
+# ) -> List[DStabilityModel]:
+#     return execute_many(models, background_tasks)
 
 
 def execute_many(
