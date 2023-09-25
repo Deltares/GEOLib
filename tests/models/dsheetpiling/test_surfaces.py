@@ -2,7 +2,7 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable, List
 
 import pytest
-from pydantic import ValidationError
+from geolib.pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel

@@ -1,9 +1,9 @@
 from typing import List, Optional
 
-from pydantic import confloat, conlist, constr, validator
-
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic import validator
+from geolib.pydantic.types import confloat, conlist, constr
 
 from .internal import Surface as InternalSurface
 from .settings import DistributionType

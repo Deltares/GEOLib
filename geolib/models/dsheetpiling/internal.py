@@ -5,8 +5,6 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import confloat, conint, conlist, constr
-
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -23,6 +21,7 @@ from geolib.models.dseries_parser import (
     DSeriesWrappedTableStructure,
     DSerieVersion,
 )
+from geolib.pydantic.types import confloat, conint, conlist, constr
 from geolib.utils import make_newline_validator
 
 from .calculation_options import (
@@ -714,7 +713,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
           0 1/0 : Yes/No Unloading curve
           1 1/0 : Yes/No Use Cur values
 
-          1 Number of soil profiles 
+          1 Number of soil profiles
         {_DEFAULT_SOIL_PROFILE_NAME}
                0.000 X coordinate
                0.000 Y coordinate
@@ -727,7 +726,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
     )
     surfaces: Union[str, Surfaces] = cleandoc(
         f"""
-        1 Number of surfaces 
+        1 Number of surfaces
         1     1 {_DEFAULT_SURFACE_NAME}
         0.00  Standard deviation
         2  Distribution type
@@ -738,8 +737,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
     water: Water = Water()
     waterlevels: Union[WaterLevels, str] = cleandoc(
         f"""
-          1 Number of Waterlevels 
-          3 Number of Data per Waterlevel 
+          1 Number of Waterlevels
+          3 Number of Data per Waterlevel
         {_DEFAULT_WATER_LEVEL_NAME}
               0.00
               0.00

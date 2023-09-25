@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 import pytest
-from pydantic import ValidationError
+from geolib.pydantic import ValidationError
 
 from geolib.geometry import Point
 from geolib.models.dstability.dstability_model import DStabilityModel

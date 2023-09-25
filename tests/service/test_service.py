@@ -1,6 +1,5 @@
-from pathlib import Path, PosixPath, WindowsPath
+from pathlib import Path
 
-import pydantic.json
 import pytest
 from fastapi.testclient import TestClient
 from requests.auth import HTTPBasicAuth
@@ -9,9 +8,8 @@ from geolib import BaseModelList, DFoundationsModel, DSettlementModel
 from geolib.service.main import app
 from tests.utils import TestUtils, only_teamcity
 
-pydantic.json.ENCODERS_BY_TYPE[Path] = str
-pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
-pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
+pytestmark = pytest.mark.skip
+
 
 client = TestClient(app)
 

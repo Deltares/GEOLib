@@ -5,8 +5,6 @@ from math import isclose
 from operator import attrgetter
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic.types import PositiveInt, confloat, conint, conlist, constr
-
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
 from geolib.models.base_model_structure import BaseModelStructure
@@ -36,6 +34,7 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
 )
 from geolib.models.internal import Bool
 from geolib.models.utils import get_required_class_field
+from geolib.pydantic.types import PositiveInt, confloat, conint, conlist, constr
 from geolib.soils import DistributionType, HorizontalBehaviourType, Soil
 from geolib.soils import StorageTypes as StorageTypes_external
 from geolib.utils import make_newline_validator

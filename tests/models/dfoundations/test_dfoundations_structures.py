@@ -4,7 +4,7 @@ from string import ascii_lowercase
 from typing import Dict, List, Type, Union, _GenericAlias
 
 import pytest
-from pydantic.error_wrappers import ValidationError
+from geolib.pydantic import ValidationError
 
 from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,

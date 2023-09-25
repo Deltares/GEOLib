@@ -1,6 +1,11 @@
 from struct import pack, unpack_from
 
-from pydantic.color import Color as PydanticColor
+from geolib.pydantic import PYDANTIC_V2
+
+if PYDANTIC_V2:
+    from pydantic_extra_types.color import Color as PydanticColor
+else:
+    from pydantic.color import Color as PydanticColor
 
 
 class Color(PydanticColor):

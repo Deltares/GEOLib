@@ -206,16 +206,19 @@ class DSettlementModel(BaseModel):
 
         calculation_options = self.datastructure.calculation_options.dict()
         calculation_options.update(**kwargs)
-        self.datastructure.calculation_options = CalculationOptions.set_imaginary_surface_options(
-            **calculation_options
+        self.datastructure.calculation_options = (
+            CalculationOptions.set_imaginary_surface_options(**calculation_options)
         )
 
         """Check that the given layer index refers to an existing index layer"""
         options = self.datastructure.calculation_options
-        if options.is_imaginary_surface \
-                and (options.imaginary_surface_layer < 1 or
-                     options.imaginary_surface_layer > self.layers.layers.__len__()):
-            raise ValueError("The index of imaginary_surface_layer refers to a nonexistent layer index.")
+        if options.is_imaginary_surface and (
+            options.imaginary_surface_layer < 1
+            or options.imaginary_surface_layer > self.layers.layers.__len__()
+        ):
+            raise ValueError(
+                "The index of imaginary_surface_layer refers to a nonexistent layer index."
+            )
 
         return calculation_options
 

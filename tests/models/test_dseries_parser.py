@@ -4,7 +4,7 @@ from random import randint
 from typing import Dict, List, Tuple, Type, _GenericAlias, get_type_hints
 
 import pytest
-from pydantic.error_wrappers import ValidationError
+from geolib.pydantic import ValidationError
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (

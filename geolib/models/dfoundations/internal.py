@@ -3,8 +3,6 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Tuple, Type, Union
 
-from pydantic.types import PositiveInt, confloat, conint, constr
-
 from geolib.models import BaseDataClass
 from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
@@ -21,6 +19,7 @@ from geolib.models.dseries_parser import (
     DSerieVersion,
 )
 from geolib.models.internal import Bool
+from geolib.pydantic.types import PositiveInt, confloat, conint, constr
 from geolib.utils import make_newline_validator
 
 from .dfoundations_structures import (
@@ -601,7 +600,7 @@ class DFoundationsInputStructure(DSeriesStructure):
     cpt_list: CPTList = CPTList()
     profiles: Profiles = Profiles()
     user_classification_method: str = cleandoc(
-        """          
+        """
         [USER CLASSIFICATION METHOD]
         0
         [END OF USER CLASSIFICATION METHOD]

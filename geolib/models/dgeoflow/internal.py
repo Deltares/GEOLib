@@ -9,11 +9,11 @@ from itertools import chain
 from math import isfinite
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import ValidationError, confloat, conlist, root_validator, validator
-
 from geolib import BaseModelStructure
 from geolib import __version__ as version
 from geolib.geometry import Point
+from geolib.pydantic import ValidationError, root_validator, validator
+from geolib.pydantic.types import confloat, conlist
 from geolib.soils import Soil, StorageParameters
 from geolib.utils import snake_to_camel
 

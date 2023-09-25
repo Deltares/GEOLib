@@ -9,11 +9,11 @@ from itertools import chain
 from math import isfinite
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import ValidationError, conlist, root_validator, validator
-
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
+from geolib.pydantic import ValidationError, root_validator, validator
+from geolib.pydantic.types import conlist
 from geolib.soils import Soil
 
 from .dstability_validator import DStabilityValidator

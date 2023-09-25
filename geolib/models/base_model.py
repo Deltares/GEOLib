@@ -13,8 +13,7 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
-from pydantic.error_wrappers import ValidationError
+from pydantic import DirectoryPath, FilePath, HttpUrl, ValidationError, conlist
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError

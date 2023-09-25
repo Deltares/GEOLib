@@ -7,9 +7,8 @@ from pathlib import Path
 from typing import List
 from warnings import warn
 
-import pydantic
+from geolib.pydantic import ValidationError
 import pytest
-from pydantic.color import Color
 from teamcity import is_running_under_teamcity
 
 import geolib.models.dsettlement.loads as loads
@@ -798,7 +797,7 @@ class TestDSettlementModel:
 
         # 2. Run test and verify expectation.
         # character length is outside bounds.
-        with pytest.raises(pydantic.ValidationError):
+        with pytest.raises(ValidationError):
             test_model.add_non_uniform_load(
                 name=long_name,
                 points=pointlist,
@@ -1268,9 +1267,13 @@ class TestDSettlementModel:
 
         # Check that an error message is raised when the index layer is invalid
         with pytest.raises(Exception):
-            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=0)
+            ds.set_any_calculation_options(
+                is_imaginary_surface=True, imaginary_surface_layer=0
+            )
         with pytest.raises(Exception):
-            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=3)
+            ds.set_any_calculation_options(
+                is_imaginary_surface=True, imaginary_surface_layer=3
+            )
 
     @pytest.mark.systemtest
     def test_serialize_calculation_options(self):

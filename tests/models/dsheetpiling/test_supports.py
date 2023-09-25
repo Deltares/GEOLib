@@ -2,7 +2,7 @@ from contextlib import nullcontext as does_not_raise
 from typing import Any
 
 import pytest
-from pydantic import ValidationError
+from geolib.pydantic import ValidationError
 
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_PRE_STRESS

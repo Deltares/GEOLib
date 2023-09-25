@@ -2,10 +2,9 @@ from abc import ABCMeta, abstractmethod
 from datetime import timedelta
 from typing import Optional
 
-from pydantic import constr
-
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic.types import constr
 
 from .internal import (
     LoadValuesCircular,
