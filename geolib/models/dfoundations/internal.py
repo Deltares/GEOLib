@@ -516,7 +516,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         super().__init__(*args, **kwargs)
 
     @staticmethod
-    def find_toggle(field):
+    def find_toggle(field: str):
         """Transform given field like `factor_gamma_s_bpb`
         into `is_gamma_s_bpb_overruled`.
         """

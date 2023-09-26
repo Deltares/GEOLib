@@ -1472,7 +1472,7 @@ def get_line_property_key_value(text: str, reversed_key: bool) -> Tuple[str, str
     return key_part, ""
 
 
-def get_field_collection_type(class_type: Type, field_idx: int) -> Type:
+def get_field_collection_type(class_type: DataClass, field_idx: int) -> Type:
     """Gets the type wrapped by a collection of a given class.
     Example:
         DummyClass:
