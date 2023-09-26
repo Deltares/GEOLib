@@ -2,7 +2,6 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable, List
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
@@ -17,6 +16,7 @@ from geolib.models.dsheetpiling.settings import (
     PassiveSide,
     Side,
 )
+from geolib.pydantic import ValidationError
 from geolib.soils import Soil
 
 _SOIL_TEST_NAME_1: str = "Clay"

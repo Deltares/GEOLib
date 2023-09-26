@@ -1,8 +1,8 @@
 import pytest
-from geolib.pydantic import ValidationError
 from teamcity import is_running_under_teamcity
 
 from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
+from geolib.pydantic import ValidationError
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
 
 
