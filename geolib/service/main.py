@@ -20,7 +20,7 @@ from geolib.models import (
     DStabilityModel,
 )
 from geolib.models.meta import MetaData
-from geolib.pydantic import ValidationError, PYDANTIC_V2
+from geolib.pydantic import PYDANTIC_V2, ValidationError
 from geolib.pydantic.types import conlist
 
 settings = MetaData()
@@ -77,7 +77,9 @@ def execute(model, background_tasks: BackgroundTasks):
     finally:
         background_tasks.add_task(cleanup, unique_folder)
 
+
 if not PYDANTIC_V2:
+
     @app.post("/calculate/dsettlementmodel", response_model=None)
     async def calculate_dsettlementmodel(
         model: DSettlementModel,
@@ -85,7 +87,6 @@ if not PYDANTIC_V2:
         _: str = Depends(get_current_username),
     ) -> DSettlementModel:
         return execute(model, background_tasks)
-
 
     @app.post("/calculate/dfoundationsmodel", response_model=None)
     async def calculate_dfoundationsmodel(
@@ -95,7 +96,6 @@ if not PYDANTIC_V2:
     ) -> DFoundationsModel:
         return execute(model, background_tasks)
 
-
     @app.post("/calculate/dsheetpilingmodel", response_model=None)
     async def calculate_dsheetpilingmodel(
         model: DSheetPilingModel,
@@ -103,7 +103,6 @@ if not PYDANTIC_V2:
         _: str = Depends(get_current_username),
     ) -> DSheetPilingModel:
         return execute(model, background_tasks)
-
 
     @app.post("/calculate/dstabilitymodel", response_model=None)
     async def calculate_dstabilitymodel(
@@ -113,7 +112,6 @@ if not PYDANTIC_V2:
     ) -> DStabilityModel:
         return execute(model, background_tasks)
 
-
     @app.post("/calculate/dsettlementmodels", response_model=None)
     async def calculate_many_dsettlementmodels(
         models: conlist(DSettlementModel, min_items=1),
@@ -121,7 +119,6 @@ if not PYDANTIC_V2:
         _: str = Depends(get_current_username),
     ) -> List[DSettlementModel]:
         return execute_many(models, background_tasks)
-
 
     @app.post("/calculate/dfoundationsmodels", response_model=None)
     async def calculate_many_dfoundationsmodel(
@@ -131,7 +128,6 @@ if not PYDANTIC_V2:
     ) -> List[DFoundationsModel]:
         return execute_many(models, background_tasks)
 
-
     @app.post("/calculate/dsheetpilingmodels", response_model=None)
     async def calculate_many_dsheetpilingmodel(
         models: conlist(DSheetPilingModel, min_items=1),
@@ -139,7 +135,6 @@ if not PYDANTIC_V2:
         _: str = Depends(get_current_username),
     ) -> List[DSheetPilingModel]:
         return execute_many(models, background_tasks)
-
 
     @app.post("/calculate/dstabilitymodels", response_model=None)
     async def calculate_many_dstabilitymodel(

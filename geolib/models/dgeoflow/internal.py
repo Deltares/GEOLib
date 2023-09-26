@@ -350,7 +350,7 @@ class ProjectInfo(DGeoFlowSubStructure):
     Project: Optional[str] = ""
     Remarks: Optional[str] = f"Created with GEOLib {version}"
 
-    @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
+    @validator("Created", "Date", "LastModified", pre=True)
     def nltime(cls, date: Union[date, str]) -> date:
         if isinstance(date, str):
             position = date.index(max(date.split("-"), key=len))
@@ -372,7 +372,7 @@ class PersistableLayer(DGeoFlowBaseModelStructure):
     Notes: Optional[str]
     Points: conlist(PersistablePoint, min_items=3)
 
-    @validator("Points", pre=True, allow_reuse=True)
+    @validator("Points", pre=True)
     def polygon_checks(cls, points):
         """
         Todo:
@@ -742,10 +742,6 @@ class DGeoFlowStructure(BaseModelStructure):
     pipe_length_results: List[PipeLengthResult] = []
     critical_head_results: List[CriticalHeadResult] = []
 
-    class Config:
-        arbitrary_types_allowed = True
-        validate_assignment = True
-
     def get_result_substructure(
         self, calculation_type: CalculationTypeEnum
     ) -> List[DGeoFlowResult]:
@@ -757,25 +753,7 @@ class DGeoFlowStructure(BaseModelStructure):
 
         return result_types_mapping[calculation_type]
 
-    @root_validator(skip_on_failure=True, allow_reuse=True)
-    def ensure_validity_foreign_keys(cls, values):
-        stage_count = 0
-        for i, scenario in enumerate(values.get("scenarios")):
-            for _, stage in enumerate(scenario.Stages):
-                if (
-                    stage.BoundaryConditionCollectionId
-                    != values.get("boundary_conditions")[stage_count].Id
-                ):
-                    raise ValueError("BoundaryConditionCollectionIds not linked!")
-                stage_count += 1
-
-            if scenario.GeometryId != values.get("geometries")[i].Id:
-                raise ValueError("GeometryIds not linked!")
-            if scenario.SoilLayersId != values.get("soillayers")[i].Id:
-                raise ValueError("SoilLayersIds not linked!")
-        return values
-
-    @root_validator(skip_on_failure=True, allow_reuse=True)
+    @root_validator(skip_on_failure=True)
     def ensure_validity_foreign_keys(cls, values):
         def list_has_id(values, id):
             for entry in values:

@@ -992,7 +992,7 @@ class ProjectInfo(DStabilitySubStructure):
     Project: Optional[str] = ""
     Remarks: Optional[str] = f"Created with GEOLib {version}"
 
-    @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
+    @validator("Created", "Date", "LastModified", pre=True)
     def nltime(cls, date: Union[date, str]) -> date:
         if isinstance(date, str):
             position = date.index(max(date.split("-"), key=len))
@@ -1133,7 +1133,7 @@ class PersistableLayer(DStabilityBaseModelStructure):
     Notes: Optional[str] = ""
     Points: conlist(PersistablePoint, min_items=3)
 
-    @validator("Points", pre=True, allow_reuse=True)
+    @validator("Points", pre=True)
     def polygon_checks(cls, points):
         """
         Todo:
@@ -2038,7 +2038,7 @@ class DStabilityStructure(BaseModelStructure):
     bishop_reliability_results: List[BishopReliabilityResult] = []
     bishop_bruteforce_reliability_results: List[BishopBruteForceReliabilityResult] = []
 
-    @root_validator(skip_on_failure=True, allow_reuse=True)
+    @root_validator(skip_on_failure=True)
     def ensure_validity_foreign_keys(cls, values):
         def list_has_id(values, id):
             for entry in values:
