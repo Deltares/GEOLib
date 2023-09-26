@@ -28,8 +28,8 @@ meta = MetaData()
 
 
 class BaseModel(BaseDataClass, abc.ABC):
-    filename: Optional[Path]
-    datastructure: Optional[BaseModelStructure]
+    filename: Optional[Path] = None
+    datastructure: Optional[BaseModelStructure] = None
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.

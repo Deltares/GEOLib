@@ -112,39 +112,41 @@ class PileShape(IntEnum):
 class TypesBearingPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
     pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
-    pile_type_for_execution_factor_sand_gravel: Optional[PileType]
-    execution_factor_sand_gravel: Optional[confloat(ge=0, le=9)]
-    pile_type_for_execution_factor_clay_loam_peat: Optional[PileTypeForClayLoamPeat]
-    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)]
-    pile_type_for_pile_class_factor: Optional[PileType]
-    pile_class_factor: Optional[confloat(ge=0, le=9)]
-    pile_type_for_load_settlement_curve: Optional[LoadSettlementCurve]
-    material: Optional[PileMaterial]
-    elasticity_modulus: Optional[confloat(ge=0, le=1e25)]
+    pile_type_for_execution_factor_sand_gravel: Optional[PileType] = None
+    execution_factor_sand_gravel: Optional[confloat(ge=0, le=9)] = None
+    pile_type_for_execution_factor_clay_loam_peat: Optional[
+        PileTypeForClayLoamPeat
+    ] = None
+    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)] = None
+    pile_type_for_pile_class_factor: Optional[PileType] = None
+    pile_class_factor: Optional[confloat(ge=0, le=9)] = None
+    pile_type_for_load_settlement_curve: Optional[LoadSettlementCurve] = None
+    material: Optional[PileMaterial] = None
+    elasticity_modulus: Optional[confloat(ge=0, le=1e25)] = None
     slip_layer: BearingPileSlipLayer = BearingPileSlipLayer.NONE
-    characteristic_adhesion: Optional[confloat(ge=0, le=1000)]
+    characteristic_adhesion: Optional[confloat(ge=0, le=1000)] = None
     shape: PileShape = PileShape.RECTANGULAR_PILE
-    base_width: Optional[confloat(ge=0, le=100)]
-    base_length: Optional[confloat(ge=0, le=100)]
-    diameter: Optional[confloat(ge=0, le=100)]
-    base_diameter: Optional[confloat(ge=0, le=100)]
-    pile_diameter: Optional[confloat(ge=0, le=100)]
-    base_height: Optional[confloat(ge=0, le=100)]
-    base_width_v: Optional[confloat(ge=0, le=100)]
-    base_length_v: Optional[confloat(ge=0, le=100)]
-    shaft_width: Optional[confloat(ge=0, le=100)]
-    shaft_length: Optional[confloat(ge=0, le=100)]
-    increase_in_diameter: Optional[confloat(ge=0, le=100)]
-    external_diameter: Optional[confloat(ge=0, le=100)]
-    internal_diameter: Optional[confloat(ge=0, le=100)]
-    height_h_shape: Optional[confloat(ge=0, le=100)]
-    width_h_shape: Optional[confloat(ge=0, le=100)]
-    thickness_web: Optional[confloat(ge=0, le=100)]
-    thickness_flange: Optional[confloat(ge=0, le=100)]
+    base_width: Optional[confloat(ge=0, le=100)] = None
+    base_length: Optional[confloat(ge=0, le=100)] = None
+    diameter: Optional[confloat(ge=0, le=100)] = None
+    base_diameter: Optional[confloat(ge=0, le=100)] = None
+    pile_diameter: Optional[confloat(ge=0, le=100)] = None
+    base_height: Optional[confloat(ge=0, le=100)] = None
+    base_width_v: Optional[confloat(ge=0, le=100)] = None
+    base_length_v: Optional[confloat(ge=0, le=100)] = None
+    shaft_width: Optional[confloat(ge=0, le=100)] = None
+    shaft_length: Optional[confloat(ge=0, le=100)] = None
+    increase_in_diameter: Optional[confloat(ge=0, le=100)] = None
+    external_diameter: Optional[confloat(ge=0, le=100)] = None
+    internal_diameter: Optional[confloat(ge=0, le=100)] = None
+    height_h_shape: Optional[confloat(ge=0, le=100)] = None
+    width_h_shape: Optional[confloat(ge=0, le=100)] = None
+    thickness_web: Optional[confloat(ge=0, le=100)] = None
+    thickness_flange: Optional[confloat(ge=0, le=100)] = None
     overrule_pile_tip_shape_factor: Bool = Bool.FALSE
-    pile_tip_shape_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_shape_factor: Optional[confloat(ge=0, le=10)] = None
     overrule_pile_tip_cross_section_factors: Bool = Bool.FALSE
-    pile_tip_cross_section_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_cross_section_factor: Optional[confloat(ge=0, le=10)] = None
     use_pre_2016: Bool = Bool.FALSE
     user_defined_pile_type_as_prefab: Bool = Bool.FALSE
     use_manual_reduction_for_qc: Bool = Bool.FALSE
@@ -155,33 +157,35 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
 class TypesTensionPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
     pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
-    pile_type_for_execution_factor_sand_gravel: Optional[PileType]
-    execution_factor_sand_gravel: Optional[confloat(ge=0, le=9)]
-    pile_type_for_execution_factor_clay_loam_peat: Optional[PileTypeForClayLoamPeat]
-    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)]
-    material: Optional[PileMaterial]
-    unit_weight_pile: Optional[confloat(ge=0, le=1000)]
-    elasticity_modulus: Optional[confloat(ge=0, le=1e25)]
+    pile_type_for_execution_factor_sand_gravel: Optional[PileType] = None
+    execution_factor_sand_gravel: Optional[confloat(ge=0, le=9)] = None
+    pile_type_for_execution_factor_clay_loam_peat: Optional[
+        PileTypeForClayLoamPeat
+    ] = None
+    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)] = None
+    material: Optional[PileMaterial] = None
+    unit_weight_pile: Optional[confloat(ge=0, le=1000)] = None
+    elasticity_modulus: Optional[confloat(ge=0, le=1e25)] = None
     shape: PileShape = PileShape.RECTANGULAR_PILE
-    base_width: Optional[confloat(ge=0, le=100)]
-    base_length: Optional[confloat(ge=0, le=100)]
-    diameter: Optional[confloat(ge=0, le=100)]
-    base_diameter: Optional[confloat(ge=0, le=100)]
-    pile_diameter: Optional[confloat(ge=0, le=100)]
-    base_height: Optional[confloat(ge=0, le=100)]
-    base_width_v: Optional[confloat(ge=0, le=100)]
-    base_length_v: Optional[confloat(ge=0, le=100)]
-    shaft_width: Optional[confloat(ge=0, le=100)]
-    shaft_length: Optional[confloat(ge=0, le=100)]
-    increase_in_diameter: Optional[confloat(ge=0, le=100)]
-    external_diameter: Optional[confloat(ge=0, le=100)]
-    internal_diameter: Optional[confloat(ge=0, le=100)]
-    height_h_shape: Optional[confloat(ge=0, le=100)]
-    width_h_shape: Optional[confloat(ge=0, le=100)]
-    thickness_web: Optional[confloat(ge=0, le=100)]
-    thickness_flange: Optional[confloat(ge=0, le=100)]
-    circumference: Optional[confloat(ge=0, le=100)]
-    cross_section: Optional[confloat(ge=0, le=100)]
+    base_width: Optional[confloat(ge=0, le=100)] = None
+    base_length: Optional[confloat(ge=0, le=100)] = None
+    diameter: Optional[confloat(ge=0, le=100)] = None
+    base_diameter: Optional[confloat(ge=0, le=100)] = None
+    pile_diameter: Optional[confloat(ge=0, le=100)] = None
+    base_height: Optional[confloat(ge=0, le=100)] = None
+    base_width_v: Optional[confloat(ge=0, le=100)] = None
+    base_length_v: Optional[confloat(ge=0, le=100)] = None
+    shaft_width: Optional[confloat(ge=0, le=100)] = None
+    shaft_length: Optional[confloat(ge=0, le=100)] = None
+    increase_in_diameter: Optional[confloat(ge=0, le=100)] = None
+    external_diameter: Optional[confloat(ge=0, le=100)] = None
+    internal_diameter: Optional[confloat(ge=0, le=100)] = None
+    height_h_shape: Optional[confloat(ge=0, le=100)] = None
+    width_h_shape: Optional[confloat(ge=0, le=100)] = None
+    thickness_web: Optional[confloat(ge=0, le=100)] = None
+    thickness_flange: Optional[confloat(ge=0, le=100)] = None
+    circumference: Optional[confloat(ge=0, le=100)] = None
+    cross_section: Optional[confloat(ge=0, le=100)] = None
     is_user_defined: Bool = Bool.TRUE
 
 
@@ -735,14 +739,14 @@ class DFoundationsGlobalNenResults(DFoundationsInlineProperties):
 
 
 class DFoundationsVerificationResults(DSeriesStructure):
-    global_nen_results: Optional[DFoundationsGlobalNenResults]
-    demands_nen__en: Optional[str]
-    nen_pile_results: Optional[DFoundationsNenPileResults]
+    global_nen_results: Optional[DFoundationsGlobalNenResults] = None
+    demands_nen__en: Optional[str] = None
+    nen_pile_results: Optional[DFoundationsNenPileResults] = None
 
-    verification_results_tp_load__settlement_curve_1b: Optional[str]
-    verification_results_tp_1a: Optional[str]
-    verification_results_tp_1b2: Optional[str]
-    verification_results_tp_load__settlement_curve_2: Optional[str]
+    verification_results_tp_load__settlement_curve_1b: Optional[str] = None
+    verification_results_tp_1a: Optional[str] = None
+    verification_results_tp_1b2: Optional[str] = None
+    verification_results_tp_load__settlement_curve_2: Optional[str] = None
 
 
 # endregion
@@ -768,23 +772,23 @@ class DFoundationsCalculationWarnings(DSeriesTreeStructure):
 
 
 class DFoundationsDumpfileOutputStructure(DSeriesStructure):
-    results_at_cpt_test_level: Optional[str]
-    verification_results: Optional[DFoundationsVerificationResults]
+    results_at_cpt_test_level: Optional[str] = None
+    verification_results: Optional[DFoundationsVerificationResults] = None
 
-    calculation_parameters_tension_piles: Optional[str]
-    verification_results_tp: Optional[DFoundationsVerificationResults]
+    calculation_parameters_tension_piles: Optional[str] = None
+    verification_results_tp: Optional[DFoundationsVerificationResults] = None
 
-    footnote_warnings: Optional[str]
-    preliminary_design_results: Optional[str]
-    verification_results_sf: Optional[str]
-    verification_results_tp_1b2: Optional[str]
-    verification_design_results: Optional[str]
-    calculation_warnings: Optional[DFoundationsCalculationWarnings]
+    footnote_warnings: Optional[str] = None
+    preliminary_design_results: Optional[str] = None
+    verification_results_sf: Optional[str] = None
+    verification_results_tp_1b2: Optional[str] = None
+    verification_design_results: Optional[str] = None
+    calculation_warnings: Optional[DFoundationsCalculationWarnings] = None
 
 
 class DFoundationsStructure(DSeriesStructure):
     input_data: DFoundationsInputStructure = DFoundationsInputStructure()
-    dumpfile_output: Optional[DFoundationsDumpfileOutputStructure]
+    dumpfile_output: Optional[DFoundationsDumpfileOutputStructure] = None
 
 
 class DFoundationsDumpStructure(DSeriesStructure):

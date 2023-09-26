@@ -222,7 +222,7 @@ class StorageParameters(SoilBaseModel):
     horizontal_permeability: Optional[
         Union[float, StochasticParameter]
     ] = StochasticParameter()
-    storage_type: Optional[StorageTypes]
+    storage_type: Optional[StorageTypes] = None
     permeability_strain_type: Optional[
         Union[float, StochasticParameter]
     ] = StochasticParameter(mean=1e15)
@@ -352,7 +352,7 @@ class StateLine(SoilBaseModel):
     TODO decide if we want cross-dependency to geometry class
     """
 
-    state_line_points: Optional[List[Point]]
+    state_line_points: Optional[List[Point]] = []
 
 
 class SoilState(SoilBaseModel):

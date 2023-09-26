@@ -77,19 +77,19 @@ class PersistablePoint(DStabilityBaseModelStructure):
 
 
 class PersistableHeadLine(DStabilityBaseModelStructure):
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = []
 
 
 class PersistableReferenceLine(DStabilityBaseModelStructure):
-    BottomHeadLineId: Optional[str]
-    Id: Optional[str]
+    BottomHeadLineId: Optional[str] = None
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
-    TopHeadLineId: Optional[str]
+    Points: Optional[List[Optional[PersistablePoint]]] = []
+    TopHeadLineId: Optional[str] = None
 
 
 class Waternet(DStabilitySubStructure):
@@ -103,7 +103,7 @@ class Waternet(DStabilitySubStructure):
     def structure_name(cls) -> str:
         return "waternets"
 
-    Id: Optional[str]
+    Id: Optional[str] = None
     ContentVersion: Optional[str] = "2"
     PhreaticLineId: Optional[str] = None
     HeadLines: List[PersistableHeadLine] = []
@@ -218,7 +218,7 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = (
         EmbankmentSoilScenarioEnum.CLAY_EMBANKMENT_ON_CLAY
     )
-    Id: Optional[str]
+    Id: Optional[str] = None
     InitialLevelEmbankmentTopLandSide: Optional[Union[float, str]] = "NaN"
     InitialLevelEmbankmentTopWaterSide: Optional[Union[float, str]] = "NaN"
     IntrusionLength: Optional[Union[float, str]] = "NaN"
@@ -259,34 +259,34 @@ class PersistableStress(DStabilityBaseModelStructure):
     PopStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    StateType: Optional[StateType]
+    StateType: Optional["StateType"] = None
     YieldStress: float = 0.0
 
 
 class PersistableStateLinePoint(DStabilityBaseModelStructure):
-    Above: Optional[PersistableStress]
-    Below: Optional[PersistableStress]
-    Id: Optional[str]
-    IsAboveAndBelowCorrelated: Optional[bool]
-    IsProbabilistic: Optional[bool]
+    Above: Optional[PersistableStress] = None
+    Below: Optional[PersistableStress] = None
+    Id: Optional[str] = None
+    IsAboveAndBelowCorrelated: Optional[bool] = None
+    IsProbabilistic: Optional[bool] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    X: Optional[float]
+    X: Optional[float] = None
 
 
 class PersistableStateLine(DStabilityBaseModelStructure):
-    Points: Optional[List[Optional[PersistablePoint]]]
-    Values: Optional[List[Optional[PersistableStateLinePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = []
+    Values: Optional[List[Optional[PersistableStateLinePoint]]] = []
 
 
 class PersistableStatePoint(DStabilityBaseModelStructure):
-    Id: Optional[str]
-    IsProbabilistic: Optional[bool]
+    Id: Optional[str] = None
+    IsProbabilistic: Optional[bool] = None
     Label: Optional[str] = ""
-    LayerId: Optional[str]
+    LayerId: Optional[str] = None
     Notes: Optional[str] = ""
-    Point: Optional[PersistablePoint]
-    Stress: Optional[PersistableStress]
+    Point: Optional[PersistablePoint] = None
+    Stress: Optional[PersistableStress] = None
 
 
 class State(DStabilitySubStructure):
@@ -301,7 +301,7 @@ class State(DStabilitySubStructure):
         return "states"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     StateLines: List[PersistableStateLine] = []
     StatePoints: List[PersistableStatePoint] = []
 
@@ -331,8 +331,8 @@ class State(DStabilitySubStructure):
 
 
 class PersistableStateCorrelation(DStabilityBaseModelStructure):
-    CorrelatedStateIds: Optional[List[Optional[str]]]
-    IsFullyCorrelated: Optional[bool]
+    CorrelatedStateIds: Optional[List[Optional[str]]] = []
+    IsFullyCorrelated: Optional[bool] = None
 
 
 class StateCorrelation(DStabilitySubStructure):
@@ -347,7 +347,7 @@ class StateCorrelation(DStabilitySubStructure):
         return "statecorrelations"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
 
     def add_state_correlation(
@@ -367,26 +367,26 @@ class Stage(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "stages"
 
-    DecorationsId: Optional[str]
-    GeometryId: Optional[str]
-    Id: Optional[str]
+    DecorationsId: Optional[str] = None
+    GeometryId: Optional[str] = None
+    Id: Optional[str] = None
     Label: Optional[str] = ""
-    LoadsId: Optional[str]
+    LoadsId: Optional[str] = None
     Notes: Optional[str] = ""
-    ReinforcementsId: Optional[str]
-    SoilLayersId: Optional[str]
-    StateCorrelationsId: Optional[str]
-    StateId: Optional[str]
-    WaternetCreatorSettingsId: Optional[str]
-    WaternetId: Optional[str]
+    ReinforcementsId: Optional[str] = None
+    SoilLayersId: Optional[str] = None
+    StateCorrelationsId: Optional[str] = None
+    StateId: Optional[str] = None
+    WaternetCreatorSettingsId: Optional[str] = None
+    WaternetId: Optional[str] = None
 
 
 class PersistableCalculation(DStabilityBaseModelStructure):
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     ResultId: Optional[str] = None
-    CalculationSettingsId: Optional[str]
+    CalculationSettingsId: Optional[str] = None
 
 
 class Scenario(DStabilitySubStructure):
@@ -403,7 +403,7 @@ class Scenario(DStabilitySubStructure):
     Stages: Optional[List[Stage]] = []
     Calculations: Optional[List[PersistableCalculation]] = []
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
 
@@ -423,9 +423,9 @@ class PersistableShadingType(Enum):
 
 
 class PersistableSoilVisualization(DStabilityBaseModelStructure):
-    Color: Optional[str]
-    PersistableShadingType: Optional[PersistableShadingType]
-    SoilId: Optional[str]
+    Color: Optional[str] = None
+    PersistableShadingType: Optional["PersistableShadingType"] = None
+    SoilId: Optional[str] = None
 
 
 class SoilVisualisation(DStabilityBaseModelStructure):
@@ -438,8 +438,8 @@ class SoilVisualisation(DStabilityBaseModelStructure):
 
 
 class PersistableSoilLayer(DStabilityBaseModelStructure):
-    LayerId: Optional[str]
-    SoilId: Optional[str]
+    LayerId: Optional[str] = None
+    SoilId: Optional[str] = None
 
 
 class SoilLayerCollection(DStabilitySubStructure):
@@ -454,7 +454,7 @@ class SoilLayerCollection(DStabilitySubStructure):
         return "soillayers"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     SoilLayers: List[PersistableSoilLayer] = []
 
     def add_soillayer(self, layer_id: str, soil_id: str) -> PersistableSoilLayer:
@@ -473,7 +473,7 @@ class SoilLayerCollection(DStabilitySubStructure):
 
 
 class PersistableSoilCorrelation(DStabilityBaseModelStructure):
-    CorrelatedSoilIds: Optional[List[str]]
+    CorrelatedSoilIds: Optional[List[str]] = None
 
 
 class SoilCorrelation(DStabilitySubStructure):
@@ -919,35 +919,35 @@ class SoilCollection(DStabilitySubStructure):
 class PersistableForbiddenLine(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    End: Optional[PersistablePoint]
-    Start: Optional[PersistablePoint]
+    End: Optional[PersistablePoint] = None
+    Start: Optional[PersistablePoint] = None
 
 
 class PersistableGeotextile(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    End: Optional[PersistablePoint]
-    ReductionArea: Optional[float]
-    Start: Optional[PersistablePoint]
-    TensileStrength: Optional[float]
+    End: Optional[PersistablePoint] = None
+    ReductionArea: Optional[float] = None
+    Start: Optional[PersistablePoint] = None
+    TensileStrength: Optional[float] = None
 
 
 class PersistableStressAtDistance(DStabilityBaseModelStructure):
-    Distance: Optional[float]
-    Stress: Optional[float]
+    Distance: Optional[float] = None
+    Stress: Optional[float] = None
 
 
 class PersistableNail(DStabilityBaseModelStructure):
     BendingStiffness: Optional[float] = 0.0
     CriticalAngle: Optional[float] = 0.0
-    Diameter: Optional[float]
+    Diameter: Optional[float] = None
     Direction: Optional[float] = 0.0
     GroutDiameter: Optional[float] = 0.0
     HorizontalSpacing: Optional[float] = 0.0
     Label: Optional[str] = ""
     LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
-    Length: Optional[float]
-    Location: Optional[PersistablePoint]
+    Length: Optional[float] = None
+    Location: Optional[PersistablePoint] = None
     MaxPullForce: Optional[float] = 0.0
     Notes: Optional[str] = ""
     PlasticMoment: Optional[float] = 0.0
@@ -960,7 +960,7 @@ class PersistableNail(DStabilityBaseModelStructure):
 class Reinforcements(DStabilitySubStructure):
     """reinforcements/reinforcements_x.json"""
 
-    Id: Optional[str]
+    Id: Optional[str] = None
     ContentVersion: Optional[str] = "2"
     ForbiddenLines: List[PersistableForbiddenLine] = []
     Geotextiles: List[PersistableGeotextile] = []
@@ -1004,16 +1004,16 @@ class ProjectInfo(DStabilitySubStructure):
 
 
 class PersistableBondStress(DStabilityBaseModelStructure):
-    Sigma: Optional[float]
-    Tau: Optional[float]
+    Sigma: Optional[float] = None
+    Tau: Optional[float] = None
 
 
 class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
     AreBondStressesActive: Optional[bool] = False
     BondStresses: Optional[List[Optional[PersistableBondStress]]] = []
-    CompressionRatio: Optional[float]
-    RheologicalCoefficient: Optional[float]
-    SoilId: Optional[str]
+    CompressionRatio: Optional[float] = None
+    RheologicalCoefficient: Optional[float] = None
+    SoilId: Optional[str] = None
 
 
 class NailProperties(DStabilitySubStructure):
@@ -1030,8 +1030,8 @@ class NailProperties(DStabilitySubStructure):
 
 
 class PersistableConsolidation(DStabilityBaseModelStructure):
-    Degree: Optional[float]
-    LayerId: Optional[str]
+    Degree: Optional[float] = None
+    LayerId: Optional[str] = None
 
 
 class PersistableEarthquake(DStabilityBaseModelStructure):
@@ -1046,36 +1046,36 @@ class PersistableEarthquake(DStabilityBaseModelStructure):
 
 class PersistableLayerLoad(DStabilityBaseModelStructure):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    LayerId: Optional[str]
+    LayerId: Optional[str] = None
 
 
 class PersistableLineLoad(DStabilityBaseModelStructure):
-    Angle: Optional[float]
+    Angle: Optional[float] = None
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     Label: Optional[str] = ""
-    Location: Optional[PersistablePoint]
-    Magnitude: Optional[float]
+    Location: Optional[PersistablePoint] = None
+    Magnitude: Optional[float] = None
     Notes: Optional[str] = ""
-    Spread: Optional[float]
+    Spread: Optional[float] = None
 
 
 class PersistableTree(DStabilityBaseModelStructure):
-    Force: Optional[float]
+    Force: Optional[float] = None
     Label: Optional[str] = ""
-    Location: Optional[PersistablePoint]
+    Location: Optional[PersistablePoint] = None
     Notes: Optional[str] = ""
-    RootZoneWidth: Optional[float]
-    Spread: Optional[float]
+    RootZoneWidth: Optional[float] = None
+    Spread: Optional[float] = None
 
 
 class PersistableUniformLoad(DStabilityBaseModelStructure):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    End: Optional[float]
+    End: Optional[float] = None
     Label: Optional[str] = ""
-    Magnitude: Optional[float]
+    Magnitude: Optional[float] = None
     Notes: Optional[str] = ""
-    Spread: Optional[float]
-    Start: Optional[float]
+    Spread: Optional[float] = None
+    Start: Optional[float] = None
 
 
 Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
@@ -1084,7 +1084,7 @@ Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
 class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
-    Id: Optional[str]
+    Id: Optional[str] = None
     ContentVersion: Optional[str] = "2"
     Earthquake: Optional[PersistableEarthquake] = PersistableEarthquake()
     LayerLoads: Optional[List[Optional[PersistableLayerLoad]]] = []
@@ -1128,10 +1128,10 @@ class Loads(DStabilitySubStructure):
 
 
 class PersistableLayer(DStabilityBaseModelStructure):
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: conlist(PersistablePoint, min_items=3)
+    Points: conlist(PersistablePoint, min_length=3) = []
 
     @validator("Points", pre=True)
     def polygon_checks(cls, points):
@@ -1155,7 +1155,7 @@ class Geometry(DStabilitySubStructure):
         return "geometries"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     Layers: List[PersistableLayer] = []
 
     def contains_point(self, point: Point) -> bool:
@@ -1215,16 +1215,16 @@ class Geometry(DStabilitySubStructure):
 
 
 class PersistableElevation(DStabilityBaseModelStructure):
-    AddedLayerId: Optional[str]
+    AddedLayerId: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = []
 
 
 class PersistableExcavation(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = []
 
 
 class Decorations(DStabilitySubStructure):
@@ -1233,7 +1233,7 @@ class Decorations(DStabilitySubStructure):
     Elevations: Optional[List[Optional[PersistableElevation]]] = []
     ContentVersion: Optional[str] = "2"
     Excavations: Optional[List[Optional[PersistableExcavation]]] = []
-    Id: Optional[str]
+    Id: Optional[str] = None
 
     def add_excavation(self, excavation: PersistableExcavation):
         self.Excavations.append(excavation)
