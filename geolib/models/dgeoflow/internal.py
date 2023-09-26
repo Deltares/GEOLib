@@ -13,7 +13,7 @@ from geolib import BaseModelStructure
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.pydantic import ValidationError, root_validator, validator
-from geolib.pydantic.types import confloat, conlist
+from geolib.pydantic.types import conlist
 from geolib.soils import Soil, StorageParameters
 from geolib.utils import snake_to_camel
 
@@ -71,9 +71,9 @@ class PersistableShadingType(Enum):
 
 
 class PersistableSoilVisualization(DGeoFlowBaseModelStructure):
-    Color: Optional[str]
-    PersistableShadingType: Optional[PersistableShadingType]
-    SoilId: Optional[str]
+    Color: Optional[str] = None
+    PersistableShadingType: Optional["PersistableShadingType"] = None
+    SoilId: Optional[str] = None
 
 
 class SoilVisualisation(DGeoFlowBaseModelStructure):
@@ -86,8 +86,8 @@ class SoilVisualisation(DGeoFlowBaseModelStructure):
 
 
 class PersistableSoilLayer(DGeoFlowBaseModelStructure):
-    LayerId: Optional[str]
-    SoilId: Optional[str]
+    LayerId: Optional[str] = None
+    SoilId: Optional[str] = None
 
 
 class SoilLayerCollection(DGeoFlowSubStructure):
@@ -102,7 +102,7 @@ class SoilLayerCollection(DGeoFlowSubStructure):
         return "soillayers"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     SoilLayers: List[PersistableSoilLayer] = []
 
     def add_soillayer(self, layer_id: str, soil_id: str) -> PersistableSoilLayer:
@@ -367,10 +367,10 @@ class PersistablePoint(DGeoFlowBaseModelStructure):
 
 
 class PersistableLayer(DGeoFlowBaseModelStructure):
-    Id: Optional[str]
-    Label: Optional[str]
-    Notes: Optional[str]
-    Points: conlist(PersistablePoint, min_items=3)
+    Id: Optional[str] = None
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    Points: conlist(PersistablePoint, min_length=3) = []
 
     @validator("Points", pre=True)
     def polygon_checks(cls, points):
@@ -398,7 +398,7 @@ class Geometry(DGeoFlowSubStructure):
         return "geometry"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     Layers: List[PersistableLayer] = []
 
     def contains_point(self, point: Point) -> bool:
@@ -462,10 +462,10 @@ class PersistableFixedHeadBoundaryConditionProperties(DGeoFlowBaseModelStructure
 
 
 class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
-    Id: Optional[str]
-    Points: conlist(PersistablePoint, min_items=2)
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    Id: Optional[str] = None
+    Points: conlist(PersistablePoint, min_length=2) = []
     FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
 
 
@@ -473,7 +473,7 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
     """boundaryconditions/boundaryconditions_x.json"""
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     BoundaryConditions: List[PersistableBoundaryCondition] = []
 
     @classmethod
@@ -522,9 +522,9 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
 
 
 class PersistableStage(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
-    BoundaryConditionCollectionId: Optional[str]
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    BoundaryConditionCollectionId: Optional[str] = None
 
 
 class ErosionDirectionEnum(Enum):
@@ -533,12 +533,12 @@ class ErosionDirectionEnum(Enum):
 
 
 class PipeTrajectory(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
-    D70: Optional[float]
-    Points: Optional[List[PersistablePoint]]
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    D70: Optional[float] = None
+    Points: Optional[List[PersistablePoint]] = []
     ErosionDirection: Optional[ErosionDirectionEnum] = ErosionDirectionEnum.RIGHT_TO_LEFT
-    ElementSize: Optional[float]
+    ElementSize: Optional[float] = None
 
 
 class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
@@ -548,16 +548,16 @@ class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
 
 
 class PersistableCalculation(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
-    CriticalHeadId: Optional[str]
+    CriticalHeadId: Optional[str] = None
     CriticalHeadSearchSpace: Optional[
         PersistableCriticalHeadSearchSpace
     ] = PersistableCriticalHeadSearchSpace()
-    PipeTrajectory: Optional[PipeTrajectory]
-    MeshPropertiesId: Optional[str]
-    ResultsId: Optional[str]
+    PipeTrajectory: Optional["PipeTrajectory"] = None
+    MeshPropertiesId: Optional[str] = None
+    ResultsId: Optional[str] = None
 
 
 class NodeResult(DGeoFlowBaseModelStructure):
@@ -573,8 +573,8 @@ class ElementResult(DGeoFlowBaseModelStructure):
 
 class PipeElementResult(DGeoFlowBaseModelStructure):
     Nodes: Optional[List[PersistablePoint]] = []
-    IsActive: Optional[bool]
-    Height: Optional[float]
+    IsActive: Optional[bool] = None
+    Height: Optional[float] = None
 
 
 class GroundwaterFlowResult(DGeoFlowSubStructure):
@@ -589,7 +589,7 @@ class GroundwaterFlowResult(DGeoFlowSubStructure):
 
 class PipeLengthResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
-    PipeLength: Optional[float]
+    PipeLength: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
@@ -601,8 +601,8 @@ class PipeLengthResult(DGeoFlowSubStructure):
 
 class CriticalHeadResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
-    PipeLength: Optional[float]
-    CriticalHead: Optional[float]
+    PipeLength: Optional[float] = None
+    CriticalHead: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
@@ -619,11 +619,11 @@ class Scenario(DGeoFlowSubStructure):
     """scenarios/scenario_x.json"""
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
-    Label: Optional[str]
+    Id: Optional[str] = None
+    Label: Optional[str] = None
     Notes: Optional[str] = None
-    GeometryId: Optional[str]
-    SoilLayersId: Optional[str]
+    GeometryId: Optional[str] = None
+    SoilLayersId: Optional[str] = None
     Stages: List[PersistableStage] = []
     Calculations: List[PersistableCalculation] = []
 
@@ -658,7 +658,7 @@ class Scenario(DGeoFlowSubStructure):
 
 class PersistableMeshProperties(DGeoFlowBaseModelStructure):
     LayerId: str
-    Label: Optional[str]
+    Label: Optional[str] = None
     ElementSize: Optional[float] = 1
 
 
@@ -666,7 +666,7 @@ class MeshProperty(DGeoFlowSubStructure):
     """meshproperties/meshproperties_x.json"""
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     MeshProperties: Optional[List[PersistableMeshProperties]] = []
 
     @classmethod

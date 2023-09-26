@@ -90,7 +90,7 @@ class Pile(BaseDataClass):
     pile_name: str
     pile_type: BasePileType
     pile_class_factor_shaft_sand_gravel: confloat(ge=0, le=9)
-    pile_class_factor_shaft_clay_loam_peat: Optional[confloat(ge=0, le=9)]
+    pile_class_factor_shaft_clay_loam_peat: Optional[confloat(ge=0, le=9)] = None
     preset_pile_class_factor_shaft_clay_loam_peat: BasePileTypeForClayLoamPeat
     elasticity_modulus: confloat(ge=0, le=1e25)
 
@@ -106,9 +106,9 @@ class BearingPile(Pile):
     characteristic_adhesion: confloat(ge=0, le=1000)
 
     overrule_pile_tip_shape_factor: bool
-    pile_tip_shape_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_shape_factor: Optional[confloat(ge=0, le=10)] = None
     overrule_pile_tip_cross_section_factors: bool
-    pile_tip_cross_section_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_cross_section_factor: Optional[confloat(ge=0, le=10)] = None
 
     def _to_internal(self):
         return TypesBearingPiles(

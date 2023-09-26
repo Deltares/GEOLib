@@ -134,7 +134,7 @@ class Curve(DSeriesTreeStructure):
     """Curve is a Line consisting of two points (by reference)."""
 
     id: PositiveInt = 1
-    points: conlist(int, min_items=2, max_items=2)
+    points: conlist(int, min_length=2, max_length=2)
 
     def __eq__(self, other: object) -> bool:
         """
@@ -601,11 +601,11 @@ class LoadValuesTank(BaseDataClass):
 class OtherLoad(BaseDataClass):
     load_type: TypeOtherLoads
     time: int = 0
-    load_values_trapeziform: Optional[LoadValuesTrapeziform]
-    load_values_circular: Optional[LoadValuesCircular]
-    load_values_rectangular: Optional[LoadValuesRectangular]
-    load_values_uniform: Optional[LoadValuesUniform]
-    load_values_tank: Optional[LoadValuesTank]
+    load_values_trapeziform: Optional[LoadValuesTrapeziform] = None
+    load_values_circular: Optional[LoadValuesCircular] = None
+    load_values_rectangular: Optional[LoadValuesRectangular] = None
+    load_values_uniform: Optional[LoadValuesUniform] = None
+    load_values_tank: Optional[LoadValuesTank] = None
 
 
 class OtherLoads(DSeriesNoParseSubStructure):
@@ -695,7 +695,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
     )
     is_imaginary_surface: Bool = Bool.FALSE
-    imaginary_surface_layer: Optional[PositiveInt]
+    imaginary_surface_layer: Optional[PositiveInt] = None
     is_submerging: Bool = Bool.FALSE
     use_end_time_for_fit: Bool = Bool.FALSE
     is_maintain_profile: Bool = Bool.FALSE
@@ -828,7 +828,7 @@ class DSettlementStructure(DSeriesStructure):
     version: Version = Version()
     soil_collection: SoilCollection = SoilCollection()
     geometry_data: GeometryData = GeometryData()
-    geometry_1d_data: Optional[str]
+    geometry_1d_data: Optional[str] = None
     run_identification: str = 2 * "\n"
     model: Union[Model, str] = Model()
     verticals: Union[Verticals, str] = Verticals()
@@ -998,15 +998,15 @@ class Vertical(ComplexVerticalSubstructure):
     id: int
     x: float
     z: float
-    time__settlement_per_load: Optional[TimeSettlementPerLoad]
+    time__settlement_per_load: Optional[TimeSettlementPerLoad] = None
     depths: Depths
-    leakages: Optional[Leakages]
-    drained_layers: Optional[DrainedLayers]
-    stresses: Optional[Stresses]
-    koppejan_settlement: Optional[KoppejanSettlements]
-    time__dependent_data: List[TimeDependentData]
-    elasticity: Optional[float]
-    horizontal_displacements: Optional[HorizontalDisplacements]
+    leakages: Optional[Leakages] = None
+    drained_layers: Optional[DrainedLayers] = None
+    stresses: Optional[Stresses] = None
+    koppejan_settlement: Optional[KoppejanSettlements] = None
+    time__dependent_data: List[TimeDependentData] = []
+    elasticity: Optional[float] = None
+    horizontal_displacements: Optional[HorizontalDisplacements] = None
 
 
 class ResidualSettlements(DSerieOldTableStructure):
@@ -1018,11 +1018,11 @@ class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
 
     verticals_count: int
-    vertical: List[Vertical]
-    residual_settlements: List[ResidualSettlements]
-    amounts_of_loads: Optional[str]
-    dissipation_in_layers: Optional[str]
-    reliability_calculation_results: Optional[str]
+    vertical: List[Vertical] = []
+    residual_settlements: List[ResidualSettlements] = []
+    amounts_of_loads: Optional[str] = None
+    dissipation_in_layers: Optional[str] = None
+    reliability_calculation_results: Optional[str] = None
 
 
 class DSettlementOutputStructure(DSeriesStructure):

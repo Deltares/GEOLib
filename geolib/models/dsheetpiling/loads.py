@@ -159,7 +159,7 @@ class SurchargeLoad(BaseDataClass):
     """
 
     name: constr(min_length=1, max_length=50)
-    points: conlist(Point, min_items=1)
+    points: conlist(Point, min_length=1)
     verification_load_settings: VerificationLoadSettingsLoads = (
         VerificationLoadSettingsLoads()
     )

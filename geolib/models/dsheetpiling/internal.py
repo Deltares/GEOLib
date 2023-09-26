@@ -409,7 +409,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
 
 
 class SheetPiling(DSeriesStructureCollection):
-    sheetpiling: conlist(SheetPileElement, min_items=1) = [SheetPileElement()]
+    sheetpiling: conlist(SheetPileElement, min_length=1) = [SheetPileElement()]
     leveltopsheetpiling: confloat(ge=-10000, le=10000) = 0.0
     lengthsheetpiling: confloat(gt=0) = 10
 
@@ -584,8 +584,8 @@ class SurchargeLoads(DSeriesStructureCollection):
 
 class Surface(DSeriesNoParseSubStructure):  # TODO determine structure
     name: constr(min_length=1, max_length=50)
-    points: conlist(Point, min_items=1)
-    points: conlist(dict, min_items=1)
+    points: conlist(Point, min_length=1)
+    points: conlist(dict, min_length=1)
     distribution_type: DistributionType = DistributionType.NONE
     std: confloat(ge=0.0) = 0.0
 
@@ -1206,33 +1206,33 @@ class Pressures(DSheetpilingWithNumberOfRowsTable):
 
 
 class SideOutput(DSeriesStructure):
-    calculation_method: Optional[str]
-    water_level: Optional[str]
-    surface: Optional[str]
-    soil_profile_for_single_pile_model: Optional[str]
-    soil_profile_for_sheet_piling_model: Optional[str]
-    pressures: Optional[Pressures]
-    force_from_layer: Optional[str]
-    lambdas: Optional[str]
-    slide_plane: Optional[str]
-    vertical_balance_per_layer: Optional[str]
+    calculation_method: Optional[str] = None
+    water_level: Optional[str] = None
+    surface: Optional[str] = None
+    soil_profile_for_single_pile_model: Optional[str] = None
+    soil_profile_for_sheet_piling_model: Optional[str] = None
+    pressures: Optional[Pressures] = None
+    force_from_layer: Optional[str] = None
+    lambdas: Optional[str] = None
+    slide_plane: Optional[str] = None
+    vertical_balance_per_layer: Optional[str] = None
 
 
 class OutputConstructionStage(DSeriesRepeatedGroupedProperties):
-    anchor_data: Optional[AnchorData]
-    hload_data: Optional[str]
-    breuk_data: Optional[BreukData]
-    passive_side_data: Optional[str]
-    soil_collapse_data: Optional[str]
-    moments_forces_displacements: Optional[MomentsForcesDisplacements]
-    side: Optional[List[SideOutput]]
-    uniform_load_data: Optional[str]
-    horizontal_line_load_data: Optional[str]
-    surcharge_data: Optional[str]
-    normal_force_data: Optional[str]
-    moment_data: Optional[str]
-    support_data: Optional[str]
-    vertical_balance_data: Optional[str]
+    anchor_data: Optional[AnchorData] = None
+    hload_data: Optional[str] = None
+    breuk_data: Optional[BreukData] = None
+    passive_side_data: Optional[str] = None
+    soil_collapse_data: Optional[str] = None
+    moments_forces_displacements: Optional[MomentsForcesDisplacements] = None
+    side: Optional[List[SideOutput]] = []
+    uniform_load_data: Optional[str] = None
+    horizontal_line_load_data: Optional[str] = None
+    surcharge_data: Optional[str] = None
+    normal_force_data: Optional[str] = None
+    moment_data: Optional[str] = None
+    support_data: Optional[str] = None
+    vertical_balance_data: Optional[str] = None
 
     @classmethod
     def get_list_field_names(cls) -> List[str]:
@@ -1248,8 +1248,8 @@ class DesignLengthCalculation(DSeriesWrappedTableStructure):
 
 
 class DesignSheetpileLength(DSeriesStructure):
-    design_length_info: Optional[DesignLengthInfo]
-    design_length_calculation: Optional[DesignLengthCalculation]
+    design_length_info: Optional[DesignLengthInfo] = None
+    design_length_calculation: Optional[DesignLengthCalculation] = None
 
 
 class PointsOnSheetpile(DSheetpilingWithNumberOfRowsTable):
@@ -1261,8 +1261,8 @@ class CurAnchorForceResults(DSheetpilingWithNumberOfRowsTable):
 
 
 class BaseVerificationStructureProperties(DSeriesRepeatedGroupedProperties):
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
-    construction_stage: Optional[List[OutputConstructionStage]]
+    points_on_sheetpile: Optional[List[PointsOnSheetpile]] = []
+    construction_stage: Optional[List[OutputConstructionStage]] = []
 
     @classmethod
     def get_list_field_names(cls) -> List[str]:
@@ -1281,70 +1281,72 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     calculation_type: str
 
     # General data
-    sheet_pile_elements: Optional[str]
-    calculated_displacements: Optional[str]
+    sheet_pile_elements: Optional[str] = None
+    calculated_displacements: Optional[str] = None
 
     # Standard, Kranz and Reliability calculation
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
-    construction_stage: Optional[List[OutputConstructionStage]]
+    points_on_sheetpile: Optional[List[PointsOnSheetpile]] = []
+    construction_stage: Optional[List[OutputConstructionStage]] = []
 
     # Design Sheet Pile Length calculation
-    design_sheetpile_length: Optional[DesignSheetpileLength]
+    design_sheetpile_length: Optional[DesignSheetpileLength] = None
 
     # Settlement by Vibration calculation
-    settlement_by_vibration: Optional[str]
+    settlement_by_vibration: Optional[str] = None
 
     # Verify calculation including Overall Stability calculation
-    overall_partial_factor_set: Optional[str]
-    factors_for_overall_stability: Optional[str]
-    overall_stability_results: Optional[str]
+    overall_partial_factor_set: Optional[str] = None
+    factors_for_overall_stability: Optional[str] = None
+    overall_stability_results: Optional[str] = None
 
     # Verify calculation according to CUR or EC7-NL with method B
-    factors_for_verification: Optional[str]
+    factors_for_verification: Optional[str] = None
 
     # Verify calculation according to CUR or EC7-NL
     verify_step_6____5_serviceability_limit_state: Optional[
         BaseVerificationStructureProperties
-    ]
-    verify_step_6____5_multiplied_by_factor: Optional[BaseVerificationStructureProperties]
+    ] = None
+    verify_step_6____5_multiplied_by_factor: Optional[
+        BaseVerificationStructureProperties
+    ] = None
     verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
+    ] = None
     verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
+    ] = None
     verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
+    ] = None
     verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
-    cur_anchor_force_results: Optional[CurAnchorForceResults]
+    ] = None
+    cur_anchor_force_results: Optional[CurAnchorForceResults] = None
 
     # Verify calculation according to EC7-BE or EC7-General
     verify_deformation_serviceability_limit_state: Optional[
         BaseVerificationStructureProperties
-    ]
-    eurocode_1_set_1: Optional[BaseVerificationStructureProperties]
-    eurocode_1_set_2: Optional[BaseVerificationStructureProperties]
-    eurocode_2: Optional[BaseVerificationStructureProperties]
-    eurocode_3: Optional[BaseVerificationStructureProperties]
-    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties]
-    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties]
+    ] = None
+    eurocode_1_set_1: Optional[BaseVerificationStructureProperties] = None
+    eurocode_1_set_2: Optional[BaseVerificationStructureProperties] = None
+    eurocode_2: Optional[BaseVerificationStructureProperties] = None
+    eurocode_3: Optional[BaseVerificationStructureProperties] = None
+    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties] = None
+    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties] = None
 
     # Kranz calculation
-    angles_kranz_calculation: Optional[str]
-    kranz_calculation: Optional[str]
-    kranz_diagram_results: Optional[str]
+    angles_kranz_calculation: Optional[str] = None
+    kranz_calculation: Optional[str] = None
+    kranz_diagram_results: Optional[str] = None
 
     # Resumes
-    resume: Optional[Resume]
-    anchors_and_struts_resume: Optional[str]
-    supports_resume: Optional[str]
-    maximum_anchor_force: Optional[str]
-    maximum_summary_results: Optional[str]
-    warnings: Optional[str]
-    errors: Optional[str]
+    resume: Optional[Resume] = None
+    anchors_and_struts_resume: Optional[str] = None
+    supports_resume: Optional[str] = None
+    maximum_anchor_force: Optional[str] = None
+    maximum_summary_results: Optional[str] = None
+    warnings: Optional[str] = None
+    errors: Optional[str] = None
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):

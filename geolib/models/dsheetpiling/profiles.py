@@ -46,7 +46,7 @@ class SoilProfile(BaseDataClass):
     """D-Sheetpiling Profile."""
 
     name: str
-    layers: conlist(SoilLayer, min_items=1)
+    layers: conlist(SoilLayer, min_length=1)
     coordinate: Point = Point(x=0, y=0)
 
     @validator("layers")

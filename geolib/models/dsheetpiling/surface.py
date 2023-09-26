@@ -20,7 +20,7 @@ class Surface(BaseDataClass):
     """
 
     name: constr(min_length=1, max_length=50)
-    points: conlist(Point, min_items=1)
+    points: conlist(Point, min_length=1)
     distribution_type: Optional[DistributionType] = None
     std: Optional[confloat(ge=0.0)] = None
 

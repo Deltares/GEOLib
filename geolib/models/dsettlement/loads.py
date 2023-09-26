@@ -20,7 +20,7 @@ from .internal import TypeOtherLoads
 class OtherLoad(BaseDataClass, metaclass=ABCMeta):
     """Other Load Class to inherit from."""
 
-    load_type: Optional[TypeOtherLoads]
+    load_type: Optional[TypeOtherLoads] = None
 
     @abstractmethod
     def _to_internal(self, time: timedelta, p: Point):
