@@ -1,5 +1,5 @@
 import sys
-from typing import TypeVar
+from typing import List, Optional, Type, TypeVar
 
 from pydantic.version import VERSION
 
@@ -23,12 +23,12 @@ if not PYDANTIC_V2 or pydanticv1_loaded:
     AnyItemType = TypeVar("AnyItemType")
 
     def patch_conlist(
-        item_type: type[AnyItemType],
+        item_type: Type[AnyItemType],
         *,
-        min_length: int | None = None,
-        max_length: int | None = None,
-        unique_items: bool | None = None,
-    ) -> type[list[AnyItemType]]:
+        min_length: Optional[int] = None,
+        max_length: Optional[int] = None,
+        unique_items: Optional[bool] = None,
+    ) -> Type[List[AnyItemType]]:
         return conlist(
             item_type=item_type,
             min_items=min_length,

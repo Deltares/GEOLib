@@ -1,7 +1,21 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
 import collections
 import sys
-from typing import Dict, List, Tuple, Type, _GenericAlias, _SpecialForm, get_type_hints
+from typing import (
+    TYPE_CHECKING,
+    Dict,
+    List,
+    Tuple,
+    Type,
+    _GenericAlias,
+    _SpecialForm,
+    get_type_hints,
+)
+
+from geolib.pydantic import PYDANTIC_V2
+
+if TYPE_CHECKING:
+    from .base_model_structure import BaseDataClass
 
 if sys.version_info < (3, 9):
     # Python 3.9 does not include `_special`, so use the function from typing instead
@@ -58,7 +72,7 @@ def get_filtered_type_hints(class_type: Type) -> List[Tuple[str, Type]]:
     ]
 
 
-def get_required_class_field(class_type: Type) -> List[Tuple[str, Type]]:
+def get_required_class_field(class_type: "BaseDataClass") -> List[Tuple[str, Type]]:
     """Gets all the (valid) class fields which are mandatory.
 
     Args:
@@ -67,6 +81,13 @@ def get_required_class_field(class_type: Type) -> List[Tuple[str, Type]]:
     Returns:
         List[Tuple[str, Type]]: [description]
     """
+    if PYDANTIC_V2:
+        return [
+            (field_name, field)
+            for field_name, field in class_type.model_fields.items()
+            if field.is_required() and not field_name.startswith("__")
+        ]
+
     return [
         (field_name, field)
         for field_name, field in class_type.__fields__.items()

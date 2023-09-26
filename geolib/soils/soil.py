@@ -426,7 +426,7 @@ class Soil(SoilBaseModel):
     shell_factor: Optional[float] = None
 
     @staticmethod
-    def set_stochastic_parameters(input_class: object):
+    def set_stochastic_parameters(input_class: Union["BaseDataClass", object]):
         """
         Converts float to stochastic parameter, where the mean is set as the input float value
         Args:
