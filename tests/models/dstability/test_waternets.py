@@ -1,5 +1,4 @@
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.geometry import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
@@ -9,6 +8,7 @@ from geolib.models.dstability.internal import (
     PersistableReferenceLine,
     Waternet,
 )
+from geolib.pydantic import ValidationError
 
 
 class TestDStabilityHeadLine:

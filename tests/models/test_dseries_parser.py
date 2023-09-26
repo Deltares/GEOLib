@@ -4,7 +4,6 @@ from random import randint
 from typing import Dict, List, Tuple, Type, _GenericAlias, get_type_hints
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
@@ -26,6 +25,7 @@ from geolib.models.dseries_parser import (
     get_line_property_value,
     make_key,
 )
+from geolib.pydantic import ValidationError
 
 
 class TestParserUtil:

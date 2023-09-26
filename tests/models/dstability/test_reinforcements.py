@@ -1,7 +1,6 @@
 from itertools import product
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
@@ -16,6 +15,7 @@ from geolib.models.dstability.reinforcements import (
     Geotextile,
     Nail,
 )
+from geolib.pydantic import ValidationError
 
 
 @pytest.fixture

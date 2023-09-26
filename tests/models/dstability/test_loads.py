@@ -1,7 +1,6 @@
 from typing import List
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
@@ -13,6 +12,7 @@ from geolib.models.dstability.internal import (
     PersistableUniformLoad,
 )
 from geolib.models.dstability.loads import Consolidation, LineLoad, TreeLoad, UniformLoad
+from geolib.pydantic import ValidationError
 
 
 @pytest.fixture

@@ -4,7 +4,6 @@ from string import ascii_lowercase
 from typing import Dict, List, Type, Union, _GenericAlias
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,
@@ -12,6 +11,7 @@ from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsTableWrapper,
 )
 from geolib.models.dseries_parser import DSeriesTreeStructure
+from geolib.pydantic import ValidationError
 
 
 class TestDFoundationsEnumStructure:

@@ -2,7 +2,6 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.models.dgeoflow import DGeoFlowModel
 from geolib.models.dgeoflow.internal import (
@@ -12,6 +11,7 @@ from geolib.models.dgeoflow.internal import (
     ProjectInfo,
 )
 from geolib.models.dstability.utils import children
+from geolib.pydantic import ValidationError
 from tests.utils import TestUtils
 
 

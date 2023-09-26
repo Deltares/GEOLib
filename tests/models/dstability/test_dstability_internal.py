@@ -2,7 +2,6 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
-from geolib.pydantic import ValidationError
 
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.internal import (
@@ -13,6 +12,7 @@ from geolib.models.dstability.internal import (
     Waternet,
 )
 from geolib.models.dstability.utils import children
+from geolib.pydantic import ValidationError
 from tests.utils import TestUtils, only_teamcity
 
 

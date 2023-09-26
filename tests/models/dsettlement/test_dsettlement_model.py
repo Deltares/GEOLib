@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import List
 from warnings import warn
 
-from geolib.pydantic import ValidationError
 import pytest
 from teamcity import is_running_under_teamcity
 
@@ -53,6 +52,7 @@ from geolib.models.dsettlement.internal import (
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
+from geolib.pydantic import ValidationError
 from geolib.soils import (
     DistributionType,
     IsotacheParameters,
