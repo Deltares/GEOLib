@@ -11,7 +11,7 @@ from .soil_utils import Color
 
 class SoilBaseModel(BaseDataClass):
     @validator("*")
-    def fail_on_infinite(cls, v, values, field):
+    def fail_on_infinite(cls, v):
         if isinstance(v, float) and not isfinite(v):
             raise ValueError(
                 "Only finite values are supported, don't use nan, -inf or inf."

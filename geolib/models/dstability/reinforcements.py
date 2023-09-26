@@ -3,7 +3,7 @@ This module handles the three types of reinforcements in DStability.
 """
 
 import abc
-from typing import List, Tuple, Optional
+from typing import List, Optional, Tuple
 
 from geolib.models import BaseDataClass
 from geolib.pydantic.types import confloat
