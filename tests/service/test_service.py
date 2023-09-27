@@ -5,16 +5,24 @@ from fastapi.testclient import TestClient
 from requests.auth import HTTPBasicAuth
 
 from geolib import BaseModelList, DFoundationsModel, DSettlementModel
-from geolib.service.main import app
+from geolib.pydantic import pydanticv1_loaded
 from tests.utils import TestUtils, only_teamcity
 
-pytestmark = pytest.mark.skip
+pytestmark = pytest.mark.skipif(
+    pydanticv1_loaded, reason="FastApi uses pydantic v2 when it is available."
+)
+
+if not pydanticv1_loaded:
+    from geolib.service.main import app
 
 
-client = TestClient(app)
+@pytest.fixture(scope="session")
+def client():
+    with TestClient(app) as client:
+        yield client
 
 
-def test_read_main():
+def test_read_main(client):
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello World"}

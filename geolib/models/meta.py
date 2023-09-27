@@ -14,14 +14,18 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
-from pydantic import AnyHttpUrl, DirectoryPath
-
 from geolib.pydantic import PYDANTIC_V2
 
-if PYDANTIC_V2:
+SettingsConfigDict = None
+try:
+    from pydantic import AnyHttpUrl, DirectoryPath
     from pydantic_settings import BaseSettings, SettingsConfigDict
-else:
-    from pydantic import BaseSettings
+except ImportError:
+    if PYDANTIC_V2:
+        from pydantic.v1 import AnyHttpUrl, BaseSettings, DirectoryPath
+    else:
+        from pydantic import BaseSettings
+        from pydantic import AnyHttpUrl, DirectoryPath
 
 from geolib import __version__ as version
 
@@ -64,7 +68,7 @@ class MetaData(BaseSettings):
         "ignore", "allow", "forbid"
     ] = "forbid"  # can be "ignore", "allow" or "forbid"
 
-    if PYDANTIC_V2:
+    if SettingsConfigDict:
         model_config = SettingsConfigDict(env_file="geolib.env")
     else:
 

@@ -1467,7 +1467,7 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 name = "pydantic-extra-types"
 version = "2.1.0"
 description = "Extra Pydantic types."
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "pydantic_extra_types-2.1.0-py3-none-any.whl", hash = "sha256:1b8aa83a2986b0bc6a7179834fdb423c5e0bcef6b2b4cd9261bf753ad7dcc483"},
@@ -1484,7 +1484,7 @@ all = ["phonenumbers (>=8,<9)", "pycountry (>=22,<23)"]
 name = "pydantic-settings"
 version = "2.0.3"
 description = "Settings management using Pydantic"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "pydantic_settings-2.0.3-py3-none-any.whl", hash = "sha256:ddd907b066622bd67603b75e2ff791875540dc485b7307c4fffc015719da8625"},
@@ -1592,7 +1592,7 @@ six = ">=1.5"
 name = "python-dotenv"
 version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "python-dotenv-1.0.0.tar.gz", hash = "sha256:a8df96034aae6d2d50a4ebe8216326c61c3eb64836776504fcca410e5937a3ba"},
@@ -2169,9 +2169,10 @@ docs = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.link
 testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=2.2)", "pytest-ignore-flaky", "pytest-mypy (>=0.9.1)", "pytest-ruff"]
 
 [extras]
+pydanticv2 = ["pydantic-extra-types", "pydantic-settings"]
 server = ["fastapi", "httpx", "uvicorn"]
 
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0.0"
-content-hash = "89edc8a8ae8494d6488b6128d3535b93d38544962e40e93beb9c7d4c06e34e39"
+content-hash = "5264c35153e825792d737903b77e8d7ba0f929b9a01f61334c1307e53e7aa9cf"
