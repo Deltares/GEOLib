@@ -52,7 +52,7 @@ from geolib.models.dsettlement.internal import (
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
-from geolib.pydantic import ValidationError, PYDANTIC_V2
+from geolib.pydantic import PYDANTIC_V2, ValidationError
 from geolib.soils import (
     DistributionType,
     IsotacheParameters,

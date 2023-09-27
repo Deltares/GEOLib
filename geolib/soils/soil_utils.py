@@ -2,9 +2,9 @@ from struct import pack, unpack_from
 
 from geolib.pydantic import PYDANTIC_V2
 
-if PYDANTIC_V2:
+try:
     from pydantic_extra_types.color import Color as PydanticColor
-else:
+except ImportError:
     from pydantic.color import Color as PydanticColor
 
 

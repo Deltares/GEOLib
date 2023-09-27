@@ -12,8 +12,15 @@ from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.internal import Bool
-from geolib.service.main import app
+from geolib.pydantic import pydanticv1_loaded
 from tests.utils import TestUtils, only_teamcity
+
+if not pydanticv1_loaded:
+    from geolib.service.main import app
+else:
+    from fastapi import FastAPI
+
+    app = FastAPI()
 
 client = TestClient(app)
 
