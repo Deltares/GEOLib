@@ -16,8 +16,8 @@ from typing import (
     Union,
     _GenericAlias,
     _SpecialForm,
+    get_origin,
     get_type_hints,
-    get_origin
 )
 
 from pydantic import FilePath
