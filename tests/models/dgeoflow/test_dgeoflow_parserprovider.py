@@ -40,7 +40,7 @@ class TestDGeoFlowInputParser:
 
         # 4. Verify final expectations.
         assert input_structure is not None
-        data = input_structure.json(indent=4)
+        data = input_structure.json()
         with open(test_output_filepath / "dstability_parsed_input.json", "w") as io:
             io.write(data)
 
@@ -61,7 +61,7 @@ class TestDGeoFlowInputParser:
 
         # 4. Verify final expectations.
         assert input_structure is not None
-        data = input_structure.json(indent=4)
+        data = input_structure.json()
         with open(test_output_dir / "dgeoflow_parsed_input_flox.json", "w") as io:
             io.write(data)
 
