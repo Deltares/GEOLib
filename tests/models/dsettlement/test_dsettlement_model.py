@@ -52,7 +52,7 @@ from geolib.models.dsettlement.internal import (
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
-from geolib.pydantic import ValidationError
+from geolib.pydantic import ValidationError, PYDANTIC_V2
 from geolib.soils import (
     DistributionType,
     IsotacheParameters,
@@ -188,7 +188,7 @@ class TestDSettlementModel:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())
 
     @pytest.mark.acceptance
     @only_teamcity
@@ -293,7 +293,7 @@ class TestDSettlementModel:
     ):
         # 1. Set up test data.
         test_model = DSettlementModel()
-        expected_mssg = "ensure this value is greater than or equal to 0"
+        expected_mssg = "greater than or equal to 0"
 
         # 2. Run and verify expectations
         with pytest.raises(ValueError, match=expected_mssg):

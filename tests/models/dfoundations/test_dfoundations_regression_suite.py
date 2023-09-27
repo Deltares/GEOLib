@@ -49,7 +49,7 @@ class TestDFoundationsRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -73,7 +73,7 @@ class TestDFoundationsRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())
 
     @pytest.mark.unittest
     def test_regression_issue8(self):

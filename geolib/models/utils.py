@@ -81,7 +81,7 @@ def get_required_class_field(class_type: "BaseDataClass") -> List[Tuple[str, Typ
     Returns:
         List[Tuple[str, Type]]: [description]
     """
-    if PYDANTIC_V2:
+    if hasattr(class_type, "model_fields"):
         return [
             (field_name, field)
             for field_name, field in class_type.model_fields.items()

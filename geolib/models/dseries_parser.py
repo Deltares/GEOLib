@@ -17,6 +17,7 @@ from typing import (
     _GenericAlias,
     _SpecialForm,
     get_type_hints,
+    get_origin
 )
 
 from pydantic import FilePath
@@ -1486,6 +1487,12 @@ def get_field_collection_type(class_type: DataClass, field_idx: int) -> Type:
     Returns:
         Type: The class for the items in the collection.
     """
+    if hasattr(class_type, "model_fields"):
+        list_type = list(class_type.model_fields.items())[field_idx][1]
+        if get_origin(list_type.annotation):
+            return get_args(list_type.annotation)[0]
+        return list_type.annotation
+
     list_type = list(class_type.__fields__.items())[field_idx][1]
     if not list_type.sub_fields:
         return list_type.outer_type_

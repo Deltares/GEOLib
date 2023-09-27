@@ -57,7 +57,7 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -83,7 +83,7 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -107,4 +107,4 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())

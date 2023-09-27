@@ -56,7 +56,7 @@ class PersistableStochasticParameter(DGeoFlowBaseModelStructure):
     StandardDeviation: float = 0.0
 
 
-class PersistableShadingType(Enum):
+class PersistableShadingTypeEnum(Enum):
     DIAGONAL_A = "DiagonalA"
     DIAGONAL_B = "DiagonalB"
     DIAGONAL_C = "DiagonalC"
@@ -72,7 +72,7 @@ class PersistableShadingType(Enum):
 
 class PersistableSoilVisualization(DGeoFlowBaseModelStructure):
     Color: Optional[str] = None
-    PersistableShadingType: Optional["PersistableShadingType"] = None
+    PersistableShadingType: Optional[PersistableShadingTypeEnum] = None
     SoilId: Optional[str] = None
 
 
