@@ -7,14 +7,16 @@ PYDANTIC_V2 = VERSION.startswith("2.")
 
 pydanticv1_loaded = False
 if PYDANTIC_V2:
-    from pydantic.v1 import BaseModel, ValidationError, root_validator, validator
+    from pydantic.v1 import BaseModel, ValidationError, root_validator
     from pydantic.v1 import types as types
+    from pydantic.v1 import validator
     from pydantic.v1.types import conlist
 
     pydanticv1_loaded = True
 else:
-    from pydantic import BaseModel, ValidationError, root_validator, validator
+    from pydantic import BaseModel, ValidationError, root_validator
     from pydantic import types as types
+    from pydantic import validator
     from pydantic.types import conlist
 
 if not PYDANTIC_V2 or pydanticv1_loaded:
