@@ -247,7 +247,7 @@ class PersistableStochasticParameter(DStabilityBaseModelStructure):
     StandardDeviation: float = 0.0
 
 
-class StateType(Enum):
+class StateTypeEnum(Enum):
     OCR = "Ocr"
     POP = "Pop"
     YIELD_STRESS = "YieldStress"
@@ -259,7 +259,7 @@ class PersistableStress(DStabilityBaseModelStructure):
     PopStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    StateType: Optional["StateType"] = None
+    StateType: Optional[StateTypeEnum] = None
     YieldStress: float = 0.0
 
 
@@ -408,7 +408,7 @@ class Scenario(DStabilitySubStructure):
     Notes: Optional[str] = ""
 
 
-class PersistableShadingType(Enum):
+class PersistableShadingTypeEnum(Enum):
     DIAGONAL_A = "DiagonalA"
     DIAGONAL_B = "DiagonalB"
     DIAGONAL_C = "DiagonalC"
@@ -424,7 +424,7 @@ class PersistableShadingType(Enum):
 
 class PersistableSoilVisualization(DStabilityBaseModelStructure):
     Color: Optional[str] = None
-    PersistableShadingType: Optional["PersistableShadingType"] = None
+    PersistableShadingType: Optional[PersistableShadingTypeEnum] = None
     SoilId: Optional[str] = None
 
 
