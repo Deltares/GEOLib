@@ -31,7 +31,6 @@ meta = MetaData()
 class BaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path]
     datastructure: Optional[BaseModelStructure]
-    meta: MetaData = MetaData()
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.
@@ -45,7 +44,7 @@ class BaseModel(BaseDataClass, abc.ABC):
             logger.warning("Serializing before executing.")
             self.serialize(self.filename)
 
-        executable = self.meta.console_folder / self.console_path
+        executable = meta.console_folder / self.console_path
         if not executable.exists():
             logger.error(
                 f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
@@ -95,7 +94,7 @@ class BaseModel(BaseDataClass, abc.ABC):
                 endpoint, f"calculate/{self.__class__.__name__.lower()}"
             ),
             data=self.json(),
-            auth=HTTPBasicAuth(self.meta.gl_username, self.meta.gl_password),
+            auth=HTTPBasicAuth(meta.gl_username, meta.gl_password),
         )
         if response.status_code == 200:
             data = response.json()
@@ -167,10 +166,6 @@ class BaseModel(BaseDataClass, abc.ABC):
             logger.warning("No datastructured parsed yet!")
             return False
 
-    def set_metadata(self, meta: MetaData):
-        """Set custom metadata for input file."""
-        self.metadata = meta
-
     @property
     def input(self):
         """Access internal dict-like datastructure of the input."""
@@ -193,7 +188,6 @@ class BaseModelList(BaseDataClass):
     identifying them later."""
 
     models: List[BaseModel]
-    meta: MetaData = MetaData()
     errors: List[str] = []
 
     def execute(
@@ -229,7 +223,7 @@ class BaseModelList(BaseDataClass):
                 fn = unique_folder / model.filename.name
                 model.serialize(fn.resolve())
 
-            executable = self.meta.console_folder / lead_model.console_path
+            executable = meta.console_folder / lead_model.console_path
             if not executable.exists():
                 logger.error(
                     f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
@@ -286,7 +280,7 @@ class BaseModelList(BaseDataClass):
                 endpoint, f"calculate/{lead_model.__class__.__name__.lower()}s"
             ),
             data="[" + ",".join((model.json() for model in self.models)) + "]",
-            auth=HTTPBasicAuth(lead_model.meta.gl_username, lead_model.meta.gl_password),
+            auth=HTTPBasicAuth(meta.gl_username, meta.gl_password),
         )
         if response.status_code == 200:
             models = response.json()["models"]
