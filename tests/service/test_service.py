@@ -22,7 +22,7 @@ def client():
         yield client
 
 
-def test_read_main(client):
+def test_read_main(client: TestClient):
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello World"}
@@ -30,7 +30,7 @@ def test_read_main(client):
 
 @pytest.mark.acceptance
 @only_teamcity
-def test_post_calculate_empty_model_fails():
+def test_post_calculate_empty_model_fails(client: TestClient):
     model = DFoundationsModel()
 
     response = client.post(
@@ -44,7 +44,7 @@ def test_post_calculate_empty_model_fails():
 
 @pytest.mark.acceptance
 @only_teamcity
-def test_post_calculate():
+def test_post_calculate(client: TestClient):
     model = DSettlementModel()
     input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
     benchmark_fn = input_folder / "bm1-1.sli"
@@ -62,7 +62,7 @@ def test_post_calculate():
 
 @pytest.mark.acceptance
 @only_teamcity
-def test_post_calculate_many():
+def test_post_calculate_many(client: TestClient):
     # Setup models
     a = DSettlementModel()
     b = DSettlementModel()
@@ -89,7 +89,7 @@ def test_post_calculate_many():
 
 
 @pytest.mark.unittest
-def test_auth():
+def test_auth(client: TestClient):
     response = client.post(
         "/calculate/dsettlementmodels",
         json=[],
