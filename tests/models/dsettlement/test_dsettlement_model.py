@@ -7,9 +7,7 @@ from pathlib import Path
 from typing import List
 from warnings import warn
 
-import pydantic
 import pytest
-from pydantic.color import Color
 from teamcity import is_running_under_teamcity
 
 import geolib.models.dsettlement.loads as loads
@@ -54,6 +52,7 @@ from geolib.models.dsettlement.internal import (
 from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
+from geolib.pydantic import PYDANTIC_V2, ValidationError
 from geolib.soils import (
     DistributionType,
     IsotacheParameters,
@@ -189,7 +188,7 @@ class TestDSettlementModel:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.json())
 
     @pytest.mark.acceptance
     @only_teamcity
@@ -294,7 +293,7 @@ class TestDSettlementModel:
     ):
         # 1. Set up test data.
         test_model = DSettlementModel()
-        expected_mssg = "ensure this value is greater than or equal to 0"
+        expected_mssg = "greater than or equal to 0"
 
         # 2. Run and verify expectations
         with pytest.raises(ValueError, match=expected_mssg):
@@ -798,7 +797,7 @@ class TestDSettlementModel:
 
         # 2. Run test and verify expectation.
         # character length is outside bounds.
-        with pytest.raises(pydantic.ValidationError):
+        with pytest.raises(ValidationError):
             test_model.add_non_uniform_load(
                 name=long_name,
                 points=pointlist,
@@ -1268,9 +1267,13 @@ class TestDSettlementModel:
 
         # Check that an error message is raised when the index layer is invalid
         with pytest.raises(Exception):
-            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=0)
+            ds.set_any_calculation_options(
+                is_imaginary_surface=True, imaginary_surface_layer=0
+            )
         with pytest.raises(Exception):
-            ds.set_any_calculation_options(is_imaginary_surface=True, imaginary_surface_layer=3)
+            ds.set_any_calculation_options(
+                is_imaginary_surface=True, imaginary_surface_layer=3
+            )
 
     @pytest.mark.systemtest
     def test_serialize_calculation_options(self):

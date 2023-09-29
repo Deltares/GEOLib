@@ -13,8 +13,7 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
-from pydantic.error_wrappers import ValidationError
+from pydantic import DirectoryPath, FilePath, HttpUrl, ValidationError, conlist
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError
@@ -29,8 +28,8 @@ meta = MetaData()
 
 
 class BaseModel(BaseDataClass, abc.ABC):
-    filename: Optional[Path]
-    datastructure: Optional[BaseModelStructure]
+    filename: Optional[Path] = None
+    datastructure: Optional[BaseModelStructure] = None
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.

@@ -3,7 +3,6 @@ import random
 from pathlib import Path
 
 import pytest
-from pydantic.color import Color
 from teamcity import is_running_under_teamcity
 
 from geolib.geometry.one import Point
@@ -92,6 +91,7 @@ from geolib.soils import (
     Soil,
     SoilType,
 )
+from geolib.soils.soil_utils import Color
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/acceptance"

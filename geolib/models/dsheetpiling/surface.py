@@ -1,9 +1,9 @@
 from typing import List, Optional
 
-from pydantic import confloat, conlist, constr, validator
-
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic import validator
+from geolib.pydantic.types import confloat, conlist, constr
 
 from .internal import Surface as InternalSurface
 from .settings import DistributionType
@@ -20,7 +20,7 @@ class Surface(BaseDataClass):
     """
 
     name: constr(min_length=1, max_length=50)
-    points: conlist(Point, min_items=1)
+    points: conlist(Point, min_length=1)
     distribution_type: Optional[DistributionType] = None
     std: Optional[confloat(ge=0.0)] = None
 

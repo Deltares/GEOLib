@@ -4,9 +4,9 @@ This module handles the four types of loads in DStability.
 import abc
 from typing import List, Optional
 
-from pydantic import NoneStr, confloat, validator
-
 from geolib.models import BaseDataClass
+from geolib.pydantic import validator
+from geolib.pydantic.types import confloat
 
 from ...geometry.one import Point
 from .internal import (
@@ -21,7 +21,7 @@ from .internal import (
 class DStabilityLoad(BaseDataClass):
     """Base Class for Loads."""
 
-    label: NoneStr
+    label: Optional[str] = None
 
     @abc.abstractmethod
     def to_internal_datastructure(self):

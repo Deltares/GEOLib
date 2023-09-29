@@ -1,13 +1,11 @@
 import secrets
 import shutil
 import uuid
-from pathlib import Path, PosixPath, WindowsPath
+from pathlib import Path
 from typing import Dict, List, Type, Union
 
-import pydantic.json
-from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
+from fastapi import BackgroundTasks, Body, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from pydantic import ValidationError, conlist
 from starlette import status
 from starlette.responses import JSONResponse
 
@@ -21,11 +19,7 @@ from geolib.models import (
     DStabilityModel,
 )
 from geolib.models.meta import MetaData
-
-# Fixes for custom serialization
-pydantic.json.ENCODERS_BY_TYPE[Path] = str
-pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
-pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
+from geolib.pydantic import PYDANTIC_V2, ValidationError
 
 settings = MetaData()
 app = FastAPI()
@@ -115,10 +109,15 @@ async def calculate_dstabilitymodel(
     return execute(model, background_tasks)
 
 
+validator_kwargs = {"min_length": 1}
+if not PYDANTIC_V2:
+    validator_kwargs = {"min_items": 1}
+
+
 @app.post("/calculate/dsettlementmodels", response_model=None)
 async def calculate_many_dsettlementmodels(
-    models: conlist(DSettlementModel, min_items=1),
     background_tasks: BackgroundTasks,
+    models: List[DSettlementModel] = Body(**validator_kwargs),
     _: str = Depends(get_current_username),
 ) -> List[DSettlementModel]:
     return execute_many(models, background_tasks)
@@ -126,8 +125,8 @@ async def calculate_many_dsettlementmodels(
 
 @app.post("/calculate/dfoundationsmodels", response_model=None)
 async def calculate_many_dfoundationsmodel(
-    models: conlist(DFoundationsModel, min_items=1),
     background_tasks: BackgroundTasks,
+    models: List[DFoundationsModel] = Body(**validator_kwargs),
     _: str = Depends(get_current_username),
 ) -> List[DFoundationsModel]:
     return execute_many(models, background_tasks)
@@ -135,8 +134,8 @@ async def calculate_many_dfoundationsmodel(
 
 @app.post("/calculate/dsheetpilingmodels", response_model=None)
 async def calculate_many_dsheetpilingmodel(
-    models: conlist(DSheetPilingModel, min_items=1),
     background_tasks: BackgroundTasks,
+    models: List[DSheetPilingModel] = Body(**validator_kwargs),
     _: str = Depends(get_current_username),
 ) -> List[DSheetPilingModel]:
     return execute_many(models, background_tasks)
@@ -144,8 +143,8 @@ async def calculate_many_dsheetpilingmodel(
 
 @app.post("/calculate/dstabilitymodels", response_model=None)
 async def calculate_many_dstabilitymodel(
-    models: conlist(DStabilityModel, min_items=1),
     background_tasks: BackgroundTasks,
+    models: List[DStabilityModel] = Body(**validator_kwargs),
     _: str = Depends(get_current_username),
 ) -> List[DStabilityModel]:
     return execute_many(models, background_tasks)

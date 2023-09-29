@@ -8,7 +8,6 @@ from warnings import warn
 
 import pydantic
 import pytest
-from pydantic.color import Color
 from teamcity import is_running_under_teamcity
 
 import geolib.models.dsettlement.loads as loads
@@ -47,6 +46,7 @@ from geolib.soils import (
     SoilWeightParameters,
     StateType,
 )
+from geolib.soils.soil_utils import Color
 from tests.utils import TestUtils, only_teamcity
 
 

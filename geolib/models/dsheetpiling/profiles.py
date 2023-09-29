@@ -6,10 +6,10 @@ D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 from typing import List
 
-from pydantic import conlist, validator
-
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic import validator
+from geolib.pydantic.types import conlist
 from geolib.soils import Soil
 
 from .internal import SoilProfile as InternalSoilProfile
@@ -46,7 +46,7 @@ class SoilProfile(BaseDataClass):
     """D-Sheetpiling Profile."""
 
     name: str
-    layers: conlist(SoilLayer, min_items=1)
+    layers: conlist(SoilLayer, min_length=1)
     coordinate: Point = Point(x=0, y=0)
 
     @validator("layers")

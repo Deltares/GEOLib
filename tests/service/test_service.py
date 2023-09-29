@@ -1,22 +1,28 @@
-from pathlib import Path, PosixPath, WindowsPath
+from pathlib import Path
 
-import pydantic.json
 import pytest
 from fastapi.testclient import TestClient
 from requests.auth import HTTPBasicAuth
 
 from geolib import BaseModelList, DFoundationsModel, DSettlementModel
-from geolib.service.main import app
+from geolib.pydantic import pydanticv1_loaded
 from tests.utils import TestUtils, only_teamcity
 
-pydantic.json.ENCODERS_BY_TYPE[Path] = str
-pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
-pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
+pytestmark = pytest.mark.skipif(
+    pydanticv1_loaded, reason="FastApi uses pydantic v2 when it is available."
+)
 
-client = TestClient(app)
+if not pydanticv1_loaded:
+    from geolib.service.main import app
 
 
-def test_read_main():
+@pytest.fixture(scope="session")
+def client():
+    with TestClient(app) as client:
+        yield client
+
+
+def test_read_main(client: TestClient):
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello World"}
@@ -24,7 +30,7 @@ def test_read_main():
 
 @pytest.mark.acceptance
 @only_teamcity
-def test_post_calculate_empty_model_fails():
+def test_post_calculate_empty_model_fails(client: TestClient):
     model = DFoundationsModel()
 
     response = client.post(
@@ -38,7 +44,7 @@ def test_post_calculate_empty_model_fails():
 
 @pytest.mark.acceptance
 @only_teamcity
-def test_post_calculate():
+def test_post_calculate(client: TestClient):
     model = DSettlementModel()
     input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
     benchmark_fn = input_folder / "bm1-1.sli"
@@ -56,7 +62,7 @@ def test_post_calculate():
 
 @pytest.mark.acceptance
 @only_teamcity
-def test_post_calculate_many():
+def test_post_calculate_many(client: TestClient):
     # Setup models
     a = DSettlementModel()
     b = DSettlementModel()
@@ -83,11 +89,11 @@ def test_post_calculate_many():
 
 
 @pytest.mark.unittest
-def test_auth():
+def test_auth(client: TestClient):
     response = client.post(
         "/calculate/dsettlementmodels",
         json=[],
         auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 422
-    assert "ensure this value has at least 1 items" in response.text
+    assert "at least 1 item" in response.text

@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from geolib.pydantic import BaseModel
 
 
 def children(instance, filter=BaseModel):

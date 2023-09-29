@@ -2,17 +2,16 @@ from enum import Enum, IntEnum
 from math import isfinite
 from typing import List, Optional, Union
 
-from pydantic import validator
-
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic import validator
 
 from .soil_utils import Color
 
 
 class SoilBaseModel(BaseDataClass):
     @validator("*")
-    def fail_on_infinite(cls, v, values, field):
+    def fail_on_infinite(cls, v):
         if isinstance(v, float) and not isfinite(v):
             raise ValueError(
                 "Only finite values are supported, don't use nan, -inf or inf."
@@ -223,7 +222,7 @@ class StorageParameters(SoilBaseModel):
     horizontal_permeability: Optional[
         Union[float, StochasticParameter]
     ] = StochasticParameter()
-    storage_type: Optional[StorageTypes]
+    storage_type: Optional[StorageTypes] = None
     permeability_strain_type: Optional[
         Union[float, StochasticParameter]
     ] = StochasticParameter(mean=1e15)
@@ -353,7 +352,7 @@ class StateLine(SoilBaseModel):
     TODO decide if we want cross-dependency to geometry class
     """
 
-    state_line_points: Optional[List[Point]]
+    state_line_points: Optional[List[Point]] = []
 
 
 class SoilState(SoilBaseModel):
@@ -427,7 +426,7 @@ class Soil(SoilBaseModel):
     shell_factor: Optional[float] = None
 
     @staticmethod
-    def set_stochastic_parameters(input_class: object):
+    def set_stochastic_parameters(input_class: Union["BaseDataClass", object]):
         """
         Converts float to stochastic parameter, where the mean is set as the input float value
         Args:

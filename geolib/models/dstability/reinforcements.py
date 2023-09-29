@@ -3,11 +3,10 @@ This module handles the three types of reinforcements in DStability.
 """
 
 import abc
-from typing import List, Tuple
-
-from pydantic import NoneStr, confloat
+from typing import List, Optional, Tuple
 
 from geolib.models import BaseDataClass
+from geolib.pydantic.types import confloat
 
 from ...geometry.one import Point
 from ...utils import snake_to_camel
@@ -23,7 +22,7 @@ from .internal import (
 class DStabilityReinforcement(BaseDataClass, metaclass=abc.ABCMeta):
     """Base Class for Reinforcements."""
 
-    label: NoneStr = None
+    label: Optional[str] = None
 
     @abc.abstractmethod
     def _to_internal_datastructure(self):

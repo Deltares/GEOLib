@@ -2,10 +2,9 @@ from abc import ABCMeta, abstractmethod
 from datetime import timedelta
 from typing import Optional
 
-from pydantic import constr
-
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
+from geolib.pydantic.types import constr
 
 from .internal import (
     LoadValuesCircular,
@@ -21,7 +20,7 @@ from .internal import TypeOtherLoads
 class OtherLoad(BaseDataClass, metaclass=ABCMeta):
     """Other Load Class to inherit from."""
 
-    load_type: Optional[TypeOtherLoads]
+    load_type: Optional[TypeOtherLoads] = None
 
     @abstractmethod
     def _to_internal(self, time: timedelta, p: Point):

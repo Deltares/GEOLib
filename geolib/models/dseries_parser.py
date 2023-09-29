@@ -16,6 +16,7 @@ from typing import (
     Union,
     _GenericAlias,
     _SpecialForm,
+    get_origin,
     get_type_hints,
 )
 
@@ -1472,7 +1473,7 @@ def get_line_property_key_value(text: str, reversed_key: bool) -> Tuple[str, str
     return key_part, ""
 
 
-def get_field_collection_type(class_type: Type, field_idx: int) -> Type:
+def get_field_collection_type(class_type: DataClass, field_idx: int) -> Type:
     """Gets the type wrapped by a collection of a given class.
     Example:
         DummyClass:
@@ -1486,6 +1487,12 @@ def get_field_collection_type(class_type: Type, field_idx: int) -> Type:
     Returns:
         Type: The class for the items in the collection.
     """
+    if hasattr(class_type, "model_fields"):
+        list_type = list(class_type.model_fields.items())[field_idx][1]
+        if get_origin(list_type.annotation):
+            return get_args(list_type.annotation)[0]
+        return list_type.annotation
+
     list_type = list(class_type.__fields__.items())[field_idx][1]
     if not list_type.sub_fields:
         return list_type.outer_type_

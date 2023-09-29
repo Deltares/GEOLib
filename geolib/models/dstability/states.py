@@ -15,7 +15,7 @@ from .internal import (
     PersistableStatePoint,
     PersistableStochasticParameter,
     PersistableStress,
-    StateType,
+    StateTypeEnum,
 )
 
 
@@ -40,7 +40,7 @@ class DStabilityStress(DStabilityObject):
     stochastic_parameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    state_type: StateType = StateType.POP
+    state_type: StateTypeEnum = StateTypeEnum.POP
 
     def _to_internal_datastructure(self) -> PersistableStress:
         data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}

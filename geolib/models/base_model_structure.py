@@ -1,7 +1,7 @@
 import abc
 from math import isfinite
 
-from pydantic import BaseModel
+from geolib.pydantic import BaseModel
 
 from .meta import MetaData
 from .validators import BaseValidator

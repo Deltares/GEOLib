@@ -11,7 +11,7 @@ from .internal import VerticalDrain as vd
 class ScheduleValues(BaseDataClass, metaclass=ABCMeta):
     """ScheduleValues to inherit from"""
 
-    schedule: Optional[DrainSchedule]
+    schedule: Optional[DrainSchedule] = None
 
     @abstractmethod
     def _to_internal(self):
@@ -56,8 +56,8 @@ class ScheduleValuesSimpleInput(ScheduleValues):
     begin_time: float
     end_time: float
     underpressure: float
-    water_head_during_dewatering: Optional[float]
-    tube_pressure_during_dewatering: Optional[float]
+    water_head_during_dewatering: Optional[float] = None
+    tube_pressure_during_dewatering: Optional[float] = None
 
     def _to_internal(self, verticaldrains: vd) -> vd:
         verticaldrains.schedule_type = DrainSchedule.SIMPLE_INPUT
@@ -114,9 +114,9 @@ class VerticalDrain(BaseDataClass):
     range_to: float
     bottom_position: float
     center_to_center: float
-    width: Optional[float]
-    diameter: Optional[float]
-    thickness: Optional[float]
+    width: Optional[float] = None
+    diameter: Optional[float] = None
+    thickness: Optional[float] = None
     grid: DrainGridType = DrainGridType.UNDERDETERMINED
     schedule: ScheduleValues = None
 
