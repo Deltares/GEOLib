@@ -32,7 +32,10 @@ class TestGetFields:
         assert len(filtered_types) == 1
         field_name, field_type = filtered_types[0]
         assert field_name == "regular_field"
-        assert field_type.type_ == int
+        if hasattr(field_type, "annotation"):
+            assert field_type.annotation == int
+        else:
+            assert field_type.type_ == int
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(

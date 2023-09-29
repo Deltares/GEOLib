@@ -96,4 +96,4 @@ def test_auth(client: TestClient):
         auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 422
-    assert "ensure this value has at least 1 items" in response.text
+    assert "at least 1 item" in response.text
