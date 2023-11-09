@@ -37,8 +37,6 @@ from geolib.models.dsheetpiling.internal import (
     SurchargePoint,
     UniformLoad,
     UniformLoads,
-    VerifyAnchorForce,
-    VerifySheetpileData,
 )
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
@@ -168,7 +166,7 @@ class TestInternal:
         )
 
     @pytest.mark.integrationtest
-    def test_add_calculation_options_per_stage_ec7_b(
+    def test_add_calculation_options_per_stage_ec7_be(
         self, model: DSheetPilingInputStructure
     ):
         # set inputs
@@ -185,7 +183,9 @@ class TestInternal:
         )
         # test output
         assert len(model.calculation_options_per_stage.stageoptions) == 1
-        assert model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadb == 1
+        assert (
+            model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadbe == 1
+        )
 
 
 class TestInternalParseInputStructure:
@@ -309,27 +309,28 @@ class TestInternalParseInputStructure:
         column_values = {
             "moment": 11.64788,
             "shear_force": -5.00187,
-            "displacements": 117.98290,
-            "perc__mob__moment": 0,
-            "perc__mob__resistances": 6.97007,
-            "fase": 1,
+            "displacement": 117.98290,
+            "percentage_mobilized_moment": 0,
+            "percentage_mobilized_resistance": 6.97007,
+            "stage_number": 1,
             "verification_type": 15,
-            "partial_factor_type": 4,
+            "partial_factor_set": 4,
+            "representative_factor": 1.234,
             "vertical_balance_result": 0,
-            "vertical_result_direction": 0,
-            "status": 0,
+            "calculation_status": 0,
         }
         column_keys_line = "\n".join(column_values.keys())
         column_values_line = "\t".join([str(value) for value in column_values.values()])
+        data_count = len(column_values.values())
         text_to_parse = f"""
-            1 : Number of stages
-            [TABLE]
+            [TABLE]       
+            DataCount={data_count}
             [COLUMN INDICATION]
             {column_keys_line}
             [END OF COLUMN INDICATION]
-            [COLUMN DATA]
-                {column_values_line}
-            [END OF COLUMN DATA]
+            [DATA]
+            {column_values_line}
+            [END OF DATA]
             [END OF TABLE]
         """
         # 2. Run test
@@ -347,7 +348,6 @@ class TestInternalParseInputStructure:
     text_model = """0 : Sheet piling
         0 : Ka, Ko, Kp soil parameters
         0 : Verification = FALSE
-        0 : EC7-SE visible = FALSE
         0 : Pile loaded by forces
         0 : Pile loaded by user defined soil displacements
         0 : Probabilistic = FALSE
@@ -417,8 +417,8 @@ class TestInternalParseInputStructure:
             [END OF TABLE]
             """
 
-    text_pressures = """1 : Number of nodes
-        [TABLE]
+    text_pressures = """[TABLE]
+        DataCount=1
         [COLUMN INDICATION]
         Horizontal pressure
         Pore pressure
@@ -532,7 +532,6 @@ class TestInternalParseInputStructure:
         assert model.model == 0
         assert model.method == 0
         assert model.verification is False
-        assert model.ec7se_visible is False
         assert model.pile_load_option is False
         assert model.probabilistic is False
         assert model.check_vertical_balance is False
@@ -738,16 +737,16 @@ class TestInternalParseOutputStructure:
         [TABLE]
         [COLUMN INDICATION]
         Moment
-        Shear force
+        ShearForce
         Displacement
-        Percentage mobilized moment
-        Percentage mobilized resistance
-        Stage
-        Verification type
-        Partial factor type
-        Vertical balance result
-        Vertical result direction
-        Status
+        PercentageMobilizedMoment
+        PercentageMobilizedResistance
+        StageNumber
+        VerificationType
+        PartialFactorSet
+        RepresentativeFactor
+        VerticalBalanceResult
+        CalculationStatus
         [END OF COLUMN INDICATION]
         [COLUMN DATA]
         11.64788     -5.00187    117.98290      0.00000      6.97007     1    15     4 0 0     0
@@ -791,19 +790,19 @@ class TestInternalParseOutputStructure:
         [END OF TABLE]"""
 
     text_moment_forces_displacements = """[TABLE]
-            [COLUMN INDICATION]
-            Moment
-            Shear force
-            Displacements
-            [END OF COLUMN INDICATION]
-            [DATA]
-                0.00000      0.00000   -193.89808
-            [END OF DATA]
-            [END OF TABLE]
-            """
+        [COLUMN INDICATION]
+        Moment
+        Shear force
+        Displacements
+        [END OF COLUMN INDICATION]
+        [DATA]
+            0.00000      0.00000   -193.89808
+        [END OF DATA]
+        [END OF TABLE]
+        """
 
-    text_pressures = """1 : Number of nodes
-        [TABLE]
+    text_pressures = """[TABLE]
+        DataCount=1
         [COLUMN INDICATION]
         Horizontal pressure
         Pore pressure
@@ -881,17 +880,16 @@ class TestInternalParseOutputStructure:
     text_design_length_calculation = """ 1: Number of data
         [TABLE]
         [COLUMN INDICATION]
-        Design Length
-        Design Displacement
-        Design MaxMoment
-        Design Min Moment
-        Design Anchor Foece
-        Design Mobilisation percentage
+        Design length
+        Design displacement
+        Design max moment
+        Design min moment
+        Design anchor force
+        Design mobilisation percentage
         [END OF COLUMN INDICATION]
-
-        [COLUMN DATA]
+        [DATA]
         15.000 -180.020 286.526 -118.981 -38.182 29.945
-        [END OF COLUMN DATA]
+        [END OF DATA]
         [END OF TABLE]"""
 
     text_design_length_info = """[TABLE]
@@ -917,8 +915,8 @@ class TestInternalParseOutputStructure:
         [END OF DESIGN LENGTH CALCULATION]
         """
 
-    text_points_on_sheetpile = """6: Number of nodes
-        [TABLE]
+    text_points_on_sheetpile = """[TABLE]
+        DataCount=6
         [COLUMN INDICATION]
         Depth
         [END OF COLUMN INDICATION]
@@ -951,78 +949,41 @@ class TestInternalParseOutputStructure:
         {text_section_construction_stage}
         {text_section_construction_stage}"""
 
-    text_verify_anchor_force = f"""[ANCHOR NUMBER]
-        1
-        [END OF ANCHOR NUMBER]
-        {text_section_points_on_sheetpile}
-        {text_section_construction_stage}
-        [UNKOWN GROUP]
-        [END OF UNKONWN GROUP]"""
-
-    text_verify_sheetpile_data = f"""3     FaseNr
-        1     PartialFactorSet
-        [VERIFY DEFORMATION]
-        {text_base_verification_structure_properties}
-        [END OF VERIFY DEFORMATION]
-        [VERIFY MOMENT LOW ANGLE OF SUBGR REAC]
-        {not_parsable_struct}
-        [END OF VERIFY MOMENT LOW ANGLE OF SUBGR REAC]
-        [VERIFY MOMENT HIGH ANGLE OF SUBGR REAC]
-        {not_parsable_struct}
-        [END OF VERIFY MOMENT HIGH ANGLE OF SUBGR REAC]
-        [VERIFY MOMENT HIGH ANGLE OF SUBGR REAC]
-        {not_parsable_struct}
-        [END OF VERIFY MOMENT HIGH ANGLE OF SUBGR REAC]
-        [VERIFY LOW MOD WITH ALT PASSIVE WATERLEVEL]
-        {not_parsable_struct}
-        [END OF VERIFY LOW MOD WITH ALT PASSIVE WATERLEVEL]
-        [VERIFY HIGH MOD WITH ALT PASSIVE WATERLEVEL]
-        {not_parsable_struct}
-        [END OF VERIFY HIGH MOD WITH ALT PASSIVE WATERLEVEL]
-        [VERIFY ANCHOR FORCE]
-        {text_verify_anchor_force}
-        [END OF VERIFY ANCHOR FORCE]
-        [RESUME]
-        {text_resume_structure}
-        [END OF RESUME]
-        [FACTORS FOR VERIFICATION]
-        {not_parsable_struct}
-        [END OF FACTORS FOR VERIFICATION]
-        """
-
     text_output_data = f"""[CALCULATION TYPE]
         {text_calculation_type}
-        [END OF CALCULATION TYPE]
-        [RESUME]
-        {text_resume_structure}
-        [END OF RESUME]
-        [POINTS ON SHEETPILE]
-        {text_points_on_sheetpile}
-        [END OF POINTS ON SHEETPILE]
-        [CONSTRUCTION STAGE]
-        {text_output_construction_stage}
-        [END OF CONSTRUCTION STAGE]
+        [END OF CALCULATION TYPE]        
         [DESIGN SHEETPILE LENGTH]
         {text_design_sheetpile_length}
         [END OF DESIGN SHEETPILE LENGTH]
-        [VERIFY SHEETPILE DATA]
-        {text_verify_sheetpile_data}
-        [END OF VERIFY SHEETPILE DATA]
-        [VERIFY SHEETPILE DATA]
-        {text_verify_sheetpile_data}
-        [END OF VERIFY SHEETPILE DATA]
+        [FACTORS FOR VERIFICATION]
+        {not_parsable_struct}
+        [END OF FACTORS FOR VERIFICATION]
+        [VERIFY STEP 6.5 (SERVICEABILITY LIMIT STATE)]
+        {text_base_verification_structure_properties}
+        [END OF VERIFY STEP 6.5 (SERVICEABILITY LIMIT STATE)]
+        [VERIFY STEP 6.5 MULTIPLIED BY FACTOR]
+        {not_parsable_struct}
+        [END OF VERIFY STEP 6.5 MULTIPLIED BY FACTOR]        
+        [VERIFY STEP 6.1 (LOW MODULUS OF SUBGRADE REACTION AND HIGH PASSIVE WATER LEVEL)]
+        {not_parsable_struct}
+        [END OF VERIFY STEP 6.1 (LOW MODULUS OF SUBGRADE REACTION AND HIGH PASSIVE WATER LEVEL)]
+        [VERIFY STEP 6.2 (HIGH MODULUS OF SUBGRADE REACTION AND HIGH PASSIVE WATER LEVEL)]
+        {not_parsable_struct}
+        [END OF VERIFY STEP 6.2 (HIGH MODULUS OF SUBGRADE REACTION AND HIGH PASSIVE WATER LEVEL)]
+        [VERIFY STEP 6.3 (LOW MODULUS OF SUBGRADE REACTION AND LOW PASSIVE WATER LEVEL)]
+        {not_parsable_struct}
+        [END OF VERIFY STEP 6.3 (LOW MODULUS OF SUBGRADE REACTION AND LOW PASSIVE WATER LEVEL)]
+        [VERIFY STEP 6.4 (HIGH MODULUS OF SUBGRADE REACTION AND LOW PASSIVE WATER LEVEL)]
+        {not_parsable_struct}
+        [END OF VERIFY STEP 6.4 (HIGH MODULUS OF SUBGRADE REACTION AND LOW PASSIVE WATER LEVEL)]
+        [RESUME]
+        {text_resume_structure}
+        [END OF RESUME]
         """
 
     # endregion
 
     # region validations
-    def validate_verify_anchor_force(self, verify_anchor_force: VerifyAnchorForce):
-        assert isinstance(verify_anchor_force, VerifyAnchorForce)
-        assert verify_anchor_force.anchor_number == 1
-        assert verify_anchor_force.points_on_sheetpile
-        self.validate_points_on_sheetpile(verify_anchor_force.points_on_sheetpile[0])
-        assert verify_anchor_force.construction_stage
-        self.validate_output_construction_stage(verify_anchor_force.construction_stage[0])
 
     def validate_points_on_sheetpile(self, points_on_sheetpile: PointsOnSheetpile):
         assert isinstance(points_on_sheetpile, PointsOnSheetpile)
@@ -1036,27 +997,27 @@ class TestInternalParseOutputStructure:
         assert len(resume_structure.resume) == 1
         rs_table = resume_structure.resume[0]
         assert rs_table["moment"] == 11.64788
-        assert rs_table["shear_force"] == -5.00187
+        assert rs_table["shearforce"] == -5.00187
         assert rs_table["displacement"] == 117.98290
-        assert rs_table["percentage_mobilized_moment"] == 0
-        assert rs_table["percentage_mobilized_resistance"] == 6.97007
-        assert rs_table["stage"] == 1
-        assert rs_table["verification_type"] == 15
-        assert rs_table["partial_factor_type"] == 4
-        assert rs_table["vertical_balance_result"] == 0
-        assert rs_table["vertical_result_direction"] == 0
-        assert rs_table["status"] == 0
+        assert rs_table["percentagemobilizedmoment"] == 0
+        assert rs_table["percentagemobilizedresistance"] == 6.97007
+        assert rs_table["stagenumber"] == 1
+        assert rs_table["verificationtype"] == 15
+        assert rs_table["partialfactorset"] == 4
+        assert rs_table["representativefactor"] == 0
+        assert rs_table["verticalbalanceresult"] == 0
+        assert rs_table["calculationstatus"] == 0
 
     def validate_dsheetpiling_output_structure(
         self, output_structure: DSheetPilingOutputStructure
     ):
         assert output_structure
         assert output_structure.calculation_type == self.text_calculation_type
-        self.validate_points_on_sheetpile(output_structure.points_on_sheetpile[-1])
-        self.validate_resume_structure(output_structure.resume)
-        self.validate_output_construction_stage(output_structure.construction_stage[-1])
         self.validate_design_sheetpile_length(output_structure.design_sheetpile_length)
-        assert len(output_structure.verify_sheetpile_data) == 2
+        self.validate_resume_structure(output_structure.resume)
+        self.validate_base_verification_structure_properties(
+            output_structure.verify_step_6____5_serviceability_limit_state
+        )
 
     def validate_design_length_calculation(
         self, design_length_calc: DesignLengthCalculation
@@ -1066,9 +1027,9 @@ class TestInternalParseOutputStructure:
         dlc_table = design_length_calc.designlengthcalculation[0]
         assert dlc_table["design_length"] == 15
         assert dlc_table["design_displacement"] == -180.020
-        assert dlc_table["design_maxmoment"] == 286.526
+        assert dlc_table["design_max_moment"] == 286.526
         assert dlc_table["design_min_moment"] == -118.981
-        assert dlc_table["design_anchor_foece"] == -38.182
+        assert dlc_table["design_anchor_force"] == -38.182
         assert dlc_table["design_mobilisation_percentage"] == 29.945
 
     def validate_design_length_info(self, design_length_info: DesignLengthInfo):
@@ -1174,14 +1135,6 @@ class TestInternalParseOutputStructure:
         )
         self.validate_side_list_structure(output_construction_stage.side)
 
-    def validate_verify_sheetpile_data(self, verify_sheetpile_data: VerifySheetpileData):
-        assert verify_sheetpile_data
-        self.validate_resume_structure(verify_sheetpile_data.resume)
-        self.validate_verify_anchor_force(verify_sheetpile_data.verify_anchor_force)
-        self.validate_base_verification_structure_properties(
-            verify_sheetpile_data.verify_deformation
-        )
-
     def validate_points_on_sheetpile_list(self, pos_list: List[PointsOnSheetpile]):
         assert len(pos_list) == 2
         for pos in pos_list:
@@ -1209,12 +1162,6 @@ class TestInternalParseOutputStructure:
             BaseVerificationStructureProperties,
             validate_base_verification_structure_properties,
             id="Base Verification Structure Properties.",
-        ),
-        pytest.param(
-            text_verify_sheetpile_data,
-            VerifySheetpileData,
-            validate_verify_sheetpile_data,
-            id="Verify Sheetpile Data",
         ),
         pytest.param(
             text_points_on_sheetpile,
@@ -1284,12 +1231,6 @@ class TestInternalParseOutputStructure:
             SideOutput,
             validate_side_structure,
             id="Side Output (Leftside)",
-        ),
-        pytest.param(
-            text_verify_anchor_force,
-            VerifyAnchorForce,
-            validate_verify_anchor_force,
-            id="Verify Anchor Force",
         ),
     ]
 

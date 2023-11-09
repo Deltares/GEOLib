@@ -41,7 +41,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     PassiveSide,
@@ -118,7 +118,6 @@ class DiaphragmModelType(BaseModelType):
     elastic_calculation: bool = False
     diepwand_calculation: bool = True
 
-
     @property
     def model(self) -> ModelType:
         return ModelType.SHEET_PILING
@@ -142,7 +141,7 @@ class DSheetPilingModel(BaseModel):
 
     @property
     def console_path(self) -> Path:
-        return Path("DSheetPilingConsole/DSheetPilingConsole.exe")
+        return Path("DSheetPiling/DSheetPiling.exe")
 
     @property
     def console_flags(self) -> List[str]:
@@ -160,8 +159,8 @@ class DSheetPilingModel(BaseModel):
         ds = self.datastructure.input_data.dict()
         ds.update(
             {
-                "version": self.datastructure.version.dict(),
-                "version_externals": self.datastructure.version_externals.dict(),
+                "version": self.datastructure.input_data.version.dict(),
+                "version_externals": self.datastructure.input_data.version_externals.dict(),
             }
         )
         serializer = DSheetPilingInputSerializer(ds=ds)
@@ -174,7 +173,7 @@ class DSheetPilingModel(BaseModel):
         _map_method_b_available = {
             VerifyType.CUR: self.datastructure.input_data.calculation_options.curmethod,
             VerifyType.EC7NL: self.datastructure.input_data.calculation_options.ec7nlmethod,
-            VerifyType.EC7BE: self.datastructure.input_data.calculation_options.nbmethod,
+            VerifyType.EC7BE: self.datastructure.input_data.calculation_options.ec7bemethod,
         }
         if (
             self.datastructure.input_data.calculation_options.inputcalculationtype
@@ -414,7 +413,7 @@ class DSheetPilingModel(BaseModel):
             stage_id: Load is added to this stage.
 
         Note: SoilDisplacement and UniformLoad are only valid for a sheetpiling construction.
-        
+
         Raises:
             ValueError: When non-existing stage_id is passed.
             ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.

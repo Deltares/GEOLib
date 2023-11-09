@@ -75,9 +75,9 @@ class TestBaseModel:
         "model,filename,modelname",
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
-            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
-            (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
+            (DStabilityModel, "Tutorial_v2023_1.stix", "dstability"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
         ],
     )
     def test_basemodellist_execute(self, model, filename, modelname):
@@ -115,9 +115,9 @@ class TestBaseModel:
         "model,filename,modelname",
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
-            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
-            (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
+            (DStabilityModel, "Tutorial_v2023_1.stix", "dstability"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
         ],
     )
     def test_basemodellist_execute_remote(self, _, __, model, filename, modelname):
@@ -130,8 +130,6 @@ class TestBaseModel:
         ml = BaseModelList(models=[a, b])
         for i, modelinstance in enumerate(ml.models):
             modelinstance.parse(benchmark_fn)
-            modelinstance.meta.company = "Foo"
-            modelinstance.meta.console_folder = Path("/")
         fn = "test"
         ml.models.append(model(filename=Path(fn)))
 
@@ -140,10 +138,6 @@ class TestBaseModel:
         assert len(output.models) == 2
         for model in output.models:
             assert model.output
-            # Metadata is kept intact
-            assert model.meta.company == "Foo"
-            # But the console_folder meta variable is reset to default
-            assert model.meta.console_folder == MetaData().console_folder
 
         assert len(output.errors) == 1
         assert fn in output.errors[-1]
@@ -159,9 +153,9 @@ class TestBaseModel:
         "model,filename,modelname",
         [
             (DSettlementModel, "bm1-1.sli", "dsettlement"),
-            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling"),
-            (DFoundationsModel, "bm1-1a.foi", "dfoundations"),
-            (DStabilityModel, "Tutorial_v2022_1_1.stix", "dstability"),
+            (DStabilityModel, "Tutorial_v2023_1.stix", "dstability"),
+            (DSheetPilingModel, "bm1-1.shi", "dsheetpiling/benchmarks"),
+            (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
         ],
     )
     def test_basemodel_execute_remote(self, _, __, model, filename, modelname):
@@ -170,18 +164,10 @@ class TestBaseModel:
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
         benchmark_fn = input_folder / filename
         modelinstance.parse(benchmark_fn)
-        modelinstance.meta.company = "Foo"
-        modelinstance.meta.console_folder = Path("/")
 
         # Execute and make sure there's output
         model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
         assert model.output
-
-        # Metadata is kept intact
-        assert model.meta.company == "Foo"
-        # But the console_folder meta variable is reset to default
-        assert model.meta.console_folder == MetaData().console_folder
-
 
 class TestBool:
     @pytest.mark.unittest

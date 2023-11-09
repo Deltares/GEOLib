@@ -33,7 +33,6 @@ class DSheetPilingOutputParser(DSerieParser):
 
 
 class DSheetPilingParserProvider(BaseParserProvider):
-
     __input_parsers = None
     __output_parsers = None
 

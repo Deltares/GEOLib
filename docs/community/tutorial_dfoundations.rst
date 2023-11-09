@@ -50,7 +50,7 @@ In this tutorial model options are set for bearing piles. The calculation model 
         timeorder_type=profiles.TimeOrderType.CPT_BEFORE_AND_AFTER_INSTALL,
     )
 
-After inputing the CPT the rest of the inputs for the profiles should be initialised. 
+After inputting the CPT the rest of the inputs for the profiles should be initialised.
 To do that initialise the class :class:`~geolib.models.dfoundations.profiles.Excavation`.
 
 .. code-block:: python
@@ -165,7 +165,7 @@ The pile can be finally added to the model using the function  :func:`~geolib.mo
 
     df.add_pile_if_unique(pile, location)
 
-6. To run the model first the model needs to be serialised. To do that define a 
+6. To run the model first the model needs to be serialised. To do that define an
 output file name and call the function :meth:`geolib.models.dfoundations.dfoundations_model.DFoundationsModel.serialize`.
 
 .. code-block::python
@@ -174,7 +174,7 @@ output file name and call the function :meth:`geolib.models.dfoundations.dfounda
     input_test_file = Path("Tutorial.foi")
     df.serialize(input_test_file)
 
-7. Finally the ``execute`` function can be called to run the model in D-Foundations
+7. Finally the ``execute`` function can be called to run the model in D-Foundations.
 
 .. code-block::python
 

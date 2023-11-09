@@ -1,31 +1,37 @@
 import abc
-import re
 from enum import Enum
 from pathlib import Path
-from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO, List, Optional, Set, Type, Union
 
+import matplotlib.pyplot as plt
 from pydantic import DirectoryPath, FilePath
+from shapely.geometry import LineString, Point, Polygon
+from shapely.ops import polygonize
+from shapely.validation import make_valid
 
 from geolib.geometry import Point
-from geolib.models import BaseDataClass, BaseModel
+from geolib.models import BaseModel
 from geolib.soils import Soil
 
-from ...utils import camel_to_snake, snake_to_camel
 from .analysis import DStabilityAnalysisMethod
 from .dstability_parserprovider import DStabilityParserProvider
 from .internal import (
     AnalysisType,
     BishopSlipCircleResult,
-    CalculationType,
+    CalculationSettings,
     DStabilityResult,
     DStabilityStructure,
+    PersistableLayer,
     PersistablePoint,
     PersistableSoil,
     PersistableStateCorrelation,
+    PersistableExcavation,
+    Scenario,
     SoilCollection,
     SoilCorrelation,
+    SoilLayerCollection,
+    SoilVisualisation,
     SpencerSlipPlaneResult,
-    Stage,
     UpliftVanSlipCircleResult,
     Waternet,
 )
@@ -63,7 +69,9 @@ class DStabilityModel(BaseModel):
     .stix files
     """
 
+    current_scenario: int = -1
     current_stage: int = -1
+    current_calculation: int = -1
     datastructure: DStabilityStructure = DStabilityStructure()
     current_id: int = -1
 
@@ -102,33 +110,63 @@ class DStabilityModel(BaseModel):
 
     @property
     def output(self) -> List[DStabilityResult]:
-        def _get_result_or_none(stage_id) -> DStabilityResult:
-            if self.has_result(stage_id=int(stage_id)):
-                return self.get_result(stage_id=int(stage_id))
+        def _get_result_or_none(scenario_index, calculation_index) -> DStabilityResult:
+            if self.has_result(
+                scenario_index=int(scenario_index),
+                calculation_index=int(calculation_index),
+            ):
+                return self.get_result(
+                    scenario_index=int(scenario_index),
+                    calculation_index=int(calculation_index),
+                )
             else:
                 return None
 
-        all_stage_ids = [stage.Id for stage in self.datastructure.stages]
-        return [_get_result_or_none(stage_id=stage_id) for stage_id in all_stage_ids]
+        all_results = []
 
-    def has_result(self, stage_id: int) -> bool:
+        for scenario_index, scenario in enumerate(self.datastructure.scenarios):
+            for calculation_index, _ in enumerate(scenario.Calculations):
+                all_results.append(
+                    _get_result_or_none(
+                        scenario_index=scenario_index, calculation_index=calculation_index
+                    )
+                )
+
+        return all_results
+
+    def has_result(
+        self,
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
+    ) -> bool:
         """
-        Returns whether a stage has a result.
+        Returns whether a calculation has a result.
 
         Args:
-            stage_id (int): Id of a stage.
+            scenario_index (Optional[int]): Index of a scenario, if None the current scenario is used.
+            calculation_index (Optional[int]): Index of a calculation, if None the current calculation is used.
 
         Returns:
-            bool: Value indicating whether the stage has a result.
+            bool: Value indicating whether the calculation has a result.
         """
-        return self.datastructure.has_result(stage_id)
+        if calculation_index is None:
+            calculation_index = self.current_calculation
+        if scenario_index is None:
+            scenario_index = self.current_scenario
 
-    def get_result(self, stage_id: Optional[int] = None) -> DStabilityResult:
+        return self.datastructure.has_result(scenario_index, calculation_index)
+
+    def get_result(
+        self,
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
+    ) -> DStabilityResult:
         """
-        Returns the results of a stage. Calculation results are based on analysis type and calculation type.
+        Returns the results of a calculation. Calculation results are based on analysis type and calculation type.
 
         Args:
-            stage_id (Optional[int]): Id of a stage, if None is supplied the result of the current stage is returned.
+            scenario_index (Optional[int]): Index of a scenario, if None is supplied the result of the current scenario is returned.
+            calculation_index (Optional[int]): Index of a calculation, if None is supplied the result of the current calculation is returned.
 
         Returns:
             DStabilityResult: The analysis results of the stage.
@@ -136,16 +174,29 @@ class DStabilityModel(BaseModel):
         Raises:
             ValueError: No results or calculationsettings available
         """
-        if stage_id is None:
-            stage_id = self.current_stage
+        if calculation_index is None:
+            calculation_index = self.current_calculation
+        if scenario_index is None:
+            scenario_index = self.current_scenario
 
-        result = self._get_result_substructure(stage_id)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result
 
-    def _get_result_substructure(self, stage_id: int) -> DStabilityResult:
-        if self.datastructure.has_result(stage_id):
-            result_id = self.datastructure.stages[stage_id].ResultId
-            calculation_settings = self.datastructure.calculationsettings[stage_id]
+    def _get_result_substructure(
+        self, scenario_index: Optional[int], calculation_index: Optional[int]
+    ) -> DStabilityResult:
+        scenario_index = self.get_scenario_index(scenario_index)
+        calculation_index = self.get_calculation_index(calculation_index)
+
+        if self.datastructure.has_result(scenario_index, calculation_index):
+            result_id = (
+                self.datastructure.scenarios[scenario_index]
+                .Calculations[calculation_index]
+                .ResultId
+            )
+            calculation_settings = self._get_calculation_settings(
+                scenario_index, calculation_index
+            )
             analysis_type = calculation_settings.AnalysisType
             calculation_type = calculation_settings.CalculationType
 
@@ -157,43 +208,146 @@ class DStabilityModel(BaseModel):
                 if result.Id == result_id:
                     return result
 
-        raise ValueError(f"No result found for result id {stage_id}")
+        raise ValueError(f"No result found for result id {calculation_index}")
+
+    def _get_calculation_settings(
+        self, scenario_index: int, calculation_index: int
+    ) -> CalculationSettings:
+        calculation_settings_id = (
+            self.datastructure.scenarios[scenario_index]
+            .Calculations[calculation_index]
+            .CalculationSettingsId
+        )
+
+        for calculation_settings in self.datastructure.calculationsettings:
+            if calculation_settings.Id == calculation_settings_id:
+                return calculation_settings
+
+        raise ValueError(
+            f"No calculation settings found for calculation {calculation_index} in scenario {scenario_index}."
+        )
 
     def get_slipcircle_result(
-        self, stage_id: int
+        self,
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
     ) -> Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]:
         """
         Get the slipcircle(s) of the calculation result of a given stage.
 
         Args:
-            stage_id (int): stage for which to get the available results
+            scenario_index (Optional[int]): scenario for which to get the available results
+            calculation_index (Optional[int]): calculation for which to get the available results
 
         Returns:
-            Dict: dictionary of the available slipcircles per model for the given stage
+            Union[BishopSlipCircleResult, UpliftVanSlipCircleResult]: the slipcircle for the given calculation
 
         Raises:
-            ValueError: Result is not available for provided stage id
+            ValueError: Result is not available for provided scenario and calculation index
             AttributeError: When the result has no slipcircle. Try get the slipplane
         """
-        result = self._get_result_substructure(stage_id)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result.get_slipcircle_output()
 
-    def get_slipplane_result(self, stage_id: int = 0) -> SpencerSlipPlaneResult:
+    def get_slipplane_result(
+        self,
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
+    ) -> SpencerSlipPlaneResult:
         """
-        Get the slipplanes of the calculations result of a stage.
+        Get the slipplanes of the calculations result of a calculation.
 
         Args:
-            stage_id (int): stage for which to get the available results
+            scenario_index (Optional[int]): scenario for which to get the available results
+            calculation_index (Optional[int]): calculation for which to get the available results
 
         Returns:
-            dict: dictionary of the available slip planes per model for the given stage
+            SpencerSlipPlaneResult: the slip plane for the given calculation
 
         Raises:
-            ValueError: Result is not available for provided stage id
+            ValueError: Result is not available for provided scenario and calculation index
             AttributeError: When the result has no slipplane. Try get the slipcircle
         """
-        result = self._get_result_substructure(stage_id)
+        result = self._get_result_substructure(scenario_index, calculation_index)
         return result.get_slipplane_output()
+
+    def _get_geometry(self, scenario_index: int, stage_index: int):
+        geometry_id = (
+            self.datastructure.scenarios[scenario_index].Stages[stage_index].GeometryId
+        )
+
+        for geometry in self.datastructure.geometries:
+            if geometry.Id == geometry_id:
+                return geometry
+
+        raise ValueError(
+            f"No geometry found for stage {stage_index} in scenario {scenario_index}."
+        )
+
+    def _get_soil_layers(self, scenario_index: int, stage_index: int):
+        return self.datastructure._get_soil_layers(scenario_index, stage_index)
+
+    def _get_waternet(self, scenario_index: int, stage_index: int):
+        waternet_id = (
+            self.datastructure.scenarios[scenario_index].Stages[stage_index].WaternetId
+        )
+
+        for waternet in self.datastructure.waternets:
+            if waternet.Id == waternet_id:
+                return waternet
+
+        raise ValueError(
+            f"No waternet found for stage {stage_index} in scenario {scenario_index}."
+        )
+
+    def _get_state(self, scenario_index: int, stage_index: int):
+        state_id = (
+            self.datastructure.scenarios[scenario_index].Stages[stage_index].StateId
+        )
+
+        for state in self.datastructure.states:
+            if state.Id == state_id:
+                return state
+
+        raise ValueError(
+            f"No state found for stage {stage_index} in scenario {scenario_index}."
+        )
+
+    def _get_state_correlations(self, scenario_index: int, stage_index: int):
+        state_correlations_id = (
+            self.datastructure.scenarios[scenario_index]
+            .Stages[stage_index]
+            .StateCorrelationsId
+        )
+
+        for state_correlations in self.datastructure.statecorrelations:
+            if state_correlations.Id == state_correlations_id:
+                return state_correlations
+
+        raise ValueError(
+            f"No state correlations found for stage {stage_index} in scenario {scenario_index}."
+        )
+
+    def _get_excavations(self, scenario_index: int, stage_index: int):
+        return self.datastructure._get_excavations(scenario_index, stage_index)
+
+    def _get_loads(self, scenario_index: int, stage_index: int):
+        return self.datastructure._get_loads(scenario_index, stage_index)
+
+    def _get_reinforcements(self, scenario_index: int, stage_index: int):
+        reinforcements_id = (
+            self.datastructure.scenarios[scenario_index]
+            .Stages[stage_index]
+            .ReinforcementsId
+        )
+
+        for reinforcements in self.datastructure.reinforcements:
+            if reinforcements.Id == reinforcements_id:
+                return reinforcements
+
+        raise ValueError(
+            f"No reinforcements found for stage {stage_index} in scenario {scenario_index}."
+        )
 
     def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
         """Support serializing to directory while developing for debugging purposes."""
@@ -205,54 +359,95 @@ class DStabilityModel(BaseModel):
         if isinstance(location, Path):
             self.filename = location
 
-    def add_stage(self, label: str, notes: str, set_current=True) -> int:
-        """Add a new stage to the model.
+    def add_scenario(
+        self, label: str = "Scenario", notes: str = "", set_current: bool = True
+    ) -> int:
+        """Add a new scenario to the model.
 
         Args:
-            label: Label for the stage
-            notes: Notes for the stage
-            set_current: Whether to make the new stage the current stage.
+            label (str): Label for the scenario.
+            notes (str): Notes for the scenario.
+            set_current (bool): Whether to make the new scenario the current scenario.
 
         Returns:
             the id of the new stage
         """
         new_id = self._get_next_id()
-        new_stage_id, new_unique_id = self.datastructure.add_default_stage(
+        new_scenario_id, new_unique_id = self.datastructure.add_default_scenario(
             label, notes, new_id
         )
 
         if set_current:
-            self.current_stage = new_stage_id
-        self.current_id = new_unique_id
-        return new_stage_id
+            self.current_scenario = new_scenario_id
+            self.current_stage = 0
+            self.current_calculation = 0
 
-    def copy_stage(self, label: str, notes: str, set_current=True) -> int:
-        """Copy an existing stage and add it to the model.
+        self.current_id = new_unique_id
+        return new_scenario_id
+
+    def add_stage(
+        self,
+        scenario_index: Optional[int] = None,
+        label: str = "Stage",
+        notes: str = "",
+        set_current=True,
+    ) -> int:
+        """Add a new stage to the model at the given scenario index.
 
         Args:
-            label: Label for the stage
-            notes: Notes for the stage
-            set_current: Whether to make the new stage the current stage.
+            scenario_index (Optional[int]): The scenario index to add the stage to, defaults to the current scenario.
+            label (str): Label for the stage.
+            notes (str): Notes for the stage.
+            set_current (bool): Whether to make the new stage the current stage.
 
         Returns:
             the id of the new stage
         """
+        scenario_index = self.get_scenario_index(scenario_index)
+
         new_id = self._get_next_id()
-        new_stage_id, new_unique_id = self.datastructure.duplicate_stage(
-            self.current_stage, label, notes, new_id
+        new_stage_index, new_unique_id = self.datastructure.add_default_stage(
+            scenario_index, label, notes, new_id
         )
 
         if set_current:
-            self.current_stage = new_stage_id
+            self.current_stage = new_stage_index
         self.current_id = new_unique_id
-        return new_stage_id
+        return new_stage_index
+
+    def add_calculation(
+        self,
+        scenario_index: Optional[int] = None,
+        label: str = "Calculation",
+        notes: str = "",
+        set_current: bool = True,
+    ) -> int:
+        """Add a new calculation to the model.
+
+        Args:
+            scenario_index (Optional[int]): The scenario index to add the calculation to, defaults to the current scenario.
+            label (str): Label for the calculation.
+            notes (str): Notes for the calculation.
+            set_current (bool): Whether to make the new calculation the current calculation.
+
+        Returns:
+            the id of the new stage
+        """
+        scenario_index = self.get_scenario_index(scenario_index)
+
+        new_id = self._get_next_id()
+        new_calculation_index, new_unique_id = self.datastructure.add_default_calculation(
+            scenario_index, label, notes, new_id
+        )
+
+        if set_current:
+            self.current_calculation = new_calculation_index
+        self.current_id = new_unique_id
+        return new_calculation_index
 
     @property
-    def stages(self) -> List[Stage]:
-        return self.datastructure.stages
-
-    def add_point(self, point: Point, stage=None) -> int:
-        """Add point, which should be unique in the model and return the created point id."""
+    def scenarios(self) -> List[Scenario]:
+        return self.datastructure.scenarios
 
     def add_soil(self, soil: Soil) -> int:
         """
@@ -264,39 +459,14 @@ class DStabilityModel(BaseModel):
         Returns:
             int: id of the added soil
         """
-        if self.soils.has_soilcode(soil.code):
+        if soil.code == None:
+            raise ValueError("Soil.code may not be None")
+        if self.soils.has_soil_code(soil.code):
             raise ValueError(f"The soil with code {soil.code} is already defined.")
 
-        soil.id = self._get_next_id()
-        persistant_soil = self.soils.add_soil(soil)
-        return persistant_soil.Id
-
-    def edit_soil(self, code: str, **kwargs: dict) -> PersistableSoil:
-        """
-        Edit an existing soil with parameter names based on the soil class members
-
-        Args:
-            code (str): the code of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
-
-        Returns:
-            PersistableSoil: the edited soil
-        """
-        return self.soils.edit_soil(code, **kwargs)
-
-    def edit_soil_by_name(self, name: str, **kwargs: dict) -> PersistableSoil:
-        """
-        Edit an existing soil with parameter names based on the soil class members.
-        This method will edit the first occurence of the name if the name is used multiple times.
-
-        Args:
-            name (str): the name of the soil
-            kwargs (dict): the parameters and new values for example 'cohesion=2.0, friction_angle=25.0'
-
-        Returns:
-            PersistableSoil: the edited soil
-        """
-        return self.soils.edit_soil_by_name(name, **kwargs)
+        soil.id = str(self._get_next_id())
+        dstability_soil = self.soils.add_soil(soil)
+        return int(dstability_soil.Id)
 
     @property
     def points(self):
@@ -308,7 +478,8 @@ class DStabilityModel(BaseModel):
         soil_code: str,
         label: str = "",
         notes: str = "",
-        stage_id: int = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> int:
         """
         Add a soil layer to the model
@@ -318,35 +489,152 @@ class DStabilityModel(BaseModel):
             soil_code (str): code of the soil for this layer
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
-            stage_id (int): stage to add to, defaults to 0
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario
+            stage_index (Optional[int]): stage to add to, defaults to the current stage
 
         Returns:
             int: id of the added layer
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        geometry = self._get_geometry(scenario_index, stage_index)
+        soil_layers = self._get_soil_layers(scenario_index, stage_index)
 
-        geometry = self.datastructure.geometries[stage_id]
-        soillayerscollection = self.datastructure.soillayers[stage_id]
-
-        # do we have this soil code?
-        if not self.soils.has_soilcode(soil_code):
+        # Check if we have the soil code
+        if not self.soils.has_soil_code(soil_code):
             raise ValueError(
                 f"The soil with code {soil_code} is not defined in the soil collection."
             )
 
-        # add the layer to the geometry
-        # the checks on the validity of the points are done in the PersistableLayer class
-        persistable_layer = geometry.add_layer(
-            id=str(self._get_next_id()), label=label, points=points, notes=notes
+        # Make sure the points are valid
+        persistable_points = self.make_points_valid(points)
+
+        # Create the new layer
+        new_layer = PersistableLayer(
+            Id=str(self._get_next_id()),
+            Label=label,
+            Points=persistable_points,
+            Notes=notes,
         )
 
-        # add the connection between the layer and the soil to soillayers
+        # Add the layer to the geometry
+        self.add_layer_and_connect_points(geometry.Layers, new_layer)
+
+        # Add the connection between the layer and the soil to soillayers
         soil = self.soils.get_soil(soil_code)
-        soillayerscollection.add_soillayer(layer_id=persistable_layer.Id, soil_id=soil.id)
-        return int(persistable_layer.Id)
+        soil_layers.add_soillayer(layer_id=new_layer.Id, soil_id=soil.Id)
+        return int(new_layer.Id)
+
+    def make_points_valid(self, points: List[Point]) -> List[PersistablePoint]:
+        valid_points = make_valid(self.geolib_points_to_shapely_polygon(points))
+        return self.to_dstability_points(valid_points)
+
+    def connect_layers(self, layer1: PersistableLayer, layer2: PersistableLayer):
+        """Connects two polygons by adding a the missing points on the polygon edges. Returns the two new polygons."""
+        linestring1 = self.to_shapely_linestring(layer1.Points)
+        linestring2 = self.to_shapely_linestring(layer2.Points)
+
+        # Create a union of the two polygons and polygonize it creating two connected polygons
+        union = linestring1.union(linestring2)
+        result = [geom for geom in polygonize(union)]
+
+        # If the result has two polygons, we return them, otherwise we return the original polygons
+        if len(result) == 2:
+            return result[0].exterior, result[1].exterior
+        else:
+            return linestring1, linestring2
+
+    def add_layer_and_connect_points(
+        self, current_layers: List[PersistableLayer], new_layer: PersistableLayer
+    ):
+        """Adds a new layer to the list of layers and connects the points of the new layer to the existing layers."""
+
+        current_layers.append(new_layer)
+
+        # Check if the new layer intersects with any of the existing layers
+        for layer in current_layers:
+            if layer != new_layer and self.dstability_points_to_shapely_polygon(
+                layer.Points
+            ).exterior.intersects(
+                self.dstability_points_to_shapely_polygon(new_layer.Points).exterior
+            ):
+                # If it does, connect the layers
+                linestring1, linestring2 = self.connect_layers(layer, new_layer)
+
+                # Update the points of the layers
+                current_layers[
+                    current_layers.index(layer)
+                ].Points = self.to_dstability_points(linestring1)
+                current_layers[
+                    current_layers.index(new_layer)
+                ].Points = self.to_dstability_points(linestring2)
+
+    def to_shapely_linestring(self, points: List[PersistablePoint]) -> LineString:
+        converted_points = [(p.X, p.Z) for p in points]
+        converted_points.append(converted_points[0])
+        return LineString(converted_points)
+
+    def dstability_points_to_shapely_polygon(
+        self, points: List[PersistablePoint]
+    ) -> Polygon:
+        return Polygon([(p.X, p.Z) for p in points])
+
+    def geolib_points_to_shapely_polygon(self, points: List[Point]) -> Polygon:
+        return Polygon([(p.x, p.z) for p in points])
+
+    def to_dstability_points(
+        self, shapely_object: Union[LineString, Polygon]
+    ) -> List[PersistablePoint]:
+        if isinstance(shapely_object, LineString):
+            coords = shapely_object.coords
+        elif isinstance(shapely_object, Polygon):
+            coords = shapely_object.exterior.coords
+        else:
+            raise ValueError(
+                "shapely_object must be a LineString or Polygon, not {}".format(
+                    type(shapely_object)
+                )
+            )
+
+        persistable_points = [PersistablePoint(X=p[0], Z=p[1]) for p in list(coords)]
+
+        # Remove duplicate points
+        persistable_points = [
+            i
+            for n, i in enumerate(persistable_points)
+            if i not in persistable_points[n + 1 :]
+        ]
+
+        # Remove last point if it is the same as the first
+        if persistable_points[0] == persistable_points[-1]:
+            persistable_points.pop(-1)
+
+        return persistable_points
+
+    def get_soil(self, code: str) -> PersistableSoil:
+        """
+        Gets an existing soil with the given soil code.
+
+        Args:
+            code (str): the code of the soil
+
+        Returns:
+            PersistableSoil: the soil
+        """
+        return self.soils.get_soil(code=code)
+
+    def get_soil_by_name(self, name: str) -> PersistableSoil:
+        """
+        Gets an existing soil with the given soil name.
+
+        Args:
+            name (str): the name of the soil
+
+        Returns:
+            PersistableSoil: the soil
+        """
+        return self.soils.get_soil_by_name(name=name)
 
     def add_head_line(
         self,
@@ -354,7 +642,8 @@ class DStabilityModel(BaseModel):
         label: str = "",
         notes: str = "",
         is_phreatic_line: bool = False,
-        stage_id: int = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> int:
         """
         Add head line to the model
@@ -364,17 +653,16 @@ class DStabilityModel(BaseModel):
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
             is_phreatic_line (bool): set as phreatic line, defaults to False
-            stage_id (int): stage to add to, defaults to current stage
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario
+            stage_index (Optional[int]): stage to add to, defaults to the current stage
 
         Returns:
             bool: id of the added headline
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
-
-        waternet = self.waternets[stage_id]
+        waternet = self._get_waternet(scenario_index, stage_index)
 
         persistable_headline = waternet.add_head_line(
             str(self._get_next_id()), label, notes, points, is_phreatic_line
@@ -388,7 +676,8 @@ class DStabilityModel(BaseModel):
         top_head_line_id: int,
         label: str = "",
         notes: str = "",
-        stage_id: int = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> int:
         """
         Add reference line to the model
@@ -399,19 +688,18 @@ class DStabilityModel(BaseModel):
             top_head_line_id (int): id of the headline to use as the top headline
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
-            stage_id (int): stage to add to, defaults to 0
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario
+            stage_index (Optional[int]): stage to add to, defaults to the current stage
 
         Returns:
             int: id of the added reference line
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        waternet = self._get_waternet(scenario_index, stage_index)
 
-        waternet = self.waternets[stage_id]
-
-        persistable_referenceline = waternet.add_reference_line(
+        persistable_reference_line = waternet.add_reference_line(
             str(self._get_next_id()),
             label,
             notes,
@@ -419,75 +707,70 @@ class DStabilityModel(BaseModel):
             str(bottom_headline_id),
             str(top_head_line_id),
         )
-        return int(persistable_referenceline.Id)
+        return int(persistable_reference_line.Id)
 
     def add_state_point(
         self,
         state_point: DStabilityStatePoint,
-        stage_id: int = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> int:
         """
         Add state point to the model
 
         Args:
             state_point (DStabilityStatePoint): DStabilityStatePoint class
-            stage_id (int): stage_id (int): stage to add to, defaults to the current stage
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario
+            stage_index (Optional[int]): stage to add to, defaults to the current stage
 
         Returns:
             int: id of the added add_state_point
-
-        Todo:
-            Check if point lies within the given layer
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        states = self._get_state(scenario_index, stage_index)
 
-        states = self.datastructure.states[stage_id]
-
-        # check if the given layer id is valid
         try:
-            _ = self.datastructure.geometries[stage_id].get_layer(state_point.layer_id)
+            _ = self._get_geometry(scenario_index, stage_index).get_layer(
+                state_point.layer_id
+            )
         except ValueError:
             raise ValueError(f"No layer with id '{state_point.layer_id} in this geometry")
-
-        # todo > check if point is in layer
 
         state_point.id = (
             self._get_next_id()
         )  # the user does not know the id so we have to add it
-        persistable_statepoint = state_point._to_internal_datastructure()
-        states.add_state_point(persistable_statepoint)
-        return int(persistable_statepoint.Id)
+        persistable_state_point = state_point._to_internal_datastructure()
+        states.add_state_point(persistable_state_point)
+        return int(persistable_state_point.Id)
 
     def add_state_line(
         self,
         points: List[Point],
         state_points: List[DStabilityStateLinePoint],
-        stage_id: int = None,
-    ) -> None:
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
+    ) -> int:
         """
         Add state line. From the Soils, only the state parameters are used.
 
-        points are a list of points with x,z
-        state_point are a list of DStabilit.. where ONLY the x is used, the Z will be calculated
+        points are a list of points with x,z coordinates
+        state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the Z will be calculated
 
-        No result PersistableStateLine has no Id
+        Args:
+            points (List[Point]): The geometry points of the state line.
+            state_point (List[DStabilityStatePoint]): The list of state point values.
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario.
+            stage_index (Optional[int]): stage to add to, defaults to the current stage.
+
+        Returns:
+            PersistableStateLine: The created state line
         """
-        # 1. check of de gegeven points aanwezig zijn in de layers want ze MOETEN op een
-        #    punt uit een layer liggen
-        # 2. voeg deze punten toe aan de PersistableStateLine.Points
-        # 3. voeg op alle x coordinaten in DStabilityStateLinePoint[] een PersistableStateLinePoint object toe
-        #    let op dat points.xmin <= x <= points.xmax
-        # 4. voeg de PersistableStateLine toe aan de interne datastructuur
-        # 5. geef de id terug
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
-
-        states = self.datastructure.states[stage_id]
+        states = self._get_state(scenario_index, stage_index)
 
         # each point should belong to a layer
         persistable_points = []
@@ -501,22 +784,33 @@ class DStabilityModel(BaseModel):
             state_point.id = self._get_next_id()  # assign a new id
             persistable_state_line_points.append(state_point._to_internal_datastructure())
 
-        states.add_state_line(persistable_points, persistable_state_line_points)
+        return states.add_state_line(persistable_points, persistable_state_line_points)
 
     def add_state_correlation(
-        self, correlated_state_ids: List[int], stage_id: int = None
+        self,
+        correlated_state_ids: List[int],
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ):
+        """
+        Add state correlation between the given state point ids.
 
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        Args:
+            correlated_state_ids (List[int]): The state point ids to correlate.
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario.
+            stage_index (Optional[int]): stage to add to, defaults to the current stage.
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
+        Returns:
+            None
+        """
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
-        state_correlations = self.datastructure.statecorrelations[stage_id]
+        state_correlations = self._get_state_correlations(scenario_index, stage_index)
 
         for state_id in correlated_state_ids:
             try:
-                _ = self.datastructure.states[stage_id].get_state(state_id)
+                _ = self._get_state(scenario_index, stage_index).get_state(state_id)
             except ValueError:
                 raise ValueError(f"No state point with id '{state_id} in this geometry")
 
@@ -526,11 +820,30 @@ class DStabilityModel(BaseModel):
 
         state_correlations.add_state_correlation(persistable_state_correlation)
 
+    def add_excavation(
+        self,
+        points: List[Point],
+        label: str,
+        notes: str = "",
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
+    ):
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
+
+        persistable_excavation = PersistableExcavation(
+            Label=label,
+            Notes=notes,
+            Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
+        )
+        self._get_excavations(scenario_index, stage_index).append(persistable_excavation)
+
     def add_load(
         self,
         load: DStabilityLoad,
         consolidations: Optional[List[Consolidation]] = None,
-        stage_id: Optional[int] = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> None:
         """Add a load to the object.
 
@@ -541,33 +854,40 @@ class DStabilityModel(BaseModel):
 
         Args:
             load: A subclass of DStabilityLoad.
-            stage_id: Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario.
+            stage_index (Optional[int]): stage to add to, defaults to the current stage.
 
         Raises:
-            ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.
+            ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_index is provided, or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         if not issubclass(type(load), DStabilityLoad):
             raise ValueError(
                 f"load should be a subclass of DstabilityReinforcement, received {load}"
             )
-        if self.datastructure.has_soil_layers(stage_id) and self.datastructure.has_loads(
-            stage_id
-        ):
+        if self.datastructure.has_soil_layers(
+            scenario_index, stage_index
+        ) and self.datastructure.has_loads(scenario_index, stage_index):
             if consolidations is None:
-                consolidations = self._get_default_consolidations(stage_id)
+                consolidations = self._get_default_consolidations(
+                    scenario_index, stage_index
+                )
             else:
-                self._verify_consolidations(consolidations, stage_id)
-            self.datastructure.loads[stage_id].add_load(load, consolidations)
+                self._verify_consolidations(consolidations, scenario_index, stage_index)
+            self._get_loads(scenario_index, stage_index).add_load(load, consolidations)
         else:
-            raise ValueError(f"No loads found for stage id {stage_id}")
+            raise ValueError(
+                f"No loads found for scenario {scenario_index} stage {stage_index}"
+            )
 
     def add_soil_layer_consolidations(
         self,
         soil_layer_id: int,
         consolidations: Optional[List[Consolidation]] = None,
-        stage_id: int = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> None:
         """Add consolidations for a layer (layerload).
 
@@ -578,53 +898,65 @@ class DStabilityModel(BaseModel):
         Args:
             soil_layer_id: Consolidation is set for this soil layer id.
             consolidations: List of Consolidation. Must contain a Consolidation for every other layer.
-            stage_id: Id used to identify the stage to which the load is linked. If no stage_id is proved, the current stage_id will be taken.
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario.
+            stage_index (Optional[int]): stage to add to, defaults to the current stage.
 
         Raises:
-            ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_id is provided, or the datastructure is no longer valid.
+            ValueError: When the provided load is no subclass of DStabilityLoad, an invalid stage_index is provided, or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         if self.datastructure.has_soil_layer(
-            stage_id, soil_layer_id
-        ) and self.datastructure.has_loads(stage_id):
+            scenario_index, stage_index, soil_layer_id
+        ) and self.datastructure.has_loads(scenario_index, stage_index):
             if consolidations is None:
-                consolidations = self._get_default_consolidations(stage_id, soil_layer_id)
+                consolidations = self._get_default_consolidations(
+                    scenario_index, stage_index, soil_layer_id
+                )
             else:
-                self._verify_consolidations(consolidations, stage_id, soil_layer_id)
+                self._verify_consolidations(
+                    consolidations, scenario_index, stage_index, soil_layer_id
+                )
 
-            self.datastructure.loads[stage_id].add_layer_load(
+            self._get_loads(scenario_index, stage_index).add_layer_load(
                 soil_layer_id, consolidations
             )
         else:
-            raise ValueError(f"No soil layers found found for stage id {stage_id}")
+            raise ValueError(
+                f"No soil layer loads found for scenario {scenario_index} stage {stage_index}"
+            )
 
     def _get_default_consolidations(
-        self, stage_id: int, exclude_soil_layer_id: Optional[int] = None
+        self,
+        scenario_index: int,
+        stage_index: int,
+        exclude_soil_layer_id: Optional[int] = None,
     ) -> List[Consolidation]:
         """Length of the consolidations is equal to the amount of soil layers.
 
         If exclude_soil_layer_id is provided, that specific soil layer id is not included in the consolidations.
         """
-        if self.datastructure.has_soil_layers(stage_id):
-            soil_layer_ids = self.datastructure.soillayers[stage_id].get_ids(
+        if self.datastructure.has_soil_layers(scenario_index, stage_index):
+            soil_layer_ids = self._get_soil_layers(scenario_index, stage_index).get_ids(
                 exclude_soil_layer_id
             )
             return [Consolidation(layer_id=layer_id) for layer_id in soil_layer_ids]
 
-        raise ValueError(f"No soil layers found for stage id {stage_id}")
+        raise ValueError(f"No soil layers found for stage at index {stage_index}")
 
     def _verify_consolidations(
         self,
         consolidations: List[Consolidation],
-        stage_id: int,
+        scenario_index: int,
+        stage_index: int,
         exclude_soil_layer_id: Optional[int] = None,
     ) -> None:
-        if self.datastructure.has_soil_layers(stage_id):
+        if self.datastructure.has_soil_layers(scenario_index, stage_index):
             consolidation_soil_layer_ids: Set[str] = {
                 str(c.layer_id) for c in consolidations
             }
-            soil_layer_ids = self.datastructure.soillayers[stage_id].get_ids(
+            soil_layer_ids = self._get_soil_layers(scenario_index, stage_index).get_ids(
                 exclude_soil_layer_id
             )
 
@@ -633,37 +965,42 @@ class DStabilityModel(BaseModel):
                     f"Received consolidations ({consolidation_soil_layer_ids}) should contain all soil layer ids ({soil_layer_ids})"
                 )
         else:
-            raise ValueError(f"No soil layers found for stage id {stage_id}")
+            raise ValueError(f"No soil layers found for stage at index {stage_index}")
 
     def add_reinforcement(
         self,
         reinforcement: DStabilityReinforcement,
-        stage_id: Optional[int] = None,
+        scenario_index: Optional[int] = None,
+        stage_index: Optional[int] = None,
     ) -> None:
         """Add a reinforcement to the model.
 
         Args:
             reinforcement: A subclass of DStabilityReinforcement.
-            stage_id: Id used to identify the stage to which the reinforcement is linked.
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario.
+            stage_index (Optional[int]): stage to add to, defaults to the current stage.
 
         Returns:
             int: Assigned id of the reinforcements (collection object of all reinforcements for a stage).
 
         Raises:
-            ValueError: When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_id is provided, or the datastructure is no longer valid.
+            ValueError: When the provided reinforcement is no subclass of DStabilityReinforcement, an invalid stage_index is provided, or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        stage_index = self.get_stage_index(stage_index)
 
         if not issubclass(type(reinforcement), DStabilityReinforcement):
             raise ValueError(
                 f"reinforcement should be a subclass of DstabilityReinforcement, received {reinforcement}"
             )
 
-        if self.datastructure.has_reinforcements(stage_id):
-            self.datastructure.reinforcements[stage_id].add_reinforcement(reinforcement)
+        if self.datastructure.has_reinforcements(scenario_index, stage_index):
+            self._get_reinforcements(scenario_index, stage_index).add_reinforcement(
+                reinforcement
+            )
         else:
             raise ValueError(
-                f"No reinforcements found for stage found with id {stage_id}"
+                f"No reinforcements found for scenario {scenario_index} stage {stage_index}"
             )
 
     def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
@@ -674,23 +1011,29 @@ class DStabilityModel(BaseModel):
         """
         self.soil_correlations.add_soil_correlation(list_correlated_soil_ids)
 
-    def set_model(self, analysis_method: DStabilityAnalysisMethod, stage_id=None):
+    def set_model(
+        self,
+        analysis_method: DStabilityAnalysisMethod,
+        scenario_index: Optional[int] = None,
+        calculation_index: Optional[int] = None,
+    ) -> None:
         """Sets the model and applies the given parameters
 
         Args:
             analysis_method (DStabilityAnalysisMethod): A subclass of DStabilityAnalysisMethod.
-            stage_id: Id used to identify the stage to which the analysis method is linked.
+            scenario_index (Optional[int]): scenario to add to, defaults to the current scenario
+            calculation_index (Optional[int]): calculation to add to, defaults to the current calculation
 
         Raises:
-            ValueError: When the provided analysismethod is no subclass of DStabilityAnalysisMethod,
-            an invalid stage_id is provided, the analysis method is not known or the datastructure is no longer valid.
+            ValueError: When the provided analysis method is no subclass of DStabilityAnalysisMethod,
+            an invalid stage_index is provided, the analysis method is not known or the datastructure is no longer valid.
         """
-        stage_id = stage_id if stage_id is not None else self.current_stage
+        scenario_index = self.get_scenario_index(scenario_index)
+        calculation_index = self.get_calculation_index(calculation_index)
 
-        if not self.datastructure.has_stage(stage_id):
-            raise IndexError(f"stage {stage_id} is not available")
-
-        calculationsettings = self.datastructure.calculationsettings[stage_id]
+        calculationsettings = self._get_calculation_settings(
+            scenario_index, calculation_index
+        )
 
         _analysis_method_mapping = {
             AnalysisType.BISHOP: calculationsettings.set_bishop,
@@ -709,3 +1052,71 @@ class DStabilityModel(BaseModel):
             raise ValueError(
                 f"Unknown analysis method {analysis_method.analysis_type.value} found"
             )
+
+    def get_scenario_index(self, scenario_index: Optional[int]):
+        if scenario_index is None:
+            return self.current_scenario
+        else:
+            return scenario_index
+
+    def get_stage_index(self, stage_index: Optional[int]):
+        if stage_index is None:
+            return self.current_stage
+        else:
+            return stage_index
+
+    def get_calculation_index(self, calculation_index: Optional[int]):
+        if calculation_index is None:
+            return self.current_calculation
+        else:
+            return calculation_index
+
+    @staticmethod
+    def get_soil_id_from_layer_id(
+        layers: SoilLayerCollection, layer_id: str
+    ) -> Union[str, None]:
+        for layer in layers.SoilLayers:
+            if layer.LayerId == layer_id:
+                return layer.SoilId
+        return None
+
+    @staticmethod
+    def get_color_from_soil_id(
+        soil_visualizations: SoilVisualisation, soil_id: str
+    ) -> str:
+        for soil_visualization in soil_visualizations.SoilVisualizations:
+            if soil_visualization.SoilId == soil_id:
+                return soil_visualization.Color
+        return "#000000"
+
+    def _get_color_of_layer(
+        self, layers_collection: SoilLayerCollection, layer: PersistableLayer
+    ) -> str:
+        layer_id = layer.Id
+        # use the layer id to get the soil type id
+        soil_type_id = DStabilityModel.get_soil_id_from_layer_id(
+            layers_collection, layer_id
+        )
+        # get the color of the soil type
+        color = DStabilityModel.get_color_from_soil_id(
+            self.input.soilvisualizations, soil_type_id
+        )
+        return color.replace("#80", "#")
+
+    def plot(
+        self, scenario_index: Optional[int] = None, stage_index: Optional[int] = None
+    ):
+        geometry = self._get_geometry(scenario_index, stage_index)
+        layers_collection = self._get_soil_layers(scenario_index, stage_index)
+        fig, ax = plt.subplots()
+        # loop over the layers
+        for layer in geometry.Layers:
+            # get list of x and y coordinates
+            x = [p.X for p in layer.Points]
+            y = [p.Z for p in layer.Points]
+            # get color of layer
+            color = self._get_color_of_layer(layers_collection, layer)
+            # create a polygon
+            ax.fill(x, y, color=color)
+        plt.axis("off")
+        return fig, ax

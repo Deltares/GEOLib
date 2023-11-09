@@ -112,7 +112,6 @@ class TestCurve:
 class TestInternalDSeriesListStructureCollections:
     @pytest.mark.unittest
     def test_sort_based_on_new_indexes(self):
-
         # initialise values
         mylist = ["a", "b", "c", "d", "e"]
         myorder = [3, 2, 0, 1, 4]

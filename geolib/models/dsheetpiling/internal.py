@@ -41,15 +41,12 @@ from .internal_partial_factors import (
     PartialFactorsCurI,
     PartialFactorsCurIi,
     PartialFactorsCurIii,
-    PartialFactorsEc7BSet1,
-    PartialFactorsEc7BSet2,
+    PartialFactorsEc7BESet1,
+    PartialFactorsEc7BESet2,
     PartialFactorsEc7Nl0,
     PartialFactorsEc7Nl1,
     PartialFactorsEc7Nl2,
     PartialFactorsEc7Nl3,
-    PartialFactorsEc7SeVk1,
-    PartialFactorsEc7SeVk2,
-    PartialFactorsEc7SeVk3,
     PartialFactorsEurocodeDa1Set1,
     PartialFactorsEurocodeDa1Set2,
     PartialFactorsEurocodeDa2,
@@ -75,7 +72,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     PassiveSide,
@@ -96,8 +93,8 @@ _DEFAULT_SHEET_PILING_ELEMENT_NAME: str = "New element"
 _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
-_DEFAULT_SOIL_VERSION: int = 1007
-_DEFAULT_SHEETPILING_VERSION: int = 1026
+_DEFAULT_SOIL_VERSION: int = 1010
+_DEFAULT_SHEETPILING_VERSION: int = 1033
 
 REQ_RUN_LINES = 2
 
@@ -106,7 +103,6 @@ class Model(DSeriesInlineReversedProperties):
     model: ModelType = ModelType.SHEET_PILING
     method: LateralEarthPressureMethod = LateralEarthPressureMethod.MIXED
     verification: bool = False
-    ec7se_visible: bool = False
     pile_load_option: bool = False
     pile_load_by_user: bool = False
     probabilistic: bool = False
@@ -123,8 +119,8 @@ class Version(DSerieVersion):
 
 
 class VersionExternals(DSeriesInlineMappedProperties):
-    dgscptipcalc____dll: str = "19.1.1.23469"
-    dgscptipui____dll: str = "19.1.1.23469"
+    dgscptipcalc____dll: str = "21.3.1.35380"
+    dgscptipui____dll: str = "21.3.1.35380"
 
 
 class Soil(DSeriesUnmappedNameProperties):
@@ -139,11 +135,8 @@ class Soil(DSeriesUnmappedNameProperties):
     soilcohesion: confloat(ge=0, le=1000000000) = 0
     soilphi: confloat(ge=-89, le=89) = 0
     soildelta: confloat(ge=-80, le=89) = 0.00
-    soilcutop: float = 0  # fixed value
-    soilcubottom: float = 0  # fixed value
-    soilcubearingcapacityfactor: float = 4.10  # fixed value
+    soilisdeltaangleautomaticallycalculated: bool = False
     soilocr: confloat(ge=0, le=1000) = 1.00
-    soildrained: int = 0  # fixed value
     soilpermeabkx: confloat(ge=0.00000000001, le=1000000) = 0.0001
     soilstdcohesion: confloat(ge=0, le=100000000) = 0.00
     soilstdphi: confloat(ge=0, le=100000000) = 0.00
@@ -243,7 +236,6 @@ class CalculationOptions(DSeriesStructure):
     calcfirststageinitial: bool = False
     calcminornodeson: bool = False
     calcreducedeltas: bool = False
-    calcempiricalfactorstresstype: int = 0  # fixed value
     inputcalculationtype: CalculationType = CalculationType.STANDARD
     isvibrationcalculation: bool = False
     allowableanchorforcecalculationtype: bool = False
@@ -261,12 +253,13 @@ class CalculationOptions(DSeriesStructure):
         PartialFactorSetEC7NADNL.RC0
     )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadb: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
     designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    designpartialfactorsetec7nadbe: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
+    )
+    designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadse: int = 0  # fixed value
-    designec7semethod: int = 0  # fixed value
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.CUR
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
@@ -275,28 +268,27 @@ class CalculationOptions(DSeriesStructure):
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     ec7nloverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     ec7nadnloverallstability: bool = False
-    ec7boverallstability: bool = False
+    ec7beoverallstability: bool = False
+    ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     curoverallstability: bool = False
-    ec7semethod: int = 0  # fixed value
-    ec7seoverallpartialfactorset: int = 0  # fixed value
-    ec7nadseoverallstability: int = 0  # fixed value
     # Characteristic Kranz Anchor Strength calculation
     curanchorforcestage: conint(ge=0) = 0
     # Overall stability calculation
     curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
+    stabilityexport: bool = False
     stabilityeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stabilityec7bpartialfactorset: PartialFactorSetEC7NADB = PartialFactorSetEC7NADB.SET1
+    stabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
+    )
     stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    stabilityec7separtialfactorset: int = 0  # fixed value
-    overallstabilitydrained: int = 1  # fixed value
 
     # These are all subgroups (key=value)
     partial_factors_eurocode_da1_set1: PartialFactorsEurocodeDa1Set1 = (
@@ -311,14 +303,11 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_nl_1: PartialFactorsEc7Nl1 = PartialFactorsEc7Nl1()
     partial_factors_ec7_nl_2: PartialFactorsEc7Nl2 = PartialFactorsEc7Nl2()
     partial_factors_ec7_nl_3: PartialFactorsEc7Nl3 = PartialFactorsEc7Nl3()
-    partial_factors_ec7_b_set1: PartialFactorsEc7BSet1 = PartialFactorsEc7BSet1()
-    partial_factors_ec7_b_set2: PartialFactorsEc7BSet2 = PartialFactorsEc7BSet2()
+    partial_factors_ec7_be_set1: PartialFactorsEc7BESet1 = PartialFactorsEc7BESet1()
+    partial_factors_ec7_be_set2: PartialFactorsEc7BESet2 = PartialFactorsEc7BESet2()
     partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
     partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
     partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
-    partial_factors_ec7_se_vk1: PartialFactorsEc7SeVk1 = PartialFactorsEc7SeVk1()
-    partial_factors_ec7_se_vk2: PartialFactorsEc7SeVk2 = PartialFactorsEc7SeVk2()
-    partial_factors_ec7_se_vk3: PartialFactorsEc7SeVk3 = PartialFactorsEc7SeVk3()
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
@@ -330,7 +319,6 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
     sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
     sheetpilingelementheight: conint(ge=10, le=100000) = 400
-    sheetpilingelementcoatingarea: confloat(ge=0.01, le=10) = 1.35
     sheetpilingpilewidth: confloat(ge=0, le=100000) = 0
     sheetpilingelementsectionarea: conint(ge=10, le=100000) = 170
     sheetpilingelementresistingmoment: conint(ge=0, le=100000) = 0
@@ -538,9 +526,7 @@ class StageOptions(DSeriesInlineMappedProperties):
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
-    stageverifyec7nadb: int = 0
-    stagepartialfactorsetec7nadse: int = 0  # fixed value
-    stageverifyec7nadse: int = 0  # fixed value
+    stageverifyec7nadbe: int = 0
 
 
 class CalculationOptionsPerStage(DSeriesStructureCollection):
@@ -674,6 +660,15 @@ class SupportContainer(DSeriesNoParseSubStructure):
         return {support.name for support in self.supports}
 
 
+class VibrationPosition(DSeriesNoParseSubStructure):
+    x: float
+    z: float
+
+
+class VibrationPositions(DSeriesNoParseSubStructure):
+    positions: List[VibrationPosition] = []
+
+
 class Water(DSeriesUnmappedNameProperties):
     unit_weight_of_water: float = 9.81
 
@@ -681,6 +676,8 @@ class Water(DSeriesUnmappedNameProperties):
 class DSheetPilingInputStructure(DSeriesStructure):
     """Representation of complete .shi file."""
 
+    version: Version = Version()
+    version_externals: VersionExternals = VersionExternals()
     soil_collection: SoilCollection = SoilCollection()
     run_identification: str = 2 * "\n"
     model: Model = Model()
@@ -775,8 +772,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
     )
 
     """
-    When there are no anchors, struts, supports, or soil displacements in the model,
-    their respective blocks is not present in the .shi file.
+    When there are no anchors, struts, supports, vibration positions or soil displacements in the model,
+    their respective block is not present in the .shi file.
     """
     soil_displacements: Optional[str] = None
     rigid_supports: Union[str, SupportContainer, None] = None
@@ -785,6 +782,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
     normal_forces: Union[str, NormalForces, None] = None
     anchors: Union[str, Anchors, None] = None
     struts: Union[str, Struts, None] = None
+    vibration_positions: Union[str, VibrationPositions, None] = None
 
     # Custom validator
     _validate_run_identification = make_newline_validator(
@@ -846,7 +844,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 "stageverifyec7nadnl": stage_id + 1,
                 "stageanchorfactorec7nadnl": input_calc_options.anchor_factor,
             },
-            VerifyType.EC7BE: {"stageverifyec7nadb": stage_id + 1},
+            VerifyType.EC7BE: {
+                "stageverifyec7nadbe": stage_id + 1,
+            },
         }
         stageoptions = StageOptions(
             **_map_external_to_internal_values[self.calculation_options.verifytype]
@@ -908,7 +908,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         model.
         """
         if not isinstance(self.model, Model):
-            raise ValueError(f"Model is a string; set model first")
+            raise ValueError("Model is a string; set model first")
         if stage_method is None:
             return self.model.method
         error = ValueError(
@@ -932,7 +932,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         method_right: LateralEarthPressureMethodStage,
     ) -> None:
         if not isinstance(self.model, Model):
-            raise ValueError(f"Model is a string; set model first")
+            raise ValueError("Model is a string; set model first")
         if self.model.model == ModelType.SINGLE_PILE:
             if method_left != method_right:
                 raise ValueError(
@@ -1102,7 +1102,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         elif isinstance(load, UniformLoad):
             self.add_uniform_load(load=load, stage_id=stage_id)
         else:
-            raise ValueError(f"This type of load is not yet supported")
+            raise ValueError("This type of load is not yet supported")
 
     def add_uniform_load(self, stage_id: int, load: UniformLoad) -> None:
         self.is_valid_unique_load_names(
@@ -1223,6 +1223,8 @@ class OutputConstructionStage(DSeriesRepeatedGroupedProperties):
     anchor_data: Optional[AnchorData]
     hload_data: Optional[str]
     breuk_data: Optional[BreukData]
+    passive_side_data: Optional[str]
+    soil_collapse_data: Optional[str]
     moments_forces_displacements: Optional[MomentsForcesDisplacements]
     side: Optional[List[SideOutput]]
     uniform_load_data: Optional[str]
@@ -1262,46 +1264,16 @@ class CurAnchorForceResults(DSheetpilingWithNumberOfRowsTable):
 class BaseVerificationStructureProperties(DSeriesRepeatedGroupedProperties):
     points_on_sheetpile: Optional[List[PointsOnSheetpile]]
     construction_stage: Optional[List[OutputConstructionStage]]
-    resume: Optional[Resume]
-    warning: Optional[str]
-    error: Optional[str]
-
-    # TODO Check how many optional variations exist
-    basis_step_of_step_9____1_per_anchor: Optional[str]
-    verify_anchor_force_step_9____1_based_on_step_6____5: Optional[str]
-    verify_anchor_force_step_9____1_based_on_step_6____3: Optional[str]
 
     @classmethod
     def get_list_field_names(cls) -> List[str]:
         return ["points_on_sheetpile", "construction_stage"]
 
 
-class VerifyAnchorForce(BaseVerificationStructureProperties):
-    anchor_number: Optional[int]
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
-    construction_stage: Optional[List[OutputConstructionStage]]
-    resume: Optional[Resume]
-
-
-class VerifySheetpileData(DSeriesStructure):
-    verify_deformation: Optional[BaseVerificationStructureProperties]
-    verify_moment_low_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_moment_high_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_low_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_high_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_anchor_force: Optional[VerifyAnchorForce]
-    resume: Optional[Resume]
-    factors_for_verification: Optional[str]
-
-
 class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     @classmethod
     def get_list_field_names(cls) -> List[str]:
-        return ["verify_sheetpile_data", "points_on_sheetpile", "construction_stage"]
+        return ["points_on_sheetpile", "construction_stage"]
 
     @classmethod
     def parse_text(cls, text):
@@ -1309,59 +1281,74 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
 
     calculation_type: str
 
-    # Sheetpile calculation
+    # General data
     sheet_pile_elements: Optional[str]
-    design_sheetpile_length: Optional[DesignSheetpileLength]
-    verify_sheetpile_data: Optional[List[VerifySheetpileData]]
+    calculated_displacements: Optional[str]
+
+    # Standard, Kranz and Reliability calculation
     points_on_sheetpile: Optional[List[PointsOnSheetpile]]
     construction_stage: Optional[List[OutputConstructionStage]]
 
-    # Vibration calculation
+    # Design Sheet Pile Length calculation
+    design_sheetpile_length: Optional[DesignSheetpileLength]
+
+    # Settlement by Vibration calculation
     settlement_by_vibration: Optional[str]
 
-    # Verification calculation
-    # TODO Split further based on A/B grouping
+    # Verify calculation including Overall Stability calculation
     overall_partial_factor_set: Optional[str]
     factors_for_overall_stability: Optional[str]
     overall_stability_results: Optional[str]
 
-    calculation_overview: Optional[str]
-    number_of_verifications: Optional[str]
-    maximum_moment_effect_included: Optional[str]
+    # Verify calculation according to CUR or EC7-NL with method B
+    factors_for_verification: Optional[str]
 
-    eurocode2: Optional[str]
-    eurocode3: Optional[str]
-    eurocode1_set1: Optional[str]
-    eurocode1_set2: Optional[str]
-    eurocode_belgie_set2: Optional[str]
-    eurocode_belgie_set1: Optional[str]
+    # Verify calculation according to CUR or EC7-NL
+    verify_step_6____5_serviceability_limit_state: Optional[
+        BaseVerificationStructureProperties
+    ]
+    verify_step_6____5_multiplied_by_factor: Optional[BaseVerificationStructureProperties]
+    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
+        BaseVerificationStructureProperties
+    ]
+    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
+        BaseVerificationStructureProperties
+    ]
+    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
+        BaseVerificationStructureProperties
+    ]
+    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
+        BaseVerificationStructureProperties
+    ]
     cur_anchor_force_results: Optional[CurAnchorForceResults]
-    warning_list: Optional[str]
-    warning: Optional[str]
-    error: Optional[str]
 
-    calculated_displacements: Optional[str]
+    # Verify calculation according to EC7-BE or EC7-General
+    verify_deformation_serviceability_limit_state: Optional[
+        BaseVerificationStructureProperties
+    ]
+    eurocode_1_set_1: Optional[BaseVerificationStructureProperties]
+    eurocode_1_set_2: Optional[BaseVerificationStructureProperties]
+    eurocode_2: Optional[BaseVerificationStructureProperties]
+    eurocode_3: Optional[BaseVerificationStructureProperties]
+    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties]
+    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties]
+
+    # Kranz calculation
     angles_kranz_calculation: Optional[str]
     kranz_calculation: Optional[str]
+    kranz_diagram_results: Optional[str]
 
-    # Verifications, duplicated for all verifications.
-    verify_deformation: Optional[BaseVerificationStructureProperties]
-    verify_moment_low_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_moment_high_angle_of_subgr_reac: Optional[BaseVerificationStructureProperties]
-    verify_low_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_high_mod_with_alt_passive_waterlevel: Optional[
-        BaseVerificationStructureProperties
-    ]
-    verify_anchor_force: Optional[BaseVerificationStructureProperties]
+    # Resumes
     resume: Optional[Resume]
-    factors_for_verification: Optional[str]
+    anchors_and_struts_resume: Optional[str]
+    supports_resume: Optional[str]
+    maximum_anchor_force: Optional[str]
+    maximum_summary_results: Optional[str]
+    warnings: Optional[str]
+    errors: Optional[str]
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):
-    version: Version = Version()
-    version_externals: VersionExternals = VersionExternals()
     input_data: DSheetPilingInputStructure = DSheetPilingInputStructure()
     output_data: Optional[DSheetPilingOutputStructure] = None
 

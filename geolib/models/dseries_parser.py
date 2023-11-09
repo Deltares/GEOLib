@@ -80,7 +80,6 @@ class DSeriesStructure(BaseModelStructure):
             )
 
         for field, fieldtype in get_type_hints(self).items():
-
             # If the body is a string, we should check
             # whether we can parse it further.
             if field in kwargs and isinstance(kwargs[field], str):
@@ -308,8 +307,49 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
 
     @classmethod
     def parse_text(cls, text):
-        unwrapped_text = DSerieParser.parse_group_as_dict(text)
-        return super().parse_text(list(unwrapped_text.values())[0])
+        """Parses a Table wrapped in another group such as:
+        [TABLE]
+        DataCount = x followed by
+        [END OF TABLE]  directly when x = 0 or, when x > 0, by
+        [COLUMN INDICATION]
+        A
+        B
+        [END OF COLUMN INDICATION]
+        [DATA]
+        1 1
+        2 2
+        [END OF DATA]
+        [END OF TABLE]
+
+        Args:
+            text (str): Wrapped table group to parse.
+
+        Returns:
+            DSerieStructure: Parsed structure.
+        """
+
+        def split_line(text: str) -> List[str]:
+            parts = re.split("[ \t]", text.strip())
+            return list(filter(lambda part: part != "", parts))
+
+        table_text = list(DSerieParser.parse_list_group(text).values())[0]
+        table_data = list(DSerieParser.parse_list_group(table_text).values())
+        if len(table_data) == 0:
+            values_dict_list = table_data
+            collection_property_name = list(cls.__fields__.items())[0][0]
+            return cls(**{collection_property_name: values_dict_list})
+        else:
+            # Expected two groups (column_indication and data)
+            keys = table_data[0].split("\n")
+            keys = [make_key(j) for j in keys]
+
+            values_dict_list = [
+                dict(zip(keys, values))
+                for values in map(split_line, table_data[1].split("\n"))
+            ]
+            collection_property_name = list(cls.__fields__.items())[0][0]
+
+        return cls(**{collection_property_name: values_dict_list})
 
 
 class DSerieOldTableStructure(DSeriesStructure):
@@ -1312,7 +1352,6 @@ class DSerieParser(BaseParser):
 
                 # end of current group signaled with [END OF GROUP]
                 elif key == "end_of_" + currentkey:
-
                     # If key already exists, this is a repeated group -> List
                     if currentkey in parsed_dict:
                         # Append in case of a list (2+ elements)

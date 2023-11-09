@@ -6,6 +6,7 @@ from pydantic import ValidationError
 
 from geolib.geometry import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
+from geolib.models.dstability.internal import PersistablePoint
 from geolib.soils import Soil
 from tests.utils import TestUtils
 
@@ -40,11 +41,11 @@ class TestDStabilityGeometry:
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_contains_num_soillayers(self, dir_path: str):
+    def test_given_data_contains_num_soillayers(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -53,15 +54,15 @@ class TestDStabilityGeometry:
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
-        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 6
+        assert len(dstability_model.datastructure.soillayers[0].SoilLayers) == 2
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "dir_path", [pytest.param("dstability/example_1", id="Input Structure")]
+        "file_path", [pytest.param("dstability/example_1.stix", id="Input Structure")]
     )
-    def test_given_data_soillayer_polygon_points_equal(self, dir_path: str):
+    def test_given_data_soillayer_polygon_points_equal(self, file_path: str):
         # 1. Set up test data.
-        test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_input_filepath = Path(TestUtils.get_local_test_data_dir(file_path))
         dstability_model = DStabilityModel()
 
         # 2. Verify initial expectations.
@@ -71,16 +72,134 @@ class TestDStabilityGeometry:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
         expected_polygon_coords = [
-            (150.0, -5.0),
-            (150.0, -15.0),
-            (-100, -15.0),
-            (-100.0, -2.0),
-            (-9.0, -2.0),
-            (-1.0, -3.0),
-            (11.0, -3.0),
-            (20.0, -5.0),
+            (70.0, 0.0),
+            (20.0, 0.0),
+            (20.0, 10.0),
+            (30.0, 10.0),
+            (50.0, 10.0),
+            (70.0, 10.0),
         ]
 
-        layer = dstability_model.datastructure.geometries[0].Layers[0]
+        layer = dstability_model.datastructure.geometries[3].Layers[0]
         found_polygon_coords = [(p.X, p.Z) for p in layer.Points]
         assert expected_polygon_coords == found_polygon_coords
+
+    @pytest.mark.unittest
+    def test_layer_with_incorrectly_ordered_points_are_fixed(self):
+        layer = [
+            Point(x=-50, z=-10),
+            Point(x=20, z=-10),
+            Point(x=40, z=-10),
+            Point(x=30, z=-10),
+            Point(x=50, z=-10),
+            Point(x=50, z=-20),
+            Point(x=20, z=-20),
+            Point(x=40, z=-20),
+            Point(x=30, z=-20),
+            Point(x=-50, z=-20),
+        ]
+
+        dstability_model = DStabilityModel()
+        dstability_model.add_soil(Soil(code="Peat"))
+        dstability_model.add_layer(points=layer, soil_code="Peat")
+
+        expected_layer = [
+            PersistablePoint(X=30, Z=-10),
+            PersistablePoint(X=40, Z=-10),
+            PersistablePoint(X=50, Z=-10),
+            PersistablePoint(X=50, Z=-20),
+            PersistablePoint(X=40, Z=-20),
+            PersistablePoint(X=30, Z=-20),
+            PersistablePoint(X=20, Z=-20),
+            PersistablePoint(X=-50, Z=-20),
+            PersistablePoint(X=-50, Z=-10),
+            PersistablePoint(X=20, Z=-10),
+        ]
+
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )
+
+    @pytest.mark.unittest
+    def test_layer_with_missing_points_on_edge_are_fixed(self):
+        layer1 = [
+            Point(x=-50, z=-10),
+            Point(x=50, z=-10),
+            Point(x=50, z=-20),
+            Point(x=-50, z=-20),
+        ]
+
+        layer2 = [
+            Point(x=-50, z=-10),
+            Point(x=-25, z=-10),
+            Point(x=25, z=-10),
+            Point(x=50, z=-10),
+            Point(x=50, z=20),
+            Point(x=-50, z=20),
+        ]
+
+        dstability_model = DStabilityModel()
+        dstability_model.add_soil(Soil(code="Peat"))
+        dstability_model.add_layer(points=layer1, soil_code="Peat")
+        dstability_model.add_layer(points=layer2, soil_code="Peat")
+
+        expected_layer = [
+            PersistablePoint(X=50, Z=-20),
+            PersistablePoint(X=-50, Z=-20),
+            PersistablePoint(X=-50, Z=-10),
+            PersistablePoint(X=-25, Z=-10),
+            PersistablePoint(X=25, Z=-10),
+            PersistablePoint(X=50, Z=-10),
+        ]
+
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )
+
+    @pytest.mark.unittest
+    def test_multiple_layers_with_missing_points_on_edge_are_fixed(self):
+        layer1 = [
+            Point(x=0, z=0),
+            Point(x=100, z=0),
+            Point(x=100, z=10),
+            Point(x=0, z=10),
+        ]
+
+        layer2 = [
+            Point(x=10, z=10),
+            Point(x=20, z=10),
+            Point(x=20, z=20),
+            Point(x=10, z=20),
+        ]
+
+        layer3 = [
+            Point(x=25, z=10),
+            Point(x=20, z=15),
+            Point(x=25, z=20),
+            Point(x=30, z=15),
+            Point(x=30, z=10),
+        ]
+
+        dstability_model = DStabilityModel()
+        dstability_model.add_soil(Soil(code="Peat"))
+        dstability_model.add_layer(points=layer1, soil_code="Peat", label="L1")
+        dstability_model.add_layer(points=layer2, soil_code="Peat", label="L2")
+        dstability_model.add_layer(points=layer3, soil_code="Peat", label="L3")
+
+        expected_layer = [
+            PersistablePoint(X=100, Z=0),
+            PersistablePoint(X=0, Z=0),
+            PersistablePoint(X=0, Z=10),
+            PersistablePoint(X=10, Z=10),
+            PersistablePoint(X=20, Z=10),
+            PersistablePoint(X=25, Z=10),
+            PersistablePoint(X=30, Z=10),
+            PersistablePoint(X=100, Z=10),
+        ]
+
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )

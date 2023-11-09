@@ -54,7 +54,6 @@ class DGeoFlowInputSerializer(DGeoFlowBaseSerializer):
         serialized_datastructure = self.serialize()
 
         for filename, data in serialized_datastructure.items():
-
             if isinstance(data, dict):
                 folder = filepath / filename
                 folder.mkdir(parents=True, exist_ok=True)
@@ -79,7 +78,6 @@ class DGeoFlowInputZipSerializer(DGeoFlowBaseSerializer):
             serialized_datastructure = self.serialize()
 
             for filename, data in serialized_datastructure.items():
-
                 if isinstance(data, dict):
                     folder = filename
                     for ffilename, fdata in data.items():

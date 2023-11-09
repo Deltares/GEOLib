@@ -95,7 +95,6 @@ class RigidSupport(BaseDataClass):
     support_type: SupportType
 
     def to_internal(self) -> InternalSupport:
-
         rotational_stiffness, translational_stiffness = {
             SupportType.TRANSLATION.value: (0, 1),
             SupportType.ROTATION.value: (1, 0),

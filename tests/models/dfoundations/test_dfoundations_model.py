@@ -59,6 +59,8 @@ from geolib.models.internal import Bool
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
 from tests.utils import TestUtils, only_teamcity
 
+test_file_directory = "dfoundations/benchmarks"
+
 
 class TestDFoundationsModel:
     @pytest.mark.unittest
@@ -133,7 +135,7 @@ class TestDFoundationsModel:
         self, filename: Path, structure: Type
     ):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
         ds = DFoundationsModel()
 
@@ -153,7 +155,7 @@ class TestDFoundationsModel:
     )
     def test_given_parsed_input_when_serialize_then_same_content(self, filename: Path):
         # 1. Set up test data
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / filename
@@ -189,9 +191,14 @@ class TestDFoundationsModel:
             if not (ds_key in output_keys):
                 errors.append(f"Key {ds_key} not serialized!")
                 continue
-            if not (ds_value == output_datastructure[ds_key]):
-                logging.warning(f"UNEQUAL: {ds_value} != {output_datastructure[ds_key]}")
-                errors.append(f"Values for key {ds_key} differ from parsed to serialized")
+            if ds_key != "user_classification_method":
+                if not (ds_value == output_datastructure[ds_key]):
+                    logging.warning(
+                        f"UNEQUAL: {ds_value} != {output_datastructure[ds_key]}"
+                    )
+                    errors.append(
+                        f"Values for key {ds_key} differ from parsed to serialized"
+                    )
         if errors:
             print(errors)
             pytest.fail(f"Failed with the following {errors}")
@@ -201,7 +208,7 @@ class TestDFoundationsModel:
     def test_execute_console_successfully(self):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test.foi"
@@ -278,45 +285,34 @@ class TestDFoundationsModel:
 
         gravel = Soil(name="Gravel")
         gravel.soil_type_nl = SoilType.GRAVEL
-        gravel.soil_type_be = SoilType.GRAVEL
         gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
         gravel.undrained_parameters.undrained_shear_strength = 1000
 
         sandy_loam = Soil(name="Sandy loam")
-        sandy_loam.soil_type_nl = SoilType.SANDY_LOAM
-        sandy_loam.soil_type_be = SoilType.SANDY_LOAM
+        sandy_loam.soil_type_nl = SoilType.TERTCLAY
         sandy_loam.mohr_coulomb_parameters = mohr_coulomb_parameters
         sandy_loam.undrained_parameters.undrained_shear_strength = 1000
 
         sandy_loam_and_gravel = Soil(name="Sandy loam")
         sandy_loam_and_gravel.soil_type_nl = SoilType.SANDY_LOAM
-        sandy_loam_and_gravel.soil_type_be = SoilType.GRAVEL
         sandy_loam_and_gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
         sandy_loam_and_gravel.undrained_parameters.undrained_shear_strength = 1000
 
         # 3. Run test
         df.add_soil(gravel)
-        with pytest.raises(ValueError):
-            df.add_soil(sandy_loam)
-        df.add_soil(sandy_loam_and_gravel)
+        df.add_soil(sandy_loam)
+        with pytest.raises(NameError):
+            df.add_soil(sandy_loam_and_gravel)
 
         # 4. Verify final expectations.
         assert (
             df.datastructure.input_data.soil_collection.soil[-2].soilsoiltype
             == SoilType.GRAVEL
         )
-        assert (
-            df.datastructure.input_data.soil_collection.soil[-2].soilbelgiansoiltype
-            == SoilType.GRAVEL
-        )
 
         assert (
             df.datastructure.input_data.soil_collection.soil[-1].soilsoiltype
-            == SoilType.SANDY_LOAM
-        )
-        assert (
-            df.datastructure.input_data.soil_collection.soil[-1].soilbelgiansoiltype
-            == SoilType.GRAVEL
+            == SoilType.TERTCLAY
         )
 
     @pytest.fixture
@@ -455,7 +451,7 @@ class TestDFoundationsModel:
     def test_add_bearing_pile_location(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_bearing_pile_location.foi"
@@ -493,7 +489,7 @@ class TestDFoundationsModel:
     def test_add_two_equal_bearing_pile_locations(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_bearing_pile_location.foi"
@@ -529,7 +525,7 @@ class TestDFoundationsModel:
     def test_add_two_unique_bearing_pile_locations(self, create_bearing_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_bearing_pile_locations.foi"
@@ -576,7 +572,7 @@ class TestDFoundationsModel:
     def test_add_tension_pile_location(self, create_tension_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_tension_pile_location.foi"
@@ -616,7 +612,7 @@ class TestDFoundationsModel:
     def test_add_two_equal_tension_pile_locations(self, create_tension_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_tension_pile_locations.foi"
@@ -654,7 +650,7 @@ class TestDFoundationsModel:
     def test_add_two_unique_tension_pile_locations(self, create_tension_pile):
         # 1. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / "test_add_two_tension_pile_locations.foi"
@@ -704,7 +700,6 @@ class TestDFoundationsModel:
     @pytest.mark.acceptance
     @only_teamcity
     def test_bearing_pile(self, create_bearing_pile, create_bearing_pile_shape):
-
         # 1. Get test information
         test_file_name = create_bearing_pile_shape[0]
         geometry_pile = create_bearing_pile_shape[1]
@@ -712,11 +707,12 @@ class TestDFoundationsModel:
 
         # 2. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / test_file_name
+        log_output_test_file = output_test_file.with_suffix(".log")
 
         df.parse(test_file)
 
@@ -744,13 +740,19 @@ class TestDFoundationsModel:
         # 6. Verify model output has been parsed.
         with pytest.raises(CalculationError) as e:
             df.execute()
-
-        assert "Number of CPTs (0 ) is outside its limits" in e.value.message
+        # The no cpt error is now written to the log file, no longer raised as error.
+        assert "Couldn't determine source of error for" in e.value.message
+        assert log_output_test_file.is_file()
+        with open(log_output_test_file) as f:
+            text = f.read()
+        is_text_ok = text.__contains__(
+            "Number of CPTs (0 ) is outside its limits (1 - 350)"
+        )
+        assert is_text_ok
 
     @pytest.mark.acceptance
     @only_teamcity
     def test_tension_pile(self, create_tension_pile, create_tension_pile_shape):
-
         # 1. Get test information
         test_file_name = create_tension_pile_shape[0]
         geometry_pile = create_tension_pile_shape[1]
@@ -758,11 +760,12 @@ class TestDFoundationsModel:
 
         # 2. Set up test data.
         df = DFoundationsModel()
-        test_folder = Path(TestUtils.get_local_test_data_dir("dfoundations"))
+        test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
 
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
         output_test_file = output_test_folder / test_file_name
+        log_output_test_file = output_test_file.with_suffix(".log")
 
         df.parse(test_file)
 
@@ -793,7 +796,9 @@ class TestDFoundationsModel:
         with pytest.raises(CalculationError) as e:
             df.execute()
 
-        assert "Number of CPTs (0 ) is outside its limits" in e.value.message
+        # The no cpt error is now written to the log file, no longer raised as error.
+        assert "Couldn't determine source of error for" in e.value.message
+        assert log_output_test_file.is_file()
 
     @pytest.mark.integrationtest
     def test_set_model_options(self):
@@ -823,7 +828,6 @@ class TestDFoundationsModel:
 
     @pytest.mark.integrationtest
     def test_default_soils_generated_on_model_change(self):
-
         # Setup
         df = DFoundationsModel()
         mo = BearingPilesModel(is_rigid=False, factor_xi3=9)

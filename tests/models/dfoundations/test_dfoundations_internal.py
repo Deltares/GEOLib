@@ -262,6 +262,13 @@ class TestInternalOutputDFoundations:
     # region Fixtures
     input_data = "[INPUT DATA]\n" + "[END OF INPUT DATA]"
 
+    empty_table_block = (
+        "[NEN AVERAGE PILE FACTORS]\n"
+        + "[TABLE]\n"
+        + "DataCount=0\n"
+        + "[END OF TABLE]\n"
+        + "[END OF NEN AVERAGE PILE FACTORS]"
+    )
     nen_average_pile_factors = (
         "[NEN AVERAGE PILE FACTORS]\n"
         + "[TABLE]\n"
@@ -380,9 +387,9 @@ class TestInternalOutputDFoundations:
     global_nen_results = (
         "[GLOBAL NEN RESULTS]\n"
         + "0.063203 = wd1B\n"
-        + "0.009173 = Betad1B\n"
         + "0.024783 = w2d\n"
-        + "0.003441 = Betad2\n"
+        + "0.009173 = ReciprocalMaxRelativeRotationCalc1B\n"
+        + "0.003441 = ReciprocalMaxRelativeRotationCalc2\n"
         + "[END OF GLOBAL NEN RESULTS]"
     )
 
@@ -393,22 +400,12 @@ class TestInternalOutputDFoundations:
         + "0.066 = wreq1b\n"
         + "0.022 = wreq2\n"
         + "0 = Stiffness\n"
-        + "0.010000 = Betadreq1B\n"
+        + "0.010000 = ReciprocalMaxRelativeRotationReqULS\n"
         + "1 = GT = 1B\n"
-        + "0.003333 = Betadreq2\n"
+        + "0.003333 = ReciprocalMaxRelativeRotationReqSLS\n"
         + "[END OF DEMANDS NEN-EN]\n"
         + f"{nen_pile_results}\n"
         + "[END OF VERIFICATION RESULTS]"
-    )
-
-    dumpfile_output = (
-        "[DUMPFILE OUTPUT]\n"
-        + "[RESULTS AT CPT TEST LEVEL]\n"
-        + "[END OF RESULTS AT CPT TEST LEVEL]\n"
-        + f"{verification_results}\n"
-        + "[FOOTNOTE WARNINGS]\n"
-        + "[END OF FOOTNOTE WARNINGS]\n"
-        + "[END OF DUMPFILE OUTPUT]"
     )
 
     calculation_warnings = (
@@ -424,15 +421,24 @@ class TestInternalOutputDFoundations:
         + "0 = IsWarningSFSlopeNotRelevantGiven (1=true, 0=false)\n"
         + "0 = IsWarningNENSFPlacementDepthTooDeep (1=true, 0=false)\n"
         + "0 = IsWarningNENSFPlacementDepthTooShallow (1=true, 0=false)\n"
+        + "1 = FIsWarningNENBPPositiveSkinFrictionZoneGiven (1=true, 0=false)\n"
+        + "0 = FIsWarningSFFoundationLevelForPunchToDeepForSlopeGiven(1 = true, 0 = false)\n"
         + "[END OF CALCULATION WARNINGS]"
     )
 
-    dfoundations_structure_text = (
-        "[DUMPFILE]\n"
-        + f"{input_data}\n"
-        + f"{dumpfile_output}\n"
+    dumpfile_output = (
+        "[DUMPFILE OUTPUT]\n"
+        + "[RESULTS AT CPT TEST LEVEL]\n"
+        + "[END OF RESULTS AT CPT TEST LEVEL]\n"
+        + f"{verification_results}\n"
+        + "[FOOTNOTE WARNINGS]\n"
+        + "[END OF FOOTNOTE WARNINGS]\n"
         + f"{calculation_warnings}\n"
-        + "[END OF DUMPFILE]"
+        + "[END OF DUMPFILE OUTPUT]"
+    )
+
+    dfoundations_structure_text = (
+        "[DUMPFILE]\n" + f"{input_data}\n" + f"{dumpfile_output}\n" + "[END OF DUMPFILE]"
     )
 
     # endregion
@@ -470,6 +476,20 @@ class TestInternalOutputDFoundations:
         assert parsed_structure
         assert len(parsed_structure.data) == 3
         assert parsed_structure.data[0] == first_expected_value
+
+    @pytest.mark.integrationtest
+    def test_given_empty_nen_average_pile_factors_text_when_parse_then_returns_empty(
+        self,
+    ):
+        # 1. Set up test data
+        group_text = self.get_group_text(self.empty_table_block)
+
+        # 2. Run test
+        parsed_structure = DFoundationsNenPileResultsTable.parse_text(group_text)
+
+        # 3. Verify final expectations.
+        assert parsed_structure
+        assert len(parsed_structure.data) == 0
 
     @pytest.mark.integrationtest
     def test_given_max_shaft_and_point_text_when_parse_then_returns_structure(self):
@@ -529,9 +549,9 @@ class TestInternalOutputDFoundations:
         parsed_structure = DFoundationsGlobalNenResults.parse_text(group_text)
         # 3. Verify results
         assert parsed_structure.wd1b == 0.063203
-        assert parsed_structure.betad1b == 0.009173
         assert parsed_structure.w2d == 0.024783
-        assert parsed_structure.betad2 == 0.003441
+        assert parsed_structure.reciprocal_max_relative_rotation_calc_1B == 0.009173
+        assert parsed_structure.reciprocal_max_relative_rotation_calc_2 == 0.003441
 
     @pytest.mark.integrationtest
     def test_given_calculation_parameters_bearing_piles_ec_7_when_parse_then_returns_structure(
@@ -557,11 +577,11 @@ class TestInternalOutputDFoundations:
         "text_to_parse, property_name, parsing_type, expected_type",
         [
             pytest.param(
-                dfoundations_structure_text,
+                dumpfile_output,
                 "calculation_warnings",
-                DFoundationsStructure,
+                DFoundationsDumpfileOutputStructure,
                 DFoundationsCalculationWarnings,
-                id="Calculation Warnings",
+                id="Calculation warnings",
             ),
             pytest.param(
                 dfoundations_structure_text,
@@ -621,7 +641,7 @@ class TestInternalOutputDFoundations:
             ),
         ],
     )
-    def test_given_all_dfoundationsstructure_fixtures_when_parse_dfoundationtype_then_returns_as_property(
+    def test_given_all_dfoundations_structure_fixtures_when_parse_dfoundations_type_then_returns_as_property(
         self,
         text_to_parse: str,
         property_name: str,

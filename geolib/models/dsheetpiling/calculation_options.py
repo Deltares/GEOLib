@@ -11,7 +11,7 @@ from .settings import (
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
-    PartialFactorSetEC7NADB,
+    PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
     PartialFactorSetVerifyEC,
     VerifyType,
@@ -29,7 +29,11 @@ class CalculationOptionsPerStage(BaseDataClass):
 
     anchor_factor: float = 1
     partial_factor_set: Optional[
-        Union[PartialFactorSetEC7NADB, PartialFactorSetCUR, PartialFactorSetEC7NADNL]
+        Union[
+            PartialFactorSetEC7NADBE,
+            PartialFactorSetCUR,
+            PartialFactorSetEC7NADNL,
+        ]
     ] = None
 
 
@@ -87,8 +91,9 @@ class OverallStabilityCalculationOptions(CalculationOptions):
      overall_stability_type: which type of calculation is going to be performed
      stability_eurocode_partial_factor_set: partial factor set selected for the EC7 General calculation
      stability_ec7_nl_partial_factor_set: partial factor set selected for the EC7 NL calculation
-     stability_ec7_b_partial_factor_set: partial factor set selected for the EC7 B calculation
+     stability_ec7_be_partial_factor_set: partial factor set selected for the EC7 BE calculation
      stability_cur_partial_factor_set: partial factor set selected for the CUR calculation
+     stability_export: Set on True to generate an input file with STI format which can be opened with D-Geo Stability
     """
 
     input_calculation_type: CalculationType = CalculationType.OVERALL_STABILITY
@@ -98,10 +103,11 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stability_ec7_b_partial_factor_set: PartialFactorSetEC7NADB = (
-        PartialFactorSetEC7NADB.SET1
+    stability_ec7_be_partial_factor_set: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
     )
     stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
+    stability_export: bool = False
 
 
 class KranzAnchorStrengthCalculationOptions(CalculationOptions):
@@ -140,7 +146,7 @@ class VerifyCalculationOptions(CalculationOptions):
      ec7_nl_overall_partial_factor_set: Select partial factor set
      ec7_nl_overall_anchor_factor: multiplication factor for the anchor stiffness
      ec7_nad_nl_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
-     ec7_b_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
+     ec7_be_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
      nb_method: Select method of calculation according to CUR 166 design procedure
      cur_method: Select method of calculation according to CUR 166 design procedure
      cur_overall_partial_factor_set: Select partial factor set
@@ -158,7 +164,7 @@ class VerifyCalculationOptions(CalculationOptions):
     )
     ec7_nl_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     ec7_nad_nl_overall_stability: bool = False
-    ec7_b_overall_stability: bool = False
+    ec7_be_overall_stability: bool = False
     nb_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
@@ -187,8 +193,8 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
      design_eurocode_partial_factor_set: Select partial factor set
      design_partial_factor_set_ec7_nad_nl: Select partial factor set
      design_ec7_nl_method: Select method of calculation according to CUR 166 design procedure
-     design_partial_factor_set_ec7_nad_b: Select partial factor set
-     design_ec7_b_method: Select method of calculation according to CUR 166 design procedure
+     design_partial_factor_set_ec7_nad_be: Select partial factor set
+     design_ec7_be_method: Select method of calculation according to CUR 166 design procedure
      design_partial_factor_set: Select partial factor set
      design_cur_method: Select method of calculation according to CUR 166 design procedure
     """
@@ -206,10 +212,10 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     design_ec7_nl_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
-    design_partial_factor_set_ec7_nad_b: PartialFactorSetEC7NADB = (
-        PartialFactorSetEC7NADB.SET1
+    design_partial_factor_set_ec7_nad_be: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.SET1
     )
-    design_ec7_b_method: PartialFactorCalculationType = (
+    design_ec7_be_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
     design_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI

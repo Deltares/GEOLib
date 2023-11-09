@@ -9,9 +9,10 @@ from geolib.models.dstability.internal import (
     PersistableLayerLoad,
     PersistableLineLoad,
     PersistableSoilLayer,
+    PersistableTree,
     PersistableUniformLoad,
 )
-from geolib.models.dstability.loads import Consolidation, LineLoad, UniformLoad
+from geolib.models.dstability.loads import Consolidation, LineLoad, TreeLoad, UniformLoad
 
 
 @pytest.fixture
@@ -32,6 +33,17 @@ def _get_line_load() -> LineLoad:
         location=Point(x=0, z=0),
         magnitude=10,
         angle=0,
+        angle_of_distribution=45,
+    )
+
+
+@pytest.fixture
+def _get_tree_load() -> TreeLoad:
+    return TreeLoad(
+        label="this is a tree load",
+        tree_top_location=Point(x=20, z=10),
+        wind_force=10,
+        width_of_root_zone=2,
         angle_of_distribution=45,
     )
 
@@ -61,7 +73,6 @@ class TestConsolidation:
 
     @pytest.mark.unittest
     def test_get_consolidations_fixture_is_valid(self, _get_consolidations):
-
         consolidations = _get_consolidations
 
         assert isinstance(consolidations, List)
@@ -117,7 +128,6 @@ class TestUniformLoad:
 
     @pytest.mark.unittest
     def test_get_uniform_load_fixture_is_valid(self, _get_uniform_load):
-
         uniform_load = _get_uniform_load
 
         assert isinstance(uniform_load, UniformLoad)
@@ -211,7 +221,6 @@ class TestLineLoad:
 
     @pytest.mark.unittest
     def test_get_line_load_fixture_is_valid(self, _get_line_load):
-
         line_load = _get_line_load
 
         assert isinstance(line_load, LineLoad)
@@ -274,6 +283,21 @@ class TestLineLoad:
         assert line_load.angle == internal_datastructure.Angle
         assert line_load.angle_of_distribution == internal_datastructure.Spread
 
+    @pytest.mark.unittest
+    def test_tree_to_internal_datastructure(self, _get_tree_load):
+        tree = _get_tree_load
+
+        internal_datastructure = tree.to_internal_datastructure()
+
+        assert isinstance(internal_datastructure, PersistableTree)
+
+        assert tree.label == internal_datastructure.Label
+        assert tree.tree_top_location.x == internal_datastructure.Location.X
+        assert tree.tree_top_location.z == internal_datastructure.Location.Z
+        assert tree.wind_force == internal_datastructure.Force
+        assert tree.width_of_root_zone == internal_datastructure.RootZoneWidth
+        assert tree.angle_of_distribution == internal_datastructure.Spread
+
 
 class TestDStabilityModelAddLoad:
     @pytest.mark.unittest
@@ -286,9 +310,9 @@ class TestDStabilityModelAddLoad:
         load = NotaDStabilityLoad()
 
         with pytest.raises(ValueError):
-            dstability_model.add_load(load=load, stage_id=0)
+            dstability_model.add_load(load=load, scenario_index=0, stage_index=0)
 
-    @pytest.mark.integrationtest
+    @pytest.mark.unittest
     @pytest.mark.parametrize(
         "stage_id",
         [
@@ -314,8 +338,12 @@ class TestDStabilityModelAddLoad:
         soil_layer_id = 15
         soil_layers_id = 20
 
-        dstability_model.datastructure.stages[stage_id].LoadsId = str(loads_id)
-        dstability_model.datastructure.stages[stage_id].SoilLayersId = str(soil_layers_id)
+        dstability_model.datastructure.scenarios[0].Stages[stage_id].LoadsId = str(
+            loads_id
+        )
+        dstability_model.datastructure.scenarios[0].Stages[stage_id].SoilLayersId = str(
+            soil_layers_id
+        )
         dstability_model.datastructure.loads[stage_id].Id = str(loads_id)
         dstability_model.datastructure.soillayers[stage_id].Id = str(soil_layers_id)
         dstability_model.datastructure.soillayers[stage_id].SoilLayers.append(
@@ -325,31 +353,17 @@ class TestDStabilityModelAddLoad:
         uniform_load = _get_uniform_load
         consolidations = _get_consolidations if use_consolidations else None
 
-        dstability_model.add_load(
-            load=uniform_load, consolidations=consolidations, stage_id=stage_id
-        )
+        dstability_model.add_load(load=uniform_load, consolidations=consolidations)
 
-        uniformloads = dstability_model.datastructure.loads[stage_id].UniformLoads
-        assert len(uniformloads) == 1
+        uniform_loads = dstability_model.datastructure.loads[stage_id].UniformLoads
+        assert len(uniform_loads) == 1
         assert isinstance(
-            uniformloads[0],
+            uniform_loads[0],
             PersistableUniformLoad,
         )
         if use_consolidations:
-            assert len(uniformloads[0].Consolidations) == 1
-            assert uniformloads[0].Consolidations[0].LayerId == str(soil_layer_id)
-
-    @pytest.mark.integrationtest
-    def test_add_valid_line_load(self):
-        pass
-
-    @pytest.mark.integrationtest
-    def test_add_load_invalid_stage_id_raises_value_error(self):
-        pass
-
-    @pytest.mark.integrationtest
-    def test_add_load_has_no_loads_raises_value_error(self):
-        pass
+            assert len(uniform_loads[0].Consolidations) == 1
+            assert uniform_loads[0].Consolidations[0].LayerId == str(soil_layer_id)
 
 
 class TestDStabilityModelAddSoilLayerConsolidations:
@@ -378,8 +392,12 @@ class TestDStabilityModelAddSoilLayerConsolidations:
         soil_layer_id_b = 16
         soil_layers_id = 20
 
-        dstability_model.datastructure.stages[stage_id].LoadsId = str(loads_id)
-        dstability_model.datastructure.stages[stage_id].SoilLayersId = str(soil_layers_id)
+        dstability_model.datastructure.scenarios[0].Stages[stage_id].LoadsId = str(
+            loads_id
+        )
+        dstability_model.datastructure.scenarios[0].Stages[stage_id].SoilLayersId = str(
+            soil_layers_id
+        )
         dstability_model.datastructure.loads[stage_id].Id = str(loads_id)
         dstability_model.datastructure.soillayers[stage_id].Id = str(soil_layers_id)
         dstability_model.datastructure.soillayers[stage_id].SoilLayers.append(
@@ -391,9 +409,7 @@ class TestDStabilityModelAddSoilLayerConsolidations:
 
         consolidations = _get_consolidations if use_consolidations else None
         dstability_model.add_soil_layer_consolidations(
-            soil_layer_id=soil_layer_id_b,
-            consolidations=consolidations,
-            stage_id=stage_id,
+            soil_layer_id=soil_layer_id_b, consolidations=consolidations
         )
 
         assert len(dstability_model.datastructure.loads[stage_id].LayerLoads) == 1
@@ -401,11 +417,3 @@ class TestDStabilityModelAddSoilLayerConsolidations:
             dstability_model.datastructure.loads[stage_id].LayerLoads[0],
             PersistableLayerLoad,
         )
-
-    @pytest.mark.unittest
-    def test_add_layer_load_invalid_stage_id_raises_value_error(self):
-        pass
-
-    @pytest.mark.unittest
-    def test_add_layer_load_has_no_loads_raises_value_error(self):
-        pass

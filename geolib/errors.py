@@ -2,6 +2,7 @@
 Error definitions for GEOLib.
 """
 
+
 class GEOLibError(Exception):
     """Base GEOLib Exception class."""
 

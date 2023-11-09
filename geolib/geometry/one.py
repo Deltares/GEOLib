@@ -20,14 +20,13 @@ class Point(BaseDataClass):
     """A single Point Class."""
 
     label: Optional[str] = ""
-    id: Optional[int]
+    id: Optional[int] = None
     x: float = NODATA
     y: float = NODATA
     z: float = NODATA
     tolerance: float = 1e-4
 
     def __eq__(self, other):
-
         if isinstance(other, Point):
             return (
                 isclose(self.x, other.x, abs_tol=self.tolerance)

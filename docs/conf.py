@@ -90,7 +90,7 @@ html_theme_options = {
         "@Source code": "https://github.com/Deltares/GEOLib",
         "@Issue Tracker": "https://github.com/Deltares/GEOLib/issues",
         "@Project documentation": "https://deltares.github.io/geolib/",
-        "@Releases": "https://github.com/Deltares/GEOLib/releases",
+        "@Changelog": "https://github.com/Deltares/GEOLib/releases",
     },
     "show_relbars": True,
 }

@@ -33,7 +33,6 @@ class DSettlementOutputParser(DSerieParser):
 
 
 class DSettlementParserProvider(BaseParserProvider):
-
     __input_parsers = None
     __output_parsers = None
 

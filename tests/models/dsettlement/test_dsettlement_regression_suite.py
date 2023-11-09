@@ -8,7 +8,6 @@ from tests.utils import TestUtils, only_teamcity
 
 
 class TestDSettlementRegressionSuite:
-
     input_testdata = TestUtils.get_test_files_from_local_test_dir(
         "dsettlement/benchmarks", "*.sld"
     )

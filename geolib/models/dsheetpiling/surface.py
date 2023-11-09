@@ -40,7 +40,6 @@ class Surface(BaseDataClass):
         return v
 
     def to_internal(self) -> InternalSurface:
-
         kwargs = self.dict(exclude_none=True, exclude={"points"})
         kwargs["points"] = [
             {"Nr": i, "X-coord": p.x, "Value": p.z}

@@ -132,7 +132,7 @@ class TestDSeriesTreeStructure:
     ):
         # 1. Set up test data
         text_lines = [["2"], ["4"], ["2"]]
-        expected_error = f"Expected 4 values for property list_property."
+        expected_error = "Expected 4 values for property list_property."
         parsed_structure = None
         # 2. Run and verify
         with pytest.raises(ValueError) as e_info:
@@ -150,7 +150,7 @@ class TestDSeriesTreeStructure:
     def test_given_notenoughlistvalues_when_parse_text_lines_then_raises_valueerror(self):
         # 1. Set up test data
         text_lines = ["2", "4", "2"]
-        expected_error = f"Expected text line property for single_property."
+        expected_error = "Expected text line property for single_property."
         parsed_structure = None
         # 2. Run and verify
         with pytest.raises(ValueError) as e_info:
@@ -188,7 +188,7 @@ class TestDSeriesTreeStructure:
         text_lines = ["2"]
         expected_error = (
             ""
-            + f"There should be at least 2"
+            + "There should be at least 2"
             + f" fields to correctly initalize object {DummyTreeStructure}"
         )
         parsed_structure = None
@@ -628,7 +628,6 @@ class TestDSeriesWrappedTableStructure:
 
 
 class TestDSeriesInlineProperties:
-
     test_values = {"property_1": 42, "property_2": 24, "property_3": 4.2}
 
     valid_inline_properties = "property_1 = 42\n" + "property_2 = 24"

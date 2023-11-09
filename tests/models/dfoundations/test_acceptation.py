@@ -10,6 +10,7 @@ from geolib.soils import Soil
 from tests.utils import TestUtils, only_teamcity
 
 
+@pytest.mark.usefixtures("cleandir_dfo")
 @pytest.mark.acceptance
 @only_teamcity
 def test_run_model_from_scratch_expanded():
@@ -20,7 +21,10 @@ def test_run_model_from_scratch_expanded():
 
     # Model options are required to be set before setting additional parameters
     model_options = gl.models.dfoundations.dfoundations_model.BearingPilesModel(
-        is_rigid=False, factor_xi3=9
+        is_rigid=False,
+        factor_xi3=9,
+        max_allowed_rel_rotation_lim_state_str=100,
+        max_allowed_rel_rotation_lim_state_serv=300,
     )
     calculation_options = gl.models.dfoundations.dfoundations_model.CalculationOptions(
         calculationtype=gl.models.dfoundations.dfoundations_model.CalculationType.VERIFICATION_DESIGN,
