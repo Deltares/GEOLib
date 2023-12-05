@@ -1490,6 +1490,8 @@ class PersistableSlice(DStabilityBaseModelStructure):
 
 
 class BishopBruteForceResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     Circle: Optional[PersistableCircle] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
