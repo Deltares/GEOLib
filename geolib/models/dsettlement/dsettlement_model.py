@@ -75,8 +75,12 @@ class DSettlementModel(BaseModel):
         return DSettlementParserProvider
 
     @property
-    def console_path(self) -> Path:
+    def default_console_path(self) -> Path:
         return Path("DSettlementConsole/DSettlementConsole.exe")
+    
+    @property
+    def custom_console_path(self) -> Path:
+        return self.get_meta_property("dsettlement_console_path")
 
     @property
     def console_flags(self) -> List[str]:

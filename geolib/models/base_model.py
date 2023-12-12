@@ -44,7 +44,11 @@ class BaseModel(BaseDataClass, abc.ABC):
             logger.warning("Serializing before executing.")
             self.serialize(self.filename)
 
-        executable = meta.console_folder / self.console_path
+        if self.custom_console_path is not None:
+            executable = self.custom_console_path
+        else:
+            executable = meta.console_folder / self.default_console_path
+
         if not executable.exists():
             logger.error(
                 f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"
@@ -127,8 +131,12 @@ class BaseModel(BaseDataClass, abc.ABC):
         """Serialize model to input file."""
 
     @property
-    def console_path(self) -> Path:
+    def default_console_path(self) -> Path:
         raise NotImplementedError("Implement in concrete classes.")
+    
+    @property
+    def custom_console_path(self) -> Optional[Path]:
+        return None
 
     @property
     def console_flags(self) -> List[str]:
@@ -178,7 +186,13 @@ class BaseModel(BaseDataClass, abc.ABC):
         Requires a successful execute.
         """
         return self.datastructure.results
-
+    
+    def get_meta_property(self, key: str) -> str:
+        """Get a metadata property from the input file."""
+        if hasattr(meta, key):
+            return meta.__getattribute__(key)
+        else:
+            return None
 
 class BaseModelList(BaseDataClass):
     """Hold multiple models that can be executed in parallel.
@@ -223,7 +237,7 @@ class BaseModelList(BaseDataClass):
                 fn = unique_folder / model.filename.name
                 model.serialize(fn.resolve())
 
-            executable = meta.console_folder / lead_model.console_path
+            executable = meta.console_folder / lead_model.default_console_path
             if not executable.exists():
                 logger.error(
                     f"Please make sure the `geolib.env` file points to the console folder. GEOLib now can't find it at `{executable}`"

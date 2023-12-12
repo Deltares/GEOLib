@@ -58,8 +58,12 @@ class DGeoFlowModel(BaseModel):
         return DGeoFlowParserProvider
 
     @property
-    def console_path(self) -> Path:
+    def default_console_path(self) -> Path:
         return Path("DGeoFlowConsole/DGeoFlow Console.exe")
+    
+    @property
+    def custom_console_path(self) -> Path:
+        return self.get_meta_property("dgeoflow_console_path")
 
     @property
     def console_flags_post(self) -> List[str]:
