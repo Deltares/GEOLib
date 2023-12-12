@@ -11,7 +11,24 @@ company name.
 You can specify the configuration in two ways. One is to create a geolib.env
 file in your working directory. The second is to specify environment variables.
 
-The *geolib.env* file is a simple text file, which can contain any number of parameters, for example::
+The *geolib.env* file is a simple text file, which can contain any number of parameters, see the two methods below
+to see how you can use this file to configure the path to the console applications.
+
+Setting the console paths per application
+-----------------------------------------
+
+In the *geolib.env* file, you can set the paths to the console applications, for example::
+
+    DSTABILITY_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-GEO Suite\\D-Stability 2023.01\\bin\\D-Stability Console.exe"
+    DGEOFLOW_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Geo Flow 2023.01\\bin\\DGeoFlow Console.exe"
+    DSHEETPILING_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Sheet Piling 23.1.1\\DSheetPiling.exe"
+    DFOUNDATIONS_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Foundations 23.1.1\\DFoundations.exe"
+    DSETTLEMENT_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Settlement 23.1.1\\DSettlement.exe"
+
+Settings the console path using the common CONSOLE_FOLDER variable
+------------------------------------------------------------------
+
+In the *geolib.env* file, you can set the CONSOLE_FOLDER variable to a folder that should contain all console applications in a single location, for example::
 
     CONSOLE_FOLDER="C:\\Users\\You\\Documents\\GEOLibConsoles"  # path has to exist!
 
@@ -28,6 +45,9 @@ otherwise GEOLib will not start. The executables are expected in the following l
 
 It can also be set by a **CONSOLE_FOLDER** environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.
+
+Default settings
+----------------
 
 The defaults are as follows::
 
