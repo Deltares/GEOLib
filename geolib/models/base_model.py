@@ -187,7 +187,7 @@ class BaseModel(BaseDataClass, abc.ABC):
         """
         return self.datastructure.results
     
-    def get_meta_property(self, key: str) -> str:
+    def get_meta_property(self, key: str) -> Optional[str]:
         """Get a metadata property from the input file."""
         if hasattr(meta, key):
             return meta.__getattribute__(key)
