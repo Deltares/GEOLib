@@ -193,6 +193,13 @@ class BaseModel(BaseDataClass, abc.ABC):
             return meta.__getattribute__(key)
         else:
             return None
+        
+    def set_meta_property(self, key: str, value: str) -> None:
+        """Set a metadata property from the input file."""
+        if hasattr(meta, key):
+            meta.__setattr__(key, value)
+        else:
+            raise ValueError(f"Metadata property {key} does not exist.")
 
 class BaseModelList(BaseDataClass):
     """Hold multiple models that can be executed in parallel.
