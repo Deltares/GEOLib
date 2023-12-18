@@ -1615,6 +1615,8 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
 
 
 class BishopResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     Circle: Optional[PersistableCircle] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
@@ -1687,6 +1689,8 @@ class PersistableSpencerSlice(DStabilityBaseModelStructure):
 
 
 class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
@@ -1778,6 +1782,8 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
 
 
 class SpencerResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
@@ -1801,6 +1807,8 @@ class SpencerResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
@@ -1910,6 +1918,8 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
 
 
 class UpliftVanResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
