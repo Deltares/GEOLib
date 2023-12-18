@@ -77,16 +77,15 @@ Dynamic settings
 ----------------
 
 If you don't wish to use *geolib.env* files or wish to override them, you can change the final settings
-in Python itself, using the *meta* attribute of a model. For example, to override the *console_folder*::
+in Python itself, using the *meta* methods on a model. Note that changing the properties for one model changes the global settings, so it applies to all instances of a model.
+For example, to override the *console_folder*::
 
     >>> import geolib as gl
     >>> from pathlib import Path
     >>> dm = gl.models.DSettlementModel()
-    >>> dm.meta
-    MetaData(company='Deltares', analyst='', startdate=datetime.datetime(2020, 10, 7, 15, 44, 9, 174187), project='', remarks='Created by GEOLib 0.1.2', endpoint=AnyHttpUrl('http://localhost:8000/', scheme='http', host='localhost', host_type='int_domain', port='8000', path='/'), gl_username='test', gl_password='test', console_folder=PosixPath('tests'))
-    >>> dm.meta.console_folder
-    PosixPath('tests')
-    >>> dm.meta.console_folder = Path("other_location")  # has to exist!
+    >>> dm.get_meta_property("company")
+    Deltares
+    >>> dm.set_meta_property("console_folder", Path("other_location"))
 
 Logging
 -------
