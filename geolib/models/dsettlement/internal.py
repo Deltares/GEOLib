@@ -15,6 +15,7 @@ from geolib.models.dseries_parser import (
     DSerieMatrixStructure,
     DSerieOldTableStructure,
     DSeriesInlineMappedProperties,
+    DSeriesInlineReversedProperties,
     DSeriesMatrixTreeStructureCollection,
     DSeriesNoParseSubStructure,
     DSeriesRepeatedGroupedProperties,
@@ -101,9 +102,9 @@ class SoilCollection(DSeriesStructureCollection):
 
 
 class Version(DSerieVersion):
-    soil: int = 1005
-    geometry: int = 1000
-    d__settlement: int = 1007
+    soil: int = 1011
+    geometry: int = 1002
+    d__settlement: int = 1011
 
 
 class Points(DSeriesMatrixTreeStructureCollection):
@@ -363,10 +364,6 @@ class DistributionBoundaries(DSerieListStructure):
             )
 
 
-class Accuracy(DSeriesUnmappedNameProperties):
-    accuracy: confloat(ge=1e-10) = 1e-3
-
-
 class PhreaticLine(DSeriesUnmappedNameProperties):
     phreatic_line: conint(ge=0, lt=99) = 0
 
@@ -374,7 +371,6 @@ class PhreaticLine(DSeriesUnmappedNameProperties):
 class GeometryData(DSeriesStructure):
     """Representation of [GEOMETRY DATA] group."""
 
-    accuracy: Accuracy = Accuracy()
     points: Points = Points()
     curves: Curves = Curves()
     boundaries: Boundaries = Boundaries()
@@ -385,16 +381,7 @@ class GeometryData(DSeriesStructure):
     distribution_boundaries: DistributionBoundaries = DistributionBoundaries()
     piezo_lines: PiezoLines = PiezoLines()
     phreatic_line: PhreaticLine = PhreaticLine()
-    world_co__ordinates: str = cleandoc(
-        """
-          0.000 - X world 1 -
-          0.000 - Y world 1 -
-          0.000 - X world 2 -
-          0.000 - Y world 2 -
-          """
-    )
     layers: Layers = Layers()
-    layerloads: str = ""
 
     def boundary_area_above_horizontal(self, boundary: Boundary, y: float = 0.0) -> float:
         """Area above horizontal line defined by y-coordinate."""
@@ -539,8 +526,6 @@ class ResidualTimes(DSeriesNoParseSubStructure):
 class Verticals(DSeriesNoParseSubStructure):
     """Representation of [VERTICALS] group."""
 
-    # total mesh is default value that is written in sli file but not read
-    total_mesh: int = 100
     locations: List[DSeriePoint] = []
 
 
@@ -624,28 +609,28 @@ class OtherLoads(DSeriesNoParseSubStructure):
             return None
 
 
-class Dimension(Enum):
+class Dimension(IntEnum):
     ONE_D = 0
     TWO_D = 1
 
 
-class ConsolidationModel(Enum):
+class ConsolidationModel(IntEnum):
     DARCY = 0
     TERZAGHI = 1
 
 
-class SoilModel(Enum):
+class SoilModel(IntEnum):
     NEN_KOPPEJAN = 0
     NEN_BJERRUM = 1
     ISOTACHE = 2
 
 
-class StrainType(Enum):
+class StrainType(IntEnum):
     LINEAR = 0
     NATURAL = 1
 
 
-class Model(DSeriesNoParseSubStructure):
+class Model(DSeriesInlineReversedProperties):
     dimension: Dimension = Dimension.TWO_D
     consolidation_model: ConsolidationModel = ConsolidationModel.DARCY
     soil_model: SoilModel = SoilModel.NEN_KOPPEJAN
@@ -654,8 +639,8 @@ class Model(DSeriesNoParseSubStructure):
     is_fit_for_settlement_plate: Bool = Bool.FALSE
     is_probabilistic: Bool = Bool.FALSE
     is_horizontal_displacements: Bool = Bool.FALSE
+    # Secondary Swelling is only available in Evaluation version (Deltares only)
     is_secondary_swelling: Bool = Bool.FALSE
-    is_waspan: Bool = Bool.FALSE
 
 
 class PreconPressureWithinLayer(IntEnum):
@@ -774,6 +759,17 @@ class InternalProbabilisticCalculationType(IntEnum):
     BandWidthAndProbabilityOfFailureMonteCarlo = 2
 
 
+class FitOptions(DSeriesInlineMappedProperties):
+    fit_maximum_number_of_iterations: conint(ge=0, le=100) = 5
+    fit_required_iteration_accuracy: confloat(ge=0, le=1) = 0.0001
+    fit_required_correlation_coefficient: confloat(ge=0, le=1) = 0.99
+
+
+class FitCalculation(DSeriesInlineMappedProperties):
+    is_fit_calculation: Bool = Bool.FALSE
+    fit_vertical_number: conint(ge=-1, le=1000) = 0  # index (zero-based)
+
+
 class ProbabilisticData(DSeriesInlineMappedProperties):
     reliability_x_co__ordinate: float = 0
     residual_settlement: confloat(ge=0, le=1000) = 1
@@ -823,7 +819,7 @@ class ProbabilisticData(DSeriesInlineMappedProperties):
         return map_values[reliability_type.value]
 
 
-class DSettlementStructure(DSeriesStructure):
+class DSettlementInputStructure(DSeriesStructure):
     """Representation of complete .sli file."""
 
     version: Version = Version()
@@ -831,7 +827,7 @@ class DSettlementStructure(DSeriesStructure):
     geometry_data: GeometryData = GeometryData()
     geometry_1d_data: Optional[str]
     run_identification: str = 2 * "\n"
-    model: Union[Model, str] = Model()
+    model: Model = Model()
     verticals: Union[Verticals, str] = Verticals()
     water: Union[float, str] = 9.81
     non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
@@ -843,15 +839,6 @@ class DSettlementStructure(DSeriesStructure):
         """
         1 : Number of items
         0.05
-        """
-    )
-    pore_pressure_meters: str = ZERO_ITEMS
-    non__uniform_loads_pore_pressures: str = ZERO_ITEMS
-    other_loads_pore_pressures: str = ZERO_ITEMS
-    calculation_options_pore_pressures: str = cleandoc(
-        """
-        1 : Shear stress = TRUE
-        1 : calculation method of lateral stress ratio (k0) = Nu
         """
     )
     vertical_drain: Union[VerticalDrain, str] = VerticalDrain()
@@ -911,27 +898,8 @@ class DSettlementStructure(DSeriesStructure):
         ProbDefLayerDist=0
         """
     )
-    fit_options: str = cleandoc(
-        """
-        Fit Maximum Number of Iterations=5
-        Fit Required Iteration Accuracy=0.0001000000
-        Fit Required Correlation Coefficient=0.990
-        """
-    )
-    fit_calculation: str = cleandoc(
-        """
-        Is Fit Calculation=0
-        Fit Vertical Number=-1
-        """
-    )
-    eps: str = cleandoc(
-        """
-        0.00 = Dry unit weight
-        0.00 = Saturated unit weight
-        0.00 = Load
-        0.00 = Height above surface
-        """
-    )
+    fit_options: FitOptions = FitOptions()
+    fit_calculation: FitCalculation = FitCalculation()
     fit: str = ZERO_ITEMS
 
     # Custom validator
@@ -1015,9 +983,14 @@ class ResidualSettlements(DSerieOldTableStructure):
     residualsettlements: List[Dict[str, float]]
 
 
+class CalculationSettings(DSeriesStructure):
+    # Secondary Swelling is only available in Evaluation version (Deltares only)
+    is_secondary_swelling_used: bool = False
+
+
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
-
+    calculation_settings: Optional[CalculationSettings]
     verticals_count: int
     vertical: List[Vertical]
     residual_settlements: List[ResidualSettlements]
@@ -1027,8 +1000,12 @@ class Results(DSeriesRepeatedGroupedProperties):
 
 
 class DSettlementOutputStructure(DSeriesStructure):
-    """Representation of complete .sld file, inherting
+    """Representation of complete .sld file, inheriting
     the structure of the .sli file as well."""
-
     results: Results
-    input_data: DSettlementStructure
+    input_data: DSettlementInputStructure
+
+
+class DSettlementStructure(DSeriesStructure):
+    input_data: DSettlementInputStructure = DSettlementInputStructure()
+    output_data: Optional[Results] = None

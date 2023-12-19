@@ -367,7 +367,9 @@ class SoilState(SoilBaseModel):
     ] = StochasticParameter()
     ocr_layer: Optional[Union[float, StochasticParameter]] = StochasticParameter()
     pop_layer: Optional[Union[float, StochasticParameter]] = StochasticParameter()
-
+    secondary_swelling_reduced: Optional[bool] = None
+    secondary_swelling_factor: Optional[float] = None
+    unloading_stress_ratio: Optional[float] = None
 
 class SoilType(IntEnum):
     GRAVEL = 0
