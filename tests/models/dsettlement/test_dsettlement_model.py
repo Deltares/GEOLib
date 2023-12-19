@@ -580,7 +580,7 @@ class TestDSettlementModel:
         assert ds.datastructure.input_data.probabilistic_data.is_reliability_calculation.value == 1
         assert ds.datastructure.input_data.probabilistic_data.maximum_drawings == 1000
         assert ds.datastructure.input_data.probabilistic_data.maximum_iterations == 30
-        assert ds.datastructure.input_data.probabilistic_data.reliability_x_co__ordinate == 0.0
+        assert ds.datastructure.input_data.probabilistic_data.reliability_x_co__ordinate == pytest.approx(0.0)
         assert (
             ds.datastructure.input_data.probabilistic_data.reliability_type
             == InternalProbabilisticCalculationType.FOSMOrDeterministic
@@ -1458,8 +1458,8 @@ class TestDSettlementModel:
             == test_drain.center_to_center
         )
         assert ds.datastructure.input_data.vertical_drain.width == test_drain.width
-        assert ds.datastructure.input_data.vertical_drain.diameter == 0.1
-        assert ds.datastructure.input_data.vertical_drain.thickness == 0.003
+        assert ds.datastructure.input_data.vertical_drain.diameter == pytest.approx(0.1)
+        assert ds.datastructure.input_data.vertical_drain.thickness == pytest.approx(0.003)
         assert ds.datastructure.input_data.vertical_drain.grid == test_drain.grid
         assert (
             ds.datastructure.input_data.vertical_drain.start_of_drainage
@@ -1513,8 +1513,8 @@ class TestDSettlementModel:
             == test_drain.center_to_center
         )
         assert ds.datastructure.input_data.vertical_drain.diameter == test_drain.diameter
-        assert ds.datastructure.input_data.vertical_drain.width == 0.1
-        assert ds.datastructure.input_data.vertical_drain.thickness == 0.003
+        assert ds.datastructure.input_data.vertical_drain.width == pytest.approx(0.1)
+        assert ds.datastructure.input_data.vertical_drain.thickness == pytest.approx(0.003)
         assert ds.datastructure.input_data.vertical_drain.grid == test_drain.grid
         assert (
             ds.datastructure.input_data.vertical_drain.start_of_drainage

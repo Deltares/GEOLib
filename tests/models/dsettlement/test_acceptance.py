@@ -677,9 +677,9 @@ class TestDSettlementAcceptance:
         # 6. Select fit iteration options
         assert dm.fit_options.fit_maximum_number_of_iterations == 5
         dm.fit_options.fit_maximum_number_of_iterations = 2
-        assert dm.fit_options.fit_required_iteration_accuracy == 0.0001
+        assert dm.fit_options.fit_required_iteration_accuracy == pytest.approx(0.0001)
         dm.fit_options.fit_required_iteration_accuracy = 0.001
-        assert dm.fit_options.fit_required_correlation_coefficient == 0.99
+        assert dm.fit_options.fit_required_correlation_coefficient == pytest.approx(0.99)
         dm.fit_options.fit_required_correlation_coefficient = 0.9
 
         # 7. Serialize file
