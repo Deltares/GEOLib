@@ -59,15 +59,12 @@ def cleanup(path: Path):
     shutil.rmtree(path)
 
 
-def execute(model, background_tasks: BackgroundTasks):
+def execute(model: BaseModel, background_tasks: BackgroundTasks):
     unique_id = str(uuid.uuid4())
     unique_folder = Path(settings.calculation_folder / unique_id).absolute()
     unique_folder.mkdir(parents=True, exist_ok=True)
     ext = model.parser_provider_type().input_parsers[0].suffix_list[0]
     model.serialize(unique_folder / f"{unique_id}{ext}")
-
-    # Override console folder from client
-    model.meta.console_folder = settings.console_folder
 
     try:
         output = model.execute()

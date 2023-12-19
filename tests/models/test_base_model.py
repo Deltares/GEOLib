@@ -130,8 +130,6 @@ class TestBaseModel:
         ml = BaseModelList(models=[a, b])
         for i, modelinstance in enumerate(ml.models):
             modelinstance.parse(benchmark_fn)
-            modelinstance.meta.company = "Foo"
-            modelinstance.meta.console_folder = Path("/")
         fn = "test"
         ml.models.append(model(filename=Path(fn)))
 
@@ -140,10 +138,6 @@ class TestBaseModel:
         assert len(output.models) == 2
         for model in output.models:
             assert model.output
-            # Metadata is kept intact
-            assert model.meta.company == "Foo"
-            # But the console_folder meta variable is reset to default
-            assert model.meta.console_folder == MetaData().console_folder
 
         assert len(output.errors) == 1
         assert fn in output.errors[-1]
@@ -170,18 +164,10 @@ class TestBaseModel:
         input_folder = Path(TestUtils.get_local_test_data_dir(modelname))
         benchmark_fn = input_folder / filename
         modelinstance.parse(benchmark_fn)
-        modelinstance.meta.company = "Foo"
-        modelinstance.meta.console_folder = Path("/")
 
         # Execute and make sure there's output
         model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
         assert model.output
-
-        # Metadata is kept intact
-        assert model.meta.company == "Foo"
-        # But the console_folder meta variable is reset to default
-        assert model.meta.console_folder == MetaData().console_folder
-
 
 class TestBool:
     @pytest.mark.unittest
