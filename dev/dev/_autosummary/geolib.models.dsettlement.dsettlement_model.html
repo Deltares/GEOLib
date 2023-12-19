@@ -68,11 +68,6 @@ by external loading.</p>
 <dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p>
 </dd>
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.accuracy">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">accuracy</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.accuracy" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_boundary">
 <span class="sig-name descname"><span class="pre">add_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_probabilistic_defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distribution_boundaries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DistributionType.Undefined</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.add_boundary" title="Link to this definition">¶</a></dt>
@@ -224,9 +219,25 @@ by external loading.</p>
 <dd></dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.fit_calculation">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit_calculation</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.fit_calculation" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.fit_options">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit_options</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.fit_options" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.headlines">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">headlines</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.headlines" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.input">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input</span></span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.input" title="Link to this definition">¶</a></dt>
+<dd><p>Access internal dict-like datastructure of the input.</p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.layers">
@@ -339,7 +350,7 @@ by external loading.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model">
-<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constitutive_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidation_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_two_dimensional</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strain_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_vertical_drain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fit_for_settlement_plate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_probabilistic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_horizontal_displacements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_secondary_swelling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_waspan</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constitutive_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consolidation_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_two_dimensional</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strain_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_vertical_drain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fit_for_settlement_plate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_probabilistic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_horizontal_displacements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_secondary_swelling</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsettlement.dsettlement_model.DSettlementModel.set_model" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the D-settlement Model. Initializes CalculationOptions and Model if the type is str</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -353,7 +364,6 @@ by external loading.</p>
 <li><p><strong>is_probabilistic</strong> (<em>bool</em>) – true if probabilistic calculation should be made</p></li>
 <li><p><strong>is_horizontal_displacements</strong> (<em>bool</em>) – true if horizontal displacements should be calculated</p></li>
 <li><p><strong>is_secondary_swelling</strong> (<em>bool</em>) – true if secondary swelling is present</p></li>
-<li><p><strong>is_waspan</strong> (<em>bool</em>) – true if waspan</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

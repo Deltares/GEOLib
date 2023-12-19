@@ -62,15 +62,35 @@
 <h2>Tutorial<a class="headerlink" href="#tutorial" title="Link to this heading">¶</a></h2>
 <p>You can find the D-Settlement tutorial here: <a class="reference internal" href="../../community/tutorial_dsettlement.html"><span class="doc">Tutorial D-Settlement</span></a></p>
 </section>
+<section id="fit-for-settlement-plate">
+<h2>Fit for settlement plate<a class="headerlink" href="#fit-for-settlement-plate" title="Link to this heading">¶</a></h2>
+<p>With a fit calculation, the match between predicted and measured settlements can be improved by automatic scaling of soil properties.
+A close fit will improve the continued prediction of final and residual settlements.
+To perform a fit for settlement plate calculation, the following settings are required:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># In the model settings, the fit option must be activated:</span>
+<span class="n">DSettlementModel</span><span class="p">()</span><span class="o">.</span><span class="n">datastructure</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">is_fit_for_settlement_plate</span> <span class="o">=</span> <span class="n">Bool</span><span class="o">.</span><span class="n">TRUE</span>
+
+<span class="c1"># In the fit calculation, the fit must be activated and the vertical along which the fit is performed must be defined:</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">fit_calculation</span><span class="o">.</span><span class="n">fit_vertical_number</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">dm</span><span class="o">.</span><span class="n">fit_calculation</span><span class="o">.</span><span class="n">is_fit_calculation</span> <span class="o">=</span> <span class="n">Bool</span><span class="o">.</span><span class="n">TRUE</span>
+</pre></div>
+</div>
+<p>Note that fit_vertical_number corresponds to the (zero-based) index of the vertical:
+the first vertical has index 0, the second vertical index 1, etc…</p>
+<p>Make sure that the measurement file (text file) defined in DSettlementModel().datastructure.input_data.fit is present.</p>
+<p>As results of the fit calculation,
+the fit factors of the selected soil properties and the coefficient of determination are available in
+DSettlementModel().datastructure.input_data.fit of the output file.</p>
+</section>
 <section id="geometry">
 <h2>Geometry<a class="headerlink" href="#geometry" title="Link to this heading">¶</a></h2>
 <section id="add-layer">
 <h3>Add layer<a class="headerlink" href="#add-layer" title="Link to this heading">¶</a></h3>
-<p>In order to add a layer in d-settlement it is required to first set the head lines
+<p>In order to add a layer in D-Settlement it is required to first set the head lines
 and the boundaries.</p>
 <section id="add-boundary">
 <h4>Add boundary<a class="headerlink" href="#add-boundary" title="Link to this heading">¶</a></h4>
-<p>The only required input for adding a boundary is a list of points. The boundary needs to fullfill
+<p>The only required input for adding a boundary is a list of points. The boundary needs to fulfill
 a number of requirements:</p>
 <blockquote>
 <div><ul class="simple">
@@ -80,7 +100,7 @@ a number of requirements:</p>
 <li><p>When you desire to set up a boundary with vertical parts, it is required to arrange the points of the boundary from left to right and from bottom to top.</p></li>
 </ul>
 </div></blockquote>
-<p>It is important that you pay attention to the above requirements, as d-settlement does not return an error when
+<p>It is important that you pay attention to the above requirements, as D-Settlement does not return an error when
 the above requirements are not fulfilled. Instead an unwanted geometry is generated. Below, a visual example is given of how a geometry should be created.</p>
 <a class="reference internal image-reference" href="../../_images/simple_geometry_example.png"><img alt="../../_images/simple_geometry_example.png" src="../../_images/simple_geometry_example.png" style="width: 800px;" /></a>
 <p>In the above figure, two layers and six points are shown.</p>
