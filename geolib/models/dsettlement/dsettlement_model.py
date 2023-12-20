@@ -76,7 +76,7 @@ class DSettlementModel(BaseModel):
 
     @property
     def default_console_path(self) -> Path:
-        return Path("DSettlementConsole/DSettlement.exe")
+        return Path("DSettlement/DSettlement.exe")
     
     @property
     def custom_console_path(self) -> Path:
