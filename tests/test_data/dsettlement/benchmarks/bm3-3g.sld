@@ -2,18 +2,29 @@ Dump file for D-Settlement : Settlement of soil.
 ==============================================================================
 COMPANY    : 
 
-DATE       : 8-3-2019
-TIME       : 16:03:57
-FILENAME   : D:\DSettlement\Test Results DSettlement\Benchmarks Branch\bm3-3g.sld
-CREATED BY : D-Settlement version 19.1.1.23743
+DATE       : 10/08/2023
+TIME       : 07:52:50
+FILENAME   : C:\Deltares\D-Settlement\Benchmarks\bm3-3g.sld
+CREATED BY : D-Settlement version 23.2.1.41674
 ==========================    BEGINNING OF DATA     ==========================
-[Input Data]
+[INPUT DATA]
 [VERSION]
-Soil=1005
-Geometry=1000
-D-Settlement=1007
+Soil=1011
+Geometry=1002
+D-Settlement=1011
 [END OF VERSION]
 
+[MODEL]
+1 : Dimension = 2D
+0 : Calculation type = Darcy
+1 : Model = NEN - Bjerrum
+0 : Strain type = Linear
+0 : Vertical drains = FALSE
+0 : Fit for settlement plate = FALSE
+0 : Probabilistic = FALSE
+0 : Horizontal displacements = FALSE
+0 : Secondary swelling = FALSE
+[END OF MODEL]
 [SOIL COLLECTION]
     1 = number of items
 [SOIL]
@@ -22,8 +33,6 @@ SoilColor=9764853
 SoilGamDry=15.00
 SoilGamWet=18.00
 SoilInitialVoidRatio=0.150000
-SoilCohesion=10.00
-SoilPhi=30.00
 SoilPreconIsotacheType=0
 SoilPreconKoppejanType=1
 SoilUseEquivalentAge=0
@@ -31,9 +40,11 @@ SoilEquivalentAge=2.95E+01
 SoilPc=0.00E+00
 SoilOCR=1.20
 SoilPOP=4.00
-SoilLimitStress=0.00
 SoilDrained=1
 SoilApAsApproximationByCpCs=0
+SoilSecondarySwellingReduced=0
+SoilSecondarySwellingFactor=1.00
+SoilUnloadingStressRatio=1.01
 SoilCv=1.00E+02
 SoilPermeabilityVer=1.000E-06
 SoilPermeabilityHorFactor=0.150
@@ -130,10 +141,6 @@ SoilDefaultElasticity=1
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 [GEOMETRY DATA]
-[ACCURACY]
-        0.0010
-[END OF ACCURACY]
-
 [POINTS]
       8  - Number of geometry points -
        1         -0.250          0.000          0.000
@@ -204,13 +211,6 @@ SoilDefaultElasticity=1
    1 - Number of the piezometric level line acting as phreatic line -
 [END OF PHREATIC LINE]
 
-[WORLD CO-ORDINATES]
-          0.000 - X world 1 -
-          0.000 - Y world 1 -
-          0.000 - X world 2 -
-          0.000 - Y world 2 -
-[END OF WORLD CO-ORDINATES]
-
 [LAYERS]
    1 - Number of layers -
      1 - Layer number, next line is material of layer
@@ -221,31 +221,13 @@ SoilDefaultElasticity=1
        0 - Boundarynumber at bottom of layer
 [END OF LAYERS]
 
-[LAYERLOADS]
- - Layers which are loads -
-
-[END OF LAYERLOADS]
-
 [END OF GEOMETRY DATA]
 [RUN IDENTIFICATION]
 Benchmark MSettle: bm3-3g
 Settlements acc. to NEN-Bjerrum model
 Darcy consolidation - OCR- Compression index
 [END OF RUN IDENTIFICATION]
-[MODEL]
-1 : Dimension = 2D
-0 : Calculation type = Darcy
-1 : Model = NEN - Bjerrum
-0 : Strain type = Linear
-0 : Vertical drains = FALSE
-0 : Fit for settlement plate = FALSE
-0 : Probabilistic = FALSE
-0 : Horizontal displacements = FALSE
-0 : Secondary swelling = FALSE
-0 : Waspan = FALSE
-[END OF MODEL]
 [VERTICALS]
-    100 = total Mesh
     1 = number of items
        0.040        0.000 = X, Z
 [END OF VERTICALS]
@@ -326,37 +308,6 @@ Superelevation
 1 : Number of items
 0.05
 [END OF FILTER BAND WIDTH]
-[PORE PRESSURE METERS]
-    0 = number of items
-[END OF PORE PRESSURE METERS]
-[NON-UNIFORM LOADS PORE PRESSURES]
-    0 = number of items
-[END OF NON-UNIFORM LOADS PORE PRESSURES]
-[OTHER LOADS PORE PRESSURES]
-    9 = number of items
-Initial load
-       0.000 = Top of heightening
-1
-       0.000 = Top of heightening
-2
-       0.000 = Top of heightening
-3
-       0.000 = Top of heightening
-4
-       0.000 = Top of heightening
-5
-       0.000 = Top of heightening
-6
-       0.000 = Top of heightening
-7
-       0.000 = Top of heightening
-8
-       0.000 = Top of heightening
-[END OF OTHER LOADS PORE PRESSURES]
-[CALCULATION OPTIONS PORE PRESSURES]
-1 : Shear stress = TRUE
-1 : calculation method of lateral stress ratio (k0) = Nu
-[END OF CALCULATION OPTIONS PORE PRESSURES]
 [VERTICAL DRAIN]
 1 : Flow type = Plane
        0.000 = Bottom position
@@ -450,18 +401,15 @@ Fit Required Correlation Coefficient=0.990
 Is Fit Calculation=0
 Fit Vertical Number=-1
 [END OF FIT CALCULATION]
-[EPS]
-        0.00 = Dry unit weight
-        0.00 = Saturated unit weight
-        0.00 = Load
-        0.00 = Height above surface
-[END OF EPS]
 [FIT]
     0 = number of items
 [END OF FIT]
-[End of Input Data]
+[END OF INPUT DATA]
 
 [Results]
+[CALCULATION SETTINGS]
+IsSecondarySwellingUsed=0
+[END OF CALCULATION SETTINGS]
 [Verticals Count]
 1
 [End of Verticals Count]

@@ -38,7 +38,7 @@ Note that the *CONSOLE_FOLDER* variable has to point to an existing path,
 otherwise GEOLib will not start. The executables are expected in the following locations::
 
 - *CONSOLE_FOLDER*/"DFoundations/DFoundations.exe"
-- *CONSOLE_FOLDER*/"DSettlementConsole/DSettlementConsole.exe"
+- *CONSOLE_FOLDER*/"DSettlement/DSettlement.exe"
 - *CONSOLE_FOLDER*/"DSheetPiling/DSheetPiling.exe"
 - *CONSOLE_FOLDER*/"DStabilityConsole/D-Stability Console.exe"
 - *CONSOLE_FOLDER*/"DGeoFlowConsole/DGeoFlow Console.exe"
@@ -123,7 +123,7 @@ Each D-Serie / D-GEO Suite release can slightly change the structure of the inpu
 GEOLib only supports the files used by the D-Serie / D-GEO Suite consoles and thus the consoles specific version number.
 At the moment that version number is:
 
-* D-Settlement **19.1**
+* D-Settlement **23.2**
 * D-Foundations **23.1**
 * D-SheetPiling **23.1**
 * D-Stability **2023.01**
