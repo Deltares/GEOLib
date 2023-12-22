@@ -54,7 +54,22 @@ is also used for the metadata used in the model input files, such as your
 company name.</p>
 <p>You can specify the configuration in two ways. One is to create a geolib.env
 file in your working directory. The second is to specify environment variables.</p>
-<p>The <em>geolib.env</em> file is a simple text file, which can contain any number of parameters, for example:</p>
+<p>The <em>geolib.env</em> file is a simple text file, which can contain any number of parameters, see the two methods below
+to see how you can use this file to configure the path to the console applications.</p>
+<section id="setting-the-console-paths-per-application">
+<h2>Setting the console paths per application<a class="headerlink" href="#setting-the-console-paths-per-application" title="Link to this heading">¶</a></h2>
+<p>In the <em>geolib.env</em> file, you can set the paths to the console applications, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DSTABILITY_CONSOLE_PATH</span><span class="o">=</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files (x86)</span><span class="se">\\</span><span class="s2">Deltares</span><span class="se">\\</span><span class="s2">D-GEO Suite</span><span class="se">\\</span><span class="s2">D-Stability 2023.01</span><span class="se">\\</span><span class="s2">bin</span><span class="se">\\</span><span class="s2">D-Stability Console.exe&quot;</span>
+<span class="n">DGEOFLOW_CONSOLE_PATH</span><span class="o">=</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">Deltares</span><span class="se">\\</span><span class="s2">D-GEO Suite</span><span class="se">\\</span><span class="s2">D-Geo Flow 2023.01</span><span class="se">\\</span><span class="s2">bin</span><span class="se">\\</span><span class="s2">DGeoFlow Console.exe&quot;</span>
+<span class="n">DSHEETPILING_CONSOLE_PATH</span><span class="o">=</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files (x86)</span><span class="se">\\</span><span class="s2">Deltares</span><span class="se">\\</span><span class="s2">D-Sheet Piling 23.1.1</span><span class="se">\\</span><span class="s2">DSheetPiling.exe&quot;</span>
+<span class="n">DFOUNDATIONS_CONSOLE_PATH</span><span class="o">=</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files (x86)</span><span class="se">\\</span><span class="s2">Deltares</span><span class="se">\\</span><span class="s2">D-Foundations 23.1.1</span><span class="se">\\</span><span class="s2">DFoundations.exe&quot;</span>
+<span class="n">DSETTLEMENT_CONSOLE_PATH</span><span class="o">=</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files (x86)</span><span class="se">\\</span><span class="s2">Deltares</span><span class="se">\\</span><span class="s2">D-Settlement 23.1.1</span><span class="se">\\</span><span class="s2">DSettlement.exe&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="settings-the-console-path-using-the-common-console-folder-variable">
+<h2>Settings the console path using the common CONSOLE_FOLDER variable<a class="headerlink" href="#settings-the-console-path-using-the-common-console-folder-variable" title="Link to this heading">¶</a></h2>
+<p>In the <em>geolib.env</em> file, you can set the CONSOLE_FOLDER variable to a folder that should contain all console applications in a single location, for example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONSOLE_FOLDER</span><span class="o">=</span><span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">You</span><span class="se">\\</span><span class="s2">Documents</span><span class="se">\\</span><span class="s2">GEOLibConsoles&quot;</span>  <span class="c1"># path has to exist!</span>
 </pre></div>
 </div>
@@ -70,6 +85,9 @@ otherwise GEOLib will not start. The executables are expected in the following l
 </div>
 <p>It can also be set by a <strong>CONSOLE_FOLDER</strong> environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.</p>
+</section>
+<section id="default-settings">
+<h2>Default settings<a class="headerlink" href="#default-settings" title="Link to this heading">¶</a></h2>
 <p>The defaults are as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">company</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 <span class="n">analyst</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -94,18 +112,18 @@ overrule the .env file, which in its turn, overrides the defaults set in Python.
 <span class="n">extra_fields</span> <span class="o">=</span> <span class="s2">&quot;forbid&quot;</span>  <span class="c1"># can be &quot;ignore&quot;, &quot;allow&quot; or &quot;forbid&quot;</span>
 </pre></div>
 </div>
+</section>
 <section id="dynamic-settings">
 <h2>Dynamic settings<a class="headerlink" href="#dynamic-settings" title="Link to this heading">¶</a></h2>
 <p>If you don’t wish to use <em>geolib.env</em> files or wish to override them, you can change the final settings
-in Python itself, using the <em>meta</em> attribute of a model. For example, to override the <em>console_folder</em>:</p>
+in Python itself, using the <em>meta</em> methods on a model. Note that changing the properties for one model changes the global settings, so it applies to all instances of a model.
+For example, to override the <em>console_folder</em>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">DSettlementModel</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">meta</span>
-<span class="go">MetaData(company=&#39;Deltares&#39;, analyst=&#39;&#39;, startdate=datetime.datetime(2020, 10, 7, 15, 44, 9, 174187), project=&#39;&#39;, remarks=&#39;Created by GEOLib 0.1.2&#39;, endpoint=AnyHttpUrl(&#39;http://localhost:8000/&#39;, scheme=&#39;http&#39;, host=&#39;localhost&#39;, host_type=&#39;int_domain&#39;, port=&#39;8000&#39;, path=&#39;/&#39;), gl_username=&#39;test&#39;, gl_password=&#39;test&#39;, console_folder=PosixPath(&#39;tests&#39;))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">console_folder</span>
-<span class="go">PosixPath(&#39;tests&#39;)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">console_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;other_location&quot;</span><span class="p">)</span>  <span class="c1"># has to exist!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">get_meta_property</span><span class="p">(</span><span class="s2">&quot;company&quot;</span><span class="p">)</span>
+<span class="go">Deltares</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dm</span><span class="o">.</span><span class="n">set_meta_property</span><span class="p">(</span><span class="s2">&quot;console_folder&quot;</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;other_location&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
@@ -144,7 +162,7 @@ At the moment that version number is:</p>
 <li><p>D-Foundations <strong>23.1</strong></p></li>
 <li><p>D-SheetPiling <strong>23.1</strong></p></li>
 <li><p>D-Stability <strong>2023.01</strong></p></li>
-<li><p>D-Geo flow <strong>2022.01</strong></p></li>
+<li><p>D-Geo Flow <strong>2023.01</strong></p></li>
 </ul>
 <p>Loading files generated by either older or newer versions isn’t guaranteed to work and will likely result in an error message such as ValidationError(extra fields not permitted).
 You could disable this by changing the extra_fields setting described above, but we don’t support this.</p>
@@ -197,6 +215,9 @@ You could disable this by changing the extra_fields setting described above, but
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-the-console-paths-per-application">Setting the console paths per application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#settings-the-console-path-using-the-common-console-folder-variable">Settings the console path using the common CONSOLE_FOLDER variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#default-settings">Default settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dynamic-settings">Dynamic settings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logging">Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#consoles">Consoles</a></li>
