@@ -76,6 +76,24 @@ class PersistablePoint(DStabilityBaseModelStructure):
     Z: Optional[Union[float, str]] = "NaN"
 
 
+class UpliftVanParticleSwarmSlipPlaneResult(DStabilityBaseModelStructure):
+    SlipPlanePoints: List[PersistablePoint] = None
+    LeftCenter: Optional[PersistablePoint] = None
+    RightCenter: Optional[PersistablePoint] = None
+    FactorOfSafety: Optional[float] = None
+
+
+class BishopBruteForceSplipPlaneResult(DStabilityBaseModelStructure):
+    SlipPlanePoints: List[PersistablePoint] = None
+    Center: PersistablePoint = None
+    FactorOfSafety: Optional[float] = None
+
+
+class SpencerGeneticAlgorithmSlipPlaneResult(DStabilityBaseModelStructure):
+    SlipPlanePoints: List[PersistablePoint] = None
+    FactorOfSafety: Optional[float] = None
+
+
 class PersistableHeadLine(DStabilityBaseModelStructure):
     Id: Optional[str]
     Label: Optional[str] = ""
@@ -1490,6 +1508,8 @@ class PersistableSlice(DStabilityBaseModelStructure):
 
 
 class BishopBruteForceResult(DStabilitySubStructure):
+    ResultThreshold: float = 0.0
+    SlipPlaneResults: Optional[List[BishopBruteForceSplipPlaneResult]] = None
     Circle: Optional[PersistableCircle] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
@@ -1685,11 +1705,13 @@ class PersistableSpencerSlice(DStabilityBaseModelStructure):
 
 
 class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
+    ResultThreshold: float = 0.0
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+    SlipPlaneResults: Optional[List[SpencerGeneticAlgorithmSlipPlaneResult]] = None
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1799,6 +1821,8 @@ class SpencerResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
+    ResultThreshold: float = 0.0
+    SlipPlaneResults: Optional[List[UpliftVanParticleSwarmSlipPlaneResult]] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
