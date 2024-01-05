@@ -77,20 +77,20 @@ class PersistablePoint(DStabilityBaseModelStructure):
 
 
 class UpliftVanParticleSwarmSlipPlaneResult(DStabilityBaseModelStructure):
-    SlipPlanePoints: List[PersistablePoint] = None
+    SlipPlanePoints: Optional[List[PersistablePoint]] = None
     LeftCenter: Optional[PersistablePoint] = None
     RightCenter: Optional[PersistablePoint] = None
     FactorOfSafety: Optional[float] = None
 
 
 class BishopBruteForceSplipPlaneResult(DStabilityBaseModelStructure):
-    SlipPlanePoints: List[PersistablePoint] = None
-    Center: PersistablePoint = None
+    SlipPlanePoints: Optional[List[PersistablePoint]] = None
+    Center: Optional[PersistablePoint] = None
     FactorOfSafety: Optional[float] = None
 
 
 class SpencerGeneticAlgorithmSlipPlaneResult(DStabilityBaseModelStructure):
-    SlipPlanePoints: List[PersistablePoint] = None
+    SlipPlanePoints: Optional[List[PersistablePoint]] = None
     FactorOfSafety: Optional[float] = None
 
 
@@ -1508,7 +1508,7 @@ class PersistableSlice(DStabilityBaseModelStructure):
 
 
 class BishopBruteForceResult(DStabilitySubStructure):
-    ResultThreshold: float = 0.0
+    ResultThreshold: Optional[float] = 0.0
     SlipPlaneResults: Optional[List[BishopBruteForceSplipPlaneResult]] = None
     Circle: Optional[PersistableCircle] = None
     FactorOfSafety: Optional[float] = None
@@ -1705,7 +1705,7 @@ class PersistableSpencerSlice(DStabilityBaseModelStructure):
 
 
 class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
-    ResultThreshold: float = 0.0
+    ResultThreshold: Optional[float] = 0.0
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
@@ -1821,7 +1821,7 @@ class SpencerResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
-    ResultThreshold: float = 0.0
+    ResultThreshold: Optional[float] = 0.0
     SlipPlaneResults: Optional[List[UpliftVanParticleSwarmSlipPlaneResult]] = None
     FactorOfSafety: Optional[float] = None
     Id: Optional[str] = None

@@ -90,7 +90,7 @@ class DStabilityModel(BaseModel):
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dstability_console_path")
-    
+
     @property
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""
@@ -540,7 +540,7 @@ class DStabilityModel(BaseModel):
         linestring2 = self.to_shapely_linestring(layer2.Points)
 
         # Create a union of the two polygons and polygonize it creating two connected polygons
-        union = linestring1.union(linestring2)
+        union = linestring1.union(linestring2, grid_size=1e-3)
         result = [geom for geom in polygonize(union)]
 
         # If the result has two polygons, we return them, otherwise we return the original polygons
