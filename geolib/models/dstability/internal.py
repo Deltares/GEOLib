@@ -1495,6 +1495,8 @@ class BishopBruteForceResult(DStabilitySubStructure):
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1595,6 +1597,8 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     StatePointContributions: Optional[
         List[Optional[PersistableStatePointContribution]]
     ] = None
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1690,6 +1694,8 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1806,6 +1812,8 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
     RightCenter: Optional[PersistablePoint] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
     TangentLine: Optional[float] = None
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1868,6 +1876,8 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
+    ResultThreshold: Optional[float] = None
+    SlipPlaneResults: Optional[list] = None
     Converged: Optional[bool] = None
     FailureProbability: Optional[float] = None
     Id: Optional[str] = None
@@ -1886,6 +1896,8 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
         List[Optional[PersistableStatePointContribution]]
     ] = None
     TangentLine: Optional[float] = None
+    
+    
 
     @classmethod
     def structure_group(cls) -> str:
