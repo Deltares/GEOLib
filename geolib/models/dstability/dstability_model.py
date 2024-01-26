@@ -84,9 +84,13 @@ class DStabilityModel(BaseModel):
         return DStabilityParserProvider
 
     @property
-    def console_path(self) -> Path:
+    def default_console_path(self) -> Path:
         return Path("DStabilityConsole/D-Stability Console.exe")
 
+    @property
+    def custom_console_path(self) -> Path:
+        return self.get_meta_property("dstability_console_path")
+    
     @property
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""

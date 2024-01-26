@@ -140,9 +140,13 @@ class DSheetPilingModel(BaseModel):
         return DSheetPilingParserProvider
 
     @property
-    def console_path(self) -> Path:
+    def default_console_path(self) -> Path:
         return Path("DSheetPiling/DSheetPiling.exe")
 
+    @property
+    def custom_console_path(self) -> Path:
+        return self.get_meta_property("dsheetpiling_console_path")
+    
     @property
     def console_flags(self) -> List[str]:
         return [CONSOLE_RUN_BATCH_FLAG]

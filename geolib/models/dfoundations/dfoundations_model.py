@@ -149,8 +149,12 @@ class DFoundationsModel(BaseModel):
         return DFoundationsParserProvider
 
     @property
-    def console_path(self) -> Path:
+    def default_console_path(self) -> Path:
         return Path("DFoundations/DFoundations.exe")
+    
+    @property
+    def custom_console_path(self) -> Path:
+        return self.get_meta_property("dfoundations_console_path")
 
     @property
     def console_flags(self) -> List[str]:

@@ -7,7 +7,7 @@ The main purpose of this example is to demonstrate how to utilize the GEOLib Pyt
 a fragility curve depending on various water levels. 
 
 To undertake failure probability studies (or reliability analyses) for levee 
-macrostability `Handreiking Faalkansanalyse <https://www.helpdeskwater.nl/publish/pages/144404/11200575-016-geo-0005-v02-r-handreiking_faalkansanalyses_macrostabiliteit_-_definitief.pdf>`_, 
+macrostability `Handreiking Faalkansanalyse <https://publicwiki.deltares.nl/download/attachments/217120825/11209051-007-GEO-0001_v4.0-Handreiking%20Faalkansanalyse%20-%20voor%20publicatie.pdf>`_, 
 the designer should provide fragility curves. A Fragility Curve represents the (conditional) probability 
 of failure as a function of load. In the case of levee macrostability, the water level (h) is usually 
 used for this purpose. These curves will later be used to include the uncertainties in the water level 
