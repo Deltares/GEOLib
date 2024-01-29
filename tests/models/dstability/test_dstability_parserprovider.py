@@ -24,7 +24,10 @@ class TestDStabilityInputParser:
         [
             pytest.param("dstability/example_1.stix", id="Input Structure"),
             pytest.param(
-                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 20.2.1"
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2024_1.stix", id="Tutorial DStability 2024.1"
             ),
         ],
     )
