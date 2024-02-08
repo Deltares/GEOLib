@@ -1,30 +1,6 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
-import collections
-import sys
-from typing import Dict, List, Tuple, Type, _GenericAlias, _SpecialForm, get_type_hints
-
-if sys.version_info < (3, 9):
-    # Python 3.9 does not include `_special`, so use the function from typing instead
-
-    def get_args(tp):
-        """Get type arguments with all substitutions performed.
-        For unions, basic simplifications used by Union constructor are performed.
-        Examples:
-            get_args(Dict[str, int]) == (str, int)
-            get_args(int) == ()
-            get_args(Union[int, Union[T, int], str][int]) == (int, str)
-            get_args(Union[int, Tuple[T, int]][str]) == (int, Tuple[str, int])
-            get_args(Callable[[], T][int]) == ([], int)
-        """
-        if isinstance(tp, (_GenericAlias, _SpecialForm)) and not tp._special:
-            res = tp.__args__
-            if tp.__origin__ is collections.abc.Callable and res[0] is not Ellipsis:
-                res = (list(res[:-1]), res[-1])
-            return res
-        return ()
-
-else:
-    from typing import get_args as get_args  # NOQA
+from typing import List, Tuple, Type, _GenericAlias, get_type_hints
+from typing import get_args as get_args
 
 
 def unpack_if_union(tp):

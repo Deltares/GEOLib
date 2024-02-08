@@ -2,7 +2,7 @@
 GEOLib Library
 """
 
-__version__ = "1.3.3"
+__version__ = "2.3.0"
 
 from . import utils
 from .models import *

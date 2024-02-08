@@ -84,6 +84,9 @@ class TestDStabilityModel:
             pytest.param(
                 "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2024_1.stix", id="Tutorial DStability 2024.1"
+            ),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -124,6 +127,9 @@ class TestDStabilityModel:
             pytest.param("dstability/ResultExample.stix", id="Result Example"),
             pytest.param(
                 "dstability/Tutorial_v2023_1.stix", id="Tutorial DStability 2023.1"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2024_1.stix", id="Tutorial DStability 2024.1"
             ),
         ],
     )

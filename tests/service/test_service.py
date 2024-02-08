@@ -40,7 +40,7 @@ def test_post_calculate_empty_model_fails():
 @only_teamcity
 def test_post_calculate():
     model = DSettlementModel()
-    input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
+    input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement/benchmarks"))
     benchmark_fn = input_folder / "bm1-1.sli"
     model.parse(benchmark_fn)
 
@@ -60,7 +60,7 @@ def test_post_calculate_many():
     # Setup models
     a = DSettlementModel()
     b = DSettlementModel()
-    input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement"))
+    input_folder = Path(TestUtils.get_local_test_data_dir("dsettlement/benchmarks"))
     benchmark_fn = input_folder / "bm1-1.sli"
 
     ml = BaseModelList(models=[a, b])

@@ -1,6 +1,7 @@
 import logging
 import os
 import pathlib
+import shutil
 from datetime import timedelta
 from pathlib import Path
 from typing import List
@@ -425,8 +426,7 @@ class TestDSettlementAcceptance:
             is_fit_for_settlement_plate=False,
             is_probabilistic=False,
             is_horizontal_displacements=False,
-            is_secondary_swelling=True,  # TODO document this parameter
-            is_waspan=False,  # TODO document this parameter
+            is_secondary_swelling=True,
         )
 
         path = self.outputdir / "test_set_model.sli"
@@ -571,7 +571,7 @@ class TestDSettlementAcceptance:
         dm.serialize(path)
 
     @pytest.mark.acceptance
-    @pytest.mark.xfail  #   Wrong soils for now
+    @pytest.mark.xfail  # Wrong soils for now
     @only_teamcity
     def test_sorting_vertical_layer_boundaries(self):
         """
@@ -643,3 +643,59 @@ class TestDSettlementAcceptance:
         # Verify geometry is correct and we can parse output
         dm.execute()  # will raise on execution error
         assert dm.datastructure
+
+    @pytest.mark.acceptance
+    def test_run_fit(self):
+        # 1. Set up test data
+        test_folder = TestUtils.get_local_test_data_dir("dsettlement")
+        test_file = pathlib.Path(os.path.join(test_folder, "BeforeFit.sli"))
+        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement/acceptancetest/"))
+        output_test_inputfile = output_test_folder / ("FitCalculation.sli")
+        source = pathlib.Path(os.path.join(test_folder, "FitMeasurement.txt"))
+        dest = pathlib.Path(os.path.join(output_test_folder, "FitMeasurement.txt"))
+        shutil.copyfile(source, dest)
+
+        dm = DSettlementModel()
+
+        # 2. Verify initial expectations
+        assert test_file.exists()
+
+        # 3. Parse test file
+        dm.parse(test_file)
+        fit_origin = list(dm.datastructure.input_data.fit.split("\n"))
+
+        # 4. Select fit model option
+        assert not dm.datastructure.input_data.model.is_fit_for_settlement_plate
+        dm.datastructure.input_data.model.is_fit_for_settlement_plate = Bool.TRUE
+
+        # 5. Select vertical and fit calculation
+        assert dm.fit_calculation.fit_vertical_number == 0
+        dm.fit_calculation.fit_vertical_number = 1
+        assert not dm.fit_calculation.is_fit_calculation
+        dm.fit_calculation.is_fit_calculation = Bool.TRUE
+
+        # 6. Select fit iteration options
+        assert dm.fit_options.fit_maximum_number_of_iterations == 5
+        dm.fit_options.fit_maximum_number_of_iterations = 2
+        assert dm.fit_options.fit_required_iteration_accuracy == pytest.approx(0.0001)
+        dm.fit_options.fit_required_iteration_accuracy = 0.001
+        assert dm.fit_options.fit_required_correlation_coefficient == pytest.approx(0.99)
+        dm.fit_options.fit_required_correlation_coefficient = 0.9
+
+        # 7. Serialize file
+        dm.serialize(output_test_inputfile)
+
+        # 8. Run fit calculation (includes parsing of output file)
+        result = dm.execute()
+
+        # 9. Check that a fit calculation was performed,
+        # by checking a few lines in the FIT block in the INPUT part of the output file
+        assert fit_origin[33].strip() == '50.000 = X co-ordinate'
+        assert fit_origin[56].strip() == '1      1.000      1.000     10.000 Factor 0: selected, current, previous, weight'
+        assert fit_origin[67].strip() == '0.000 = Coefficient of determination  -'
+        assert fit_origin[68].strip() == '0.19 = Imperfection  m'
+        fit = list(result.input.fit.split("\n"))
+        assert fit[33].strip() == '50.000 = X co-ordinate'
+        assert fit[56].strip() == '1      1.051      1.000     10.000 Factor 0: selected, current, previous, weight'
+        assert fit[67].strip() == '0.841 = Coefficient of determination  -'
+        assert fit[68].strip() == '0.50 = Imperfection  m'
