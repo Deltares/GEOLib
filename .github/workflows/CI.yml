@@ -45,7 +45,7 @@ jobs:
           poetry config virtualenvs.path ~/.virtualenvs
 
       - name: Install Dependencies
-        run: poetry install -E server
+        run: poetry install -E server -E pydantic-v2
         
       - name: Test with pytest
         run: poetry run pytest --cov=geolib --cov-report xml:coverage-reports/coverage-hydrolib-core.xml --junitxml=xunit-reports/xunit-result-hydrolib-core.xml -m "unittest and not workinprogress"
