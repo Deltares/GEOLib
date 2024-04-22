@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.dstability_parserprovider import (
@@ -53,7 +54,10 @@ class TestDStabilityInputParser:
 
         # 4. Verify final expectations.
         assert input_structure is not None
-        data = input_structure.json(indent=4)
+        if IS_PYDANTIC_V2:
+            data = input_structure.model_dump_json(indent=4)
+        else:
+            data = input_structure.json(indent=4)
         with open(test_output_file_path / "dstability_parsed_input.json", "w") as io:
             io.write(data)
 
@@ -76,7 +80,10 @@ class TestDStabilityInputParser:
 
         # 4. Verify final expectations.
         assert input_structure is not None
-        data = input_structure.json(indent=4)
+        if IS_PYDANTIC_V2:
+            data = input_structure.model_dump_json(indent=4)
+        else:
+            data = input_structure.json(indent=4)
         with open(test_output_dir / "dstability_parsed_input_stix.json", "w") as io:
             io.write(data)
 

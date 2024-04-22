@@ -2,7 +2,13 @@ from contextlib import nullcontext as does_not_raise
 from typing import Any
 
 import pytest
-from pydantic import ValidationError
+
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import ValidationError
+else:
+    from pydantic.error_wrappers import ValidationError
 
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_PRE_STRESS
@@ -335,7 +341,10 @@ class TestSpringSupport:
                 "name",
                 "i" * 51,
                 pytest.raises(
-                    ValidationError, match=r"ensure this value has at most 50 characters"
+                    ValidationError,
+                    match=r"String should have at most 50 characters"
+                    if IS_PYDANTIC_V2
+                    else r"ensure this value has at most 50 characters",
                 ),
                 id="Name too long",
             ),
@@ -344,7 +353,9 @@ class TestSpringSupport:
                 -1,
                 pytest.raises(
                     ValidationError,
-                    match=r"ensure this value is greater than or equal to 0",
+                    match=r"Input should be greater than or equal to 0 "
+                    if IS_PYDANTIC_V2
+                    else r"ensure this value is greater than or equal to 0",
                 ),
                 id="Name too long",
             ),
@@ -353,7 +364,9 @@ class TestSpringSupport:
                 -1,
                 pytest.raises(
                     ValidationError,
-                    match=r"ensure this value is greater than or equal to 0",
+                    match=r"Input should be greater than or equal to 0 "
+                    if IS_PYDANTIC_V2
+                    else r"ensure this value is greater than or equal to 0",
                 ),
                 id="Negative translational stiffness",
             ),
@@ -511,7 +524,10 @@ class TestRigidSupport:
                 "name",
                 "i" * 51,
                 pytest.raises(
-                    ValidationError, match=r"ensure this value has at most 50 characters"
+                    ValidationError,
+                    match=r"String should have at most 50 characters"
+                    if IS_PYDANTIC_V2
+                    else r"ensure this value has at most 50 characters",
                 ),
                 id="Name too long",
             ),
@@ -520,7 +536,9 @@ class TestRigidSupport:
                 5,
                 pytest.raises(
                     ValidationError,
-                    match=r"value is not a valid enumeration member; permitted: 1, 2, 3",
+                    match=r"Input should be 1, 2 or 3"
+                    if IS_PYDANTIC_V2
+                    else r"value is not a valid enumeration member; permitted: 1, 2, 3",
                 ),
                 id="Name too long",
             ),

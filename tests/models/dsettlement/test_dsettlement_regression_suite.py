@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 from teamcity import is_running_under_teamcity
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import DSettlementModel
 from tests.utils import TestUtils, only_teamcity
 
@@ -10,6 +11,7 @@ benchmark_directory = "dsettlement/benchmarks"
 tutorials_directory = "dsettlement/tutorials"
 dump_file_extension_filter = "*.sld"
 output_test_file_extension = ".json"
+
 
 class TestDSettlementRegressionSuite:
     input_benchmark_testdata = TestUtils.get_test_files_from_local_test_dir(
@@ -48,7 +50,10 @@ class TestDSettlementRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            if IS_PYDANTIC_V2:
+                io.write(ds.model_dump_json(indent=4))
+            else:
+                io.write(ds.output.json(indent=4))
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -72,4 +77,7 @@ class TestDSettlementRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            if IS_PYDANTIC_V2:
+                io.write(ds.model_dump_json(indent=4))
+            else:
+                io.write(ds.output.json(indent=4))
