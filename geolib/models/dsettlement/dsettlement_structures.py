@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, List, Tuple
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models.dseries_parser import (
     DSerieListGroupNextStructure,
     DSerieParser,
@@ -31,7 +32,11 @@ class ComplexVerticalSubstructure(DSeriesStructure):
         them.
         """
         largs = list(args)
-        for field, fieldtype in self.__fields__.items():
+        if IS_PYDANTIC_V2:
+            fields = self.model_fields
+        else:
+            fields = self.__fields__
+        for field, fieldtype in fields.items():
             if len(largs) == 0:
                 break
             if field in kwargs:

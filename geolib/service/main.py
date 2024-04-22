@@ -4,10 +4,19 @@ import uuid
 from pathlib import Path, PosixPath, WindowsPath
 from typing import Dict, List, Type, Union
 
-import pydantic.json
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import Field, ValidationError
+    from pydantic.deprecated import json as pydantic_json
+    from typing_extensions import Annotated
+else:
+    from pydantic import json as pydantic_json
+    from pydantic import conlist
+    from pydantic.error_wrappers import ValidationError
+
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
-from pydantic import ValidationError, conlist
 from starlette import status
 from starlette.responses import JSONResponse
 
@@ -23,13 +32,27 @@ from geolib.models import (
 from geolib.models.meta import MetaData
 
 # Fixes for custom serialization
-pydantic.json.ENCODERS_BY_TYPE[Path] = str
-pydantic.json.ENCODERS_BY_TYPE[PosixPath] = str
-pydantic.json.ENCODERS_BY_TYPE[WindowsPath] = str
+pydantic_json.ENCODERS_BY_TYPE[Path] = str
+pydantic_json.ENCODERS_BY_TYPE[PosixPath] = str
+pydantic_json.ENCODERS_BY_TYPE[WindowsPath] = str
 
 settings = MetaData()
 app = FastAPI()
 security = HTTPBasic()
+
+
+# Models (types) are defined below, because they are used in the
+# signatures of the functions and they differ between Pydantic v1 and v2.
+if IS_PYDANTIC_V2:
+    dsettlement_list = Annotated[List[DSettlementModel], Field(min_length=1)]
+    dfoundation_list = Annotated[List[DFoundationsModel], Field(min_length=1)]
+    dsheetpile_list = Annotated[List[DSheetPilingModel], Field(min_length=1)]
+    dstability_list = Annotated[List[DStabilityModel], Field(min_length=1)]
+else:
+    dsettlement_list = conlist(DSettlementModel, min_items=1)
+    dfoundation_list = conlist(DFoundationsModel, min_items=1)
+    dsheetpile_list = conlist(DSheetPilingModel, min_items=1)
+    dstability_list = conlist(DStabilityModel, min_items=1)
 
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
@@ -117,7 +140,7 @@ async def calculate_dstabilitymodel(
 
 @app.post("/calculate/dsettlementmodels", response_model=None)
 async def calculate_many_dsettlementmodels(
-    models: conlist(DSettlementModel, min_items=1),
+    models: dsettlement_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DSettlementModel]:
@@ -126,7 +149,7 @@ async def calculate_many_dsettlementmodels(
 
 @app.post("/calculate/dfoundationsmodels", response_model=None)
 async def calculate_many_dfoundationsmodel(
-    models: conlist(DFoundationsModel, min_items=1),
+    models: dfoundation_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DFoundationsModel]:
@@ -135,7 +158,7 @@ async def calculate_many_dfoundationsmodel(
 
 @app.post("/calculate/dsheetpilingmodels", response_model=None)
 async def calculate_many_dsheetpilingmodel(
-    models: conlist(DSheetPilingModel, min_items=1),
+    models: dsheetpile_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DSheetPilingModel]:
@@ -144,7 +167,7 @@ async def calculate_many_dsheetpilingmodel(
 
 @app.post("/calculate/dstabilitymodels", response_model=None)
 async def calculate_many_dstabilitymodel(
-    models: conlist(DStabilityModel, min_items=1),
+    models: dstability_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
 ) -> List[DStabilityModel]:

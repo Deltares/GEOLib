@@ -9,7 +9,13 @@ from itertools import chain
 from math import isfinite
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import ValidationError, confloat, conlist, root_validator, validator
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import ConfigDict, Field, field_validator, model_validator
+    from typing_extensions import Annotated
+else:
+    from pydantic import conlist, root_validator, validator
 
 from geolib import BaseModelStructure
 from geolib import __version__ as version
@@ -23,11 +29,20 @@ from .utils import children
 
 class DGeoFlowBaseModelStructure(BaseModelStructure):
     def dict(_, *args, **kwargs):
-        data = super().dict(*args, **kwargs)
+        if IS_PYDANTIC_V2:
+            data = super().model_dump(*args, **kwargs)
+        else:
+            data = super().dict(*args, **kwargs)
         return {
             k: "NaN" if isinstance(v, float) and not isfinite(v) else v
             for k, v in data.items()
         }
+
+    @classmethod
+    def transform_id_to_str(cls, value) -> str:
+        if value is None:
+            return None
+        return str(value)
 
 
 class DGeoFlowSubStructure(DGeoFlowBaseModelStructure):
@@ -56,7 +71,7 @@ class PersistableStochasticParameter(DGeoFlowBaseModelStructure):
     StandardDeviation: float = 0.0
 
 
-class PersistableShadingType(Enum):
+class PersistableShadingTypeEnum(Enum):
     DIAGONAL_A = "DiagonalA"
     DIAGONAL_B = "DiagonalB"
     DIAGONAL_C = "DiagonalC"
@@ -72,8 +87,13 @@ class PersistableShadingType(Enum):
 
 class PersistableSoilVisualization(DGeoFlowBaseModelStructure):
     Color: Optional[str]
-    PersistableShadingType: Optional[PersistableShadingType]
+    PersistableShadingType: Optional[PersistableShadingTypeEnum]
     SoilId: Optional[str]
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("SoilId", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
 
 class SoilVisualisation(DGeoFlowBaseModelStructure):
@@ -86,8 +106,13 @@ class SoilVisualisation(DGeoFlowBaseModelStructure):
 
 
 class PersistableSoilLayer(DGeoFlowBaseModelStructure):
-    LayerId: Optional[str]
-    SoilId: Optional[str]
+    LayerId: Optional[str] = None
+    SoilId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("LayerId", "SoilId", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
 
 class SoilLayerCollection(DGeoFlowSubStructure):
@@ -102,8 +127,13 @@ class SoilLayerCollection(DGeoFlowSubStructure):
         return "soillayers"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     SoilLayers: List[PersistableSoilLayer] = []
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     def add_soillayer(self, layer_id: str, soil_id: str) -> PersistableSoilLayer:
         psl = PersistableSoilLayer(LayerId=layer_id, SoilId=soil_id)
@@ -127,6 +157,11 @@ class PersistableSoil(DGeoFlowBaseModelStructure):
     Notes: str = ""
     HorizontalPermeability: float = 0.001
     VerticalPermeability: float = 0.001
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
 
 class SoilCollection(DGeoFlowSubStructure):
@@ -350,7 +385,7 @@ class ProjectInfo(DGeoFlowSubStructure):
     Project: Optional[str] = ""
     Remarks: Optional[str] = f"Created with GEOLib {version}"
 
-    @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
+    @classmethod
     def nltime(cls, date: Union[date, str]) -> date:
         if isinstance(date, str):
             position = date.index(max(date.split("-"), key=len))
@@ -360,6 +395,15 @@ class ProjectInfo(DGeoFlowSubStructure):
                 date = datetime.strptime(date, "%Y-%m-%d").date()
         return date
 
+    if IS_PYDANTIC_V2:
+        nltime_validator = field_validator(
+            "Created", "Date", "LastModified", mode="before"
+        )(nltime)
+    else:
+        nltime_validator = validator(
+            "Created", "Date", "LastModified", pre=True, allow_reuse=True
+        )(nltime)
+
 
 class PersistablePoint(DGeoFlowBaseModelStructure):
     X: Optional[float] = 0
@@ -367,12 +411,20 @@ class PersistablePoint(DGeoFlowBaseModelStructure):
 
 
 class PersistableLayer(DGeoFlowBaseModelStructure):
-    Id: Optional[str]
-    Label: Optional[str]
-    Notes: Optional[str]
-    Points: conlist(PersistablePoint, min_items=3)
+    Id: Optional[str] = None
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    if IS_PYDANTIC_V2:
+        Points: Annotated[List[PersistablePoint], Field(min_length=3)]
+    else:
+        Points: conlist(PersistablePoint, min_items=3)
 
-    @validator("Points", pre=True, allow_reuse=True)
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
+
+    @classmethod
     def polygon_checks(cls, points):
         """
         Todo:
@@ -384,6 +436,15 @@ class PersistableLayer(DGeoFlowBaseModelStructure):
         # 3. is it a non closed polygon
         # 4. does it intersect other polygons
         return points
+
+    if IS_PYDANTIC_V2:
+        polygon_checks_validator = field_validator("Points", mode="before")(
+            polygon_checks
+        )
+    else:
+        polygon_checks_validator = validator("Points", pre=True, allow_reuse=True)(
+            polygon_checks
+        )
 
 
 class Geometry(DGeoFlowSubStructure):
@@ -398,8 +459,13 @@ class Geometry(DGeoFlowSubStructure):
         return "geometry"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     Layers: List[PersistableLayer] = []
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     def contains_point(self, point: Point) -> bool:
         """
@@ -462,19 +528,32 @@ class PersistableFixedHeadBoundaryConditionProperties(DGeoFlowBaseModelStructure
 
 
 class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
-    Id: Optional[str]
-    Points: conlist(PersistablePoint, min_items=2)
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    Id: Optional[str] = None
+    if IS_PYDANTIC_V2:
+        Points: Annotated[List[PersistablePoint], Field(min_length=2)]
+    else:
+        Points: conlist(PersistablePoint, min_items=2)
     FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
 
 class BoundaryConditionCollection(DGeoFlowSubStructure):
     """boundaryconditions/boundaryconditions_x.json"""
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     BoundaryConditions: List[PersistableBoundaryCondition] = []
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     @classmethod
     def structure_group(cls) -> str:
@@ -522,9 +601,9 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
 
 
 class PersistableStage(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
-    BoundaryConditionCollectionId: Optional[str]
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    BoundaryConditionCollectionId: Optional[str] = None
 
 
 class ErosionDirectionEnum(Enum):
@@ -532,13 +611,13 @@ class ErosionDirectionEnum(Enum):
     RIGHT_TO_LEFT = "RightToLeft"
 
 
-class PipeTrajectory(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
-    D70: Optional[float]
-    Points: Optional[List[PersistablePoint]]
+class InternalPipeTrajectory(DGeoFlowBaseModelStructure):
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
+    D70: Optional[float] = None
+    Points: Optional[List[PersistablePoint]] = None
     ErosionDirection: Optional[ErosionDirectionEnum] = ErosionDirectionEnum.RIGHT_TO_LEFT
-    ElementSize: Optional[float]
+    ElementSize: Optional[float] = None
 
 
 class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
@@ -548,16 +627,21 @@ class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
 
 
 class PersistableCalculation(DGeoFlowBaseModelStructure):
-    Label: Optional[str]
-    Notes: Optional[str]
+    Label: Optional[str] = None
+    Notes: Optional[str] = None
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
-    CriticalHeadId: Optional[str]
+    CriticalHeadId: Optional[str] = None
     CriticalHeadSearchSpace: Optional[
         PersistableCriticalHeadSearchSpace
     ] = PersistableCriticalHeadSearchSpace()
-    PipeTrajectory: Optional[PipeTrajectory]
-    MeshPropertiesId: Optional[str]
-    ResultsId: Optional[str]
+    PipeTrajectory: Optional[InternalPipeTrajectory] = None
+    MeshPropertiesId: Optional[str] = None
+    ResultsId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator(
+            "CriticalHeadId", "MeshPropertiesId", "ResultsId", mode="before"
+        )(DGeoFlowBaseModelStructure.transform_id_to_str)
 
 
 class NodeResult(DGeoFlowBaseModelStructure):
@@ -573,14 +657,19 @@ class ElementResult(DGeoFlowBaseModelStructure):
 
 class PipeElementResult(DGeoFlowBaseModelStructure):
     Nodes: Optional[List[PersistablePoint]] = []
-    IsActive: Optional[bool]
-    Height: Optional[float]
+    IsActive: Optional[bool] = None
+    Height: Optional[float] = None
 
 
 class GroundwaterFlowResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     Elements: Optional[List[ElementResult]] = []
     ContentVersion: Optional[str] = "2"
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     @classmethod
     def structure_group(cls) -> str:
@@ -589,10 +678,15 @@ class GroundwaterFlowResult(DGeoFlowSubStructure):
 
 class PipeLengthResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
-    PipeLength: Optional[float]
+    PipeLength: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     @classmethod
     def structure_group(cls) -> str:
@@ -601,11 +695,16 @@ class PipeLengthResult(DGeoFlowSubStructure):
 
 class CriticalHeadResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
-    PipeLength: Optional[float]
-    CriticalHead: Optional[float]
+    PipeLength: Optional[float] = None
+    CriticalHead: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     @classmethod
     def structure_group(cls) -> str:
@@ -619,13 +718,18 @@ class Scenario(DGeoFlowSubStructure):
     """scenarios/scenario_x.json"""
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
-    Label: Optional[str]
+    Id: Optional[str] = None
+    Label: Optional[str] = None
     Notes: Optional[str] = None
-    GeometryId: Optional[str]
-    SoilLayersId: Optional[str]
+    GeometryId: Optional[str] = None
+    SoilLayersId: Optional[str] = None
     Stages: List[PersistableStage] = []
     Calculations: List[PersistableCalculation] = []
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", "GeometryId", "SoilLayersId", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     @classmethod
     def structure_name(cls) -> str:
@@ -658,16 +762,26 @@ class Scenario(DGeoFlowSubStructure):
 
 class PersistableMeshProperties(DGeoFlowBaseModelStructure):
     LayerId: str
-    Label: Optional[str]
+    Label: Optional[str] = None
     ElementSize: Optional[float] = 1
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("LayerId", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
 
 class MeshProperty(DGeoFlowSubStructure):
     """meshproperties/meshproperties_x.json"""
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     MeshProperties: Optional[List[PersistableMeshProperties]] = []
+
+    if IS_PYDANTIC_V2:
+        id_validator = field_validator("Id", mode="before")(
+            DGeoFlowBaseModelStructure.transform_id_to_str
+        )
 
     @classmethod
     def structure_name(cls) -> str:
@@ -742,9 +856,13 @@ class DGeoFlowStructure(BaseModelStructure):
     pipe_length_results: List[PipeLengthResult] = []
     critical_head_results: List[CriticalHeadResult] = []
 
-    class Config:
-        arbitrary_types_allowed = True
-        validate_assignment = True
+    if IS_PYDANTIC_V2:
+        model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True)
+    else:
+
+        class Config:
+            arbitrary_types_allowed = True
+            validate_assignment = True
 
     def get_result_substructure(
         self, calculation_type: CalculationTypeEnum
@@ -757,45 +875,72 @@ class DGeoFlowStructure(BaseModelStructure):
 
         return result_types_mapping[calculation_type]
 
-    @root_validator(skip_on_failure=True, allow_reuse=True)
-    def ensure_validity_foreign_keys(cls, values):
-        stage_count = 0
-        for i, scenario in enumerate(values.get("scenarios")):
-            for _, stage in enumerate(scenario.Stages):
-                if (
-                    stage.BoundaryConditionCollectionId
-                    != values.get("boundary_conditions")[stage_count].Id
-                ):
-                    raise ValueError("BoundaryConditionCollectionIds not linked!")
-                stage_count += 1
+    if IS_PYDANTIC_V2:
 
-            if scenario.GeometryId != values.get("geometries")[i].Id:
-                raise ValueError("GeometryIds not linked!")
-            if scenario.SoilLayersId != values.get("soillayers")[i].Id:
-                raise ValueError("SoilLayersIds not linked!")
-        return values
+        @model_validator(mode="after")
+        def ensure_validity_foreign_keys(self):
+            def list_has_id(values, id):
+                for entry in values:
+                    if entry.Id == id:
+                        return True
+                return False
 
-    @root_validator(skip_on_failure=True, allow_reuse=True)
-    def ensure_validity_foreign_keys(cls, values):
-        def list_has_id(values, id):
-            for entry in values:
-                if entry.Id == id:
-                    return True
-            return False
+            for _, scenario in enumerate(self.scenarios):
+                for _, stage in enumerate(scenario.Stages):
+                    if not list_has_id(
+                        self.boundary_conditions, stage.BoundaryConditionCollectionId
+                    ):
+                        raise ValueError("BoundaryConditionCollectionIds not linked!")
 
-        for _, scenario in enumerate(values.get("scenarios")):
-            for _, stage in enumerate(scenario.Stages):
-                if not list_has_id(
-                    values.get("boundary_conditions"), stage.BoundaryConditionCollectionId
-                ):
-                    raise ValueError("BoundaryConditionCollectionIds not linked!")
+                if not list_has_id(self.geometries, scenario.GeometryId):
+                    raise ValueError("GeometryIds not linked!")
+                if not list_has_id(self.soillayers, scenario.SoilLayersId):
+                    raise ValueError("SoilLayersIds not linked!")
 
-            if not list_has_id(values.get("geometries"), scenario.GeometryId):
-                raise ValueError("GeometryIds not linked!")
-            if not list_has_id(values.get("soillayers"), scenario.SoilLayersId):
-                raise ValueError("SoilLayersIds not linked!")
+            return self
 
-        return values
+    else:
+        # TODO: these are the original validators, but they are double?
+        @root_validator(skip_on_failure=True, allow_reuse=True)
+        def ensure_validity_foreign_keys(cls, values):
+            stage_count = 0
+            for i, scenario in enumerate(values.get("scenarios")):
+                for _, stage in enumerate(scenario.Stages):
+                    if (
+                        stage.BoundaryConditionCollectionId
+                        != values.get("boundary_conditions")[stage_count].Id
+                    ):
+                        raise ValueError("BoundaryConditionCollectionIds not linked!")
+                    stage_count += 1
+
+                if scenario.GeometryId != values.get("geometries")[i].Id:
+                    raise ValueError("GeometryIds not linked!")
+                if scenario.SoilLayersId != values.get("soillayers")[i].Id:
+                    raise ValueError("SoilLayersIds not linked!")
+            return values
+
+        @root_validator(skip_on_failure=True, allow_reuse=True)
+        def ensure_validity_foreign_keys(cls, values):
+            def list_has_id(values, id):
+                for entry in values:
+                    if entry.Id == id:
+                        return True
+                return False
+
+            for _, scenario in enumerate(values.get("scenarios")):
+                for _, stage in enumerate(scenario.Stages):
+                    if not list_has_id(
+                        values.get("boundary_conditions"),
+                        stage.BoundaryConditionCollectionId,
+                    ):
+                        raise ValueError("BoundaryConditionCollectionIds not linked!")
+
+                if not list_has_id(values.get("geometries"), scenario.GeometryId):
+                    raise ValueError("GeometryIds not linked!")
+                if not list_has_id(values.get("soillayers"), scenario.SoilLayersId):
+                    raise ValueError("SoilLayersIds not linked!")
+
+            return values
 
     def add_default_scenario(
         self, label: str, notes: str, unique_start_id: Optional[int] = None

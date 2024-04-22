@@ -21,7 +21,7 @@ from .internal import TypeOtherLoads
 class OtherLoad(BaseDataClass, metaclass=ABCMeta):
     """Other Load Class to inherit from."""
 
-    load_type: Optional[TypeOtherLoads]
+    load_type: Optional[TypeOtherLoads] = None
 
     @abstractmethod
     def _to_internal(self, time: timedelta, p: Point):
@@ -33,7 +33,7 @@ class TrapeziformLoad(OtherLoad):
     Create a trapeziform load with the given name and properties.
 
     Arguments:
-        gamma -- The weight of the load per m\ :sup:`3`
+        gamma -- The weight of the load per m³
 
     .. image:: /figures/dsettlement/trapeziform.png
         :height: 200px
@@ -146,7 +146,7 @@ class UniformLoad(OtherLoad):
     """Create a uniform load with the given name and properties.
 
     Arguments:
-        unit_weight: The weight of the load per m\ :sup:`3`
+        unit_weight: The weight of the load per m³
 
     .. image:: /figures/dsettlement/uniform.png
         :height: 200px
