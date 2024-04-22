@@ -38,11 +38,10 @@ class DGeoFlowBaseModelStructure(BaseModelStructure):
             for k, v in data.items()
         }
 
-    @classmethod
-    def transform_id_to_str(cls, value) -> str:
-        if value is None:
-            return None
-        return str(value)
+def transform_id_to_str(value) -> str:
+    if value is None:
+        return None
+    return str(value)
 
 
 class DGeoFlowSubStructure(DGeoFlowBaseModelStructure):
@@ -92,7 +91,7 @@ class PersistableSoilVisualization(DGeoFlowBaseModelStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("SoilId", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
 
@@ -111,7 +110,7 @@ class PersistableSoilLayer(DGeoFlowBaseModelStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("LayerId", "SoilId", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
 
@@ -132,7 +131,7 @@ class SoilLayerCollection(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     def add_soillayer(self, layer_id: str, soil_id: str) -> PersistableSoilLayer:
@@ -160,7 +159,7 @@ class PersistableSoil(DGeoFlowBaseModelStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
 
@@ -421,7 +420,7 @@ class PersistableLayer(DGeoFlowBaseModelStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -464,7 +463,7 @@ class Geometry(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     def contains_point(self, point: Point) -> bool:
@@ -539,7 +538,7 @@ class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
 
@@ -552,7 +551,7 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -641,7 +640,7 @@ class PersistableCalculation(DGeoFlowBaseModelStructure):
     if IS_PYDANTIC_V2:
         id_validator = field_validator(
             "CriticalHeadId", "MeshPropertiesId", "ResultsId", mode="before"
-        )(DGeoFlowBaseModelStructure.transform_id_to_str)
+        )(transform_id_to_str)
 
 
 class NodeResult(DGeoFlowBaseModelStructure):
@@ -668,7 +667,7 @@ class GroundwaterFlowResult(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -685,7 +684,7 @@ class PipeLengthResult(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -703,7 +702,7 @@ class CriticalHeadResult(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -728,7 +727,7 @@ class Scenario(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", "GeometryId", "SoilLayersId", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -767,7 +766,7 @@ class PersistableMeshProperties(DGeoFlowBaseModelStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("LayerId", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
 
@@ -780,7 +779,7 @@ class MeshProperty(DGeoFlowSubStructure):
 
     if IS_PYDANTIC_V2:
         id_validator = field_validator("Id", mode="before")(
-            DGeoFlowBaseModelStructure.transform_id_to_str
+            transform_id_to_str
         )
 
     @classmethod
@@ -884,9 +883,10 @@ class DGeoFlowStructure(BaseModelStructure):
                     if entry.Id == id:
                         return True
                 return False
-
+            # print(self)
             for _, scenario in enumerate(self.scenarios):
                 for _, stage in enumerate(scenario.Stages):
+                    print(self.boundary_conditions[0])
                     if not list_has_id(
                         self.boundary_conditions, stage.BoundaryConditionCollectionId
                     ):
