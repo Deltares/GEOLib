@@ -36,9 +36,9 @@ jobs:
         id: cache
         with:
           path: ~/.virtualenvs
-          key: v1-venv--${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv--${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-v1
           restore-keys: |
-            v1-venv--${{ matrix.os }}-${{ matrix.python-version }}-
+            venv--${{ matrix.os }}-${{ matrix.python-version }}-v1
 
       - name: Set Poetry config
         run: |
@@ -48,7 +48,8 @@ jobs:
       # To force Pydantic v1, we install the package before the dependencies. This
       # simulates a user who has Pydantic v1 required from another package. 
       - name: Install Pydantic v1
-        run: poetry run pip install pydantic==1.8.2
+        run: |
+          poetry add pydantic==1.8.2
       
       # Install dependencies. This function will take the already installed Pydantic v1
       - name: Install Dependencies
