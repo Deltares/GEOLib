@@ -9,7 +9,14 @@ from itertools import chain
 from math import isfinite
 from typing import Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import ValidationError, conlist, root_validator, validator
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import Field, ValidationError, field_validator, model_validator
+    from typing_extensions import Annotated
+else:
+    from pydantic import conlist, root_validator, validator
+    from pydantic.error_wrappers import ValidationError
 
 from geolib import __version__ as version
 from geolib.geometry import Point
@@ -22,7 +29,10 @@ from .utils import children
 
 class DStabilityBaseModelStructure(BaseModelStructure):
     def dict(_, *args, **kwargs):
-        data = super().dict(*args, **kwargs)
+        if IS_PYDANTIC_V2:
+            data = super().model_dump(*args, **kwargs)
+        else:
+            data = super().dict(*args, **kwargs)
         return {
             k: "NaN" if isinstance(v, float) and not isfinite(v) else v
             for k, v in data.items()
@@ -77,19 +87,38 @@ class PersistablePoint(DStabilityBaseModelStructure):
 
 
 class PersistableHeadLine(DStabilityBaseModelStructure):
-    Id: Optional[str]
+    if IS_PYDANTIC_V2:
+        Id: Optional[str] = None
+    else:
+        Id: Optional[str]
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableReferenceLine(DStabilityBaseModelStructure):
-    BottomHeadLineId: Optional[str]
-    Id: Optional[str]
+    BottomHeadLineId: Optional[str] = None
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
-    TopHeadLineId: Optional[str]
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    TopHeadLineId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", "TopHeadLineId", "BottomHeadLineId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class Waternet(DStabilitySubStructure):
@@ -103,12 +132,20 @@ class Waternet(DStabilitySubStructure):
     def structure_name(cls) -> str:
         return "waternets"
 
-    Id: Optional[str]
+    Id: Optional[str] = None
     ContentVersion: Optional[str] = "2"
     PhreaticLineId: Optional[str] = None
     HeadLines: List[PersistableHeadLine] = []
     ReferenceLines: List[PersistableReferenceLine] = []
     UnitWeightWater: Optional[float] = 9.81
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", "PhreaticLineId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def get_head_line(self, head_line_id: str) -> PersistableHeadLine:
         for head_line in self.HeadLines:
@@ -218,7 +255,7 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = (
         EmbankmentSoilScenarioEnum.CLAY_EMBANKMENT_ON_CLAY
     )
-    Id: Optional[str]
+    Id: Optional[str] = None
     InitialLevelEmbankmentTopLandSide: Optional[Union[float, str]] = "NaN"
     InitialLevelEmbankmentTopWaterSide: Optional[Union[float, str]] = "NaN"
     IntrusionLength: Optional[Union[float, str]] = "NaN"
@@ -236,6 +273,14 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     UseDefaultOffsets: Optional[bool] = True
     WaterLevelHinterland: Optional[Union[float, str]] = "NaN"
 
+    if IS_PYDANTIC_V2:
+        field_validator("Id", "AquiferLayerId", mode="before")
+
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
     @classmethod
     def structure_group(cls) -> str:
         return "waternetcreatorsettings"
@@ -247,7 +292,7 @@ class PersistableStochasticParameter(DStabilityBaseModelStructure):
     StandardDeviation: float = 0.0
 
 
-class StateType(Enum):
+class InternalStateTypeEnum(Enum):
     OCR = "Ocr"
     POP = "Pop"
     YIELD_STRESS = "YieldStress"
@@ -259,34 +304,50 @@ class PersistableStress(DStabilityBaseModelStructure):
     PopStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    StateType: Optional[StateType]
+    StateType: Optional[InternalStateTypeEnum] = None
     YieldStress: float = 0.0
 
 
 class PersistableStateLinePoint(DStabilityBaseModelStructure):
-    Above: Optional[PersistableStress]
-    Below: Optional[PersistableStress]
-    Id: Optional[str]
-    IsAboveAndBelowCorrelated: Optional[bool]
-    IsProbabilistic: Optional[bool]
+    Above: Optional[PersistableStress] = None
+    Below: Optional[PersistableStress] = None
+    Id: Optional[str] = None
+    IsAboveAndBelowCorrelated: Optional[bool] = None
+    IsProbabilistic: Optional[bool] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    X: Optional[float]
+    X: Optional[float] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableStateLine(DStabilityBaseModelStructure):
-    Points: Optional[List[Optional[PersistablePoint]]]
-    Values: Optional[List[Optional[PersistableStateLinePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Values: Optional[List[Optional[PersistableStateLinePoint]]] = None
 
 
 class PersistableStatePoint(DStabilityBaseModelStructure):
-    Id: Optional[str]
-    IsProbabilistic: Optional[bool]
+    Id: Optional[str] = None
+    IsProbabilistic: Optional[bool] = None
     Label: Optional[str] = ""
-    LayerId: Optional[str]
+    LayerId: Optional[str] = None
     Notes: Optional[str] = ""
-    Point: Optional[PersistablePoint]
-    Stress: Optional[PersistableStress]
+    Point: Optional[PersistablePoint] = None
+    Stress: Optional[PersistableStress] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", "LayerId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class State(DStabilitySubStructure):
@@ -301,9 +362,17 @@ class State(DStabilitySubStructure):
         return "states"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     StateLines: List[PersistableStateLine] = []
     StatePoints: List[PersistableStatePoint] = []
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def add_state_point(self, state_point: PersistableStatePoint) -> None:
         self.StatePoints.append(state_point)
@@ -331,8 +400,20 @@ class State(DStabilitySubStructure):
 
 
 class PersistableStateCorrelation(DStabilityBaseModelStructure):
-    CorrelatedStateIds: Optional[List[Optional[str]]]
-    IsFullyCorrelated: Optional[bool]
+    CorrelatedStateIds: Optional[List[Optional[str]]] = None
+    IsFullyCorrelated: Optional[bool] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("CorrelatedStateIds", mode="before")
+        def transform_id_to_str(cls, values) -> str:
+            out = []
+            for value in values:
+                if value is None:
+                    out.append(None)
+                else:
+                    out.append(str(value))
+            return out
 
 
 class StateCorrelation(DStabilitySubStructure):
@@ -347,8 +428,16 @@ class StateCorrelation(DStabilitySubStructure):
         return "statecorrelations"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def add_state_correlation(
         self, state_correlation: PersistableStateCorrelation
@@ -367,26 +456,52 @@ class Stage(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "stages"
 
-    DecorationsId: Optional[str]
-    GeometryId: Optional[str]
-    Id: Optional[str]
+    DecorationsId: Optional[str] = None
+    GeometryId: Optional[str] = None
+    Id: Optional[str] = None
     Label: Optional[str] = ""
-    LoadsId: Optional[str]
+    LoadsId: Optional[str] = None
     Notes: Optional[str] = ""
-    ReinforcementsId: Optional[str]
-    SoilLayersId: Optional[str]
-    StateCorrelationsId: Optional[str]
-    StateId: Optional[str]
-    WaternetCreatorSettingsId: Optional[str]
-    WaternetId: Optional[str]
+    ReinforcementsId: Optional[str] = None
+    SoilLayersId: Optional[str] = None
+    StateCorrelationsId: Optional[str] = None
+    StateId: Optional[str] = None
+    WaternetCreatorSettingsId: Optional[str] = None
+    WaternetId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator(
+            "DecorationsId",
+            "GeometryId",
+            "Id",
+            "LoadsId",
+            "ReinforcementsId",
+            "SoilLayersId",
+            "StateId",
+            "WaternetId",
+            mode="before",
+        )
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableCalculation(DStabilityBaseModelStructure):
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     ResultId: Optional[str] = None
-    CalculationSettingsId: Optional[str]
+    CalculationSettingsId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", "ResultId", "CalculationSettingsId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class Scenario(DStabilitySubStructure):
@@ -403,12 +518,20 @@ class Scenario(DStabilitySubStructure):
     Stages: Optional[List[Stage]] = []
     Calculations: Optional[List[PersistableCalculation]] = []
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
 
+    if IS_PYDANTIC_V2:
 
-class PersistableShadingType(Enum):
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
+
+class PersistableShadingTypeEnum(Enum):
     DIAGONAL_A = "DiagonalA"
     DIAGONAL_B = "DiagonalB"
     DIAGONAL_C = "DiagonalC"
@@ -423,9 +546,17 @@ class PersistableShadingType(Enum):
 
 
 class PersistableSoilVisualization(DStabilityBaseModelStructure):
-    Color: Optional[str]
-    PersistableShadingType: Optional[PersistableShadingType]
-    SoilId: Optional[str]
+    Color: Optional[str] = None
+    PersistableShadingType: Optional[PersistableShadingTypeEnum]
+    SoilId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("SoilId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class SoilVisualisation(DStabilityBaseModelStructure):
@@ -438,8 +569,16 @@ class SoilVisualisation(DStabilityBaseModelStructure):
 
 
 class PersistableSoilLayer(DStabilityBaseModelStructure):
-    LayerId: Optional[str]
-    SoilId: Optional[str]
+    LayerId: Optional[str] = None
+    SoilId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("LayerId", "SoilId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class SoilLayerCollection(DStabilitySubStructure):
@@ -454,8 +593,16 @@ class SoilLayerCollection(DStabilitySubStructure):
         return "soillayers"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     SoilLayers: List[PersistableSoilLayer] = []
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def add_soillayer(self, layer_id: str, soil_id: str) -> PersistableSoilLayer:
         psl = PersistableSoilLayer(LayerId=layer_id, SoilId=soil_id)
@@ -473,7 +620,19 @@ class SoilLayerCollection(DStabilitySubStructure):
 
 
 class PersistableSoilCorrelation(DStabilityBaseModelStructure):
-    CorrelatedSoilIds: Optional[List[str]]
+    CorrelatedSoilIds: Optional[List[str]] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("CorrelatedSoilIds", mode="before")
+        def transform_id_to_str(cls, values) -> str:
+            out = []
+            for value in values:
+                if value is None:
+                    out.append(None)
+                else:
+                    out.append(str(value))
+            return out
 
 
 class SoilCorrelation(DStabilitySubStructure):
@@ -613,6 +772,14 @@ class PersistableSoil(DStabilityBaseModelStructure):
     VolumetricWeightAbovePhreaticLevel: float = 0.0
     VolumetricWeightBelowPhreaticLevel: float = 0.0
     SuTable: PersistableSuTable = PersistableSuTable()
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class SoilCollection(DStabilitySubStructure):
@@ -919,35 +1086,35 @@ class SoilCollection(DStabilitySubStructure):
 class PersistableForbiddenLine(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    End: Optional[PersistablePoint]
-    Start: Optional[PersistablePoint]
+    End: Optional[PersistablePoint] = None
+    Start: Optional[PersistablePoint] = None
 
 
 class PersistableGeotextile(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    End: Optional[PersistablePoint]
-    ReductionArea: Optional[float]
-    Start: Optional[PersistablePoint]
-    TensileStrength: Optional[float]
+    End: Optional[PersistablePoint] = None
+    ReductionArea: Optional[float] = None
+    Start: Optional[PersistablePoint] = None
+    TensileStrength: Optional[float] = None
 
 
 class PersistableStressAtDistance(DStabilityBaseModelStructure):
-    Distance: Optional[float]
-    Stress: Optional[float]
+    Distance: Optional[float] = None
+    Stress: Optional[float] = None
 
 
 class PersistableNail(DStabilityBaseModelStructure):
     BendingStiffness: Optional[float] = 0.0
     CriticalAngle: Optional[float] = 0.0
-    Diameter: Optional[float]
+    Diameter: Optional[float] = None
     Direction: Optional[float] = 0.0
     GroutDiameter: Optional[float] = 0.0
     HorizontalSpacing: Optional[float] = 0.0
     Label: Optional[str] = ""
     LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
-    Length: Optional[float]
-    Location: Optional[PersistablePoint]
+    Length: Optional[float] = None
+    Location: Optional[PersistablePoint] = None
     MaxPullForce: Optional[float] = 0.0
     Notes: Optional[str] = ""
     PlasticMoment: Optional[float] = 0.0
@@ -960,11 +1127,19 @@ class PersistableNail(DStabilityBaseModelStructure):
 class Reinforcements(DStabilitySubStructure):
     """reinforcements/reinforcements_x.json"""
 
-    Id: Optional[str]
+    Id: Optional[str] = None
     ContentVersion: Optional[str] = "2"
     ForbiddenLines: List[PersistableForbiddenLine] = []
     Geotextiles: List[PersistableGeotextile] = []
     Nails: List[PersistableNail] = []
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def add_reinforcement(
         self, reinforcement: "DStabilityReinforcement"
@@ -992,7 +1167,7 @@ class ProjectInfo(DStabilitySubStructure):
     Project: Optional[str] = ""
     Remarks: Optional[str] = f"Created with GEOLib {version}"
 
-    @validator("Created", "Date", "LastModified", pre=True, allow_reuse=True)
+    @classmethod
     def nltime(cls, date: Union[date, str]) -> date:
         if isinstance(date, str):
             position = date.index(max(date.split("-"), key=len))
@@ -1002,18 +1177,35 @@ class ProjectInfo(DStabilitySubStructure):
                 date = datetime.strptime(date, "%Y-%m-%d").date()
         return date
 
+    if IS_PYDANTIC_V2:
+        nltime_validator = field_validator(
+            "Created", "Date", "LastModified", mode="before"
+        )(nltime)
+    else:
+        nltime_validator = validator(
+            "Created", "Date", "LastModified", pre=True, allow_reuse=True
+        )(nltime)
+
 
 class PersistableBondStress(DStabilityBaseModelStructure):
-    Sigma: Optional[float]
-    Tau: Optional[float]
+    Sigma: Optional[float] = None
+    Tau: Optional[float] = None
 
 
 class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
     AreBondStressesActive: Optional[bool] = False
     BondStresses: Optional[List[Optional[PersistableBondStress]]] = []
-    CompressionRatio: Optional[float]
-    RheologicalCoefficient: Optional[float]
-    SoilId: Optional[str]
+    CompressionRatio: Optional[float] = None
+    RheologicalCoefficient: Optional[float] = None
+    SoilId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("SoilId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class NailProperties(DStabilitySubStructure):
@@ -1030,8 +1222,16 @@ class NailProperties(DStabilitySubStructure):
 
 
 class PersistableConsolidation(DStabilityBaseModelStructure):
-    Degree: Optional[float]
-    LayerId: Optional[str]
+    Degree: Optional[float] = None
+    LayerId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("LayerId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableEarthquake(DStabilityBaseModelStructure):
@@ -1046,36 +1246,44 @@ class PersistableEarthquake(DStabilityBaseModelStructure):
 
 class PersistableLayerLoad(DStabilityBaseModelStructure):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    LayerId: Optional[str]
+    LayerId: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("LayerId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableLineLoad(DStabilityBaseModelStructure):
-    Angle: Optional[float]
+    Angle: Optional[float] = None
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     Label: Optional[str] = ""
-    Location: Optional[PersistablePoint]
-    Magnitude: Optional[float]
+    Location: Optional[PersistablePoint] = None
+    Magnitude: Optional[float] = None
     Notes: Optional[str] = ""
-    Spread: Optional[float]
+    Spread: Optional[float] = None
 
 
 class PersistableTree(DStabilityBaseModelStructure):
-    Force: Optional[float]
+    Force: Optional[float] = None
     Label: Optional[str] = ""
-    Location: Optional[PersistablePoint]
+    Location: Optional[PersistablePoint] = None
     Notes: Optional[str] = ""
-    RootZoneWidth: Optional[float]
-    Spread: Optional[float]
+    RootZoneWidth: Optional[float] = None
+    Spread: Optional[float] = None
 
 
 class PersistableUniformLoad(DStabilityBaseModelStructure):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    End: Optional[float]
+    End: Optional[float] = None
     Label: Optional[str] = ""
-    Magnitude: Optional[float]
+    Magnitude: Optional[float] = None
     Notes: Optional[str] = ""
-    Spread: Optional[float]
-    Start: Optional[float]
+    Spread: Optional[float] = None
+    Start: Optional[float] = None
 
 
 Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
@@ -1084,13 +1292,21 @@ Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
 class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
-    Id: Optional[str]
+    Id: Optional[str] = None
     ContentVersion: Optional[str] = "2"
     Earthquake: Optional[PersistableEarthquake] = PersistableEarthquake()
     LayerLoads: Optional[List[Optional[PersistableLayerLoad]]] = []
     LineLoads: Optional[List[Optional[PersistableLineLoad]]] = []
     Trees: Optional[List[Optional[PersistableTree]]] = []
     UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def add_load(
         self, load: "DStabilityLoad", consolidations: List["Consolidation"]
@@ -1128,12 +1344,23 @@ class Loads(DStabilitySubStructure):
 
 
 class PersistableLayer(DStabilityBaseModelStructure):
-    Id: Optional[str]
+    Id: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: conlist(PersistablePoint, min_items=3)
+    if IS_PYDANTIC_V2:
+        Points: Annotated[List[PersistablePoint], Field(min_length=3)]
+    else:
+        Points: conlist(PersistablePoint, min_items=3)
 
-    @validator("Points", pre=True, allow_reuse=True)
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
+    @classmethod
     def polygon_checks(cls, points):
         """
         Todo:
@@ -1146,6 +1373,13 @@ class PersistableLayer(DStabilityBaseModelStructure):
         # 4. does it intersect other polygons
         return points
 
+    if IS_PYDANTIC_V2:
+        polygon_chack_validator = field_validator("Points", mode="before")(polygon_checks)
+    else:
+        polygon_chack_validator = validator("Points", pre=True, allow_reuse=True)(
+            polygon_checks
+        )
+
 
 class Geometry(DStabilitySubStructure):
     """geometries/geometry_x.json"""
@@ -1155,8 +1389,16 @@ class Geometry(DStabilitySubStructure):
         return "geometries"
 
     ContentVersion: Optional[str] = "2"
-    Id: Optional[str]
+    Id: Optional[str] = None
     Layers: List[PersistableLayer] = []
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def contains_point(self, point: Point) -> bool:
         """
@@ -1215,16 +1457,24 @@ class Geometry(DStabilitySubStructure):
 
 
 class PersistableElevation(DStabilityBaseModelStructure):
-    AddedLayerId: Optional[str]
+    AddedLayerId: Optional[str] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("AddedLayerId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableExcavation(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]]
+    Points: Optional[List[Optional[PersistablePoint]]] = None
 
 
 class Decorations(DStabilitySubStructure):
@@ -1233,7 +1483,15 @@ class Decorations(DStabilitySubStructure):
     Elevations: Optional[List[Optional[PersistableElevation]]] = []
     ContentVersion: Optional[str] = "2"
     Excavations: Optional[List[Optional[PersistableExcavation]]] = []
-    Id: Optional[str]
+    Id: Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     def add_excavation(self, excavation: PersistableExcavation):
         self.Excavations.append(excavation)
@@ -1409,6 +1667,14 @@ class CalculationSettings(DStabilitySubStructure):
         PersistableUpliftVanParticleSwarmSettings
     ] = PersistableUpliftVanParticleSwarmSettings()
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
     def set_bishop(self, bishop_settings: PersistableBishopSettings) -> None:
         self.Bishop = bishop_settings
         self.AnalysisType = AnalysisType.BISHOP
@@ -1498,6 +1764,14 @@ class BishopBruteForceResult(DStabilitySubStructure):
     ResultThreshold: Optional[float] = None
     SlipPlaneResults: Optional[list] = None
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
     @classmethod
     def structure_group(cls) -> str:
         return "results/bishopbruteforce/"
@@ -1521,6 +1795,14 @@ class PersistableSoilContribution(DStabilityBaseModelStructure):
     UncorrelatedAlpha: Optional[float] = None
     Value: Optional[float] = None
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("SoilId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
 
 class PersistableCalculationContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
@@ -1528,6 +1810,14 @@ class PersistableCalculationContribution(DStabilityBaseModelStructure):
     CalculationId: Optional[str] = None
     UncorrelatedAlpha: Optional[float] = None
     Value: Optional[float] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("CalculationId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
@@ -1537,6 +1827,14 @@ class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
     UncorrelatedAlpha: Optional[float] = None
     Value: Optional[float] = None
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("StateLinePointId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
 
 class PersistableStatePointContribution(DStabilityBaseModelStructure):
     Alpha: Optional[float] = None
@@ -1544,6 +1842,14 @@ class PersistableStatePointContribution(DStabilityBaseModelStructure):
     StatePointId: Optional[str] = None
     UncorrelatedAlpha: Optional[float] = None
     Value: Optional[float] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("StatePointId", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
 
 class BishopReliabilityResult(DStabilitySubStructure):
@@ -1563,6 +1869,14 @@ class BishopReliabilityResult(DStabilitySubStructure):
     StatePointContributions: Optional[
         List[Optional[PersistableStatePointContribution]]
     ] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1600,6 +1914,14 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     ResultThreshold: Optional[float] = None
     SlipPlaneResults: Optional[list] = None
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
     @classmethod
     def structure_group(cls) -> str:
         return "results/bishopbruteforcereliability/"
@@ -1622,6 +1944,14 @@ class BishopResult(DStabilitySubStructure):
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1697,6 +2027,14 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
     ResultThreshold: Optional[float] = None
     SlipPlaneResults: Optional[list] = None
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
     @classmethod
     def structure_group(cls) -> str:
         return "results/spencergeneticalgorithm/"
@@ -1730,6 +2068,14 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     StatePointContributions: Optional[
         List[Optional[PersistableStatePointContribution]]
     ] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1765,6 +2111,14 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
         List[Optional[PersistableStatePointContribution]]
     ] = None
 
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
+
     @classmethod
     def structure_group(cls) -> str:
         return "results/spencergeneticreliability/"
@@ -1787,6 +2141,14 @@ class SpencerResult(DStabilitySubStructure):
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1814,6 +2176,14 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
     TangentLine: Optional[float] = None
     ResultThreshold: Optional[float] = None
     SlipPlaneResults: Optional[list] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1854,6 +2224,14 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
         List[Optional[PersistableStatePointContribution]]
     ] = None
     TangentLine: Optional[float] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1896,8 +2274,14 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
         List[Optional[PersistableStatePointContribution]]
     ] = None
     TangentLine: Optional[float] = None
-    
-    
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -1927,6 +2311,14 @@ class UpliftVanResult(DStabilitySubStructure):
     RightCenter: Optional[PersistablePoint] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
     TangentLine: Optional[float] = None
+
+    if IS_PYDANTIC_V2:
+
+        @field_validator("Id", mode="before")
+        def transform_id_to_str(cls, value) -> str:
+            if value is None:
+                return None
+            return str(value)
 
     @classmethod
     def structure_group(cls) -> str:
@@ -2050,45 +2442,90 @@ class DStabilityStructure(BaseModelStructure):
     bishop_reliability_results: List[BishopReliabilityResult] = []
     bishop_bruteforce_reliability_results: List[BishopBruteForceReliabilityResult] = []
 
-    @root_validator(skip_on_failure=True, allow_reuse=True)
-    def ensure_validity_foreign_keys(cls, values):
-        def list_has_id(values, id):
-            for entry in values:
-                if entry.Id == id:
-                    return True
-            return False
+    if IS_PYDANTIC_V2:
 
-        for _, scenario in enumerate(values.get("scenarios")):
-            for _, stage in enumerate(scenario.Stages):
-                if not list_has_id(values.get("decorations"), stage.DecorationsId):
-                    raise ValueError("DecorationsIds not linked!")
-                if not list_has_id(values.get("geometries"), stage.GeometryId):
-                    raise ValueError("GeometryIds not linked!")
-                if not list_has_id(values.get("loads"), stage.LoadsId):
-                    raise ValueError("LoadsIds not linked!")
-                if not list_has_id(values.get("reinforcements"), stage.ReinforcementsId):
-                    raise ValueError("ReinforcementsIds not linked!")
-                if not list_has_id(values.get("soillayers"), stage.SoilLayersId):
-                    raise ValueError("SoilLayersIds not linked!")
-                if not list_has_id(values.get("states"), stage.StateId):
-                    raise ValueError("StateIds not linked!")
-                if not list_has_id(
-                    values.get("statecorrelations"), stage.StateCorrelationsId
-                ):
-                    raise ValueError("StateCorrelationsIds not linked!")
-                if not list_has_id(
-                    values.get("waternetcreatorsettings"), stage.WaternetCreatorSettingsId
-                ):
-                    raise ValueError("WaternetCreatorSettingsIds not linked!")
-                if not list_has_id(values.get("waternets"), stage.WaternetId):
-                    raise ValueError("WaternetIds not linked!")
-            for _, calculation in enumerate(scenario.Calculations):
-                if not list_has_id(
-                    values.get("calculationsettings"), calculation.CalculationSettingsId
-                ):
-                    raise ValueError("CalculationSettingsIds not linked!")
+        @model_validator(mode="after")
+        def ensure_validity_foreign_keys(self):
+            def list_has_id(values, id):
+                for entry in values:
+                    if entry.Id == id:
+                        return True
+                return False
 
-        return values
+            for _, scenario in enumerate(self.scenarios):
+                for _, stage in enumerate(scenario.Stages):
+                    if not list_has_id(self.decorations, stage.DecorationsId):
+                        raise ValueError("DecorationsIds not linked!")
+                    if not list_has_id(self.geometries, stage.GeometryId):
+                        raise ValueError("GeometryIds not linked!")
+                    if not list_has_id(self.loads, stage.LoadsId):
+                        raise ValueError("LoadsIds not linked!")
+                    if not list_has_id(self.reinforcements, stage.ReinforcementsId):
+                        raise ValueError("ReinforcementsIds not linked!")
+                    if not list_has_id(self.soillayers, stage.SoilLayersId):
+                        raise ValueError("SoilLayersIds not linked!")
+                    if not list_has_id(self.states, stage.StateId):
+                        raise ValueError("StateIds not linked!")
+                    if not list_has_id(self.statecorrelations, stage.StateCorrelationsId):
+                        raise ValueError("StateCorrelationsIds not linked!")
+                    if not list_has_id(
+                        self.waternetcreatorsettings, stage.WaternetCreatorSettingsId
+                    ):
+                        raise ValueError("WaternetCreatorSettingsIds not linked!")
+                    if not list_has_id(self.waternets, stage.WaternetId):
+                        raise ValueError("WaternetIds not linked!")
+                for _, calculation in enumerate(scenario.Calculations):
+                    if not list_has_id(
+                        self.calculationsettings, calculation.CalculationSettingsId
+                    ):
+                        raise ValueError("CalculationSettingsIds not linked!")
+            return self
+
+    else:
+
+        @root_validator(skip_on_failure=True, allow_reuse=True)
+        def ensure_validity_foreign_keys(cls, values):
+            def list_has_id(values, id):
+                for entry in values:
+                    if entry.Id == id:
+                        return True
+                return False
+
+            for _, scenario in enumerate(values.get("scenarios")):
+                for _, stage in enumerate(scenario.Stages):
+                    if not list_has_id(values.get("decorations"), stage.DecorationsId):
+                        raise ValueError("DecorationsIds not linked!")
+                    if not list_has_id(values.get("geometries"), stage.GeometryId):
+                        raise ValueError("GeometryIds not linked!")
+                    if not list_has_id(values.get("loads"), stage.LoadsId):
+                        raise ValueError("LoadsIds not linked!")
+                    if not list_has_id(
+                        values.get("reinforcements"), stage.ReinforcementsId
+                    ):
+                        raise ValueError("ReinforcementsIds not linked!")
+                    if not list_has_id(values.get("soillayers"), stage.SoilLayersId):
+                        raise ValueError("SoilLayersIds not linked!")
+                    if not list_has_id(values.get("states"), stage.StateId):
+                        raise ValueError("StateIds not linked!")
+                    if not list_has_id(
+                        values.get("statecorrelations"), stage.StateCorrelationsId
+                    ):
+                        raise ValueError("StateCorrelationsIds not linked!")
+                    if not list_has_id(
+                        values.get("waternetcreatorsettings"),
+                        stage.WaternetCreatorSettingsId,
+                    ):
+                        raise ValueError("WaternetCreatorSettingsIds not linked!")
+                    if not list_has_id(values.get("waternets"), stage.WaternetId):
+                        raise ValueError("WaternetIds not linked!")
+                for _, calculation in enumerate(scenario.Calculations):
+                    if not list_has_id(
+                        values.get("calculationsettings"),
+                        calculation.CalculationSettingsId,
+                    ):
+                        raise ValueError("CalculationSettingsIds not linked!")
+
+            return values
 
     def add_default_scenario(
         self, label: str, notes: str, unique_start_id: Optional[int] = None

@@ -1,7 +1,13 @@
 from typing import List
 
 import pytest
-from pydantic import ValidationError
+
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic_core._pydantic_core import ValidationError
+else:
+    from pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dstability.dstability_model import DStabilityModel

@@ -649,7 +649,9 @@ class TestDSettlementAcceptance:
         # 1. Set up test data
         test_folder = TestUtils.get_local_test_data_dir("dsettlement")
         test_file = pathlib.Path(os.path.join(test_folder, "BeforeFit.sli"))
-        output_test_folder = Path(TestUtils.get_output_test_data_dir("dsettlement/acceptancetest/"))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir("dsettlement/acceptancetest/")
+        )
         output_test_inputfile = output_test_folder / ("FitCalculation.sli")
         source = pathlib.Path(os.path.join(test_folder, "FitMeasurement.txt"))
         dest = pathlib.Path(os.path.join(output_test_folder, "FitMeasurement.txt"))
@@ -690,12 +692,18 @@ class TestDSettlementAcceptance:
 
         # 9. Check that a fit calculation was performed,
         # by checking a few lines in the FIT block in the INPUT part of the output file
-        assert fit_origin[33].strip() == '50.000 = X co-ordinate'
-        assert fit_origin[56].strip() == '1      1.000      1.000     10.000 Factor 0: selected, current, previous, weight'
-        assert fit_origin[67].strip() == '0.000 = Coefficient of determination  -'
-        assert fit_origin[68].strip() == '0.19 = Imperfection  m'
+        assert fit_origin[33].strip() == "50.000 = X co-ordinate"
+        assert (
+            fit_origin[56].strip()
+            == "1      1.000      1.000     10.000 Factor 0: selected, current, previous, weight"
+        )
+        assert fit_origin[67].strip() == "0.000 = Coefficient of determination  -"
+        assert fit_origin[68].strip() == "0.19 = Imperfection  m"
         fit = list(result.input.fit.split("\n"))
-        assert fit[33].strip() == '50.000 = X co-ordinate'
-        assert fit[56].strip() == '1      1.051      1.000     10.000 Factor 0: selected, current, previous, weight'
-        assert fit[67].strip() == '0.841 = Coefficient of determination  -'
-        assert fit[68].strip() == '0.50 = Imperfection  m'
+        assert fit[33].strip() == "50.000 = X co-ordinate"
+        assert (
+            fit[56].strip()
+            == "1      1.051      1.000     10.000 Factor 0: selected, current, previous, weight"
+        )
+        assert fit[67].strip() == "0.841 = Coefficient of determination  -"
+        assert fit[68].strip() == "0.50 = Imperfection  m"

@@ -77,7 +77,7 @@ class DSettlementModel(BaseModel):
     @property
     def default_console_path(self) -> Path:
         return Path("DSettlement/DSettlement.exe")
-    
+
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dsettlement_console_path")
@@ -207,16 +207,19 @@ class DSettlementModel(BaseModel):
 
         calculation_options = self.datastructure.input_data.calculation_options.dict()
         calculation_options.update(**kwargs)
-        self.datastructure.input_data.calculation_options = CalculationOptions.set_imaginary_surface_options(
-            **calculation_options
+        self.datastructure.input_data.calculation_options = (
+            CalculationOptions.set_imaginary_surface_options(**calculation_options)
         )
 
         """Check that the given layer index refers to an existing index layer"""
         options = self.datastructure.input_data.calculation_options
-        if options.is_imaginary_surface \
-                and (options.imaginary_surface_layer < 1 or
-                     options.imaginary_surface_layer > self.layers.layers.__len__()):
-            raise ValueError("The index of imaginary_surface_layer refers to a nonexistent layer index.")
+        if options.is_imaginary_surface and (
+            options.imaginary_surface_layer < 1
+            or options.imaginary_surface_layer > self.layers.layers.__len__()
+        ):
+            raise ValueError(
+                "The index of imaginary_surface_layer refers to a nonexistent layer index."
+            )
 
         return calculation_options
 
@@ -234,7 +237,9 @@ class DSettlementModel(BaseModel):
 
     @property
     def use_probabilistic_defaults_boundaries(self):
-        return self.datastructure.input_data.geometry_data.use_probabilistic_defaults_boundaries
+        return (
+            self.datastructure.input_data.geometry_data.use_probabilistic_defaults_boundaries
+        )
 
     @property
     def stdv_boundaries(self):
@@ -287,7 +292,9 @@ class DSettlementModel(BaseModel):
             is_reliability_calculation : set to True if a probabilistic calculation should be performed.
 
         """
-        self.datastructure.input_data.check_x_in_vertical(point_of_vertical=point_of_vertical)
+        self.datastructure.input_data.check_x_in_vertical(
+            point_of_vertical=point_of_vertical
+        )
         self.datastructure.input_data.probabilistic_data = (
             self.datastructure.input_data.probabilistic_data.set_probabilistic_data(
                 point_of_vertical=point_of_vertical,
@@ -351,7 +358,9 @@ class DSettlementModel(BaseModel):
 
         piezo_line = self.headlines.create_piezoline(curves)
         if is_phreatic:
-            self.datastructure.input_data.geometry_data.phreatic_line.phreatic_line = piezo_line.id
+            self.datastructure.input_data.geometry_data.phreatic_line.phreatic_line = (
+                piezo_line.id
+            )
         return piezo_line.id
 
     @property
@@ -505,6 +514,7 @@ class DSettlementModel(BaseModel):
             raise ValueError(
                 "If you wish to add a vertical drain then value is_vertical_drains for the model should be True"
             )
+
     @property
     def output(self) -> Results:
         """Access internal dict-like datastructure of the output.

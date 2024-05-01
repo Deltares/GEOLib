@@ -1,8 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import Optional, Union
 
-from pydantic.types import confloat, conint
-
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import BaseDataClass
 
 from .settings import (
@@ -16,6 +15,12 @@ from .settings import (
     PartialFactorSetVerifyEC,
     VerifyType,
 )
+
+if IS_PYDANTIC_V2:
+    from pydantic import Field
+    from typing_extensions import Annotated
+else:
+    from pydantic.types import confloat, conint
 
 
 class CalculationOptionsPerStage(BaseDataClass):
@@ -97,7 +102,10 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     """
 
     input_calculation_type: CalculationType = CalculationType.OVERALL_STABILITY
-    cur_stability_stage: conint(ge=0) = 0
+    if IS_PYDANTIC_V2:
+        cur_stability_stage: Annotated[int, Field(ge=0)] = 0
+    else:
+        cur_stability_stage: conint(ge=0) = 0
     overall_stability_type: DesignType = DesignType.REPRESENTATIVE
     stability_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = (
@@ -121,7 +129,10 @@ class KranzAnchorStrengthCalculationOptions(CalculationOptions):
     input_calculation_type: CalculationType = (
         CalculationType.CHARACTERISTIC_KRANZ_ANCHOR_STRENGTH
     )
-    cur_anchor_force_stage: conint(ge=0) = 0
+    if IS_PYDANTIC_V2:
+        cur_anchor_force_stage: Annotated[int, Field(ge=0)] = 0
+    else:
+        cur_anchor_force_stage: conint(ge=0) = 0
 
 
 class StandardCalculationOptions(CalculationOptions):
@@ -162,13 +173,19 @@ class VerifyCalculationOptions(CalculationOptions):
     ec7_nl_overall_partial_factor_set: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    ec7_nl_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
+    if IS_PYDANTIC_V2:
+        ec7_nl_overall_anchor_factor: Annotated[float, Field(ge=0.001, le=1000)] = 1
+    else:
+        ec7_nl_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     ec7_nad_nl_overall_stability: bool = False
     ec7_be_overall_stability: bool = False
     nb_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    cur_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
+    if IS_PYDANTIC_V2:
+        cur_overall_anchor_factor: Annotated[float, Field(ge=0.001, le=1000)] = 1
+    else:
+        cur_overall_anchor_factor: confloat(ge=0.001, le=1000) = 1
     cur_overall_stability: bool = False
 
     @property
@@ -200,10 +217,16 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     """
 
     input_calculation_type: CalculationType = CalculationType.DESIGN_SHEETPILING_LENGTH
-    design_stage: conint(ge=0) = 0
-    design_pile_length_from: confloat(ge=1, le=100) = 1
-    design_pile_length_to: confloat(ge=1, le=100) = 1
-    design_pile_length_decrement: confloat(ge=0.01, le=10) = 0.01
+    if IS_PYDANTIC_V2:
+        design_stage: Annotated[int, Field(ge=0)] = 0
+        design_pile_length_from: Annotated[float, Field(ge=1, le=100)] = 1
+        design_pile_length_to: Annotated[float, Field(ge=1, le=100)] = 1
+        design_pile_length_decrement: Annotated[float, Field(ge=0.01, le=10)] = 0.01
+    else:
+        design_stage: conint(ge=0) = 0
+        design_pile_length_from: confloat(ge=1, le=100) = 1
+        design_pile_length_to: confloat(ge=1, le=100) = 1
+        design_pile_length_decrement: confloat(ge=0.01, le=10) = 0.01
     design_type: DesignType = DesignType.REPRESENTATIVE
     design_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
     design_partial_factor_set_ec7_nad_nl: PartialFactorSetEC7NADNL = (
