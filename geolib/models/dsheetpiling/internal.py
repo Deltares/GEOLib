@@ -927,12 +927,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
     sheet_piling: Union[str, SheetPiling] = SheetPiling()
     combined_wall: str = ""
     vertical_balance: VerticalBalance = VerticalBalance()
-    # vertical_balance: str = cleandoc(
-    #     """
-    #     SheetPilingQcRep=0.000
-    #     SheetPilingXi=1.39
-    #     """
-    # )
     settlement_by_vibration_params: str = cleandoc(
         """
         SheetPilingNumberOfPilesDrilled=2
