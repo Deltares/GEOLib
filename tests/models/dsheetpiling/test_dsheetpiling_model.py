@@ -912,10 +912,7 @@ class TestDsheetPilingModel:
     @pytest.mark.unittest
     def test_add_vertical_balance(self, model: DSheetPilingModel):
         # Set up vertical balance
-        vertical_balance = VerticalBalance(
-            max_point_resistance=1,
-            xi_factor=2
-        )
+        vertical_balance = VerticalBalance(max_point_resistance=1, xi_factor=2)
 
         # Call the test function
         model.set_vertical_balance(vertical_balance=vertical_balance)

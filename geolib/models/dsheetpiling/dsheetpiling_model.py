@@ -9,7 +9,12 @@ from pydantic.types import confloat, conint
 from geolib._compat import IS_PYDANTIC_V2
 from geolib.geometry import Point
 from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
-from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet, VerticalBalance
+from geolib.models.dsheetpiling.constructions import (
+    DiaphragmWall,
+    Pile,
+    Sheet,
+    VerticalBalance,
+)
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 
@@ -427,7 +432,9 @@ class DSheetPilingModel(BaseModel):
         Args:
             vertical_balance: VerticalBalance, holds the vertical balance parameters
         """
-        self.datastructure.input_data.set_vertical_balance(vertical_balance=vertical_balance.to_internal())
+        self.datastructure.input_data.set_vertical_balance(
+            vertical_balance=vertical_balance.to_internal()
+        )
 
     def add_load(
         self,
