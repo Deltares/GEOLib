@@ -572,7 +572,7 @@ class SheetPiling(DSeriesStructureCollection):
         lengthsheetpiling: confloat(gt=0) = 10
 
 
-class VerticalBalance(DSeriesInlineMappedProperties):  # DSeriesUnmappedNameProperties
+class VerticalBalance(DSeriesInlineMappedProperties):
     sheetpilingqcrep: Optional[confloat(ge=0)] = 0.001
     sheetpilingxi: Optional[confloat(ge=0.1)] = 1.39
 
