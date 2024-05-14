@@ -1,6 +1,9 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
-from typing import List, Tuple, Type, _GenericAlias, get_type_hints
+from typing import List, Tuple, Type, _GenericAlias
 from typing import get_args as get_args
+from typing import get_type_hints
+
+from geolib._compat import IS_PYDANTIC_V2
 
 
 def unpack_if_union(tp):
@@ -43,8 +46,15 @@ def get_required_class_field(class_type: Type) -> List[Tuple[str, Type]]:
     Returns:
         List[Tuple[str, Type]]: [description]
     """
-    return [
-        (field_name, field)
-        for field_name, field in class_type.__fields__.items()
-        if field.required and not field_name.startswith("__")
-    ]
+    if IS_PYDANTIC_V2:
+        return [
+            (field_name, field)
+            for field_name, field in class_type.model_fields.items()
+            if field.is_required() and not field_name.startswith("__")
+        ]
+    else:
+        return [
+            (field_name, field)
+            for field_name, field in class_type.__fields__.items()
+            if field.required and not field_name.startswith("__")
+        ]

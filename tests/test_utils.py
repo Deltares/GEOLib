@@ -3,6 +3,7 @@ from typing import Type, _GenericAlias, get_type_hints
 
 import pytest
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import BaseDataClass
 from geolib.models.utils import get_filtered_type_hints, get_required_class_field
 
@@ -32,7 +33,10 @@ class TestGetFields:
         assert len(filtered_types) == 1
         field_name, field_type = filtered_types[0]
         assert field_name == "regular_field"
-        assert field_type.type_ == int
+        if IS_PYDANTIC_V2:
+            assert field_type.annotation == int
+        else:
+            assert field_type.type_ == int
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(

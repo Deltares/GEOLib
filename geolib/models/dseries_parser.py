@@ -21,6 +21,7 @@ from typing import (
 
 from pydantic import FilePath
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.errors import ParserError
 from geolib.models import BaseDataClass as DataClass
 from geolib.models.base_model_structure import BaseModelStructure
@@ -167,7 +168,10 @@ class DSeriesStructure(BaseModelStructure):
         return get_filtered_type_hints(cls)
 
     def dict(_, *args, **kwargs):
-        data = super().dict(*args, **kwargs)
+        if IS_PYDANTIC_V2:
+            data = super().model_dump(*args, **kwargs)
+        else:
+            data = super().dict(*args, **kwargs)
         for __, value in data.items():
             if isinstance(value, float) and not isfinite(value):
                 raise ValueError(
@@ -225,8 +229,10 @@ class DSerieListGroupNextStructure(DSeriesStructure):
         else:
             if not len(elements) == num_elements:
                 raise ParserError(f"Error in parsing in number of elements for {cls}")
-
-        collection_property_name = list(cls.__fields__.items())[0][0]
+        if IS_PYDANTIC_V2:
+            collection_property_name = list(cls.model_fields.items())[0][0]
+        else:
+            collection_property_name = list(cls.__fields__.items())[0][0]
         return cls(**{collection_property_name: elements})
 
 
@@ -327,16 +333,37 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
         Returns:
             DSerieStructure: Parsed structure.
         """
+        if IS_PYDANTIC_V2:
+            # Changed this code to keep the type of the parsed data. This is needed for the
+            # tests to pass. Assert does not do type coercion, so asser '7' == 7 will fail.
+            def split_line(text: str) -> List[str]:
+                parts = []
+                for part in re.split("[ \t]", text.strip()):
+                    if part == "":
+                        continue
+                    if part.isdigit():
+                        parts.append(int(part))
+                    else:
+                        try:
+                            parts.append(float(part))
+                        except ValueError:
+                            parts.append(part)
+                return parts
 
-        def split_line(text: str) -> List[str]:
-            parts = re.split("[ \t]", text.strip())
-            return list(filter(lambda part: part != "", parts))
+        else:
+
+            def split_line(text: str) -> List[str]:
+                parts = re.split("[ \t]", text.strip())
+                return list(filter(lambda part: part != "", parts))
 
         table_text = list(DSerieParser.parse_list_group(text).values())[0]
         table_data = list(DSerieParser.parse_list_group(table_text).values())
         if len(table_data) == 0:
             values_dict_list = table_data
-            collection_property_name = list(cls.__fields__.items())[0][0]
+            if IS_PYDANTIC_V2:
+                collection_property_name = list(cls.model_fields.items())[0][0]
+            else:
+                collection_property_name = list(cls.__fields__.items())[0][0]
             return cls(**{collection_property_name: values_dict_list})
         else:
             # Expected two groups (column_indication and data)
@@ -347,7 +374,10 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
                 dict(zip(keys, values))
                 for values in map(split_line, table_data[1].split("\n"))
             ]
-            collection_property_name = list(cls.__fields__.items())[0][0]
+            if IS_PYDANTIC_V2:
+                collection_property_name = list(cls.model_fields.items())[0][0]
+            else:
+                collection_property_name = list(cls.__fields__.items())[0][0]
 
         return cls(**{collection_property_name: values_dict_list})
 
@@ -621,13 +651,22 @@ class DSeriesInlineMappedProperties(DSeriesInlineProperties):
 class DSerieVersion(DSeriesInlineMappedProperties):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for k, v in self.dict().items():
-            if self.__fields__.get(k).get_default() != v:
-                logger.warning(
-                    """The version of the input file is unsupported.
-                Check the documentation on how to prevent this warning in the future."""
-                )
-                break
+        if IS_PYDANTIC_V2:
+            for k, v in self.model_dump().items():
+                if self.model_fields.get(k).get_default() != v:
+                    logger.warning(
+                        """The version of the input file is unsupported.
+                    Check the documentation on how to prevent this warning in the future."""
+                    )
+                    return
+        else:
+            for k, v in self.dict().items():
+                if self.__fields__.get(k).get_default() != v:
+                    logger.warning(
+                        """The version of the input file is unsupported.
+                    Check the documentation on how to prevent this warning in the future."""
+                    )
+                    return
 
 
 class DSeriesInlineReversedProperties(DSeriesInlineProperties):
@@ -1114,7 +1153,10 @@ class DSeriesTreeStructureCollection(DSeriesStructure):
     @classmethod
     def parse_text_lines(cls, lines: List[str]) -> Tuple[DSeriesStructure, int]:
         # Get class types
-        collection_property_name = list(cls.__fields__.items())[0][0]
+        if IS_PYDANTIC_V2:
+            collection_property_name = list(cls.model_fields.items())[0][0]
+        else:
+            collection_property_name = list(cls.__fields__.items())[0][0]
         structure_type = get_field_collection_type(cls, 0)
         # Parse elements.
         number_of_structures = cls.get_number_of_structures(lines)
@@ -1486,10 +1528,18 @@ def get_field_collection_type(class_type: Type, field_idx: int) -> Type:
     Returns:
         Type: The class for the items in the collection.
     """
-    list_type = list(class_type.__fields__.items())[field_idx][1]
-    if not list_type.sub_fields:
-        return list_type.outer_type_
-    return list_type.sub_fields[0].outer_type_
+    if IS_PYDANTIC_V2:
+        from typing import get_args
+
+        list_type = list(class_type.model_fields.items())[field_idx][1]
+        if not get_args(list_type.annotation):
+            return list_type.annotation
+        return get_args(list_type.annotation)[0]
+    else:
+        list_type = list(class_type.__fields__.items())[field_idx][1]
+        if not list_type.sub_fields:
+            return list_type.outer_type_
+        return list_type.sub_fields[0].outer_type_
 
 
 def is_structure_collection(field: Type) -> bool:

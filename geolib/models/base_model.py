@@ -14,7 +14,14 @@ from typing import List, Optional, Type, Union
 
 import requests
 from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
-from pydantic.error_wrappers import ValidationError
+
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import ValidationError
+else:
+    from pydantic.error_wrappers import ValidationError
+
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError
@@ -29,8 +36,8 @@ meta = MetaData()
 
 
 class BaseModel(BaseDataClass, abc.ABC):
-    filename: Optional[Path]
-    datastructure: Optional[BaseModelStructure]
+    filename: Optional[Path] = None
+    datastructure: Optional[BaseModelStructure] = None
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.
@@ -85,7 +92,7 @@ class BaseModel(BaseDataClass, abc.ABC):
         else:
             error = self.get_error_context()
             raise CalculationError(
-                process.returncode, error + " Path: " + str(output_filename.absolute)
+                process.returncode, error + " Path: " + str(output_filename.absolute())
             )
 
     def execute_remote(self, endpoint: HttpUrl) -> "BaseModel":
@@ -133,7 +140,7 @@ class BaseModel(BaseDataClass, abc.ABC):
     @property
     def default_console_path(self) -> Path:
         raise NotImplementedError("Implement in concrete classes.")
-    
+
     @property
     def custom_console_path(self) -> Optional[Path]:
         return None
@@ -186,20 +193,21 @@ class BaseModel(BaseDataClass, abc.ABC):
         Requires a successful execute.
         """
         return self.datastructure.results
-    
+
     def get_meta_property(self, key: str) -> Optional[str]:
         """Get a metadata property from the input file."""
         if hasattr(meta, key):
             return meta.__getattribute__(key)
         else:
             return None
-        
+
     def set_meta_property(self, key: str, value: str) -> None:
         """Set a metadata property from the input file."""
         if hasattr(meta, key):
             meta.__setattr__(key, value)
         else:
             raise ValueError(f"Metadata property {key} does not exist.")
+
 
 class BaseModelList(BaseDataClass):
     """Hold multiple models that can be executed in parallel.

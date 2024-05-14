@@ -1,7 +1,13 @@
 from enum import IntEnum
 from typing import Optional
 
-from pydantic import PositiveFloat, confloat, constr
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import Field, PositiveFloat, StringConstraints
+    from typing_extensions import Annotated
+else:
+    from pydantic import PositiveFloat, confloat, constr
 
 from geolib.models import BaseDataClass
 
@@ -26,18 +32,30 @@ class Anchor(BaseDataClass):
         side: Side of the anchor [Side]
     """
 
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     level: float
     e_modulus: Optional[PositiveFloat] = None
     cross_section: Optional[PositiveFloat] = None
-    wall_height_kranz: Optional[confloat(ge=0)] = None
+    if IS_PYDANTIC_V2:
+        wall_height_kranz: Optional[Annotated[float, Field(ge=0)]] = None
+    else:
+        wall_height_kranz: Optional[confloat(ge=0)] = None
     length: Optional[PositiveFloat] = None
     angle: Optional[float] = None
     side: Side = Side.RIGHT
-    yield_force: Optional[confloat(ge=0)] = None
+    if IS_PYDANTIC_V2:
+        yield_force: Optional[Annotated[float, Field(ge=0)]] = None
+    else:
+        yield_force: Optional[confloat(ge=0)] = None
 
     def to_internal(self) -> InternalAnchor:
-        return InternalAnchor(**self.dict(exclude_none=True))
+        if IS_PYDANTIC_V2:
+            return InternalAnchor(**self.model_dump(exclude_none=True))
+        else:
+            return InternalAnchor(**self.dict(exclude_none=True))
 
 
 class Strut(BaseDataClass):
@@ -55,18 +73,31 @@ class Strut(BaseDataClass):
         pre_compression: Pre-compressions [kN/m']
     """
 
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     level: float
     e_modulus: Optional[PositiveFloat] = None
     cross_section: Optional[PositiveFloat] = None
     length: Optional[PositiveFloat] = None
     angle: Optional[float] = None
-    buckling_force: Optional[confloat(ge=0)] = None
+    if IS_PYDANTIC_V2:
+        buckling_force: Optional[Annotated[float, Field(ge=0)]] = None
+    else:
+        buckling_force: Optional[confloat(ge=0)] = None
     side: Side = Side.RIGHT
     pre_compression: Optional[PositiveFloat] = None
 
     def to_internal(self) -> InternalStrut:
-        return InternalStrut(**self.dict(exclude_none=True, exclude={"pre_compression"}))
+        if IS_PYDANTIC_V2:
+            return InternalStrut(
+                **self.model_dump(exclude_none=True, exclude={"pre_compression"})
+            )
+        else:
+            return InternalStrut(
+                **self.dict(exclude_none=True, exclude={"pre_compression"})
+            )
 
 
 class SupportType(IntEnum):
@@ -78,19 +109,31 @@ class SupportType(IntEnum):
 class SpringSupport(BaseDataClass):
     """Spring support."""
 
-    name: constr(min_length=1, max_length=50)
-    level: float
-    rotational_stiffness: confloat(ge=0)
-    translational_stiffness: confloat(ge=0)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        level: float
+        rotational_stiffness: Annotated[float, Field(ge=0)]
+        translational_stiffness: Annotated[float, Field(ge=0)]
+    else:
+        name: constr(min_length=1, max_length=50)
+        level: float
+        rotational_stiffness: confloat(ge=0)
+        translational_stiffness: confloat(ge=0)
 
     def to_internal(self) -> InternalSupport:
-        return InternalSupport(**self.dict())
+        if IS_PYDANTIC_V2:
+            return InternalSupport(**self.model_dump())
+        else:
+            return InternalSupport(**self.dict())
 
 
 class RigidSupport(BaseDataClass):
     """Rigid support."""
 
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     level: float
     support_type: SupportType
 

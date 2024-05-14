@@ -42,6 +42,20 @@ This package, unlike GEOLib+, tries to limit the number of
 
 You don't need to install anything manually, as the pip installation should take care of it.
 
+Combining GEOLib with pydantic v2
+---------------------------------
+
+GEOLib uses pydantic for validation of types and some parameters (min/max/defaults). The 
+latest version of pydantic (v2) has some breaking changes. When using pydantic v2, some
+extra dependencies are required.To use GEOLib with pydantic v2, you can use the following
+command to automatically install the extra dependencies::
+
+    $ pip install d-geolib[pydantic-v2]
+
+When the extra dependencies are not installed, and pydantic v2 is used, an error will be
+thrown when trying to import GEOLib. The error message will guide you in installing the
+required packages yourself.
+
 Get the Source Code
 -------------------
 

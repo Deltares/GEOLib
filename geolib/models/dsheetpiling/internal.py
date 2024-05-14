@@ -5,7 +5,13 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from pydantic import confloat, conint, conlist, constr
+from geolib._compat import IS_PYDANTIC_V2
+
+if IS_PYDANTIC_V2:
+    from pydantic import Field, StringConstraints
+    from typing_extensions import Annotated
+else:
+    from pydantic import confloat, conint, conlist, constr
 
 import geolib.models.dsheetpiling.constructions as constructions
 from geolib.geometry import Point
@@ -124,53 +130,112 @@ class VersionExternals(DSeriesInlineMappedProperties):
 
 
 class Soil(DSeriesUnmappedNameProperties):
-    name: constr(min_length=1, max_length=25) = "default soil"
-    soilcolor: int = 9764853
-    soilsoiltype: SoilTypeModulusSubgradeReaction = SoilTypeModulusSubgradeReaction.SAND
-    soilgraintype: GrainType = GrainType.FINE
-    soilgamdry: confloat(ge=0, le=100) = 0.01
-    soilgamwet: confloat(ge=0, le=100) = 0.01
-    soilrelativedensity: confloat(ge=0, le=100) = 0
-    soilemodmenard: confloat(ge=0.01, le=1000000) = 0.01
-    soilcohesion: confloat(ge=0, le=1000000000) = 0
-    soilphi: confloat(ge=-89, le=89) = 0
-    soildelta: confloat(ge=-80, le=89) = 0.00
-    soilisdeltaangleautomaticallycalculated: bool = False
-    soilocr: confloat(ge=0, le=1000) = 1.00
-    soilpermeabkx: confloat(ge=0.00000000001, le=1000000) = 0.0001
-    soilstdcohesion: confloat(ge=0, le=100000000) = 0.00
-    soilstdphi: confloat(ge=0, le=100000000) = 0.00
-    soildistcohesion: DistributionType = DistributionType.NONE
-    soildistphi: DistributionType = DistributionType.NONE
-    soilla: confloat(ge=0, le=1000) = 0
-    soilln: confloat(ge=0, le=1000) = 0.01
-    soillp: confloat(ge=0, le=1000) = 0.01
-    soilusemenard: ModulusSubgradeReaction = ModulusSubgradeReaction.MANUAL
-    soilusebrinchhansen: EarthPressureCoefficients = EarthPressureCoefficients.MANUAL
-    soilshellfactor: confloat(ge=1, le=1000) = 1.00
-    soillambdatype: LambdaType = LambdaType.MANUAL
-    soillam1: confloat(ge=0, le=100) = 50
-    soillam2: confloat(ge=0, le=100) = 80
-    soillam3: confloat(ge=0, le=100) = 90
-    soilkb0: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilkb1: confloat(ge=0.01, le=10000000000) = 5.00000e00
-    soilkb2: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilkb3: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilkb4: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilko0: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilko1: confloat(ge=0.01, le=10000000000) = 5.00000e00
-    soilko2: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilko3: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilko4: confloat(ge=0.01, le=10000000000) = 1.00000e04
-    soilcurkb1: confloat(ge=0.01, le=10000000000) = 2.00000e03
-    soilcurkb2: confloat(ge=0.01, le=10000000000) = 8.00000e02
-    soilcurkb3: confloat(ge=0.01, le=10000000000) = 5.00000e02
-    soilcurko1: confloat(ge=0.01, le=10000000000) = 2.00000e03
-    soilcurko2: confloat(ge=0.01, le=10000000000) = 8.00000e02
-    soilcurko3: confloat(ge=0.01, le=10000000000) = 5.00000e02
-    soilhorizontalbehaviourtype: HorizontalBehaviorType = HorizontalBehaviorType.ELASTIC
-    soilelasticity: float = 1.00000e03  # fixed value
-    soildefaultelasticity: int = 1  # fixed value
+    if IS_PYDANTIC_V2:
+        name: Annotated[
+            str, StringConstraints(min_length=1, max_length=25)
+        ] = "default soil"
+        soilcolor: int = 9764853
+        soilsoiltype: SoilTypeModulusSubgradeReaction = (
+            SoilTypeModulusSubgradeReaction.SAND
+        )
+        soilgraintype: GrainType = GrainType.FINE
+        soilgamdry: Annotated[float, Field(ge=0, le=100)] = 0.01
+        soilgamwet: Annotated[float, Field(ge=0, le=100)] = 0.01
+        soilrelativedensity: Annotated[float, Field(ge=0, le=100)] = 0
+        soilemodmenard: Annotated[float, Field(ge=0.01, le=1000000)] = 0.01
+        soilcohesion: Annotated[float, Field(ge=0, le=1000000000)] = 0
+        soilphi: Annotated[float, Field(ge=-89, le=89)] = 0
+        soildelta: Annotated[float, Field(ge=-80, le=89)] = 0.00
+        soilisdeltaangleautomaticallycalculated: bool = False
+        soilocr: Annotated[float, Field(ge=0, le=1000)] = 1.00
+        soilpermeabkx: Annotated[float, Field(ge=0.00000000001, le=1000000)] = 0.0001
+        soilstdcohesion: Annotated[float, Field(ge=0, le=100000000)] = 0.00
+        soilstdphi: Annotated[float, Field(ge=0, le=100000000)] = 0.00
+        soildistcohesion: DistributionType = DistributionType.NONE
+        soildistphi: DistributionType = DistributionType.NONE
+        soilla: Annotated[float, Field(ge=0, le=1000)] = 0
+        soilln: Annotated[float, Field(ge=0, le=1000)] = 0.01
+        soillp: Annotated[float, Field(ge=0, le=1000)] = 0.01
+        soilusemenard: ModulusSubgradeReaction = ModulusSubgradeReaction.MANUAL
+        soilusebrinchhansen: EarthPressureCoefficients = EarthPressureCoefficients.MANUAL
+        soilshellfactor: Annotated[float, Field(ge=1, le=1000)] = 1.00
+        soillambdatype: LambdaType = LambdaType.MANUAL
+        soillam1: Annotated[float, Field(ge=0, le=100)] = 50
+        soillam2: Annotated[float, Field(ge=0, le=100)] = 80
+        soillam3: Annotated[float, Field(ge=0, le=100)] = 90
+        soilkb0: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilkb1: Annotated[float, Field(ge=0.01, le=10000000000)] = 5.00000e00
+        soilkb2: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilkb3: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilkb4: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilko0: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilko1: Annotated[float, Field(ge=0.01, le=10000000000)] = 5.00000e00
+        soilko2: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilko3: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilko4: Annotated[float, Field(ge=0.01, le=10000000000)] = 1.00000e04
+        soilcurkb1: Annotated[float, Field(ge=0.01, le=10000000000)] = 2.00000e03
+        soilcurkb2: Annotated[float, Field(ge=0.01, le=10000000000)] = 8.00000e02
+        soilcurkb3: Annotated[float, Field(ge=0.01, le=10000000000)] = 5.00000e02
+        soilcurko1: Annotated[float, Field(ge=0.01, le=10000000000)] = 2.00000e03
+        soilcurko2: Annotated[float, Field(ge=0.01, le=10000000000)] = 8.00000e02
+        soilcurko3: Annotated[float, Field(ge=0.01, le=10000000000)] = 5.00000e02
+        soilhorizontalbehaviourtype: HorizontalBehaviorType = (
+            HorizontalBehaviorType.ELASTIC
+        )
+        soilelasticity: float = 1.00000e03  # fixed value
+        soildefaultelasticity: int = 1  # fixed value
+    else:
+        name: constr(min_length=1, max_length=25) = "default soil"
+        soilcolor: int = 9764853
+        soilsoiltype: SoilTypeModulusSubgradeReaction = (
+            SoilTypeModulusSubgradeReaction.SAND
+        )
+        soilgraintype: GrainType = GrainType.FINE
+        soilgamdry: confloat(ge=0, le=100) = 0.01
+        soilgamwet: confloat(ge=0, le=100) = 0.01
+        soilrelativedensity: confloat(ge=0, le=100) = 0
+        soilemodmenard: confloat(ge=0.01, le=1000000) = 0.01
+        soilcohesion: confloat(ge=0, le=1000000000) = 0
+        soilphi: confloat(ge=-89, le=89) = 0
+        soildelta: confloat(ge=-80, le=89) = 0.00
+        soilisdeltaangleautomaticallycalculated: bool = False
+        soilocr: confloat(ge=0, le=1000) = 1.00
+        soilpermeabkx: confloat(ge=0.00000000001, le=1000000) = 0.0001
+        soilstdcohesion: confloat(ge=0, le=100000000) = 0.00
+        soilstdphi: confloat(ge=0, le=100000000) = 0.00
+        soildistcohesion: DistributionType = DistributionType.NONE
+        soildistphi: DistributionType = DistributionType.NONE
+        soilla: confloat(ge=0, le=1000) = 0
+        soilln: confloat(ge=0, le=1000) = 0.01
+        soillp: confloat(ge=0, le=1000) = 0.01
+        soilusemenard: ModulusSubgradeReaction = ModulusSubgradeReaction.MANUAL
+        soilusebrinchhansen: EarthPressureCoefficients = EarthPressureCoefficients.MANUAL
+        soilshellfactor: confloat(ge=1, le=1000) = 1.00
+        soillambdatype: LambdaType = LambdaType.MANUAL
+        soillam1: confloat(ge=0, le=100) = 50
+        soillam2: confloat(ge=0, le=100) = 80
+        soillam3: confloat(ge=0, le=100) = 90
+        soilkb0: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilkb1: confloat(ge=0.01, le=10000000000) = 5.00000e00
+        soilkb2: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilkb3: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilkb4: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilko0: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilko1: confloat(ge=0.01, le=10000000000) = 5.00000e00
+        soilko2: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilko3: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilko4: confloat(ge=0.01, le=10000000000) = 1.00000e04
+        soilcurkb1: confloat(ge=0.01, le=10000000000) = 2.00000e03
+        soilcurkb2: confloat(ge=0.01, le=10000000000) = 8.00000e02
+        soilcurkb3: confloat(ge=0.01, le=10000000000) = 5.00000e02
+        soilcurko1: confloat(ge=0.01, le=10000000000) = 2.00000e03
+        soilcurko2: confloat(ge=0.01, le=10000000000) = 8.00000e02
+        soilcurko3: confloat(ge=0.01, le=10000000000) = 5.00000e02
+        soilhorizontalbehaviourtype: HorizontalBehaviorType = (
+            HorizontalBehaviorType.ELASTIC
+        )
+        soilelasticity: float = 1.00000e03  # fixed value
+        soildefaultelasticity: int = 1  # fixed value
 
 
 class SoilCollection(DSeriesStructureCollection):
@@ -211,14 +276,20 @@ class SoilLayer(DSeriesNoParseSubStructure):
 
 
 class SoilProfile(DSeriesNoParseSubStructure):
-    name: constr(min_length=1, max_length=25)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)]
+    else:
+        name: constr(min_length=1, max_length=25)
     layers: List[SoilLayer]
     coordinate: Point
 
 
 class SoilProfiles(DSeriesNoParseSubStructure):
     soil_profiles: List[SoilProfile] = []
-    curve_number: conint(ge=1, le=4) = 3
+    if IS_PYDANTIC_V2:
+        curve_number: Annotated[int, Field(ge=1, le=4)] = 3
+    else:
+        curve_number: conint(ge=1, le=4) = 3
     use_unloading_reloading_curve: bool = False
     modulus_reaction_type: int = ModulusReactionType.SECANT.value
 
@@ -242,10 +313,16 @@ class CalculationOptions(DSeriesStructure):
     # available when c, phi , delta is selected for as a model
     calcautolambdason: bool = True
     # design sheet pile length calculation
-    designstage: conint(ge=0) = 0
-    designpilelengthfrom: confloat(ge=1, le=100) = 1
-    designpilelengthto: confloat(ge=1, le=100) = 1
-    designpilelengthdecrement: confloat(ge=0.01, le=10) = 0.01
+    if IS_PYDANTIC_V2:
+        designstage: Annotated[int, Field(ge=0)] = 0
+        designpilelengthfrom: Annotated[float, Field(ge=1, le=100)] = 1
+        designpilelengthto: Annotated[float, Field(ge=1, le=100)] = 1
+        designpilelengthdecrement: Annotated[float, Field(ge=0.01, le=10)] = 0.01
+    else:
+        designstage: conint(ge=0) = 0
+        designpilelengthfrom: confloat(ge=1, le=100) = 1
+        designpilelengthto: confloat(ge=1, le=100) = 1
+        designpilelengthdecrement: confloat(ge=0.01, le=10) = 0.01
     designpilelengthnew: int = 1  # fixed value
     designtype: DesignType = DesignType.REPRESENTATIVE
     designeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
@@ -266,19 +343,31 @@ class CalculationOptions(DSeriesStructure):
     eurocodeoverallstability: bool = False
     ec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
-    ec7nloverallanchorfactor: confloat(ge=0.001, le=1000) = 1
+    if IS_PYDANTIC_V2:
+        ec7nloverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
+    else:
+        ec7nloverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     ec7nadnloverallstability: bool = False
     ec7beoverallstability: bool = False
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
+    if IS_PYDANTIC_V2:
+        curoverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
+    else:
+        curoverallanchorfactor: confloat(ge=0.001, le=1000) = 1
     curoverallstability: bool = False
-    # Characteristic Kranz Anchor Strength calculation
-    curanchorforcestage: conint(ge=0) = 0
-    # Overall stability calculation
-    curstabilitystage: conint(ge=0) = 0
+    if IS_PYDANTIC_V2:
+        # Characteristic Kranz Anchor Strength calculation
+        curanchorforcestage: Annotated[int, Field(ge=0)] = 0
+        # Overall stability calculation
+        curstabilitystage: Annotated[int, Field(ge=0)] = 0
+    else:
+        # Characteristic Kranz Anchor Strength calculation
+        curanchorforcestage: conint(ge=0) = 0
+        # Overall stability calculation
+        curstabilitystage: conint(ge=0) = 0
     overallstabilitytype: DesignType = DesignType.REPRESENTATIVE
     stabilityexport: bool = False
     stabilityeurocodepartialfactorset: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
@@ -311,47 +400,108 @@ class CalculationOptions(DSeriesStructure):
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
-    name: constr(min_length=1, max_length=50) = _DEFAULT_SHEET_PILING_ELEMENT_NAME
-    sheetpilingelementmaterialtype: SheetPilingElementMaterialType = (
-        SheetPilingElementMaterialType.Steel
-    )
-    sheetpilingelementei: confloat(ge=0.001, le=1e12) = 100000
-    sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
-    sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
-    sheetpilingelementheight: conint(ge=10, le=100000) = 400
-    sheetpilingpilewidth: confloat(ge=0, le=100000) = 0
-    sheetpilingelementsectionarea: conint(ge=10, le=100000) = 170
-    sheetpilingelementresistingmoment: conint(ge=0, le=100000) = 0
-    sheetpilingelementreductionfactorei: confloat(ge=0.01, le=10) = 1
-    sheetpilingelementnote: constr(min_length=0, max_length=20) = ""
-    sheetpilingelementmaxcharacteristicmoment: confloat(ge=0, le=100000) = 0
-    sheetpilingelementmaxplasticcharacteristicmoment: confloat(ge=0, le=100000) = 0
-    sheetpilingelementkmod: confloat(ge=0.01, le=1) = 0.01
-    sheetpilingelementmaterialfactor: confloat(ge=0.01, le=10) = 0.01
-    ssheetpilingelementreductionfactormaxmoment: confloat(ge=0.01, le=10) = 1
-    diaphragmwallissymmetric: conint(ge=0, le=1) = 0
-    diaphragmwallposeielastoplastic1: confloat(ge=0, le=100000) = 0
-    diaphragmwallnegeielastoplastic1: confloat(ge=0, le=100000) = 0
-    diaphragmwallposmomelastic: confloat(ge=0, le=1000000000000) = 100000
-    diaphragmwallnegmomelastic: confloat(ge=0, le=100000) = 0
-    diaphragmwallposmomplastic: confloat(ge=0, le=100000) = 0
-    diaphragmwallnegmomplastic: confloat(ge=0, le=100000) = 0
-    diaphragmwallposeielastoplastic2: confloat(ge=0, le=100000) = 0
-    diaphragmwallposmomelastoplastic: confloat(ge=0, le=100000) = 0
-    diaphragmwallnegeielastoplastic2: confloat(ge=0, le=100000) = 0
-    diaphragmwallnegmomelastoplastic: confloat(ge=0, le=100000) = 0
-    woodensheetpilingelemente: confloat(ge=0.001, le=1000000000000) = 100000
-    woodensheetpilingelementcharacflexuralstrength: confloat(ge=0, le=100000) = 0
-    woodensheetpilingelementksys: confloat(ge=0.01, le=10) = 1.15
-    woodensheetpilingelementkdef: confloat(ge=0.01, le=10) = 1
-    woodensheetpilingelementpsi2eff: confloat(ge=0, le=10) = 1
-    woodensheetpilingelementmaterialfactor: confloat(ge=0.01, le=10) = 1.3
-    woodensheetpilingelementkmodfshort: confloat(ge=0.01, le=10) = 0.65
-    woodensheetpilingelementkmodflong: confloat(ge=0.01, le=10) = 0.5
-    woodensheetpilingelementkmode: confloat(ge=0.01, le=10) = 0.8
+    if IS_PYDANTIC_V2:
+        name: Annotated[
+            str, StringConstraints(min_length=1, max_length=50)
+        ] = _DEFAULT_SHEET_PILING_ELEMENT_NAME
+        sheetpilingelementmaterialtype: SheetPilingElementMaterialType = (
+            SheetPilingElementMaterialType.Steel
+        )
+        sheetpilingelementei: Annotated[float, Field(ge=0.001, le=1e12)] = 100000
+        sheetpilingelementwidth: Annotated[float, Field(ge=0, le=1000)] = 1
+        sheetpilingelementlevel: Annotated[float, Field(ge=-10000, le=10000)] = -10
+        sheetpilingelementheight: Annotated[int, Field(ge=10, le=100000)] = 400
+        sheetpilingpilewidth: Annotated[float, Field(ge=0, le=100000)] = 0
+        sheetpilingelementsectionarea: Annotated[int, Field(ge=10, le=100000)] = 170
+        sheetpilingelementresistingmoment: Annotated[int, Field(ge=0, le=100000)] = 0
+        sheetpilingelementreductionfactorei: Annotated[float, Field(ge=0.01, le=10)] = 1
+        sheetpilingelementnote: Annotated[
+            str, StringConstraints(min_length=0, max_length=20)
+        ] = ""
+        sheetpilingelementmaxcharacteristicmoment: Annotated[
+            float, Field(ge=0, le=100000)
+        ] = 0
+        sheetpilingelementmaxplasticcharacteristicmoment: Annotated[
+            float, Field(ge=0, le=100000)
+        ] = 0
+        sheetpilingelementkmod: Annotated[float, Field(ge=0.01, le=1)] = 0.01
+        sheetpilingelementmaterialfactor: Annotated[float, Field(ge=0.01, le=10)] = 0.01
+        ssheetpilingelementreductionfactormaxmoment: Annotated[
+            float, Field(ge=0.01, le=10)
+        ] = 1
+        diaphragmwallissymmetric: Annotated[int, Field(ge=0, le=1)] = 0
+        diaphragmwallposeielastoplastic1: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallnegeielastoplastic1: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallposmomelastic: Annotated[
+            float, Field(ge=0, le=1000000000000)
+        ] = 100000
+        diaphragmwallnegmomelastic: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallposmomplastic: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallnegmomplastic: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallposeielastoplastic2: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallposmomelastoplastic: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallnegeielastoplastic2: Annotated[float, Field(ge=0, le=100000)] = 0
+        diaphragmwallnegmomelastoplastic: Annotated[float, Field(ge=0, le=100000)] = 0
+        woodensheetpilingelemente: Annotated[
+            float, Field(ge=0.001, le=1000000000000)
+        ] = 100000
+        woodensheetpilingelementcharacflexuralstrength: Annotated[
+            float, Field(ge=0, le=100000)
+        ] = 0
+        woodensheetpilingelementksys: Annotated[float, Field(ge=0.01, le=10)] = 1.15
+        woodensheetpilingelementkdef: Annotated[float, Field(ge=0.01, le=10)] = 1
+        woodensheetpilingelementpsi2eff: Annotated[float, Field(ge=0, le=10)] = 1
+        woodensheetpilingelementmaterialfactor: Annotated[
+            float, Field(ge=0.01, le=10)
+        ] = 1.3
+        woodensheetpilingelementkmodfshort: Annotated[float, Field(ge=0.01, le=10)] = 0.65
+        woodensheetpilingelementkmodflong: Annotated[float, Field(ge=0.01, le=10)] = 0.5
+        woodensheetpilingelementkmode: Annotated[float, Field(ge=0.01, le=10)] = 0.8
+    else:
+        name: constr(min_length=1, max_length=50) = _DEFAULT_SHEET_PILING_ELEMENT_NAME
+        sheetpilingelementmaterialtype: SheetPilingElementMaterialType = (
+            SheetPilingElementMaterialType.Steel
+        )
+        sheetpilingelementei: confloat(ge=0.001, le=1e12) = 100000
+        sheetpilingelementwidth: confloat(ge=0, le=1000) = 1
+        sheetpilingelementlevel: confloat(ge=-10000, le=10000) = -10
+        sheetpilingelementheight: conint(ge=10, le=100000) = 400
+        sheetpilingpilewidth: confloat(ge=0, le=100000) = 0
+        sheetpilingelementsectionarea: conint(ge=10, le=100000) = 170
+        sheetpilingelementresistingmoment: conint(ge=0, le=100000) = 0
+        sheetpilingelementreductionfactorei: confloat(ge=0.01, le=10) = 1
+        sheetpilingelementnote: constr(min_length=0, max_length=20) = ""
+        sheetpilingelementmaxcharacteristicmoment: confloat(ge=0, le=100000) = 0
+        sheetpilingelementmaxplasticcharacteristicmoment: confloat(ge=0, le=100000) = 0
+        sheetpilingelementkmod: confloat(ge=0.01, le=1) = 0.01
+        sheetpilingelementmaterialfactor: confloat(ge=0.01, le=10) = 0.01
+        ssheetpilingelementreductionfactormaxmoment: confloat(ge=0.01, le=10) = 1
+        diaphragmwallissymmetric: conint(ge=0, le=1) = 0
+        diaphragmwallposeielastoplastic1: confloat(ge=0, le=100000) = 0
+        diaphragmwallnegeielastoplastic1: confloat(ge=0, le=100000) = 0
+        diaphragmwallposmomelastic: confloat(ge=0, le=1000000000000) = 100000
+        diaphragmwallnegmomelastic: confloat(ge=0, le=100000) = 0
+        diaphragmwallposmomplastic: confloat(ge=0, le=100000) = 0
+        diaphragmwallnegmomplastic: confloat(ge=0, le=100000) = 0
+        diaphragmwallposeielastoplastic2: confloat(ge=0, le=100000) = 0
+        diaphragmwallposmomelastoplastic: confloat(ge=0, le=100000) = 0
+        diaphragmwallnegeielastoplastic2: confloat(ge=0, le=100000) = 0
+        diaphragmwallnegmomelastoplastic: confloat(ge=0, le=100000) = 0
+        woodensheetpilingelemente: confloat(ge=0.001, le=1000000000000) = 100000
+        woodensheetpilingelementcharacflexuralstrength: confloat(ge=0, le=100000) = 0
+        woodensheetpilingelementksys: confloat(ge=0.01, le=10) = 1.15
+        woodensheetpilingelementkdef: confloat(ge=0.01, le=10) = 1
+        woodensheetpilingelementpsi2eff: confloat(ge=0, le=10) = 1
+        woodensheetpilingelementmaterialfactor: confloat(ge=0.01, le=10) = 1.3
+        woodensheetpilingelementkmodfshort: confloat(ge=0.01, le=10) = 0.65
+        woodensheetpilingelementkmodflong: confloat(ge=0.01, le=10) = 0.5
+        woodensheetpilingelementkmode: confloat(ge=0.01, le=10) = 0.8
 
     def __init__(self, *args, **kwargs) -> "SheetPileElement":
-        default_dict = dict(self.__fields__)
+        if IS_PYDANTIC_V2:
+            default_dict = dict(self.model_fields)
+        else:
+            default_dict = dict(self.__fields__)
         for field, value in kwargs.items():
             if value is None:
                 kwargs[field] = default_dict[field].default
@@ -410,9 +560,16 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
 
 
 class SheetPiling(DSeriesStructureCollection):
-    sheetpiling: conlist(SheetPileElement, min_items=1) = [SheetPileElement()]
-    leveltopsheetpiling: confloat(ge=-10000, le=10000) = 0.0
-    lengthsheetpiling: confloat(gt=0) = 10
+    if IS_PYDANTIC_V2:
+        sheetpiling: Annotated[List[SheetPileElement], Field(min_length=1)] = [
+            SheetPileElement()
+        ]
+        leveltopsheetpiling: Annotated[float, Field(ge=-10000, le=10000)] = 0.0
+        lengthsheetpiling: Annotated[float, Field(gt=0)] = 10
+    else:
+        sheetpiling: conlist(SheetPileElement, min_items=1) = [SheetPileElement()]
+        leveltopsheetpiling: confloat(ge=-10000, le=10000) = 0.0
+        lengthsheetpiling: confloat(gt=0) = 10
 
 
 class VerticalBalance(DSeriesInlineMappedProperties):  # DSeriesUnmappedNameProperties
@@ -421,15 +578,26 @@ class VerticalBalance(DSeriesInlineMappedProperties):  # DSeriesUnmappedNameProp
 
 
 class Anchor(DSheetpilingTableEntry):
-    name: constr(min_length=1, max_length=50)
-    level: float = 0
-    e_modulus: confloat(gt=0) = 2.1e8
-    cross_section: Optional[confloat(gt=0)] = 1e-3
-    wall_height_kranz: Optional[confloat(ge=0)] = 0.00
-    length: Optional[confloat(gt=0)] = 1
-    angle: Optional[float] = 0.00
-    yield_force: Optional[confloat(ge=0)] = 0.00
-    side: Side = Side.RIGHT
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        level: float = 0
+        e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
+        cross_section: Optional[Annotated[float, Field(gt=0)]] = 1e-3
+        wall_height_kranz: Optional[Annotated[float, Field(ge=0)]] = 0.00
+        length: Optional[Annotated[float, Field(gt=0)]] = 1
+        angle: Optional[float] = 0.00
+        yield_force: Optional[Annotated[float, Field(ge=0)]] = 0.00
+        side: Side = Side.RIGHT
+    else:
+        name: constr(min_length=1, max_length=50)
+        level: float = 0
+        e_modulus: confloat(gt=0) = 2.1e8
+        cross_section: Optional[confloat(gt=0)] = 1e-3
+        wall_height_kranz: Optional[confloat(ge=0)] = 0.00
+        length: Optional[confloat(gt=0)] = 1
+        angle: Optional[float] = 0.00
+        yield_force: Optional[confloat(ge=0)] = 0.00
+        side: Side = Side.RIGHT
 
 
 class Anchors(DSheetpilingUnwrappedTable):
@@ -447,18 +615,31 @@ class AnchorOrStrutPresstressReference(BaseDataClass):
     prestress."""
 
     name: str
-    pre_stress: confloat(ge=0) = _DEFAULT_PRE_STRESS
+    if IS_PYDANTIC_V2:
+        pre_stress: Annotated[float, Field(ge=0)] = _DEFAULT_PRE_STRESS
+    else:
+        pre_stress: confloat(ge=0) = _DEFAULT_PRE_STRESS
 
 
 class Strut(DSheetpilingTableEntry):
-    name: constr(min_length=1, max_length=50)
-    level: float = 0
-    e_modulus: confloat(gt=0) = 2.1e8
-    cross_section: Optional[confloat(gt=0)] = 1e-4
-    length: Optional[confloat(gt=0)] = 1
-    angle: Optional[float] = 0.00
-    buckling_force: Optional[confloat(ge=0)] = 0.00
-    side: Side = Side.RIGHT
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        level: float = 0
+        e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
+        cross_section: Optional[Annotated[float, Field(gt=0)]] = 1e-4
+        length: Optional[Annotated[float, Field(gt=0)]] = 1
+        angle: Optional[float] = 0.00
+        buckling_force: Optional[Annotated[float, Field(ge=0)]] = 0.00
+        side: Side = Side.RIGHT
+    else:
+        name: constr(min_length=1, max_length=50)
+        level: float = 0
+        e_modulus: confloat(gt=0) = 2.1e8
+        cross_section: Optional[confloat(gt=0)] = 1e-4
+        length: Optional[confloat(gt=0)] = 1
+        angle: Optional[float] = 0.00
+        buckling_force: Optional[confloat(ge=0)] = 0.00
+        side: Side = Side.RIGHT
 
 
 class Struts(DSheetpilingUnwrappedTable):
@@ -472,7 +653,10 @@ class Struts(DSheetpilingUnwrappedTable):
 
 
 class ConstructionStage(DSeriesUnmappedNameProperties):
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     displacement_top_sheet_piling: float = 0
     passive_side: PassiveSide = PassiveSide.DSHEETPILING_DETERMINED
     method_left: LateralEarthPressureMethodStage = (
@@ -508,7 +692,10 @@ class ConstructionStages(DSeriesStructureCollection):
 
 
 class WaterLevel(DSeriesNoParseSubStructure):
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     level: float
     distribution_type: DistributionType = DistributionType.NONE
     standard_deviation: float = 0.0
@@ -527,10 +714,16 @@ class StageOptions(DSeriesInlineMappedProperties):
 
     stagepartialfactorsetcur: PartialFactorSetCUR = PartialFactorSetCUR.UNKNOWN
     stageverify: int = 0
-    stageanchorfactor: confloat(ge=0.001, le=1000) = 1
+    if IS_PYDANTIC_V2:
+        stageanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
+    else:
+        stageanchorfactor: confloat(ge=0.001, le=1000) = 1
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stageverifyec7nadnl: int = 0
-    stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
+    if IS_PYDANTIC_V2:
+        stageanchorfactorec7nadnl: Annotated[float, Field(ge=0.001, le=1000)] = 1
+    else:
+        stageanchorfactorec7nadnl: confloat(ge=0.001, le=1000) = 1
     stageverifyec7nadbe: int = 0
 
 
@@ -541,7 +734,10 @@ class CalculationOptionsPerStage(DSeriesStructureCollection):
 
 
 class UniformLoad(DSeriesUnmappedNameProperties):
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     uniformloadleft: float
     uniformloadright: float
     uniformloadpermanent: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
@@ -568,7 +764,10 @@ class SurchargePoint(DSeriesInlineMappedProperties):
 
 
 class SurchargeLoad(DSheetpilingSurchargeLoad):
-    name: constr(min_length=1, max_length=50)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    else:
+        name: constr(min_length=1, max_length=50)
     points: List[SurchargePoint] = []
     surchargeloadpermanent: LoadTypePermanentVariable = (
         LoadTypePermanentVariable.PERMANENT
@@ -589,11 +788,18 @@ class SurchargeLoads(DSeriesStructureCollection):
 
 
 class Surface(DSeriesNoParseSubStructure):  # TODO determine structure
-    name: constr(min_length=1, max_length=50)
-    points: conlist(Point, min_items=1)
-    points: conlist(dict, min_items=1)
-    distribution_type: DistributionType = DistributionType.NONE
-    std: confloat(ge=0.0) = 0.0
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        points: Annotated[List[Point], Field(min_length=1)]
+        points: Annotated[List[dict], Field(min_length=1)]
+        distribution_type: DistributionType = DistributionType.NONE
+        std: Annotated[float, Field(ge=0.0)] = 0.0
+    else:
+        name: constr(min_length=1, max_length=50)
+        points: conlist(Point, min_items=1)
+        points: conlist(dict, min_items=1)
+        distribution_type: DistributionType = DistributionType.NONE
+        std: confloat(ge=0.0) = 0.0
 
 
 class Surfaces(DSeriesNoParseSubStructure):  # TODO GroupList should be suitable?
@@ -605,9 +811,14 @@ class Surfaces(DSeriesNoParseSubStructure):  # TODO GroupList should be suitable
 
 
 class HorizontalLineLoad(DSeriesNoParseSubStructure):
-    name: constr(min_length=1, max_length=50)
-    level: confloat(ge=-1e12, le=1e12) = 0
-    load: confloat(ge=-1e12, le=1e12) = 100
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        level: Annotated[float, Field(ge=-1e12, le=1e12)] = 0
+        load: Annotated[float, Field(ge=-1e12, le=1e12)] = 100
+    else:
+        name: constr(min_length=1, max_length=50)
+        level: confloat(ge=-1e12, le=1e12) = 0
+        load: confloat(ge=-1e12, le=1e12) = 100
     load_type: LoadTypeFavourableUnfavourable = (
         LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
     )
@@ -619,9 +830,14 @@ class HorizontalLineLoads(DSeriesNoParseSubStructure):
 
 
 class Moment(DSeriesNoParseSubStructure):
-    name: constr(min_length=1, max_length=50)
-    level: confloat(ge=-1e12, le=1e12) = 0
-    load: confloat(ge=-1e12, le=1e12) = 100
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        level: Annotated[float, Field(ge=-1e12, le=1e12)] = 0
+        load: Annotated[float, Field(ge=-1e12, le=1e12)] = 100
+    else:
+        name: constr(min_length=1, max_length=50)
+        level: confloat(ge=-1e12, le=1e12) = 0
+        load: confloat(ge=-1e12, le=1e12) = 100
     load_type: LoadTypeFavourableUnfavourableMoment = (
         LoadTypeFavourableUnfavourableMoment.FAVOURABLE
     )
@@ -633,11 +849,18 @@ class Moments(DSeriesNoParseSubStructure):
 
 
 class NormalForce(DSeriesNoParseSubStructure):
-    name: constr(min_length=1, max_length=50)
-    force_at_sheet_pile_top: confloat(ge=-1e12, le=1e12)
-    force_at_surface_level_left_side: confloat(ge=-1e12, le=1e12)
-    force_at_surface_level_right_side: confloat(ge=-1e12, le=1e12)
-    force_at_sheet_pile_toe: confloat(ge=-1e12, le=1e12)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        force_at_sheet_pile_top: Annotated[float, Field(ge=-1e12, le=1e12)]
+        force_at_surface_level_left_side: Annotated[float, Field(ge=-1e12, le=1e12)]
+        force_at_surface_level_right_side: Annotated[float, Field(ge=-1e12, le=1e12)]
+        force_at_sheet_pile_toe: Annotated[float, Field(ge=-1e12, le=1e12)]
+    else:
+        name: constr(min_length=1, max_length=50)
+        force_at_sheet_pile_top: confloat(ge=-1e12, le=1e12)
+        force_at_surface_level_left_side: confloat(ge=-1e12, le=1e12)
+        force_at_surface_level_right_side: confloat(ge=-1e12, le=1e12)
+        force_at_sheet_pile_toe: confloat(ge=-1e12, le=1e12)
     load_type: LoadTypeFavourableUnfavourableMoment = (
         LoadTypeFavourableUnfavourableMoment.FAVOURABLE
     )
@@ -651,10 +874,16 @@ class NormalForces(DSeriesNoParseSubStructure):
 class Support(DSeriesNoParseSubStructure):
     """Internal structure for spring and rigid supports."""
 
-    name: constr(min_length=1, max_length=50)
-    level: float
-    rotational_stiffness: confloat(ge=0)
-    translational_stiffness: confloat(ge=0)
+    if IS_PYDANTIC_V2:
+        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+        level: float
+        rotational_stiffness: Annotated[float, Field(ge=0)]
+        translational_stiffness: Annotated[float, Field(ge=0)]
+    else:
+        name: constr(min_length=1, max_length=50)
+        level: float
+        rotational_stiffness: confloat(ge=0)
+        translational_stiffness: confloat(ge=0)
 
 
 class SupportContainer(DSeriesNoParseSubStructure):
@@ -1216,33 +1445,33 @@ class Pressures(DSheetpilingWithNumberOfRowsTable):
 
 
 class SideOutput(DSeriesStructure):
-    calculation_method: Optional[str]
-    water_level: Optional[str]
-    surface: Optional[str]
-    soil_profile_for_single_pile_model: Optional[str]
-    soil_profile_for_sheet_piling_model: Optional[str]
-    pressures: Optional[Pressures]
-    force_from_layer: Optional[str]
-    lambdas: Optional[str]
-    slide_plane: Optional[str]
-    vertical_balance_per_layer: Optional[str]
+    calculation_method: Optional[str] = None
+    water_level: Optional[str] = None
+    surface: Optional[str] = None
+    soil_profile_for_single_pile_model: Optional[str] = None
+    soil_profile_for_sheet_piling_model: Optional[str] = None
+    pressures: Optional[Pressures] = None
+    force_from_layer: Optional[str] = None
+    lambdas: Optional[str] = None
+    slide_plane: Optional[str] = None
+    vertical_balance_per_layer: Optional[str] = None
 
 
 class OutputConstructionStage(DSeriesRepeatedGroupedProperties):
-    anchor_data: Optional[AnchorData]
-    hload_data: Optional[str]
-    breuk_data: Optional[BreukData]
-    passive_side_data: Optional[str]
-    soil_collapse_data: Optional[str]
-    moments_forces_displacements: Optional[MomentsForcesDisplacements]
-    side: Optional[List[SideOutput]]
-    uniform_load_data: Optional[str]
-    horizontal_line_load_data: Optional[str]
-    surcharge_data: Optional[str]
-    normal_force_data: Optional[str]
-    moment_data: Optional[str]
-    support_data: Optional[str]
-    vertical_balance_data: Optional[str]
+    anchor_data: Optional[AnchorData] = None
+    hload_data: Optional[str] = None
+    breuk_data: Optional[BreukData] = None
+    passive_side_data: Optional[str] = None
+    soil_collapse_data: Optional[str] = None
+    moments_forces_displacements: Optional[MomentsForcesDisplacements] = None
+    side: Optional[List[SideOutput]] = None
+    uniform_load_data: Optional[str] = None
+    horizontal_line_load_data: Optional[str] = None
+    surcharge_data: Optional[str] = None
+    normal_force_data: Optional[str] = None
+    moment_data: Optional[str] = None
+    support_data: Optional[str] = None
+    vertical_balance_data: Optional[str] = None
 
     @classmethod
     def get_list_field_names(cls) -> List[str]:
@@ -1258,8 +1487,8 @@ class DesignLengthCalculation(DSeriesWrappedTableStructure):
 
 
 class DesignSheetpileLength(DSeriesStructure):
-    design_length_info: Optional[DesignLengthInfo]
-    design_length_calculation: Optional[DesignLengthCalculation]
+    design_length_info: Optional[DesignLengthInfo] = None
+    design_length_calculation: Optional[DesignLengthCalculation] = None
 
 
 class PointsOnSheetpile(DSheetpilingWithNumberOfRowsTable):
@@ -1271,8 +1500,8 @@ class CurAnchorForceResults(DSheetpilingWithNumberOfRowsTable):
 
 
 class BaseVerificationStructureProperties(DSeriesRepeatedGroupedProperties):
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
-    construction_stage: Optional[List[OutputConstructionStage]]
+    points_on_sheetpile: Optional[List[PointsOnSheetpile]] = None
+    construction_stage: Optional[List[OutputConstructionStage]] = None
 
     @classmethod
     def get_list_field_names(cls) -> List[str]:
@@ -1291,70 +1520,72 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     calculation_type: str
 
     # General data
-    sheet_pile_elements: Optional[str]
-    calculated_displacements: Optional[str]
+    sheet_pile_elements: Optional[str] = None
+    calculated_displacements: Optional[str] = None
 
     # Standard, Kranz and Reliability calculation
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]]
-    construction_stage: Optional[List[OutputConstructionStage]]
+    points_on_sheetpile: Optional[List[PointsOnSheetpile]] = None
+    construction_stage: Optional[List[OutputConstructionStage]] = None
 
     # Design Sheet Pile Length calculation
-    design_sheetpile_length: Optional[DesignSheetpileLength]
+    design_sheetpile_length: Optional[DesignSheetpileLength] = None
 
     # Settlement by Vibration calculation
-    settlement_by_vibration: Optional[str]
+    settlement_by_vibration: Optional[str] = None
 
     # Verify calculation including Overall Stability calculation
-    overall_partial_factor_set: Optional[str]
-    factors_for_overall_stability: Optional[str]
-    overall_stability_results: Optional[str]
+    overall_partial_factor_set: Optional[str] = None
+    factors_for_overall_stability: Optional[str] = None
+    overall_stability_results: Optional[str] = None
 
     # Verify calculation according to CUR or EC7-NL with method B
-    factors_for_verification: Optional[str]
+    factors_for_verification: Optional[str] = None
 
     # Verify calculation according to CUR or EC7-NL
     verify_step_6____5_serviceability_limit_state: Optional[
         BaseVerificationStructureProperties
-    ]
-    verify_step_6____5_multiplied_by_factor: Optional[BaseVerificationStructureProperties]
+    ] = None
+    verify_step_6____5_multiplied_by_factor: Optional[
+        BaseVerificationStructureProperties
+    ] = None
     verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
+    ] = None
     verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
+    ] = None
     verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
+    ] = None
     verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
         BaseVerificationStructureProperties
-    ]
-    cur_anchor_force_results: Optional[CurAnchorForceResults]
+    ] = None
+    cur_anchor_force_results: Optional[CurAnchorForceResults] = None
 
     # Verify calculation according to EC7-BE or EC7-General
     verify_deformation_serviceability_limit_state: Optional[
         BaseVerificationStructureProperties
-    ]
-    eurocode_1_set_1: Optional[BaseVerificationStructureProperties]
-    eurocode_1_set_2: Optional[BaseVerificationStructureProperties]
-    eurocode_2: Optional[BaseVerificationStructureProperties]
-    eurocode_3: Optional[BaseVerificationStructureProperties]
-    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties]
-    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties]
+    ] = None
+    eurocode_1_set_1: Optional[BaseVerificationStructureProperties] = None
+    eurocode_1_set_2: Optional[BaseVerificationStructureProperties] = None
+    eurocode_2: Optional[BaseVerificationStructureProperties] = None
+    eurocode_3: Optional[BaseVerificationStructureProperties] = None
+    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties] = None
+    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties] = None
 
     # Kranz calculation
-    angles_kranz_calculation: Optional[str]
-    kranz_calculation: Optional[str]
-    kranz_diagram_results: Optional[str]
+    angles_kranz_calculation: Optional[str] = None
+    kranz_calculation: Optional[str] = None
+    kranz_diagram_results: Optional[str] = None
 
     # Resumes
-    resume: Optional[Resume]
-    anchors_and_struts_resume: Optional[str]
-    supports_resume: Optional[str]
-    maximum_anchor_force: Optional[str]
-    maximum_summary_results: Optional[str]
-    warnings: Optional[str]
-    errors: Optional[str]
+    resume: Optional[Resume] = None
+    anchors_and_struts_resume: Optional[str] = None
+    supports_resume: Optional[str] = None
+    maximum_anchor_force: Optional[str] = None
+    maximum_summary_results: Optional[str] = None
+    warnings: Optional[str] = None
+    errors: Optional[str] = None
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):

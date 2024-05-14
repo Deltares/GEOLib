@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 from teamcity import is_running_under_teamcity
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import DSheetPilingModel
 from tests.utils import TestUtils, only_teamcity
 
@@ -57,7 +58,10 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            if IS_PYDANTIC_V2:
+                io.write(ds.output.model_dump_json(indent=4))
+            else:
+                io.write(ds.output.json(indent=4))
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -83,7 +87,10 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            if IS_PYDANTIC_V2:
+                io.write(ds.output.model_dump_json(indent=4))
+            else:
+                io.write(ds.output.json(indent=4))
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -107,4 +114,7 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            if IS_PYDANTIC_V2:
+                io.write(ds.output.model_dump_json(indent=4))
+            else:
+                io.write(ds.output.json(indent=4))

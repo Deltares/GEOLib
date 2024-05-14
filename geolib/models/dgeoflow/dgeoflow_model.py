@@ -18,10 +18,10 @@ from .internal import (
     DGeoFlowResult,
     DGeoFlowStructure,
     GroundwaterFlowResult,
+    InternalPipeTrajectory,
     PersistableSoil,
     PersistableSoilLayer,
     PipeLengthResult,
-    PipeTrajectory,
     Scenario,
     SoilCollection,
     SoilLayerCollection,
@@ -60,7 +60,7 @@ class DGeoFlowModel(BaseModel):
     @property
     def default_console_path(self) -> Path:
         return Path("DGeoFlowConsole/DGeoFlow Console.exe")
-    
+
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dgeoflow_console_path")
@@ -410,7 +410,7 @@ class DGeoFlowModel(BaseModel):
         self,
         scenario_index: int = 0,
         calculation_index: int = 0,
-        pipe_trajectory: PipeTrajectory = None,
+        pipe_trajectory: InternalPipeTrajectory = None,
     ) -> None:
         """
         Sets the pipe trajectory for a calculation.

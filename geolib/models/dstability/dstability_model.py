@@ -21,11 +21,11 @@ from .internal import (
     CalculationSettings,
     DStabilityResult,
     DStabilityStructure,
+    PersistableExcavation,
     PersistableLayer,
     PersistablePoint,
     PersistableSoil,
     PersistableStateCorrelation,
-    PersistableExcavation,
     Scenario,
     SoilCollection,
     SoilCorrelation,
@@ -90,7 +90,7 @@ class DStabilityModel(BaseModel):
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dstability_console_path")
-    
+
     @property
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""

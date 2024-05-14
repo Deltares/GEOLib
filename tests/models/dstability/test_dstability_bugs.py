@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.geometry import Point
 from geolib.models import DStabilityModel
 from geolib.models.dstability.analysis import (
@@ -26,7 +27,10 @@ class TestDStabilityNaNFields:
         )
         dm.set_model(bishop_analysis_method, 0, 0)
 
-        data = dm.datastructure.json()
+        if IS_PYDANTIC_V2:
+            data = dm.datastructure.model_dump_json()
+        else:
+            data = dm.datastructure.json()
         # Using `in` was very slow, hence the find
         assert data.find('"NaN"') != -1  # Assert that quoted NaNs are found
         assert data.find(" NaN") == -1  # Assert that an unquoted NaN isn't found

@@ -7,6 +7,7 @@ from typing import List, Type
 import pytest
 from teamcity import is_running_under_teamcity
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
@@ -97,8 +98,13 @@ def model() -> DSheetPilingModel:
 
 
 def get_problem_description(ds_value, errors, od_value):
-    od_dict = od_value.dict()
-    for key, value in ds_value.dict().items():
+    if IS_PYDANTIC_V2:
+        od_dict = od_value.model_dump()
+        ds_dict = ds_value.model_dump()
+    else:
+        od_dict = od_value.dict()
+        ds_dict = ds_value.dict()
+    for key, value in ds_dict.items():
         if key not in od_dict.keys():
             errors.append(f"Input key {key} not present in output")
         if value != od_dict[key]:
@@ -232,7 +238,6 @@ class TestDsheetPilingModel:
         # the large values.
         assert output_test_file.is_file()
         output_datastructure = DSheetPilingModel().parse(output_test_file).input_data
-        print(output_datastructure.anchors)
         anchorline = output_datastructure.anchors.split("\n")[2].strip()  # dataline
         values = list(filter(lambda x: (len(x) != 0), anchorline.split(" ")))
         assert len(values) == 10

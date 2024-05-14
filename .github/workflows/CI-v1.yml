@@ -1,4 +1,5 @@
-name: ci-pydantic-v2
+# This workflow is aimed at testing GEOLib with Pydantic v1
+name: ci-pydantic-v1
 
 on:
   push:
@@ -35,17 +36,25 @@ jobs:
         id: cache
         with:
           path: ~/.virtualenvs
-          key: venv--${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv--${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}-v1
           restore-keys: |
-            venv--${{ matrix.os }}-${{ matrix.python-version }}-
+            venv--${{ matrix.os }}-${{ matrix.python-version }}-v1
 
       - name: Set Poetry config
         run: |
           poetry config virtualenvs.in-project false
           poetry config virtualenvs.path ~/.virtualenvs
 
+      # To force Pydantic v1, we install the package before the dependencies. This
+      # simulates a user who has Pydantic v1 required from another package. 
+      - name: Install Pydantic v1
+        run: |
+          poetry remove pydantic-settings pydantic-extra-types
+          poetry add pydantic==1.10.7
+      
+      # Install dependencies. This function will take the already installed Pydantic v1
       - name: Install Dependencies
-        run: poetry install -E server -E pydantic-v2
+        run: poetry install -E server
         
       - name: Test with pytest
         run: poetry run pytest --cov=geolib --cov-report xml:coverage-reports/coverage-hydrolib-core.xml --junitxml=xunit-reports/xunit-result-hydrolib-core.xml -m "unittest and not workinprogress"
