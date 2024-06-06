@@ -2,6 +2,7 @@ from typing import Optional
 
 from geolib.models import BaseDataClass
 from geolib.models.dsheetpiling.internal import SheetPileElement
+from geolib.models.dsheetpiling.internal import VerticalBalance as InternalVerticalBalance
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
 
@@ -377,4 +378,23 @@ class Pile(BaseDataClass):
             diaphragmwallposmomelastoplastic=self.plastic_properties.moment_point_2_positive,
             diaphragmwallnegeielastoplastic2=self.plastic_properties.eI_branch_3_negative,
             diaphragmwallnegmomelastoplastic=self.plastic_properties.moment_point_2_negative,
+        )
+
+
+class VerticalBalance(BaseDataClass):
+    """
+    Vertical Balance parameters
+
+    Arguments:
+        max_point_resistance: Maximum point resistance (bearing capacity) at the pile point
+        xi_factor: Statistic factor related to the number of CPT's used for derivation of the maximum point resistance
+    """
+
+    max_point_resistance: Optional[float] = None
+    xi_factor: Optional[float] = None
+
+    def to_internal(self) -> InternalVerticalBalance:
+        return InternalVerticalBalance(
+            sheetpilingqcrep=self.max_point_resistance,
+            sheetpilingxi=self.xi_factor,
         )
