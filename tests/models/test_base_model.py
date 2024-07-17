@@ -21,6 +21,10 @@ client = TestClient(app)
 
 class TestBaseModel:
     def test_model_dump_issues(self):
+        """
+        Test to reproduce the issue with the model_dump method
+        If BaseModels are added to the list, the model_dump method will fail
+        """
         a = DummyModel(filename="a.txt")
         assert a.datastructure.input_data
         b = DummyModel(filename="b.txt")
