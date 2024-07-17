@@ -5,9 +5,6 @@ from typing import List, Optional, Type, Union
 from pydantic import BaseModel, DirectoryPath, FilePath
 
 from geolib._compat import IS_PYDANTIC_V2
-from geolib.models.dsettlement.dsettlement_parserprovider import (
-    DSettlementParserProvider,
-)
 from geolib.models.meta import MetaData
 
 if IS_PYDANTIC_V2:
@@ -60,26 +57,9 @@ class BaseModelStructure(BaseDataClass, abc.ABC):
         return BaseValidator(self)
 
 
-class DSeriesStructure(BaseModelStructure):
-    pass
-
-
-class Results(DSeriesStructure):
-    dummy: str = ""
-
-
-class DummyInputStructure(DSeriesStructure):
-    dummy: str = ""
-
-
-class DummyOutputStructure(DSeriesStructure):
-    results: Results
-    input_data: DummyInputStructure
-
-
-class DummyStructure(DSeriesStructure):
-    input_data: DummyInputStructure = DummyInputStructure()
-    output_data: Optional[Results] = None
+class DummyStructure(BaseModelStructure):
+    input_data: BaseModelStructure = BaseModelStructure()
+    output_data: Optional[BaseModelStructure] = None
 
 
 class DummyBaseModel(BaseDataClass, abc.ABC):
@@ -89,16 +69,7 @@ class DummyBaseModel(BaseDataClass, abc.ABC):
 
 class DummyModel(DummyBaseModel):
     filename: Optional[Path] = None
-    datastructure: Union[DummyStructure, DummyOutputStructure] = DummyStructure()
-
-    @property
-    def parser_provider_type(self) -> Type[DSettlementParserProvider]:
-        pass
-
-    def serialize(
-        self, filename: Union[FilePath, DirectoryPath, None]
-    ) -> Union[FilePath, DirectoryPath, None]:
-        pass
+    datastructure: DummyStructure = DummyStructure()
 
 
 class DummyModelList(BaseDataClass):
