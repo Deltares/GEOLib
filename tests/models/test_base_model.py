@@ -29,9 +29,9 @@ class TestBaseModel:
         assert ml.base_models[0].datastructure.input_data
 
         _dump = ml.model_dump()
-        _dump["dummy_models"][0]["datastructure"]["input_data"]
+        _ = _dump["dummy_models"][0]["datastructure"]["input_data"]
         with pytest.raises(KeyError):
-            _dump["base_models"][0]["datastructure"]["input_data"]
+            _ = _dump["base_models"][0]["datastructure"]["input_data"]
 
     @pytest.fixture
     def default_base_model(self):
