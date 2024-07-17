@@ -273,7 +273,7 @@ class BaseModelList(BaseDataClass):
             process.wait(timeout=timeout_in_seconds)
 
         # Iterate over the models
-        for i, models in enumerate(split_models):
+        for models in split_models:
             for model in models:
                 model = model.copy(deep=True)  # prevent aliasing
                 output_filename = output_filename_from_input(model)
