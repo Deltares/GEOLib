@@ -19,6 +19,17 @@ client = TestClient(app)
 
 
 class TestBaseModel:
+    def test_model_dump_issues(self):
+        a = DSettlementModel(filename="a.txt")
+        assert a.datastructure.input_data
+        b = DSettlementModel(filename="b.txt")
+        ml = BaseModelList(models=[a, b])
+        assert ml.models[0].datastructure.input_data
+
+        _dump = ml.model_dump()
+        with pytest.raises(KeyError):
+            _dump["models"][0]["datastructure"]["input_data"]
+
     @pytest.fixture
     def default_base_model(self):
         return BaseModel()
@@ -70,7 +81,7 @@ class TestBaseModel:
         )
 
     @pytest.mark.acceptance
-    @only_teamcity
+    # @only_teamcity
     @pytest.mark.parametrize(
         "model,filename,modelname",
         [
@@ -105,7 +116,7 @@ class TestBaseModel:
         assert fn in output.errors[-1]
 
     @pytest.mark.acceptance
-    @only_teamcity
+    # @only_teamcity
     @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
     @mock.patch(
         "geolib.models.base_model.requests.compat.urljoin",
@@ -143,7 +154,7 @@ class TestBaseModel:
         assert fn in output.errors[-1]
 
     @pytest.mark.acceptance
-    @only_teamcity
+    # @only_teamcity
     @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
     @mock.patch(
         "geolib.models.base_model.requests.compat.urljoin",
