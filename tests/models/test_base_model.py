@@ -6,6 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 from teamcity import is_running_under_teamcity
 
+from geolib.dummy_model import DummyModel, DummyModelList
 from geolib.models import BaseDataClass, DSettlementModel
 from geolib.models.base_model import BaseModel, BaseModelList, MetaData
 from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
@@ -20,15 +21,17 @@ client = TestClient(app)
 
 class TestBaseModel:
     def test_model_dump_issues(self):
-        a = DSettlementModel(filename="a.txt")
+        a = DummyModel(filename="a.txt")
         assert a.datastructure.input_data
-        b = DSettlementModel(filename="b.txt")
-        ml = BaseModelList(models=[a, b])
-        assert ml.models[0].datastructure.input_data
+        b = DummyModel(filename="b.txt")
+        ml = DummyModelList(dummy_models=[a, b], base_models=[a, b])
+        assert ml.dummy_models[0].datastructure.input_data
+        assert ml.base_models[0].datastructure.input_data
 
         _dump = ml.model_dump()
+        _dump["dummy_models"][0]["datastructure"]["input_data"]
         with pytest.raises(KeyError):
-            _dump["models"][0]["datastructure"]["input_data"]
+            _dump["base_models"][0]["datastructure"]["input_data"]
 
     @pytest.fixture
     def default_base_model(self):
