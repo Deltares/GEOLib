@@ -120,7 +120,6 @@ class TestBaseModel:
             (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
         ],
     )
-    @pytest.mark.skip(reason="Failing after pydantic 2 update. Cause of failure should be investigated in more detail.")
     def test_basemodellist_execute_remote(self, _, __, model, filename, modelname):
         # Setup models
         a = model()
@@ -169,6 +168,7 @@ class TestBaseModel:
         # Execute and make sure there's output
         model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
         assert model.output
+
 
 class TestBool:
     @pytest.mark.unittest
