@@ -1,8 +1,8 @@
 import abc
 from pathlib import Path
-from typing import List, Optional, Type, Union
+from typing import List, Optional, Union
 
-from pydantic import BaseModel, DirectoryPath, FilePath
+from pydantic import BaseModel
 
 from geolib._compat import IS_PYDANTIC_V2
 from geolib.models.meta import MetaData
@@ -11,20 +11,7 @@ if IS_PYDANTIC_V2:
     from pydantic import ConfigDict
 settings = MetaData()
 
-
-class BaseValidator:
-    def __init__(self, ds):
-        self.ds = ds
-
-    @property
-    def is_valid(self) -> bool:
-        return all(
-            [
-                getattr(self, func)()
-                for func in dir(self)
-                if (func.startswith("is_valid_"))
-            ]
-        )
+### BASE MODEL STRUCTURE
 
 
 class BaseDataClass(BaseModel):
@@ -47,14 +34,17 @@ class BaseDataClass(BaseModel):
 
 
 class BaseModelStructure(BaseDataClass, abc.ABC):
-    @property
-    def is_valid(self) -> bool:
-        """Validates the current model structure."""
-        return self.validator().is_valid
+    pass
 
-    def validator(self) -> BaseValidator:
-        """Set the Validator class."""
-        return BaseValidator(self)
+
+class GeolibBaseModel(BaseDataClass, abc.ABC):
+    filename: Optional[Path] = None
+    datastructure: Optional[
+        Union[BaseModelStructure]
+    ] = None  # Adding DummyStructure in Union here would cause circular dependencies in the real application
+
+
+### DUMMY MODEL STRUCTURE
 
 
 class DummyStructure(BaseModelStructure):
@@ -62,12 +52,7 @@ class DummyStructure(BaseModelStructure):
     output_data: Optional[BaseModelStructure] = None
 
 
-class DummyBaseModel(BaseDataClass, abc.ABC):
-    filename: Optional[Path] = None
-    datastructure: Optional[BaseModelStructure] = None
-
-
-class DummyModel(DummyBaseModel):
+class DummyModel(GeolibBaseModel):
     filename: Optional[Path] = None
     datastructure: DummyStructure = DummyStructure()
 
@@ -76,5 +61,5 @@ class DummyModelList(BaseDataClass):
     dummy_models: List[
         DummyModel
     ]  # Changing this into List[DummyBaseModel] will cause the test to fail
-    base_models: List[DummyBaseModel]
+    base_models: List[GeolibBaseModel]
     errors: List[str] = []
