@@ -35,8 +35,7 @@ class TestBaseModel:
 
         _dump = ml.model_dump()
         _ = _dump["dummy_models"][0]["datastructure"]["input_data"]
-        with pytest.raises(KeyError):
-            _ = _dump["base_models"][0]["datastructure"]["input_data"]
+        _ = _dump["base_models"][0]["datastructure"]["input_data"]
 
     @pytest.fixture
     def default_base_model(self):

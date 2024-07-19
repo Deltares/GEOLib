@@ -2,7 +2,7 @@ import abc
 from pathlib import Path
 from typing import List, Optional, Union
 
-from pydantic import BaseModel
+from pydantic import BaseModel, SerializeAsAny
 
 from geolib._compat import IS_PYDANTIC_V2
 from geolib.models.meta import MetaData
@@ -40,7 +40,7 @@ class BaseModelStructure(BaseDataClass, abc.ABC):
 class GeolibBaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path] = None
     datastructure: Optional[
-        Union[BaseModelStructure]
+        SerializeAsAny[BaseModelStructure]
     ] = None  # Adding DummyStructure in Union here would cause circular dependencies in the real application
 
 
