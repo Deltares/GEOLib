@@ -910,7 +910,7 @@ class TestDsheetPilingModel:
             model.add_surcharge_load(load=testload, side=Side.LEFT, stage_id=0)
 
     @pytest.mark.unittest
-    def test_add_vertical_balance(self, model: DSheetPilingModel):
+    def test_set_vertical_balance(self, model: DSheetPilingModel):
         # Set up vertical balance
         vertical_balance = VerticalBalance(max_point_resistance=1, xi_factor=2)
 

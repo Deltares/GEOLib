@@ -34,7 +34,7 @@ from geolib.models.dsheetpiling.constructions import (
     Sheet,
     SheetPileModelPlasticCalculationProperties,
     SheetPileProperties,
-    WoodenSheetPileProperties,
+    WoodenSheetPileProperties, VerticalBalance,
 )
 from geolib.models.dsheetpiling.dsheetpiling_model import (
     DiaphragmModelType,
@@ -197,6 +197,10 @@ class TestDsheetPilingAcceptance:
         model.set_construction(
             top_level=level_top, elements=[sheet_element_1, sheet_element_2]
         )
+
+        # Add vertical balance properties
+        vertical_balance = VerticalBalance(max_point_resistance=0.5, xi_factor=1.24)
+        model.set_vertical_balance(vertical_balance=vertical_balance)
 
         # Add soil
         # Set clay material
