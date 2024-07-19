@@ -5,7 +5,7 @@ This module contains the primary objects that power GEOLib.
 """
 import abc
 import logging
-from abc import abstractmethod, abstractproperty
+from abc import abstractmethod
 from pathlib import Path
 from subprocess import run
 from typing import List, Optional, Type, Union
@@ -150,7 +150,8 @@ class BaseModel(BaseDataClass, abc.ABC):
     def console_flags_post(self) -> List[str]:
         return []
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def parser_provider_type(self) -> Type[BaseParserProvider]:
         """Returns the parser provider type of the current concrete class.
 
