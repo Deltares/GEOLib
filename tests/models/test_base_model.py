@@ -6,6 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 from teamcity import is_running_under_teamcity
 
+from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import BaseDataClass, DSettlementModel
 from geolib.models.base_model import BaseModel, BaseModelList, MetaData
 from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
@@ -103,6 +104,24 @@ class TestBaseModel:
 
         assert len(output.errors) == 1
         assert fn in output.errors[-1]
+
+    @pytest.mark.unittest
+    def test_serialize_modellist(self):
+        # 1. Set initial test data.
+        a = DSettlementModel(filename="a.txt")
+        b = DSettlementModel(filename="b.txt")
+        ml = BaseModelList(models=[a, b])
+
+        # 2. Define test action.
+        if IS_PYDANTIC_V2:
+            _dump = ml.model_dump()
+        else:
+            _dump = ml.dict()
+
+        # 3. Verify final expectations.
+        assert _dump.get("models") == [a.model_dump(), b.model_dump()]
+        for _model in _dump.get("models"):
+            assert _model["datastructure"]
 
     @pytest.mark.acceptance
     @only_teamcity
