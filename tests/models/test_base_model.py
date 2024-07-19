@@ -8,7 +8,8 @@ from teamcity import is_running_under_teamcity
 
 from geolib.dummy_model import DummyModel, DummyModelList
 from geolib.models import BaseDataClass, DSettlementModel
-from geolib.models.base_model import BaseModel, BaseModelList, MetaData
+from geolib.models.base_model import BaseModel, MetaData
+from geolib.models.base_model_list import BaseModelList
 from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dstability.dstability_model import DStabilityModel
