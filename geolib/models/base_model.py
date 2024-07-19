@@ -11,7 +11,7 @@ from subprocess import run
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl
+from pydantic import DirectoryPath, FilePath, HttpUrl, SerializeAsAny
 
 from geolib._compat import IS_PYDANTIC_V2
 
@@ -34,7 +34,7 @@ meta = MetaData()
 
 class BaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path] = None
-    datastructure: Optional[BaseModelStructure] = None
+    datastructure: Optional[SerializeAsAny[BaseModelStructure]] = None
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.
