@@ -38,6 +38,12 @@ meta = MetaData()
 class BaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path] = None
     datastructure: Optional[SerializeAsAny[BaseModelStructure]] = None
+    """
+    This is the base class for all models in GEOLib.
+    
+    Note that `datastructure` is a `SerializeAsAny` type, which means that
+    the inheriting class is serialized according to its own definition.
+    """
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.
