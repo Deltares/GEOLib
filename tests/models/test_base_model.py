@@ -119,7 +119,10 @@ class TestBaseModel:
             _dump = ml.dict()
 
         # 3. Verify final expectations.
-        assert _dump.get("models") == [a.model_dump(), b.model_dump()]
+        if IS_PYDANTIC_V2:
+            assert _dump.get("models") == [a.model_dump(), b.model_dump()]
+        else:
+            assert _dump.get("models") == [a.dict(), b.dict()]
         for _model in _dump.get("models"):
             assert _model["datastructure"]
 
