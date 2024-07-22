@@ -13,15 +13,12 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
-    
+from pydantic import DirectoryPath, FilePath, HttpUrl, ValidationError, conlist
+
 from geolib._compat import IS_PYDANTIC_V2
 
 if IS_PYDANTIC_V2:
     from pydantic import SerializeAsAny
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
 
 from requests.auth import HTTPBasicAuth
 
