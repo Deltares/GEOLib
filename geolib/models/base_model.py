@@ -13,7 +13,9 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, SerializeAsAny, conlist
+from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
+if IS_PYDANTIC_V2:
+    from pydantic import SerializeAsAny
 
 from geolib._compat import IS_PYDANTIC_V2
 
