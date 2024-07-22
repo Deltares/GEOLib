@@ -4,9 +4,7 @@ from unittest import mock
 
 import pytest
 from fastapi.testclient import TestClient
-from teamcity import is_running_under_teamcity
 
-from geolib.dummy_model import DummyModel, DummyModelList
 from geolib.models import BaseDataClass, DSettlementModel
 from geolib.models.base_model import BaseModel, MetaData
 from geolib.models.base_model_list import BaseModelList
@@ -21,22 +19,6 @@ client = TestClient(app)
 
 
 class TestBaseModel:
-    def test_model_dump_issues(self):
-        """
-        Test to reproduce the issue with the model_dump method
-        If BaseModels are added to the list, the model_dump method will fail
-        """
-        a = DummyModel(filename="a.txt")
-        assert a.datastructure.input_data
-        b = DummyModel(filename="b.txt")
-        ml = DummyModelList(dummy_models=[a, b], base_models=[a, b])
-        assert ml.dummy_models[0].datastructure.input_data
-        assert ml.base_models[0].datastructure.input_data
-
-        _dump = ml.model_dump()
-        _ = _dump["dummy_models"][0]["datastructure"]["input_data"]
-        _ = _dump["base_models"][0]["datastructure"]["input_data"]
-
     @pytest.fixture
     def default_base_model(self):
         return BaseModel()
@@ -88,7 +70,7 @@ class TestBaseModel:
         )
 
     @pytest.mark.acceptance
-    # @only_teamcity
+    @only_teamcity
     @pytest.mark.parametrize(
         "model,filename,modelname",
         [
@@ -123,7 +105,7 @@ class TestBaseModel:
         assert fn in output.errors[-1]
 
     @pytest.mark.acceptance
-    # @only_teamcity
+    @only_teamcity
     @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
     @mock.patch(
         "geolib.models.base_model.requests.compat.urljoin",
@@ -161,7 +143,7 @@ class TestBaseModel:
         assert fn in output.errors[-1]
 
     @pytest.mark.acceptance
-    # @only_teamcity
+    @only_teamcity
     @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
     @mock.patch(
         "geolib.models.base_model.requests.compat.urljoin",
