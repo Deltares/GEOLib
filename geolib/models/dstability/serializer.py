@@ -90,7 +90,10 @@ class DStabilityInputZipSerializer(DStabilityBaseSerializer):
                 if isinstance(data, dict):
                     folder = filename
                     for ffilename, fdata in data.items():
-                        fn = folder + "/" + ffilename
+                        if folder[-1] == "/":
+                            fn = folder + ffilename
+                        else:
+                            fn = folder + "/" + ffilename
                         with zip.open(fn, "w") as io:
                             io.write(fdata.encode("utf-8"))
                 else:
