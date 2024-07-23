@@ -6,22 +6,13 @@ This module contains the primary objects that power GEOLib.
 import abc
 import logging
 import os
-from abc import abstractmethod, abstractproperty
-from pathlib import Path, PosixPath, WindowsPath
+from abc import abstractmethod
+from pathlib import Path
 from subprocess import Popen, run
-from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
-
+from pydantic import DirectoryPath, FilePath, HttpUrl, ValidationError
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError
@@ -153,7 +144,8 @@ class BaseModel(BaseDataClass, abc.ABC):
     def console_flags_post(self) -> List[str]:
         return []
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def parser_provider_type(self) -> Type[BaseParserProvider]:
         """Returns the parser provider type of the current concrete class.
 
