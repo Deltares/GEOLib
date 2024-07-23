@@ -192,7 +192,7 @@ class DSerieListGroupNextStructure(DSeriesStructure):
     """
 
     @property
-    @abstractclassmethod
+    @abstractmethod
     def group_delimiter(cls) -> str:
         raise NotImplementedError("Implement in derived classes.")
 
