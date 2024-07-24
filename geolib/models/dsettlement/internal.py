@@ -3,15 +3,14 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from math import isclose
 from operator import attrgetter
-from typing import Any, Dict, List, Optional, Tuple, Type, Union
+from typing import Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import Field, StringConstraints
-from pydantic.types import PositiveInt, conint
+from pydantic.types import PositiveInt
 from typing_extensions import Annotated
 
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
-from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSerieListStructure,
     DSerieMatrixStructure,
