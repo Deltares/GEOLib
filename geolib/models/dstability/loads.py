@@ -2,15 +2,10 @@
 This module handles the four types of loads in DStability.
 """
 import abc
-from typing import List, Optional
+from typing import Optional
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import Field, model_validator
-    from typing_extensions import Annotated
-else:
-    from pydantic import NoneStr, confloat, validator
+from pydantic import Field, model_validator
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
 
@@ -27,10 +22,7 @@ from .internal import (
 class DStabilityLoad(BaseDataClass):
     """Base Class for Loads."""
 
-    if IS_PYDANTIC_V2:
-        label: Optional[str] = None
-    else:
-        label: NoneStr
+    label: Optional[str] = None
 
     @abc.abstractmethod
     def to_internal_datastructure(self):
@@ -38,10 +30,7 @@ class DStabilityLoad(BaseDataClass):
 
 
 class Consolidation(BaseDataClass):
-    if IS_PYDANTIC_V2:
-        degree: Annotated[float, Field(ge=0, le=100)] = 100
-    else:
-        degree: confloat(ge=0, le=100) = 100
+    degree: Annotated[float, Field(ge=0, le=100)] = 100
     layer_id: int
 
     def to_internal_datastructure(self) -> PersistableConsolidation:
@@ -53,29 +42,16 @@ class UniformLoad(DStabilityLoad):
 
     start: float
     end: float
-    if IS_PYDANTIC_V2:
-        magnitude: Annotated[float, Field(ge=0)]
-        angle_of_distribution: Annotated[float, Field(ge=0, le=90)]
+    magnitude: Annotated[float, Field(ge=0)]
+    angle_of_distribution: Annotated[float, Field(ge=0, le=90)]
 
-        @model_validator(mode="after")
-        def end_greater_than_start(self):
-            if self.end <= self.start:
-                raise ValueError(
-                    f"End {self.end} should be greater than start ({self.start})"
-                )
-            return self
-
-    else:
-        magnitude: confloat(ge=0)
-        angle_of_distribution: confloat(ge=0, le=90)
-
-        @validator("end")
-        def end_greater_than_start(cls, v, values):
-            if v <= values["start"]:
-                raise ValueError(
-                    f"End {v} should be greater than start ({values['start']})"
-                )
-            return v
+    @model_validator(mode="after")
+    def end_greater_than_start(self):
+        if self.end <= self.start:
+            raise ValueError(
+                f"End {self.end} should be greater than start ({self.start})"
+            )
+        return self
 
     def to_internal_datastructure(self) -> PersistableUniformLoad:
         return PersistableUniformLoad(
@@ -91,14 +67,9 @@ class LineLoad(DStabilityLoad):
     """DStability Lineload."""
 
     location: Point
-    if IS_PYDANTIC_V2:
-        angle: Annotated[float, Field(ge=-360, le=360)]
-        magnitude: Annotated[float, Field(ge=0)]
-        angle_of_distribution: Annotated[float, Field(ge=0, le=90)]
-    else:
-        angle: confloat(ge=-360, le=360)
-        magnitude: confloat(ge=0)
-        angle_of_distribution: confloat(ge=0, le=90)
+    angle: Annotated[float, Field(ge=-360, le=360)]
+    magnitude: Annotated[float, Field(ge=0)]
+    angle_of_distribution: Annotated[float, Field(ge=0, le=90)]
 
     def to_internal_datastructure(self) -> PersistableLineLoad:
         return PersistableLineLoad(

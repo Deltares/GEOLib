@@ -2,24 +2,12 @@ import logging
 import os
 from io import BytesIO
 from pathlib import Path
-from typing import List, Type
+from typing import Type
 
 import pytest
-from teamcity import is_running_under_teamcity
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
-from geolib.models.dsheetpiling.calculation_options import (
-    CalculationOptions,
-    CalculationOptionsPerStage,
-    DesignSheetpilingLengthCalculationOptions,
-    KranzAnchorStrengthCalculationOptions,
-    OverallStabilityCalculationOptions,
-    ReliabilityAnalysisCalculationOptions,
-    StandardCalculationOptions,
-    VerifyCalculationOptions,
-)
 from geolib.models.dsheetpiling.constructions import (
     DiaphragmWall,
     DiaphragmWallProperties,
@@ -38,7 +26,6 @@ from geolib.models.dsheetpiling.dsheetpiling_model import (
 from geolib.models.dsheetpiling.internal import (
     DSheetPilingDumpStructure,
     DSheetPilingInputStructure,
-    DSheetPilingOutputStructure,
     DSheetPilingStructure,
     SurchargePoint,
 )
@@ -49,37 +36,19 @@ from geolib.models.dsheetpiling.loads import (
     Moment,
     NormalForce,
     SurchargeLoad,
-    UniformLoad,
     VerificationLoadSettingsLoads,
     VerificationLoadSettingsMomentNormalForce,
 )
-from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
-    CalculationType,
-    CurveSettings,
     DistributionType,
     LateralEarthPressureMethod,
     LateralEarthPressureMethodStage,
     ModelType,
-    ModulusReactionType,
-    ModulusSubgradeReaction,
-    PartialFactorCalculationType,
-    PartialFactorSetEC7NADNL,
     PassiveSide,
-    SheetPilingElementMaterialType,
     Side,
-    VerifyType,
 )
-from geolib.models.dsheetpiling.supports import (
-    Anchor,
-    RigidSupport,
-    SpringSupport,
-    Strut,
-    SupportType,
-)
-from geolib.models.dsheetpiling.surface import Surface
-from geolib.models.dsheetpiling.water_level import WaterLevel
-from geolib.soils import MohrCoulombParameters, Soil, SoilType
+from geolib.models.dsheetpiling.supports import Anchor
+from geolib.soils import Soil, SoilType
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/benchmarks"
@@ -98,12 +67,8 @@ def model() -> DSheetPilingModel:
 
 
 def get_problem_description(ds_value, errors, od_value):
-    if IS_PYDANTIC_V2:
-        od_dict = od_value.model_dump()
-        ds_dict = ds_value.model_dump()
-    else:
-        od_dict = od_value.dict()
-        ds_dict = ds_value.dict()
+    od_dict = od_value.model_dump()
+    ds_dict = ds_value.model_dump()
     for key, value in ds_dict.items():
         if key not in od_dict.keys():
             errors.append(f"Input key {key} not present in output")

@@ -2,13 +2,7 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable, List
 
 import pytest
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
@@ -81,10 +75,7 @@ class TestCurveSettings:
             pytest.param(
                 0,
                 pytest.raises(
-                    ValidationError,
-                    match=r"Input should be greater than or equal to 1"
-                    if IS_PYDANTIC_V2
-                    else r"ensure this value is greater than or equal to 1",
+                    ValidationError, match=r"Input should be greater than or equal to 1"
                 ),
                 id="Lower than allowed",
             ),
@@ -95,10 +86,7 @@ class TestCurveSettings:
             pytest.param(
                 5,
                 pytest.raises(
-                    ValidationError,
-                    match=r"Input should be less than or equal to 4"
-                    if IS_PYDANTIC_V2
-                    else r"ensure this value is less than or equal to 4",
+                    ValidationError, match=r"Input should be less than or equal to 4"
                 ),
                 id="Higher than allowed",
             ),
@@ -187,9 +175,7 @@ class TestSoilProfile:
                 [],
                 pytest.raises(
                     ValidationError,
-                    match=r"List should have at least 1 item after validation"
-                    if IS_PYDANTIC_V2
-                    else r"ensure this value has at least 1 items",
+                    match=r"List should have at least 1 item after validation",
                 ),
                 id="No layers",
             ),
@@ -289,10 +275,7 @@ class TestSoilProfile:
         assert internal.name == _PROFILE_TEST_NAME
         assert len(profile.layers) == len(internal.layers)
         for layer, internal_layer in zip(profile.layers, internal.layers):
-            if IS_PYDANTIC_V2:
-                assert layer.model_dump() == internal_layer.model_dump()
-            else:
-                assert layer.dict() == internal_layer.dict()
+            assert layer.model_dump() == internal_layer.model_dump()
         assert profile.coordinate.x == internal.coordinate.x
         assert profile.coordinate.y == internal.coordinate.y
 

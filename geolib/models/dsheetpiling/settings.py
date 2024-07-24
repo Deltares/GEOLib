@@ -1,12 +1,7 @@
 from enum import Enum, IntEnum
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import Field
-    from typing_extensions import Annotated
-else:
-    from pydantic import conint
+from pydantic import Field
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
 
@@ -212,10 +207,7 @@ class ModulusReactionType(Enum):
 class CurveSettings(BaseDataClass):
     modulus_reaction_type: ModulusReactionType = ModulusReactionType.SECANT
     use_unloading_reloading_curve: bool = False
-    if IS_PYDANTIC_V2:
-        curve_number: Annotated[int, Field(ge=1, le=4)] = 3
-    else:
-        curve_number: conint(ge=1, le=4) = 3
+    curve_number: Annotated[int, Field(ge=1, le=4)] = 3
 
 
 class LoadTypeFavourableUnfavourable(IntEnum):

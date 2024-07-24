@@ -1,15 +1,7 @@
-from abc import ABCMeta, abstractmethod
-from typing import Optional
+from typing import List
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from typing import List
-
-    from pydantic import Field, StringConstraints, field_validator
-    from typing_extensions import Annotated
-else:
-    from pydantic import conlist, constr, validator
+from pydantic import Field, StringConstraints, field_validator
+from typing_extensions import Annotated
 
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -108,10 +100,7 @@ class UniformLoad(BaseDataClass):
         distribution_type_right: Distribution type of the right side.
     """
 
-    if IS_PYDANTIC_V2:
-        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    else:
-        name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     left_load: float
     right_load: float
     verification_load_settings: VerificationLoadSettingsLoads = (
@@ -142,10 +131,7 @@ class UniformLoad(BaseDataClass):
 class Moment(BaseDataClass):
     """Moment Load."""
 
-    if IS_PYDANTIC_V2:
-        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    else:
-        name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
     load: float
     verification_load_settings: VerificationLoadSettingsMomentNormalForce = (
@@ -153,16 +139,9 @@ class Moment(BaseDataClass):
     )
 
     def to_internal(self) -> MomentInternal:
-        if IS_PYDANTIC_V2:
-            moment = MomentInternal(
-                **self.model_dump(
-                    exclude_none=True, exclude=["verification_load_settings"]
-                )
-            )
-        else:
-            moment = MomentInternal(
-                **self.dict(exclude_none=True, exclude={"verification_load_settings"})
-            )
+        moment = MomentInternal(
+            **self.model_dump(exclude_none=True, exclude=["verification_load_settings"])
+        )
         moment.load_type = self.verification_load_settings.load_type
         moment.duration_type = self.verification_load_settings.duration_type
         return moment
@@ -179,12 +158,8 @@ class SurchargeLoad(BaseDataClass):
         distribution_type: Distribution type.
     """
 
-    if IS_PYDANTIC_V2:
-        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-        points: Annotated[List[Point], Field(min_length=1)]
-    else:
-        name: constr(min_length=1, max_length=50)
-        points: conlist(Point, min_items=1)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    points: Annotated[List[Point], Field(min_length=1)]
     verification_load_settings: VerificationLoadSettingsLoads = (
         VerificationLoadSettingsLoads()
     )
@@ -202,14 +177,9 @@ class SurchargeLoad(BaseDataClass):
             raise ValueError("x-coordinates must be strictly increasing")
         return v
 
-    if IS_PYDANTIC_V2:
-        point_validator = field_validator("points")(
-            points_must_be_increasing_and_greater_or_equal_to_zero
-        )
-    else:
-        point_validator = validator("points")(
-            points_must_be_increasing_and_greater_or_equal_to_zero
-        )
+    point_validator = field_validator("points")(
+        points_must_be_increasing_and_greater_or_equal_to_zero
+    )
 
     def to_internal(self) -> InternalSurchargeLoad:
         surchargeload = InternalSurchargeLoad(
@@ -235,10 +205,7 @@ class SurchargeLoad(BaseDataClass):
 class HorizontalLineLoad(BaseDataClass):
     """Horizontal Line Load."""
 
-    if IS_PYDANTIC_V2:
-        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    else:
-        name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
     load: float
     verification_load_settings: VerificationLoadSettingsLoads = (
@@ -246,16 +213,9 @@ class HorizontalLineLoad(BaseDataClass):
     )
 
     def to_internal(self) -> HorizontalLineLoadInternal:
-        if IS_PYDANTIC_V2:
-            horizontallineload = HorizontalLineLoadInternal(
-                **self.model_dump(
-                    exclude_none=True, exclude=["verification_load_settings"]
-                )
-            )
-        else:
-            horizontallineload = HorizontalLineLoadInternal(
-                **self.dict(exclude_none=True, exclude={"verification_load_settings"})
-            )
+        horizontallineload = HorizontalLineLoadInternal(
+            **self.model_dump(exclude_none=True, exclude=["verification_load_settings"])
+        )
         horizontallineload.load_type = self.verification_load_settings.load_type
         horizontallineload.duration_type = self.verification_load_settings.duration_type
         return horizontallineload
@@ -264,10 +224,7 @@ class HorizontalLineLoad(BaseDataClass):
 class NormalForce(BaseDataClass):
     """Normal Force Load."""
 
-    if IS_PYDANTIC_V2:
-        name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    else:
-        name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     force_at_sheet_pile_top: float
     force_at_surface_level_left_side: float
     force_at_surface_level_right_side: float
@@ -277,16 +234,9 @@ class NormalForce(BaseDataClass):
     )
 
     def to_internal(self) -> NormalForceInternal:
-        if IS_PYDANTIC_V2:
-            normalforce = NormalForceInternal(
-                **self.model_dump(
-                    exclude_none=True, exclude=["verification_load_settings"]
-                )
-            )
-        else:
-            normalforce = NormalForceInternal(
-                **self.dict(exclude_none=True, exclude={"verification_load_settings"})
-            )
+        normalforce = NormalForceInternal(
+            **self.model_dump(exclude_none=True, exclude=["verification_load_settings"])
+        )
         normalforce.load_type = self.verification_load_settings.load_type
         normalforce.duration_type = self.verification_load_settings.duration_type
         return normalforce

@@ -2,13 +2,7 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable, List
 
 import pytest
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
+from pydantic import ValidationError
 
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
@@ -55,10 +49,7 @@ class TestSurfaces:
             pytest.param(
                 [],
                 pytest.raises(
-                    ValidationError,
-                    match=r" List should have at least 1 item"
-                    if IS_PYDANTIC_V2
-                    else r"ensure this value has at least 1 items",
+                    ValidationError, match=r" List should have at least 1 item"
                 ),
                 id="No points",
             ),

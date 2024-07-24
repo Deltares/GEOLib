@@ -1,7 +1,6 @@
 import logging
 from typing import Set
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.models.validators import BaseValidator
 
 logger = logging.getLogger(__name__)
@@ -23,10 +22,7 @@ class DStabilityValidator(BaseValidator):
 
         lengths_set = set()
         valid = True
-        if IS_PYDANTIC_V2:
-            model_dump = self.ds.model_dump()
-        else:
-            model_dump = self.ds.dict()
+        model_dump = self.ds.model_dump()
         for key, value in (
             (k, v)
             for k, v in model_dump.items()

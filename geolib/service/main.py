@@ -2,23 +2,15 @@ import secrets
 import shutil
 import uuid
 from pathlib import Path, PosixPath, WindowsPath
-from typing import Dict, List, Type, Union
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import Field, ValidationError
-    from pydantic.deprecated import json as pydantic_json
-    from typing_extensions import Annotated
-else:
-    from pydantic import json as pydantic_json
-    from pydantic import conlist
-    from pydantic.error_wrappers import ValidationError
+from typing import List
 
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from pydantic import Field, ValidationError
+from pydantic.deprecated import json as pydantic_json
 from starlette import status
 from starlette.responses import JSONResponse
+from typing_extensions import Annotated
 
 from geolib.errors import CalculationError
 from geolib.models import (
@@ -43,16 +35,10 @@ security = HTTPBasic()
 
 # Models (types) are defined below, because they are used in the
 # signatures of the functions and they differ between Pydantic v1 and v2.
-if IS_PYDANTIC_V2:
-    dsettlement_list = Annotated[List[DSettlementModel], Field(min_length=1)]
-    dfoundation_list = Annotated[List[DFoundationsModel], Field(min_length=1)]
-    dsheetpile_list = Annotated[List[DSheetPilingModel], Field(min_length=1)]
-    dstability_list = Annotated[List[DStabilityModel], Field(min_length=1)]
-else:
-    dsettlement_list = conlist(DSettlementModel, min_items=1)
-    dfoundation_list = conlist(DFoundationsModel, min_items=1)
-    dsheetpile_list = conlist(DSheetPilingModel, min_items=1)
-    dstability_list = conlist(DStabilityModel, min_items=1)
+dsettlement_list = Annotated[List[DSettlementModel], Field(min_length=1)]
+dfoundation_list = Annotated[List[DFoundationsModel], Field(min_length=1)]
+dsheetpile_list = Annotated[List[DSheetPilingModel], Field(min_length=1)]
+dstability_list = Annotated[List[DStabilityModel], Field(min_length=1)]
 
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):

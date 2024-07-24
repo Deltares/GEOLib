@@ -1,31 +1,18 @@
-import logging
 import os
-import pathlib
 from datetime import timedelta
 from io import BytesIO
 from pathlib import Path
 from typing import List
-from warnings import warn
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
 
 import pytest
-from pydantic.color import Color
-from teamcity import is_running_under_teamcity
+from pydantic import ValidationError
 
 import geolib.models.dsettlement.loads as loads
 import geolib.soils as soil_external
-from geolib.errors import CalculationError
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
-from geolib.models.dsettlement.drain_types import DrainGridType, DrainSchedule, DrainType
+from geolib.models.dsettlement.drain_types import DrainGridType, DrainType
 from geolib.models.dsettlement.drains import (
-    ScheduleValues,
     ScheduleValuesDetailedInput,
     ScheduleValuesOff,
     ScheduleValuesSimpleInput,
@@ -42,7 +29,6 @@ from geolib.models.dsettlement.internal import (
     Dimension,
     DispersionConditionLayerBoundary,
     DSeriePoint,
-    DSettlementOutputStructure,
     DSettlementStructure,
     GeometryData,
     InternalProbabilisticCalculationType,
@@ -62,10 +48,8 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
 )
 from geolib.soils import (
     DistributionType,
-    IsotacheParameters,
     Soil,
     SoilClassificationParameters,
-    SoilWeightParameters,
     StateType,
     StochasticParameter,
 )
@@ -196,10 +180,7 @@ class TestDSettlementModel:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            if IS_PYDANTIC_V2:
-                io.write(ds.output.model_dump_json(indent=4))
-            else:
-                io.write(ds.output.json(indent=4))
+            io.write(ds.output.model_dump_json(indent=4))
 
     @pytest.mark.acceptance
     @only_teamcity
@@ -299,10 +280,7 @@ class TestDSettlementModel:
     ):
         # 1. Set up test data.
         test_model = DSettlementModel()
-        if IS_PYDANTIC_V2:
-            expected_mssg = "Input should be greater than or equal to 0"
-        else:
-            expected_mssg = "ensure this value is greater than or equal to 0"
+        expected_mssg = "Input should be greater than or equal to 0"
 
         # 2. Run and verify expectations
         with pytest.raises(ValueError, match=expected_mssg):
@@ -367,21 +345,13 @@ class TestDSettlementModel:
         # 4.1. Verify final expectations.
         assert ds.datastructure, "No data has been generated."
         assert isinstance(ds.datastructure, DSettlementStructure)
-        if IS_PYDANTIC_V2:
-            input_datastructure = ds.datastructure.input_data.model_dump()
-        else:
-            input_datastructure = ds.datastructure.input_data.dict()
+        input_datastructure = ds.datastructure.input_data.model_dump()
 
         # 4.2. Read the generated data.
         assert output_test_file.is_file()
-        if IS_PYDANTIC_V2:
-            output_datastructure = (
-                DSettlementModel().parse(output_test_file).input_data.model_dump()
-            )
-        else:
-            output_datastructure = (
-                DSettlementModel().parse(output_test_file).input_data.dict()
-            )
+        output_datastructure = (
+            DSettlementModel().parse(output_test_file).input_data.model_dump()
+        )
         assert not (
             input_datastructure is output_datastructure
         ), "Both references are the same."
@@ -1057,10 +1027,7 @@ class TestDSettlementModel:
         # step 3: run test
         ds.add_soil(soil_input)
         # step 4: verify final expectations
-        if IS_PYDANTIC_V2:
-            model_dump = ds.input.soil_collection.soil[-1].model_dump()
-        else:
-            model_dump = ds.input.soil_collection.soil[-1].dict()
+        model_dump = ds.input.soil_collection.soil[-1].model_dump()
         assert model_dump["name"] == "MyNewSoil"
         assert model_dump["soilgamdry"] == 30
         assert model_dump["soilgamwet"] == 20

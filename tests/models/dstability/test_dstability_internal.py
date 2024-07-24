@@ -2,19 +2,12 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic_core._pydantic_core import ValidationError
-else:
-    from pydantic import ValidationError
+from pydantic_core._pydantic_core import ValidationError
 
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.internal import (
     DStabilityStructure,
     ForeignKeys,
-    PersistableHeadLine,
     ProjectInfo,
     Waternet,
 )

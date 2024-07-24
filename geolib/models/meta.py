@@ -15,13 +15,7 @@ from pathlib import Path
 from typing import Optional
 
 from pydantic import AnyHttpUrl, DirectoryPath
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic_settings import BaseSettings, SettingsConfigDict
-else:
-    from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from geolib import __version__ as version
 
@@ -68,9 +62,4 @@ class MetaData(BaseSettings):
     # of input/output fields. We don't support any other value than "forbid"!
     extra_fields: str = "forbid"  # can be "ignore", "allow" or "forbid"
 
-    if IS_PYDANTIC_V2:
-        model_config = SettingsConfigDict(env_file="geolib.env")
-    else:
-
-        class Config:
-            env_file = "geolib.env"
+    model_config = SettingsConfigDict(env_file="geolib.env")

@@ -1,20 +1,7 @@
 import pytest
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
-
 from geolib.geometry import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
-from geolib.models.dstability.internal import (
-    PersistableHeadLine,
-    PersistablePoint,
-    PersistableReferenceLine,
-    Waternet,
-)
 
 
 class TestDStabilityHeadLine:
