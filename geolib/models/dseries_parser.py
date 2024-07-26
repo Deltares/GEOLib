@@ -43,7 +43,7 @@ class DSeriesStructure(BaseModelStructure):
     def __init__(self, *args, **kwargs):
         """The base class for all DSerie structures.
 
-        It's parent is a BaseModel from Pydantic, which expects
+        Its parent is a BaseModel from Pydantic, which expects
         all its fields named as kwargs.
 
         Here we check, using the type annotations stored for each

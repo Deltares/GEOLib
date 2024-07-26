@@ -9,7 +9,7 @@ from pydantic import FilePath, validate_arguments
 from pydantic.types import PositiveInt, confloat, conint, constr
 
 from geolib.geometry import Point
-from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
+from geolib.models.base_model import BaseModel
 from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.loads import (
     CircularLoad,
