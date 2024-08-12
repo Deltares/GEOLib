@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>geolib.models.dsettlement.drains &#8212; geolib 2.3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8cc7f55d" />
     <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -18,8 +18,9 @@
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -74,9 +75,29 @@
 <dd><p>ScheduleValues to inherit from</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValues.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValues.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValues.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValues.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValues.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'schedule':</span> <span class="pre">FieldInfo(annotation=Union[DrainSchedule,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValues.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValues.schedule">
 <span class="sig-name descname"><span class="pre">schedule</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="geolib.models.dsettlement.drain_types.html#geolib.models.dsettlement.drain_types.DrainSchedule" title="geolib.models.dsettlement.drain_types.DrainSchedule"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrainSchedule</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValues.schedule" title="Link to this definition">¶</a></dt>
@@ -91,13 +112,33 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>active.</strong> (<em>Time -- The time at which dewatering is</em>) – </p></li>
-<li><p><strong>underpressure.</strong> (<em>Underpressure -- This value is zero for vertical drains without enforced</em>) – </p></li>
-<li><p><strong>dewatering.</strong> (<em>Water head -- The vertical level where the negative pore pressure equals the enforced underpressure during</em>) – </p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>active.</strong> (<em>Time -- The time at which dewatering is</em>)</p></li>
+<li><p><strong>underpressure.</strong> (<em>Underpressure -- This value is zero for vertical drains without enforced</em>)</p></li>
+<li><p><strong>dewatering.</strong> (<em>Water head -- The vertical level where the negative pore pressure equals the enforced underpressure during</em>)</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'schedule':</span> <span class="pre">FieldInfo(annotation=Union[DrainSchedule,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'time':</span> <span class="pre">FieldInfo(annotation=List[timedelta],</span> <span class="pre">required=False,</span> <span class="pre">default=[]),</span> <span class="pre">'underpressure':</span> <span class="pre">FieldInfo(annotation=List[float],</span> <span class="pre">required=False,</span> <span class="pre">default=[]),</span> <span class="pre">'water_level':</span> <span class="pre">FieldInfo(annotation=List[float],</span> <span class="pre">required=False,</span> <span class="pre">default=[])}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.time">
 <span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">timedelta</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesDetailedInput.time" title="Link to this definition">¶</a></dt>
@@ -123,11 +164,31 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>assumes</strong> (<em>Start</em><em> of </em><em>drainage -- The time t at which the drain becomes active. D-SETTLEMENT</em>) – that the water head in the drain equals the phreatic level.</p></li>
-<li><p><strong>drainage.</strong> (<em>Phreatic level in drain -- The water head in the drain during</em>) – </p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>drainage.</strong> (<em>Phreatic level in drain -- The water head in the drain during</em>)</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesOff.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesOff.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesOff.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesOff.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesOff.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'phreatic_level_in_drain':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'schedule':</span> <span class="pre">FieldInfo(annotation=Union[DrainSchedule,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'start_of_drainage':</span> <span class="pre">FieldInfo(annotation=timedelta,</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesOff.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesOff.phreatic_level_in_drain">
 <span class="sig-name descname"><span class="pre">phreatic_level_in_drain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesOff.phreatic_level_in_drain" title="Link to this definition">¶</a></dt>
@@ -148,12 +209,12 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>assumes</strong> (<em>Start</em><em> of </em><em>drainage -- The time t at which the drain becomes active. D-SETTLEMENT</em>) – that the water head in the drain equals the phreatic level.</p></li>
-<li><p><strong>dewatering</strong> (<em>Begin time -- The time at which</em>) – </p></li>
-<li><p><strong>stops.</strong> (<em>End time -- The time at which dewatering</em>) – </p></li>
-<li><p><strong>dewatering.</strong> (<em>Water head during dewatering -- The vertical level where the negative pore pressure equals the enforced underpressure during</em>) – </p></li>
-<li><p><strong>dewatering.</strong> – </p></li>
-<li><p><strong>drainage.</strong> (<em>Phreatic level in drain -- The water head in the drain during</em>) – </p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>dewatering</strong> (<em>Begin time -- The time at which</em>)</p></li>
+<li><p><strong>stops.</strong> (<em>End time -- The time at which dewatering</em>)</p></li>
+<li><p><strong>dewatering.</strong> (<em>Water head during dewatering -- The vertical level where the negative pore pressure equals the enforced underpressure during</em>)</p></li>
+<li><p><strong>dewatering.</strong></p></li>
+<li><p><strong>drainage.</strong> (<em>Phreatic level in drain -- The water head in the drain during</em>)</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -166,6 +227,26 @@
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.end_time">
 <span class="sig-name descname"><span class="pre">end_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.end_time" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'begin_time':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'end_time':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'phreatic_level_in_drain':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'schedule':</span> <span class="pre">FieldInfo(annotation=Union[DrainSchedule,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'start_of_drainage':</span> <span class="pre">FieldInfo(annotation=timedelta,</span> <span class="pre">required=True),</span> <span class="pre">'tube_pressure_during_dewatering':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'underpressure':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'water_head_during_dewatering':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.ScheduleValuesSimpleInput.phreatic_level_in_drain">
@@ -202,14 +283,14 @@ This class refers to the input window “Vertical Drains” of the D-Settlement 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>area</strong> (<em>range_to -- right limit to the drained</em>) – </p></li>
-<li><p><strong>area</strong> – </p></li>
-<li><p><strong>The</strong> (<em>bottom_position --</em>) – </p></li>
-<li><p><strong>drains.</strong> (<em>center_to_center -- The actual spacing between the</em>) – </p></li>
-<li><p><strong>drain.</strong> (<em>thickness -- The actual thickness</em><em> of </em><em>the Strip</em>) – </p></li>
-<li><p><strong>drain.</strong> – </p></li>
-<li><p><strong>grid.</strong> (<em>grid -- The geometry</em><em> of </em><em>the</em>) – </p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>area</strong> (<em>range_to -- right limit to the drained</em>)</p></li>
+<li><p><strong>area</strong></p></li>
+<li><p><strong>The</strong> (<em>bottom_position --</em>)</p></li>
+<li><p><strong>drains.</strong> (<em>center_to_center -- The actual spacing between the</em>)</p></li>
+<li><p><strong>drain.</strong> (<em>thickness -- The actual thickness</em><em> of </em><em>the Strip</em>)</p></li>
+<li><p><strong>drain.</strong></p></li>
+<li><p><strong>grid.</strong> (<em>grid -- The geometry</em><em> of </em><em>the</em>)</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -237,6 +318,26 @@ This class refers to the input window “Vertical Drains” of the D-Settlement 
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.VerticalDrain.grid">
 <span class="sig-name descname"><span class="pre">grid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsettlement.drain_types.html#geolib.models.dsettlement.drain_types.DrainGridType" title="geolib.models.dsettlement.drain_types.DrainGridType"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrainGridType</span></code></a></em><a class="headerlink" href="#geolib.models.dsettlement.drains.VerticalDrain.grid" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.VerticalDrain.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.VerticalDrain.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.VerticalDrain.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.VerticalDrain.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsettlement.drains.VerticalDrain.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'bottom_position':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'center_to_center':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'diameter':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'drain_type':</span> <span class="pre">FieldInfo(annotation=DrainType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;DrainType.STRIP:</span> <span class="pre">0&gt;),</span> <span class="pre">'grid':</span> <span class="pre">FieldInfo(annotation=DrainGridType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;DrainGridType.UNDERDETERMINED:</span> <span class="pre">2&gt;),</span> <span class="pre">'range_from':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'range_to':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=True),</span> <span class="pre">'schedule':</span> <span class="pre">FieldInfo(annotation=ScheduleValues,</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'thickness':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'width':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsettlement.drains.VerticalDrain.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsettlement.drains.VerticalDrain.range_from">
@@ -287,11 +388,11 @@ This class refers to the input window “Vertical Drains” of the D-Settlement 
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../../index.html">
-    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    <img class="logo" src="../../_static/geolib.png" alt="Logo" />
     
   </a>
 </p>
@@ -365,7 +466,7 @@ This class refers to the input window “Vertical Drains” of the D-Settlement 
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
@@ -373,14 +474,14 @@ This class refers to the input window “Vertical Drains” of the D-Settlement 
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, Deltares.
+      &#169;2023, Deltares.
       
     </div>
 

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>geolib.models.dsheetpiling.constructions &#8212; geolib 2.3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8cc7f55d" />
     <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -18,8 +18,9 @@
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -90,7 +91,7 @@
 <li><p><strong>name</strong> – Name of the element inputted</p></li>
 <li><p><strong>diaphragm_wall_properties</strong> – properties specifically used for the Diaphragm Wall element.</p></li>
 <li><p><strong>plastic_properties</strong> – plastic calculation properties. For the Diaphragm Wall option, these are always present.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -98,6 +99,26 @@
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.diaphragm_wall_properties">
 <span class="sig-name descname"><span class="pre">diaphragm_wall_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties" title="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiaphragmWallProperties</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.diaphragm_wall_properties" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'diaphragm_wall_properties':</span> <span class="pre">FieldInfo(annotation=Union[DiaphragmWallProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=DiaphragmWallProperties(material_type=&lt;SheetPilingElementMaterialType.Steel:</span> <span class="pre">1&gt;,</span> <span class="pre">section_bottom_level=None,</span> <span class="pre">elastic_stiffness_ei=None,</span> <span class="pre">acting_width=None,</span> <span class="pre">reduction_factor_on_ei=None,</span> <span class="pre">note_on_reduction_factor=None,</span> <span class="pre">mr_char_el=None,</span> <span class="pre">mr_char_pl=None,</span> <span class="pre">modification_factor_k_mod=None,</span> <span class="pre">material_factor_gamma_m=None,</span> <span class="pre">reduction_factor_on_maximum_moment=None)),</span> <span class="pre">'name':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default=''),</span> <span class="pre">'plastic_properties':</span> <span class="pre">FieldInfo(annotation=Union[FullPlasticCalculationProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=FullPlasticCalculationProperties(symmetrical=False,</span> <span class="pre">eI_branch_2_positive=None,</span> <span class="pre">eI_branch_2_negative=None,</span> <span class="pre">moment_point_1_positive=None,</span> <span class="pre">moment_point_1_negative=None,</span> <span class="pre">plastic_moment_positive=None,</span> <span class="pre">plastic_moment_negative=None,</span> <span class="pre">eI_branch_3_positive=None,</span> <span class="pre">moment_point_2_positive=None,</span> <span class="pre">eI_branch_3_negative=None,</span> <span class="pre">moment_point_2_negative=None))}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWall.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWall.name">
@@ -145,7 +166,7 @@ Otherwise, the program will automatically apply the following factors:</p>
 </ul>
 </p></li>
 <li><p><strong>reduction_factor_on_ei</strong> – Reduction factor applied on the stiffness EI of the pile.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -168,6 +189,26 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.material_type">
 <span class="sig-name descname"><span class="pre">material_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType" title="geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SheetPilingElementMaterialType</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.material_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'acting_width':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'elastic_stiffness_ei':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'material_factor_gamma_m':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'material_type':</span> <span class="pre">FieldInfo(annotation=Union[SheetPilingElementMaterialType,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;SheetPilingElementMaterialType.Steel:</span> <span class="pre">1&gt;),</span> <span class="pre">'modification_factor_k_mod':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'mr_char_el':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'mr_char_pl':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'note_on_reduction_factor':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'reduction_factor_on_ei':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'reduction_factor_on_maximum_moment':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'section_bottom_level':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.DiaphragmWallProperties.modification_factor_k_mod">
@@ -227,10 +268,11 @@ Otherwise, the program will automatically apply the following factors:</p>
 </ul>
 </dd>
 </dl>
-<a class="reference internal image-reference" href="../../_images/fullplastic.png"><img alt="../../_images/fullplastic.png" class="align-center" src="../../_images/fullplastic.png" style="width: 420.0px; height: 280.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/fullplastic.png"><img alt="../../_images/fullplastic.png" class="align-center" src="../../_images/fullplastic.png" style="width: 420.0px; height: 280.0px;" />
+</a>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -252,6 +294,26 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_3_positive">
 <span class="sig-name descname"><span class="pre">eI_branch_3_positive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.eI_branch_3_positive" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'eI_branch_2_negative':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'eI_branch_2_positive':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'eI_branch_3_negative':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'eI_branch_3_positive':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'moment_point_1_negative':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'moment_point_1_positive':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'moment_point_2_negative':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'moment_point_2_positive':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'plastic_moment_negative':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'plastic_moment_positive':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'symmetrical':</span> <span class="pre">FieldInfo(annotation=Union[bool,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.FullPlasticCalculationProperties.moment_point_1_negative">
@@ -300,10 +362,30 @@ Otherwise, the program will automatically apply the following factors:</p>
 <li><p><strong>name</strong> – Name of the element inputted</p></li>
 <li><p><strong>pile_properties</strong> – properties specifically used for the Pile element.</p></li>
 <li><p><strong>plastic_properties</strong> – plastic calculation properties. If Elastic calculation checkbox is not selected.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'name':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default=''),</span> <span class="pre">'pile_properties':</span> <span class="pre">FieldInfo(annotation=Union[PileProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=PileProperties(material_type=&lt;SheetPilingElementMaterialType.Steel:</span> <span class="pre">1&gt;,</span> <span class="pre">elastic_stiffness_ei=None,</span> <span class="pre">diameter=None,</span> <span class="pre">section_bottom_level=None,</span> <span class="pre">reduction_factor_on_ei=None,</span> <span class="pre">mr_char_el=None,</span> <span class="pre">mr_char_pl=None,</span> <span class="pre">modification_factor_k_mod=None,</span> <span class="pre">material_factor_gamma_m=None,</span> <span class="pre">reduction_factor_on_maximum_moment=None,</span> <span class="pre">note_on_reduction_factor=None)),</span> <span class="pre">'plastic_properties':</span> <span class="pre">FieldInfo(annotation=Union[FullPlasticCalculationProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=FullPlasticCalculationProperties(symmetrical=False,</span> <span class="pre">eI_branch_2_positive=None,</span> <span class="pre">eI_branch_2_negative=None,</span> <span class="pre">moment_point_1_positive=None,</span> <span class="pre">moment_point_1_negative=None,</span> <span class="pre">plastic_moment_positive=None,</span> <span class="pre">plastic_moment_negative=None,</span> <span class="pre">eI_branch_3_positive=None,</span> <span class="pre">moment_point_2_positive=None,</span> <span class="pre">eI_branch_3_negative=None,</span> <span class="pre">moment_point_2_negative=None))}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Pile.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Pile.name" title="Link to this definition">¶</a></dt>
@@ -333,22 +415,22 @@ Otherwise, the program will automatically apply the following factors:</p>
 <li><p><strong>section_bottom_level</strong> – the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.</p></li>
 <li><p><strong>mr_char_el</strong> – Characteristic elastic moment without safety factors.</p></li>
 <li><p><strong>material_factor_gamma_m</strong> – The partial safety factor γ m should be defined, only if the User defined material type</p></li>
-<li><p><strong>Otherwise</strong> (<em>is selected.</em>) – </p></li>
-<li><p><strong>factors</strong> (<em>the program will automatically apply the following</em>) – </p></li>
-<li><p><strong>moment</strong> (<em>(</em><em>acc. to the corresponding Eurocode</em><em>) </em><em>to calculate the design allowable</em>) – </p></li>
+<li><p><strong>Otherwise</strong> (<em>is selected.</em>)</p></li>
+<li><p><strong>factors</strong> (<em>the program will automatically apply the following</em>)</p></li>
+<li><p><strong>moment</strong> (<em>(</em><em>acc. to the corresponding Eurocode</em><em>) </em><em>to calculate the design allowable</em>)</p></li>
 <li><p><strong>Steel</strong> (<em>*</em>) – γm = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)</p></li>
 <li><p><strong>Concrete</strong> (<em>*</em>) – γm = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6</p></li>
 <li><p><strong>Wood</strong> (<em>*</em>) – γm = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)</p></li>
 <li><p><strong>Synthetic</strong> (<em>*</em>) – γm = 1.2</p></li>
 <li><p><strong>modification_factor_k_mod</strong> – The modification factor kmod should be defined, only if the User defined</p></li>
-<li><p><strong>selected.</strong> (<em>and synthetic material type is</em>) – </p></li>
-<li><p><strong>Otherwise</strong> – </p></li>
-<li><p><strong>factors</strong> – </p></li>
+<li><p><strong>selected.</strong> (<em>and synthetic material type is</em>)</p></li>
+<li><p><strong>Otherwise</strong></p></li>
+<li><p><strong>factors</strong></p></li>
 <li><p><strong>Steel</strong> – kmod = 1</p></li>
 <li><p><strong>Concrete</strong> – kmod = 1</p></li>
 <li><p><strong>Wood</strong> – kmod= 1</p></li>
 <li><p><strong>reduction_factor_on_maximum_moment</strong> – The reduction factor applied to the maximum allowable moment</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -371,6 +453,26 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.material_type">
 <span class="sig-name descname"><span class="pre">material_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType" title="geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SheetPilingElementMaterialType</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.material_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'diameter':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'elastic_stiffness_ei':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'material_factor_gamma_m':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'material_type':</span> <span class="pre">FieldInfo(annotation=Union[SheetPilingElementMaterialType,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;SheetPilingElementMaterialType.Steel:</span> <span class="pre">1&gt;),</span> <span class="pre">'modification_factor_k_mod':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'mr_char_el':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'mr_char_pl':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'note_on_reduction_factor':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'reduction_factor_on_ei':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'reduction_factor_on_maximum_moment':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'section_bottom_level':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.PileProperties.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.PileProperties.modification_factor_k_mod">
@@ -419,10 +521,30 @@ Otherwise, the program will automatically apply the following factors:</p>
 <li><p><strong>name</strong> – Name of the element inputted</p></li>
 <li><p><strong>sheet_pile_properties</strong> – properties specifically used for the Sheet pile element.</p></li>
 <li><p><strong>plastic_properties</strong> – plastic calculation properties. If Elastic calculation checkbox is not selected.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'name':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default=''),</span> <span class="pre">'plastic_properties':</span> <span class="pre">FieldInfo(annotation=Union[SheetPileModelPlasticCalculationProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=SheetPileModelPlasticCalculationProperties(symmetrical=False,</span> <span class="pre">plastic_moment_positive=None,</span> <span class="pre">plastic_moment_negative=None)),</span> <span class="pre">'sheet_pile_properties':</span> <span class="pre">FieldInfo(annotation=Union[SheetPileProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=SheetPileProperties(material_type=&lt;SheetPilingElementMaterialType.Steel:</span> <span class="pre">1&gt;,</span> <span class="pre">elastic_stiffness_ei=None,</span> <span class="pre">acting_width=None,</span> <span class="pre">section_bottom_level=None,</span> <span class="pre">height=400,</span> <span class="pre">width_of_sheet_piles=None,</span> <span class="pre">section_area=None,</span> <span class="pre">elastic_section_modulus_w_el=None,</span> <span class="pre">reduction_factor_on_ei=None,</span> <span class="pre">note_on_reduction_factor=None,</span> <span class="pre">mr_char_el=None,</span> <span class="pre">mr_char_pl=None,</span> <span class="pre">modification_factor_k_mod=None,</span> <span class="pre">material_factor_gamma_m=None,</span> <span class="pre">reduction_factor_on_maximum_moment=None)),</span> <span class="pre">'wooden_sheet_pile_properties':</span> <span class="pre">FieldInfo(annotation=Union[WoodenSheetPileProperties,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=WoodenSheetPileProperties(elasticity_modulus_e_m_0_mean=None,</span> <span class="pre">charac_flexural_strength_f_m_0_char=None,</span> <span class="pre">system_factor_k_sys=None,</span> <span class="pre">deform_factor_k_def=None,</span> <span class="pre">creep_factor_psi_2_eff=None,</span> <span class="pre">material_factor_gamma_m=None,</span> <span class="pre">modif_factor_on_f_m_0_char_short_term_k_mod_f_short=None,</span> <span class="pre">modif_factor_on_f_m_0_char_long_term_k_mod_f_long=None,</span> <span class="pre">modification_factor_on_e_m_0_d_k_mod_e=None))}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.Sheet.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.Sheet.name" title="Link to this definition">¶</a></dt>
@@ -457,12 +579,33 @@ Otherwise, the program will automatically apply the following factors:</p>
 </ul>
 </dd>
 </dl>
-<a class="reference internal image-reference" href="../../_images/sheetpileplastic.png"><img alt="../../_images/sheetpileplastic.png" class="align-center" src="../../_images/sheetpileplastic.png" style="width: 420.0px; height: 280.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/sheetpileplastic.png"><img alt="../../_images/sheetpileplastic.png" class="align-center" src="../../_images/sheetpileplastic.png" style="width: 420.0px; height: 280.0px;" />
+</a>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'plastic_moment_negative':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'plastic_moment_positive':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'symmetrical':</span> <span class="pre">FieldInfo(annotation=Union[bool,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.plastic_moment_negative">
 <span class="sig-name descname"><span class="pre">plastic_moment_negative</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileModelPlasticCalculationProperties.plastic_moment_negative" title="Link to this definition">¶</a></dt>
@@ -509,13 +652,13 @@ Otherwise, the program will automatically apply the following factors:</p>
 </p></li>
 <li><p><strong>reduction_factor_on_maximum_moment</strong> – The reduction factor applied to the maximum allowable moment</p></li>
 <li><p><strong>reduction_factor_on_ei</strong> – Reduction factor applied on the stiffness EI of the pile.</p></li>
-<li><p><strong>wall</strong><strong>]</strong><strong>.</strong> (<em>length</em><em> of </em><em>the perimeter</em><em> of </em><em>the sheet piling section per running meter</em><em> of </em><em>wall</em><em> [</em><em>m2/m2</em>) – </p></li>
+<li><p><strong>wall</strong><strong>]</strong><strong>.</strong> (<em>length</em><em> of </em><em>the perimeter</em><em> of </em><em>the sheet piling section per running meter</em><em> of </em><em>wall</em><em> [</em><em>m2/m2</em>)</p></li>
 <li><p><strong>height</strong> – The thickness of the sheet piling profile [mm].</p></li>
 <li><p><strong>elastic_section_modulus_w_el</strong> – The section modulus (also called resisting moment in the Netherlands) of the sheet piling,</p></li>
-<li><p><strong>[</strong><strong>cm3/m</strong><strong>]</strong> – </p></li>
-<li><p><strong>control</strong> (<em>used for a Feasibility</em>) – </p></li>
+<li><p><strong>[</strong><strong>cm3/m</strong><strong>]</strong></p></li>
+<li><p><strong>control</strong> (<em>used for a Feasibility</em>)</p></li>
 <li><p><strong>section_area</strong> – The cross-sectional area of the sheet piling, [cm3/m].</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -548,6 +691,26 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.material_type">
 <span class="sig-name descname"><span class="pre">material_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType" title="geolib.models.dsheetpiling.settings.SheetPilingElementMaterialType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SheetPilingElementMaterialType</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.material_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'acting_width':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'elastic_section_modulus_w_el':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'elastic_stiffness_ei':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'height':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=400),</span> <span class="pre">'material_factor_gamma_m':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'material_type':</span> <span class="pre">FieldInfo(annotation=Union[SheetPilingElementMaterialType,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;SheetPilingElementMaterialType.Steel:</span> <span class="pre">1&gt;),</span> <span class="pre">'modification_factor_k_mod':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'mr_char_el':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'mr_char_pl':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'note_on_reduction_factor':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'reduction_factor_on_ei':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'reduction_factor_on_maximum_moment':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'section_area':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'section_bottom_level':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'width_of_sheet_piles':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.modification_factor_k_mod">
@@ -612,7 +775,7 @@ Otherwise, the program will automatically apply the following factors:</p>
 <li><p><strong>modif_factor_on_f_m_0_char_short_term_k_mod_f_short</strong> – The short term modification factor of the strength to count for duration life of the wooden pile.</p></li>
 <li><p><strong>modif_factor_on_f_m_0_char_long_term_k_mod_f_long</strong> – The long term modification factor of the strength to count for duration life of the wooden pile.</p></li>
 <li><p><strong>modification_factor_on_e_m_0_d_k_mod_e</strong> – This value describes the modification factor of the elasticity.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -640,6 +803,26 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.material_factor_gamma_m">
 <span class="sig-name descname"><span class="pre">material_factor_gamma_m</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.material_factor_gamma_m" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'charac_flexural_strength_f_m_0_char':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'creep_factor_psi_2_eff':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'deform_factor_k_def':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'elasticity_modulus_e_m_0_mean':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'material_factor_gamma_m':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'modif_factor_on_f_m_0_char_long_term_k_mod_f_long':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'modif_factor_on_f_m_0_char_short_term_k_mod_f_short':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'modification_factor_on_e_m_0_d_k_mod_e':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'system_factor_k_sys':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties.modif_factor_on_f_m_0_char_long_term_k_mod_f_long">
@@ -685,11 +868,11 @@ Otherwise, the program will automatically apply the following factors:</p>
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../../index.html">
-    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    <img class="logo" src="../../_static/geolib.png" alt="Logo" />
     
   </a>
 </p>
@@ -763,7 +946,7 @@ Otherwise, the program will automatically apply the following factors:</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
@@ -771,14 +954,14 @@ Otherwise, the program will automatically apply the following factors:</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, Deltares.
+      &#169;2023, Deltares.
       
     </div>
 

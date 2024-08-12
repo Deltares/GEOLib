@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>geolib.models.dsheetpiling.calculation_options &#8212; geolib 2.3.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8cc7f55d" />
     <script src="../../_static/documentation_options.js?v=c3c8ae58"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -18,8 +18,9 @@
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -88,7 +89,7 @@
 <li><p><strong>calc_minor_nodes_on</strong> – Select either the faster, classic, coarse element determination (False) of active and passive pressures, or the more accurate fine element determination(True).</p></li>
 <li><p><strong>calc_reduce_deltas</strong> – Set on True for reduction of the wall friction angles according to CUR 166 for the calculation of the passive earth pressure coefficients of Culmann method.</p></li>
 <li><p><strong>input_calculation_type</strong> – select the type of calculation that is going to be performed.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -122,6 +123,26 @@
 <span class="sig-name descname"><span class="pre">is_vibration_calculation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.is_vibration_calculation" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.STANDARD:</span> <span class="pre">0&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -134,13 +155,33 @@ when another type of calculation is performed.
 :param partial_factor_set: partial factor sets corresponding to different code annexes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.anchor_factor">
 <span class="sig-name descname"><span class="pre">anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.anchor_factor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'anchor_factor':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=1),</span> <span class="pre">'partial_factor_set':</span> <span class="pre">FieldInfo(annotation=Union[PartialFactorSetEC7NADBE,</span> <span class="pre">PartialFactorSetCUR,</span> <span class="pre">PartialFactorSetEC7NADNL,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.CalculationOptionsPerStage.partial_factor_set">
@@ -170,7 +211,7 @@ compared to what’s been set in the .shi file.</p>
 <li><p><strong>design_ec7_be_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
 <li><p><strong>design_partial_factor_set</strong> – Select partial factor set</p></li>
 <li><p><strong>design_cur_method</strong> – Select method of calculation according to CUR 166 design procedure</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -211,22 +252,22 @@ compared to what’s been set in the .shi file.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_decrement">
-<span class="sig-name descname"><span class="pre">design_pile_length_decrement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedFloatValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_decrement" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">design_pile_length_decrement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_decrement" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_from">
-<span class="sig-name descname"><span class="pre">design_pile_length_from</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedFloatValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_from" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">design_pile_length_from</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_from" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_to">
-<span class="sig-name descname"><span class="pre">design_pile_length_to</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedFloatValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_to" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">design_pile_length_to</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_pile_length_to" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_stage">
-<span class="sig-name descname"><span class="pre">design_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedIntValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_stage" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">design_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.design_stage" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -239,6 +280,26 @@ compared to what’s been set in the .shi file.</p>
 <span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationType</span></code></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.input_calculation_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'design_cur_method':</span> <span class="pre">FieldInfo(annotation=PartialFactorCalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorCalculationType.METHODA:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_ec7_be_method':</span> <span class="pre">FieldInfo(annotation=PartialFactorCalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorCalculationType.METHODA:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_ec7_nl_method':</span> <span class="pre">FieldInfo(annotation=PartialFactorCalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorCalculationType.METHODA:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_eurocode_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC.DA1SET1:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetCUR,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetCUR.CLASSI:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_partial_factor_set_ec7_nad_be':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC7NADBE,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC7NADBE.SET1:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_partial_factor_set_ec7_nad_nl':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC7NADNL,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC7NADNL.RC0:</span> <span class="pre">0&gt;),</span> <span class="pre">'design_pile_length_decrement':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=0.01,</span> <span class="pre">metadata=[Ge(ge=0.01),</span> <span class="pre">Le(le=10)]),</span> <span class="pre">'design_pile_length_from':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=1,</span> <span class="pre">metadata=[Ge(ge=1),</span> <span class="pre">Le(le=100)]),</span> <span class="pre">'design_pile_length_to':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=1,</span> <span class="pre">metadata=[Ge(ge=1),</span> <span class="pre">Le(le=100)]),</span> <span class="pre">'design_stage':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0,</span> <span class="pre">metadata=[Ge(ge=0)]),</span> <span class="pre">'design_type':</span> <span class="pre">FieldInfo(annotation=DesignType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;DesignType.REPRESENTATIVE:</span> <span class="pre">0&gt;),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.DESIGN_SHEETPILING_LENGTH:</span> <span class="pre">1&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.DesignSheetpilingLengthCalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -250,19 +311,39 @@ window.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cur_anchor_force_stage</strong> – Id of the stage to be checked. This id refers to D-SheetPiling so the first stage in D-SheetPiling has an input of 0.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.cur_anchor_force_stage">
-<span class="sig-name descname"><span class="pre">cur_anchor_force_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedIntValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.cur_anchor_force_stage" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cur_anchor_force_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.cur_anchor_force_stage" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.input_calculation_type">
 <span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationType</span></code></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.input_calculation_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'cur_anchor_force_stage':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0,</span> <span class="pre">metadata=[Ge(ge=0)]),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.CHARACTERISTIC_KRANZ_ANCHOR_STRENGTH:</span> <span class="pre">3&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.KranzAnchorStrengthCalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -280,19 +361,39 @@ window.</p>
 <li><p><strong>stability_ec7_be_partial_factor_set</strong> – partial factor set selected for the EC7 BE calculation</p></li>
 <li><p><strong>stability_cur_partial_factor_set</strong> – partial factor set selected for the CUR calculation</p></li>
 <li><p><strong>stability_export</strong> – Set on True to generate an input file with STI format which can be opened with D-Geo Stability</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.cur_stability_stage">
-<span class="sig-name descname"><span class="pre">cur_stability_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedIntValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.cur_stability_stage" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cur_stability_stage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.cur_stability_stage" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.input_calculation_type">
 <span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationType</span></code></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.input_calculation_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'cur_stability_stage':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=0,</span> <span class="pre">metadata=[Ge(ge=0)]),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.OVERALL_STABILITY:</span> <span class="pre">4&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'overall_stability_type':</span> <span class="pre">FieldInfo(annotation=DesignType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;DesignType.REPRESENTATIVE:</span> <span class="pre">0&gt;),</span> <span class="pre">'stability_cur_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetCUR,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetCUR.CLASSI:</span> <span class="pre">0&gt;),</span> <span class="pre">'stability_ec7_be_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC7NADBE,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC7NADBE.SET1:</span> <span class="pre">0&gt;),</span> <span class="pre">'stability_ec7_nl_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC7NADNL,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC7NADNL.RC0:</span> <span class="pre">0&gt;),</span> <span class="pre">'stability_eurocode_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC.DA1SET1:</span> <span class="pre">0&gt;),</span> <span class="pre">'stability_export':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.OverallStabilityCalculationOptions.overall_stability_type">
@@ -333,13 +434,33 @@ window.</p>
 window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.input_calculation_type">
 <span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationType</span></code></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.input_calculation_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.RELIABILITY_ANALYSIS:</span> <span class="pre">5&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.ReliabilityAnalysisCalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -351,7 +472,7 @@ window.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>calc_auto_lambdas_on</strong> – When True Automatic leaves the values of the lateral earth pressure ratios that are calculated by the Culmann (c, phi, delta) method as they are.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -364,6 +485,26 @@ window.</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.input_calculation_type">
 <span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationType</span></code></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.input_calculation_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_auto_lambdas_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=True),</span> <span class="pre">'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.STANDARD:</span> <span class="pre">0&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.StandardCalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -387,7 +528,7 @@ window.</p>
 <li><p><strong>cur_overall_partial_factor_set</strong> – Select partial factor set</p></li>
 <li><p><strong>cur_overall_anchor_factor</strong> – multiplication factor for the anchor stiffness</p></li>
 <li><p><strong>cur_overall_stability</strong> – Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.</p></li>
-<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>) – </p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -403,7 +544,7 @@ window.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_anchor_factor">
-<span class="sig-name descname"><span class="pre">cur_overall_anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedFloatValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_anchor_factor" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cur_overall_anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.cur_overall_anchor_factor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -433,7 +574,7 @@ window.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_anchor_factor">
-<span class="sig-name descname"><span class="pre">ec7_nl_overall_anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstrainedFloatValue</span></code></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_anchor_factor" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ec7_nl_overall_anchor_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Annotated</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.ec7_nl_overall_anchor_factor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -455,6 +596,26 @@ window.</p>
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.input_calculation_type">
 <span class="sig-name descname"><span class="pre">input_calculation_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dsheetpiling.settings.html#geolib.models.dsheetpiling.settings.CalculationType" title="geolib.models.dsheetpiling.settings.CalculationType"><code class="xref py py-class docutils literal notranslate"><span class="pre">CalculationType</span></code></a></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.input_calculation_type" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.model_computed_fields" title="Link to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'calc_first_stage_initial':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_minor_nodes_on':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'calc_reduce_deltas':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'cur_method':</span> <span class="pre">FieldInfo(annotation=PartialFactorCalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorCalculationType.METHODA:</span> <span class="pre">0&gt;),</span> <span class="pre">'cur_overall_anchor_factor':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=1,</span> <span class="pre">metadata=[Ge(ge=0.001),</span> <span class="pre">Le(le=1000)]),</span> <span class="pre">'cur_overall_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetCUR,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetCUR.CLASSI:</span> <span class="pre">0&gt;),</span> <span class="pre">'cur_overall_stability':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'ec7_be_overall_stability':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'ec7_nad_nl_overall_stability':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'ec7_nl_method':</span> <span class="pre">FieldInfo(annotation=PartialFactorCalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorCalculationType.METHODA:</span> <span class="pre">0&gt;),</span> <span class="pre">'ec7_nl_overall_anchor_factor':</span> <span class="pre">FieldInfo(annotation=float,</span> <span class="pre">required=False,</span> <span class="pre">default=1,</span> <span class="pre">metadata=[Ge(ge=0.001),</span> <span class="pre">Le(le=1000)]),</span> <span class="pre">'ec7_nl_overall_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetEC7NADNL,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetEC7NADNL.RC0:</span> <span class="pre">0&gt;),</span> <span class="pre">'eurocode_overall_stability':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'eurocode_partial_factor_set':</span> <span class="pre">FieldInfo(annotation=PartialFactorSetVerifyEC,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorSetVerifyEC.DA1:</span> <span class="pre">0&gt;),</span> <span class="pre">'input_calculation_type':</span> <span class="pre">FieldInfo(annotation=CalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;CalculationType.VERIFY_SHEETPILING:</span> <span class="pre">2&gt;),</span> <span class="pre">'is_vibration_calculation':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'nb_method':</span> <span class="pre">FieldInfo(annotation=PartialFactorCalculationType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;PartialFactorCalculationType.METHODA:</span> <span class="pre">0&gt;),</span> <span class="pre">'verify_type':</span> <span class="pre">FieldInfo(annotation=VerifyType,</span> <span class="pre">required=False,</span> <span class="pre">default=&lt;VerifyType.CUR:</span> <span class="pre">0&gt;)}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.model_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.calculation_options.VerifyCalculationOptions.nb_method">
@@ -490,11 +651,11 @@ window.</p>
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../../index.html">
-    <img class="logo" src="../../_static/geolib.png" alt="Logo"/>
+    <img class="logo" src="../../_static/geolib.png" alt="Logo" />
     
   </a>
 </p>
@@ -568,7 +729,7 @@ window.</p>
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
@@ -576,14 +737,14 @@ window.</p>
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, Deltares.
+      &#169;2023, Deltares.
       
     </div>
 
