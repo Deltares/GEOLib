@@ -1,14 +1,8 @@
 from pathlib import Path, PosixPath, WindowsPath
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic.deprecated import json as pydantic_json
-else:
-    from pydantic import json as pydantic_json
-
 import pytest
 from fastapi.testclient import TestClient
+from pydantic.deprecated import json as pydantic_json
 from requests.auth import HTTPBasicAuth
 
 from geolib.models import BaseModelList, DFoundationsModel, DSettlementModel
@@ -33,10 +27,7 @@ def test_read_main():
 def test_post_calculate_empty_model_fails():
     model = DFoundationsModel()
 
-    if IS_PYDANTIC_V2:
-        data = model.model_dump_json()
-    else:
-        data = model.json()
+    data = model.model_dump_json()
 
     response = client.post(
         "/calculate/dfoundationsmodel",
@@ -55,10 +46,7 @@ def test_post_calculate():
     benchmark_fn = input_folder / "bm1-1.sli"
     model.parse(benchmark_fn)
 
-    if IS_PYDANTIC_V2:
-        data = model.model_dump_json()
-    else:
-        data = model.json()
+    data = model.model_dump_json()
 
     response = client.post(
         "/calculate/dsettlementmodel",
@@ -84,18 +72,11 @@ def test_post_calculate_many():
         model.parse(benchmark_fn)
     ml.models.append(DSettlementModel(filename=Path("c.sli")))
 
-    if IS_PYDANTIC_V2:
-        response = client.post(
-            "/calculate/dsettlementmodels",
-            data="[" + ",".join((model.model_dump_json() for model in ml.models)) + "]",
-            auth=HTTPBasicAuth("test", "test"),
-        )
-    else:
-        response = client.post(
-            "/calculate/dsettlementmodels",
-            data="[" + ",".join((model.json() for model in ml.models)) + "]",
-            auth=HTTPBasicAuth("test", "test"),
-        )
+    response = client.post(
+        "/calculate/dsettlementmodels",
+        data="[" + ",".join((model.model_dump_json() for model in ml.models)) + "]",
+        auth=HTTPBasicAuth("test", "test"),
+    )
     assert response.status_code == 200
     assert "models" in response.json()
     assert "errors" in response.json()
@@ -113,7 +94,4 @@ def test_auth():
         auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 422
-    if IS_PYDANTIC_V2:
-        assert "List should have at least 1 item after validation" in response.text
-    else:
-        assert "field required" in response.text
+    assert "List should have at least 1 item after validation" in response.text

@@ -1,11 +1,6 @@
 from struct import pack, unpack_from
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic_extra_types.color import Color as PydanticColor
-else:
-    from pydantic.color import Color as PydanticColor
+from pydantic_extra_types.color import Color as PydanticColor
 
 
 class Color(PydanticColor):

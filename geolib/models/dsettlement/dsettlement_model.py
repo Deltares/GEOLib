@@ -1,12 +1,9 @@
 import logging
 from datetime import timedelta
-from operator import attrgetter
 from pathlib import Path
-from subprocess import CompletedProcess, run
-from typing import BinaryIO, List, Optional, Type, Union
+from typing import Annotated, BinaryIO, List, Optional, Type, Union
 
-from pydantic import FilePath, validate_arguments
-from pydantic.types import PositiveInt, confloat, conint, constr
+from pydantic import FilePath, StringConstraints
 
 from geolib.geometry import Point
 from geolib.models.base_model import BaseModel
@@ -22,30 +19,25 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
 from geolib.models.dsettlement.serializer import DSettlementInputSerializer
-from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG, MetaData
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import DistributionType
 from geolib.soils import Soil as Soil_Input
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
 from .internal import (
-    Boundary,
     CalculationOptions,
     ConsolidationModel,
-    Curve,
     Dimension,
     DSeriePoint,
     DSettlementOutputStructure,
     DSettlementStructure,
     Layer,
-    Layers,
     Model,
     NonUniformLoad,
     NonUniformLoads,
     OtherLoads,
-    PiezoLines,
     PointForLoad,
-    Points,
     ResidualTimes,
     Results,
     SoilModel,
@@ -410,7 +402,7 @@ class DSettlementModel(BaseModel):
 
     def add_other_load(
         self,
-        name: constr(min_length=1, max_length=25),
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         time: timedelta,
         point: Point,
         other_load: Union[
@@ -430,7 +422,7 @@ class DSettlementModel(BaseModel):
 
     def add_non_uniform_load(
         self,
-        name: constr(min_length=1, max_length=25),
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         points: List[Point],
         time_start: timedelta,
         gamma_dry: float,

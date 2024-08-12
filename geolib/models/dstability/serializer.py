@@ -1,14 +1,10 @@
 from abc import ABCMeta, abstractmethod
-from datetime import datetime
 from io import BytesIO
-from os import makedirs
-from typing import Dict, List, Union, _GenericAlias, get_type_hints
+from typing import Dict, Union, _GenericAlias
 from zipfile import ZIP_DEFLATED, ZipFile
 
 from pydantic import DirectoryPath, FilePath
-from zipp import Path
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.errors import NotConcreteError
 from geolib.models.serializers import BaseSerializer
 from geolib.models.utils import get_filtered_type_hints
@@ -35,21 +31,13 @@ class DStabilityBaseSerializer(BaseSerializer, metaclass=ABCMeta):
                 for i, data in enumerate(getattr(self.ds, field)):
                     suffix = f"_{i}" if i > 0 else ""
                     fn = element_type.structure_name() + suffix + ".json"
-                    if IS_PYDANTIC_V2:
-                        serialized_datastructure[folder][fn] = data.model_dump_json(
-                            indent=4
-                        )
-                    else:
-                        serialized_datastructure[folder][fn] = data.json(indent=4)
+                    serialized_datastructure[folder][fn] = data.model_dump_json(indent=4)
 
             # Otherwise its a single .json in the root folder
             else:
                 fn = fieldtype.structure_name() + ".json"
                 data = getattr(self.ds, field)
-                if IS_PYDANTIC_V2:
-                    serialized_datastructure[fn] = data.model_dump_json(indent=4)
-                else:
-                    serialized_datastructure[fn] = data.json(indent=4)
+                serialized_datastructure[fn] = data.model_dump_json(indent=4)
 
         return serialized_datastructure
 
