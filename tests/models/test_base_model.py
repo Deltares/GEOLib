@@ -104,6 +104,21 @@ class TestBaseModel:
         assert len(output.errors) == 1
         assert fn in output.errors[-1]
 
+    @pytest.mark.unittest
+    def test_serialize_modellist(self):
+        # 1. Set initial test data.
+        a = DSettlementModel(filename="a.txt")
+        b = DSettlementModel(filename="b.txt")
+        ml = BaseModelList(models=[a, b])
+
+        # 2. Define test action.
+        _dump = ml.model_dump()
+
+        # 3. Verify final expectations.
+        assert _dump.get("models") == [a.model_dump(), b.model_dump()]
+        for _model in _dump.get("models"):
+            assert _model["datastructure"]
+
     @pytest.mark.acceptance
     @only_teamcity
     @mock.patch("geolib.models.base_model.requests.post", side_effect=client.post)
@@ -120,7 +135,6 @@ class TestBaseModel:
             (DFoundationsModel, "bm1-1a.foi", "dfoundations/benchmarks"),
         ],
     )
-    @pytest.mark.skip(reason="Failing after pydantic 2 update. Cause of failure should be investigated in more detail.")
     def test_basemodellist_execute_remote(self, _, __, model, filename, modelname):
         # Setup models
         a = model()
@@ -169,6 +183,7 @@ class TestBaseModel:
         # Execute and make sure there's output
         model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
         assert model.output
+
 
 class TestBool:
     @pytest.mark.unittest
