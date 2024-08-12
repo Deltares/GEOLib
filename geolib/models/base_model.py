@@ -13,14 +13,12 @@ from types import CoroutineType
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, conlist
+from pydantic import DirectoryPath, FilePath, HttpUrl, ValidationError, conlist
 
 from geolib._compat import IS_PYDANTIC_V2
 
 if IS_PYDANTIC_V2:
-    from pydantic import ValidationError
-else:
-    from pydantic.error_wrappers import ValidationError
+    from pydantic import SerializeAsAny
 
 from requests.auth import HTTPBasicAuth
 
@@ -37,7 +35,18 @@ meta = MetaData()
 
 class BaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path] = None
-    datastructure: Optional[BaseModelStructure] = None
+    if IS_PYDANTIC_V2:
+        datastructure: Optional[SerializeAsAny[BaseModelStructure]] = None
+    else:
+        datastructure: Optional[BaseModelStructure] = None
+    """
+    This is the base class for all models in GEOLib.
+    
+    Note that `datastructure` is a `SerializeAsAny` type, which means that
+    the inheriting class is serialized according to its own definition (duck-typing).
+    This is needed since Pydantic v2 as the default behavior has changed:
+    https://docs.pydantic.dev/latest/concepts/serialization/#subclass-instances-for-fields-of-basemodel-dataclasses-typeddict
+    """
 
     def execute(self, timeout_in_seconds: int = meta.timeout) -> "BaseModel":
         """Execute a Model and wait for `timeout` seconds.
