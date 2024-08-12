@@ -12,7 +12,7 @@ from subprocess import Popen, run
 from typing import List, Optional, Type, Union
 
 import requests
-from pydantic import DirectoryPath, FilePath, HttpUrl, ValidationError
+from pydantic import DirectoryPath, FilePath, HttpUrl, SerializeAsAny, ValidationError
 from requests.auth import HTTPBasicAuth
 
 from geolib.errors import CalculationError
@@ -28,10 +28,7 @@ meta = MetaData()
 
 class BaseModel(BaseDataClass, abc.ABC):
     filename: Optional[Path] = None
-    if IS_PYDANTIC_V2:
-        datastructure: Optional[SerializeAsAny[BaseModelStructure]] = None
-    else:
-        datastructure: Optional[BaseModelStructure] = None
+    datastructure: Optional[SerializeAsAny[BaseModelStructure]] = None
     """
     This is the base class for all models in GEOLib.
     
