@@ -41,11 +41,12 @@ class DStabilityStress(DStabilityObject):
     )
     state_type: InternalStateTypeEnum = InternalStateTypeEnum.POP
 
-
-def _to_internal_datastructure(self) -> PersistableStress:
-    data = {**{snake_to_camel(name): value for name, value in self.model_dump().items()}}
-    data["PopStochasticParameter"] = data.pop("StochasticParameter")
-    return PersistableStress(**data)
+    def _to_internal_datastructure(self) -> PersistableStress:
+        data = {
+            **{snake_to_camel(name): value for name, value in self.model_dump().items()}
+        }
+        data["PopStochasticParameter"] = data.pop("StochasticParameter")
+        return PersistableStress(**data)
 
 
 class DStabilityStatePoint(DStabilityObject):
