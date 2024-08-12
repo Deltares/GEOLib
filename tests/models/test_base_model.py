@@ -4,10 +4,10 @@ from unittest import mock
 
 import pytest
 from fastapi.testclient import TestClient
-from teamcity import is_running_under_teamcity
 
 from geolib.models import BaseDataClass, DSettlementModel
-from geolib.models.base_model import BaseModel, BaseModelList, MetaData
+from geolib.models.base_model import BaseModel, MetaData
+from geolib.models.base_model_list import BaseModelList
 from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dstability.dstability_model import DStabilityModel
@@ -90,7 +90,7 @@ class TestBaseModel:
         output_folder = Path(TestUtils.get_output_test_data_dir(modelname)) / "multiple"
 
         ml = BaseModelList(models=[a, b])
-        for i, modelinstance in enumerate(ml.models):
+        for modelinstance in ml.models:
             modelinstance.parse(benchmark_fn)
         fn = "test"
         ml.models.append(model(filename=Path(fn)))
@@ -143,7 +143,7 @@ class TestBaseModel:
         benchmark_fn = input_folder / filename
 
         ml = BaseModelList(models=[a, b])
-        for i, modelinstance in enumerate(ml.models):
+        for modelinstance in ml.models:
             modelinstance.parse(benchmark_fn)
         fn = "test"
         ml.models.append(model(filename=Path(fn)))

@@ -12,9 +12,9 @@ from typing import Dict, List, Optional, Set, Tuple, Union
 from pydantic import ConfigDict, Field, field_validator, model_validator
 from typing_extensions import Annotated
 
-from geolib import BaseModelStructure
 from geolib import __version__ as version
 from geolib.geometry import Point
+from geolib.models import BaseModelStructure
 from geolib.soils import Soil, StorageParameters
 from geolib.utils import snake_to_camel
 
@@ -812,7 +812,6 @@ class DGeoFlowStructure(BaseModelStructure):
                     return True
             return False
 
-        # print(self)
         for _, scenario in enumerate(self.scenarios):
             for _, stage in enumerate(scenario.Stages):
                 print(self.boundary_conditions[0])

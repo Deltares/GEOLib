@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 from pydantic.deprecated import json as pydantic_json
 from requests.auth import HTTPBasicAuth
 
-from geolib import BaseModelList, DFoundationsModel, DSettlementModel
+from geolib.models import BaseModelList, DFoundationsModel, DSettlementModel
 from geolib.service.main import app
 from tests.utils import TestUtils, only_teamcity
 

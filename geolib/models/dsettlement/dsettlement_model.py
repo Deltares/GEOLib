@@ -6,7 +6,8 @@ from typing import Annotated, BinaryIO, List, Optional, Type, Union
 from pydantic import FilePath, StringConstraints
 
 from geolib.geometry import Point
-from geolib.models import BaseModel
+from geolib.models.base_model import BaseModel
+from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.loads import (
     CircularLoad,
     RectangularLoad,
