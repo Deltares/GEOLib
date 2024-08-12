@@ -254,7 +254,12 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.datastructure">
 <span class="sig-name descname"><span class="pre">datastructure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dgeoflow.internal.html#geolib.models.dgeoflow.internal.DGeoFlowStructure" title="geolib.models.dgeoflow.internal.DGeoFlowStructure"><code class="xref py py-class docutils literal notranslate"><span class="pre">DGeoFlowStructure</span></code></a></em><a class="headerlink" href="#geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.datastructure" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>This is the base class for all models in GEOLib.</p>
+<p>Note that <cite>datastructure</cite> is a <cite>SerializeAsAny</cite> type, which means that
+the inheriting class is serialized according to its own definition (duck-typing).
+This is needed since Pydantic v2 as the default behavior has changed:
+<a class="reference external" href="https://docs.pydantic.dev/latest/concepts/serialization/#subclass-instances-for-fields-of-basemodel-dataclasses-typeddict">https://docs.pydantic.dev/latest/concepts/serialization/#subclass-instances-for-fields-of-basemodel-dataclasses-typeddict</a></p>
+</dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dgeoflow.dgeoflow_model.DGeoFlowModel.default_console_path">
