@@ -37,8 +37,12 @@ from .internal_partial_factors import (
     PartialFactorsCurI,
     PartialFactorsCurIi,
     PartialFactorsCurIii,
-    PartialFactorsEc7BESet1,
-    PartialFactorsEc7BESet2,
+    PartialFactorsEc7BE1Set1,
+    PartialFactorsEc7BE1Set2,
+    PartialFactorsEc7BE2Set1,
+    PartialFactorsEc7BE2Set2,
+    PartialFactorsEc7BE3Set1,
+    PartialFactorsEc7BE3Set2,
     PartialFactorsEc7Nl0,
     PartialFactorsEc7Nl1,
     PartialFactorsEc7Nl2,
@@ -69,7 +73,9 @@ from .settings import (
     PartialFactorSetCUR,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
+    RiskClassEC7BE,
     PartialFactorSetEC7NADNL,
+    AssessmentTypeEC7NL,
     PartialFactorSetVerifyEC,
     PassiveSide,
     SheetPilingElementMaterialType,
@@ -249,8 +255,8 @@ class CalculationOptions(DSeriesStructure):
     )
     designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorsetec7nadbe: PartialFactorSetEC7NADBE = (
-        PartialFactorSetEC7NADBE.SET1
+    designec7bepartialfactorset: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.RC1SET1
     )
     designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
@@ -263,8 +269,10 @@ class CalculationOptions(DSeriesStructure):
     ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     ec7nloverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     ec7nadnloverallstability: bool = False
+    ec7nlassessmenttype: AssessmentTypeEC7NL = AssessmentTypeEC7NL.NewConstruction
     ec7beoverallstability: bool = False
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    ec7beoverallriskclass: RiskClassEC7BE = RiskClassEC7BE.RC2
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
@@ -280,8 +288,8 @@ class CalculationOptions(DSeriesStructure):
     stabilityec7nlpartialfactorset: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
-        PartialFactorSetEC7NADBE.SET1
+    overallstabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.RC1SET1
     )
     stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
 
@@ -298,8 +306,12 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_nl_1: PartialFactorsEc7Nl1 = PartialFactorsEc7Nl1()
     partial_factors_ec7_nl_2: PartialFactorsEc7Nl2 = PartialFactorsEc7Nl2()
     partial_factors_ec7_nl_3: PartialFactorsEc7Nl3 = PartialFactorsEc7Nl3()
-    partial_factors_ec7_be_set1: PartialFactorsEc7BESet1 = PartialFactorsEc7BESet1()
-    partial_factors_ec7_be_set2: PartialFactorsEc7BESet2 = PartialFactorsEc7BESet2()
+    partial_factors_ec7_be_1_set1: PartialFactorsEc7BE1Set1 = PartialFactorsEc7BE1Set1()
+    partial_factors_ec7_be_1_set2: PartialFactorsEc7BE1Set2 = PartialFactorsEc7BE1Set2()
+    partial_factors_ec7_be_2_set1: PartialFactorsEc7BE2Set1 = PartialFactorsEc7BE2Set1()
+    partial_factors_ec7_be_2_set2: PartialFactorsEc7BE2Set2 = PartialFactorsEc7BE2Set2()
+    partial_factors_ec7_be_3_set1: PartialFactorsEc7BE3Set1 = PartialFactorsEc7BE3Set1()
+    partial_factors_ec7_be_3_set2: PartialFactorsEc7BE3Set2 = PartialFactorsEc7BE3Set2()
     partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
     partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
     partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
@@ -535,6 +547,7 @@ class StageOptions(DSeriesInlineMappedProperties):
     stageverify: int = 0
     stageanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    stageriskclassec7nadbe: RiskClassEC7BE = RiskClassEC7BE.RC2
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: Annotated[float, Field(ge=0.001, le=1000)] = 1
     stageverifyec7nadbe: int = 0
@@ -1356,7 +1369,9 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     anchors_and_struts_resume: Optional[str] = None
     supports_resume: Optional[str] = None
     maximum_anchor_force: Optional[str] = None
+    maximum_anchor_force_be_set_1: Optional[str] = None
     maximum_summary_results: Optional[str] = None
+    maximum_summary_results_be_set_1: Optional[str] = None
     warnings: Optional[str] = None
     errors: Optional[str] = None
 

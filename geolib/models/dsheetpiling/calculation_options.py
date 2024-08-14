@@ -13,7 +13,9 @@ from .settings import (
     PartialFactorSetCUR,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
+    RiskClassEC7BE,
     PartialFactorSetEC7NADNL,
+    AssessmentTypeEC7NL,
     PartialFactorSetVerifyEC,
     VerifyType,
 )
@@ -104,8 +106,8 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    stability_ec7_be_partial_factor_set: PartialFactorSetEC7NADBE = (
-        PartialFactorSetEC7NADBE.SET1
+    overall_stability_ec7_be_partial_factor_set: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.RC1SET1
     )
     stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     stability_export: bool = False
@@ -147,8 +149,10 @@ class VerifyCalculationOptions(CalculationOptions):
      ec7_nl_overall_partial_factor_set: Select partial factor set
      ec7_nl_overall_anchor_factor: multiplication factor for the anchor stiffness
      ec7_nad_nl_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
+     ec7_nl_assessment_type: Select assessment type
      ec7_be_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
-     nb_method: Select method of calculation according to CUR 166 design procedure
+     ec7_be_method: Select method of calculation for EC7 BE
+     ec7_be_overall_risk_class: Select risk class
      cur_method: Select method of calculation according to CUR 166 design procedure
      cur_overall_partial_factor_set: Select partial factor set
      cur_overall_anchor_factor: multiplication factor for the anchor stiffness
@@ -165,8 +169,10 @@ class VerifyCalculationOptions(CalculationOptions):
     )
     ec7_nl_overall_anchor_factor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     ec7_nad_nl_overall_stability: bool = False
+    ec7_nl_assessment_type: AssessmentTypeEC7NL = AssessmentTypeEC7NL.NewConstruction
     ec7_be_overall_stability: bool = False
-    nb_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    ec7_be_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    ec7_be_overall_risk_class: RiskClassEC7BE = RiskClassEC7BE.RC2
     cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     cur_overall_anchor_factor: Annotated[float, Field(ge=0.001, le=1000)] = 1
@@ -194,7 +200,7 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
      design_eurocode_partial_factor_set: Select partial factor set
      design_partial_factor_set_ec7_nad_nl: Select partial factor set
      design_ec7_nl_method: Select method of calculation according to CUR 166 design procedure
-     design_partial_factor_set_ec7_nad_be: Select partial factor set
+     design_ec7_be_partial_factor_set: Select partial factor set
      design_ec7_be_method: Select method of calculation according to CUR 166 design procedure
      design_partial_factor_set: Select partial factor set
      design_cur_method: Select method of calculation according to CUR 166 design procedure
@@ -213,8 +219,8 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     design_ec7_nl_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
-    design_partial_factor_set_ec7_nad_be: PartialFactorSetEC7NADBE = (
-        PartialFactorSetEC7NADBE.SET1
+    design_ec7_be_partial_factor_set: PartialFactorSetEC7NADBE = (
+        PartialFactorSetEC7NADBE.RC1SET1
     )
     design_ec7_be_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
