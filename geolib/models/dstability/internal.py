@@ -297,7 +297,7 @@ class PersistableStateLinePoint(DStabilityBaseModelStructure):
     IsProbabilistic: Optional[bool] = None
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    X: Optional[float] = None
+    X: Optional[Union[float, str]] = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1049,26 +1049,26 @@ class PersistableGeotextile(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     End: Optional[PersistablePoint] = None
-    ReductionArea: Optional[float] = None
+    ReductionArea: Optional[Union[float, str]] = "NaN"
     Start: Optional[PersistablePoint] = None
-    TensileStrength: Optional[float] = None
+    TensileStrength: Optional[Union[float, str]] = "NaN"
 
 
 class PersistableStressAtDistance(DStabilityBaseModelStructure):
-    Distance: Optional[float] = None
-    Stress: Optional[float] = None
+    Distance: Optional[Union[float, str]] = "NaN"
+    Stress: Optional[Union[float, str]] = "NaN"
 
 
 class PersistableNail(DStabilityBaseModelStructure):
     BendingStiffness: Optional[float] = 0.0
     CriticalAngle: Optional[float] = 0.0
-    Diameter: Optional[float] = None
+    Diameter: Optional[Union[float, str]] = "NaN"
     Direction: Optional[float] = 0.0
     GroutDiameter: Optional[float] = 0.0
     HorizontalSpacing: Optional[float] = 0.0
     Label: Optional[str] = ""
     LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
-    Length: Optional[float] = None
+    Length: Optional[Union[float, str]] = "NaN"
     Location: Optional[PersistablePoint] = None
     MaxPullForce: Optional[float] = 0.0
     Notes: Optional[str] = ""
@@ -1136,15 +1136,15 @@ class ProjectInfo(DStabilitySubStructure):
 
 
 class PersistableBondStress(DStabilityBaseModelStructure):
-    Sigma: Optional[float] = None
-    Tau: Optional[float] = None
+    Sigma: Optional[Union[float, str]] = "NaN"
+    Tau: Optional[Union[float, str]] = "NaN"
 
 
 class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
     AreBondStressesActive: Optional[bool] = False
     BondStresses: Optional[List[Optional[PersistableBondStress]]] = []
-    CompressionRatio: Optional[float] = None
-    RheologicalCoefficient: Optional[float] = None
+    CompressionRatio: Optional[Union[float, str]] = "NaN"
+    RheologicalCoefficient: Optional[Union[float, str]] = "NaN"
     SoilId: Optional[str] = None
 
     @field_validator("SoilId", mode="before")
@@ -1168,7 +1168,7 @@ class NailProperties(DStabilitySubStructure):
 
 
 class PersistableConsolidation(DStabilityBaseModelStructure):
-    Degree: Optional[float] = None
+    Degree: Optional[Union[float, str]] = "NaN"
     LayerId: Optional[str] = None
 
     @field_validator("LayerId", mode="before")
@@ -1200,32 +1200,32 @@ class PersistableLayerLoad(DStabilityBaseModelStructure):
 
 
 class PersistableLineLoad(DStabilityBaseModelStructure):
-    Angle: Optional[float] = None
+    Angle: Optional[Union[float, str]] = "NaN"
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
     Label: Optional[str] = ""
     Location: Optional[PersistablePoint] = None
-    Magnitude: Optional[float] = None
+    Magnitude: Optional[Union[float, str]] = "NaN"
     Notes: Optional[str] = ""
-    Spread: Optional[float] = None
+    Spread: Optional[Union[float, str]] = "NaN"
 
 
 class PersistableTree(DStabilityBaseModelStructure):
-    Force: Optional[float] = None
+    Force: Optional[Union[float, str]] = "NaN"
     Label: Optional[str] = ""
     Location: Optional[PersistablePoint] = None
     Notes: Optional[str] = ""
-    RootZoneWidth: Optional[float] = None
-    Spread: Optional[float] = None
+    RootZoneWidth: Optional[Union[float, str]] = "NaN"
+    Spread: Optional[Union[float, str]] = "NaN"
 
 
 class PersistableUniformLoad(DStabilityBaseModelStructure):
     Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    End: Optional[float] = None
+    End: Optional[Union[float, str]] = "NaN"
     Label: Optional[str] = ""
-    Magnitude: Optional[float] = None
+    Magnitude: Optional[Union[float, str]] = "NaN"
     Notes: Optional[str] = ""
-    Spread: Optional[float] = None
-    Start: Optional[float] = None
+    Spread: Optional[Union[float, str]] = "NaN"
+    Start: Optional[Union[float, str]] = "NaN"
 
 
 Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
@@ -1554,7 +1554,7 @@ class PersistableTangentArea(DStabilityBaseModelStructure):
     Height: Optional[float] = 0.0
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    TopZ: Optional[float] = None
+    TopZ: Optional[Union[float, str]] = "NaN"
 
 
 class PersistableUpliftVanParticleSwarmSettings(DStabilityBaseModelStructure):
@@ -1635,55 +1635,55 @@ class CalculationSettings(DStabilitySubStructure):
 
 
 class PersistableSlice(DStabilityBaseModelStructure):
-    ArcLength: Optional[float] = None
-    BottomAngle: Optional[float] = None
+    ArcLength: Optional[Union[float, str]] = "NaN"
+    BottomAngle: Optional[Union[float, str]] = "NaN"
     BottomLeft: Optional[PersistablePoint] = None
     BottomRight: Optional[PersistablePoint] = None
-    CohesionInput: Optional[float] = None
-    CohesionOutput: Optional[float] = None
-    DegreeOfConsolidationLoadPorePressure: Optional[float] = None
-    DegreeOfConsolidationPorePressure: Optional[float] = None
-    DilatancyInput: Optional[float] = None
-    DilatancyOutput: Optional[float] = None
-    EffectiveStress: Optional[float] = None
-    HorizontalPorePressure: Optional[float] = None
-    HorizontalSoilQuakeStress: Optional[float] = None
-    HydrostaticPorePressure: Optional[float] = None
+    CohesionInput: Optional[Union[float, str]] = "NaN"
+    CohesionOutput: Optional[Union[float, str]] = "NaN"
+    DegreeOfConsolidationLoadPorePressure: Optional[Union[float, str]] = "NaN"
+    DegreeOfConsolidationPorePressure: Optional[Union[float, str]] = "NaN"
+    DilatancyInput: Optional[Union[float, str]] = "NaN"
+    DilatancyOutput: Optional[Union[float, str]] = "NaN"
+    EffectiveStress: Optional[Union[float, str]] = "NaN"
+    HorizontalPorePressure: Optional[Union[float, str]] = "NaN"
+    HorizontalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
+    HydrostaticPorePressure: Optional[Union[float, str]] = "NaN"
     Label: Optional[str] = None
-    LoadStress: Optional[float] = None
-    MInput: Optional[float] = None
-    NormalStress: Optional[float] = None
-    Ocr: Optional[float] = None
-    PhiInput: Optional[float] = None
-    PhiOutput: Optional[float] = None
-    PiezometricPorePressure: Optional[float] = None
-    Pop: Optional[float] = None
-    ShearStress: Optional[float] = None
-    SInput: Optional[float] = None
-    SuOutput: Optional[float] = None
-    SurfacePorePressure: Optional[float] = None
-    TopAngle: Optional[float] = None
+    LoadStress: Optional[Union[float, str]] = "NaN"
+    MInput: Optional[Union[float, str]] = "NaN"
+    NormalStress: Optional[Union[float, str]] = "NaN"
+    Ocr: Optional[Union[float, str]] = "NaN"
+    PhiInput: Optional[Union[float, str]] = "NaN"
+    PhiOutput: Optional[Union[float, str]] = "NaN"
+    PiezometricPorePressure: Optional[Union[float, str]] = "NaN"
+    Pop: Optional[Union[float, str]] = "NaN"
+    ShearStress: Optional[Union[float, str]] = "NaN"
+    SInput: Optional[Union[float, str]] = "NaN"
+    SuOutput: Optional[Union[float, str]] = "NaN"
+    SurfacePorePressure: Optional[Union[float, str]] = "NaN"
+    TopAngle: Optional[Union[float, str]] = "NaN"
     TopLeft: Optional[PersistablePoint] = None
     TopRight: Optional[PersistablePoint] = None
-    TotalPorePressure: Optional[float] = None
-    TotalStress: Optional[float] = None
-    UpliftFactor: Optional[float] = None
-    VerticalPorePressure: Optional[float] = None
-    VerticalSoilQuakeStress: Optional[float] = None
-    WaterQuakeStress: Optional[float] = None
-    Weight: Optional[float] = None
-    Width: Optional[float] = None
-    YieldStress: Optional[float] = None
+    TotalPorePressure: Optional[Union[float, str]] = "NaN"
+    TotalStress: Optional[Union[float, str]] = "NaN"
+    UpliftFactor: Optional[Union[float, str]] = "NaN"
+    VerticalPorePressure: Optional[Union[float, str]] = "NaN"
+    VerticalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
+    WaterQuakeStress: Optional[Union[float, str]] = "NaN"
+    Weight: Optional[Union[float, str]] = "NaN"
+    Width: Optional[Union[float, str]] = "NaN"
+    YieldStress: Optional[Union[float, str]] = "NaN"
     ShearStrengthModelType: Optional[ShearStrengthModelTypePhreaticLevelInternal] = None
 
 
 class BishopBruteForceResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
-    FactorOfSafety: Optional[float] = None
+    FactorOfSafety: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
-    ResultThreshold: Optional[float] = None
+    ResultThreshold: Optional[Union[float, str]] = "NaN"
     SlipPlaneResults: Optional[list] = None
 
     @field_validator("Id", mode="before")
@@ -1709,11 +1709,11 @@ class BishopBruteForceResult(DStabilitySubStructure):
 
 
 class PersistableSoilContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[float] = None
+    Alpha: Optional[Union[float, str]] = "NaN"
     Property: Optional[str] = None
     SoilId: Optional[str] = None
-    UncorrelatedAlpha: Optional[float] = None
-    Value: Optional[float] = None
+    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
+    Value: Optional[Union[float, str]] = "NaN"
 
     @field_validator("SoilId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1723,11 +1723,11 @@ class PersistableSoilContribution(DStabilityBaseModelStructure):
 
 
 class PersistableCalculationContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[float] = None
+    Alpha: Optional[Union[float, str]] = "NaN"
     Property: Optional[str] = None
     CalculationId: Optional[str] = None
-    UncorrelatedAlpha: Optional[float] = None
-    Value: Optional[float] = None
+    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
+    Value: Optional[Union[float, str]] = "NaN"
 
     @field_validator("CalculationId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1737,11 +1737,11 @@ class PersistableCalculationContribution(DStabilityBaseModelStructure):
 
 
 class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[float] = None
+    Alpha: Optional[Union[float, str]] = "NaN"
     Property: Optional[str] = None
     StateLinePointId: Optional[str] = None
-    UncorrelatedAlpha: Optional[float] = None
-    Value: Optional[float] = None
+    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
+    Value: Optional[Union[float, str]] = "NaN"
 
     @field_validator("StateLinePointId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1751,11 +1751,11 @@ class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
 
 
 class PersistableStatePointContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[float] = None
+    Alpha: Optional[Union[float, str]] = "NaN"
     Property: Optional[str] = None
     StatePointId: Optional[str] = None
-    UncorrelatedAlpha: Optional[float] = None
-    Value: Optional[float] = None
+    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
+    Value: Optional[Union[float, str]] = "NaN"
 
     @field_validator("StatePointId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1767,10 +1767,10 @@ class PersistableStatePointContribution(DStabilityBaseModelStructure):
 class BishopReliabilityResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
     Converged: Optional[bool] = None
-    FailureProbability: Optional[float] = None
+    FailureProbability: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
-    ReliabilityIndex: Optional[float] = None
-    DistanceToConvergence: Optional[float] = None
+    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
+    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
         List[Optional[PersistableCalculationContribution]]
@@ -1807,10 +1807,10 @@ class BishopReliabilityResult(DStabilitySubStructure):
 class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
     Converged: Optional[bool] = None
-    FailureProbability: Optional[float] = None
+    FailureProbability: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
-    ReliabilityIndex: Optional[float] = None
-    DistanceToConvergence: Optional[float] = None
+    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
+    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
         List[Optional[PersistableCalculationContribution]]
@@ -1821,7 +1821,7 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     StatePointContributions: Optional[
         List[Optional[PersistableStatePointContribution]]
     ] = None
-    ResultThreshold: Optional[float] = None
+    ResultThreshold: Optional[Union[float, str]] = "NaN"
     SlipPlaneResults: Optional[list] = None
 
     @field_validator("Id", mode="before")
@@ -1848,7 +1848,7 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
 
 class BishopResult(DStabilitySubStructure):
     Circle: Optional[PersistableCircle] = None
-    FactorOfSafety: Optional[float] = None
+    FactorOfSafety: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
@@ -1876,61 +1876,61 @@ class BishopResult(DStabilitySubStructure):
 
 
 class PersistableSpencerSlice(DStabilityBaseModelStructure):
-    ArcLength: Optional[float] = None
-    BottomAngle: Optional[float] = None
+    ArcLength: Optional[Union[float, str]] = "NaN"
+    BottomAngle: Optional[Union[float, str]] = "NaN"
     BottomLeft: Optional[PersistablePoint] = None
     BottomRight: Optional[PersistablePoint] = None
-    CohesionInput: Optional[float] = None
-    CohesionOutput: Optional[float] = None
-    DegreeOfConsolidationLoadPorePressure: Optional[float] = None
-    DegreeOfConsolidationPorePressure: Optional[float] = None
-    DilatancyInput: Optional[float] = None
-    DilatancyOutput: Optional[float] = None
-    EffectiveStress: Optional[float] = None
-    HorizontalPorePressure: Optional[float] = None
-    HorizontalSoilQuakeStress: Optional[float] = None
-    HydrostaticPorePressure: Optional[float] = None
+    CohesionInput: Optional[Union[float, str]] = "NaN"
+    CohesionOutput: Optional[Union[float, str]] = "NaN"
+    DegreeOfConsolidationLoadPorePressure: Optional[Union[float, str]] = "NaN"
+    DegreeOfConsolidationPorePressure: Optional[Union[float, str]] = "NaN"
+    DilatancyInput: Optional[Union[float, str]] = "NaN"
+    DilatancyOutput: Optional[Union[float, str]] = "NaN"
+    EffectiveStress: Optional[Union[float, str]] = "NaN"
+    HorizontalPorePressure: Optional[Union[float, str]] = "NaN"
+    HorizontalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
+    HydrostaticPorePressure: Optional[Union[float, str]] = "NaN"
     Label: Optional[str] = None
-    LeftForce: Optional[float] = None
-    LeftForceAngle: Optional[float] = None
-    LeftForceY: Optional[float] = None
-    LoadStress: Optional[float] = None
-    MInput: Optional[float] = None
-    NormalStress: Optional[float] = None
-    Ocr: Optional[float] = None
-    PhiInput: Optional[float] = None
-    PhiOutput: Optional[float] = None
-    PiezometricPorePressure: Optional[float] = None
-    Pop: Optional[float] = None
-    RightForce: Optional[float] = None
-    RightForceAngle: Optional[float] = None
-    RightForceY: Optional[float] = None
-    ShearStress: Optional[float] = None
-    SInput: Optional[float] = None
-    SuOutput: Optional[float] = None
-    SurfacePorePressure: Optional[float] = None
-    TopAngle: Optional[float] = None
+    LeftForce: Optional[Union[float, str]] = "NaN"
+    LeftForceAngle: Optional[Union[float, str]] = "NaN"
+    LeftForceY: Optional[Union[float, str]] = "NaN"
+    LoadStress: Optional[Union[float, str]] = "NaN"
+    MInput: Optional[Union[float, str]] = "NaN"
+    NormalStress: Optional[Union[float, str]] = "NaN"
+    Ocr: Optional[Union[float, str]] = "NaN"
+    PhiInput: Optional[Union[float, str]] = "NaN"
+    PhiOutput: Optional[Union[float, str]] = "NaN"
+    PiezometricPorePressure: Optional[Union[float, str]] = "NaN"
+    Pop: Optional[Union[float, str]] = "NaN"
+    RightForce: Optional[Union[float, str]] = "NaN"
+    RightForceAngle: Optional[Union[float, str]] = "NaN"
+    RightForceY: Optional[Union[float, str]] = "NaN"
+    ShearStress: Optional[Union[float, str]] = "NaN"
+    SInput: Optional[Union[float, str]] = "NaN"
+    SuOutput: Optional[Union[float, str]] = "NaN"
+    SurfacePorePressure: Optional[Union[float, str]] = "NaN"
+    TopAngle: Optional[Union[float, str]] = "NaN"
     TopLeft: Optional[PersistablePoint] = None
     TopRight: Optional[PersistablePoint] = None
-    TotalPorePressure: Optional[float] = None
-    TotalStress: Optional[float] = None
-    UpliftFactor: Optional[float] = None
-    VerticalPorePressure: Optional[float] = None
-    VerticalSoilQuakeStress: Optional[float] = None
-    WaterQuakeStress: Optional[float] = None
-    Weight: Optional[float] = None
-    Width: Optional[float] = None
-    YieldStress: Optional[float] = None
+    TotalPorePressure: Optional[Union[float, str]] = "NaN"
+    TotalStress: Optional[Union[float, str]] = "NaN"
+    UpliftFactor: Optional[Union[float, str]] = "NaN"
+    VerticalPorePressure: Optional[Union[float, str]] = "NaN"
+    VerticalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
+    WaterQuakeStress: Optional[Union[float, str]] = "NaN"
+    Weight: Optional[Union[float, str]] = "NaN"
+    Width: Optional[Union[float, str]] = "NaN"
+    YieldStress: Optional[Union[float, str]] = "NaN"
     ShearStrengthModelType: Optional[ShearStrengthModelTypePhreaticLevelInternal] = None
 
 
 class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[float] = None
+    FactorOfSafety: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    ResultThreshold: Optional[float] = None
+    ResultThreshold: Optional[Union[float, str]] = "NaN"
     SlipPlaneResults: Optional[list] = None
 
     @field_validator("Id", mode="before")
@@ -1957,10 +1957,10 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
 
 class SpencerReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
-    FailureProbability: Optional[float] = None
+    FailureProbability: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
-    ReliabilityIndex: Optional[float] = None
-    DistanceToConvergence: Optional[float] = None
+    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
+    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
@@ -1997,10 +1997,10 @@ class SpencerReliabilityResult(DStabilitySubStructure):
 
 class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
-    FailureProbability: Optional[float] = None
+    FailureProbability: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
-    ReliabilityIndex: Optional[float] = None
-    DistanceToConvergence: Optional[float] = None
+    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
+    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
@@ -2036,7 +2036,7 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
 
 
 class SpencerResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[float] = None
+    FactorOfSafety: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
@@ -2065,14 +2065,14 @@ class SpencerResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[float] = None
+    FactorOfSafety: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     RightCenter: Optional[PersistablePoint] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
-    TangentLine: Optional[float] = None
-    ResultThreshold: Optional[float] = None
+    TangentLine: Optional[Union[float, str]] = "NaN"
+    ResultThreshold: Optional[Union[float, str]] = "NaN"
     SlipPlaneResults: Optional[list] = None
 
     @field_validator("Id", mode="before")
@@ -2103,11 +2103,11 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
 
 class UpliftVanReliabilityResult(DStabilitySubStructure):
     Converged: Optional[bool] = None
-    FailureProbability: Optional[float] = None
+    FailureProbability: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
-    ReliabilityIndex: Optional[float] = None
-    DistanceToConvergence: Optional[float] = None
+    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
+    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
     RightCenter: Optional[PersistablePoint] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
@@ -2119,7 +2119,7 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     StatePointContributions: Optional[
         List[Optional[PersistableStatePointContribution]]
     ] = None
-    TangentLine: Optional[float] = None
+    TangentLine: Optional[Union[float, str]] = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2148,14 +2148,14 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
-    ResultThreshold: Optional[float] = None
+    ResultThreshold: Optional[Union[float, str]] = "NaN"
     SlipPlaneResults: Optional[list] = None
     Converged: Optional[bool] = None
-    FailureProbability: Optional[float] = None
+    FailureProbability: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
-    ReliabilityIndex: Optional[float] = None
-    DistanceToConvergence: Optional[float] = None
+    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
+    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
     RightCenter: Optional[PersistablePoint] = None
     SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
     CalculationContributions: Optional[
@@ -2167,7 +2167,7 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
     StatePointContributions: Optional[
         List[Optional[PersistableStatePointContribution]]
     ] = None
-    TangentLine: Optional[float] = None
+    TangentLine: Optional[Union[float, str]] = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2196,13 +2196,13 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
 
 
 class UpliftVanResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[float] = None
+    FactorOfSafety: Optional[Union[float, str]] = "NaN"
     Id: Optional[str] = None
     LeftCenter: Optional[PersistablePoint] = None
     Points: Optional[List[Optional[PersistablePoint]]] = None
     RightCenter: Optional[PersistablePoint] = None
     Slices: Optional[List[Optional[PersistableSlice]]] = None
-    TangentLine: Optional[float] = None
+    TangentLine: Optional[Union[float, str]] = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
