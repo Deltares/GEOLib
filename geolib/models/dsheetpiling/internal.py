@@ -427,12 +427,8 @@ class SheetPiling(DSeriesStructureCollection):
 
 
 class VerticalBalance(DSeriesInlineMappedProperties):
-    if IS_PYDANTIC_V2:
-        sheetpilingqcrep: Optional[Annotated[float, Field(ge=0)]] = 0.001
-        sheetpilingxi: Optional[Annotated[float, Field(ge=0.1)]] = 1.39
-    else:
-        sheetpilingqcrep: Optional[confloat(ge=0)] = 0.001
-        sheetpilingxi: Optional[confloat(ge=0.1)] = 1.39
+    sheetpilingqcrep: Optional[Annotated[float, Field(ge=0)]] = 0.001
+    sheetpilingxi: Optional[Annotated[float, Field(ge=0.1)]] = 1.39
 
 
 class Anchor(DSheetpilingTableEntry):
