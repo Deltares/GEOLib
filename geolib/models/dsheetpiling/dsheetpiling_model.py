@@ -1,10 +1,9 @@
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
-from typing import Any, BinaryIO, List, Optional, Type, Union
+from typing import BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, PositiveFloat
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import BaseDataClass, BaseModel
 from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet, VerticalBalance
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
