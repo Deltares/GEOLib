@@ -6,17 +6,11 @@ D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 from typing import List
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import Field, field_validator
-    from typing_extensions import Annotated
-else:
-    from pydantic import conlist, validator
+from pydantic import Field, field_validator
+from typing_extensions import Annotated
 
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
-from geolib.soils import Soil
 
 from .internal import SoilProfile as InternalSoilProfile
 
@@ -52,10 +46,7 @@ class SoilProfile(BaseDataClass):
     """D-Sheetpiling Profile."""
 
     name: str
-    if IS_PYDANTIC_V2:
-        layers: Annotated[List[SoilLayer], Field(min_length=1)]
-    else:
-        layers: conlist(SoilLayer, min_items=1)
+    layers: Annotated[List[SoilLayer], Field(min_length=1)]
     coordinate: Point = Point(x=0, y=0)
 
     @classmethod
@@ -67,15 +58,9 @@ class SoilProfile(BaseDataClass):
             )
         return v
 
-    if IS_PYDANTIC_V2:
-        top_of_layer_validator = field_validator(
-            "layers",
-        )(top_of_layers_must_be_decreasing)
-    else:
-        top_of_layer_validator = validator("layers")(top_of_layers_must_be_decreasing)
+    top_of_layer_validator = field_validator(
+        "layers",
+    )(top_of_layers_must_be_decreasing)
 
     def to_internal(self) -> InternalSoilProfile:
-        if IS_PYDANTIC_V2:
-            return InternalSoilProfile(**self.model_dump(exclude_none=True))
-        else:
-            return InternalSoilProfile(**self.dict(exclude_none=True))
+        return InternalSoilProfile(**self.model_dump(exclude_none=True))

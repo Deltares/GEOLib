@@ -30,16 +30,10 @@ from .serializer import DSheetPilingInputSerializer
 from .settings import (
     CalculationType,
     CurveSettings,
-    DesignType,
     LateralEarthPressureMethod,
     LateralEarthPressureMethodStage,
     ModelType,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
-    PartialFactorSetEC,
-    PartialFactorSetEC7NADBE,
-    PartialFactorSetEC7NADNL,
-    PartialFactorSetVerifyEC,
     PassiveSide,
     Side,
     SinglePileLoadOptions,
@@ -59,10 +53,7 @@ class BaseModelType(BaseDataClass, metaclass=ABCMeta):
         raise NotImplementedError
 
     def to_internal(self):
-        if IS_PYDANTIC_V2:
-            return self.model_dump()
-        else:
-            return dict(self)
+        return self.model_dump()
 
 
 class SheetModelType(BaseModelType):
@@ -159,22 +150,13 @@ class DSheetPilingModel(BaseModel):
         return self.datastructure.input_data.model.model
 
     def serialize(self, filename: Union[FilePath, BinaryIO]):
-        if IS_PYDANTIC_V2:
-            ds = self.datastructure.input_data.model_dump()
-            ds.update(
-                {
-                    "version": self.datastructure.input_data.version.model_dump(),
-                    "version_externals": self.datastructure.input_data.version_externals.model_dump(),
-                }
-            )
-        else:
-            ds = self.datastructure.input_data.dict()
-            ds.update(
-                {
-                    "version": self.datastructure.input_data.version.dict(),
-                    "version_externals": self.datastructure.input_data.version_externals.dict(),
-                }
-            )
+        ds = self.datastructure.input_data.model_dump()
+        ds.update(
+            {
+                "version": self.datastructure.input_data.version.model_dump(),
+                "version_externals": self.datastructure.input_data.version_externals.model_dump(),
+            }
+        )
         serializer = DSheetPilingInputSerializer(ds=ds)
         serializer.write(filename)
         if isinstance(filename, Path):
@@ -303,14 +285,9 @@ class DSheetPilingModel(BaseModel):
             raise ValueError(
                 f"model should be of subtype CalculationOptions, received {calculation_options}"
             )
-        if IS_PYDANTIC_V2:
-            self.datastructure.input_data.set_calculation_options(
-                **calculation_options.model_dump()
-            )
-        else:
-            self.datastructure.input_data.set_calculation_options(
-                **dict(calculation_options)
-            )
+        self.datastructure.input_data.set_calculation_options(
+            **calculation_options.model_dump()
+        )
 
     def set_curve_settings(
         self,

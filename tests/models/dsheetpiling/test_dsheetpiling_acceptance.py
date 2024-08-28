@@ -3,25 +3,14 @@ import random
 from pathlib import Path
 
 import pytest
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic_extra_types.color import Color
-else:
-    from pydantic.color import Color
-
-from teamcity import is_running_under_teamcity
+from pydantic_extra_types.color import Color
 
 from geolib.geometry.one import Point
-from geolib.models import BaseModel
 from geolib.models.dsheetpiling.calculation_options import (
-    CalculationOptions,
     CalculationOptionsPerStage,
     DesignSheetpilingLengthCalculationOptions,
     KranzAnchorStrengthCalculationOptions,
     OverallStabilityCalculationOptions,
-    ReliabilityAnalysisCalculationOptions,
     StandardCalculationOptions,
     VerifyCalculationOptions,
 )
@@ -44,35 +33,21 @@ from geolib.models.dsheetpiling.dsheetpiling_model import (
     SinglePileModelType,
     WoodenSheetPileModelType,
 )
-from geolib.models.dsheetpiling.internal import (
-    DSheetPilingDumpStructure,
-    DSheetPilingInputStructure,
-    DSheetPilingOutputStructure,
-    DSheetPilingStructure,
-    SurchargePoint,
-)
 from geolib.models.dsheetpiling.loads import (
     HorizontalLineLoad,
-    LoadTypeFavourableUnfavourable,
-    LoadTypePermanentVariable,
     Moment,
     NormalForce,
     SurchargeLoad,
     UniformLoad,
-    VerificationLoadSettingsLoads,
-    VerificationLoadSettingsMomentNormalForce,
 )
 from geolib.models.dsheetpiling.profiles import SoilLayer, SoilProfile
 from geolib.models.dsheetpiling.settings import (
     CalculationType,
     CurveSettings,
     DesignType,
-    DistributionType,
     LateralEarthPressureMethod,
     LateralEarthPressureMethodStage,
-    ModelType,
     ModulusReactionType,
-    ModulusSubgradeReaction,
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC7NADNL,
@@ -80,7 +55,6 @@ from geolib.models.dsheetpiling.settings import (
     SheetPilingElementMaterialType,
     Side,
     SinglePileLoadOptions,
-    SoilTypeModulusSubgradeReaction,
     VerifyType,
 )
 from geolib.models.dsheetpiling.supports import (
@@ -405,17 +379,12 @@ class TestDsheetPilingAcceptance:
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
-            if IS_PYDANTIC_V2:
-                json.dump(
-                    model.datastructure.model_dump(),
-                    outfile,
-                    ensure_ascii=False,
-                    indent=4,
-                )
-            else:
-                json.dump(
-                    model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
-                )
+            json.dump(
+                model.datastructure.model_dump(),
+                outfile,
+                ensure_ascii=False,
+                indent=4,
+            )
 
         # 5. For OverallStabilityCalculationOptions a STI file should be present because StabilityExport is True
         if isinstance(calc_options, OverallStabilityCalculationOptions):
@@ -675,17 +644,12 @@ class TestDsheetPilingAcceptance:
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
-            if IS_PYDANTIC_V2:
-                json.dump(
-                    model.datastructure.model_dump(),
-                    outfile,
-                    ensure_ascii=False,
-                    indent=4,
-                )
-            else:
-                json.dump(
-                    model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
-                )
+            json.dump(
+                model.datastructure.model_dump(),
+                outfile,
+                ensure_ascii=False,
+                indent=4,
+            )
 
     # @only_teamcity
     @pytest.mark.acceptance
@@ -915,17 +879,12 @@ class TestDsheetPilingAcceptance:
             with open(
                 "data" + output_test_file.name.split(".")[0] + ".json", "w"
             ) as outfile:
-                if IS_PYDANTIC_V2:
-                    json.dump(
-                        model.datastructure.model_dump(),
-                        outfile,
-                        ensure_ascii=False,
-                        indent=4,
-                    )
-                else:
-                    json.dump(
-                        model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
-                    )
+                json.dump(
+                    model.datastructure.model_dump(),
+                    outfile,
+                    ensure_ascii=False,
+                    indent=4,
+                )
 
     # @only_teamcity
     @pytest.mark.acceptance
@@ -1232,17 +1191,12 @@ class TestDsheetPilingAcceptance:
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
-            if IS_PYDANTIC_V2:
-                json.dump(
-                    model.datastructure.model_dump(),
-                    outfile,
-                    ensure_ascii=False,
-                    indent=4,
-                )
-            else:
-                json.dump(
-                    model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
-                )
+            json.dump(
+                model.datastructure.model_dump(),
+                outfile,
+                ensure_ascii=False,
+                indent=4,
+            )
 
     # @only_teamcity
     @pytest.mark.acceptance
@@ -1560,17 +1514,12 @@ class TestDsheetPilingAcceptance:
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
-            if IS_PYDANTIC_V2:
-                json.dump(
-                    model.datastructure.model_dump(),
-                    outfile,
-                    ensure_ascii=False,
-                    indent=4,
-                )
-            else:
-                json.dump(
-                    model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
-                )
+            json.dump(
+                model.datastructure.model_dump(),
+                outfile,
+                ensure_ascii=False,
+                indent=4,
+            )
 
     # @only_teamcity
     @pytest.mark.acceptance
@@ -1873,14 +1822,9 @@ class TestDsheetPilingAcceptance:
         assert model.datastructure
         assert model.datastructure.is_valid
         with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
-            if IS_PYDANTIC_V2:
-                json.dump(
-                    model.datastructure.model_dump(),
-                    outfile,
-                    ensure_ascii=False,
-                    indent=4,
-                )
-            else:
-                json.dump(
-                    model.datastructure.dict(), outfile, ensure_ascii=False, indent=4
-                )
+            json.dump(
+                model.datastructure.model_dump(),
+                outfile,
+                ensure_ascii=False,
+                indent=4,
+            )
