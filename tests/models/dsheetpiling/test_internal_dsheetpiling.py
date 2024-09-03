@@ -80,6 +80,18 @@ class TestInternal:
             )
         assert sheet_piling_element.sheetpilingelementkmod == 1
         assert sheet_piling_element.sheetpilingelementmaterialfactor == 1.1
+        # Set correct values, expected no warnings
+        sheet_piling_element = SheetPileElement(
+            sheetpilingelementkmod=1.0,
+            sheetpilingelementmaterialfactor=1.1,
+            sheetpilingelementmaterialtype=SheetPilingElementMaterialType.Concrete,
+        )
+        with warnings.catch_warnings(record=True) as w:
+            # Cause all warnings to always be triggered.
+            warnings.simplefilter("always")
+            # Trigger a warning.
+            sheet_piling_element.update_arguments_if_invalid_input()
+            assert len(w) == 0
 
     @pytest.mark.integrationtest
     def test_set_construction(self):
