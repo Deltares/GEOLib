@@ -384,8 +384,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
             5: self.sheetpilingelementkmod,
         }
         if (
-            self.sheetpilingelementkmod
-            is not result_dict_k_mod_value[self.sheetpilingelementmaterialtype.value]
+            self.sheetpilingelementkmod != result_dict_k_mod_value[self.sheetpilingelementmaterialtype.value]
         ):
             self.sheetpilingelementkmod = result_dict_k_mod_value[
                 self.sheetpilingelementmaterialtype.value
@@ -405,8 +404,8 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
             5: self.sheetpilingelementmaterialfactor,
         }
         if (
-            self.sheetpilingelementmaterialfactor
-            is not result_dict_gamma_m_value[self.sheetpilingelementmaterialtype.value]
+            self.sheetpilingelementmaterialfactor !=
+                result_dict_gamma_m_value[self.sheetpilingelementmaterialtype.value]
         ):
             self.sheetpilingelementmaterialfactor = result_dict_gamma_m_value[
                 self.sheetpilingelementmaterialtype.value
