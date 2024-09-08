@@ -275,7 +275,7 @@ class DStabilityModel(BaseModel):
         result = self._get_result_substructure(scenario_index, calculation_index)
         return result.get_slipplane_output()
 
-    def _get_geometry(self, scenario_index: int, stage_index: int):
+    def get_geometry(self, scenario_index: int, stage_index: int):
         geometry_id = (
             self.datastructure.scenarios[scenario_index].Stages[stage_index].GeometryId
         )
@@ -502,7 +502,7 @@ class DStabilityModel(BaseModel):
         scenario_index = self.get_scenario_index(scenario_index)
         stage_index = self.get_stage_index(stage_index)
 
-        geometry = self._get_geometry(scenario_index, stage_index)
+        geometry = self.get_geometry(scenario_index, stage_index)
         soil_layers = self._get_soil_layers(scenario_index, stage_index)
 
         # Check if we have the soil code
@@ -736,7 +736,7 @@ class DStabilityModel(BaseModel):
         states = self._get_state(scenario_index, stage_index)
 
         try:
-            _ = self._get_geometry(scenario_index, stage_index).get_layer(
+            _ = self.get_geometry(scenario_index, stage_index).get_layer(
                 state_point.layer_id
             )
         except ValueError:
@@ -1110,7 +1110,7 @@ class DStabilityModel(BaseModel):
     def plot(
         self, scenario_index: Optional[int] = None, stage_index: Optional[int] = None
     ):
-        geometry = self._get_geometry(scenario_index, stage_index)
+        geometry = self.get_geometry(scenario_index, stage_index)
         layers_collection = self._get_soil_layers(scenario_index, stage_index)
         fig, ax = plt.subplots()
         # loop over the layers
