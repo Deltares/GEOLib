@@ -15,6 +15,7 @@ from geolib.models.dsheetpiling.constructions import (
     PileProperties,
     Sheet,
     SheetPileProperties,
+    VerticalBalance,
 )
 from geolib.models.dsheetpiling.dsheetpiling_model import (
     DiaphragmModelType,
@@ -872,3 +873,15 @@ class TestDsheetPilingModel:
         error_message = "New SurchargeLoad load name is duplicated. Please change the name of the load."
         with pytest.raises(ValueError, match=error_message):
             model.add_surcharge_load(load=testload, side=Side.LEFT, stage_id=0)
+
+    @pytest.mark.unittest
+    def test_set_vertical_balance(self, model: DSheetPilingModel):
+        # Set up vertical balance
+        vertical_balance = VerticalBalance(max_point_resistance=1, xi_factor=2)
+
+        # Call the test function
+        model.set_vertical_balance(vertical_balance=vertical_balance)
+
+        # Assert
+        assert model.datastructure.input_data.vertical_balance.sheetpilingqcrep == 1
+        assert model.datastructure.input_data.vertical_balance.sheetpilingxi == 2
