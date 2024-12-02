@@ -3,19 +3,18 @@ This module handles the three types of state types in DStability.
 """
 
 import abc
-from typing import List, Tuple
 
 from geolib.models import BaseDataClass
 
 from ...geometry.one import Point
 from ...utils import snake_to_camel
 from .internal import (
+    InternalStateTypeEnum,
     PersistablePoint,
     PersistableStateLinePoint,
     PersistableStatePoint,
     PersistableStochasticParameter,
     PersistableStress,
-    StateType,
 )
 
 
@@ -32,7 +31,7 @@ class DStabilityStress(DStabilityObject):
         ocr (float): OCR value, defaults to 1.0
         pop (float): POP value, defaults to 0.0
         stochastic_parameter (PersistableStochasticParameter)
-        state_type (StateType): type of state
+        state_type (InternalStateTypeEnum): type of state
     """
 
     ocr: float = 1.0
@@ -40,10 +39,12 @@ class DStabilityStress(DStabilityObject):
     stochastic_parameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    state_type: StateType = StateType.POP
+    state_type: InternalStateTypeEnum = InternalStateTypeEnum.POP
 
     def _to_internal_datastructure(self) -> PersistableStress:
-        data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}
+        data = {
+            **{snake_to_camel(name): value for name, value in self.model_dump().items()}
+        }
         data["PopStochasticParameter"] = data.pop("StochasticParameter")
         return PersistableStress(**data)
 
@@ -70,10 +71,11 @@ class DStabilityStatePoint(DStabilityObject):
     label: str = ""
 
     def _to_internal_datastructure(self) -> PersistableStatePoint:
+        model_dump = self.model_dump()
         data = {
             **{
                 snake_to_camel(name): value
-                for name, value in self.dict().items()
+                for name, value in model_dump.items()
                 if name not in {"point", "stress"}
             },
             "Point": PersistablePoint(X=self.point.x, Z=self.point.z),
@@ -94,10 +96,11 @@ class DStabilityStateLinePoint(DStabilityObject):
     x: float
 
     def _to_internal_datastructure(self) -> PersistableStateLinePoint:
+        model_dump = self.model_dump()
         data = {
             **{
                 snake_to_camel(name): value
-                for name, value in self.dict().items()
+                for name, value in model_dump.items()
                 if name not in {"above", "below"}
             },
             "Above": self.above._to_internal_datastructure(),

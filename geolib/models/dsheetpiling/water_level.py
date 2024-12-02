@@ -1,5 +1,3 @@
-from typing import Optional
-
 from geolib.models import BaseDataClass
 
 from .internal import WaterLevel as InternalWaterLevel
@@ -13,4 +11,4 @@ class WaterLevel(BaseDataClass):
     standard_deviation: float = 0.0
 
     def to_internal(self) -> InternalWaterLevel:
-        return InternalWaterLevel(**self.dict(exclude_none=True))
+        return InternalWaterLevel(**self.model_dump(exclude_none=True))

@@ -1,6 +1,5 @@
 import pytest
-from pydantic import ValidationError
-from teamcity import is_running_under_teamcity
+from pydantic_core._pydantic_core import ValidationError
 
 from geolib.soils import (
     MohrCoulombParameters,

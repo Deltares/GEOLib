@@ -3,13 +3,14 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from math import isclose
 from operator import attrgetter
-from typing import Any, Dict, List, Optional, Tuple, Type, Union
+from typing import Dict, List, Optional, Tuple, Type, Union
 
-from pydantic.types import PositiveInt, confloat, conint, conlist, constr
+from pydantic import Field, StringConstraints
+from pydantic.types import PositiveInt
+from typing_extensions import Annotated
 
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
-from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
     DSerieListStructure,
     DSerieMatrixStructure,
@@ -37,8 +38,7 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
 )
 from geolib.models.internal import Bool
 from geolib.models.utils import get_required_class_field
-from geolib.soils import DistributionType, HorizontalBehaviourType, Soil
-from geolib.soils import StorageTypes as StorageTypes_external
+from geolib.soils import DistributionType
 from geolib.utils import make_newline_validator
 
 from .drain_types import DrainGridType, DrainSchedule, DrainType
@@ -136,7 +136,7 @@ class Curve(DSeriesTreeStructure):
     """Curve is a Line consisting of two points (by reference)."""
 
     id: PositiveInt = 1
-    points: conlist(int, min_items=2, max_items=2)
+    points: Annotated[List[int], Field(min_length=2, max_length=2)]
 
     def __eq__(self, other: object) -> bool:
         """
@@ -190,7 +190,7 @@ class Curves(DSeriesTreeStructureCollection):
 
 
 class Boundary(DSeriesTreeStructure):
-    id: conint(ge=0) = 0
+    id: Annotated[int, Field(ge=0)] = 0
     curves: List[int] = []
 
     def __eq__(self, other: object) -> bool:
@@ -241,8 +241,8 @@ class Boundaries(DSeriesTreeStructureCollection):
 class Layer(DSeriesTreeStructure):
     id: PositiveInt = 1
     material: str = ""  # reference to soil name
-    piezo_top: conint(ge=0, le=99) = 0  # reference to head line
-    piezo_bottom: conint(ge=0, le=99) = 0  # reference to head line
+    piezo_top: Annotated[int, Field(ge=0, le=99)] = 0  # reference to head line
+    piezo_bottom: Annotated[int, Field(ge=0, le=99)] = 0  # reference to head line
     boundary_top: int  # reference to boundary
     boundary_bottom: int  # reference to boundary
 
@@ -365,7 +365,7 @@ class DistributionBoundaries(DSerieListStructure):
 
 
 class PhreaticLine(DSeriesUnmappedNameProperties):
-    phreatic_line: conint(ge=0, lt=99) = 0
+    phreatic_line: Annotated[int, Field(ge=0, lt=99)] = 0
 
 
 class GeometryData(DSeriesStructure):
@@ -482,10 +482,14 @@ class NonUniformLoad(BaseDataClass):
 class NonUniformLoads(DSeriesNoParseSubStructure):
     """Representation of [NON-UNIFORM LOADS] group."""
 
-    loads: Dict[constr(min_length=1, max_length=25), NonUniformLoad] = {}
+    loads: Dict[
+        Annotated[str, StringConstraints(min_length=1, max_length=25)], NonUniformLoad
+    ] = {}
 
     def add_load(
-        self, name: constr(min_length=1, max_length=25), load: NonUniformLoad
+        self,
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
+        load: NonUniformLoad,
     ) -> Optional[ValueError]:
         if name in self.loads:
             raise ValueError(f"Load with name '{name}' already exists.")
@@ -520,7 +524,7 @@ class WaterLoads(DSeriesNoParseSubStructure):
 class ResidualTimes(DSeriesNoParseSubStructure):
     """Representation of [RESIDUAL TIMES] group."""
 
-    time_steps: List[conint(ge=0)] = []
+    time_steps: List[Annotated[int, Field(ge=0)]] = []
 
 
 class Verticals(DSeriesNoParseSubStructure):
@@ -587,20 +591,24 @@ class LoadValuesTank(BaseDataClass):
 class OtherLoad(BaseDataClass):
     load_type: TypeOtherLoads
     time: int = 0
-    load_values_trapeziform: Optional[LoadValuesTrapeziform]
-    load_values_circular: Optional[LoadValuesCircular]
-    load_values_rectangular: Optional[LoadValuesRectangular]
-    load_values_uniform: Optional[LoadValuesUniform]
-    load_values_tank: Optional[LoadValuesTank]
+    load_values_trapeziform: Optional[LoadValuesTrapeziform] = None
+    load_values_circular: Optional[LoadValuesCircular] = None
+    load_values_rectangular: Optional[LoadValuesRectangular] = None
+    load_values_uniform: Optional[LoadValuesUniform] = None
+    load_values_tank: Optional[LoadValuesTank] = None
 
 
 class OtherLoads(DSeriesNoParseSubStructure):
     """Representation of [OTHER LOADS] group."""
 
-    loads: Dict[constr(min_length=1, max_length=25), OtherLoad] = {}
+    loads: Dict[
+        Annotated[str, StringConstraints(min_length=1, max_length=25)], OtherLoad
+    ] = {}
 
     def add_load(
-        self, name: constr(min_length=1, max_length=25), load: OtherLoad
+        self,
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
+        load: OtherLoad,
     ) -> Optional[ValueError]:
         if name in self.loads:
             raise ValueError(f"Load with name '{name}' already exists.")
@@ -681,14 +689,14 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
     )
     is_imaginary_surface: Bool = Bool.FALSE
-    imaginary_surface_layer: Optional[PositiveInt]
+    imaginary_surface_layer: Optional[PositiveInt] = None
     is_submerging: Bool = Bool.FALSE
     use_end_time_for_fit: Bool = Bool.FALSE
     is_maintain_profile: Bool = Bool.FALSE
     maintain_profile_material_name: str = "Superelevation"
-    maintain_profile_time: conint(ge=0, le=100000) = 0
-    maintain_profile_gamma_dry: confloat(ge=-100, le=100) = 10
-    maintain_profile_gamma_wet: confloat(ge=-100, le=100) = 10
+    maintain_profile_time: Annotated[int, Field(ge=0, le=100000)] = 0
+    maintain_profile_gamma_dry: Annotated[float, Field(ge=-100, le=100)] = 10
+    maintain_profile_gamma_wet: Annotated[float, Field(ge=-100, le=100)] = 10
     dispersion_conditions_layer_boundaries_top: DispersionConditionLayerBoundary = (
         DispersionConditionLayerBoundary.DRAINED
     )
@@ -697,16 +705,18 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     )
     stress_distribution_soil: StressDistributionSoil = StressDistributionSoil.BUISMAN
     stress_distribution_loads: StressDistributionLoads = StressDistributionLoads.SIMULATE
-    iteration_stop_criteria_submerging: confloat(ge=0.0, le=1.0) = 0.0
-    iteration_stop_criteria_submerging_layer_height: confloat(ge=0, le=99.999) = 0
-    maximum_iteration_steps_for_submerging: conint(ge=1, le=100) = 1
-    iteration_stop_criteria_desired_profile: confloat(ge=0, le=1) = 0.1
-    load_column_width_imaginary_surface: confloat(ge=0.05, le=10000) = 1
-    load_column_width_non_uniform_loads: confloat(ge=0.05, le=10000) = 1
-    load_column_width_trapeziform_loads: confloat(ge=0.05, le=10000) = 1
-    end_of_consolidation: conint(ge=1, le=100000) = 100000
-    number_of_subtime_steps: conint(ge=1, le=100) = 2
-    reference_time: confloat(ge=0.001, le=1000000) = 1
+    iteration_stop_criteria_submerging: Annotated[float, Field(ge=0.0, le=1.0)] = 0.0
+    iteration_stop_criteria_submerging_layer_height: Annotated[
+        float, Field(ge=0, le=99.999)
+    ] = 0
+    maximum_iteration_steps_for_submerging: Annotated[int, Field(ge=1, le=100)] = 1
+    iteration_stop_criteria_desired_profile: Annotated[float, Field(ge=0, le=1)] = 0.1
+    load_column_width_imaginary_surface: Annotated[float, Field(ge=0.05, le=10000)] = 1
+    load_column_width_non_uniform_loads: Annotated[float, Field(ge=0.05, le=10000)] = 1
+    load_column_width_trapeziform_loads: Annotated[float, Field(ge=0.05, le=10000)] = 1
+    end_of_consolidation: Annotated[int, Field(ge=1, le=100000)] = 100000
+    number_of_subtime_steps: Annotated[int, Field(ge=1, le=100)] = 2
+    reference_time: Annotated[float, Field(ge=0.001, le=1000000)] = 1
     dissipation: Bool = Bool.FALSE
     x_coord_dissipation: float = 0.0
     use_fit_factors: Bool = Bool.FALSE
@@ -726,31 +736,33 @@ class CalculationOptions(DSeriesNoParseSubStructure):
 class VerticalDrain(DSeriesNoParseSubStructure):
     # geometry of drain
     drain_type: DrainType = DrainType.STRIP
-    range_from: confloat(ge=-10000000.000, le=10000000.000) = 0
-    range_to: confloat(ge=-10000000.000, le=10000000.000) = 0
-    bottom_position: confloat(ge=-10000000.000, le=10000000.000) = 0
-    center_to_center: confloat(ge=0.001, le=1000) = 3
-    width: confloat(ge=0.001, le=1000) = 0.1
-    diameter: confloat(ge=0.001, le=1000) = 0.1
-    thickness: confloat(ge=0.001, le=1000) = 0.003
+    range_from: Annotated[float, Field(ge=-10000000.000, le=10000000.000)] = 0
+    range_to: Annotated[float, Field(ge=-10000000.000, le=10000000.000)] = 0
+    bottom_position: Annotated[float, Field(ge=-10000000.000, le=10000000.000)] = 0
+    center_to_center: Annotated[float, Field(ge=0.001, le=1000)] = 3
+    width: Annotated[float, Field(ge=0.001, le=1000)] = 0.1
+    diameter: Annotated[float, Field(ge=0.001, le=1000)] = 0.1
+    thickness: Annotated[float, Field(ge=0.001, le=1000)] = 0.003
     grid: DrainGridType = DrainGridType.UNDERDETERMINED
     # schedule
     schedule_type: DrainSchedule = DrainSchedule.OFF
-    begin_time: confloat(ge=0, le=100000) = 0
-    end_time: confloat(ge=0, le=100000) = 0
-    under_pressure_for_strips_and_columns: confloat(ge=0, le=100000) = 35
-    under_pressure_for_sand_wall: confloat(ge=0, le=100000) = 35
-    start_of_drainage: confloat(ge=0, le=100000) = 0
-    phreatic_level_in_drain: confloat(ge=-10000000.000, le=10000000.000) = 0
-    water_head_during_dewatering: confloat(
-        ge=-10000000.000, le=10000000.000
-    ) = 0  # relevant for strip and column
-    tube_pressure_during_dewatering: confloat(
-        ge=-10000000.000, le=10000000.000
-    ) = 0  # relevant for the sand wall
-    time: List[confloat(ge=0, le=100000)] = []
-    underpressure: List[confloat(ge=0, le=100000)] = []
-    water_level: List[confloat(ge=-10000000.000, le=10000000.000)] = []
+    begin_time: Annotated[float, Field(ge=0, le=100000)] = 0
+    end_time: Annotated[float, Field(ge=0, le=100000)] = 0
+    under_pressure_for_strips_and_columns: Annotated[float, Field(ge=0, le=100000)] = 35
+    under_pressure_for_sand_wall: Annotated[float, Field(ge=0, le=100000)] = 35
+    start_of_drainage: Annotated[float, Field(ge=0, le=100000)] = 0
+    phreatic_level_in_drain: Annotated[
+        float, Field(ge=-10000000.000, le=10000000.000)
+    ] = 0
+    water_head_during_dewatering: Annotated[
+        float, Field(ge=-10000000.000, le=10000000.000)
+    ] = 0  # relevant for strip and column
+    tube_pressure_during_dewatering: Annotated[
+        float, Field(ge=-10000000.000, le=10000000.000)
+    ] = 0  # relevant for the sand wall
+    time: List[Annotated[float, Field(ge=0, le=100000)]] = []
+    underpressure: List[Annotated[float, Field(ge=0, le=100000)]] = []
+    water_level: List[Annotated[float, Field(ge=-10000000.000, le=10000000.000)]] = []
 
 
 class InternalProbabilisticCalculationType(IntEnum):
@@ -760,21 +772,21 @@ class InternalProbabilisticCalculationType(IntEnum):
 
 
 class FitOptions(DSeriesInlineMappedProperties):
-    fit_maximum_number_of_iterations: conint(ge=0, le=100) = 5
-    fit_required_iteration_accuracy: confloat(ge=0, le=1) = 0.0001
-    fit_required_correlation_coefficient: confloat(ge=0, le=1) = 0.99
+    fit_maximum_number_of_iterations: Annotated[int, Field(ge=0, le=100)] = 5
+    fit_required_iteration_accuracy: Annotated[float, Field(ge=0, le=1)] = 0.0001
+    fit_required_correlation_coefficient: Annotated[float, Field(ge=0, le=1)] = 0.99
 
 
 class FitCalculation(DSeriesInlineMappedProperties):
     is_fit_calculation: Bool = Bool.FALSE
-    fit_vertical_number: conint(ge=-1, le=1000) = 0  # index (zero-based)
+    fit_vertical_number: Annotated[int, Field(ge=-1, le=1000)] = 0  # index (zero-based)
 
 
 class ProbabilisticData(DSeriesInlineMappedProperties):
     reliability_x_co__ordinate: float = 0
-    residual_settlement: confloat(ge=0, le=1000) = 1
-    maximum_drawings: conint(ge=0, le=999999999) = 100
-    maximum_iterations: conint(ge=1, le=50) = 15
+    residual_settlement: Annotated[float, Field(ge=0, le=1000)] = 1
+    maximum_drawings: Annotated[int, Field(ge=0, le=999999999)] = 100
+    maximum_iterations: Annotated[int, Field(ge=1, le=50)] = 15
     reliability_type: InternalProbabilisticCalculationType = (
         InternalProbabilisticCalculationType.FOSMOrDeterministic
     )
@@ -825,7 +837,7 @@ class DSettlementInputStructure(DSeriesStructure):
     version: Version = Version()
     soil_collection: SoilCollection = SoilCollection()
     geometry_data: GeometryData = GeometryData()
-    geometry_1d_data: Optional[str]
+    geometry_1d_data: Optional[str] = None
     run_identification: str = 2 * "\n"
     model: Model = Model()
     verticals: Union[Verticals, str] = Verticals()
@@ -967,15 +979,15 @@ class Vertical(ComplexVerticalSubstructure):
     id: int
     x: float
     z: float
-    time__settlement_per_load: Optional[TimeSettlementPerLoad]
+    time__settlement_per_load: Optional[TimeSettlementPerLoad] = None
     depths: Depths
-    leakages: Optional[Leakages]
-    drained_layers: Optional[DrainedLayers]
-    stresses: Optional[Stresses]
-    koppejan_settlement: Optional[KoppejanSettlements]
+    leakages: Optional[Leakages] = None
+    drained_layers: Optional[DrainedLayers] = None
+    stresses: Optional[Stresses] = None
+    koppejan_settlement: Optional[KoppejanSettlements] = None
     time__dependent_data: List[TimeDependentData]
-    elasticity: Optional[float]
-    horizontal_displacements: Optional[HorizontalDisplacements]
+    elasticity: Optional[float] = None
+    horizontal_displacements: Optional[HorizontalDisplacements] = None
 
 
 class ResidualSettlements(DSerieOldTableStructure):
@@ -990,18 +1002,20 @@ class CalculationSettings(DSeriesStructure):
 
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
-    calculation_settings: Optional[CalculationSettings]
+
+    calculation_settings: Optional[CalculationSettings] = None
     verticals_count: int
     vertical: List[Vertical]
     residual_settlements: List[ResidualSettlements]
-    amounts_of_loads: Optional[str]
-    dissipation_in_layers: Optional[str]
-    reliability_calculation_results: Optional[str]
+    amounts_of_loads: Optional[str] = None
+    dissipation_in_layers: Optional[str] = None
+    reliability_calculation_results: Optional[str] = None
 
 
 class DSettlementOutputStructure(DSeriesStructure):
     """Representation of complete .sld file, inheriting
     the structure of the .sli file as well."""
+
     results: Results
     input_data: DSettlementInputStructure
 

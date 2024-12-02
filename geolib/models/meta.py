@@ -14,7 +14,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from pydantic import AnyHttpUrl, BaseSettings, DirectoryPath
+from pydantic import AnyHttpUrl, DirectoryPath
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from geolib import __version__ as version
 
@@ -50,7 +51,7 @@ class MetaData(BaseSettings):
     dsheetpiling_console_path: Optional[Path] = None
     dsettlement_console_path: Optional[Path] = None
     dfoundations_console_path: Optional[Path] = None
-    
+
     timeout: int = 10 * 60  # in seconds, so 10 minutes
 
     # For multiple calculations
@@ -59,7 +60,6 @@ class MetaData(BaseSettings):
 
     # For ignoring extra fields that could come with newer/older versions
     # of input/output fields. We don't support any other value than "forbid"!
-    extra_fields = "forbid"  # can be "ignore", "allow" or "forbid"
+    extra_fields: str = "forbid"  # can be "ignore", "allow" or "forbid"
 
-    class Config:
-        env_file = "geolib.env"
+    model_config = SettingsConfigDict(env_file="geolib.env")

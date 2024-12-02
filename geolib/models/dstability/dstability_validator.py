@@ -22,9 +22,10 @@ class DStabilityValidator(BaseValidator):
 
         lengths_set = set()
         valid = True
+        model_dump = self.ds.model_dump()
         for key, value in (
             (k, v)
-            for k, v in self.ds.dict().items()
+            for k, v in model_dump.items()
             if "result" not in k
             and "scenarios" not in k
             and "calculationsettings" not in k

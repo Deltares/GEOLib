@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pytest
-from teamcity import is_running_under_teamcity
 
 from geolib.models import DSheetPilingModel
 from tests.utils import TestUtils, only_teamcity
@@ -57,7 +56,7 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.model_dump_json(indent=4))
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -83,7 +82,7 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.model_dump_json(indent=4))
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -107,4 +106,4 @@ class TestDSheetPilingRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.output.model_dump_json(indent=4))

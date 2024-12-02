@@ -3,7 +3,8 @@ from enum import IntEnum
 from pathlib import Path
 from typing import List
 
-from pydantic import confloat, constr
+from pydantic import Field, StringConstraints
+from typing_extensions import Annotated
 
 from geolib.models.dseries_parser import DSeriesUnmappedNameProperties
 from geolib.models.internal import Bool
@@ -29,29 +30,30 @@ class MaxConeResistType(IntEnum):
 
 
 class Soil(DSeriesUnmappedNameProperties):
-    name: constr(min_length=1, max_length=25)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=25)]
     soilcolor: int = 10871211  # could be color
     soilsoiltype: SoilTypeNl = SoilTypeNl.SAND
-    soilgamdry: confloat(ge=0.0, le=100) = 20.00
-    soilgamwet: confloat(ge=0.0, le=100) = 20.00
-    soilinitialvoidratio: confloat(ge=0.0, le=20.0) = 0.001001
-    soildiameterd50: confloat(ge=0.0, le=1000.0) = 0.20000
-    soilminvoidratio: confloat(ge=0.0, le=1.0) = 0.400
-    soilmaxvoidratio: confloat(ge=0.0, le=1.0) = 0.800
-    soilcohesion: confloat(ge=0.0, le=1000.0) = 30.00
-    soilphi: confloat(ge=0.0, le=89.0)
-    soilcu: confloat(ge=0.0, le=1000.0) = 0.00
+    soilgamdry: Annotated[float, Field(ge=0.0, le=100)] = 20.00
+    soilgamwet: Annotated[float, Field(ge=0.0, le=100)] = 20.00
+    soilinitialvoidratio: Annotated[float, Field(ge=0.0, le=20.0)] = 0.001001
+    soildiameterd50: Annotated[float, Field(ge=0.0, le=1000.0)] = 0.20000
+    soilminvoidratio: Annotated[float, Field(ge=0.0, le=1.0)] = 0.400
+    soilmaxvoidratio: Annotated[float, Field(ge=0.0, le=1.0)] = 0.800
+    soilcohesion: Annotated[float, Field(ge=0.0, le=1000.0)] = 30.00
+    soilphi: Annotated[float, Field(ge=0.0, le=89.0)]
+    soilcu: Annotated[float, Field(ge=0.0, le=1000.0)] = 0.00
     soilmaxconeresisttype: MaxConeResistType = MaxConeResistType.STANDARD
-    soilmaxconeresist: confloat(ge=0.0, le=1000000.0) = 0.00
+    soilmaxconeresist: Annotated[float, Field(ge=0.0, le=1000000.0)] = 0.00
     soilusetension: Bool = Bool.TRUE
-    soilca: confloat(ge=0.0, le=10.0) = 0.0040000
-    soilccindex: confloat(ge=0.0, le=20.0) = 0.1260000
+    soilca: Annotated[float, Field(ge=0.0, le=10.0)] = 0.0040000
+    soilccindex: Annotated[float, Field(ge=0.0, le=20.0)] = 0.1260000
 
     def __init__(self, *args, **kwargs):
         if "name" not in kwargs:
             name = None
             for key, value in kwargs.items():
-                if key not in self.__fields__:
+                fields = self.model_fields
+                if key not in fields:
                     name = key + value
                     break
             if name:

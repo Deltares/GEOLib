@@ -1,20 +1,16 @@
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
-from subprocess import CompletedProcess, run
-from typing import Any, BinaryIO, List, Optional, Type, Union
+from typing import BinaryIO, List, Optional, Type, Union
 
 from pydantic import FilePath, PositiveFloat
-from pydantic.types import confloat, conint
 
-from geolib.geometry import Point
-from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
+from geolib.models import BaseDataClass, BaseModel
 from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 
 from .calculation_options import CalculationOptions, CalculationOptionsPerStage
 from .dsheetpiling_parserprovider import DSheetPilingParserProvider
-from .internal import CalculationOptions as CalculationOptionsInternal
 from .internal import (
     DSheetPilingDumpStructure,
     DSheetPilingOutputStructure,
@@ -34,16 +30,10 @@ from .serializer import DSheetPilingInputSerializer
 from .settings import (
     CalculationType,
     CurveSettings,
-    DesignType,
     LateralEarthPressureMethod,
     LateralEarthPressureMethodStage,
     ModelType,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
-    PartialFactorSetEC,
-    PartialFactorSetEC7NADBE,
-    PartialFactorSetEC7NADNL,
-    PartialFactorSetVerifyEC,
     PassiveSide,
     Side,
     SinglePileLoadOptions,
@@ -63,7 +53,7 @@ class BaseModelType(BaseDataClass, metaclass=ABCMeta):
         raise NotImplementedError
 
     def to_internal(self):
-        return dict(self)
+        return self.model_dump()
 
 
 class SheetModelType(BaseModelType):
@@ -146,7 +136,7 @@ class DSheetPilingModel(BaseModel):
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dsheetpiling_console_path")
-    
+
     @property
     def console_flags(self) -> List[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
@@ -160,11 +150,11 @@ class DSheetPilingModel(BaseModel):
         return self.datastructure.input_data.model.model
 
     def serialize(self, filename: Union[FilePath, BinaryIO]):
-        ds = self.datastructure.input_data.dict()
+        ds = self.datastructure.input_data.model_dump()
         ds.update(
             {
-                "version": self.datastructure.input_data.version.dict(),
-                "version_externals": self.datastructure.input_data.version_externals.dict(),
+                "version": self.datastructure.input_data.version.model_dump(),
+                "version_externals": self.datastructure.input_data.version_externals.model_dump(),
             }
         )
         serializer = DSheetPilingInputSerializer(ds=ds)
@@ -295,7 +285,9 @@ class DSheetPilingModel(BaseModel):
             raise ValueError(
                 f"model should be of subtype CalculationOptions, received {calculation_options}"
             )
-        self.datastructure.input_data.set_calculation_options(**dict(calculation_options))
+        self.datastructure.input_data.set_calculation_options(
+            **calculation_options.model_dump()
+        )
 
     def set_curve_settings(
         self,

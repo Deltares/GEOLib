@@ -19,6 +19,7 @@ class PartialFactorsEurocodeDa1Set1(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.00
     geometrydeltaactivephreaticline: float = 0.00
@@ -47,6 +48,7 @@ class PartialFactorsEurocodeDa1Set2(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.00
     geometrydeltaactivephreaticline: float = 0.00
@@ -75,6 +77,7 @@ class PartialFactorsEurocodeDa2(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.40
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.00
     geometrydeltaactivephreaticline: float = 0.00
@@ -103,6 +106,7 @@ class PartialFactorsEurocodeDa3(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.00
     geometrydeltaactivephreaticline: float = 0.00
@@ -131,6 +135,7 @@ class PartialFactorsEc7Nl0(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.15
     geometrydeltaactivephreaticline: float = 0.05
@@ -159,6 +164,7 @@ class PartialFactorsEc7Nl1(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.20
     geometrydeltaactivephreaticline: float = 0.05
@@ -187,6 +193,7 @@ class PartialFactorsEc7Nl2(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.25
     geometrydeltaactivephreaticline: float = 0.05
@@ -215,6 +222,7 @@ class PartialFactorsEc7Nl3(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.25
     geometrydeltaactivephreaticline: float = 0.05
@@ -226,7 +234,65 @@ class PartialFactorsEc7Nl3(DSeriesInlineMappedProperties):
     verticalbalancegammamb: float = 1.25
 
 
-class PartialFactorsEc7BESet1(DSeriesInlineMappedProperties):
+class PartialFactorsEc7BE1Set1(DSeriesInlineMappedProperties):
+    loadfactorpermunfav: float = 1.00
+    loadfactorpermfav: float = 1.00
+    loadfactorvarunfav: float = 1.00
+    loadfactorvarfav: float = 0.00
+    constructloadfactorpermfav: float = 1.00
+    constructloadfactorvarfav: float = 1.00
+    constructloadfactorpermunfavcalc: float = 1.00
+    constructloadfactorvarunfavcalc: float = 1.00
+    effectfactor: float = 1.2
+    effectfactorvarunfav: float = 1.083
+    materialfactorcohesion: float = 1.00
+    materialfactortgphi: float = 1.000
+    materialfactorsubgradereaction: float = 1.00
+    resistancefactor: float = 1.00
+    geometryincretainingheight: float = 0.00
+    geometrymaxincretainingheight: float = 0.00
+    geometryincretainingheightdry: float = 0.00
+    geometrydeltapassivesurfacelevel: float = 0.00
+    geometrydeltapassivephreaticline: float = 0.00
+    geometrydeltaactivephreaticline: float = 0.00
+    overallstabilityfactordrivingmoment: float = 1.00
+    overallstabilityfactorcohesion: float = 1.00
+    overallstabilityfactortgphi: float = 1.00
+    overallstabilityfactorunitweight: float = 1.00
+    factorrepvaluesmdpmax: float = 1.00
+    verticalbalancegammamb: float = 1.00
+
+
+class PartialFactorsEc7BE1Set2(DSeriesInlineMappedProperties):
+    loadfactorpermunfav: float = 1.00
+    loadfactorpermfav: float = 1.00
+    loadfactorvarunfav: float = 1.10
+    loadfactorvarfav: float = 0.00
+    constructloadfactorpermfav: float = 1.00
+    constructloadfactorvarfav: float = 1.00
+    constructloadfactorpermunfavcalc: float = 1.00
+    constructloadfactorvarunfavcalc: float = 1.00
+    effectfactor: float = 1.00
+    effectfactorvarunfav: float = 1.00
+    materialfactorcohesion: float = 1.10
+    materialfactortgphi: float = 1.10
+    materialfactorsubgradereaction: float = 1.00
+    resistancefactor: float = 1.00
+    geometryincretainingheight: float = 10.00
+    geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.30
+    geometrydeltapassivesurfacelevel: float = 0.00
+    geometrydeltapassivephreaticline: float = 0.00
+    geometrydeltaactivephreaticline: float = 0.00
+    overallstabilityfactordrivingmoment: float = 1.00
+    overallstabilityfactorcohesion: float = 1.10
+    overallstabilityfactortgphi: float = 1.10
+    overallstabilityfactorunitweight: float = 1.00
+    factorrepvaluesmdpmax: float = 0.00
+    verticalbalancegammamb: float = 1.30
+
+
+class PartialFactorsEc7BE2Set1(DSeriesInlineMappedProperties):
     loadfactorpermunfav: float = 1.00
     loadfactorpermfav: float = 1.00
     loadfactorvarunfav: float = 1.00
@@ -236,13 +302,14 @@ class PartialFactorsEc7BESet1(DSeriesInlineMappedProperties):
     constructloadfactorpermunfavcalc: float = 1.00
     constructloadfactorvarunfavcalc: float = 1.00
     effectfactor: float = 1.35
-    effectfactorvarunfav: float = 1.10
+    effectfactorvarunfav: float = 1.111
     materialfactorcohesion: float = 1.00
     materialfactortgphi: float = 1.000
     materialfactorsubgradereaction: float = 1.00
     resistancefactor: float = 1.00
-    geometryincretainingheight: float = 10.00
-    geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheight: float = 0.00
+    geometrymaxincretainingheight: float = 0.00
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.00
     geometrydeltaactivephreaticline: float = 0.00
@@ -250,11 +317,11 @@ class PartialFactorsEc7BESet1(DSeriesInlineMappedProperties):
     overallstabilityfactorcohesion: float = 1.00
     overallstabilityfactortgphi: float = 1.00
     overallstabilityfactorunitweight: float = 1.00
-    factorrepvaluesmdpmax: float = 0.00
-    verticalbalancegammamb: float = 1.20
+    factorrepvaluesmdpmax: float = 1.00
+    verticalbalancegammamb: float = 1.00
 
 
-class PartialFactorsEc7BESet2(DSeriesInlineMappedProperties):
+class PartialFactorsEc7BE2Set2(DSeriesInlineMappedProperties):
     loadfactorpermunfav: float = 1.00
     loadfactorpermfav: float = 1.00
     loadfactorvarunfav: float = 1.10
@@ -266,11 +333,12 @@ class PartialFactorsEc7BESet2(DSeriesInlineMappedProperties):
     effectfactor: float = 1.00
     effectfactorvarunfav: float = 1.00
     materialfactorcohesion: float = 1.25
-    materialfactortgphi: float = 1.250
+    materialfactortgphi: float = 1.25
     materialfactorsubgradereaction: float = 1.00
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 10.00
     geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.30
     geometrydeltapassivesurfacelevel: float = 0.00
     geometrydeltapassivephreaticline: float = 0.00
     geometrydeltaactivephreaticline: float = 0.00
@@ -278,8 +346,66 @@ class PartialFactorsEc7BESet2(DSeriesInlineMappedProperties):
     overallstabilityfactorcohesion: float = 1.25
     overallstabilityfactortgphi: float = 1.25
     overallstabilityfactorunitweight: float = 1.00
-    factorrepvaluesmdpmax: float = 0.00
-    verticalbalancegammamb: float = 1.20
+    factorrepvaluesmdpmax: float = 1.00
+    verticalbalancegammamb: float = 1.30
+
+
+class PartialFactorsEc7BE3Set1(DSeriesInlineMappedProperties):
+    loadfactorpermunfav: float = 1.00
+    loadfactorpermfav: float = 1.00
+    loadfactorvarunfav: float = 1.00
+    loadfactorvarfav: float = 0.00
+    constructloadfactorpermfav: float = 1.00
+    constructloadfactorvarfav: float = 1.00
+    constructloadfactorpermunfavcalc: float = 1.00
+    constructloadfactorvarunfavcalc: float = 1.00
+    effectfactor: float = 1.50
+    effectfactorvarunfav: float = 1.20
+    materialfactorcohesion: float = 1.00
+    materialfactortgphi: float = 1.000
+    materialfactorsubgradereaction: float = 1.00
+    resistancefactor: float = 1.00
+    geometryincretainingheight: float = 0.00
+    geometrymaxincretainingheight: float = 0.00
+    geometryincretainingheightdry: float = 0.00
+    geometrydeltapassivesurfacelevel: float = 0.00
+    geometrydeltapassivephreaticline: float = 0.00
+    geometrydeltaactivephreaticline: float = 0.00
+    overallstabilityfactordrivingmoment: float = 1.00
+    overallstabilityfactorcohesion: float = 1.00
+    overallstabilityfactortgphi: float = 1.00
+    overallstabilityfactorunitweight: float = 1.00
+    factorrepvaluesmdpmax: float = 1.00
+    verticalbalancegammamb: float = 1.00
+
+
+class PartialFactorsEc7BE3Set2(DSeriesInlineMappedProperties):
+    loadfactorpermunfav: float = 1.00
+    loadfactorpermfav: float = 1.00
+    loadfactorvarunfav: float = 1.20
+    loadfactorvarfav: float = 0.00
+    constructloadfactorpermfav: float = 1.00
+    constructloadfactorvarfav: float = 1.00
+    constructloadfactorpermunfavcalc: float = 1.00
+    constructloadfactorvarunfavcalc: float = 1.00
+    effectfactor: float = 1.00
+    effectfactorvarunfav: float = 1.00
+    materialfactorcohesion: float = 1.40
+    materialfactortgphi: float = 1.40
+    materialfactorsubgradereaction: float = 1.00
+    resistancefactor: float = 1.00
+    geometryincretainingheight: float = 10.00
+    geometrymaxincretainingheight: float = 0.50
+    geometryincretainingheightdry: float = 0.30
+    geometrydeltapassivesurfacelevel: float = 0.00
+    geometrydeltapassivephreaticline: float = 0.00
+    geometrydeltaactivephreaticline: float = 0.00
+    overallstabilityfactordrivingmoment: float = 1.00
+    overallstabilityfactorcohesion: float = 1.40
+    overallstabilityfactortgphi: float = 1.40
+    overallstabilityfactorunitweight: float = 1.00
+    factorrepvaluesmdpmax: float = 1.00
+    verticalbalancegammamb: float = 1.30
 
 
 class PartialFactorsCurI(DSeriesInlineMappedProperties):
@@ -299,6 +425,7 @@ class PartialFactorsCurI(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 0.00
     geometrymaxincretainingheight: float = 0.00
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.20
     geometrydeltapassivephreaticline: float = 0.15
     geometrydeltaactivephreaticline: float = 0.05
@@ -327,6 +454,7 @@ class PartialFactorsCurIi(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 0.00
     geometrymaxincretainingheight: float = 0.00
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.30
     geometrydeltapassivephreaticline: float = 0.20
     geometrydeltaactivephreaticline: float = 0.05
@@ -355,6 +483,7 @@ class PartialFactorsCurIii(DSeriesInlineMappedProperties):
     resistancefactor: float = 1.00
     geometryincretainingheight: float = 0.00
     geometrymaxincretainingheight: float = 0.00
+    geometryincretainingheightdry: float = 0.00
     geometrydeltapassivesurfacelevel: float = 0.35
     geometrydeltapassivephreaticline: float = 0.25
     geometrydeltaactivephreaticline: float = 0.05

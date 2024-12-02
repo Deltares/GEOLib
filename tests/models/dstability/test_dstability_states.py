@@ -7,10 +7,10 @@ import pytest
 from geolib.geometry import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import (
+    InternalStateTypeEnum,
     PersistablePoint,
     PersistableStateLine,
     PersistableStatePoint,
-    StateType,
 )
 from geolib.models.dstability.states import (
     DStabilityStateLinePoint,
@@ -40,7 +40,7 @@ class TestDStabilityStates:
             id=1,
             layer_id=layer_id,
             point=Point(x=10.0, z=10.0),
-            stress=DStabilityStress(state_type=StateType.OCR, ocr=10.0),
+            stress=DStabilityStress(state_type=InternalStateTypeEnum.OCR, ocr=10.0),
         )
 
         _ = dstability_model.add_state_point(dstability_state_point)
@@ -60,7 +60,7 @@ class TestDStabilityStates:
                 id=1,
                 layer_id=-1,
                 point=Point(x=10.0, z=10.0),
-                stress=DStabilityStress(state_type=StateType.OCR, ocr=10.0),
+                stress=DStabilityStress(state_type=InternalStateTypeEnum.OCR, ocr=10.0),
             )
             _ = dstability_model.add_state_point(dstability_state_point)
 
@@ -74,8 +74,8 @@ class TestDStabilityStates:
         state_line_points = [Point(x=-20.0, z=2.0), Point(x=50.0, z=2.0)]
         dstability_state_line_point = DStabilityStateLinePoint(
             id=1,
-            above=DStabilityStress(state_type=StateType.OCR, ocr=10.0),
-            below=DStabilityStress(state_type=StateType.POP, ocr=20.0),
+            above=DStabilityStress(state_type=InternalStateTypeEnum.OCR, ocr=10.0),
+            below=DStabilityStress(state_type=InternalStateTypeEnum.POP, ocr=20.0),
             x=0,
         )
 

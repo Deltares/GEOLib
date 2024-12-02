@@ -200,7 +200,6 @@ class TestDFoundationsModel:
                         f"Values for key {ds_key} differ from parsed to serialized"
                     )
         if errors:
-            print(errors)
             pytest.fail(f"Failed with the following {errors}")
 
     @pytest.mark.acceptance
