@@ -7,16 +7,16 @@ from typing_extensions import Annotated
 from geolib.models import BaseDataClass
 
 from .settings import (
+    AssessmentTypeEC7NL,
     CalculationType,
     DesignType,
     PartialFactorCalculationType,
     PartialFactorSetCUR,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
-    RiskClassEC7BE,
     PartialFactorSetEC7NADNL,
-    AssessmentTypeEC7NL,
     PartialFactorSetVerifyEC,
+    RiskClassEC7BE,
     VerifyType,
 )
 

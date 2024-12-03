@@ -12,12 +12,7 @@ from geolib.models.dstability.internal import (
     PersistableTree,
     PersistableUniformLoad,
 )
-from geolib.models.dstability.loads import (
-    Consolidation,
-    LineLoad,
-    TreeLoad,
-    UniformLoad,
-)
+from geolib.models.dstability.loads import Consolidation, LineLoad, TreeLoad, UniformLoad
 
 
 @pytest.fixture

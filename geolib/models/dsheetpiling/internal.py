@@ -53,6 +53,7 @@ from .internal_partial_factors import (
     PartialFactorsEurocodeDa3,
 )
 from .settings import (
+    AssessmentTypeEC7NL,
     CalculationType,
     CurveSettings,
     DesignType,
@@ -73,11 +74,10 @@ from .settings import (
     PartialFactorSetCUR,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
-    RiskClassEC7BE,
     PartialFactorSetEC7NADNL,
-    AssessmentTypeEC7NL,
     PartialFactorSetVerifyEC,
     PassiveSide,
+    RiskClassEC7BE,
     SheetPilingElementMaterialType,
     Side,
     SoilTypeModulusSubgradeReaction,
@@ -396,7 +396,8 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
             5: self.sheetpilingelementkmod,
         }
         if (
-            self.sheetpilingelementkmod != result_dict_k_mod_value[self.sheetpilingelementmaterialtype.value]
+            self.sheetpilingelementkmod
+            != result_dict_k_mod_value[self.sheetpilingelementmaterialtype.value]
         ):
             self.sheetpilingelementkmod = result_dict_k_mod_value[
                 self.sheetpilingelementmaterialtype.value
@@ -416,8 +417,8 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
             5: self.sheetpilingelementmaterialfactor,
         }
         if (
-            self.sheetpilingelementmaterialfactor !=
-                result_dict_gamma_m_value[self.sheetpilingelementmaterialtype.value]
+            self.sheetpilingelementmaterialfactor
+            != result_dict_gamma_m_value[self.sheetpilingelementmaterialtype.value]
         ):
             self.sheetpilingelementmaterialfactor = result_dict_gamma_m_value[
                 self.sheetpilingelementmaterialtype.value
