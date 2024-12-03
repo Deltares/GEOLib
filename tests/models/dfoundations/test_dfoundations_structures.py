@@ -1,23 +1,16 @@
 from contextlib import nullcontext as does_not_raise
 from random import choice, randint
 from string import ascii_lowercase
-from typing import Dict, List, Type, Union, _GenericAlias
+from typing import Dict, List, Type, Union
 
 import pytest
-
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic_core._pydantic_core import ValidationError
-else:
-    from pydantic import ValidationError
+from pydantic_core._pydantic_core import ValidationError
 
 from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,
     DFoundationsEnumStructure,
     DFoundationsTableWrapper,
 )
-from geolib.models.dseries_parser import DSeriesTreeStructure
 
 
 class TestDFoundationsEnumStructure:

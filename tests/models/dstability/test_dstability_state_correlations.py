@@ -1,7 +1,7 @@
 import pytest
 
-from geolib import DStabilityModel
 from geolib.geometry import Point
+from geolib.models import DStabilityModel
 from geolib.models.dstability.internal import StateCorrelation
 from geolib.models.dstability.states import DStabilityStatePoint, DStabilityStress
 

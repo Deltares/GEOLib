@@ -3,7 +3,8 @@ Module containing all GEOLib application specific models for the D-GEO Suite and
 """
 
 from .base_model_structure import BaseDataClass, BaseModelStructure  # isort:skip
-from .base_model import BaseModel, BaseModelList
+from .base_model import BaseModel
+from .base_model_list import BaseModelList
 from .dfoundations import DFoundationsModel
 from .dsettlement import DSettlementModel
 from .dsheetpiling import DSheetPilingModel

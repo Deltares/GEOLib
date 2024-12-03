@@ -24,7 +24,7 @@ class TestDsheetPilingBugFixes:
         # should be consistent with what is written in the input file
 
         # 1. Build model.
-        model = gl.DSheetPilingModel()
+        model = gl.models.DSheetPilingModel()
         test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = test_folder / Path("test_consistent_model_setting.shi")
 
@@ -59,7 +59,7 @@ class TestDsheetPilingBugFixes:
         # The expectation is that the load is defined once but added to all the stages.
 
         # 1. Build model.
-        model = gl.DSheetPilingModel()
+        model = gl.models.DSheetPilingModel()
         test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
         output_test_file = test_folder / Path("GEOLIB191.shi")
 
@@ -140,7 +140,7 @@ class TestDsheetPilingBugFixes:
     def test_parse_field_verify_sheet_piling_calculation_type_standard(self):
         # Former test of test_geolib_173
         # 1. Define test data
-        model = gl.DSheetPilingModel()
+        model = gl.models.DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir(benchmarks_directory))
         test_file = test_folder / Path("bm4-5a.shd")
 
@@ -160,7 +160,7 @@ class TestDsheetPilingBugFixes:
     ):
         # Former test of test_geolib_173
         # 1. Define test data
-        model = gl.DSheetPilingModel()
+        model = gl.models.DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir(benchmarks_directory))
         test_file = test_folder / Path("bm3-1b.shd")
 
@@ -178,7 +178,7 @@ class TestDsheetPilingBugFixes:
     def test_parse_field_verify_sheet_piling_according_to_cur_method_a(self):
         # Former test of test_geolib_173
         # 1. Define test data
-        model = gl.DSheetPilingModel()
+        model = gl.models.DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir(benchmarks_directory))
         test_file = test_folder / Path("bm3-1d.shd")
 
@@ -203,7 +203,7 @@ class TestDsheetPilingBugFixes:
     def test_parse_field_verify_sheet_piling_according_to_cur_method_b(self):
         # Former test of test_geolib_173
         # 1. Define test data
-        model = gl.DSheetPilingModel()
+        model = gl.models.DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir(benchmarks_directory))
         test_file = test_folder / Path("bm4-17a.shd")
 

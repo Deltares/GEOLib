@@ -1,6 +1,5 @@
 from typing import Any, Dict, List, Optional
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
 from geolib.models.internal import Bool
@@ -50,10 +49,7 @@ class CPT(BaseDataClass):
         pass
 
     def _to_internal(self) -> InternalCPT:
-        if IS_PYDANTIC_V2:
-            kwargs = self.model_dump()
-        else:
-            kwargs = self.dict()
+        kwargs = self.model_dump()
         kwargs["measured_data"] = {"data": kwargs["measured_data"]}
         return InternalCPT(**kwargs)
 
@@ -107,18 +103,12 @@ class Profile(BaseDataClass):
     layers: List[Dict[str, Any]]
 
     def _to_internal(self, matching_cpt) -> InternalProfile:
-        if IS_PYDANTIC_V2:
-            kwargs = self.model_dump(exclude={"cpt", "excavation", "location"})
-        else:
-            kwargs = self.dict(exclude={"cpt", "excavation", "location"})
+        kwargs = self.model_dump(exclude={"cpt", "excavation", "location"})
 
         kwargs["matching_cpt"] = matching_cpt
 
         if self.excavation is not None:
-            if IS_PYDANTIC_V2:
-                kwargs.update(self.excavation.model_dump())
-            else:
-                kwargs.update(self.excavation.dict())
+            kwargs.update(self.excavation.model_dump())
 
         kwargs["x_coordinate"] = self.location.x
         kwargs["y_coordinate"] = self.location.y
