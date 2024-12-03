@@ -5,7 +5,7 @@ from typing import BinaryIO, List, Optional, Set, Type, Union
 
 import matplotlib.pyplot as plt
 from pydantic import DirectoryPath, FilePath
-from shapely.geometry import LineString, Point, Polygon
+from shapely.geometry import LineString, Polygon
 from shapely.ops import polygonize
 from shapely.validation import make_valid
 
@@ -21,11 +21,11 @@ from .internal import (
     CalculationSettings,
     DStabilityResult,
     DStabilityStructure,
+    PersistableExcavation,
     PersistableLayer,
     PersistablePoint,
     PersistableSoil,
     PersistableStateCorrelation,
-    PersistableExcavation,
     Scenario,
     SoilCollection,
     SoilCorrelation,
@@ -90,7 +90,7 @@ class DStabilityModel(BaseModel):
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dstability_console_path")
-    
+
     @property
     def soils(self) -> SoilCollection:
         """Enables easy access to the soil in the internal dict-like datastructure. Also enables edit/delete for individual soils."""

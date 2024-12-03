@@ -1,4 +1,3 @@
-from contextlib import nullcontext as does_not_raise
 from typing import Any
 
 import pytest
@@ -335,7 +334,7 @@ class TestSpringSupport:
                 "name",
                 "i" * 51,
                 pytest.raises(
-                    ValidationError, match=r"ensure this value has at most 50 characters"
+                    ValidationError, match=r"String should have at most 50 characters"
                 ),
                 id="Name too long",
             ),
@@ -343,8 +342,7 @@ class TestSpringSupport:
                 "rotational_stiffness",
                 -1,
                 pytest.raises(
-                    ValidationError,
-                    match=r"ensure this value is greater than or equal to 0",
+                    ValidationError, match=r"Input should be greater than or equal to 0 "
                 ),
                 id="Name too long",
             ),
@@ -352,8 +350,7 @@ class TestSpringSupport:
                 "translational_stiffness",
                 -1,
                 pytest.raises(
-                    ValidationError,
-                    match=r"ensure this value is greater than or equal to 0",
+                    ValidationError, match=r"Input should be greater than or equal to 0 "
                 ),
                 id="Negative translational stiffness",
             ),
@@ -511,17 +508,14 @@ class TestRigidSupport:
                 "name",
                 "i" * 51,
                 pytest.raises(
-                    ValidationError, match=r"ensure this value has at most 50 characters"
+                    ValidationError, match=r"String should have at most 50 characters"
                 ),
                 id="Name too long",
             ),
             pytest.param(
                 "support_type",
                 5,
-                pytest.raises(
-                    ValidationError,
-                    match=r"value is not a valid enumeration member; permitted: 1, 2, 3",
-                ),
+                pytest.raises(ValidationError, match=r"Input should be 1, 2 or 3"),
                 id="Name too long",
             ),
         ],

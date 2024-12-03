@@ -1,16 +1,14 @@
 import logging
-from enum import Enum, IntEnum
+from enum import IntEnum
 from inspect import cleandoc
-from typing import Any, Dict, List, Optional, Tuple, Type, Union
+from typing import Dict, List, Optional, Union
 
-from pydantic.types import PositiveInt, confloat, conint, constr
+from pydantic import Field, StringConstraints
+from pydantic.types import PositiveInt
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
-from geolib.models.base_model_structure import BaseModelStructure
 from geolib.models.dseries_parser import (
-    DSerieListStructure,
-    DSerieMatrixStructure,
-    DSerieOldTableStructure,
     DSeriesInlineMappedProperties,
     DSeriesInlineProperties,
     DSeriesNoParseSubStructure,
@@ -113,76 +111,80 @@ class PileShape(IntEnum):
 class TypesBearingPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
     pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
-    pile_type_for_execution_factor_sand_gravel: Optional[PileType]
-    execution_factor_sand_gravel: Optional[confloat(ge=0, le=9)]
-    pile_type_for_execution_factor_clay_loam_peat: Optional[PileTypeForClayLoamPeat]
-    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)]
-    pile_type_for_pile_class_factor: Optional[PileType]
-    pile_class_factor: Optional[confloat(ge=0, le=9)]
-    pile_type_for_load_settlement_curve: Optional[LoadSettlementCurve]
-    material: Optional[PileMaterial]
-    elasticity_modulus: Optional[confloat(ge=0, le=1e25)]
+    pile_type_for_execution_factor_sand_gravel: Optional[PileType] = None
+    execution_factor_sand_gravel: Optional[Annotated[float, Field(ge=0, le=9)]] = None
+    pile_type_for_execution_factor_clay_loam_peat: Optional[
+        PileTypeForClayLoamPeat
+    ] = None
+    execution_factor_clay_loam_peat: Optional[Annotated[float, Field(ge=0, le=9)]] = None
+    pile_type_for_pile_class_factor: Optional[PileType] = None
+    pile_class_factor: Optional[Annotated[float, Field(ge=0, le=9)]] = None
+    pile_type_for_load_settlement_curve: Optional[LoadSettlementCurve] = None
+    material: Optional[PileMaterial] = None
+    elasticity_modulus: Optional[Annotated[float, Field(ge=0, le=1e25)]] = None
     slip_layer: BearingPileSlipLayer = BearingPileSlipLayer.NONE
-    characteristic_adhesion: Optional[confloat(ge=0, le=1000)]
+    characteristic_adhesion: Optional[Annotated[float, Field(ge=0, le=1000)]] = None
     shape: PileShape = PileShape.RECTANGULAR_PILE
-    base_width: Optional[confloat(ge=0, le=100)]
-    base_length: Optional[confloat(ge=0, le=100)]
-    diameter: Optional[confloat(ge=0, le=100)]
-    base_diameter: Optional[confloat(ge=0, le=100)]
-    pile_diameter: Optional[confloat(ge=0, le=100)]
-    base_height: Optional[confloat(ge=0, le=100)]
-    base_width_v: Optional[confloat(ge=0, le=100)]
-    base_length_v: Optional[confloat(ge=0, le=100)]
-    shaft_width: Optional[confloat(ge=0, le=100)]
-    shaft_length: Optional[confloat(ge=0, le=100)]
-    increase_in_diameter: Optional[confloat(ge=0, le=100)]
-    external_diameter: Optional[confloat(ge=0, le=100)]
-    internal_diameter: Optional[confloat(ge=0, le=100)]
-    height_h_shape: Optional[confloat(ge=0, le=100)]
-    width_h_shape: Optional[confloat(ge=0, le=100)]
-    thickness_web: Optional[confloat(ge=0, le=100)]
-    thickness_flange: Optional[confloat(ge=0, le=100)]
+    base_width: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_length: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    pile_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_height: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_width_v: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_length_v: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    shaft_width: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    shaft_length: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    increase_in_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    external_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    internal_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    height_h_shape: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    width_h_shape: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    thickness_web: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    thickness_flange: Optional[Annotated[float, Field(ge=0, le=100)]] = None
     overrule_pile_tip_shape_factor: Bool = Bool.FALSE
-    pile_tip_shape_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_shape_factor: Optional[Annotated[float, Field(ge=0, le=10)]] = None
     overrule_pile_tip_cross_section_factors: Bool = Bool.FALSE
-    pile_tip_cross_section_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_cross_section_factor: Optional[Annotated[float, Field(ge=0, le=10)]] = None
     use_pre_2016: Bool = Bool.FALSE
     user_defined_pile_type_as_prefab: Bool = Bool.FALSE
     use_manual_reduction_for_qc: Bool = Bool.FALSE
-    reduction_percentage_qc: confloat(ge=25, le=100) = 25
+    reduction_percentage_qc: Annotated[float, Field(ge=25, le=100)] = 25
     is_user_defined: Bool = Bool.TRUE
 
 
 class TypesTensionPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
     pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
-    pile_type_for_execution_factor_sand_gravel: Optional[PileType]
-    execution_factor_sand_gravel: Optional[confloat(ge=0, le=9)]
-    pile_type_for_execution_factor_clay_loam_peat: Optional[PileTypeForClayLoamPeat]
-    execution_factor_clay_loam_peat: Optional[confloat(ge=0, le=9)]
-    material: Optional[PileMaterial]
-    unit_weight_pile: Optional[confloat(ge=0, le=1000)]
-    elasticity_modulus: Optional[confloat(ge=0, le=1e25)]
+    pile_type_for_execution_factor_sand_gravel: Optional[PileType] = None
+    execution_factor_sand_gravel: Optional[Annotated[float, Field(ge=0, le=9)]] = None
+    pile_type_for_execution_factor_clay_loam_peat: Optional[
+        PileTypeForClayLoamPeat
+    ] = None
+    execution_factor_clay_loam_peat: Optional[Annotated[float, Field(ge=0, le=9)]] = None
+    material: Optional[PileMaterial] = None
+    unit_weight_pile: Optional[Annotated[float, Field(ge=0, le=1000)]] = None
+    elasticity_modulus: Optional[Annotated[float, Field(ge=0, le=1e25)]] = None
     shape: PileShape = PileShape.RECTANGULAR_PILE
-    base_width: Optional[confloat(ge=0, le=100)]
-    base_length: Optional[confloat(ge=0, le=100)]
-    diameter: Optional[confloat(ge=0, le=100)]
-    base_diameter: Optional[confloat(ge=0, le=100)]
-    pile_diameter: Optional[confloat(ge=0, le=100)]
-    base_height: Optional[confloat(ge=0, le=100)]
-    base_width_v: Optional[confloat(ge=0, le=100)]
-    base_length_v: Optional[confloat(ge=0, le=100)]
-    shaft_width: Optional[confloat(ge=0, le=100)]
-    shaft_length: Optional[confloat(ge=0, le=100)]
-    increase_in_diameter: Optional[confloat(ge=0, le=100)]
-    external_diameter: Optional[confloat(ge=0, le=100)]
-    internal_diameter: Optional[confloat(ge=0, le=100)]
-    height_h_shape: Optional[confloat(ge=0, le=100)]
-    width_h_shape: Optional[confloat(ge=0, le=100)]
-    thickness_web: Optional[confloat(ge=0, le=100)]
-    thickness_flange: Optional[confloat(ge=0, le=100)]
-    circumference: Optional[confloat(ge=0, le=100)]
-    cross_section: Optional[confloat(ge=0, le=100)]
+    base_width: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_length: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    pile_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_height: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_width_v: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    base_length_v: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    shaft_width: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    shaft_length: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    increase_in_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    external_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    internal_diameter: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    height_h_shape: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    width_h_shape: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    thickness_web: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    thickness_flange: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    circumference: Optional[Annotated[float, Field(ge=0, le=100)]] = None
+    cross_section: Optional[Annotated[float, Field(ge=0, le=100)]] = None
     is_user_defined: Bool = Bool.TRUE
 
 
@@ -285,26 +287,26 @@ class InternalPile(BaseDataClass):
 
 class PositionBearingPile(InternalPile):
     index: PositiveInt = 1
-    x_coordinate: confloat(ge=-10000000, le=100000000)
-    y_coordinate: confloat(ge=-10000000, le=100000000)
-    pile_head_level: confloat(ge=-1000, le=1000)
-    surcharge: confloat(ge=0, le=100000)
-    limit_state_str: confloat(ge=0, le=100000)
-    limit_state_service: confloat(ge=0, le=100000)
-    pile_name: constr(min_length=1, max_length=100)
+    x_coordinate: Annotated[float, Field(ge=-10000000, le=100000000)]
+    y_coordinate: Annotated[float, Field(ge=-10000000, le=100000000)]
+    pile_head_level: Annotated[float, Field(ge=-1000, le=1000)]
+    surcharge: Annotated[float, Field(ge=0, le=100000)]
+    limit_state_str: Annotated[float, Field(ge=0, le=100000)]
+    limit_state_service: Annotated[float, Field(ge=0, le=100000)]
+    pile_name: Annotated[str, StringConstraints(min_length=1, max_length=100)]
 
 
 class PositionTensionPile(InternalPile):
     index: PositiveInt = 1
-    x_coordinate: confloat(ge=-10000000, le=100000000)
-    y_coordinate: confloat(ge=-10000000, le=100000000)
-    pile_head_level: confloat(ge=-1000, le=1000)
+    x_coordinate: Annotated[float, Field(ge=-10000000, le=100000000)]
+    y_coordinate: Annotated[float, Field(ge=-10000000, le=100000000)]
+    pile_head_level: Annotated[float, Field(ge=-1000, le=1000)]
     use_alternating_loads: Bool
-    max_force: confloat(ge=-100000, le=100000)
-    min_force: confloat(ge=-100000, le=100000)
-    limit_state_str: confloat(ge=0, le=100000)
-    limit_state_service: confloat(ge=0, le=100000)
-    pile_name: constr(min_length=1, max_length=100)
+    max_force: Annotated[float, Field(ge=-100000, le=100000)]
+    min_force: Annotated[float, Field(ge=-100000, le=100000)]
+    limit_state_str: Annotated[float, Field(ge=0, le=100000)]
+    limit_state_service: Annotated[float, Field(ge=0, le=100000)]
+    pile_name: Annotated[str, StringConstraints(min_length=1, max_length=100)]
 
 
 class PositionsBearingPiles(DSeriesNoParseSubStructure):
@@ -431,32 +433,32 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     is_rigid: Bool = Bool.TRUE
 
     # Transformation
-    max_allowed_settlement_lim_state_str: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_str: conint(ge=1, le=10000) = 100
-    max_allowed_settlement_lim_state_serv: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_serv: conint(ge=1, le=10000) = 300
+    max_allowed_settlement_lim_state_str: Annotated[float, Field(ge=0, le=100000)] = 0
+    max_allowed_rel_rotation_lim_state_str: Annotated[int, Field(ge=1, le=10000)] = 100
+    max_allowed_settlement_lim_state_serv: Annotated[float, Field(ge=0, le=100000)] = 0
+    max_allowed_rel_rotation_lim_state_serv: Annotated[int, Field(ge=1, le=10000)] = 300
 
     # Overrule parameters Bearing Piles
     is_xi3_overruled: Bool = Bool.FALSE
-    factor_xi3: Optional[confloat(ge=0.01, le=10)] = 2
+    factor_xi3: Optional[Annotated[float, Field(ge=0.01, le=10)]] = 2
     is_xi4_overruled: Bool = Bool.FALSE
-    factor_xi4: Optional[confloat(ge=0.01, le=10)] = 2
+    factor_xi4: Optional[Annotated[float, Field(ge=0.01, le=10)]] = 2
     is_gamma_b_overruled: Bool = Bool.FALSE
-    factor_gamma_b: Optional[confloat(ge=1, le=100)] = 2
+    factor_gamma_b: Optional[Annotated[float, Field(ge=1, le=100)]] = 2
     is_gamma_s_overruled: Bool = Bool.FALSE
-    factor_gamma_s: Optional[confloat(ge=1, le=100)] = 2
+    factor_gamma_s: Optional[Annotated[float, Field(ge=1, le=100)]] = 2
     is_gamma_fnk_overruled: Bool = Bool.FALSE
-    factor_gamma_fnk: Optional[confloat(ge=-100, le=100)] = 2
+    factor_gamma_fnk: Optional[Annotated[float, Field(ge=-100, le=100)]] = 2
     is_area_overruled: Bool = Bool.FALSE
-    area: Optional[confloat(ge=0, le=100000)] = 1000
+    area: Optional[Annotated[float, Field(ge=0, le=100000)]] = 1000
     is_qbmax_overruled: Bool = Bool.FALSE
-    qbmax: Optional[confloat(ge=0, le=100)] = 15
+    qbmax: Optional[Annotated[float, Field(ge=0, le=100)]] = 15
     is_qcza_low_overruled: Bool = Bool.FALSE
-    qcza_low: Optional[confloat(ge=0, le=100)] = 12
+    qcza_low: Optional[Annotated[float, Field(ge=0, le=100)]] = 12
     is_qcza_high_overruled: Bool = Bool.FALSE
-    qcza_high: Optional[confloat(ge=0, le=100)] = 15
+    qcza_high: Optional[Annotated[float, Field(ge=0, le=100)]] = 15
     is_ea_gem_overruled: Bool = Bool.FALSE
-    ea_gem: Optional[confloat(ge=1)] = 100000
+    ea_gem: Optional[Annotated[float, Field(ge=1)]] = 100000
 
     # Model options combined
     is_suppress_qc_reduction: Bool = Bool.FALSE
@@ -469,33 +471,33 @@ class CalculationOptions(DSeriesNoParseSubStructure):
 
     # Overrule parameters Shallow foundations
     is_gamma_g_str_overruled: Bool = Bool.FALSE
-    factor_gamma_g_str: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_g_str: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_coh_overruled: Bool = Bool.FALSE
-    factor_gamma_coh: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_coh: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_phi_overruled: Bool = Bool.FALSE
-    factor_gamma_phi: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_phi: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_fundr_overruled: Bool = Bool.FALSE
-    factor_gamma_fundr: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_fundr: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_g_sls_overruled: Bool = Bool.FALSE
-    factor_gamma_g_sls: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_g_sls: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_cc_overruled: Bool = Bool.FALSE
-    factor_gamma_cc: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_cc: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_ca_overruled: Bool = Bool.FALSE
-    factor_gamma_ca: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_ca: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_keep_length_constant: Bool = Bool.FALSE
     use_5_percent_limit: Bool = Bool.FALSE
-    load_factor_between_limit_1_and_2: confloat(ge=0.5, le=1) = 0.833
+    load_factor_between_limit_1_and_2: Annotated[float, Field(ge=0.5, le=1)] = 0.833
 
     # Overrule parameters Tension Piles
-    unit_weight_water: confloat(ge=0.01, le=20) = 9.81
+    unit_weight_water: Annotated[float, Field(ge=0.01, le=20)] = 9.81
     use_compaction: Bool = Bool.FALSE
     is_gamma_var_overruled: Bool = Bool.FALSE
-    factor_gamma_var: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_var: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_st_overruled: Bool = Bool.FALSE
-    factor_gamma_st: Optional[confloat(ge=0.01, le=100)] = 1.0
+    factor_gamma_st: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
     is_gamma_gamma_overruled: Bool = Bool.FALSE
-    factor_gamma_gamma: Optional[confloat(ge=0.01, le=100)] = 1.0
-    surcharge: confloat(ge=0, le=1e7) = 0
+    factor_gamma_gamma: Optional[Annotated[float, Field(ge=0.01, le=100)]] = 1.0
+    surcharge: Annotated[float, Field(ge=0, le=1e7)] = 0
     use_piezometric_levels: Bool = Bool.TRUE
 
     def __init__(self, *args, **kwargs):
@@ -507,7 +509,8 @@ class CalculationOptions(DSeriesNoParseSubStructure):
             if value is None:
                 continue  # Nones will be passed by default settings
             toggle_field = self.find_toggle(field)
-            if toggle_field in self.__fields__:
+            fields = self.model_fields
+            if toggle_field in fields:
                 toggles[toggle_field] = Bool.TRUE
         kwargs.update(toggles)
         super().__init__(*args, **kwargs)
@@ -736,14 +739,14 @@ class DFoundationsGlobalNenResults(DFoundationsInlineProperties):
 
 
 class DFoundationsVerificationResults(DSeriesStructure):
-    global_nen_results: Optional[DFoundationsGlobalNenResults]
-    demands_nen__en: Optional[str]
-    nen_pile_results: Optional[DFoundationsNenPileResults]
+    global_nen_results: Optional[DFoundationsGlobalNenResults] = None
+    demands_nen__en: Optional[str] = None
+    nen_pile_results: Optional[DFoundationsNenPileResults] = None
 
-    verification_results_tp_load__settlement_curve_1b: Optional[str]
-    verification_results_tp_1a: Optional[str]
-    verification_results_tp_1b2: Optional[str]
-    verification_results_tp_load__settlement_curve_2: Optional[str]
+    verification_results_tp_load__settlement_curve_1b: Optional[str] = None
+    verification_results_tp_1a: Optional[str] = None
+    verification_results_tp_1b2: Optional[str] = None
+    verification_results_tp_load__settlement_curve_2: Optional[str] = None
 
 
 # endregion
@@ -769,23 +772,23 @@ class DFoundationsCalculationWarnings(DSeriesTreeStructure):
 
 
 class DFoundationsDumpfileOutputStructure(DSeriesStructure):
-    results_at_cpt_test_level: Optional[str]
-    verification_results: Optional[DFoundationsVerificationResults]
+    results_at_cpt_test_level: Optional[str] = None
+    verification_results: Optional[DFoundationsVerificationResults] = None
 
-    calculation_parameters_tension_piles: Optional[str]
-    verification_results_tp: Optional[DFoundationsVerificationResults]
+    calculation_parameters_tension_piles: Optional[str] = None
+    verification_results_tp: Optional[DFoundationsVerificationResults] = None
 
-    footnote_warnings: Optional[str]
-    preliminary_design_results: Optional[str]
-    verification_results_sf: Optional[str]
-    verification_results_tp_1b2: Optional[str]
-    verification_design_results: Optional[str]
-    calculation_warnings: Optional[DFoundationsCalculationWarnings]
+    footnote_warnings: Optional[str] = None
+    preliminary_design_results: Optional[str] = None
+    verification_results_sf: Optional[str] = None
+    verification_results_tp_1b2: Optional[str] = None
+    verification_design_results: Optional[str] = None
+    calculation_warnings: Optional[DFoundationsCalculationWarnings] = None
 
 
 class DFoundationsStructure(DSeriesStructure):
     input_data: DFoundationsInputStructure = DFoundationsInputStructure()
-    dumpfile_output: Optional[DFoundationsDumpfileOutputStructure]
+    dumpfile_output: Optional[DFoundationsDumpfileOutputStructure] = None
 
 
 class DFoundationsDumpStructure(DSeriesStructure):

@@ -1,13 +1,11 @@
 import logging
-from enum import Enum
 from pathlib import Path
-from subprocess import CompletedProcess, run
 from typing import BinaryIO, List, Optional, Type, Union
 
-from pydantic import FilePath, confloat, conint
+from pydantic import Field, FilePath
+from typing_extensions import Annotated
 
-from geolib.geometry import Point
-from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
+from geolib.models import BaseDataClass, BaseModel
 from geolib.models.internal import Bool
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
@@ -47,15 +45,14 @@ class ModelOptions(BaseDataClass):
     is_rigid: Bool = True
 
     # Transformation
-    max_allowed_settlement_lim_state_str: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_str: conint(ge=1, le=10000) = 100
-    max_allowed_settlement_lim_state_serv: confloat(ge=0, le=100000) = 0
-    max_allowed_rel_rotation_lim_state_serv: conint(ge=1, le=10000) = 300
-
+    max_allowed_settlement_lim_state_str: Annotated[float, Field(ge=0, le=100000)] = 0
+    max_allowed_rel_rotation_lim_state_str: Annotated[int, Field(ge=1, le=10000)] = 100
+    max_allowed_settlement_lim_state_serv: Annotated[float, Field(ge=0, le=100000)] = 0
+    max_allowed_rel_rotation_lim_state_serv: Annotated[int, Field(ge=1, le=10000)] = 300
     # Factors
-    factor_xi3: Optional[confloat(ge=0.01, le=10)] = None
-    factor_xi4: Optional[confloat(ge=0.01, le=10)] = None
-    ea_gem: Optional[confloat(ge=1)] = None
+    factor_xi3: Optional[Annotated[float, Field(ge=0.01, le=10)]] = None
+    factor_xi4: Optional[Annotated[float, Field(ge=0.01, le=10)]] = None
+    ea_gem: Optional[Annotated[float, Field(ge=1)]] = None
 
     # Combined Model Options
     is_suppress_qc_reduction: Bool = False
@@ -67,7 +64,7 @@ class ModelOptions(BaseDataClass):
     use_extra_almere_rules: Bool = False
 
     def _to_internal(self):
-        return InternalModelOptions(**self.dict())
+        return InternalModelOptions(**self.model_dump())
 
     @classmethod
     def model_type(cls):
@@ -75,10 +72,10 @@ class ModelOptions(BaseDataClass):
 
 
 class BearingPilesModel(ModelOptions):
-    factor_gamma_b: Optional[confloat(ge=1, le=100)] = None
-    factor_gamma_s: Optional[confloat(ge=1, le=100)] = None
-    factor_gamma_fnk: Optional[confloat(ge=-100, le=100)] = None
-    area: Optional[confloat(ge=0, le=100000)] = None
+    factor_gamma_b: Optional[Annotated[float, Field(ge=1, le=100)]] = None
+    factor_gamma_s: Optional[Annotated[float, Field(ge=1, le=100)]] = None
+    factor_gamma_fnk: Optional[Annotated[float, Field(ge=-100, le=100)]] = None
+    area: Optional[Annotated[float, Field(ge=0, le=100000)]] = None
 
     @classmethod
     def model_type(cls):
@@ -86,14 +83,14 @@ class BearingPilesModel(ModelOptions):
 
 
 class TensionPilesModel(ModelOptions):
-    unit_weight_water: confloat(ge=0.01, le=20) = 9.81
+    unit_weight_water: Annotated[float, Field(ge=0.01, le=20)] = 9.81
     use_compaction: Bool = False
-    surcharge: confloat(ge=0, le=1e7) = 0
+    surcharge: Annotated[float, Field(ge=0, le=1e7)] = 0
     use_piezometric_levels: Bool = True
 
-    factor_gamma_var: Optional[confloat(ge=0.01, le=100)] = None
-    factor_gamma_st: Optional[confloat(ge=0.01, le=100)] = None
-    factor_gamma_gamma: Optional[confloat(ge=0.01, le=100)] = None
+    factor_gamma_var: Optional[Annotated[float, Field(ge=0.01, le=100)]] = None
+    factor_gamma_st: Optional[Annotated[float, Field(ge=0.01, le=100)]] = None
+    factor_gamma_gamma: Optional[Annotated[float, Field(ge=0.01, le=100)]] = None
 
     @classmethod
     def model_type(cls):
@@ -128,7 +125,7 @@ class CalculationOptions(BaseDataClass):
     trajectory_interval: float = 0.50
 
     def _to_internal(self):
-        fields = self.dict(exclude={"calculationtype"})
+        fields = self.model_dump(exclude=["calculationtype"])
         return PreliminaryDesign(**fields)
 
 
@@ -151,7 +148,7 @@ class DFoundationsModel(BaseModel):
     @property
     def default_console_path(self) -> Path:
         return Path("DFoundations/DFoundations.exe")
-    
+
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dfoundations_console_path")
@@ -169,7 +166,7 @@ class DFoundationsModel(BaseModel):
         return self.datastructure.input_data
 
     def serialize(self, filename: Union[FilePath, BinaryIO]):
-        serializer = DFoundationsInputSerializer(ds=self.datastructure.dict())
+        serializer = DFoundationsInputSerializer(ds=self.datastructure.model_dump())
         serializer.write(filename)
 
         if isinstance(filename, Path):

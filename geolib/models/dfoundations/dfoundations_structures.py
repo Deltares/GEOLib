@@ -77,14 +77,24 @@ class DFoundationsTableWrapper(DSeriesStructure):
         """
 
         def split_line(text: str) -> List[str]:
-            parts = re.split(" |\t", text.strip())
-            return list(filter(lambda part: part != "", parts))
+            parts = []
+            for part in re.split(" |\t", text.strip()):
+                if part == "":
+                    continue
+                if part.isdigit():
+                    parts.append(int(part))
+                else:
+                    try:
+                        parts.append(float(part))
+                    except ValueError:
+                        parts.append(part)
+            return parts
 
         table_text = list(DSerieParser.parse_list_group(text).values())[0]
         table_data = list(DSerieParser.parse_list_group(table_text).values())
         if len(table_data) == 0:
             values_dict_list = table_data
-            collection_property_name = list(cls.__fields__.items())[0][0]
+            collection_property_name = list(cls.model_fields.items())[0][0]
             return cls(**{collection_property_name: values_dict_list})
         else:
             # Expected two groups (column_indication and data)
@@ -93,7 +103,7 @@ class DFoundationsTableWrapper(DSeriesStructure):
                 dict(zip(keys, values))
                 for values in map(split_line, table_data[1].split("\n"))
             ]
-            collection_property_name = list(cls.__fields__.items())[0][0]
+            collection_property_name = list(cls.model_fields.items())[0][0]
 
         return cls(**{collection_property_name: values_dict_list})
 

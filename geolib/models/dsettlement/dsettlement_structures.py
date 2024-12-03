@@ -1,16 +1,11 @@
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Tuple
+from typing import Dict, List
 
 from geolib.models.dseries_parser import (
-    DSerieListGroupNextStructure,
-    DSerieParser,
-    DSeriesInlineProperties,
     DSeriesRepeatedGroupedProperties,
     DSeriesStructure,
-    get_line_property_key_value,
-    get_line_property_value,
     make_key,
     split_line_elements,
     strip_line_first_element,
@@ -31,7 +26,8 @@ class ComplexVerticalSubstructure(DSeriesStructure):
         them.
         """
         largs = list(args)
-        for field, fieldtype in self.__fields__.items():
+        fields = self.model_fields
+        for field, fieldtype in fields.items():
             if len(largs) == 0:
                 break
             if field in kwargs:

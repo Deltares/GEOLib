@@ -26,7 +26,7 @@ class TestDStabilityNaNFields:
         )
         dm.set_model(bishop_analysis_method, 0, 0)
 
-        data = dm.datastructure.json()
+        data = dm.datastructure.model_dump_json()
         # Using `in` was very slow, hence the find
         assert data.find('"NaN"') != -1  # Assert that quoted NaNs are found
         assert data.find(" NaN") == -1  # Assert that an unquoted NaN isn't found

@@ -1,6 +1,5 @@
 import logging
-from os import path, scandir
-from typing import List, Tuple, Type, _GenericAlias, get_type_hints
+from typing import List, Tuple, Type, _GenericAlias
 from zipfile import ZipFile
 
 from pydantic import DirectoryPath, FilePath
@@ -41,7 +40,7 @@ class DStabilityParser(BaseParser):
                 fn = filepath / (fieldtype.structure_name() + ".json")
                 if not fn.exists():
                     raise FileNotFoundError(f"Couldn't find required file at {fn}")
-                ds[field] = fieldtype.parse_raw(fn.open().read())
+                ds[field] = fieldtype.model_validate_json(fn.open().read())
 
         return self.structure(**ds)
 
@@ -59,7 +58,7 @@ class DStabilityParser(BaseParser):
         sorted_files = sorted(files, key=lambda x: x.name)
         for file in sorted_files:
             if fieldtype.structure_name() in file.name:
-                out.append(fieldtype.parse_raw(file.open().read()))
+                out.append(fieldtype.model_validate_json(file.open().read()))
             else:
                 logger.debug(f"Didn't match {fieldtype} for {file}")
 

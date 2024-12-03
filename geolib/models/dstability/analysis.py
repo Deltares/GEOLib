@@ -1,8 +1,8 @@
 import abc
-from enum import Enum
-from typing import Dict, List, Optional, Type, Union
+from typing import List
 
-from pydantic import PositiveInt, confloat
+from pydantic import Field, PositiveInt
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
 
@@ -57,7 +57,7 @@ class DStabilityCircle(DStabilityObject):
     """
 
     center: Point
-    radius: confloat(gt=0)
+    radius: Annotated[float, Field(gt=0)]
 
     def _to_internal_datastructure(self) -> PersistableCircle:
         return PersistableCircle(
@@ -78,11 +78,13 @@ class DStabilitySearchGrid(DStabilityObject):
     bottom_left: Point
     number_of_points_in_x: PositiveInt
     number_of_points_in_z: PositiveInt
-    space: confloat(gt=0)
+    space: Annotated[float, Field(gt=0)]
 
     def _to_internal_datastructure(self) -> PersistableSearchGrid:
         return PersistableSearchGrid(
-            BottomLeft=PersistablePoint(X=self.bottom_left.x, Z=self.bottom_left.z),
+            BottomLeft=NullablePersistablePoint(
+                X=self.bottom_left.x, Z=self.bottom_left.z
+            ),
             NumberOfPointsInX=self.number_of_points_in_x,
             NumberOfPointsInZ=self.number_of_points_in_z,
             Space=self.space,
@@ -98,9 +100,9 @@ class DStabilitySearchArea(DStabilityObject):
         width (float): Width of the search area
     """
 
-    height: confloat(gt=0)
+    height: Annotated[float, Field(gt=0)]
     top_left: Point
-    width: confloat(gt=0)
+    width: Annotated[float, Field(gt=0)]
 
     def _to_internal_datastructure(self) -> PersistableSearchArea:
         return PersistableSearchArea(
@@ -136,7 +138,9 @@ class DStabilitySlipPlaneConstraints(DStabilityObject):
     x_left_zone_b: float = 0.0
 
     def _to_internal_datastructure(self) -> PersistableSlipPlaneConstraints:
-        data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}
+        data = {
+            **{snake_to_camel(name): value for name, value in self.model_dump().items()}
+        }
         return PersistableSlipPlaneConstraints(**data)
 
 
@@ -154,7 +158,9 @@ class DStabilityGeneticSlipPlaneConstraints(DStabilityObject):
     minimum_thrust_line_percentage_inside_slices: float = 0.0
 
     def _to_internal_datastructure(self) -> PersistableGeneticSlipPlaneConstraints:
-        data = {**{snake_to_camel(name): value for name, value in self.dict().items()}}
+        data = {
+            **{snake_to_camel(name): value for name, value in self.model_dump().items()}
+        }
         return PersistableGeneticSlipPlaneConstraints(**data)
 
 
@@ -192,7 +198,7 @@ class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):
     )
     bottom_tangent_line_z: float
     number_of_tangent_lines: PositiveInt
-    space_tangent_lines: confloat(gt=0)  # type: ignore
+    space_tangent_lines: Annotated[float, Field(gt=0)]  # type: ignore
 
     def _to_internal_datastructure(self) -> PersistableBishopBruteForceSettings:
         return PersistableBishopBruteForceSettings(

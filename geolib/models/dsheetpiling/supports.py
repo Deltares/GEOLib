@@ -1,7 +1,8 @@
 from enum import IntEnum
 from typing import Optional
 
-from pydantic import PositiveFloat, confloat, constr
+from pydantic import Field, PositiveFloat, StringConstraints
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
 
@@ -26,18 +27,18 @@ class Anchor(BaseDataClass):
         side: Side of the anchor [Side]
     """
 
-    name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
     e_modulus: Optional[PositiveFloat] = None
     cross_section: Optional[PositiveFloat] = None
-    wall_height_kranz: Optional[confloat(ge=0)] = None
+    wall_height_kranz: Optional[Annotated[float, Field(ge=0)]] = None
     length: Optional[PositiveFloat] = None
     angle: Optional[float] = None
     side: Side = Side.RIGHT
-    yield_force: Optional[confloat(ge=0)] = None
+    yield_force: Optional[Annotated[float, Field(ge=0)]] = None
 
     def to_internal(self) -> InternalAnchor:
-        return InternalAnchor(**self.dict(exclude_none=True))
+        return InternalAnchor(**self.model_dump(exclude_none=True))
 
 
 class Strut(BaseDataClass):
@@ -55,18 +56,20 @@ class Strut(BaseDataClass):
         pre_compression: Pre-compressions [kN/m']
     """
 
-    name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
     e_modulus: Optional[PositiveFloat] = None
     cross_section: Optional[PositiveFloat] = None
     length: Optional[PositiveFloat] = None
     angle: Optional[float] = None
-    buckling_force: Optional[confloat(ge=0)] = None
+    buckling_force: Optional[Annotated[float, Field(ge=0)]] = None
     side: Side = Side.RIGHT
     pre_compression: Optional[PositiveFloat] = None
 
     def to_internal(self) -> InternalStrut:
-        return InternalStrut(**self.dict(exclude_none=True, exclude={"pre_compression"}))
+        return InternalStrut(
+            **self.model_dump(exclude_none=True, exclude={"pre_compression"})
+        )
 
 
 class SupportType(IntEnum):
@@ -78,19 +81,19 @@ class SupportType(IntEnum):
 class SpringSupport(BaseDataClass):
     """Spring support."""
 
-    name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
-    rotational_stiffness: confloat(ge=0)
-    translational_stiffness: confloat(ge=0)
+    rotational_stiffness: Annotated[float, Field(ge=0)]
+    translational_stiffness: Annotated[float, Field(ge=0)]
 
     def to_internal(self) -> InternalSupport:
-        return InternalSupport(**self.dict())
+        return InternalSupport(**self.model_dump())
 
 
 class RigidSupport(BaseDataClass):
     """Rigid support."""
 
-    name: constr(min_length=1, max_length=50)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
     support_type: SupportType
 
