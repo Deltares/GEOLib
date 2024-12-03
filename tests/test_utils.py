@@ -1,5 +1,4 @@
-from random import randint
-from typing import Type, _GenericAlias, get_type_hints
+from typing import Type
 
 import pytest
 
@@ -32,7 +31,7 @@ class TestGetFields:
         assert len(filtered_types) == 1
         field_name, field_type = filtered_types[0]
         assert field_name == "regular_field"
-        assert field_type.type_ == int
+        assert field_type.annotation == int
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(

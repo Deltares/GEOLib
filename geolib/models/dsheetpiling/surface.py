@@ -1,6 +1,7 @@
 from typing import List, Optional
 
-from pydantic import confloat, conlist, constr, validator
+from pydantic import Field, StringConstraints, field_validator
+from typing_extensions import Annotated
 
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -19,12 +20,12 @@ class Surface(BaseDataClass):
         std: Standard deviation of the distribution type.
     """
 
-    name: constr(min_length=1, max_length=50)
-    points: conlist(Point, min_items=1)
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
+    points: Annotated[List[Point], Field(min_length=1)]
     distribution_type: Optional[DistributionType] = None
-    std: Optional[confloat(ge=0.0)] = None
+    std: Optional[Annotated[float, Field(ge=0.0)]] = None
 
-    @validator("points")
+    @classmethod
     def points_must_be_increasing_and_greater_or_equal_to_zero(cls, v):
         x_coords = [p.x for p in v]
         if min(x_coords) < 0:
@@ -39,8 +40,12 @@ class Surface(BaseDataClass):
             raise ValueError("x-coordinates must be strictly increasing")
         return v
 
+    points_validator = field_validator("points")(
+        points_must_be_increasing_and_greater_or_equal_to_zero
+    )
+
     def to_internal(self) -> InternalSurface:
-        kwargs = self.dict(exclude_none=True, exclude={"points"})
+        kwargs = self.model_dump(exclude_none=True, exclude=["points"])
         kwargs["points"] = [
             {"Nr": i, "X-coord": p.x, "Value": p.z}
             for i, p in enumerate(self.points, start=1)

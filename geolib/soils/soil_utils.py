@@ -1,6 +1,6 @@
 from struct import pack, unpack_from
 
-from pydantic.color import Color as PydanticColor
+from pydantic_extra_types.color import Color as PydanticColor
 
 
 class Color(PydanticColor):

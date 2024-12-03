@@ -49,7 +49,7 @@ class TestSurfaces:
             pytest.param(
                 [],
                 pytest.raises(
-                    ValidationError, match=r"ensure this value has at least 1 items"
+                    ValidationError, match=r" List should have at least 1 item"
                 ),
                 id="No points",
             ),

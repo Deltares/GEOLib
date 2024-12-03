@@ -11,6 +11,7 @@ tutorials_directory = "dsettlement/tutorials"
 dump_file_extension_filter = "*.sld"
 output_test_file_extension = ".json"
 
+
 class TestDSettlementRegressionSuite:
     input_benchmark_testdata = TestUtils.get_test_files_from_local_test_dir(
         benchmark_directory, dump_file_extension_filter
@@ -48,7 +49,7 @@ class TestDSettlementRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.model_dump_json(indent=4))
 
     @pytest.mark.systemtest
     @only_teamcity
@@ -72,4 +73,4 @@ class TestDSettlementRegressionSuite:
 
         # Serialize to json for acceptance
         with open(output_test_file, "w") as io:
-            io.write(ds.output.json(indent=4))
+            io.write(ds.model_dump_json(indent=4))

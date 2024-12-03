@@ -49,7 +49,7 @@ class CPT(BaseDataClass):
         pass
 
     def _to_internal(self) -> InternalCPT:
-        kwargs = self.dict()
+        kwargs = self.model_dump()
         kwargs["measured_data"] = {"data": kwargs["measured_data"]}
         return InternalCPT(**kwargs)
 
@@ -103,12 +103,12 @@ class Profile(BaseDataClass):
     layers: List[Dict[str, Any]]
 
     def _to_internal(self, matching_cpt) -> InternalProfile:
-        kwargs = self.dict(exclude={"cpt", "excavation", "location"})
+        kwargs = self.model_dump(exclude={"cpt", "excavation", "location"})
 
         kwargs["matching_cpt"] = matching_cpt
 
         if self.excavation is not None:
-            kwargs.update(self.excavation.dict())
+            kwargs.update(self.excavation.model_dump())
 
         kwargs["x_coordinate"] = self.location.x
         kwargs["y_coordinate"] = self.location.y

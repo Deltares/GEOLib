@@ -15,8 +15,8 @@ from geolib.models.dgeoflow.internal import (
     CalculationTypeEnum,
     DGeoFlowStructure,
     ErosionDirectionEnum,
+    InternalPipeTrajectory,
     PersistablePoint,
-    PipeTrajectory,
 )
 from tests.utils import TestUtils, only_teamcity
 
@@ -273,7 +273,7 @@ class TestDGeoFlowModel:
 
         dm.set_calculation_type(calculation_type=CalculationTypeEnum.PIPE_LENGTH)
         dm.set_pipe_trajectory(
-            pipe_trajectory=PipeTrajectory(
+            pipe_trajectory=InternalPipeTrajectory(
                 Label="Pipe",
                 D70=0.1,
                 ErosionDirection=ErosionDirectionEnum.RIGHT_TO_LEFT,
@@ -346,7 +346,7 @@ class TestDGeoFlowModel:
         dm.add_boundary_condition([Point(x=30, z=0), Point(x=50, z=0)], 0, "Polder")
         dm.set_calculation_type(calculation_type=CalculationTypeEnum.CRITICAL_HEAD)
         dm.set_pipe_trajectory(
-            pipe_trajectory=PipeTrajectory(
+            pipe_trajectory=InternalPipeTrajectory(
                 Label="Pipe",
                 D70=0.1,
                 ErosionDirection=ErosionDirectionEnum.RIGHT_TO_LEFT,

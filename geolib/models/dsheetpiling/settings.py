@@ -1,6 +1,7 @@
 from enum import Enum, IntEnum
 
-from pydantic import conint
+from pydantic import Field
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
 
@@ -121,10 +122,26 @@ class PartialFactorSetEC7NADNL(IntEnum):
     RC3 = 3
     SLS = 4
 
+class AssessmentTypeEC7NL(IntEnum):
+    NewConstruction = 0
+    Reconstruction = 1
+    ReconstructionAccordingToBouwBesluit2003OrBefore = 2
+    Disapproval = 3
+
 
 class PartialFactorSetEC7NADBE(IntEnum):
-    SET1 = 0
-    SET2 = 1
+    RC1SET1 = 0
+    RC1SET2 = 1
+    RC2SET1 = 2
+    RC2SET2 = 3
+    RC3SET1 = 4
+    RC3SET2 = 5
+
+
+class RiskClassEC7BE(IntEnum):
+    RC1 = 0
+    RC2 = 1
+    RC3 = 2
 
 
 class PartialFactorSetCUR(IntEnum):
@@ -206,7 +223,7 @@ class ModulusReactionType(Enum):
 class CurveSettings(BaseDataClass):
     modulus_reaction_type: ModulusReactionType = ModulusReactionType.SECANT
     use_unloading_reloading_curve: bool = False
-    curve_number: conint(ge=1, le=4) = 3
+    curve_number: Annotated[int, Field(ge=1, le=4)] = 3
 
 
 class LoadTypeFavourableUnfavourable(IntEnum):

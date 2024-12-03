@@ -1,15 +1,12 @@
 import logging
 from datetime import timedelta
-from operator import attrgetter
 from pathlib import Path
-from subprocess import CompletedProcess, run
-from typing import BinaryIO, List, Optional, Type, Union
+from typing import Annotated, BinaryIO, List, Optional, Type, Union
 
-from pydantic import FilePath, validate_arguments
-from pydantic.types import PositiveInt, confloat, conint, constr
+from pydantic import FilePath, StringConstraints
 
 from geolib.geometry import Point
-from geolib.models import BaseDataClass, BaseModel, BaseModelStructure
+from geolib.models.base_model import BaseModel
 from geolib.models.dsettlement.internal_soil import SoilInternal
 from geolib.models.dsettlement.loads import (
     CircularLoad,
@@ -22,30 +19,25 @@ from geolib.models.dsettlement.probabilistic_calculation_types import (
     ProbabilisticCalculationType,
 )
 from geolib.models.dsettlement.serializer import DSettlementInputSerializer
-from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG, MetaData
+from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import DistributionType
 from geolib.soils import Soil as Soil_Input
 
 from .drains import VerticalDrain
 from .dsettlement_parserprovider import DSettlementParserProvider
 from .internal import (
-    Boundary,
     CalculationOptions,
     ConsolidationModel,
-    Curve,
     Dimension,
     DSeriePoint,
     DSettlementOutputStructure,
     DSettlementStructure,
     Layer,
-    Layers,
     Model,
     NonUniformLoad,
     NonUniformLoads,
     OtherLoads,
-    PiezoLines,
     PointForLoad,
-    Points,
     ResidualTimes,
     Results,
     SoilModel,
@@ -77,7 +69,7 @@ class DSettlementModel(BaseModel):
     @property
     def default_console_path(self) -> Path:
         return Path("DSettlement/DSettlement.exe")
-    
+
     @property
     def custom_console_path(self) -> Path:
         return self.get_meta_property("dsettlement_console_path")
@@ -207,16 +199,19 @@ class DSettlementModel(BaseModel):
 
         calculation_options = self.datastructure.input_data.calculation_options.dict()
         calculation_options.update(**kwargs)
-        self.datastructure.input_data.calculation_options = CalculationOptions.set_imaginary_surface_options(
-            **calculation_options
+        self.datastructure.input_data.calculation_options = (
+            CalculationOptions.set_imaginary_surface_options(**calculation_options)
         )
 
         """Check that the given layer index refers to an existing index layer"""
         options = self.datastructure.input_data.calculation_options
-        if options.is_imaginary_surface \
-                and (options.imaginary_surface_layer < 1 or
-                     options.imaginary_surface_layer > self.layers.layers.__len__()):
-            raise ValueError("The index of imaginary_surface_layer refers to a nonexistent layer index.")
+        if options.is_imaginary_surface and (
+            options.imaginary_surface_layer < 1
+            or options.imaginary_surface_layer > self.layers.layers.__len__()
+        ):
+            raise ValueError(
+                "The index of imaginary_surface_layer refers to a nonexistent layer index."
+            )
 
         return calculation_options
 
@@ -234,7 +229,9 @@ class DSettlementModel(BaseModel):
 
     @property
     def use_probabilistic_defaults_boundaries(self):
-        return self.datastructure.input_data.geometry_data.use_probabilistic_defaults_boundaries
+        return (
+            self.datastructure.input_data.geometry_data.use_probabilistic_defaults_boundaries
+        )
 
     @property
     def stdv_boundaries(self):
@@ -287,7 +284,9 @@ class DSettlementModel(BaseModel):
             is_reliability_calculation : set to True if a probabilistic calculation should be performed.
 
         """
-        self.datastructure.input_data.check_x_in_vertical(point_of_vertical=point_of_vertical)
+        self.datastructure.input_data.check_x_in_vertical(
+            point_of_vertical=point_of_vertical
+        )
         self.datastructure.input_data.probabilistic_data = (
             self.datastructure.input_data.probabilistic_data.set_probabilistic_data(
                 point_of_vertical=point_of_vertical,
@@ -351,7 +350,9 @@ class DSettlementModel(BaseModel):
 
         piezo_line = self.headlines.create_piezoline(curves)
         if is_phreatic:
-            self.datastructure.input_data.geometry_data.phreatic_line.phreatic_line = piezo_line.id
+            self.datastructure.input_data.geometry_data.phreatic_line.phreatic_line = (
+                piezo_line.id
+            )
         return piezo_line.id
 
     @property
@@ -401,7 +402,7 @@ class DSettlementModel(BaseModel):
 
     def add_other_load(
         self,
-        name: constr(min_length=1, max_length=25),
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         time: timedelta,
         point: Point,
         other_load: Union[
@@ -421,7 +422,7 @@ class DSettlementModel(BaseModel):
 
     def add_non_uniform_load(
         self,
-        name: constr(min_length=1, max_length=25),
+        name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         points: List[Point],
         time_start: timedelta,
         gamma_dry: float,
@@ -505,6 +506,7 @@ class DSettlementModel(BaseModel):
             raise ValueError(
                 "If you wish to add a vertical drain then value is_vertical_drains for the model should be True"
             )
+
     @property
     def output(self) -> Results:
         """Access internal dict-like datastructure of the output.

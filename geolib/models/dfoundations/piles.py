@@ -4,7 +4,9 @@
 from enum import Enum
 from typing import Optional
 
-from pydantic.types import PositiveInt, confloat, constr
+from pydantic import Field, StringConstraints
+from pydantic.types import PositiveInt
+from typing_extensions import Annotated
 
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -26,11 +28,11 @@ from .internal import (
 class PileLocation(BaseDataClass):
     """Base Class for Pile location."""
 
-    pile_name: constr(min_length=0, max_length=100) = ""
+    pile_name: Annotated[str, StringConstraints(min_length=0, max_length=100)] = ""
     point: Point
-    pile_head_level: confloat(ge=-1000, le=1000)
-    limit_state_str: confloat(ge=0, le=100000)
-    limit_state_service: confloat(ge=0, le=100000)
+    pile_head_level: Annotated[float, Field(ge=-1000, le=1000)]
+    limit_state_str: Annotated[float, Field(ge=0, le=100000)]
+    limit_state_service: Annotated[float, Field(ge=0, le=100000)]
 
     def _to_internal(self, index: PositiveInt):
         return {
@@ -47,7 +49,7 @@ class PileLocation(BaseDataClass):
 class BearingPileLocation(PileLocation):
     """Inherits :class:`~geolib.models.dfoundations.piles.PileLocation`."""
 
-    surcharge: confloat(ge=0, le=100000)
+    surcharge: Annotated[float, Field(ge=0, le=100000)]
 
     def _to_internal(self, index: PositiveInt):
         pile_location = super()._to_internal(index)
@@ -58,8 +60,8 @@ class TensionPileLocation(PileLocation):
     """Inherits :class:`~geolib.models.dfoundations.piles.PileLocation`."""
 
     use_alternating_loads: bool
-    max_force: confloat(ge=-100000, le=100000)
-    min_force: confloat(ge=-100000, le=100000)
+    max_force: Annotated[float, Field(ge=-100000, le=100000)]
+    min_force: Annotated[float, Field(ge=-100000, le=100000)]
 
     def _to_internal(self, index: PositiveInt):
         pile_location = super()._to_internal(index)
@@ -90,26 +92,28 @@ class Pile(BaseDataClass):
 
     pile_name: str
     pile_type: BasePileType
-    pile_class_factor_shaft_sand_gravel: confloat(ge=0, le=9)
-    pile_class_factor_shaft_clay_loam_peat: Optional[confloat(ge=0, le=9)]
+    pile_class_factor_shaft_sand_gravel: Annotated[float, Field(ge=0, le=9)]
+    pile_class_factor_shaft_clay_loam_peat: Optional[
+        Annotated[float, Field(ge=0, le=9)]
+    ] = None
     preset_pile_class_factor_shaft_clay_loam_peat: BasePileTypeForClayLoamPeat
-    elasticity_modulus: confloat(ge=0, le=1e25)
+    elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)]
 
 
 class BearingPile(Pile):
     """Inherits :class:`~geolib.models.dfoundations.piles.Pile`."""
 
-    pile_class_factor_tip: confloat(ge=0, le=9)
+    pile_class_factor_tip: Annotated[float, Field(ge=0, le=9)]
     load_settlement_curve: LoadSettlementCurve
     user_defined_pile_type_as_prefab: bool
     use_manual_reduction_for_qc: bool
-    reduction_percentage_qc: confloat(ge=25, le=100) = 25
-    characteristic_adhesion: confloat(ge=0, le=1000)
+    reduction_percentage_qc: Annotated[float, Field(ge=25, le=100)] = 25
+    characteristic_adhesion: Annotated[float, Field(ge=0, le=1000)]
 
     overrule_pile_tip_shape_factor: bool
-    pile_tip_shape_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_shape_factor: Optional[Annotated[float, Field(ge=0, le=10)]] = None
     overrule_pile_tip_cross_section_factors: bool
-    pile_tip_cross_section_factor: Optional[confloat(ge=0, le=10)]
+    pile_tip_cross_section_factor: Optional[Annotated[float, Field(ge=0, le=10)]] = None
 
     def _to_internal(self):
         return TypesBearingPiles(
@@ -145,7 +149,7 @@ class BearingPile(Pile):
 class TensionPile(Pile):
     """Inherits :class:`~geolib.models.dfoundations.piles.Pile`."""
 
-    unit_weight_pile: confloat(ge=0, le=1000)
+    unit_weight_pile: Annotated[float, Field(ge=0, le=1000)]
 
     def _to_internal(self):
         return TypesTensionPiles(
@@ -165,7 +169,7 @@ class TensionPile(Pile):
 class BearingRoundPile(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    diameter: confloat(ge=0, le=100)
+    diameter: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -177,7 +181,7 @@ class BearingRoundPile(BearingPile):
 class TensionRoundPile(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    diameter: confloat(ge=0, le=100)
+    diameter: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -189,8 +193,8 @@ class TensionRoundPile(TensionPile):
 class BearingRectangularPile(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    base_width: confloat(ge=0, le=100)
-    base_length: confloat(ge=0, le=100)
+    base_width: Annotated[float, Field(ge=0, le=100)]
+    base_length: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -203,8 +207,8 @@ class BearingRectangularPile(BearingPile):
 class TensionRectangularPile(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    base_width: confloat(ge=0, le=100)
-    base_length: confloat(ge=0, le=100)
+    base_width: Annotated[float, Field(ge=0, le=100)]
+    base_length: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -217,9 +221,9 @@ class TensionRectangularPile(TensionPile):
 class BearingRoundPileWithEnlargedBase(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    base_diameter: confloat(ge=0, le=100)
-    pile_diameter: confloat(ge=0, le=100)
-    base_height: confloat(ge=0, le=100)
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+    base_height: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -233,9 +237,9 @@ class BearingRoundPileWithEnlargedBase(BearingPile):
 class TensionRoundPileWithEnlargedBase(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    base_diameter: confloat(ge=0, le=100)
-    pile_diameter: confloat(ge=0, le=100)
-    base_height: confloat(ge=0, le=100)
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+    base_height: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -249,11 +253,11 @@ class TensionRoundPileWithEnlargedBase(TensionPile):
 class BearingRectangularPileWithEnlargedBase(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    base_width_v: confloat(ge=0, le=100)
-    base_length_v: confloat(ge=0, le=100)
-    base_height: confloat(ge=0, le=100)
-    shaft_width: confloat(ge=0, le=100)
-    shaft_length: confloat(ge=0, le=100)
+    base_width_v: Annotated[float, Field(ge=0, le=100)]
+    base_length_v: Annotated[float, Field(ge=0, le=100)]
+    base_height: Annotated[float, Field(ge=0, le=100)]
+    shaft_width: Annotated[float, Field(ge=0, le=100)]
+    shaft_length: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -269,11 +273,11 @@ class BearingRectangularPileWithEnlargedBase(BearingPile):
 class TensionRectangularPileWithEnlargedBase(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    base_width_v: confloat(ge=0, le=100)
-    base_length_v: confloat(ge=0, le=100)
-    base_height: confloat(ge=0, le=100)
-    shaft_width: confloat(ge=0, le=100)
-    shaft_length: confloat(ge=0, le=100)
+    base_width_v: Annotated[float, Field(ge=0, le=100)]
+    base_length_v: Annotated[float, Field(ge=0, le=100)]
+    base_height: Annotated[float, Field(ge=0, le=100)]
+    shaft_width: Annotated[float, Field(ge=0, le=100)]
+    shaft_length: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -289,8 +293,8 @@ class TensionRectangularPileWithEnlargedBase(TensionPile):
 class BearingRoundTaperedPile(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    diameter_at_pile_tip: confloat(ge=0, le=100)
-    increase_in_diameter: confloat(ge=0, le=100)
+    diameter_at_pile_tip: Annotated[float, Field(ge=0, le=100)]
+    increase_in_diameter: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -303,8 +307,8 @@ class BearingRoundTaperedPile(BearingPile):
 class TensionRoundTaperedPile(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    diameter_at_pile_tip: confloat(ge=0, le=100)
-    increase_in_diameter: confloat(ge=0, le=100)
+    diameter_at_pile_tip: Annotated[float, Field(ge=0, le=100)]
+    increase_in_diameter: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -317,8 +321,8 @@ class TensionRoundTaperedPile(TensionPile):
 class BearingRoundHollowPileWithClosedBase(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    external_diameter: confloat(ge=0, le=100)
-    wall_thickness: confloat(ge=0, le=100)
+    external_diameter: Annotated[float, Field(ge=0, le=100)]
+    wall_thickness: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -333,8 +337,8 @@ class BearingRoundHollowPileWithClosedBase(BearingPile):
 class TensionRoundHollowPileWithClosedBase(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    external_diameter: confloat(ge=0, le=100)
-    wall_thickness: confloat(ge=0, le=100)
+    external_diameter: Annotated[float, Field(ge=0, le=100)]
+    wall_thickness: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -349,8 +353,8 @@ class TensionRoundHollowPileWithClosedBase(TensionPile):
 class BearingRoundPileWithLostTip(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    base_diameter: confloat(ge=0, le=100)
-    pile_diameter: confloat(ge=0, le=100)
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -363,8 +367,8 @@ class BearingRoundPileWithLostTip(BearingPile):
 class TensionRoundPileWithLostTip(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    base_diameter: confloat(ge=0, le=100)
-    pile_diameter: confloat(ge=0, le=100)
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -377,9 +381,9 @@ class TensionRoundPileWithLostTip(TensionPile):
 class BearingRoundPileWithInSituFormedBase(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    base_diameter: confloat(ge=0, le=100)
-    pile_diameter: confloat(ge=0, le=100)
-    base_height: confloat(ge=0, le=100)
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+    base_height: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -393,9 +397,9 @@ class BearingRoundPileWithInSituFormedBase(BearingPile):
 class TensionRoundPileWithInSituFormedBase(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    base_diameter: confloat(ge=0, le=100)
-    pile_diameter: confloat(ge=0, le=100)
-    base_height: confloat(ge=0, le=100)
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+    base_height: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -409,8 +413,8 @@ class TensionRoundPileWithInSituFormedBase(TensionPile):
 class BearingSection(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    base_width: confloat(ge=0, le=100)
-    base_length: confloat(ge=0, le=100)
+    base_width: Annotated[float, Field(ge=0, le=100)]
+    base_length: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -423,8 +427,8 @@ class BearingSection(BearingPile):
 class TensionSection(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    circumference: confloat(ge=0, le=100)
-    cross_section: confloat(ge=0, le=100)
+    circumference: Annotated[float, Field(ge=0, le=100)]
+    cross_section: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -437,8 +441,8 @@ class TensionSection(TensionPile):
 class BearingRoundOpenEndedHollowPile(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    external_diameter: confloat(ge=0, le=100)
-    wall_thickness: confloat(ge=0, le=100)
+    external_diameter: Annotated[float, Field(ge=0, le=100)]
+    wall_thickness: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -453,8 +457,8 @@ class BearingRoundOpenEndedHollowPile(BearingPile):
 class TensionRoundOpenEndedHollowPile(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    external_diameter: confloat(ge=0, le=100)
-    wall_thickness: confloat(ge=0, le=100)
+    external_diameter: Annotated[float, Field(ge=0, le=100)]
+    wall_thickness: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
@@ -469,10 +473,10 @@ class TensionRoundOpenEndedHollowPile(TensionPile):
 class BearingHShapedPile(BearingPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
 
-    height_h_shape: confloat(ge=0, le=100)
-    width_h_shape: confloat(ge=0, le=100)
-    thickness_web: confloat(ge=0, le=100)
-    thickness_flange: confloat(ge=0, le=100)
+    height_h_shape: Annotated[float, Field(ge=0, le=100)]
+    width_h_shape: Annotated[float, Field(ge=0, le=100)]
+    thickness_web: Annotated[float, Field(ge=0, le=100)]
+    thickness_flange: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
@@ -487,10 +491,10 @@ class BearingHShapedPile(BearingPile):
 class TensionHShapedPile(TensionPile):
     """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
 
-    height_h_shape: confloat(ge=0, le=100)
-    width_h_shape: confloat(ge=0, le=100)
-    thickness_web: confloat(ge=0, le=100)
-    thickness_flange: confloat(ge=0, le=100)
+    height_h_shape: Annotated[float, Field(ge=0, le=100)]
+    width_h_shape: Annotated[float, Field(ge=0, le=100)]
+    thickness_web: Annotated[float, Field(ge=0, le=100)]
+    thickness_flange: Annotated[float, Field(ge=0, le=100)]
 
     def _to_internal(self):
         types_tension_pile = super()._to_internal()

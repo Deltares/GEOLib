@@ -7,9 +7,8 @@ import logging
 import re
 from collections import namedtuple
 from pathlib import Path
-from typing import Any
 
-from pydantic import validator
+from pydantic import field_validator
 
 _CAMEL_TO_SNAKE_PATTERN = re.compile(r"(?<!^)(?=[A-Z])")
 
@@ -49,4 +48,4 @@ def make_newline_validator(*field_name: str, req_newlines: int = 2):
             )
         return v
 
-    return validator(*field_name, allow_reuse=True)(field_must_contain_newlines)
+    return field_validator(*field_name)(field_must_contain_newlines)

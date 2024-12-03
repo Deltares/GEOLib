@@ -125,7 +125,7 @@ At the moment that version number is:
 
 * D-Settlement **23.2**
 * D-Foundations **23.1**
-* D-SheetPiling **23.1**
+* D-SheetPiling **24.1**
 * D-Stability **2024.01**
 * D-Geo Flow **2024.01**
 
