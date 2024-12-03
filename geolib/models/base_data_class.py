@@ -12,5 +12,6 @@ class BaseDataClass(BaseModel):
         validate_assignment=True,
         arbitrary_types_allowed=True,
         validate_default=True,
+        ser_json_inf_nan='constants',
         extra=settings.extra_fields,
     )
