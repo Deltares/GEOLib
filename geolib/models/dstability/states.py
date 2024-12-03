@@ -3,9 +3,7 @@ This module handles the three types of state types in DStability.
 """
 
 import abc
-from typing import List, Tuple
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.models import BaseDataClass
 
 from ...geometry.one import Point
@@ -44,17 +42,9 @@ class DStabilityStress(DStabilityObject):
     state_type: InternalStateTypeEnum = InternalStateTypeEnum.POP
 
     def _to_internal_datastructure(self) -> PersistableStress:
-        if IS_PYDANTIC_V2:
-            data = {
-                **{
-                    snake_to_camel(name): value
-                    for name, value in self.model_dump().items()
-                }
-            }
-        else:
-            data = {
-                **{snake_to_camel(name): value for name, value in self.dict().items()}
-            }
+        data = {
+            **{snake_to_camel(name): value for name, value in self.model_dump().items()}
+        }
         data["PopStochasticParameter"] = data.pop("StochasticParameter")
         return PersistableStress(**data)
 
@@ -81,10 +71,7 @@ class DStabilityStatePoint(DStabilityObject):
     label: str = ""
 
     def _to_internal_datastructure(self) -> PersistableStatePoint:
-        if IS_PYDANTIC_V2:
-            model_dump = self.model_dump()
-        else:
-            model_dump = self.dict()
+        model_dump = self.model_dump()
         data = {
             **{
                 snake_to_camel(name): value
@@ -109,10 +96,7 @@ class DStabilityStateLinePoint(DStabilityObject):
     x: float
 
     def _to_internal_datastructure(self) -> PersistableStateLinePoint:
-        if IS_PYDANTIC_V2:
-            model_dump = self.model_dump()
-        else:
-            model_dump = self.dict()
+        model_dump = self.model_dump()
         data = {
             **{
                 snake_to_camel(name): value

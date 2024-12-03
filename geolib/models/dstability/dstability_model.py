@@ -5,7 +5,7 @@ from typing import BinaryIO, List, Optional, Set, Type, Union
 
 import matplotlib.pyplot as plt
 from pydantic import DirectoryPath, FilePath
-from shapely.geometry import LineString, Point, Polygon
+from shapely.geometry import LineString, Polygon
 from shapely.ops import polygonize
 from shapely.validation import make_valid
 

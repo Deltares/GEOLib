@@ -3,17 +3,10 @@ This module handles the three types of reinforcements in DStability.
 """
 
 import abc
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from typing import Optional
-
-    from pydantic import Field
-    from typing_extensions import Annotated
-else:
-    from pydantic import NoneStr, confloat
+from pydantic import Field
+from typing_extensions import Annotated
 
 from geolib.models import BaseDataClass
 
@@ -31,10 +24,7 @@ from .internal import (
 class DStabilityReinforcement(BaseDataClass, metaclass=abc.ABCMeta):
     """Base Class for Reinforcements."""
 
-    if IS_PYDANTIC_V2:
-        label: Optional[str] = None
-    else:
-        label: NoneStr = None
+    label: Optional[str] = None
 
     @abc.abstractmethod
     def _to_internal_datastructure(self):
@@ -47,21 +37,13 @@ class Nail(DStabilityReinforcement):
     location: Point  # TODO x, z must be below ground level
     direction: float = 0.0
     horizontal_spacing: float = 0.0
-    if IS_PYDANTIC_V2:
-        length: Annotated[float, Field(gt=0)] = 3.0
-        diameter: Annotated[float, Field(gt=0)] = 0.1
-        grout_diameter: Annotated[float, Field(gt=0)] = 0.1
-    else:
-        length: confloat(gt=0) = 3.0
-        diameter: confloat(gt=0) = 0.1
-        grout_diameter: confloat(gt=0) = 0.1
+    length: Annotated[float, Field(gt=0)] = 3.0
+    diameter: Annotated[float, Field(gt=0)] = 0.1
+    grout_diameter: Annotated[float, Field(gt=0)] = 0.1
     critical_angle: float = 0.0
     max_pull_force: float = 0.0
     plastic_moment: float = 0.0
-    if IS_PYDANTIC_V2:
-        bending_stiffness: Annotated[float, Field(gt=0)] = 0.1
-    else:
-        bending_stiffness: confloat(gt=0) = 0.1
+    bending_stiffness: Annotated[float, Field(gt=0)] = 0.1
     use_facing: bool = False
     use_lateral_stress: bool = (
         False  # TODO set on wether or not lateralstresses are provided?
@@ -73,10 +55,7 @@ class Nail(DStabilityReinforcement):
     shear_stresses: List[Tuple[float, float]] = []
 
     def _to_internal_datastructure(self) -> PersistableNail:
-        if IS_PYDANTIC_V2:
-            model_dump = self.model_dump()
-        else:
-            model_dump = self.dict()
+        model_dump = self.model_dump()
         data = {
             **{
                 snake_to_camel(name): value
@@ -115,12 +94,8 @@ class Geotextile(DStabilityReinforcement):
 
     start: Point
     end: Point
-    if IS_PYDANTIC_V2:
-        effective_tensile_strength: Annotated[float, Field(gt=0)]
-        reduction_area: Annotated[float, Field(gt=0)]
-    else:
-        effective_tensile_strength: confloat(gt=0)
-        reduction_area: confloat(gt=0)
+    effective_tensile_strength: Annotated[float, Field(gt=0)]
+    reduction_area: Annotated[float, Field(gt=0)]
 
     def _to_internal_datastructure(self) -> PersistableForbiddenLine:
         return PersistableGeotextile(
