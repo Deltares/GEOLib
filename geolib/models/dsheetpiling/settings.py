@@ -122,6 +122,7 @@ class PartialFactorSetEC7NADNL(IntEnum):
     RC3 = 3
     SLS = 4
 
+
 class AssessmentTypeEC7NL(IntEnum):
     NewConstruction = 0
     Reconstruction = 1
