@@ -123,9 +123,26 @@ class PartialFactorSetEC7NADNL(IntEnum):
     SLS = 4
 
 
+class AssessmentTypeEC7NL(IntEnum):
+    NewConstruction = 0
+    Reconstruction = 1
+    ReconstructionAccordingToBouwBesluit2003OrBefore = 2
+    Disapproval = 3
+
+
 class PartialFactorSetEC7NADBE(IntEnum):
-    SET1 = 0
-    SET2 = 1
+    RC1SET1 = 0
+    RC1SET2 = 1
+    RC2SET1 = 2
+    RC2SET2 = 3
+    RC3SET1 = 4
+    RC3SET2 = 5
+
+
+class RiskClassEC7BE(IntEnum):
+    RC1 = 0
+    RC2 = 1
+    RC3 = 2
 
 
 class PartialFactorSetCUR(IntEnum):
