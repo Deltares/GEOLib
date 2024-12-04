@@ -1,18 +1,9 @@
-import logging
-import os
 from random import randint
-from typing import Dict, List, Tuple, Type, _GenericAlias, get_type_hints
+from typing import Dict, List, Tuple, Type
 
 import pytest
+from pydantic_core._pydantic_core import ValidationError
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic_core._pydantic_core import ValidationError
-else:
-    from pydantic import ValidationError
-
-from geolib.models.base_model import BaseModel
 from geolib.models.dseries_parser import (
     DSeriesInlineMappedProperties,
     DSeriesInlineProperties,

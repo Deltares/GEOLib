@@ -2,12 +2,7 @@ from enum import Enum, IntEnum
 from math import isfinite
 from typing import List, Optional, Union
 
-from geolib._compat import IS_PYDANTIC_V2
-
-if IS_PYDANTIC_V2:
-    from pydantic import field_validator
-else:
-    from pydantic import validator
+from pydantic import field_validator
 
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
@@ -16,25 +11,13 @@ from .soil_utils import Color
 
 
 class SoilBaseModel(BaseDataClass):
-    if IS_PYDANTIC_V2:
-
-        @field_validator("*")
-        def fail_on_infinite(cls, v, _):
-            if isinstance(v, float) and not isfinite(v):
-                raise ValueError(
-                    "Only finite values are supported, don't use nan, -inf or inf."
-                )
-            return v
-
-    else:
-
-        @validator("*")
-        def fail_on_infinite(cls, v, values, field):
-            if isinstance(v, float) and not isfinite(v):
-                raise ValueError(
-                    "Only finite values are supported, don't use nan, -inf or inf."
-                )
-            return v
+    @field_validator("*")
+    def fail_on_infinite(cls, v, _):
+        if isinstance(v, float) and not isfinite(v):
+            raise ValueError(
+                "Only finite values are supported, don't use nan, -inf or inf."
+            )
+        return v
 
 
 class DistributionType(IntEnum):
@@ -446,14 +429,12 @@ class Soil(SoilBaseModel):
     ] = SubgradeReactionParameters()
     shell_factor: Optional[float] = None
 
-    if IS_PYDANTIC_V2:
-
-        @field_validator("id", mode="before")
-        @classmethod
-        def transform_id_to_str(cls, value) -> str:
-            if value is None:
-                return None
-            return str(value)
+    @field_validator("id", mode="before")
+    @classmethod
+    def transform_id_to_str(cls, value) -> str:
+        if value is None:
+            return None
+        return str(value)
 
     @staticmethod
     def set_stochastic_parameters(input_class: object):
@@ -467,17 +448,11 @@ class Soil(SoilBaseModel):
         """
 
         try:
-            if IS_PYDANTIC_V2:
-                class_dict = input_class.model_dump()
-            else:
-                class_dict = input_class.dict()
+            class_dict = input_class.model_dump()
         except AttributeError:
             return input_class
 
-        if IS_PYDANTIC_V2:
-            fields = input_class.model_fields
-        else:
-            fields = input_class.__fields__
+        fields = input_class.model_fields
         for field in fields:
             parameter = fields[field]
             if isinstance(parameter.default, StochasticParameter):
@@ -495,10 +470,7 @@ class Soil(SoilBaseModel):
         Returns:
 
         """
-        if IS_PYDANTIC_V2:
-            fields = self.model_fields
-        else:
-            fields = self.__fields__
+        fields = self.model_fields
         for field in fields:
             self.set_stochastic_parameters(self.__getattribute__(field))
 

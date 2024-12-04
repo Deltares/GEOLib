@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 
-from geolib._compat import IS_PYDANTIC_V2
 from geolib.models.dgeoflow import DGeoFlowModel
 from geolib.models.dgeoflow.dgeoflow_parserprovider import (
     DGeoFlowParser,
@@ -41,10 +40,7 @@ class TestDGeoFlowInputParser:
 
         # 4. Verify final expectations.
         assert input_structure is not None
-        if IS_PYDANTIC_V2:
-            data = input_structure.model_dump_json(indent=4)
-        else:
-            data = input_structure.json(indent=4)
+        data = input_structure.model_dump_json(indent=4)
         with open(test_output_filepath / "dstability_parsed_input.json", "w") as io:
             io.write(data)
 
@@ -65,10 +61,7 @@ class TestDGeoFlowInputParser:
 
         # 4. Verify final expectations.
         assert input_structure is not None
-        if IS_PYDANTIC_V2:
-            data = input_structure.model_dump_json(indent=4)
-        else:
-            data = input_structure.json(indent=4)
+        data = input_structure.model_dump_json(indent=4)
         with open(test_output_dir / "dgeoflow_parsed_input_flox.json", "w") as io:
             io.write(data)
 
