@@ -76,7 +76,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties" title="geolib.models.dsheetpiling.constructions.SheetPileProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SheetPileProperties</span></code></a>(**data)</p></td>
 <td><p>Pile selected from the model window in D-Sheet Piling</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties" title="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WoodenSheetPileProperties</span></code></a>(**data)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.VerticalBalance" title="geolib.models.dsheetpiling.constructions.VerticalBalance"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VerticalBalance</span></code></a>(**data)</p></td>
+<td><p>Vertical Balance parameters</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties" title="geolib.models.dsheetpiling.constructions.WoodenSheetPileProperties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WoodenSheetPileProperties</span></code></a>(**data)</p></td>
 <td><p>Wooden pile selected from the model window in D-Sheet Piling</p></td>
 </tr>
 </tbody>
@@ -643,6 +646,37 @@ Otherwise, the program will automatically apply the following factors:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.SheetPileProperties.width_of_sheet_piles">
 <span class="sig-name descname"><span class="pre">width_of_sheet_piles</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.SheetPileProperties.width_of_sheet_piles" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.VerticalBalance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dsheetpiling.constructions.</span></span><span class="sig-name descname"><span class="pre">VerticalBalance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.VerticalBalance" title="Link to this definition">¶</a></dt>
+<dd><p>Vertical Balance parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_point_resistance</strong> – Maximum point resistance (bearing capacity) at the pile point</p></li>
+<li><p><strong>xi_factor</strong> – Statistic factor related to the number of CPT’s used for derivation of the maximum point resistance</p></li>
+<li><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.VerticalBalance.max_point_resistance">
+<span class="sig-name descname"><span class="pre">max_point_resistance</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.VerticalBalance.max_point_resistance" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.VerticalBalance.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'ser_json_inf_nan':</span> <span class="pre">'constants',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.VerticalBalance.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dsheetpiling.constructions.VerticalBalance.xi_factor">
+<span class="sig-name descname"><span class="pre">xi_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dsheetpiling.constructions.VerticalBalance.xi_factor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
