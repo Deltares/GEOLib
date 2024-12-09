@@ -438,6 +438,11 @@ class SheetPiling(DSeriesStructureCollection):
     lengthsheetpiling: Annotated[float, Field(gt=0)] = 10
 
 
+class VerticalBalance(DSeriesInlineMappedProperties):
+    sheetpilingqcrep: Optional[Annotated[float, Field(ge=0)]] = 0.001
+    sheetpilingxi: Optional[Annotated[float, Field(ge=0.1)]] = 1.39
+
+
 class Anchor(DSheetpilingTableEntry):
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float = 0
@@ -712,12 +717,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
     )
     sheet_piling: Union[str, SheetPiling] = SheetPiling()
     combined_wall: str = ""
-    vertical_balance: str = cleandoc(
-        """
-        SheetPilingQcRep=0.000
-        SheetPilingXi=1.39
-        """
-    )
+    vertical_balance: VerticalBalance = VerticalBalance()
     settlement_by_vibration_params: str = cleandoc(
         """
         SheetPilingNumberOfPilesDrilled=2
@@ -1060,6 +1060,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         sheet.update_arguments_if_invalid_input()
         self.sheet_piling.sheetpiling.append(sheet)
         self.sheet_piling.update_length_of_sheet_pile()
+
+    def set_vertical_balance(self, vertical_balance: VerticalBalance):
+        self.vertical_balance = vertical_balance
 
     def add_anchor(self, stage_id: int, anchor: Anchor, pre_tension: float) -> None:
         if not isinstance(self.anchors, Anchors):
