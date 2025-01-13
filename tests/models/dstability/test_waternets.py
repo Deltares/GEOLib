@@ -53,3 +53,22 @@ class TestDStabilityReferenceLine:
                 bottom_headline_id=-1,
                 top_head_line_id=head_line_2_id,
             )
+
+    @pytest.mark.unittest
+    def test_add_interpolation(self):
+        dsm = DStabilityModel()
+
+        points = [Point(x=-20.0, z=-2.0), Point(x=50.0, z=-2.0)]
+        _ = dsm.add_head_line(label="TestHL_1", points=points, is_phreatic_line=True)
+        head_line_2_id = dsm.add_head_line(
+            label="TestHL_2", points=points, is_phreatic_line=False
+        )
+
+        # adding valid reference line with interpolation
+        _ = dsm.add_reference_line(
+            label="TestRL",
+            points=points,
+            top_head_line_id=head_line_2_id,
+        )
+        assert dsm.waternets[0].ReferenceLines[0].BottomHeadLineId is None
+        assert dsm.waternets[0].ReferenceLines[0].TopHeadLineId == head_line_2_id
