@@ -13,7 +13,7 @@ class TestDStabilityHeadLine:
             label="TestHL", points=points, is_phreatic_line=True
         )
         headline = dsm.datastructure.waternets[0].get_head_line(str(headline_id))
-        assert isinstance(headline_id, int)
+        assert isinstance(headline_id, str)
         assert pytest.approx(headline.Points[0].X) == -20.0
         assert dsm.waternets[0].PhreaticLineId == headline.Id
 
