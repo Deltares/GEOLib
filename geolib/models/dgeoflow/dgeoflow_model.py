@@ -59,7 +59,7 @@ class DGeoFlowModel(BaseModel):
 
     @property
     def default_console_path(self) -> Path:
-        return Path("DGeoFlowConsole/DGeoFlow Console.exe")
+        return Path("DGeoFlowConsole/D-GeoFlow Console.exe")
 
     @property
     def custom_console_path(self) -> Path:

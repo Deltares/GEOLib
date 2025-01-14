@@ -20,7 +20,7 @@ Setting the console paths per application
 In the *geolib.env* file, you can set the paths to the console applications, for example::
 
     DSTABILITY_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-GEO Suite\\D-Stability 2023.01\\bin\\D-Stability Console.exe"
-    DGEOFLOW_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Geo Flow 2023.01\\bin\\D-GeoFlow Console.exe"
+    DGEOFLOW_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Geo Flow 2024.02\\bin\\D-GeoFlow Console.exe"
     DSHEETPILING_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Sheet Piling 23.1.1\\DSheetPiling.exe"
     DFOUNDATIONS_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Foundations 23.1.1\\DFoundations.exe"
     DSETTLEMENT_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Settlement 23.1.1\\DSettlement.exe"
@@ -41,7 +41,7 @@ otherwise GEOLib will not start. The executables are expected in the following l
 - *CONSOLE_FOLDER*/"DSettlement/DSettlement.exe"
 - *CONSOLE_FOLDER*/"DSheetPiling/DSheetPiling.exe"
 - *CONSOLE_FOLDER*/"DStabilityConsole/D-Stability Console.exe"
-- *CONSOLE_FOLDER*/"DGeoFlowConsole/DGeoFlow Console.exe"
+- *CONSOLE_FOLDER*/"DGeoFlowConsole/D-GeoFlow Console.exe"
 
 It can also be set by a **CONSOLE_FOLDER** environment variable. The environment variable will
 overrule the .env file, which in its turn, overrides the defaults set in Python.
