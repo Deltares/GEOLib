@@ -605,6 +605,16 @@ class NodeResult(DGeoFlowBaseModelStructure):
 class ElementResult(DGeoFlowBaseModelStructure):
     NodeResults: Optional[List[NodeResult]] = []
 
+class PersistablePhreaticLineSegment(DGeoFlowBaseModelStructure):
+    Start: Optional[PersistablePoint] = None
+    End: Optional[PersistablePoint] = None
+
+# class Start(DGeoFlowBaseModelStructure):
+#     Start: Optional[PersistablePoint] = None
+
+# class End(DGeoFlowBaseModelStructure):
+#     End: Optional[PersistablePoint] = None
+
 
 class PipeElementResult(DGeoFlowBaseModelStructure):
     Nodes: Optional[List[PersistablePoint]] = []
@@ -615,6 +625,7 @@ class PipeElementResult(DGeoFlowBaseModelStructure):
 class GroundwaterFlowResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     Elements: Optional[List[ElementResult]] = []
+    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
     ContentVersion: Optional[str] = "2"
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
@@ -628,6 +639,7 @@ class PipeLengthResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     PipeLength: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
+    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
 
@@ -643,6 +655,7 @@ class CriticalHeadResult(DGeoFlowSubStructure):
     PipeLength: Optional[float] = None
     CriticalHead: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
+    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
 
