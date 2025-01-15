@@ -583,9 +583,9 @@ class PersistableCalculation(DGeoFlowBaseModelStructure):
     Notes: Optional[str] = None
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
     CriticalHeadId: Optional[str] = None
-    CriticalHeadSearchSpace: Optional[
-        PersistableCriticalHeadSearchSpace
-    ] = PersistableCriticalHeadSearchSpace()
+    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace] = (
+        PersistableCriticalHeadSearchSpace()
+    )
     PipeTrajectory: Optional[InternalPipeTrajectory] = None
     MeshPropertiesId: Optional[str] = None
     ResultsId: Optional[str] = None
@@ -605,15 +605,10 @@ class NodeResult(DGeoFlowBaseModelStructure):
 class ElementResult(DGeoFlowBaseModelStructure):
     NodeResults: Optional[List[NodeResult]] = []
 
+
 class PersistablePhreaticLineSegment(DGeoFlowBaseModelStructure):
     Start: Optional[PersistablePoint] = None
     End: Optional[PersistablePoint] = None
-
-# class Start(DGeoFlowBaseModelStructure):
-#     Start: Optional[PersistablePoint] = None
-
-# class End(DGeoFlowBaseModelStructure):
-#     End: Optional[PersistablePoint] = None
 
 
 class PipeElementResult(DGeoFlowBaseModelStructure):
