@@ -32,5 +32,7 @@ from .soil import (
     StorageTypes,
     SubgradeReactionParameters,
     SuTablePoint,
+    SigmaTauTablePoint,
+    SigmaTauParameters,
     UndrainedParameters,
 )

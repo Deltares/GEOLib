@@ -27,6 +27,9 @@ class TestDStabilityInputParser:
             pytest.param(
                 "dstability/Tutorial_v2024_1.stix", id="Tutorial DStability 2024.1"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
+            ),
         ],
     )
     def test_dstability_parse_directory(self, dir_path: str):

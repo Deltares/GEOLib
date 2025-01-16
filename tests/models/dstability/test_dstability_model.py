@@ -34,7 +34,7 @@ from geolib.models.dstability.states import (
     DStabilityStatePoint,
     DStabilityStress,
 )
-from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil, SuTablePoint
+from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil, SuTablePoint, SigmaTauTablePoint
 from tests.utils import TestUtils
 
 
@@ -86,6 +86,9 @@ class TestDStabilityModel:
             ),
             pytest.param(
                 "dstability/Tutorial_v2024_1.stix", id="Tutorial DStability 2024.1"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
             ),
         ],
     )
@@ -833,4 +836,85 @@ class TestDStabilityModel:
         )
         assert len(soil_su_table.SuTable.SuTablePoints) == len(
             soil.undrained_parameters.su_table
+        )
+
+    @pytest.mark.unittest
+    def test_sigmatau_table_version_parsing(self):
+        dm = DStabilityModel()
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
+        )
+
+        dm.parse(test_filepath)
+
+        soil_sigma_tau_table = dm.get_soil("S_Tau material")
+        assert (
+            soil_sigma_tau_table.ShearStrengthModelTypeAbovePhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE
+        )
+        assert (
+            soil_sigma_tau_table.ShearStrengthModelTypeBelowPhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE
+        )
+        assert len(soil_sigma_tau_table.SigmaTauTable.SigmaTauTablePoints) == 4
+        
+    @pytest.mark.integrationtest
+    def test_sigmatau_table_version_input(self):
+        dm = DStabilityModel()
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
+        )
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir("dstability/Tutorial_v2024_2_serialized.stix")
+        )
+
+        dm.parse(test_filepath)
+
+        soil = Soil()
+        soil.name = "Soil test"
+        soil.code = "sigma tau soil"
+        soil.soil_weight_parameters.saturated_weight.mean = 10.2
+        soil.soil_weight_parameters.unsaturated_weight.mean = 10.2
+        soil.sigma_tau_parameters.sigma_tau_table = [
+            SigmaTauTablePoint(sigma=0, tau=0),
+            SigmaTauTablePoint(sigma=100, tau=200),
+            SigmaTauTablePoint(sigma=200, tau=300),
+        ]
+        soil.shear_strength_model_above_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.SIGMATAUTABLE
+        )
+        soil.shear_strength_model_below_phreatic_level = (
+            ShearStrengthModelTypePhreaticLevel.SIGMATAUTABLE
+        )
+        new_layer = [
+            Point(x=66, z=0),
+            Point(x=89.95, z=-0.06),
+            Point(x=90, z=-8.7),
+            Point(x=88.6, z=-5.9),
+            Point(x=85.9, z=-4.7),
+            Point(x=83.6, z=-3.6),
+            Point(x=81, z=-3),
+            Point(x=79.2, z=-2),
+            Point(x=77.1, z=-1.7),
+            Point(x=74.2, z=-1),
+            Point(x=71, z=-0.4),
+        ]
+
+        dm.add_soil(soil)
+        dm.add_layer(points=new_layer, soil_code=soil.code)
+
+        # output changed file
+        dm.serialize(test_output_filepath)
+        # test that the file was written correctly
+        soil_sigma_tau_table = dm.get_soil("sigma tau soil")
+        assert (
+            soil_sigma_tau_table.ShearStrengthModelTypeAbovePhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE
+        )
+        assert (
+            soil_sigma_tau_table.ShearStrengthModelTypeBelowPhreaticLevel
+            == ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE
+        )
+        assert len(soil_sigma_tau_table.SigmaTauTable.SigmaTauTablePoints) == len(
+            soil.sigma_tau_parameters.sigma_tau_table
         )

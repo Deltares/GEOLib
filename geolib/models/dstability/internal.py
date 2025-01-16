@@ -628,6 +628,7 @@ class ShearStrengthModelTypePhreaticLevelInternal(Enum):
     NONE = "None"
     SU = "Su"
     SUTABLE = "SuTable"
+    SIGMATAUTABLE = "SigmaTauTable"
 
     def to_global_shear_strength_model(self):
         transform_dictionary = {
@@ -636,6 +637,7 @@ class ShearStrengthModelTypePhreaticLevelInternal(Enum):
             "None": "None",
             "Su": "SHANSEP",
             "SuTable": "SuTable",
+            "SigmaTauTable": "SigmaTauTable",
         }
         return transform_dictionary[self.value]
 
@@ -663,6 +665,26 @@ class PersistableSuTable(DStabilityBaseModelStructure):
                 SuTablePoint(su=su_table_point.Su, stress=su_table_point.EffectiveStress)
             )
         return su_table
+    
+class PersistableSigmaTauTablePoint(DStabilitySubStructure):
+    EffectiveStress: float = 0.0
+    ShearStrength: float = 0.0
+
+
+class PersistableSigmaTauTable(DStabilityBaseModelStructure):
+    SigmaTauTablePoints: List[PersistableSigmaTauTablePoint] = []
+    IsSigmaTauTableProbabilistic: bool = False
+    SigmaTauTableVariationCoefficient: float = 0.0
+
+    def to_global_sigma_tau_table(self):
+        from geolib.soils import SigmaTauTablePoint
+
+        sigma_tau_table = []
+        for sigma_tau_table_point in self.SigmaTauTablePoints:
+            sigma_tau_table.append(
+                SigmaTauTablePoint(shearStrength=sigma_tau_table_point.ShearStrength, effective_stress=sigma_tau_table_point.EffectiveStress)
+            )
+        return sigma_tau_table
 
 
 class PersistableMohrCoulombClassicShearStrengthModel(DStabilityBaseModelStructure):
@@ -729,6 +751,7 @@ class PersistableSoil(DStabilityBaseModelStructure):
     VolumetricWeightAbovePhreaticLevel: float = 0.0
     VolumetricWeightBelowPhreaticLevel: float = 0.0
     SuTable: PersistableSuTable = PersistableSuTable()
+    SigmaTauTable: PersistableSigmaTauTable = PersistableSigmaTauTable()
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -935,6 +958,7 @@ class SoilCollection(DStabilitySubStructure):
     def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
         from geolib.soils import (
             MohrCoulombParameters,
+            SigmaTauParameters,
             SoilWeightParameters,
             UndrainedParameters,
         )
@@ -950,6 +974,12 @@ class SoilCollection(DStabilitySubStructure):
                 persistable_soil.MohrCoulombAdvancedShearStrengthModel.DilatancyStochasticParameter
             ),
             cohesion_and_friction_angle_correlated=persistable_soil.MohrCoulombAdvancedShearStrengthModel.CohesionAndFrictionAngleCorrelated,
+        )
+
+        sigma_tau_parameters = SigmaTauParameters(
+            sigma_tau_table=persistable_soil.SigmaTauTable.to_global_sigma_tau_table(),
+            probabilistic_sigma_tau_table=persistable_soil.SigmaTauTable.IsSigmaTauTableProbabilistic,
+            sigma_tau_table_variation_coefficient=persistable_soil.SigmaTauTable.SigmaTauTableVariationCoefficient,
         )
 
         strength_increase_exponent = self.__determine_strength_increase_exponent(
@@ -982,6 +1012,7 @@ class SoilCollection(DStabilitySubStructure):
             shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.to_global_shear_strength_model(),
             shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.to_global_shear_strength_model(),
             mohr_coulomb_parameters=mohr_coulomb_parameters,
+            sigma_tau_parameters=sigma_tau_parameters,
             soil_weight_parameters=soil_weight_parameters,
             undrained_parameters=undrained_parameters,
         )

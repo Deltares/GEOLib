@@ -54,6 +54,7 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
     NONE = "None"
     SHANSEP = "SHANSEP"
     SUTABLE = "SuTable"
+    SIGMATAUTABLE = "SigmaTauTable"
 
     def transform_shear_strength_model_type_to_internal(self):
         from geolib.models.dstability.internal import (
@@ -65,6 +66,7 @@ class ShearStrengthModelTypePhreaticLevel(Enum):
             "None": ShearStrengthModelTypePhreaticLevelInternal.NONE,
             "SHANSEP": ShearStrengthModelTypePhreaticLevelInternal.SU,
             "SuTable": ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
+            "SigmaTauTable": ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE,
         }
         return transformation_dict[self.value]
 
@@ -87,6 +89,31 @@ class MohrCoulombParameters(SoilBaseModel):
 class SuTablePoint(SoilBaseModel):
     su: float = None
     stress: float = None
+
+
+class SigmaTauTablePoint(SoilBaseModel):
+    sigma: float = None
+    tau: float = None
+    
+
+class SigmaTauParameters(SoilBaseModel):
+    sigma_tau_table: Optional[List[SigmaTauTablePoint]] = None
+    probabilistic_sigma_tau_table: Optional[bool] = None
+    sigma_tau_table_variation_coefficient: Optional[float] = None
+
+    def to_sigma_tau_table_points(self):
+        from geolib.models.dstability.internal import PersistableSigmaTauTablePoint
+
+        sigma_tau_table = None
+        if self.sigma_tau_table is not None:
+            sigma_tau_table = []
+            for sigma_tau_point in self.sigma_tau_table:
+                sigma_tau_table.append(
+                    PersistableSigmaTauTablePoint(
+                        EffectiveStress=sigma_tau_point.sigma, ShearStrength=sigma_tau_point.tau
+                    )
+                )
+        return sigma_tau_table
 
 
 class UndrainedParameters(SoilBaseModel):
@@ -392,6 +419,7 @@ class Soil(SoilBaseModel):
     color: Color = Color("grey")
 
     mohr_coulomb_parameters: Optional[MohrCoulombParameters] = MohrCoulombParameters()
+    sigma_tau_parameters: Optional[SigmaTauParameters] = SigmaTauParameters()
     undrained_parameters: Optional[UndrainedParameters] = UndrainedParameters()
     bjerrum_parameters: Optional[BjerrumParameters] = BjerrumParameters()
     isotache_parameters: Optional[IsotacheParameters] = IsotacheParameters()
@@ -522,6 +550,16 @@ class Soil(SoilBaseModel):
             "SuTablePoints": self.undrained_parameters.to_su_table_points(),
         }
         return self.__transfer_soil_dict_to_model(kwargs, PersistableSuTable())
+    
+    def __to_sigmatau_table(self):
+        from geolib.models.dstability.internal import PersistableSigmaTauTable
+
+        kwargs = {
+            "IsSigmaTauTableProbabilistic": self.sigma_tau_parameters.probabilistic_sigma_tau_table,
+            "SimaTauTableVariationCoefficient": self.sigma_tau_parameters.sigma_tau_table_variation_coefficient,
+            "SigmaTauTablePoints": self.sigma_tau_parameters.to_sigma_tau_table_points(),
+        }
+        return self.__transfer_soil_dict_to_model(kwargs, PersistableSigmaTauTable())
 
     def _to_dstability(self):
         from geolib.models.dstability.internal import PersistableSoil as DStabilitySoil
@@ -581,6 +619,7 @@ class Soil(SoilBaseModel):
             "ShearStrengthModelTypeAbovePhreaticLevel": shear_strength_model_above_phreatic_level,
             "ShearStrengthModelTypeBelowPhreaticLevel": shear_strength_model_below_phreatic_level,
             "SuTable": self.__to_su_table(),
+            "SigmaTauTable": self.__to_sigmatau_table(),
         }
 
         return self.__transfer_soil_dict_to_model(kwargs, DStabilitySoil())
