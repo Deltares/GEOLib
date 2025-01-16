@@ -2,7 +2,6 @@
 Module containing the common soil object definition.
 """
 
-
 from .soil import (
     BjerrumParameters,
     ConeResistance,
@@ -18,6 +17,8 @@ from .soil import (
     ModulusSubgradeReaction,
     MohrCoulombParameters,
     ShearStrengthModelTypePhreaticLevel,
+    SigmaTauParameters,
+    SigmaTauTablePoint,
     Soil,
     SoilClassificationParameters,
     SoilState,
@@ -32,7 +33,5 @@ from .soil import (
     StorageTypes,
     SubgradeReactionParameters,
     SuTablePoint,
-    SigmaTauTablePoint,
-    SigmaTauParameters,
     UndrainedParameters,
 )

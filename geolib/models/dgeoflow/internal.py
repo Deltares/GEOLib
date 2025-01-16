@@ -583,9 +583,9 @@ class PersistableCalculation(DGeoFlowBaseModelStructure):
     Notes: Optional[str] = None
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
     CriticalHeadId: Optional[str] = None
-    CriticalHeadSearchSpace: Optional[
-        PersistableCriticalHeadSearchSpace
-    ] = PersistableCriticalHeadSearchSpace()
+    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace] = (
+        PersistableCriticalHeadSearchSpace()
+    )
     PipeTrajectory: Optional[InternalPipeTrajectory] = None
     MeshPropertiesId: Optional[str] = None
     ResultsId: Optional[str] = None

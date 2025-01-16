@@ -8,6 +8,7 @@ specify, for example height, other fields left None.
 For profiles used in 1D applications, see :class:`~geolib.soils.layers.ProfileLayer`
 
 """
+
 from math import isclose
 from typing import Optional
 

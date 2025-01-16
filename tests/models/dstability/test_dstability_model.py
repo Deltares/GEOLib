@@ -34,7 +34,12 @@ from geolib.models.dstability.states import (
     DStabilityStatePoint,
     DStabilityStress,
 )
-from geolib.soils import ShearStrengthModelTypePhreaticLevel, Soil, SuTablePoint, SigmaTauTablePoint
+from geolib.soils import (
+    ShearStrengthModelTypePhreaticLevel,
+    SigmaTauTablePoint,
+    Soil,
+    SuTablePoint,
+)
 from tests.utils import TestUtils
 
 
@@ -271,9 +276,9 @@ class TestDStabilityModel:
     def test_add_calculation(self):
         # Setup
         dm = DStabilityModel()
-        dm.datastructure.calculationsettings[
-            -1
-        ].AnalysisType = AnalysisTypeEnum.SPENCER_GENETIC
+        dm.datastructure.calculationsettings[-1].AnalysisType = (
+            AnalysisTypeEnum.SPENCER_GENETIC
+        )
 
         # Test
         new_stage_id = dm.add_calculation(0, "new stage")
@@ -857,7 +862,7 @@ class TestDStabilityModel:
             == ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE
         )
         assert len(soil_sigma_tau_table.SigmaTauTable.SigmaTauTablePoints) == 4
-        
+
     @pytest.mark.integrationtest
     def test_sigmatau_table_version_input(self):
         dm = DStabilityModel()
@@ -865,7 +870,9 @@ class TestDStabilityModel:
             TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
         )
         test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir("dstability/Tutorial_v2024_2_serialized.stix")
+            TestUtils.get_output_test_data_dir(
+                "dstability/Tutorial_v2024_2_serialized.stix"
+            )
         )
 
         dm.parse(test_filepath)

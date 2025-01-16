@@ -567,12 +567,12 @@ class DStabilityModel(BaseModel):
                 linestring1, linestring2 = self.connect_layers(layer, new_layer)
 
                 # Update the points of the layers
-                current_layers[
-                    current_layers.index(layer)
-                ].Points = self.to_dstability_points(linestring1)
-                current_layers[
-                    current_layers.index(new_layer)
-                ].Points = self.to_dstability_points(linestring2)
+                current_layers[current_layers.index(layer)].Points = (
+                    self.to_dstability_points(linestring1)
+                )
+                current_layers[current_layers.index(new_layer)].Points = (
+                    self.to_dstability_points(linestring2)
+                )
 
     def to_shapely_linestring(self, points: List[PersistablePoint]) -> LineString:
         converted_points = [(p.X, p.Z) for p in points]

@@ -10,6 +10,7 @@ such as an compute endpoint.
     Make a mapping between the possible metadata options and names for each model.
 
 """
+
 from datetime import datetime
 from pathlib import Path
 from typing import Optional

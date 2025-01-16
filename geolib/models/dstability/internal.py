@@ -227,13 +227,13 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     AquitardHeadLandSide: Optional[Union[float, str]] = "NaN"
     AquitardHeadWaterSide: Optional[Union[float, str]] = "NaN"
     ContentVersion: Optional[str] = "2"
-    DitchCharacteristics: Optional[
-        PersistableDitchCharacteristics
-    ] = PersistableDitchCharacteristics()
+    DitchCharacteristics: Optional[PersistableDitchCharacteristics] = (
+        PersistableDitchCharacteristics()
+    )
     DrainageConstruction: Optional[PersistablePoint] = PersistablePoint()
-    EmbankmentCharacteristics: Optional[
-        PersistableEmbankmentCharacteristics
-    ] = PersistableEmbankmentCharacteristics()
+    EmbankmentCharacteristics: Optional[PersistableEmbankmentCharacteristics] = (
+        PersistableEmbankmentCharacteristics()
+    )
     EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = (
         EmbankmentSoilScenarioEnum.CLAY_EMBANKMENT_ON_CLAY
     )
@@ -665,7 +665,8 @@ class PersistableSuTable(DStabilityBaseModelStructure):
                 SuTablePoint(su=su_table_point.Su, stress=su_table_point.EffectiveStress)
             )
         return su_table
-    
+
+
 class PersistableSigmaTauTablePoint(DStabilitySubStructure):
     EffectiveStress: float = 0.0
     ShearStrength: float = 0.0
@@ -682,7 +683,10 @@ class PersistableSigmaTauTable(DStabilityBaseModelStructure):
         sigma_tau_table = []
         for sigma_tau_table_point in self.SigmaTauTablePoints:
             sigma_tau_table.append(
-                SigmaTauTablePoint(shearStrength=sigma_tau_table_point.ShearStrength, effective_stress=sigma_tau_table_point.EffectiveStress)
+                SigmaTauTablePoint(
+                    shearStrength=sigma_tau_table_point.ShearStrength,
+                    effective_stress=sigma_tau_table_point.EffectiveStress,
+                )
             )
         return sigma_tau_table
 
@@ -733,18 +737,18 @@ class PersistableSoil(DStabilityBaseModelStructure):
     IsProbabilistic: bool = False
     Name: Optional[str] = ""
     Notes: Optional[str] = ""
-    ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
-        ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
-    )
-    ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
-        ShearStrengthModelTypePhreaticLevelInternal.SU
-    )
-    MohrCoulombClassicShearStrengthModel: PersistableMohrCoulombClassicShearStrengthModel = (
-        PersistableMohrCoulombClassicShearStrengthModel()
-    )
-    MohrCoulombAdvancedShearStrengthModel: PersistableMohrCoulombAdvancedShearStrengthModel = (
-        PersistableMohrCoulombAdvancedShearStrengthModel()
-    )
+    ShearStrengthModelTypeAbovePhreaticLevel: (
+        ShearStrengthModelTypePhreaticLevelInternal
+    ) = ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+    ShearStrengthModelTypeBelowPhreaticLevel: (
+        ShearStrengthModelTypePhreaticLevelInternal
+    ) = ShearStrengthModelTypePhreaticLevelInternal.SU
+    MohrCoulombClassicShearStrengthModel: (
+        PersistableMohrCoulombClassicShearStrengthModel
+    ) = PersistableMohrCoulombClassicShearStrengthModel()
+    MohrCoulombAdvancedShearStrengthModel: (
+        PersistableMohrCoulombAdvancedShearStrengthModel
+    ) = PersistableMohrCoulombAdvancedShearStrengthModel()
     SuShearStrengthModel: PersistableSuShearStrengthModel = (
         PersistableSuShearStrengthModel()
     )
@@ -899,7 +903,7 @@ class SoilCollection(DStabilitySubStructure):
                     PersistableSuTablePoint(EffectiveStress=0, Su=0),
                     PersistableSuTablePoint(EffectiveStress=100, Su=200),
                     PersistableSuTablePoint(EffectiveStress=200, Su=300),
-                ]
+                ],
             ),
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
@@ -922,7 +926,7 @@ class SoilCollection(DStabilitySubStructure):
                     PersistableSuTablePoint(EffectiveStress=140, Su=62),
                     PersistableSuTablePoint(EffectiveStress=160, Su=69),
                     PersistableSuTablePoint(EffectiveStress=180, Su=77),
-                ]
+                ],
             ),
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
@@ -1245,9 +1249,9 @@ class NailProperties(DStabilitySubStructure):
     """nailpropertiesforsoils.json"""
 
     ContentVersion: Optional[str] = "2"
-    NailPropertiesForSoils: Optional[
-        List[Optional[PersistableNailPropertiesForSoil]]
-    ] = []
+    NailPropertiesForSoils: Optional[List[Optional[PersistableNailPropertiesForSoil]]] = (
+        []
+    )
 
     @classmethod
     def structure_name(cls) -> str:
@@ -1561,13 +1565,13 @@ class PersistableTangentLines(DStabilityBaseModelStructure):
 
 
 class PersistableBishopBruteForceSettings(DStabilityBaseModelStructure):
-    GridEnhancements: Optional[
-        PersistableGridEnhancements
-    ] = PersistableGridEnhancements()
+    GridEnhancements: Optional[PersistableGridEnhancements] = (
+        PersistableGridEnhancements()
+    )
     SearchGrid: Optional[PersistableSearchGrid] = PersistableSearchGrid()
-    SlipPlaneConstraints: Optional[
-        PersistableSlipPlaneConstraints
-    ] = PersistableSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints] = (
+        PersistableSlipPlaneConstraints()
+    )
     TangentLines: Optional[PersistableTangentLines] = PersistableTangentLines()
 
 
@@ -1591,9 +1595,9 @@ class PersistableSpencerSettings(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneConstraints: Optional[
-        PersistableGeneticSlipPlaneConstraints
-    ] = PersistableGeneticSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints] = (
+        PersistableGeneticSlipPlaneConstraints()
+    )
 
 
 class OptionsTypeEnum(Enum):
@@ -1610,9 +1614,9 @@ class PersistableSpencerGeneticSettings(DStabilityBaseModelStructure):
     OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
     SlipPlaneA: Optional[List[Optional[PersistablePoint]]] = None
     SlipPlaneB: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneConstraints: Optional[
-        PersistableGeneticSlipPlaneConstraints
-    ] = PersistableGeneticSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints] = (
+        PersistableGeneticSlipPlaneConstraints()
+    )
 
 
 class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
@@ -1624,9 +1628,9 @@ class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
 class PersistableUpliftVanSettings(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    SlipPlane: Optional[
-        PersistableTwoCirclesOnTangentLine
-    ] = PersistableTwoCirclesOnTangentLine()
+    SlipPlane: Optional[PersistableTwoCirclesOnTangentLine] = (
+        PersistableTwoCirclesOnTangentLine()
+    )
 
 
 class PersistableSearchArea(DStabilityBaseModelStructure):
@@ -1650,9 +1654,9 @@ class PersistableUpliftVanParticleSwarmSettings(DStabilityBaseModelStructure):
     OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
     SearchAreaA: Optional[PersistableSearchArea] = PersistableSearchArea()
     SearchAreaB: Optional[PersistableSearchArea] = PersistableSearchArea()
-    SlipPlaneConstraints: Optional[
-        PersistableSlipPlaneConstraints
-    ] = PersistableSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints] = (
+        PersistableSlipPlaneConstraints()
+    )
     TangentArea: Optional[PersistableTangentArea] = PersistableTangentArea()
 
 
@@ -1661,22 +1665,22 @@ class CalculationSettings(DStabilitySubStructure):
 
     AnalysisType: Optional[AnalysisTypeEnum] = AnalysisTypeEnum.BISHOP_BRUTE_FORCE
     Bishop: Optional[PersistableBishopSettings] = PersistableBishopSettings()
-    BishopBruteForce: Optional[
-        PersistableBishopBruteForceSettings
-    ] = PersistableBishopBruteForceSettings()
+    BishopBruteForce: Optional[PersistableBishopBruteForceSettings] = (
+        PersistableBishopBruteForceSettings()
+    )
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.DETERMINISTIC
     ContentVersion: Optional[str] = "2"
     Id: Optional[str] = "19"
     ModelFactorMean: Optional[float] = 1.05
     ModelFactorStandardDeviation: Optional[float] = 0.033
     Spencer: Optional[PersistableSpencerSettings] = PersistableSpencerSettings()
-    SpencerGenetic: Optional[
-        PersistableSpencerGeneticSettings
-    ] = PersistableSpencerGeneticSettings()
+    SpencerGenetic: Optional[PersistableSpencerGeneticSettings] = (
+        PersistableSpencerGeneticSettings()
+    )
     UpliftVan: Optional[PersistableUpliftVanSettings] = PersistableUpliftVanSettings()
-    UpliftVanParticleSwarm: Optional[
-        PersistableUpliftVanParticleSwarmSettings
-    ] = PersistableUpliftVanParticleSwarmSettings()
+    UpliftVanParticleSwarm: Optional[PersistableUpliftVanParticleSwarmSettings] = (
+        PersistableUpliftVanParticleSwarmSettings()
+    )
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
