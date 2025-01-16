@@ -1071,6 +1071,7 @@ class PersistableNail(DStabilityBaseModelStructure):
     Length: Optional[Union[float, str]] = "NaN"
     Location: Optional[PersistablePoint] = None
     MaxPullForce: Optional[float] = 0.0
+    Key: Optional[int] = 1
     Notes: Optional[str] = ""
     PlasticMoment: Optional[float] = 0.0
     ShearStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
