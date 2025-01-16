@@ -163,7 +163,7 @@ class TestDStabilitySoil:
 
     def test_has_10_default_soils(self):
         dstability_model = DStabilityModel(filename=None)
-        assert len(dstability_model.soils.Soils) == 10
+        assert len(dstability_model.soils.Soils) == 13
 
     def test_has_default_soil_codes(self):
         dstability_model = DStabilityModel(filename=None)
@@ -178,6 +178,9 @@ class TestDStabilitySoil:
             "P_Rk_k&s",
             "Sand",
             "H_Ro_z&k",
+            "Dilatent clay",
+            "Embankment dry",
+            "S_Tau material",
         }
         default_soilcodes = {soil.Code for soil in dstability_model.soils.Soils}
         assert expected_soilcodes == default_soilcodes

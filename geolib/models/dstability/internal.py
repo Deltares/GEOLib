@@ -888,6 +888,61 @@ class SoilCollection(DStabilitySubStructure):
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
         ),
+        PersistableSoil(
+            Id="12",
+            Name="Dilatent clay",
+            Code="Dilatent clay",
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
+            SuTable=PersistableSuTable(
+                StrengthIncreaseExponent=0.8,
+                SuTablePoints=[
+                    PersistableSuTablePoint(EffectiveStress=0, Su=0),
+                    PersistableSuTablePoint(EffectiveStress=100, Su=200),
+                    PersistableSuTablePoint(EffectiveStress=200, Su=300),
+                ]
+            ),
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0,
+        ),
+        PersistableSoil(
+            Id="13",
+            Name="Embankment dry",
+            Code="Embankment dry",
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
+            SuTable=PersistableSuTable(
+                StrengthIncreaseExponent=0.8,
+                SuTablePoints=[
+                    PersistableSuTablePoint(EffectiveStress=0, Su=0),
+                    PersistableSuTablePoint(EffectiveStress=29, Su=29),
+                    PersistableSuTablePoint(EffectiveStress=40, Su=32),
+                    PersistableSuTablePoint(EffectiveStress=60, Su=37),
+                    PersistableSuTablePoint(EffectiveStress=80, Su=42),
+                    PersistableSuTablePoint(EffectiveStress=100, Su=48),
+                    PersistableSuTablePoint(EffectiveStress=120, Su=55),
+                    PersistableSuTablePoint(EffectiveStress=140, Su=62),
+                    PersistableSuTablePoint(EffectiveStress=160, Su=69),
+                    PersistableSuTablePoint(EffectiveStress=180, Su=77),
+                ]
+            ),
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0,
+        ),
+        PersistableSoil(
+            Id="14",
+            Name="S_Tau material",
+            Code="S_Tau material",
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE,
+            SigmaTauTable=PersistableSigmaTauTable(
+                SigmaTauTablePoints=[
+                    PersistableSigmaTauTablePoint(EffectiveStress=0, ShearStrength=5),
+                    PersistableSigmaTauTablePoint(EffectiveStress=10, ShearStrength=5),
+                    PersistableSigmaTauTablePoint(EffectiveStress=35, ShearStrength=30),
+                    PersistableSigmaTauTablePoint(EffectiveStress=100, ShearStrength=60),
+                ]
+            ),
+            VolumetricWeightAbovePhreaticLevel=16.0,
+            VolumetricWeightBelowPhreaticLevel=16.0,
+        ),
     ]
 
     @classmethod
