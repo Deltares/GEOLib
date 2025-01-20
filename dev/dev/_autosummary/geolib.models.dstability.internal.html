@@ -209,6 +209,12 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dstability.internal.PersistableShadingTypeEnum" title="geolib.models.dstability.internal.PersistableShadingTypeEnum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersistableShadingTypeEnum</span></code></a>(value[, names, ...])</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dstability.internal.PersistableSigmaTauTable" title="geolib.models.dstability.internal.PersistableSigmaTauTable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersistableSigmaTauTable</span></code></a>(**data)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#geolib.models.dstability.internal.PersistableSigmaTauTablePoint" title="geolib.models.dstability.internal.PersistableSigmaTauTablePoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersistableSigmaTauTablePoint</span></code></a>(**data)</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#geolib.models.dstability.internal.PersistableSlice" title="geolib.models.dstability.internal.PersistableSlice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PersistableSlice</span></code></a>(**data)</p></td>
 <td><p></p></td>
 </tr>
@@ -2713,6 +2719,11 @@ classname: [fields]</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableNail.Key">
+<span class="sig-name descname"><span class="pre">Key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableNail.Key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableNail.Label">
 <span class="sig-name descname"><span class="pre">Label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableNail.Label" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3056,6 +3067,68 @@ classname: [fields]</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dstability.internal.</span></span><span class="sig-name descname"><span class="pre">PersistableSigmaTauTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTable" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTable.IsSigmaTauTableProbabilistic">
+<span class="sig-name descname"><span class="pre">IsSigmaTauTableProbabilistic</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTable.IsSigmaTauTableProbabilistic" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTable.SigmaTauTablePoints">
+<span class="sig-name descname"><span class="pre">SigmaTauTablePoints</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="#geolib.models.dstability.internal.PersistableSigmaTauTablePoint" title="geolib.models.dstability.internal.PersistableSigmaTauTablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableSigmaTauTablePoint</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTable.SigmaTauTablePoints" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTable.SigmaTauTableVariationCoefficient">
+<span class="sig-name descname"><span class="pre">SigmaTauTableVariationCoefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTable.SigmaTauTableVariationCoefficient" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTable.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'ser_json_inf_nan':</span> <span class="pre">'constants',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTable.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTable.to_global_sigma_tau_table">
+<span class="sig-name descname"><span class="pre">to_global_sigma_tau_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTable.to_global_sigma_tau_table" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTablePoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dstability.internal.</span></span><span class="sig-name descname"><span class="pre">PersistableSigmaTauTablePoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTablePoint" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTablePoint.EffectiveStress">
+<span class="sig-name descname"><span class="pre">EffectiveStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTablePoint.EffectiveStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTablePoint.ShearStrength">
+<span class="sig-name descname"><span class="pre">ShearStrength</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTablePoint.ShearStrength" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSigmaTauTablePoint.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'ser_json_inf_nan':</span> <span class="pre">'constants',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSigmaTauTablePoint.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.models.dstability.internal.</span></span><span class="sig-name descname"><span class="pre">PersistableSlice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -3134,6 +3207,11 @@ classname: [fields]</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.InputShearStress">
+<span class="sig-name descname"><span class="pre">InputShearStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.InputShearStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.Label">
 <span class="sig-name descname"><span class="pre">Label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.Label" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3159,6 +3237,11 @@ classname: [fields]</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.OutputShearStress">
+<span class="sig-name descname"><span class="pre">OutputShearStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.OutputShearStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.PhiInput">
 <span class="sig-name descname"><span class="pre">PhiInput</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.PhiInput" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3179,6 +3262,16 @@ classname: [fields]</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.ResultantForce">
+<span class="sig-name descname"><span class="pre">ResultantForce</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.ResultantForce" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.ResultantMoment">
+<span class="sig-name descname"><span class="pre">ResultantMoment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.ResultantMoment" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.SInput">
 <span class="sig-name descname"><span class="pre">SInput</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.SInput" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3191,6 +3284,11 @@ classname: [fields]</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.ShearStress">
 <span class="sig-name descname"><span class="pre">ShearStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.ShearStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSlice.SuInput">
+<span class="sig-name descname"><span class="pre">SuInput</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSlice.SuInput" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -3383,6 +3481,11 @@ classname: [fields]</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSoil.ShearStrengthModelTypeBelowPhreaticLevel">
 <span class="sig-name descname"><span class="pre">ShearStrengthModelTypeBelowPhreaticLevel</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../soils.html#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevelInternal" title="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevelInternal"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShearStrengthModelTypePhreaticLevelInternal</span></code></a></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSoil.ShearStrengthModelTypeBelowPhreaticLevel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSoil.SigmaTauTable">
+<span class="sig-name descname"><span class="pre">SigmaTauTable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#geolib.models.dstability.internal.PersistableSigmaTauTable" title="geolib.models.dstability.internal.PersistableSigmaTauTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableSigmaTauTable</span></code></a></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSoil.SigmaTauTable" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -3743,6 +3846,11 @@ classname: [fields]</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.InputShearStress">
+<span class="sig-name descname"><span class="pre">InputShearStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.InputShearStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.Label">
 <span class="sig-name descname"><span class="pre">Label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.Label" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3783,6 +3891,11 @@ classname: [fields]</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.OutputShearStress">
+<span class="sig-name descname"><span class="pre">OutputShearStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.OutputShearStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.PhiInput">
 <span class="sig-name descname"><span class="pre">PhiInput</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.PhiInput" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3800,6 +3913,16 @@ classname: [fields]</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.Pop">
 <span class="sig-name descname"><span class="pre">Pop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.Pop" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.ResultantForce">
+<span class="sig-name descname"><span class="pre">ResultantForce</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.ResultantForce" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.ResultantMoment">
+<span class="sig-name descname"><span class="pre">ResultantMoment</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.ResultantMoment" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -3830,6 +3953,11 @@ classname: [fields]</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.ShearStress">
 <span class="sig-name descname"><span class="pre">ShearStress</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.ShearStress" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.PersistableSpencerSlice.SuInput">
+<span class="sig-name descname"><span class="pre">SuInput</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">,</span> <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code><span class="pre">,</span> <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.models.dstability.internal.PersistableSpencerSlice.SuInput" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -4957,6 +5085,11 @@ are internally defined in the json files of D-Stability.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevelInternal.NONE">
 <span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'None'</span></em><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevelInternal.NONE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE">
+<span class="sig-name descname"><span class="pre">SIGMATAUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SigmaTauTable'</span></em><a class="headerlink" href="#geolib.models.dstability.internal.ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

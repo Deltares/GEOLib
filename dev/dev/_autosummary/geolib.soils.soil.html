@@ -94,6 +94,12 @@
 <tr class="row-even"><td><p><a class="reference internal" href="../soils.html#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel" title="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ShearStrengthModelTypePhreaticLevel</span></code></a>(value[, ...])</p></td>
 <td><p>Shear Strength Model Type.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../soils.html#geolib.soils.soil.SigmaTauParameters" title="geolib.soils.soil.SigmaTauParameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SigmaTauParameters</span></code></a>(**data)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../soils.html#geolib.soils.soil.SigmaTauTablePoint" title="geolib.soils.soil.SigmaTauTablePoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SigmaTauTablePoint</span></code></a>(**data)</p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="../soils.html#geolib.soils.soil.Soil" title="geolib.soils.soil.Soil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Soil</span></code></a>(**data)</p></td>
 <td><p>Soil Material.</p></td>
 </tr>
@@ -599,6 +605,11 @@ the D-Stability program.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SIGMATAUTABLE">
+<span class="sig-name descname"><span class="pre">SIGMATAUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SigmaTauTable'</span></em><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SIGMATAUTABLE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SUTABLE">
 <span class="sig-name descname"><span class="pre">SUTABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'SuTable'</span></em><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.SUTABLE" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -606,6 +617,68 @@ the D-Stability program.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.transform_shear_strength_model_type_to_internal">
 <span class="sig-name descname"><span class="pre">transform_shear_strength_model_type_to_internal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.ShearStrengthModelTypePhreaticLevel.transform_shear_strength_model_type_to_internal" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SigmaTauParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SigmaTauParameters" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauParameters.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'ser_json_inf_nan':</span> <span class="pre">'constants',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauParameters.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauParameters.probabilistic_sigma_tau_table">
+<span class="sig-name descname"><span class="pre">probabilistic_sigma_tau_table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauParameters.probabilistic_sigma_tau_table" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauParameters.sigma_tau_table">
+<span class="sig-name descname"><span class="pre">sigma_tau_table</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code><span class="pre">[</span><a class="reference internal" href="../soils.html#geolib.soils.soil.SigmaTauTablePoint" title="geolib.soils.soil.SigmaTauTablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">SigmaTauTablePoint</span></code></a><span class="pre">]]</span></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauParameters.sigma_tau_table" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauParameters.sigma_tau_table_variation_coefficient">
+<span class="sig-name descname"><span class="pre">sigma_tau_table_variation_coefficient</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauParameters.sigma_tau_table_variation_coefficient" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauParameters.to_sigma_tau_table_points">
+<span class="sig-name descname"><span class="pre">to_sigma_tau_table_points</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SigmaTauParameters.to_sigma_tau_table_points" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauTablePoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">geolib.soils.soil.</span></span><span class="sig-name descname"><span class="pre">SigmaTauTablePoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.soils.soil.SigmaTauTablePoint" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauTablePoint.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'ser_json_inf_nan':</span> <span class="pre">'constants',</span> <span class="pre">'validate_assignment':</span> <span class="pre">True,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauTablePoint.model_config" title="Link to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauTablePoint.sigma">
+<span class="sig-name descname"><span class="pre">sigma</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauTablePoint.sigma" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.SigmaTauTablePoint.tau">
+<span class="sig-name descname"><span class="pre">tau</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#geolib.soils.soil.SigmaTauTablePoint.tau" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -719,6 +792,11 @@ the D-Stability program.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="geolib.soils.soil.Soil.shell_factor">
 <span class="sig-name descname"><span class="pre">shell_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code><span class="pre">]</span></em><a class="headerlink" href="#geolib.soils.soil.Soil.shell_factor" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="geolib.soils.soil.Soil.sigma_tau_parameters">
+<span class="sig-name descname"><span class="pre">sigma_tau_parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code><span class="pre">[</span><a class="reference internal" href="../soils.html#geolib.soils.soil.SigmaTauParameters" title="geolib.soils.soil.SigmaTauParameters"><code class="xref py py-class docutils literal notranslate"><span class="pre">SigmaTauParameters</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#geolib.soils.soil.Soil.sigma_tau_parameters" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
