@@ -583,9 +583,9 @@ class PersistableCalculation(DGeoFlowBaseModelStructure):
     Notes: Optional[str] = None
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
     CriticalHeadId: Optional[str] = None
-    CriticalHeadSearchSpace: Optional[
-        PersistableCriticalHeadSearchSpace
-    ] = PersistableCriticalHeadSearchSpace()
+    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace] = (
+        PersistableCriticalHeadSearchSpace()
+    )
     PipeTrajectory: Optional[InternalPipeTrajectory] = None
     MeshPropertiesId: Optional[str] = None
     ResultsId: Optional[str] = None
@@ -606,6 +606,11 @@ class ElementResult(DGeoFlowBaseModelStructure):
     NodeResults: Optional[List[NodeResult]] = []
 
 
+class PersistablePhreaticLineSegment(DGeoFlowBaseModelStructure):
+    Start: Optional[PersistablePoint] = None
+    End: Optional[PersistablePoint] = None
+
+
 class PipeElementResult(DGeoFlowBaseModelStructure):
     Nodes: Optional[List[PersistablePoint]] = []
     IsActive: Optional[bool] = None
@@ -615,6 +620,7 @@ class PipeElementResult(DGeoFlowBaseModelStructure):
 class GroundwaterFlowResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     Elements: Optional[List[ElementResult]] = []
+    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
     ContentVersion: Optional[str] = "2"
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
@@ -628,6 +634,7 @@ class PipeLengthResult(DGeoFlowSubStructure):
     Id: Optional[str] = None
     PipeLength: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
+    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
 
@@ -643,6 +650,7 @@ class CriticalHeadResult(DGeoFlowSubStructure):
     PipeLength: Optional[float] = None
     CriticalHead: Optional[float] = None
     Elements: Optional[List[ElementResult]] = []
+    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
     PipeElements: Optional[List[PipeElementResult]] = []
     ContentVersion: Optional[str] = "2"
 
