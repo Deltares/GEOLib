@@ -79,9 +79,9 @@ def calculate_fragility_curve(
             )
         )
         dm.set_model(bishop_analysis_method)
-        dm.datastructure.calculationsettings[
-            0
-        ].CalculationType = CalculationTypeEnum.PROBABILISTIC
+        dm.datastructure.calculationsettings[0].CalculationType = (
+            CalculationTypeEnum.PROBABILISTIC
+        )
 
         # Re-calculate to get Reliability Index
         dm.serialize(Path(output_file))

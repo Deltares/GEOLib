@@ -227,13 +227,13 @@ class WaternetCreatorSettings(DStabilitySubStructure):
     AquitardHeadLandSide: Optional[Union[float, str]] = "NaN"
     AquitardHeadWaterSide: Optional[Union[float, str]] = "NaN"
     ContentVersion: Optional[str] = "2"
-    DitchCharacteristics: Optional[
-        PersistableDitchCharacteristics
-    ] = PersistableDitchCharacteristics()
+    DitchCharacteristics: Optional[PersistableDitchCharacteristics] = (
+        PersistableDitchCharacteristics()
+    )
     DrainageConstruction: Optional[PersistablePoint] = PersistablePoint()
-    EmbankmentCharacteristics: Optional[
-        PersistableEmbankmentCharacteristics
-    ] = PersistableEmbankmentCharacteristics()
+    EmbankmentCharacteristics: Optional[PersistableEmbankmentCharacteristics] = (
+        PersistableEmbankmentCharacteristics()
+    )
     EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = (
         EmbankmentSoilScenarioEnum.CLAY_EMBANKMENT_ON_CLAY
     )
@@ -628,6 +628,7 @@ class ShearStrengthModelTypePhreaticLevelInternal(Enum):
     NONE = "None"
     SU = "Su"
     SUTABLE = "SuTable"
+    SIGMATAUTABLE = "SigmaTauTable"
 
     def to_global_shear_strength_model(self):
         transform_dictionary = {
@@ -636,6 +637,7 @@ class ShearStrengthModelTypePhreaticLevelInternal(Enum):
             "None": "None",
             "Su": "SHANSEP",
             "SuTable": "SuTable",
+            "SigmaTauTable": "SigmaTauTable",
         }
         return transform_dictionary[self.value]
 
@@ -663,6 +665,30 @@ class PersistableSuTable(DStabilityBaseModelStructure):
                 SuTablePoint(su=su_table_point.Su, stress=su_table_point.EffectiveStress)
             )
         return su_table
+
+
+class PersistableSigmaTauTablePoint(DStabilitySubStructure):
+    EffectiveStress: float = 0.0
+    ShearStrength: float = 0.0
+
+
+class PersistableSigmaTauTable(DStabilityBaseModelStructure):
+    SigmaTauTablePoints: List[PersistableSigmaTauTablePoint] = []
+    IsSigmaTauTableProbabilistic: bool = False
+    SigmaTauTableVariationCoefficient: float = 0.0
+
+    def to_global_sigma_tau_table(self):
+        from geolib.soils import SigmaTauTablePoint
+
+        sigma_tau_table = []
+        for sigma_tau_table_point in self.SigmaTauTablePoints:
+            sigma_tau_table.append(
+                SigmaTauTablePoint(
+                    shearStrength=sigma_tau_table_point.ShearStrength,
+                    effective_stress=sigma_tau_table_point.EffectiveStress,
+                )
+            )
+        return sigma_tau_table
 
 
 class PersistableMohrCoulombClassicShearStrengthModel(DStabilityBaseModelStructure):
@@ -711,24 +737,25 @@ class PersistableSoil(DStabilityBaseModelStructure):
     IsProbabilistic: bool = False
     Name: Optional[str] = ""
     Notes: Optional[str] = ""
-    ShearStrengthModelTypeAbovePhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
-        ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
-    )
-    ShearStrengthModelTypeBelowPhreaticLevel: ShearStrengthModelTypePhreaticLevelInternal = (
-        ShearStrengthModelTypePhreaticLevelInternal.SU
-    )
-    MohrCoulombClassicShearStrengthModel: PersistableMohrCoulombClassicShearStrengthModel = (
-        PersistableMohrCoulombClassicShearStrengthModel()
-    )
-    MohrCoulombAdvancedShearStrengthModel: PersistableMohrCoulombAdvancedShearStrengthModel = (
-        PersistableMohrCoulombAdvancedShearStrengthModel()
-    )
+    ShearStrengthModelTypeAbovePhreaticLevel: (
+        ShearStrengthModelTypePhreaticLevelInternal
+    ) = ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
+    ShearStrengthModelTypeBelowPhreaticLevel: (
+        ShearStrengthModelTypePhreaticLevelInternal
+    ) = ShearStrengthModelTypePhreaticLevelInternal.SU
+    MohrCoulombClassicShearStrengthModel: (
+        PersistableMohrCoulombClassicShearStrengthModel
+    ) = PersistableMohrCoulombClassicShearStrengthModel()
+    MohrCoulombAdvancedShearStrengthModel: (
+        PersistableMohrCoulombAdvancedShearStrengthModel
+    ) = PersistableMohrCoulombAdvancedShearStrengthModel()
     SuShearStrengthModel: PersistableSuShearStrengthModel = (
         PersistableSuShearStrengthModel()
     )
     VolumetricWeightAbovePhreaticLevel: float = 0.0
     VolumetricWeightBelowPhreaticLevel: float = 0.0
     SuTable: PersistableSuTable = PersistableSuTable()
+    SigmaTauTable: PersistableSigmaTauTable = PersistableSigmaTauTable()
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -865,6 +892,61 @@ class SoilCollection(DStabilitySubStructure):
             VolumetricWeightAbovePhreaticLevel=18.0,
             VolumetricWeightBelowPhreaticLevel=18.0,
         ),
+        PersistableSoil(
+            Id="12",
+            Name="Dilatent clay",
+            Code="Dilatent clay",
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
+            SuTable=PersistableSuTable(
+                StrengthIncreaseExponent=0.8,
+                SuTablePoints=[
+                    PersistableSuTablePoint(EffectiveStress=0, Su=0),
+                    PersistableSuTablePoint(EffectiveStress=100, Su=200),
+                    PersistableSuTablePoint(EffectiveStress=200, Su=300),
+                ],
+            ),
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0,
+        ),
+        PersistableSoil(
+            Id="13",
+            Name="Embankment dry",
+            Code="Embankment dry",
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SUTABLE,
+            SuTable=PersistableSuTable(
+                StrengthIncreaseExponent=0.8,
+                SuTablePoints=[
+                    PersistableSuTablePoint(EffectiveStress=0, Su=0),
+                    PersistableSuTablePoint(EffectiveStress=29, Su=29),
+                    PersistableSuTablePoint(EffectiveStress=40, Su=32),
+                    PersistableSuTablePoint(EffectiveStress=60, Su=37),
+                    PersistableSuTablePoint(EffectiveStress=80, Su=42),
+                    PersistableSuTablePoint(EffectiveStress=100, Su=48),
+                    PersistableSuTablePoint(EffectiveStress=120, Su=55),
+                    PersistableSuTablePoint(EffectiveStress=140, Su=62),
+                    PersistableSuTablePoint(EffectiveStress=160, Su=69),
+                    PersistableSuTablePoint(EffectiveStress=180, Su=77),
+                ],
+            ),
+            VolumetricWeightAbovePhreaticLevel=18.0,
+            VolumetricWeightBelowPhreaticLevel=18.0,
+        ),
+        PersistableSoil(
+            Id="14",
+            Name="S_Tau material",
+            Code="S_Tau material",
+            ShearStrengthModelTypeAbovePhreaticLevel=ShearStrengthModelTypePhreaticLevelInternal.SIGMATAUTABLE,
+            SigmaTauTable=PersistableSigmaTauTable(
+                SigmaTauTablePoints=[
+                    PersistableSigmaTauTablePoint(EffectiveStress=0, ShearStrength=5),
+                    PersistableSigmaTauTablePoint(EffectiveStress=10, ShearStrength=5),
+                    PersistableSigmaTauTablePoint(EffectiveStress=35, ShearStrength=30),
+                    PersistableSigmaTauTablePoint(EffectiveStress=100, ShearStrength=60),
+                ]
+            ),
+            VolumetricWeightAbovePhreaticLevel=16.0,
+            VolumetricWeightBelowPhreaticLevel=16.0,
+        ),
     ]
 
     @classmethod
@@ -935,6 +1017,7 @@ class SoilCollection(DStabilitySubStructure):
     def __internal_soil_to_global_soil(self, persistable_soil: PersistableSoil):
         from geolib.soils import (
             MohrCoulombParameters,
+            SigmaTauParameters,
             SoilWeightParameters,
             UndrainedParameters,
         )
@@ -950,6 +1033,12 @@ class SoilCollection(DStabilitySubStructure):
                 persistable_soil.MohrCoulombAdvancedShearStrengthModel.DilatancyStochasticParameter
             ),
             cohesion_and_friction_angle_correlated=persistable_soil.MohrCoulombAdvancedShearStrengthModel.CohesionAndFrictionAngleCorrelated,
+        )
+
+        sigma_tau_parameters = SigmaTauParameters(
+            sigma_tau_table=persistable_soil.SigmaTauTable.to_global_sigma_tau_table(),
+            probabilistic_sigma_tau_table=persistable_soil.SigmaTauTable.IsSigmaTauTableProbabilistic,
+            sigma_tau_table_variation_coefficient=persistable_soil.SigmaTauTable.SigmaTauTableVariationCoefficient,
         )
 
         strength_increase_exponent = self.__determine_strength_increase_exponent(
@@ -982,6 +1071,7 @@ class SoilCollection(DStabilitySubStructure):
             shear_strength_model_above_phreatic_level=persistable_soil.ShearStrengthModelTypeAbovePhreaticLevel.to_global_shear_strength_model(),
             shear_strength_model_below_phreatic_level=persistable_soil.ShearStrengthModelTypeBelowPhreaticLevel.to_global_shear_strength_model(),
             mohr_coulomb_parameters=mohr_coulomb_parameters,
+            sigma_tau_parameters=sigma_tau_parameters,
             soil_weight_parameters=soil_weight_parameters,
             undrained_parameters=undrained_parameters,
         )
@@ -1071,6 +1161,7 @@ class PersistableNail(DStabilityBaseModelStructure):
     Length: Optional[Union[float, str]] = "NaN"
     Location: Optional[PersistablePoint] = None
     MaxPullForce: Optional[float] = 0.0
+    Key: Optional[int] = 1
     Notes: Optional[str] = ""
     PlasticMoment: Optional[float] = 0.0
     ShearStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
@@ -1158,9 +1249,9 @@ class NailProperties(DStabilitySubStructure):
     """nailpropertiesforsoils.json"""
 
     ContentVersion: Optional[str] = "2"
-    NailPropertiesForSoils: Optional[
-        List[Optional[PersistableNailPropertiesForSoil]]
-    ] = []
+    NailPropertiesForSoils: Optional[List[Optional[PersistableNailPropertiesForSoil]]] = (
+        []
+    )
 
     @classmethod
     def structure_name(cls) -> str:
@@ -1474,13 +1565,13 @@ class PersistableTangentLines(DStabilityBaseModelStructure):
 
 
 class PersistableBishopBruteForceSettings(DStabilityBaseModelStructure):
-    GridEnhancements: Optional[
-        PersistableGridEnhancements
-    ] = PersistableGridEnhancements()
+    GridEnhancements: Optional[PersistableGridEnhancements] = (
+        PersistableGridEnhancements()
+    )
     SearchGrid: Optional[PersistableSearchGrid] = PersistableSearchGrid()
-    SlipPlaneConstraints: Optional[
-        PersistableSlipPlaneConstraints
-    ] = PersistableSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints] = (
+        PersistableSlipPlaneConstraints()
+    )
     TangentLines: Optional[PersistableTangentLines] = PersistableTangentLines()
 
 
@@ -1504,9 +1595,9 @@ class PersistableSpencerSettings(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
     SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneConstraints: Optional[
-        PersistableGeneticSlipPlaneConstraints
-    ] = PersistableGeneticSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints] = (
+        PersistableGeneticSlipPlaneConstraints()
+    )
 
 
 class OptionsTypeEnum(Enum):
@@ -1523,9 +1614,9 @@ class PersistableSpencerGeneticSettings(DStabilityBaseModelStructure):
     OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
     SlipPlaneA: Optional[List[Optional[PersistablePoint]]] = None
     SlipPlaneB: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneConstraints: Optional[
-        PersistableGeneticSlipPlaneConstraints
-    ] = PersistableGeneticSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints] = (
+        PersistableGeneticSlipPlaneConstraints()
+    )
 
 
 class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
@@ -1537,9 +1628,9 @@ class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
 class PersistableUpliftVanSettings(DStabilityBaseModelStructure):
     Label: Optional[str] = ""
     Notes: Optional[str] = ""
-    SlipPlane: Optional[
-        PersistableTwoCirclesOnTangentLine
-    ] = PersistableTwoCirclesOnTangentLine()
+    SlipPlane: Optional[PersistableTwoCirclesOnTangentLine] = (
+        PersistableTwoCirclesOnTangentLine()
+    )
 
 
 class PersistableSearchArea(DStabilityBaseModelStructure):
@@ -1563,9 +1654,9 @@ class PersistableUpliftVanParticleSwarmSettings(DStabilityBaseModelStructure):
     OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
     SearchAreaA: Optional[PersistableSearchArea] = PersistableSearchArea()
     SearchAreaB: Optional[PersistableSearchArea] = PersistableSearchArea()
-    SlipPlaneConstraints: Optional[
-        PersistableSlipPlaneConstraints
-    ] = PersistableSlipPlaneConstraints()
+    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints] = (
+        PersistableSlipPlaneConstraints()
+    )
     TangentArea: Optional[PersistableTangentArea] = PersistableTangentArea()
 
 
@@ -1574,22 +1665,22 @@ class CalculationSettings(DStabilitySubStructure):
 
     AnalysisType: Optional[AnalysisTypeEnum] = AnalysisTypeEnum.BISHOP_BRUTE_FORCE
     Bishop: Optional[PersistableBishopSettings] = PersistableBishopSettings()
-    BishopBruteForce: Optional[
-        PersistableBishopBruteForceSettings
-    ] = PersistableBishopBruteForceSettings()
+    BishopBruteForce: Optional[PersistableBishopBruteForceSettings] = (
+        PersistableBishopBruteForceSettings()
+    )
     CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.DETERMINISTIC
     ContentVersion: Optional[str] = "2"
     Id: Optional[str] = "19"
     ModelFactorMean: Optional[float] = 1.05
     ModelFactorStandardDeviation: Optional[float] = 0.033
     Spencer: Optional[PersistableSpencerSettings] = PersistableSpencerSettings()
-    SpencerGenetic: Optional[
-        PersistableSpencerGeneticSettings
-    ] = PersistableSpencerGeneticSettings()
+    SpencerGenetic: Optional[PersistableSpencerGeneticSettings] = (
+        PersistableSpencerGeneticSettings()
+    )
     UpliftVan: Optional[PersistableUpliftVanSettings] = PersistableUpliftVanSettings()
-    UpliftVanParticleSwarm: Optional[
-        PersistableUpliftVanParticleSwarmSettings
-    ] = PersistableUpliftVanParticleSwarmSettings()
+    UpliftVanParticleSwarm: Optional[PersistableUpliftVanParticleSwarmSettings] = (
+        PersistableUpliftVanParticleSwarmSettings()
+    )
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1649,17 +1740,22 @@ class PersistableSlice(DStabilityBaseModelStructure):
     HorizontalPorePressure: Optional[Union[float, str]] = "NaN"
     HorizontalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
     HydrostaticPorePressure: Optional[Union[float, str]] = "NaN"
+    InputShearStress: Optional[Union[float, str]] = "NaN"
     Label: Optional[str] = None
     LoadStress: Optional[Union[float, str]] = "NaN"
     MInput: Optional[Union[float, str]] = "NaN"
     NormalStress: Optional[Union[float, str]] = "NaN"
     Ocr: Optional[Union[float, str]] = "NaN"
+    OutputShearStress: Optional[Union[float, str]] = "NaN"
     PhiInput: Optional[Union[float, str]] = "NaN"
     PhiOutput: Optional[Union[float, str]] = "NaN"
     PiezometricPorePressure: Optional[Union[float, str]] = "NaN"
     Pop: Optional[Union[float, str]] = "NaN"
-    ShearStress: Optional[Union[float, str]] = "NaN"
+    ResultantForce: Optional[Union[float, str]] = "NaN"
+    ResultantMoment: Optional[Union[float, str]] = "NaN"
     SInput: Optional[Union[float, str]] = "NaN"
+    ShearStress: Optional[Union[float, str]] = "NaN"
+    SuInput: Optional[Union[float, str]] = "NaN"
     SuOutput: Optional[Union[float, str]] = "NaN"
     SurfacePorePressure: Optional[Union[float, str]] = "NaN"
     TopAngle: Optional[Union[float, str]] = "NaN"
@@ -1890,6 +1986,7 @@ class PersistableSpencerSlice(DStabilityBaseModelStructure):
     HorizontalPorePressure: Optional[Union[float, str]] = "NaN"
     HorizontalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
     HydrostaticPorePressure: Optional[Union[float, str]] = "NaN"
+    InputShearStress: Optional[Union[float, str]] = "NaN"
     Label: Optional[str] = None
     LeftForce: Optional[Union[float, str]] = "NaN"
     LeftForceAngle: Optional[Union[float, str]] = "NaN"
@@ -1898,15 +1995,19 @@ class PersistableSpencerSlice(DStabilityBaseModelStructure):
     MInput: Optional[Union[float, str]] = "NaN"
     NormalStress: Optional[Union[float, str]] = "NaN"
     Ocr: Optional[Union[float, str]] = "NaN"
+    OutputShearStress: Optional[Union[float, str]] = "NaN"
     PhiInput: Optional[Union[float, str]] = "NaN"
     PhiOutput: Optional[Union[float, str]] = "NaN"
     PiezometricPorePressure: Optional[Union[float, str]] = "NaN"
     Pop: Optional[Union[float, str]] = "NaN"
+    ResultantForce: Optional[Union[float, str]] = "NaN"
+    ResultantMoment: Optional[Union[float, str]] = "NaN"
     RightForce: Optional[Union[float, str]] = "NaN"
     RightForceAngle: Optional[Union[float, str]] = "NaN"
     RightForceY: Optional[Union[float, str]] = "NaN"
     ShearStress: Optional[Union[float, str]] = "NaN"
     SInput: Optional[Union[float, str]] = "NaN"
+    SuInput: Optional[Union[float, str]] = "NaN"
     SuOutput: Optional[Union[float, str]] = "NaN"
     SurfacePorePressure: Optional[Union[float, str]] = "NaN"
     TopAngle: Optional[Union[float, str]] = "NaN"

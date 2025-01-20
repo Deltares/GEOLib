@@ -1,6 +1,7 @@
 """
 This module handles the four types of loads in DStability.
 """
+
 import abc
 from typing import Optional
 
