@@ -671,13 +671,13 @@ class DStabilityModel(BaseModel):
         persistable_headline = waternet.add_head_line(
             str(self._get_next_id()), label, notes, points, is_phreatic_line
         )
-        return int(persistable_headline.Id)
+        return persistable_headline.Id
 
     def add_reference_line(
         self,
         points: List[Point],
-        bottom_headline_id: int,
-        top_head_line_id: int,
+        bottom_headline_id: Optional[str] = None,
+        top_head_line_id: Optional[str] = None,
         label: str = "",
         notes: str = "",
         scenario_index: Optional[int] = None,
@@ -708,8 +708,8 @@ class DStabilityModel(BaseModel):
             label,
             notes,
             points,
-            str(bottom_headline_id),
-            str(top_head_line_id),
+            bottom_headline_id,
+            top_head_line_id,
         )
         return int(persistable_reference_line.Id)
 

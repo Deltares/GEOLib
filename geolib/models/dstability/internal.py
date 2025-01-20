@@ -169,20 +169,22 @@ class Waternet(DStabilitySubStructure):
         label: str,
         notes: str,
         points: List[Point],
-        bottom_head_line_id: str,
-        top_head_line_id: str,
+        bottom_head_line_id: Optional[str] = None,
+        top_head_line_id: Optional[str] = None,
     ) -> PersistableReferenceLine:
         reference_line = PersistableReferenceLine(
             Id=reference_line_id, Label=label, Notes=notes
         )
         reference_line.Points = [PersistablePoint(X=p.x, Z=p.z) for p in points]
 
-        if not self.has_head_line_id(bottom_head_line_id):
+        if bottom_head_line_id is not None and not self.has_head_line_id(
+            bottom_head_line_id
+        ):
             raise ValueError(
                 f"Unknown headline id {bottom_head_line_id} for bottom_head_line_id"
             )
 
-        if not self.has_head_line_id(top_head_line_id):
+        if top_head_line_id is not None and not self.has_head_line_id(top_head_line_id):
             raise ValueError(
                 f"Unknown headline id {top_head_line_id} for top_head_line_id"
             )
