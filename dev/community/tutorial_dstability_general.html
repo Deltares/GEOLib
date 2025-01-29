@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Creating a D-Stability model &#8212; geolib 2.5.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8cc7f55d" />
     <script src="../_static/documentation_options.js?v=3c4615cf"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -53,15 +53,15 @@
 <ol class="arabic simple">
 <li><p>The model data should be set. This can be done by initializing the class  <a class="reference internal" href="../dev/_autosummary/geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel" title="geolib.models.dstability.dstability_model.DStabilityModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityModel</span></code></a>.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability</span> <span class="kn">import</span> <span class="n">DStabilityModel</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.models.dstability</span><span class="w"> </span><span class="kn">import</span> <span class="n">DStabilityModel</span>
 
 <span class="n">dm</span> <span class="o">=</span> <span class="n">DStabilityModel</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>2. Choose an analysis method, such as <code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityBishopAnalysisMethod</span></code> and set
 it to the model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.geometry.one</span> <span class="kn">import</span> <span class="n">Point</span>
-<span class="kn">from</span> <span class="nn">geolib.models.dstability.analysis</span> <span class="kn">import</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">,</span> <span class="n">DStabilityCircle</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.geometry.one</span><span class="w"> </span><span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geolib.models.dstability.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">,</span> <span class="n">DStabilityCircle</span>
 
 <span class="n">bishop_analysis_method</span> <span class="o">=</span> <span class="n">DStabilityBishopAnalysisMethod</span><span class="p">(</span>
     <span class="n">circle</span><span class="o">=</span><span class="n">DStabilityCircle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
@@ -145,7 +145,7 @@ it to the model.</p>
 <ol class="arabic simple">
 <li><p>We can then create a <code class="xref py py-class docutils literal notranslate"><span class="pre">Soil</span></code> and add it to the model. Refer to <a class="reference internal" href="tutorial_soil.html#soil-tut"><span class="std std-ref">Tutorial Soils</span></a> for more information.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils.soil</span> <span class="kn">import</span> <span class="n">Soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils.soil</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span>
 
 <span class="c1"># add soil</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
@@ -236,8 +236,8 @@ it to the model.</p>
 <ol class="arabic simple" start="6">
 <li><p>What’s left to add is the creation of several types of loads.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability.loads</span> <span class="kn">import</span> <span class="n">LineLoad</span><span class="p">,</span> <span class="n">UniformLoad</span>
-<span class="kn">from</span> <span class="nn">geolib.models.dstability.reinforcements</span> <span class="kn">import</span> <span class="n">ForbiddenLine</span><span class="p">,</span> <span class="n">Geotextile</span><span class="p">,</span> <span class="n">Nail</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.models.dstability.loads</span><span class="w"> </span><span class="kn">import</span> <span class="n">LineLoad</span><span class="p">,</span> <span class="n">UniformLoad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geolib.models.dstability.reinforcements</span><span class="w"> </span><span class="kn">import</span> <span class="n">ForbiddenLine</span><span class="p">,</span> <span class="n">Geotextile</span><span class="p">,</span> <span class="n">Nail</span>
 
 <span class="c1">#  add uniform load</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">add_load</span><span class="p">(</span>
@@ -293,7 +293,7 @@ it to the model.</p>
 <ol class="arabic simple" start="7">
 <li><p>And we can set state points or state lines.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.models.dstability.states</span> <span class="kn">import</span> <span class="n">DStabilityStateLinePoint</span><span class="p">,</span> <span class="n">DStabilityStatePoint</span><span class="p">,</span> <span class="n">DStabilityStress</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.models.dstability.states</span><span class="w"> </span><span class="kn">import</span> <span class="n">DStabilityStateLinePoint</span><span class="p">,</span> <span class="n">DStabilityStatePoint</span><span class="p">,</span> <span class="n">DStabilityStress</span>
 
 <span class="c1"># state point</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">add_state_point</span><span class="p">(</span>
@@ -317,7 +317,7 @@ it to the model.</p>
 </div>
 <p>To run the model first the model needs to be serialized. To do that define a
 output file name and call the function <a class="reference internal" href="../dev/_autosummary/geolib.models.dstability.dstability_model.html#geolib.models.dstability.dstability_model.DStabilityModel.serialize" title="geolib.models.dstability.dstability_model.DStabilityModel.serialize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize()</span></code></a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="n">dm</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;tutorial.stix&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -358,7 +358,7 @@ be added to the current scenario.</p>
 </pre></div>
 </div>
 <p>The GEOLib package also contains functionality to plot a D-Stability model. To plot the model you can use the following code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="n">scenario_id</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">stage_id</span> <span class="o">=</span> <span class="mi">0</span>

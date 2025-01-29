@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>D-Stability &#8212; geolib 2.5.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8cc7f55d" />
     <script src="../../_static/documentation_options.js?v=3c4615cf"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
@@ -76,9 +76,9 @@ is illustrated below.</p>
 <p>The following valid code will produce a correct geometry, note that the clay layer is a rectangular layer, but still
 requires 6 geometry points. This is because the dike layer touches the clay layer at two points. If the clay layer is
 only generated the 4 corner points, a valid geometry is generated, however unexpected results can occur.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geolib</span>
-<span class="kn">from</span> <span class="nn">geolib.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">geolib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geolib.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="n">ds</span> <span class="o">=</span> <span class="n">geolib</span><span class="o">.</span><span class="n">DStabilityModel</span><span class="p">()</span>
 

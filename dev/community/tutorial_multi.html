@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Tutorial Multiple Calculations &#8212; geolib 2.5.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8cc7f55d" />
     <script src="../_static/documentation_options.js?v=3c4615cf"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -59,8 +59,8 @@ Note how we set a specific filename for each model. This is required, both for d
 On calculation the models are serialized to input files for the console, so they need unique filenames.
 Because of the parallel batch calculation, the order of the list of output models isn’t guaranteed to be the same as the list of output models.
 Only the name part of the filename is used, so any folders or prefixed are ignored.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geolib</span> <span class="k">as</span> <span class="nn">gl</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">geolib</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gl</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="n">dma</span> <span class="o">=</span> <span class="n">gl</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">DStabilityModel</span><span class="p">()</span>
 <span class="n">dma</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;test.stix&quot;</span><span class="p">))</span>

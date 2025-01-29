@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Tutorial Soils &#8212; geolib 2.5.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8cc7f55d" />
     <script src="../_static/documentation_options.js?v=3c4615cf"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -60,14 +60,14 @@ class.</p>
 <p>Since parameters are clustered in different classes as the Soil class, it is required to
 fill in parameters in these respective classes. Below an example is given on how to
 to initialise a soil with a friction angle and cohesion.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span>
 
 <span class="n">mohr_coulomb_parameters</span> <span class="o">=</span> <span class="n">MohrCoulombParameters</span><span class="p">(</span><span class="n">cohesion</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">friction_angle</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">mohr_coulomb_parameters</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Another method is to first initialise the soil and then change the values, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span>
 
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span> <span class="o">=</span> <span class="mi">5</span>
@@ -75,7 +75,7 @@ to initialise a soil with a friction angle and cohesion.</p>
 </pre></div>
 </div>
 <p>Lastly, the parameters can be passed as a dictionary, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span>
 
 <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cohesion&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
           <span class="s2">&quot;friction_angle&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">}</span>
@@ -84,7 +84,7 @@ to initialise a soil with a friction angle and cohesion.</p>
 </div>
 <p>When initialising the Soil class all values given should be parameters of the class itself.
 Otherwise an error is thrown, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Peat&quot;</span><span class="p">,</span> <span class="n">cohesion</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -101,21 +101,21 @@ is filled in as a floating value, the value is automatically translated to a sto
 a mean of the input float and a standard deviation of 0. This step is required to stay
 consistent in sending parameters to the corresponding models</p>
 <p>Below three examples are given on how to input a stochastic variable in the soil.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span><span class="p">,</span> <span class="n">StochasticParameter</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span><span class="p">,</span> <span class="n">StochasticParameter</span>
 
 <span class="n">cohesion</span> <span class="o">=</span> <span class="n">StochasticParameter</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">standard_deviation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">mohr_coulomb_parameters</span> <span class="o">=</span> <span class="n">MohrCoulombParameters</span><span class="p">(</span><span class="n">cohesion</span><span class="o">=</span><span class="n">cohesion</span><span class="p">)</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">mohr_coulomb_parameters</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span>
 
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">mohr_coulomb_parameters</span><span class="o">.</span><span class="n">cohesion</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="mf">0.5</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span>
 
 <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;cohesion&quot;</span><span class="p">:{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
                         <span class="s2">&quot;standard_deviation&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}}</span>
@@ -127,8 +127,8 @@ consistent in sending parameters to the corresponding models</p>
 to the soil list of the corresponding model. Note that, for non-filled in parameters, the default value is used.
 Below an example is given on how to add a soil in D-Settlement. For an overview on how to pass the complete workflow
 for each model, see the other <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorials</span></a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span>
-<span class="kn">from</span> <span class="nn">geolib.models</span> <span class="kn">import</span> <span class="n">DSettlementModel</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">MohrCoulombParameters</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">geolib.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">DSettlementModel</span>
 
 <span class="n">mohr_coulomb_parameters</span> <span class="o">=</span> <span class="n">MohrCoulombParameters</span><span class="p">(</span><span class="n">cohesion</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">friction_angle</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">(</span><span class="n">mohr_coulomb_parameters</span><span class="o">=</span><span class="n">mohr_coulomb_parameters</span><span class="p">)</span>
@@ -139,7 +139,7 @@ for each model, see the other <a class="reference internal" href="tutorial.html#
 </div>
 <p>Certain soil input are enumerations. For example, “soil_type_nl” which is an input for D-Foundations. Below an example
 is shown on how to set an enumeration for the soil.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">geolib.soils</span> <span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">SoilType</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">geolib.soils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Soil</span><span class="p">,</span> <span class="n">SoilType</span>
 
 <span class="n">soil</span> <span class="o">=</span> <span class="n">Soil</span><span class="p">()</span>
 <span class="n">soil</span><span class="o">.</span><span class="n">soil_type_nl</span> <span class="o">=</span> <span class="n">SoilType</span><span class="o">.</span><span class="n">CLAY</span>
