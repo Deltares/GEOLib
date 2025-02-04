@@ -1,6 +1,7 @@
 import logging
 from enum import IntEnum
 from inspect import cleandoc
+
 from pydantic import Field, StringConstraints
 from pydantic.types import PositiveInt
 from typing_extensions import Annotated
@@ -710,7 +711,9 @@ class DFoundationsNenPileResults(DFoundationsInlineProperties):
     min_value: float
     max_value: float
     nen_average_pile_factors: DFoundationsNenPileResultsTable
-    calculation_parameters_bearing_piles_ec_7: DFoundationsCalculationParametersBearingPilesEC7
+    calculation_parameters_bearing_piles_ec_7: (
+        DFoundationsCalculationParametersBearingPilesEC7
+    )
 
     @classmethod
     def header_lines(cls) -> int:

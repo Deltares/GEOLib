@@ -1107,9 +1107,7 @@ class DStabilityModel(BaseModel):
         )
         return color.replace("#80", "#")
 
-    def plot(
-        self, scenario_index: int | None = None, stage_index: int | None = None
-    ):
+    def plot(self, scenario_index: int | None = None, stage_index: int | None = None):
         geometry = self._get_geometry(scenario_index, stage_index)
         layers_collection = self._get_soil_layers(scenario_index, stage_index)
         fig, ax = plt.subplots()

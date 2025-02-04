@@ -3,6 +3,7 @@ Profile and Layer classes which are used by both D-Foundations and DSheetPiling.
 D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 """
+
 from pydantic import Field, field_validator
 from typing_extensions import Annotated
 

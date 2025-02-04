@@ -30,7 +30,9 @@ class CalculationOptionsPerStage(BaseDataClass):
     """
 
     anchor_factor: float = 1
-    partial_factor_set: PartialFactorSetEC7NADBE | PartialFactorSetCUR | PartialFactorSetEC7NADNL | None = None
+    partial_factor_set: (
+        PartialFactorSetEC7NADBE | PartialFactorSetCUR | PartialFactorSetEC7NADNL | None
+    ) = None
 
 
 class CalculationOptions(BaseDataClass, metaclass=ABCMeta):
@@ -56,12 +58,12 @@ class CalculationOptions(BaseDataClass, metaclass=ABCMeta):
     def calculation_properties(
         self,
     ) -> (
-        "StandardCalculationOptions" |
-        "DesignSheetpilingLengthCalculationOptions" |
-        "VerifyCalculationOptions" |
-        "KranzAnchorStrengthCalculationOptions" |
-        "OverallStabilityCalculationOptions" |
-        "ReliabilityAnalysisCalculationOptions"
+        "StandardCalculationOptions"
+        | "DesignSheetpilingLengthCalculationOptions"
+        | "VerifyCalculationOptions"
+        | "KranzAnchorStrengthCalculationOptions"
+        | "OverallStabilityCalculationOptions"
+        | "ReliabilityAnalysisCalculationOptions"
     ):
         _calculation_properties_map = {
             CalculationType.STANDARD: StandardCalculationOptions,

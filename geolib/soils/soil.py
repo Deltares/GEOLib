@@ -121,9 +121,7 @@ class UndrainedParameters(SoilBaseModel):
 
     shear_strength_ratio: float | StochasticParameter | None = StochasticParameter()
     shear_strength_ratio_and_shear_strength_exponent_correlated: bool | None = None
-    strength_increase_exponent: float | StochasticParameter | None = (
-        StochasticParameter()
-    )
+    strength_increase_exponent: float | StochasticParameter | None = StochasticParameter()
     s_and_m_correlated: bool | None = None
     undrained_shear_strength: float | None = None
     undrained_shear_strength_top: float | None = None
@@ -167,14 +165,10 @@ class BjerrumParameters(SoilBaseModel):
 
     input_type_is_comp_ratio: bool | None = None
     reloading_ratio: float | StochasticParameter | None = StochasticParameter()
-    primary_compression_ratio: float | StochasticParameter | None = (
-        StochasticParameter()
-    )
+    primary_compression_ratio: float | StochasticParameter | None = StochasticParameter()
     correlation_reload_primary_compression_ratio: float | None = None
     reloading_index: float | StochasticParameter | None = StochasticParameter()
-    primary_compression_index: float | StochasticParameter | None = (
-        StochasticParameter()
-    )
+    primary_compression_index: float | StochasticParameter | None = StochasticParameter()
     coef_secondary_compression_Ca: float | StochasticParameter | None = (
         StochasticParameter()
     )
@@ -207,9 +201,7 @@ class IsotacheParameters(SoilBaseModel):
 
 class KoppejanParameters(SoilBaseModel):
     precon_koppejan_type: StateType | None = None
-    preconsolidation_pressure: float | StochasticParameter | None = (
-        StochasticParameter()
-    )
+    preconsolidation_pressure: float | StochasticParameter | None = StochasticParameter()
     soil_ap_as_approximation_by_Cp_Cs: bool | None = False
     primary_Cp: float | StochasticParameter | None = StochasticParameter()
     primary_Cp_point: float | StochasticParameter | None = StochasticParameter()
@@ -409,9 +401,7 @@ class Soil(SoilBaseModel):
     soil_classification_parameters: SoilClassificationParameters | None = (
         SoilClassificationParameters()
     )
-    soil_stiffness_parameters: SoilStiffnessParameters | None = (
-        SoilStiffnessParameters()
-    )
+    soil_stiffness_parameters: SoilStiffnessParameters | None = SoilStiffnessParameters()
 
     horizontal_behaviour: HorizontalBehaviour | None = HorizontalBehaviour()
     cone_resistance: ConeResistance | None = ConeResistance()

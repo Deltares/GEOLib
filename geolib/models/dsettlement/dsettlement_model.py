@@ -58,7 +58,9 @@ class DSettlementModel(BaseModel):
     \*.sli files, read \*.sld and \*.err files.
     """
 
-    datastructure: DSettlementStructure | DSettlementOutputStructure = DSettlementStructure()
+    datastructure: DSettlementStructure | DSettlementOutputStructure = (
+        DSettlementStructure()
+    )
 
     @property
     def parser_provider_type(self) -> type[DSettlementParserProvider]:
@@ -403,7 +405,9 @@ class DSettlementModel(BaseModel):
         name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         time: timedelta,
         point: Point,
-        other_load: TrapeziformLoad | RectangularLoad | CircularLoad | TankLoad | UniformLoad,
+        other_load: (
+            TrapeziformLoad | RectangularLoad | CircularLoad | TankLoad | UniformLoad
+        ),
     ) -> None:
         internal_other_load = other_load._to_internal(time, point)
         if isinstance(self.other_loads, str):

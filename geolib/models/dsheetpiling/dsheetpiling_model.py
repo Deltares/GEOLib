@@ -5,7 +5,12 @@ from typing import BinaryIO
 from pydantic import FilePath, PositiveFloat
 
 from geolib.models import BaseDataClass, BaseModel
-from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet, VerticalBalance
+from geolib.models.dsheetpiling.constructions import (
+    DiaphragmWall,
+    Pile,
+    Sheet,
+    VerticalBalance,
+)
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 
@@ -121,7 +126,9 @@ class DSheetPilingModel(BaseModel):
     """
 
     current_stage: int | None = None  # Forces user to always set a stage.
-    datastructure: DSheetPilingStructure | DSheetPilingDumpStructure = DSheetPilingStructure()
+    datastructure: DSheetPilingStructure | DSheetPilingDumpStructure = (
+        DSheetPilingStructure()
+    )
 
     @property
     def parser_provider_type(self) -> type[DSheetPilingParserProvider]:

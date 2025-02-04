@@ -23,8 +23,8 @@ from geolib.models.dsheetpiling.constructions import (
     Sheet,
     SheetPileModelPlasticCalculationProperties,
     SheetPileProperties,
-    WoodenSheetPileProperties,
     VerticalBalance,
+    WoodenSheetPileProperties,
 )
 from geolib.models.dsheetpiling.dsheetpiling_model import (
     DiaphragmModelType,
