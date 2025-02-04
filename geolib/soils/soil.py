@@ -94,7 +94,7 @@ class SigmaTauTablePoint(SoilBaseModel):
 
 
 class SigmaTauParameters(SoilBaseModel):
-    sigma_tau_table: list[SigmaTauTablePoint] = None | None
+    sigma_tau_table: list[SigmaTauTablePoint] | None = None
     probabilistic_sigma_tau_table: bool | None = None
     sigma_tau_table_variation_coefficient: float | None = None
 
@@ -121,13 +121,15 @@ class UndrainedParameters(SoilBaseModel):
 
     shear_strength_ratio: float | StochasticParameter | None = StochasticParameter()
     shear_strength_ratio_and_shear_strength_exponent_correlated: bool | None = None
-    strength_increase_exponent: float | StochasticParameter | None = StochasticParameter()
+    strength_increase_exponent: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
     s_and_m_correlated: bool | None = None
     undrained_shear_strength: float | None = None
     undrained_shear_strength_top: float | None = None
     undrained_shear_strength_bottom: float | None = None
     undrained_shear_strength_bearing_capacity_factor: float | None = None
-    su_table: list[SuTablePoint] = None | None
+    su_table: list[SuTablePoint] | None = None
     probabilistic_su_table: bool | None = None
     su_table_variation_coefficient: float | None = None
 
@@ -165,14 +167,22 @@ class BjerrumParameters(SoilBaseModel):
 
     input_type_is_comp_ratio: bool | None = None
     reloading_ratio: float | StochasticParameter | None = StochasticParameter()
-    primary_compression_ratio: float | StochasticParameter | None = StochasticParameter()
+    primary_compression_ratio: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
     correlation_reload_primary_compression_ratio: float | None = None
     reloading_index: float | StochasticParameter | None = StochasticParameter()
-    primary_compression_index: float | StochasticParameter | None = StochasticParameter()
-    coef_secondary_compression_Ca: float | StochasticParameter | None = StochasticParameter()
+    primary_compression_index: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
+    coef_secondary_compression_Ca: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
     reloading_swelling_RR: float | StochasticParameter | None = StochasticParameter()
     compression_ratio_CR: float | StochasticParameter | None = StochasticParameter()
-    reloading_swelling_index_Cr: float | StochasticParameter | None = StochasticParameter()
+    reloading_swelling_index_Cr: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
     compression_index_Cc: float | StochasticParameter | None = StochasticParameter()
 
 
@@ -184,14 +194,22 @@ class StateType(Enum):
 
 class IsotacheParameters(SoilBaseModel):
     precon_isotache_type: StateType | None = None
-    reloading_swelling_constant_a: float | StochasticParameter | None = StochasticParameter()  # SoilStdPriCompIndex
-    primary_compression_constant_b: float | StochasticParameter | None = StochasticParameter()  # SoilStdSecCompIndex
-    secondary_compression_constant_c: float | StochasticParameter | None = StochasticParameter()  # SoilStdSecCompRate
+    reloading_swelling_constant_a: float | StochasticParameter | None = (
+        StochasticParameter()
+    )  # SoilStdPriCompIndex
+    primary_compression_constant_b: float | StochasticParameter | None = (
+        StochasticParameter()
+    )  # SoilStdSecCompIndex
+    secondary_compression_constant_c: float | StochasticParameter | None = (
+        StochasticParameter()
+    )  # SoilStdSecCompRate
 
 
 class KoppejanParameters(SoilBaseModel):
     precon_koppejan_type: StateType | None = None
-    preconsolidation_pressure: float | StochasticParameter | None = StochasticParameter()
+    preconsolidation_pressure: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
     soil_ap_as_approximation_by_Cp_Cs: bool | None = False
     primary_Cp: float | StochasticParameter | None = StochasticParameter()
     primary_Cp_point: float | StochasticParameter | None = StochasticParameter()
@@ -214,11 +232,17 @@ class StorageParameters(SoilBaseModel):
     """
 
     vertical_permeability: float | StochasticParameter | None = StochasticParameter()
-    permeability_horizontal_factor: float | StochasticParameter | None = StochasticParameter()
+    permeability_horizontal_factor: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
     horizontal_permeability: float | StochasticParameter | None = StochasticParameter()
     storage_type: StorageTypes | None = None
-    permeability_strain_type: float | StochasticParameter | None = StochasticParameter(mean=1e15)
-    vertical_consolidation_coefficient: float | StochasticParameter | None = StochasticParameter()
+    permeability_strain_type: float | StochasticParameter | None = StochasticParameter(
+        mean=1e15
+    )
+    vertical_consolidation_coefficient: float | StochasticParameter | None = (
+        StochasticParameter()
+    )
 
 
 class SoilWeightParameters(SoilBaseModel):
@@ -396,8 +420,12 @@ class Soil(SoilBaseModel):
     soil_type_settlement_by_vibrations: SoilType | None = SoilType.SAND
     soil_type_nl: SoilType | None = SoilType.SAND
     soil_state: SoilState | None = SoilState()
-    shear_strength_model_above_phreatic_level: ShearStrengthModelTypePhreaticLevel | None = None
-    shear_strength_model_below_phreatic_level: ShearStrengthModelTypePhreaticLevel | None = None
+    shear_strength_model_above_phreatic_level: (
+        ShearStrengthModelTypePhreaticLevel | None
+    ) = None
+    shear_strength_model_below_phreatic_level: (
+        ShearStrengthModelTypePhreaticLevel | None
+    ) = None
     is_drained: bool | None = None
     is_probabilistic: bool | None = None
 
