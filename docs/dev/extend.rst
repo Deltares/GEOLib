@@ -112,14 +112,13 @@ less boilerplate and free validation on instantiation:
 .. code-block:: python
 
     from datetime import datetime
-    from typing import List, Optional
     from pydantic import BaseModel
 
     class User(BaseModel):
         id: int
         name = 'John Doe'
-        signup_ts: Optional[datetime] = None
-        friends: List[int] = []
+        signup_ts: datetime | None = None
+        friends: list[int] = []
 
 Note how in the above example we need no `__init__` method like a dataclass. We can define
 types and defaults for fields. We can even constrain fields (specifying a range of valid options

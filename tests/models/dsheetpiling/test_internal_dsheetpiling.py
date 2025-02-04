@@ -1,5 +1,5 @@
 import warnings
-from typing import Callable, List
+from typing import Callable
 
 import pytest
 
@@ -617,7 +617,7 @@ class TestInternalParseInputStructure:
         assert mfd_table["shear_force"] == 0
         assert mfd_table["displacements"] == -193.89808
 
-    def validate_side_list_structure(self, side_list: List[SideOutput]):
+    def validate_side_list_structure(self, side_list: list[SideOutput]):
         assert side_list
         assert len(side_list) == 2
         for side in side_list:
@@ -1129,7 +1129,7 @@ class TestInternalParseOutputStructure:
         assert mfd_table["shear_force"] == 0
         assert mfd_table["displacements"] == -193.89808
 
-    def validate_side_list_structure(self, side_list: List[SideOutput]):
+    def validate_side_list_structure(self, side_list: list[SideOutput]):
         assert side_list
         assert len(side_list) == 2
         for side in side_list:
@@ -1147,13 +1147,13 @@ class TestInternalParseOutputStructure:
         )
         self.validate_side_list_structure(output_construction_stage.side)
 
-    def validate_points_on_sheetpile_list(self, pos_list: List[PointsOnSheetpile]):
+    def validate_points_on_sheetpile_list(self, pos_list: list[PointsOnSheetpile]):
         assert len(pos_list) == 2
         for pos in pos_list:
             self.validate_points_on_sheetpile(pos)
 
     def validate_output_construction_stage_list(
-        self, ocs_list: List[OutputConstructionStage]
+        self, ocs_list: list[OutputConstructionStage]
     ):
         assert len(ocs_list) == 2
         for ocs in ocs_list:

@@ -1,7 +1,6 @@
 from contextlib import nullcontext as does_not_raise
 from random import choice, randint
 from string import ascii_lowercase
-from typing import Dict, List, Type, Union
 
 import pytest
 from pydantic_core._pydantic_core import ValidationError
@@ -35,7 +34,7 @@ class TestDFoundationsCPTCollectionWrapper:
             first_value: int
 
         class test_wrapped_collection(DFoundationsCPTCollectionWrapper):
-            collection: List[test_simple_element]
+            collection: list[test_simple_element]
 
         # 1. Define test data.
         structure_first_value_list = [42, 24]
@@ -66,22 +65,22 @@ class TestDFoundationsCPTCollectionWrapper:
 
 class TestDFoundationsTableWrapper:
     class test_simple_table(DFoundationsTableWrapper):
-        value: List[Dict[str, Union[int, float, str]]]
+        value: list[dict[str, int | float | str]]
 
     class test_table_str_first(DFoundationsTableWrapper):
-        value: List[Dict[str, Union[str, int, float]]]
+        value: list[dict[str, str | int | float]]
 
     class test_table_float_first(DFoundationsTableWrapper):
-        value: List[Dict[str, Union[float, int, str]]]
+        value: list[dict[str, float | int | str]]
 
     class test_table_only_int(DFoundationsTableWrapper):
-        value: List[Dict[str, int]]
+        value: list[dict[str, int]]
 
     class test_table_only_float(DFoundationsTableWrapper):
-        value: List[Dict[str, float]]
+        value: list[dict[str, float]]
 
     class test_table_only_str(DFoundationsTableWrapper):
-        value: List[Dict[str, str]]
+        value: list[dict[str, str]]
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
@@ -114,7 +113,7 @@ class TestDFoundationsTableWrapper:
         ],
     )
     def test_given_dfoundationstablewrapper_when_parse_type_done_in_order(
-        self, table_type: Type, expected_column_type: List[Type], run_expectation
+        self, table_type: type, expected_column_type: list[type], run_expectation
     ):
         # 1. Define test data
         input_dict = {"int": 42, "float": 4.2, "str": "'42'"}

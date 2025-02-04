@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 from pydantic_core._pydantic_core import ValidationError
 
@@ -49,7 +47,7 @@ def _get_tree_load() -> TreeLoad:
 
 
 @pytest.fixture
-def _get_consolidations() -> List[Consolidation]:
+def _get_consolidations() -> list[Consolidation]:
     return [Consolidation(degree=100, layer_id=15)]
 
 
@@ -75,7 +73,7 @@ class TestConsolidation:
     def test_get_consolidations_fixture_is_valid(self, _get_consolidations):
         consolidations = _get_consolidations
 
-        assert isinstance(consolidations, List)
+        assert isinstance(consolidations, list)
         assert len(consolidations) > 0
         for consolidation in consolidations:
             assert isinstance(consolidation, Consolidation)

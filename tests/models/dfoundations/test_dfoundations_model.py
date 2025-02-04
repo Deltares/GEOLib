@@ -2,7 +2,6 @@ import logging
 import os
 from io import BytesIO
 from pathlib import Path
-from typing import Type
 
 import pytest
 from teamcity import is_running_under_teamcity
@@ -132,7 +131,7 @@ class TestDFoundationsModel:
         ],
     )
     def test_given_filepath_when_parse_then_does_not_raise(
-        self, filename: Path, structure: Type
+        self, filename: Path, structure: type
     ):
         # 1. Set up test data
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))

@@ -18,7 +18,7 @@ using this geometry, namely D-Settlement and D-Stability.
 
 In our API we use the D-Settlement approach::
     - add_point(Point) -> point_id:int
-    - add_layer(List[point_id]) -> layer_id:int
+    - add_layer(list[point_id]) -> layer_id:int
 
 Where we use references to previously added points to ensure
 topological consistency. This is why we have not introduced a LineString

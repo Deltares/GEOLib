@@ -1,5 +1,4 @@
 from enum import Enum, IntEnum
-from typing import Optional
 
 from geolib.models.dseries_parser import DSeriesUnmappedNameProperties
 from geolib.models.internal import Bool

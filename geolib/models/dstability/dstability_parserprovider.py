@@ -1,5 +1,5 @@
 import logging
-from typing import List, Tuple, Type, _GenericAlias
+from typing import _GenericAlias
 from zipfile import ZipFile
 
 from pydantic import DirectoryPath, FilePath
@@ -15,11 +15,11 @@ logger = logging.getLogger(__name__)
 
 class DStabilityParser(BaseParser):
     @property
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         return [".json", ""]
 
     @property
-    def structure(self) -> Type[DStabilityStructure]:
+    def structure(self) -> type[DStabilityStructure]:
         return DStabilityStructure
 
     def can_parse(self, filename: FilePath) -> bool:
@@ -44,7 +44,7 @@ class DStabilityParser(BaseParser):
 
         return self.structure(**ds)
 
-    def __parse_folder(self, fieldtype, filepath: DirectoryPath) -> List:
+    def __parse_folder(self, fieldtype, filepath: DirectoryPath) -> list:
         out = []
         folder = filepath / fieldtype.structure_group()
 
@@ -70,7 +70,7 @@ class DStabilityParser(BaseParser):
 
 class DStabilityZipParser(DStabilityParser):
     @property
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         return [".stix"]
 
     def can_parse(self, filename: FilePath) -> bool:
@@ -98,13 +98,13 @@ class DStabilityParserProvider(BaseParserProvider):
     _output_parsers = None
 
     @property
-    def input_parsers(self) -> Tuple[DStabilityParser, DStabilityZipParser]:
+    def input_parsers(self) -> tuple[DStabilityParser, DStabilityZipParser]:
         if not self._input_parsers:
             self._input_parsers = (DStabilityZipParser(), DStabilityParser())
         return self._input_parsers
 
     @property
-    def output_parsers(self) -> Tuple[DStabilityParser, DStabilityZipParser]:
+    def output_parsers(self) -> tuple[DStabilityParser, DStabilityZipParser]:
         if not self._output_parsers:
             self._output_parsers = (DStabilityParser(), DStabilityZipParser())
         return self._output_parsers

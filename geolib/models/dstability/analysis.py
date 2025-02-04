@@ -1,5 +1,4 @@
 import abc
-from typing import List
 
 from pydantic import Field, PositiveInt
 from typing_extensions import Annotated
@@ -223,7 +222,7 @@ class DStabilitySpencerAnalysisMethod(DStabilityAnalysisMethod):
     """
 
     _analysis_type: AnalysisType = AnalysisType.SPENCER
-    slipplane: List[Point]
+    slipplane: list[Point]
     slip_plane_constraints: DStabilityGeneticSlipPlaneConstraints = (
         DStabilityGeneticSlipPlaneConstraints()
     )
@@ -242,15 +241,15 @@ class DStabilitySpencerGeneticAnalysisMethod(DStabilityAnalysisMethod):
 
     Args:
         options_type (OptionsType): DEFAULT or THOROUGH, defaults to DEFAULT
-        slip_plane_a (List[Point]): upper slip plane boundary
-        slip_plane_b (List[Point]): lower slip line boundary
+        slip_plane_a (list[Point]): upper slip plane boundary
+        slip_plane_b (list[Point]): lower slip line boundary
         slip_plane_constraints (DStabilityGeneticSlipPlaneConstraints): constraints for the slip plane
     """
 
     _analysis_type: AnalysisType = AnalysisType.SPENCER_GENETIC
     options_type: OptionsType = OptionsType.DEFAULT
-    slip_plane_a: List[Point]
-    slip_plane_b: List[Point]
+    slip_plane_a: list[Point]
+    slip_plane_b: list[Point]
     slip_plane_constraints: DStabilityGeneticSlipPlaneConstraints = (
         DStabilityGeneticSlipPlaneConstraints()
     )

@@ -3,7 +3,6 @@ from enum import Enum, IntEnum
 from inspect import cleandoc
 from math import isclose
 from operator import attrgetter
-from typing import Dict, List, Optional, Tuple, Type, Union
 
 from pydantic import Field, StringConstraints
 from pydantic.types import PositiveInt
@@ -67,7 +66,7 @@ class DSeriePoint(DSeriesTreeStructure):
     tolerance: float = TOLERANCE
 
     @classmethod
-    def get_structure_required_fields(cls) -> List[Tuple[str, Type]]:
+    def get_structure_required_fields(cls) -> list[tuple[str, type]]:
         point_required_field_names = [
             required_field[0] for required_field in get_required_class_field(cls)
         ]
@@ -92,7 +91,7 @@ class DSeriePoint(DSeriesTreeStructure):
 
 
 class SoilCollection(DSeriesStructureCollection):
-    soil: List[SoilInternal] = []
+    soil: list[SoilInternal] = []
 
     def add_soil_if_unique(self, soil, tolerance=TOLERANCE) -> None:
         for added_soil in self.soil:
@@ -110,7 +109,7 @@ class Version(DSerieVersion):
 class Points(DSeriesMatrixTreeStructureCollection):
     """Representation of [POINTS] group."""
 
-    points: List[DSeriePoint] = []
+    points: list[DSeriePoint] = []
 
     def add_point_if_unique(self, point: DSeriePoint, tolerance=TOLERANCE) -> DSeriePoint:
         if point in self.points:
@@ -136,7 +135,7 @@ class Curve(DSeriesTreeStructure):
     """Curve is a Line consisting of two points (by reference)."""
 
     id: PositiveInt = 1
-    points: Annotated[List[int], Field(min_length=2, max_length=2)]
+    points: Annotated[list[int], Field(min_length=2, max_length=2)]
 
     def __eq__(self, other: object) -> bool:
         """
@@ -157,7 +156,7 @@ class Curve(DSeriesTreeStructure):
 class Curves(DSeriesTreeStructureCollection):
     """Representation of [CURVES] group."""
 
-    curves: List[Curve] = []
+    curves: list[Curve] = []
 
     def create_curve(self, a: DSeriePoint, b: DSeriePoint):
         assert a.id != b.id
@@ -175,7 +174,7 @@ class Curves(DSeriesTreeStructureCollection):
 
         return curve
 
-    def create_curves(self, sorted_points: List[DSeriePoint]) -> List[Curve]:
+    def create_curves(self, sorted_points: list[DSeriePoint]) -> list[Curve]:
         new_curves = [
             self.create_curve(sorted_points[i], sorted_points[i + 1])
             for i in range(len(sorted_points) - 1)
@@ -191,7 +190,7 @@ class Curves(DSeriesTreeStructureCollection):
 
 class Boundary(DSeriesTreeStructure):
     id: Annotated[int, Field(ge=0)] = 0
-    curves: List[int] = []
+    curves: list[int] = []
 
     def __eq__(self, other: object) -> bool:
         """
@@ -212,9 +211,9 @@ class Boundary(DSeriesTreeStructure):
 class Boundaries(DSeriesTreeStructureCollection):
     """Representation of [BOUNDARIES] group."""
 
-    boundaries: List[Boundary] = []
+    boundaries: list[Boundary] = []
 
-    def create_boundary(self, curves: List[Curve]) -> Boundary:
+    def create_boundary(self, curves: list[Curve]) -> Boundary:
         boundary = Boundary(curves=[curve.id for curve in curves])
 
         # Return the id of existing one
@@ -268,7 +267,7 @@ class Layer(DSeriesTreeStructure):
 class Layers(DSeriesTreeStructureCollection):
     """Representation of [LAYERS] group."""
 
-    layers: List[Layer] = []
+    layers: list[Layer] = []
 
     def add_layer(self, layer: Layer):
         if layer in self.layers:
@@ -297,7 +296,7 @@ class Layers(DSeriesTreeStructureCollection):
 
 class PiezoLine(DSeriesTreeStructure):
     id: PositiveInt = 1
-    curves: List[int] = []
+    curves: list[int] = []
 
     def __eq__(self, other: object):
         if isinstance(other, PiezoLine):
@@ -308,9 +307,9 @@ class PiezoLine(DSeriesTreeStructure):
 class PiezoLines(DSeriesTreeStructureCollection):
     """Representation of [PIEZO LINES] group."""
 
-    piezolines: List[PiezoLine] = []
+    piezolines: list[PiezoLine] = []
 
-    def create_piezoline(self, curves: List[Curve]) -> PiezoLine:
+    def create_piezoline(self, curves: list[Curve]) -> PiezoLine:
         piezoline = PiezoLine(curves=[curve.id for curve in curves])
 
         if piezoline in self.piezolines:
@@ -333,7 +332,7 @@ class PiezoLines(DSeriesTreeStructureCollection):
 
 
 class UseProbabilisticDefaultsBoundaries(DSerieListStructure):
-    useprobabilisticdefaultsboundaries: List[Bool] = []
+    useprobabilisticdefaultsboundaries: list[Bool] = []
 
     def append_use_probabilistic_defaults_boundary(
         self, use_probabilistic_boundary: bool
@@ -344,14 +343,14 @@ class UseProbabilisticDefaultsBoundaries(DSerieListStructure):
 
 
 class StdvBoundaries(DSerieListStructure):
-    stdvboundaries: List[float] = []
+    stdvboundaries: list[float] = []
 
     def append_stdv_boundary(self, stdv_boundary: float):
         self.stdvboundaries.append(stdv_boundary)
 
 
 class DistributionBoundaries(DSerieListStructure):
-    distributionboundaries: List[DistributionType] = []
+    distributionboundaries: list[DistributionType] = []
 
     def append_distribution_boundary(self, distribution_boundary: DistributionType):
         if (distribution_boundary is DistributionType.Normal) or (
@@ -439,22 +438,22 @@ class GeometryData(DSeriesStructure):
         self.sort_boundaries()
         self.sort_probabilistic_list_based_on_new_indexes()
 
-    def create_list_of_indexes(self) -> List:
+    def create_list_of_indexes(self) -> list:
         return [boundary.id for boundary in self.boundaries.boundaries]
 
-    def sort_based_on_new_indexes(self, new_indexes: List, unsorted_list: List) -> List:
+    def sort_based_on_new_indexes(self, new_indexes: list, unsorted_list: list) -> list:
         return [unsorted_list[i] for i in new_indexes]
 
-    def get_point(self, point_id: int) -> Optional[DSeriePoint]:
+    def get_point(self, point_id: int) -> DSeriePoint | None:
         return self.points[point_id]
 
-    def get_curve(self, curve_id: int) -> Optional[Curve]:
+    def get_curve(self, curve_id: int) -> Curve | None:
         return self.curves[curve_id]
 
-    def get_boundary(self, boundary_id: int) -> Optional[Boundary]:
+    def get_boundary(self, boundary_id: int) -> Boundary | None:
         return self.boundaries[boundary_id]
 
-    def get_layer(self, layer_id: int) -> Optional[Layer]:
+    def get_layer(self, layer_id: int) -> Layer | None:
         return self.layers[layer_id]
 
 
@@ -476,13 +475,13 @@ class NonUniformLoad(BaseDataClass):
     gammawet: float = 10
     temporary: Bool = False
     endtime: int = 0
-    points: List[PointForLoad]
+    points: list[PointForLoad]
 
 
 class NonUniformLoads(DSeriesNoParseSubStructure):
     """Representation of [NON-UNIFORM LOADS] group."""
 
-    loads: Dict[
+    loads: dict[
         Annotated[str, StringConstraints(min_length=1, max_length=25)], NonUniformLoad
     ] = {}
 
@@ -490,7 +489,7 @@ class NonUniformLoads(DSeriesNoParseSubStructure):
         self,
         name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         load: NonUniformLoad,
-    ) -> Optional[ValueError]:
+    ) -> ValueError | None:
         if name in self.loads:
             raise ValueError(f"Load with name '{name}' already exists.")
         else:
@@ -503,16 +502,16 @@ class WaterLoad(BaseDataClass):
     name: str = ""
     time: int = 0
     phreatic_line: int = 1
-    headlines: List[List[int]] = [[]]
+    headlines: list[list[int]] = [[]]
 
 
 class WaterLoads(DSeriesNoParseSubStructure):
     """Representation of [WATER LOADS] group."""
 
-    waterloads: List[WaterLoad] = []
+    waterloads: list[WaterLoad] = []
 
     def add_waterload(
-        self, name: str, time: int, phreatic_line: int, headlines: List[List[int]]
+        self, name: str, time: int, phreatic_line: int, headlines: list[list[int]]
     ):
         self.waterloads.append(
             WaterLoad(
@@ -524,13 +523,13 @@ class WaterLoads(DSeriesNoParseSubStructure):
 class ResidualTimes(DSeriesNoParseSubStructure):
     """Representation of [RESIDUAL TIMES] group."""
 
-    time_steps: List[Annotated[int, Field(ge=0)]] = []
+    time_steps: list[Annotated[int, Field(ge=0)]] = []
 
 
 class Verticals(DSeriesNoParseSubStructure):
     """Representation of [VERTICALS] group."""
 
-    locations: List[DSeriePoint] = []
+    locations: list[DSeriePoint] = []
 
 
 class TypeOtherLoads(IntEnum):
@@ -591,17 +590,17 @@ class LoadValuesTank(BaseDataClass):
 class OtherLoad(BaseDataClass):
     load_type: TypeOtherLoads
     time: int = 0
-    load_values_trapeziform: Optional[LoadValuesTrapeziform] = None
-    load_values_circular: Optional[LoadValuesCircular] = None
-    load_values_rectangular: Optional[LoadValuesRectangular] = None
-    load_values_uniform: Optional[LoadValuesUniform] = None
-    load_values_tank: Optional[LoadValuesTank] = None
+    load_values_trapeziform: LoadValuesTrapeziform | None = None
+    load_values_circular: LoadValuesCircular | None = None
+    load_values_rectangular: LoadValuesRectangular | None = None
+    load_values_uniform: LoadValuesUniform | None = None
+    load_values_tank: LoadValuesTank | None = None
 
 
 class OtherLoads(DSeriesNoParseSubStructure):
     """Representation of [OTHER LOADS] group."""
 
-    loads: Dict[
+    loads: dict[
         Annotated[str, StringConstraints(min_length=1, max_length=25)], OtherLoad
     ] = {}
 
@@ -609,7 +608,7 @@ class OtherLoads(DSeriesNoParseSubStructure):
         self,
         name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         load: OtherLoad,
-    ) -> Optional[ValueError]:
+    ) -> ValueError | None:
         if name in self.loads:
             raise ValueError(f"Load with name '{name}' already exists.")
         else:
@@ -689,7 +688,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         PreconPressureWithinLayer.CONSTANT_NO_CORRECTION
     )
     is_imaginary_surface: Bool = Bool.FALSE
-    imaginary_surface_layer: Optional[PositiveInt] = None
+    imaginary_surface_layer: PositiveInt | None = None
     is_submerging: Bool = Bool.FALSE
     use_end_time_for_fit: Bool = Bool.FALSE
     is_maintain_profile: Bool = Bool.FALSE
@@ -760,9 +759,9 @@ class VerticalDrain(DSeriesNoParseSubStructure):
     tube_pressure_during_dewatering: Annotated[
         float, Field(ge=-10000000.000, le=10000000.000)
     ] = 0  # relevant for the sand wall
-    time: List[Annotated[float, Field(ge=0, le=100000)]] = []
-    underpressure: List[Annotated[float, Field(ge=0, le=100000)]] = []
-    water_level: List[Annotated[float, Field(ge=-10000000.000, le=10000000.000)]] = []
+    time: list[Annotated[float, Field(ge=0, le=100000)]] = []
+    underpressure: list[Annotated[float, Field(ge=0, le=100000)]] = []
+    water_level: list[Annotated[float, Field(ge=-10000000.000, le=10000000.000)]] = []
 
 
 class InternalProbabilisticCalculationType(IntEnum):
@@ -837,23 +836,23 @@ class DSettlementInputStructure(DSeriesStructure):
     version: Version = Version()
     soil_collection: SoilCollection = SoilCollection()
     geometry_data: GeometryData = GeometryData()
-    geometry_1d_data: Optional[str] = None
+    geometry_1d_data: str | None = None
     run_identification: str = 2 * "\n"
     model: Model = Model()
-    verticals: Union[Verticals, str] = Verticals()
-    water: Union[float, str] = 9.81
-    non__uniform_loads: Union[NonUniformLoads, str] = NonUniformLoads()
-    water_loads: Union[WaterLoads, str] = WaterLoads()
-    other_loads: Union[OtherLoads, str] = OtherLoads()
-    calculation_options: Union[CalculationOptions, str] = CalculationOptions()
-    residual_times: Union[ResidualTimes, str] = ResidualTimes()
+    verticals: Verticals | str = Verticals()
+    water: float | str = 9.81
+    non__uniform_loads: NonUniformLoads | str = NonUniformLoads()
+    water_loads: WaterLoads | str = WaterLoads()
+    other_loads: OtherLoads | str = OtherLoads()
+    calculation_options: CalculationOptions | str = CalculationOptions()
+    residual_times: ResidualTimes | str = ResidualTimes()
     filter_band_width: str = cleandoc(
         """
         1 : Number of items
         0.05
         """
     )
-    vertical_drain: Union[VerticalDrain, str] = VerticalDrain()
+    vertical_drain: VerticalDrain | str = VerticalDrain()
     probabilistic_data: ProbabilisticData = ProbabilisticData()
     probabilistic_defaults: str = cleandoc(
         """
@@ -942,35 +941,35 @@ class DSettlementInputStructure(DSeriesStructure):
 
 
 class Stresses(DSeriesTableStructure):
-    stresses: List[Dict[str, float]]
+    stresses: list[dict[str, float]]
 
 
 class KoppejanSettlements(DSeriesTableStructure):
-    koppejansettlements: List[Dict[str, float]]
+    koppejansettlements: list[dict[str, float]]
 
 
 class Depths(DSerieListStructure):
-    depths: List[float]
+    depths: list[float]
 
 
 class Leakages(DSerieListStructure):
-    leakages: List[float]
+    leakages: list[float]
 
 
 class DrainedLayers(DSerieListStructure):
-    drainedlayers: List[int]
+    drainedlayers: list[int]
 
 
 class TimeSettlementPerLoad(DSerieMatrixStructure):
-    timesettlementperload: List[List[float]]
+    timesettlementperload: list[list[float]]
 
 
 class HorizontalDisplacements(DSerieMatrixStructure):
-    horizontaldisplacements: List[List[float]]
+    horizontaldisplacements: list[list[float]]
 
 
 class TimeDependentData(DSerieRepeatedTableStructure):
-    timedependentdata: Dict[float, List[Dict[str, float]]]
+    timedependentdata: dict[float, list[dict[str, float]]]
 
 
 class Vertical(ComplexVerticalSubstructure):
@@ -979,20 +978,20 @@ class Vertical(ComplexVerticalSubstructure):
     id: int
     x: float
     z: float
-    time__settlement_per_load: Optional[TimeSettlementPerLoad] = None
+    time__settlement_per_load: TimeSettlementPerLoad | None = None
     depths: Depths
-    leakages: Optional[Leakages] = None
-    drained_layers: Optional[DrainedLayers] = None
-    stresses: Optional[Stresses] = None
-    koppejan_settlement: Optional[KoppejanSettlements] = None
-    time__dependent_data: List[TimeDependentData]
-    elasticity: Optional[float] = None
-    horizontal_displacements: Optional[HorizontalDisplacements] = None
+    leakages: Leakages | None = None
+    drained_layers: DrainedLayers | None = None
+    stresses: Stresses | None = None
+    koppejan_settlement: KoppejanSettlements | None = None
+    time__dependent_data: list[TimeDependentData]
+    elasticity: float | None = None
+    horizontal_displacements: HorizontalDisplacements | None = None
 
 
 class ResidualSettlements(DSerieOldTableStructure):
-    # TODO LIst[Dict[str, float]] but can be empty which now gives a validation error
-    residualsettlements: List[Dict[str, float]]
+    # TODO LIst[dict[str, float]] but can be empty which now gives a validation error
+    residualsettlements: list[dict[str, float]]
 
 
 class CalculationSettings(DSeriesStructure):
@@ -1003,13 +1002,13 @@ class CalculationSettings(DSeriesStructure):
 class Results(DSeriesRepeatedGroupedProperties):
     """Representation of [results] group in sld file."""
 
-    calculation_settings: Optional[CalculationSettings] = None
+    calculation_settings: CalculationSettings | None = None
     verticals_count: int
-    vertical: List[Vertical]
-    residual_settlements: List[ResidualSettlements]
-    amounts_of_loads: Optional[str] = None
-    dissipation_in_layers: Optional[str] = None
-    reliability_calculation_results: Optional[str] = None
+    vertical: list[Vertical]
+    residual_settlements: list[ResidualSettlements]
+    amounts_of_loads: str | None = None
+    dissipation_in_layers: str | None = None
+    reliability_calculation_results: str | None = None
 
 
 class DSettlementOutputStructure(DSeriesStructure):
@@ -1022,4 +1021,4 @@ class DSettlementOutputStructure(DSeriesStructure):
 
 class DSettlementStructure(DSeriesStructure):
     input_data: DSettlementInputStructure = DSettlementInputStructure()
-    output_data: Optional[Results] = None
+    output_data: Results | None = None

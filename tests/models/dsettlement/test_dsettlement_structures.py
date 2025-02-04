@@ -1,5 +1,3 @@
-from typing import Any, Dict, List
-
 import pytest
 
 from geolib.models.dseries_parser import DSeriesRepeatedGroupedProperties
@@ -26,7 +24,7 @@ class TestDSerieRepeatedTableStructure:
     @pytest.mark.integrationtest
     def test_given_text_when_parse_text_then_return_structure(self):
         class repeated_table(DSerieRepeatedTableStructure):
-            repeated_table: Dict[int, List[Dict[str, int]]]
+            repeated_table: dict[int, list[dict[str, int]]]
 
         # 1. Define test data
         text_to_parse = """[COLUMN INDICATION]

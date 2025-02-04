@@ -1,5 +1,4 @@
 import logging
-from typing import Set
 
 from geolib.models.validators import BaseValidator
 

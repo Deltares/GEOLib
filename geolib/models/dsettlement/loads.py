@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
 from datetime import timedelta
-from typing import Optional
 
 from geolib.geometry import Point
 from geolib.models import BaseDataClass
@@ -19,7 +18,7 @@ from .internal import TypeOtherLoads
 class OtherLoad(BaseDataClass, metaclass=ABCMeta):
     """Other Load Class to inherit from."""
 
-    load_type: Optional[TypeOtherLoads] = None
+    load_type: TypeOtherLoads | None = None
 
     @abstractmethod
     def _to_internal(self, time: timedelta, p: Point):

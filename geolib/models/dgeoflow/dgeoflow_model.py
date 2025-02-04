@@ -2,7 +2,7 @@ import abc
 import re
 from enum import Enum
 from pathlib import Path
-from typing import BinaryIO, Dict, List, Optional, Set, Type, Union
+from typing import BinaryIO
 
 from pydantic import DirectoryPath, FilePath
 
@@ -54,7 +54,7 @@ class DGeoFlowModel(BaseModel):
         self.current_id = self.datastructure.get_unique_id()
 
     @property
-    def parser_provider_type(self) -> Type[DGeoFlowParserProvider]:
+    def parser_provider_type(self) -> type[DGeoFlowParserProvider]:
         return DGeoFlowParserProvider
 
     @property
@@ -66,7 +66,7 @@ class DGeoFlowModel(BaseModel):
         return self.get_meta_property("dgeoflow_console_path")
 
     @property
-    def console_flags_post(self) -> List[str]:
+    def console_flags_post(self) -> list[str]:
         return [
             str(self.current_scenario_index + 1),
             str(self.current_calculation_index + 1),
@@ -99,7 +99,7 @@ class DGeoFlowModel(BaseModel):
             self.current_scenario_index, self.current_calculation_index
         )
 
-    def get_result(self, scenario_index: int, calculation_index: int) -> Dict:
+    def get_result(self, scenario_index: int, calculation_index: int) -> dict:
         """
         Returns the results of a scenario. Calculation results are based on analysis type and calculation type.
 
@@ -133,7 +133,7 @@ class DGeoFlowModel(BaseModel):
 
         raise ValueError(f"No result found for result id {scenario_index}")
 
-    def serialize(self, location: Union[FilePath, DirectoryPath, BinaryIO]):
+    def serialize(self, location: FilePath | DirectoryPath | BinaryIO):
         """Support serializing to directory while developing for debugging purposes."""
         if isinstance(location, Path) and location.is_dir():
             serializer = DGeoFlowInputSerializer(ds=self.datastructure)
@@ -193,7 +193,7 @@ class DGeoFlowModel(BaseModel):
 
     def add_layer(
         self,
-        points: List[Point],
+        points: list[Point],
         soil_code: str,
         label: str = "",
         notes: str = "",
@@ -203,7 +203,7 @@ class DGeoFlowModel(BaseModel):
         Add a soil layer to the model
 
         Args:
-            points (List[Point]): list of Point classes, in clockwise order (non closed simple polygon)
+            points (list[Point]): list of Point classes, in clockwise order (non closed simple polygon)
             soil_code (str): code of the soil for this layer
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
@@ -267,7 +267,7 @@ class DGeoFlowModel(BaseModel):
 
     def add_boundary_condition(
         self,
-        points: List[Point],
+        points: list[Point],
         head_level: float,
         label: str = "",
         notes: str = "",
@@ -277,7 +277,7 @@ class DGeoFlowModel(BaseModel):
         Add boundary conditions to the model
 
         Args:
-            points (List[Point]): list of Point classes, in clockwise order (non closed simple polygon)
+            points (list[Point]): list of Point classes, in clockwise order (non closed simple polygon)
             head_level (float): level of the hydraulic head for the boundary condition
             label (str): label defaults to empty string
             notes (str): notes defaults to empty string
@@ -297,7 +297,7 @@ class DGeoFlowModel(BaseModel):
         return boundary_condition_id
 
     @property
-    def scenarios(self) -> List[Scenario]:
+    def scenarios(self) -> list[Scenario]:
         return self.datastructure.scenarios
 
     def add_scenario(
@@ -328,7 +328,7 @@ class DGeoFlowModel(BaseModel):
 
     def add_stage(
         self,
-        scenario_index: Optional[int] = None,
+        scenario_index: int | None = None,
         label: str = "Stage",
         notes: str = "",
         set_current=True,
@@ -359,7 +359,7 @@ class DGeoFlowModel(BaseModel):
 
     def add_calculation(
         self,
-        scenario_index: Optional[int] = None,
+        scenario_index: int | None = None,
         label: str = "Calculation",
         notes: str = "",
         set_current: bool = True,

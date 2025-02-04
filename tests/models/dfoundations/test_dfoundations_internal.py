@@ -1,5 +1,4 @@
 from random import randint
-from typing import Callable, Type
 
 import pytest
 
@@ -645,8 +644,8 @@ class TestInternalOutputDFoundations:
         self,
         text_to_parse: str,
         property_name: str,
-        parsing_type: Type,
-        expected_type: Type,
+        parsing_type: type,
+        expected_type: type,
     ):
         # 1. Run test
         group_text = self.get_group_text(text_to_parse)

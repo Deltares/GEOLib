@@ -8,7 +8,6 @@ import logging
 from abc import abstractmethod
 from pathlib import Path
 from subprocess import run
-from typing import List, Optional, Type, Union
 
 import requests
 from pydantic import DirectoryPath, FilePath, HttpUrl, SerializeAsAny, ValidationError
@@ -25,8 +24,8 @@ meta = MetaData()
 
 
 class BaseModel(BaseDataClass, abc.ABC):
-    filename: Optional[Path] = None
-    datastructure: Optional[SerializeAsAny[BaseModelStructure]] = None
+    filename: Path | None = None
+    datastructure: SerializeAsAny[BaseModelStructure] | None = None
     """
     This is the base class for all models in GEOLib.
     
@@ -130,8 +129,8 @@ class BaseModel(BaseDataClass, abc.ABC):
 
     @abstractmethod
     def serialize(
-        self, filename: Union[FilePath, DirectoryPath, None]
-    ) -> Union[FilePath, DirectoryPath, None]:
+        self, filename: FilePath | DirectoryPath | None
+    ) -> FilePath | DirectoryPath | None:
         """Serialize model to input file."""
 
     @property
@@ -139,27 +138,27 @@ class BaseModel(BaseDataClass, abc.ABC):
         raise NotImplementedError("Implement in concrete classes.")
 
     @property
-    def custom_console_path(self) -> Optional[Path]:
+    def custom_console_path(self) -> Path | None:
         return None
 
     @property
-    def console_flags(self) -> List[str]:
+    def console_flags(self) -> list[str]:
         return []
 
     @property
-    def console_flags_post(self) -> List[str]:
+    def console_flags_post(self) -> list[str]:
         return []
 
     @property
     @abstractmethod
-    def parser_provider_type(self) -> Type[BaseParserProvider]:
+    def parser_provider_type(self) -> type[BaseParserProvider]:
         """Returns the parser provider type of the current concrete class.
 
         Raises:
             NotImplementedError: If not implemented in the concrete class.
 
         Returns:
-            Type[BaseParserProvider] -- Concrete parser provider.
+            type[BaseParserProvider] -- Concrete parser provider.
         """
         raise NotImplementedError("Implement in concrete classes.")
 
@@ -192,7 +191,7 @@ class BaseModel(BaseDataClass, abc.ABC):
         """
         return self.datastructure.results
 
-    def get_meta_property(self, key: str) -> Optional[str]:
+    def get_meta_property(self, key: str) -> str | None:
         """Get a metadata property from the input file."""
         if hasattr(meta, key):
             return meta.__getattribute__(key)

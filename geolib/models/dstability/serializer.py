@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from io import BytesIO
-from typing import Dict, Union, _GenericAlias
+from typing import _GenericAlias
 from zipfile import ZIP_DEFLATED, ZipFile
 
 from pydantic import DirectoryPath, FilePath
@@ -17,8 +17,8 @@ class DStabilityBaseSerializer(BaseSerializer, metaclass=ABCMeta):
 
     ds: DStabilityStructure
 
-    def serialize(self) -> Dict:
-        serialized_datastructure: Dict = {}
+    def serialize(self) -> dict:
+        serialized_datastructure: dict = {}
 
         for field, fieldtype in get_filtered_type_hints(self.ds):
             # On List types, write a folder
@@ -70,7 +70,7 @@ class DStabilityInputSerializer(DStabilityBaseSerializer):
 class DStabilityInputZipSerializer(DStabilityBaseSerializer):
     """DStabilSerializer for zipped.stix files."""
 
-    def write(self, filepath: Union[FilePath, BytesIO]) -> Union[FilePath, BytesIO]:
+    def write(self, filepath: FilePath | BytesIO) -> FilePath | BytesIO:
         with ZipFile(filepath, mode="w", compression=ZIP_DEFLATED) as zip:
             serialized_datastructure = self.serialize()
 

@@ -1,5 +1,5 @@
 import logging
-from typing import List, Tuple, Type, _GenericAlias
+from typing import _GenericAlias
 from zipfile import ZipFile
 
 from pydantic import DirectoryPath, FilePath
@@ -15,11 +15,11 @@ logger = logging.getLogger(__name__)
 
 class DGeoFlowParser(BaseParser):
     @property
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         return [".json", ""]
 
     @property
-    def structure(self) -> Type[DGeoFlowStructure]:
+    def structure(self) -> type[DGeoFlowStructure]:
         return DGeoFlowStructure
 
     def can_parse(self, filename: FilePath) -> bool:
@@ -44,7 +44,7 @@ class DGeoFlowParser(BaseParser):
 
         return self.structure(**data_structure)
 
-    def __parse_folder(self, fieldtype, filepath: DirectoryPath) -> List:
+    def __parse_folder(self, fieldtype, filepath: DirectoryPath) -> list:
         out = []
         folder = filepath / fieldtype.structure_group()
 
@@ -67,7 +67,7 @@ class DGeoFlowParser(BaseParser):
 
 class DGeoFlowZipParser(DGeoFlowParser):
     @property
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         return [".flox"]
 
     def can_parse(self, filename: FilePath) -> bool:
@@ -95,13 +95,13 @@ class DGeoFlowParserProvider(BaseParserProvider):
     _output_parsers = None
 
     @property
-    def input_parsers(self) -> Tuple[DGeoFlowParser, DGeoFlowZipParser]:
+    def input_parsers(self) -> tuple[DGeoFlowParser, DGeoFlowZipParser]:
         if not self._input_parsers:
             self._input_parsers = (DGeoFlowZipParser(), DGeoFlowParser())
         return self._input_parsers
 
     @property
-    def output_parsers(self) -> Tuple[DGeoFlowParser, DGeoFlowZipParser]:
+    def output_parsers(self) -> tuple[DGeoFlowParser, DGeoFlowZipParser]:
         if not self._output_parsers:
             self._output_parsers = (DGeoFlowParser(), DGeoFlowZipParser())
         return self._output_parsers

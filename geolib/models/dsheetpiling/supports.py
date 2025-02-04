@@ -1,5 +1,4 @@
 from enum import IntEnum
-from typing import Optional
 
 from pydantic import Field, PositiveFloat, StringConstraints
 from typing_extensions import Annotated
@@ -29,13 +28,13 @@ class Anchor(BaseDataClass):
 
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
-    e_modulus: Optional[PositiveFloat] = None
-    cross_section: Optional[PositiveFloat] = None
-    wall_height_kranz: Optional[Annotated[float, Field(ge=0)]] = None
-    length: Optional[PositiveFloat] = None
-    angle: Optional[float] = None
+    e_modulus: PositiveFloat | None = None
+    cross_section: PositiveFloat | None = None
+    wall_height_kranz: Annotated[float, Field(ge=0)] | None = None
+    length: PositiveFloat | None = None
+    angle: float | None = None
     side: Side = Side.RIGHT
-    yield_force: Optional[Annotated[float, Field(ge=0)]] = None
+    yield_force: Annotated[float, Field(ge=0)] | None = None
 
     def to_internal(self) -> InternalAnchor:
         return InternalAnchor(**self.model_dump(exclude_none=True))
@@ -58,13 +57,13 @@ class Strut(BaseDataClass):
 
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float
-    e_modulus: Optional[PositiveFloat] = None
-    cross_section: Optional[PositiveFloat] = None
-    length: Optional[PositiveFloat] = None
-    angle: Optional[float] = None
-    buckling_force: Optional[Annotated[float, Field(ge=0)]] = None
+    e_modulus: PositiveFloat | None = None
+    cross_section: PositiveFloat | None = None
+    length: PositiveFloat | None = None
+    angle: float | None = None
+    buckling_force: Annotated[float, Field(ge=0)] | None = None
     side: Side = Side.RIGHT
-    pre_compression: Optional[PositiveFloat] = None
+    pre_compression: PositiveFloat | None = None
 
     def to_internal(self) -> InternalStrut:
         return InternalStrut(

@@ -10,7 +10,6 @@ For profiles used in 1D applications, see :class:`~geolib.soils.layers.ProfileLa
 """
 
 from math import isclose
-from typing import Optional
 
 from geolib.models import BaseDataClass
 
@@ -20,8 +19,8 @@ NODATA = -999.0  # TODO why is this implemented instead of None?
 class Point(BaseDataClass):
     """A single Point Class."""
 
-    label: Optional[str] = ""
-    id: Optional[int] = None
+    label: str | None = ""
+    id: int | None = None
     x: float = NODATA
     y: float = NODATA
     z: float = NODATA
