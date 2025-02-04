@@ -318,9 +318,9 @@ class CalculationOptions(DSeriesStructure):
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
-    name: Annotated[
-        str, StringConstraints(min_length=1, max_length=50)
-    ] = _DEFAULT_SHEET_PILING_ELEMENT_NAME
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)] = (
+        _DEFAULT_SHEET_PILING_ELEMENT_NAME
+    )
     sheetpilingelementmaterialtype: SheetPilingElementMaterialType = (
         SheetPilingElementMaterialType.Steel
     )
@@ -357,9 +357,9 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     diaphragmwallposmomelastoplastic: Annotated[float, Field(ge=0, le=100000)] = 0
     diaphragmwallnegeielastoplastic2: Annotated[float, Field(ge=0, le=100000)] = 0
     diaphragmwallnegmomelastoplastic: Annotated[float, Field(ge=0, le=100000)] = 0
-    woodensheetpilingelemente: Annotated[
-        float, Field(ge=0.001, le=1000000000000)
-    ] = 100000
+    woodensheetpilingelemente: Annotated[float, Field(ge=0.001, le=1000000000000)] = (
+        100000
+    )
     woodensheetpilingelementcharacflexuralstrength: Annotated[
         float, Field(ge=0, le=100000)
     ] = 0
@@ -1088,9 +1088,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
             )
         )
 
-    def add_load(
-        self, load: HorizontalLineLoad | Moment | NormalForce, stage_id: int
-    ):
+    def add_load(self, load: HorizontalLineLoad | Moment | NormalForce, stage_id: int):
         if isinstance(load, HorizontalLineLoad):
             self.is_valid_unique_load_names(
                 load_list=self.construction_stages.stages[stage_id].horizontal_line_loads,
@@ -1331,16 +1329,30 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     factors_for_verification: str | None = None
 
     # Verify calculation according to CUR or EC7-NL
-    verify_step_6____5_serviceability_limit_state: BaseVerificationStructureProperties | None = None
-    verify_step_6____5_multiplied_by_factor: BaseVerificationStructureProperties | None = None
-    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: BaseVerificationStructureProperties | None = None
-    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: BaseVerificationStructureProperties | None = None
-    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: BaseVerificationStructureProperties | None = None
-    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: BaseVerificationStructureProperties | None = None
+    verify_step_6____5_serviceability_limit_state: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____5_multiplied_by_factor: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
     cur_anchor_force_results: CurAnchorForceResults | None = None
 
     # Verify calculation according to EC7-BE or EC7-General
-    verify_deformation_serviceability_limit_state: BaseVerificationStructureProperties | None = None
+    verify_deformation_serviceability_limit_state: (
+        BaseVerificationStructureProperties | None
+    ) = None
     eurocode_1_set_1: BaseVerificationStructureProperties | None = None
     eurocode_1_set_2: BaseVerificationStructureProperties | None = None
     eurocode_2: BaseVerificationStructureProperties | None = None

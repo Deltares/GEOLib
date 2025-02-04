@@ -136,7 +136,9 @@ class DFoundationsModel(BaseModel):
     This model can read, modify and create \*.foi files, read \*.fod and \*.err files.
     """
 
-    datastructure: DFoundationsDumpStructure | DFoundationsStructure = DFoundationsStructure()
+    datastructure: DFoundationsDumpStructure | DFoundationsStructure = (
+        DFoundationsStructure()
+    )
 
     @property
     def parser_provider_type(self) -> type[DFoundationsParserProvider]:

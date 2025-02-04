@@ -29,7 +29,9 @@ class PileProperties(BaseDataClass):
      reduction_factor_on_maximum_moment  : The reduction factor applied to the maximum allowable moment
     """
 
-    material_type: SheetPilingElementMaterialType | None = SheetPilingElementMaterialType.Steel
+    material_type: SheetPilingElementMaterialType | None = (
+        SheetPilingElementMaterialType.Steel
+    )
     elastic_stiffness_ei: float | None = None
     diameter: float | None = None
     section_bottom_level: float | None = None
@@ -106,10 +108,14 @@ class SheetPileProperties(BaseDataClass):
 
     """
 
-    material_type: SheetPilingElementMaterialType | None = SheetPilingElementMaterialType.Steel
+    material_type: SheetPilingElementMaterialType | None = (
+        SheetPilingElementMaterialType.Steel
+    )
     elastic_stiffness_ei: float | None = None
     acting_width: float | None = None
-    section_bottom_level: float | None = None  # TODO important parameter, shouldn't be default
+    section_bottom_level: float | None = (
+        None  # TODO important parameter, shouldn't be default
+    )
     height: int | None = 400  # value is defined in mm
     width_of_sheet_piles: float | None = None
     section_area: int | None = None
@@ -215,7 +221,9 @@ class DiaphragmWallProperties(BaseDataClass):
 
     """
 
-    material_type: SheetPilingElementMaterialType | None = SheetPilingElementMaterialType.Steel
+    material_type: SheetPilingElementMaterialType | None = (
+        SheetPilingElementMaterialType.Steel
+    )
     section_bottom_level: float | None = None
     elastic_stiffness_ei: float | None = None
     acting_width: float | None = None
@@ -241,7 +249,9 @@ class DiaphragmWall(BaseDataClass):
 
     name: str = ""
     diaphragm_wall_properties: DiaphragmWallProperties | None = DiaphragmWallProperties()
-    plastic_properties: FullPlasticCalculationProperties | None = FullPlasticCalculationProperties()
+    plastic_properties: FullPlasticCalculationProperties | None = (
+        FullPlasticCalculationProperties()
+    )
 
     def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
@@ -283,8 +293,12 @@ class Sheet(BaseDataClass):
 
     name: str = ""
     sheet_pile_properties: SheetPileProperties | None = SheetPileProperties()
-    plastic_properties: SheetPileModelPlasticCalculationProperties | None = SheetPileModelPlasticCalculationProperties()
-    wooden_sheet_pile_properties: WoodenSheetPileProperties | None = WoodenSheetPileProperties()
+    plastic_properties: SheetPileModelPlasticCalculationProperties | None = (
+        SheetPileModelPlasticCalculationProperties()
+    )
+    wooden_sheet_pile_properties: WoodenSheetPileProperties | None = (
+        WoodenSheetPileProperties()
+    )
 
     def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
@@ -331,7 +345,9 @@ class Pile(BaseDataClass):
 
     name: str = ""
     pile_properties: PileProperties | None = PileProperties()
-    plastic_properties: FullPlasticCalculationProperties | None = FullPlasticCalculationProperties()
+    plastic_properties: FullPlasticCalculationProperties | None = (
+        FullPlasticCalculationProperties()
+    )
 
     def to_internal(self) -> SheetPileElement:
         return SheetPileElement(

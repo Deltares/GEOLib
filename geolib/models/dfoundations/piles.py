@@ -1,6 +1,7 @@
 """Pile Library for D-Foundations.
 
 """
+
 from enum import Enum
 
 from pydantic import Field, StringConstraints
@@ -92,7 +93,9 @@ class Pile(BaseDataClass):
     pile_name: str
     pile_type: BasePileType
     pile_class_factor_shaft_sand_gravel: Annotated[float, Field(ge=0, le=9)]
-    pile_class_factor_shaft_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None
+    pile_class_factor_shaft_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = (
+        None
+    )
     preset_pile_class_factor_shaft_clay_loam_peat: BasePileTypeForClayLoamPeat
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)]
 

@@ -362,9 +362,7 @@ class State(DStabilitySubStructure):
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
         return state_line
 
-    def get_state(
-        self, state_id: int
-    ) -> PersistableStatePoint | PersistableStateLine:
+    def get_state(self, state_id: int) -> PersistableStatePoint | PersistableStateLine:
         for state in self.StatePoints + self.StateLines:
             if state.Id == str(state_id):
                 return state
@@ -1250,9 +1248,7 @@ class NailProperties(DStabilitySubStructure):
     """nailpropertiesforsoils.json"""
 
     ContentVersion: str | None = "2"
-    NailPropertiesForSoils: list[PersistableNailPropertiesForSoil | None] | None = (
-        []
-    )
+    NailPropertiesForSoils: list[PersistableNailPropertiesForSoil | None] | None = []
 
     @classmethod
     def structure_name(cls) -> str:
@@ -1342,7 +1338,12 @@ class Loads(DStabilitySubStructure):
 
     def add_load(
         self, load: "DStabilityLoad", consolidations: list["Consolidation"]
-    ) -> PersistableUniformLoad | PersistableLineLoad | PersistableLayerLoad | PersistableTree:
+    ) -> (
+        PersistableUniformLoad
+        | PersistableLineLoad
+        | PersistableLayerLoad
+        | PersistableTree
+    ):
         internal_datastructure = load.to_internal_datastructure()
 
         # Add consolidations if the load supports it
@@ -1564,9 +1565,7 @@ class PersistableTangentLines(DStabilityBaseModelStructure):
 
 
 class PersistableBishopBruteForceSettings(DStabilityBaseModelStructure):
-    GridEnhancements: PersistableGridEnhancements | None = (
-        PersistableGridEnhancements()
-    )
+    GridEnhancements: PersistableGridEnhancements | None = PersistableGridEnhancements()
     SearchGrid: PersistableSearchGrid | None = PersistableSearchGrid()
     SlipPlaneConstraints: PersistableSlipPlaneConstraints | None = (
         PersistableSlipPlaneConstraints()
@@ -1867,8 +1866,12 @@ class BishopReliabilityResult(DStabilitySubStructure):
     ReliabilityIndex: float | str | None = "NaN"
     DistanceToConvergence: float | str | None = "NaN"
     SoilContributions: list[PersistableSoilContribution | None] | None = None
-    CalculationContributions: list[PersistableCalculationContribution | None] | None = None
-    StateLinePointContributions: list[PersistableStateLinePointContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
     StatePointContributions: list[PersistableStatePointContribution | None] | None = None
 
     @field_validator("Id", mode="before")
@@ -1901,8 +1904,12 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     ReliabilityIndex: float | str | None = "NaN"
     DistanceToConvergence: float | str | None = "NaN"
     SoilContributions: list[PersistableSoilContribution | None] | None = None
-    CalculationContributions: list[PersistableCalculationContribution | None] | None = None
-    StateLinePointContributions: list[PersistableStateLinePointContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
     StatePointContributions: list[PersistableStatePointContribution | None] | None = None
     ResultThreshold: float | str | None = "NaN"
     SlipPlaneResults: list | None = None
@@ -2051,8 +2058,12 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     DistanceToConvergence: float | str | None = "NaN"
     SlipPlane: list[PersistablePoint | None] | None = None
     SoilContributions: list[PersistableSoilContribution | None] | None = None
-    CalculationContributions: list[PersistableCalculationContribution | None] | None = None
-    StateLinePointContributions: list[PersistableStateLinePointContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
     StatePointContributions: list[PersistableStatePointContribution | None] | None = None
 
     @field_validator("Id", mode="before")
@@ -2085,8 +2096,12 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
     DistanceToConvergence: float | str | None = "NaN"
     SlipPlane: list[PersistablePoint | None] | None = None
     SoilContributions: list[PersistableSoilContribution | None] | None = None
-    CalculationContributions: list[PersistableCalculationContribution | None] | None = None
-    StateLinePointContributions: list[PersistableStateLinePointContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
     StatePointContributions: list[PersistableStatePointContribution | None] | None = None
 
     @field_validator("Id", mode="before")
@@ -2186,8 +2201,12 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     DistanceToConvergence: float | str | None = "NaN"
     RightCenter: PersistablePoint | None = None
     SoilContributions: list[PersistableSoilContribution | None] | None = None
-    CalculationContributions: list[PersistableCalculationContribution | None] | None = None
-    StateLinePointContributions: list[PersistableStateLinePointContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
     StatePointContributions: list[PersistableStatePointContribution | None] | None = None
     TangentLine: float | str | None = "NaN"
 
@@ -2228,8 +2247,12 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
     DistanceToConvergence: float | str | None = "NaN"
     RightCenter: PersistablePoint | None = None
     SoilContributions: list[PersistableSoilContribution | None] | None = None
-    CalculationContributions: list[PersistableCalculationContribution | None] | None = None
-    StateLinePointContributions: list[PersistableStateLinePointContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
     StatePointContributions: list[PersistableStatePointContribution | None] | None = None
     TangentLine: float | str | None = "NaN"
 
@@ -2295,19 +2318,19 @@ class UpliftVanResult(DStabilitySubStructure):
 
 
 DStabilityResult = (
-    UpliftVanResult |
-    UpliftVanParticleSwarmResult |
-    UpliftVanReliabilityResult |
-    UpliftVanParticleSwarmReliabilityResult |
-    SpencerGeneticAlgorithmResult |
-    SpencerReliabilityResult |
-    SpencerGeneticAlgorithmReliabilityResult |
-    SpencerResult |
-    BishopBruteForceResult |
-    BishopReliabilityResult |
-    BishopBruteForceReliabilityResult |
-    BishopResult |
-    None
+    UpliftVanResult
+    | UpliftVanParticleSwarmResult
+    | UpliftVanReliabilityResult
+    | UpliftVanParticleSwarmReliabilityResult
+    | SpencerGeneticAlgorithmResult
+    | SpencerReliabilityResult
+    | SpencerGeneticAlgorithmReliabilityResult
+    | SpencerResult
+    | BishopBruteForceResult
+    | BishopReliabilityResult
+    | BishopBruteForceReliabilityResult
+    | BishopResult
+    | None
 )
 
 
