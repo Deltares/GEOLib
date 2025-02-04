@@ -1,7 +1,6 @@
 import logging
 import os
 from subprocess import Popen
-from typing import List, Optional
 
 import requests
 from pydantic import DirectoryPath, HttpUrl
@@ -23,14 +22,14 @@ class BaseModelList(BaseDataClass):
     otherwise they will overwrite eachother. This also helps with
     identifying them later."""
 
-    models: List[BaseModel]
-    errors: List[str] = []
+    models: list[BaseModel]
+    errors: list[str] = []
 
     def execute(
         self,
         calculation_folder: DirectoryPath,
         timeout_in_seconds: int = meta.timeout,
-        nprocesses: Optional[int] = os.cpu_count(),
+        nprocesses: int | None = os.cpu_count(),
     ) -> "BaseModelList":
         """Execute all models in this class in parallel.
 

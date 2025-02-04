@@ -3,7 +3,6 @@ This module handles the four types of loads in DStability.
 """
 
 import abc
-from typing import Optional
 
 from pydantic import Field, model_validator
 from typing_extensions import Annotated
@@ -23,7 +22,7 @@ from .internal import (
 class DStabilityLoad(BaseDataClass):
     """Base Class for Loads."""
 
-    label: Optional[str] = None
+    label: str | None = None
 
     @abc.abstractmethod
     def to_internal_datastructure(self):

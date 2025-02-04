@@ -3,9 +3,6 @@ Profile and Layer classes which are used by both D-Foundations and DSheetPiling.
 D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 """
-
-from typing import List
-
 from pydantic import Field, field_validator
 from typing_extensions import Annotated
 
@@ -25,8 +22,8 @@ class CPT(BaseDataClass):
         * Unify with DFoundations
     """
 
-    z: List[float]
-    qc: List[float]
+    z: list[float]
+    qc: list[float]
 
 
 class CPTRule(BaseDataClass):
@@ -46,7 +43,7 @@ class SoilProfile(BaseDataClass):
     """D-Sheetpiling Profile."""
 
     name: str
-    layers: Annotated[List[SoilLayer], Field(min_length=1)]
+    layers: Annotated[list[SoilLayer], Field(min_length=1)]
     coordinate: Point = Point(x=0, y=0)
 
     @classmethod

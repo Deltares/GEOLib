@@ -1,5 +1,3 @@
-from typing import List, Tuple, Type
-
 from pydantic import FilePath
 
 from geolib.models.dseries_parser import DSerieParser, DSeriesStructure
@@ -17,11 +15,11 @@ class DFoundationsInputParser(DSerieParser):
     """DFoundations parser of input files."""
 
     @property
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         return [".foi"]
 
     @property
-    def dserie_structure(self) -> Type[DFoundationsStructure]:
+    def dserie_structure(self) -> type[DFoundationsStructure]:
         return DFoundationsStructure
 
 
@@ -29,11 +27,11 @@ class DFoundationsOutputParser(DSerieParser):
     """DFoundations parser of input files."""
 
     @property
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         return [".fod"]
 
     @property
-    def dserie_structure(self) -> Type[DFoundationsDumpStructure]:
+    def dserie_structure(self) -> type[DFoundationsDumpStructure]:
         return DFoundationsDumpStructure
 
 
@@ -42,13 +40,13 @@ class DFoundationsParserProvider(BaseParserProvider):
     __output_parsers = None
 
     @property
-    def input_parsers(self) -> Tuple[DFoundationsInputParser]:
+    def input_parsers(self) -> tuple[DFoundationsInputParser]:
         if not self.__input_parsers:
             self.__input_parsers = (DFoundationsInputParser(),)
         return self.__input_parsers
 
     @property
-    def output_parsers(self) -> Tuple[DFoundationsOutputParser]:
+    def output_parsers(self) -> tuple[DFoundationsOutputParser]:
         if not self.__output_parsers:
             self.__output_parsers = (DFoundationsOutputParser(),)
         return self.__output_parsers

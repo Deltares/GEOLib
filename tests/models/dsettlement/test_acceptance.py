@@ -4,7 +4,6 @@ import pathlib
 import shutil
 from datetime import timedelta
 from pathlib import Path
-from typing import List
 from warnings import warn
 
 import pydantic

@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
@@ -27,7 +27,7 @@ class CPT(BaseDataClass):
     cptname: str
     groundlevel: float
     depthrange: float = 0.10  # minimum layer thickness
-    measured_data: List[Dict[str, float]]
+    measured_data: list[dict[str, float]]
 
     excavation_type: ExcavationType = ExcavationType.BEFORE
     timeorder_type: TimeOrderType = TimeOrderType.CPT_EXCAVATION_INSTALL
@@ -91,7 +91,7 @@ class Profile(BaseDataClass):
     phreatic_level: float
     pile_tip_level: float
     cpt: CPT
-    excavation: Optional[Excavation] = None
+    excavation: Excavation | None = None
     overconsolidation_ratio: float = 1.0
     top_of_positive_skin_friction: float = 0.0
     bottom_of_negative_skin_friction: float = 0.0
@@ -100,7 +100,7 @@ class Profile(BaseDataClass):
     concentration_value_frohlich: int = 3
     top_tension_zone: float = 0.0
     # Any, as combined int, float will become int
-    layers: List[Dict[str, Any]]
+    layers: list[dict[str, Any]]
 
     def _to_internal(self, matching_cpt) -> InternalProfile:
         kwargs = self.model_dump(exclude={"cpt", "excavation", "location"})

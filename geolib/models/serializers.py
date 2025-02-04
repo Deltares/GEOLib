@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, BinaryIO, Dict, Union
+from typing import Any, BinaryIO
 
 from pydantic import FilePath
 
@@ -9,12 +9,12 @@ from geolib.models import BaseDataClass
 class BaseSerializer(BaseDataClass):
     """Basic class for serializers."""
 
-    ds: Dict[str, Any]
+    ds: dict[str, Any]
 
     def render(self) -> str:
         return str(self.ds)
 
-    def write(self, filename: Union[FilePath, BinaryIO]):
+    def write(self, filename: FilePath | BinaryIO):
         """Write serialized model to Filepath or BytesIO buffer"""
         # if filename is pathlike, open file (in text mode) and write str
         if isinstance(filename, Path):

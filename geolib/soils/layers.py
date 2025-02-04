@@ -3,9 +3,6 @@ Profile and Layer classes which are used by both D-Foundations and DSheetPiling.
 D-Foundations often requires more parameters, which are unused for DSheetPiling.
 
 """
-
-from typing import List
-
 from geolib.geometry.one import Point
 from geolib.models import BaseDataClass
 from geolib.soils import Soil
@@ -20,8 +17,8 @@ class CPT(BaseDataClass):
         Add Friction and other parameters?
     """
 
-    z: List[float]
-    qc: List[float]
+    z: list[float]
+    qc: list[float]
 
 
 class CPTRule(BaseDataClass):
@@ -54,7 +51,7 @@ class Profile(BaseDataClass):
     """
 
     label: str
-    layers: List[ProfileLayer]
+    layers: list[ProfileLayer]
     phreatic_level: float
     pile_tip_level: float
     overconsolidation_ratio: float

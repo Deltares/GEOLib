@@ -1,5 +1,4 @@
 from random import randint
-from typing import Dict, List, Tuple, Type
 
 import pytest
 from pydantic_core._pydantic_core import ValidationError
@@ -88,7 +87,7 @@ class TestParserUtil:
     )
     @pytest.mark.unittest
     def test_get_line_property_key_value_reversed_key_false(
-        self, text: str, expected_value: Tuple[str, str]
+        self, text: str, expected_value: tuple[str, str]
     ):
         assert get_line_property_key_value(text, reversed_key=False) == expected_value
 
@@ -108,18 +107,18 @@ class TestParserUtil:
     )
     @pytest.mark.unittest
     def test_get_line_property_key_value_reversed_key_true(
-        self, text: str, expected_value: Tuple[str, str]
+        self, text: str, expected_value: tuple[str, str]
     ):
         assert get_line_property_key_value(text, reversed_key=True) == expected_value
 
 
 class DummyTreeStructure(DSeriesTreeStructure):
     simple_property: int
-    list_property: List[int]
+    list_property: list[int]
 
 
 class DummyListTreeStructureCollection(DSeriesTreeStructureCollection):
-    tabbedtreestructures: List[DummyTreeStructure]
+    tabbedtreestructures: list[DummyTreeStructure]
 
 
 class TestDSeriesTreeStructure:
@@ -140,7 +139,7 @@ class TestDSeriesTreeStructure:
         assert str(e_info.value) == expected_error
 
     class DummyTreeStructureListFirst(DSeriesTreeStructure):
-        list_property: List[int]
+        list_property: list[int]
         single_property: int
 
     @pytest.mark.unittest
@@ -304,7 +303,7 @@ class TestDSeriesTreeStructure:
         class tp_test_composite_element(DSeriesTreeStructure):
             struct_name: str
             val_0: float
-            composite_val: List[tp_test_simple_element]
+            composite_val: list[tp_test_simple_element]
 
         # 1. Define test data.
         text_to_parse = (
@@ -398,7 +397,7 @@ class TestDSeriesTreeStructureCollection:
             val_2: float
 
         class tp_test_treecollection(DSeriesTreeStructureCollection):
-            tree_collection: List[tp_test_element]
+            tree_collection: list[tp_test_element]
 
         # 1. Define test data.
         text_to_parse = (
@@ -430,7 +429,7 @@ class TestDSeriesTreeStructureCollection:
             prop_2: float
 
         class tp_test_collection(DSeriesTreeStructureCollection):
-            tp_collection: List[tp_test_simplestruct]
+            tp_collection: list[tp_test_simplestruct]
 
         class tp_test_compositestruct(DSeriesTreeStructure):
             struct_name: str
@@ -439,7 +438,7 @@ class TestDSeriesTreeStructureCollection:
             extra_struct: tp_test_collection
 
         class tp_test_treecollection(DSeriesTreeStructureCollection):
-            tree_collection: List[tp_test_compositestruct]
+            tree_collection: list[tp_test_compositestruct]
 
         # 1. Define test data.
         text_to_parse = (
@@ -492,7 +491,7 @@ class DummyMatrixStructure(DSeriesTreeStructure):
 
 class TestDSeriesTreeStructureAsMatrix:
     class DummyMatrixTreeStructureCollection(DSeriesMatrixTreeStructureCollection):
-        dummymatrixtreestructure: List[DummyMatrixStructure]
+        dummymatrixtreestructure: list[DummyMatrixStructure]
 
     @pytest.mark.unittest
     def test_given_unequal_lines_when_parse_text_then_raise_exception(self):
@@ -576,7 +575,7 @@ class TestDSeriesTableStructure:
     def test_given_column_with_string_value_when_parse_then_returns_valid_structure(self):
         # 1. Define test data
         class test_table(DSeriesTableStructure):
-            test_table: List[Dict[str, str]]
+            test_table: list[dict[str, str]]
 
         string_value = "This is a string value"
         text_to_parse = f"""[COLUMN INDICATION]
@@ -599,7 +598,7 @@ class TestDSeriesWrappedTableStructure:
     def test_given_table_without_number_of_rows_structure_is_parsed(self):
         # 1. Prepare test data
         class test_structure(DSeriesWrappedTableStructure):
-            test_structure: List[Dict[str, float]]
+            test_structure: list[dict[str, float]]
 
         text_to_parse = """
             [TABLE]
@@ -656,7 +655,7 @@ class TestDSeriesInlineProperties:
         ],
     )
     def test_given_text_with_any_kind_of_properties_when_parse_text_then_returns_structure(
-        self, text_input: str, class_to_parse: Type
+        self, text_input: str, class_to_parse: type
     ):
         # 1. Run test.
         parsed_structure = class_to_parse.parse_text(text_input)
@@ -680,7 +679,7 @@ class TestDSeriesInlineProperties:
         ],
     )
     def test_given_text_with_header_when_parse_text_then_returns_structure(
-        self, text_input: str, class_to_parse: Type
+        self, text_input: str, class_to_parse: type
     ):
         # 1. Run test.
         class with_header(class_to_parse):
@@ -732,7 +731,7 @@ class TestDSeriesInlineProperties:
         ],
     )
     def test_given_text_without_key_when_get_property_key_value_then_returns_expected_property(
-        self, text_to_parse: str, expected_key: str, expected_result: Tuple[str, str]
+        self, text_to_parse: str, expected_key: str, expected_result: tuple[str, str]
     ):
         # 1. Define test data:
         expected_key = "dummy_key"
@@ -785,7 +784,7 @@ class TestDSeriesInlineMappedProperties:
         ],
     )
     def test_given_text_without_key_when_get_property_key_value_then_returns_expected_property(
-        self, text_to_parse: str, expected_key: str, expected_result: Tuple[str, str]
+        self, text_to_parse: str, expected_key: str, expected_result: tuple[str, str]
     ):
         # 1. Define test data:
         expected_key = "dummy_key"
@@ -835,7 +834,7 @@ class TestDSeriesUnmappedNameProperties:
         ],
     )
     def test_given_no_expected_property_when_get_property_key_value_then_returns_expected(
-        self, text_to_parse: str, expected_tuple: Tuple[str, str]
+        self, text_to_parse: str, expected_tuple: tuple[str, str]
     ):
         # 1. Prepare test data.
         key = "dummy_key"
@@ -855,7 +854,7 @@ class TestDSeriesUnmappedNameProperties:
 class TestDSeriesRepeatedGroupedProperties:
     class grouped_properties(DSeriesRepeatedGroupedProperties):
         property_one: int
-        property_list: List[str]
+        property_list: list[str]
         property_two: float
 
     @pytest.mark.integrationtest
@@ -921,7 +920,7 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         class mixed_group(DSeriesRepeatedGroupsWithInlineMappedProperties):
             property_one: int
             property_two: float
-            property_list: List[str]
+            property_list: list[str]
 
         text = (
             "property one = 42\n"
@@ -947,8 +946,8 @@ class TestDSeriesStructureCollection:
     ):
         # 1. Define test data.
         class multiple_properties(DSeriesStructureCollection):
-            property_one: List[DSeriesStructure]
-            property_two: List[DSeriesStructure]
+            property_one: list[DSeriesStructure]
+            property_two: list[DSeriesStructure]
 
         expected_error = (
             "This type of collection is only meant to have one field but 2 were defined."
@@ -968,7 +967,7 @@ class TestDSeriesStructureCollection:
         self,
     ):
         class default_collection(DSeriesStructureCollection):
-            collection_one: List[DSeriesStructure]
+            collection_one: list[DSeriesStructure]
 
         # 1. Define test data.
         text_to_parse = (
@@ -999,7 +998,7 @@ class TestDSeriesStructureCollection:
             property_dummy: int
 
         class default_collection(DSeriesStructureCollection):
-            data: List[inline_properties_structure]
+            data: list[inline_properties_structure]
 
         # 1. Define test data.
         text_to_parse = (

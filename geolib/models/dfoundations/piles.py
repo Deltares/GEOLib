@@ -2,7 +2,6 @@
 
 """
 from enum import Enum
-from typing import Optional
 
 from pydantic import Field, StringConstraints
 from pydantic.types import PositiveInt
@@ -93,9 +92,7 @@ class Pile(BaseDataClass):
     pile_name: str
     pile_type: BasePileType
     pile_class_factor_shaft_sand_gravel: Annotated[float, Field(ge=0, le=9)]
-    pile_class_factor_shaft_clay_loam_peat: Optional[
-        Annotated[float, Field(ge=0, le=9)]
-    ] = None
+    pile_class_factor_shaft_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None
     preset_pile_class_factor_shaft_clay_loam_peat: BasePileTypeForClayLoamPeat
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)]
 
@@ -111,9 +108,9 @@ class BearingPile(Pile):
     characteristic_adhesion: Annotated[float, Field(ge=0, le=1000)]
 
     overrule_pile_tip_shape_factor: bool
-    pile_tip_shape_factor: Optional[Annotated[float, Field(ge=0, le=10)]] = None
+    pile_tip_shape_factor: Annotated[float, Field(ge=0, le=10)] | None = None
     overrule_pile_tip_cross_section_factors: bool
-    pile_tip_cross_section_factor: Optional[Annotated[float, Field(ge=0, le=10)]] = None
+    pile_tip_cross_section_factor: Annotated[float, Field(ge=0, le=10)] | None = None
 
     def _to_internal(self):
         return TypesBearingPiles(

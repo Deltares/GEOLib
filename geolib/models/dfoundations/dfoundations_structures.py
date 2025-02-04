@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, List, Tuple
+from typing import Any
 
 from geolib.models.dseries_parser import (
     DSerieListGroupNextStructure,
@@ -21,7 +21,7 @@ class DFoundationsEnumStructure(DSeriesStructure):
         return cls(**kwargs)
 
     @staticmethod
-    def remove_enum_explanation(structure: Dict[str, Any]) -> Dict[str, Any]:
+    def remove_enum_explanation(structure: dict[str, Any]) -> dict[str, Any]:
         """Remove trailing explanations from values of `structure`
         0 : Mechanical qc required -> 0
         """
@@ -35,7 +35,7 @@ class DFoundationsEnumStructure(DSeriesStructure):
 
 class DFoundationsInlineProperties(DSeriesInlineProperties):
     @classmethod
-    def get_property_key_value(cls, text: str, expected_property: str) -> Tuple[str, str]:
+    def get_property_key_value(cls, text: str, expected_property: str) -> tuple[str, str]:
         """Returns the value content for a line of format:
         value : key || value = key
 
@@ -76,7 +76,7 @@ class DFoundationsTableWrapper(DSeriesStructure):
             DSerieStructure: Parsed structure.
         """
 
-        def split_line(text: str) -> List[str]:
+        def split_line(text: str) -> list[str]:
             parts = []
             for part in re.split(" |\t", text.strip()):
                 if part == "":

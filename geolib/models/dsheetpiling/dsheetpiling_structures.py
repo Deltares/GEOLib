@@ -1,6 +1,6 @@
 import logging
 import re
-from typing import Any, Dict, List, Tuple, get_type_hints
+from typing import get_type_hints
 
 from geolib.errors import ParserError
 from geolib.models.dseries_parser import (
@@ -49,13 +49,13 @@ class DSeriesPilingParserStructure(DSeriesStructure):
 
 class DSheetpilingSurchargeLoad(DSeriesRepeatedGroupsWithInlineMappedProperties):
     @classmethod
-    def get_list_field_names(cls) -> List[str]:
+    def get_list_field_names(cls) -> list[str]:
         super_field_names = super().get_list_field_names()
         super_field_names.append("point")
         return super_field_names
 
     @classmethod
-    def get_validated_mappings(cls, generated_dict: Dict[str, str]) -> Dict[str, str]:
+    def get_validated_mappings(cls, generated_dict: dict[str, str]) -> dict[str, str]:
         name_field = generated_dict.pop("", "")
         # Verify the name field has not been replaced by "surcharge_load"
         if "surcharge_load" in generated_dict:

@@ -1,5 +1,4 @@
 import abc
-from typing import List
 
 from pydantic import FilePath
 
@@ -10,7 +9,7 @@ from geolib.models.base_model_structure import BaseModelStructure
 class BaseParser(abc.ABC):
     @property
     @abc.abstractmethod
-    def suffix_list(self) -> List[str]:
+    def suffix_list(self) -> list[str]:
         raise NotConcreteError
 
     @abc.abstractmethod

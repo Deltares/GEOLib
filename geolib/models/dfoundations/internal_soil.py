@@ -1,7 +1,6 @@
 import logging
 from enum import IntEnum
 from pathlib import Path
-from typing import List
 
 from pydantic import Field, StringConstraints
 from typing_extensions import Annotated
@@ -62,7 +61,7 @@ class Soil(DSeriesUnmappedNameProperties):
         super().__init__(*args, **kwargs)
 
     @classmethod
-    def default_soils(cls, model: str = "BEARING_PILES") -> List["Soil"]:
+    def default_soils(cls, model: str = "BEARING_PILES") -> list["Soil"]:
         currentfolder = Path(__file__).parent
         name = model.lower()
         filename = currentfolder / f"soil_csv/{name}_soils.csv"

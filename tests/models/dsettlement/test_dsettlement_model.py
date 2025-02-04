@@ -2,7 +2,6 @@ import os
 from datetime import timedelta
 from io import BytesIO
 from pathlib import Path
-from typing import List
 
 import pytest
 from pydantic import ValidationError
@@ -447,7 +446,7 @@ class TestDSettlementModel:
         ],
     )
     def test_add_simpleboundary(
-        self, dserie_points: List[Point], expected_result: List[int]
+        self, dserie_points: list[Point], expected_result: list[int]
     ):
         # 1. Set up test model
         model = DSettlementModel()

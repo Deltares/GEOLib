@@ -1,6 +1,5 @@
 from abc import ABCMeta, abstractmethod
 from datetime import timedelta
-from typing import List, Optional, Union
 
 from geolib.models import BaseDataClass
 
@@ -11,7 +10,7 @@ from .internal import VerticalDrain as vd
 class ScheduleValues(BaseDataClass, metaclass=ABCMeta):
     """ScheduleValues to inherit from"""
 
-    schedule: Optional[DrainSchedule] = None
+    schedule: DrainSchedule | None = None
 
     @abstractmethod
     def _to_internal(self):
@@ -56,8 +55,8 @@ class ScheduleValuesSimpleInput(ScheduleValues):
     begin_time: float
     end_time: float
     underpressure: float
-    water_head_during_dewatering: Optional[float] = None
-    tube_pressure_during_dewatering: Optional[float] = None
+    water_head_during_dewatering: float | None = None
+    tube_pressure_during_dewatering: float | None = None
 
     def _to_internal(self, verticaldrains: vd) -> vd:
         verticaldrains.schedule_type = DrainSchedule.SIMPLE_INPUT
@@ -83,9 +82,9 @@ class ScheduleValuesDetailedInput(ScheduleValues):
         Water head -- The vertical level where the negative pore pressure equals the enforced underpressure during dewatering.
     """
 
-    time: List[timedelta] = []
-    underpressure: List[float] = []
-    water_level: List[float] = []
+    time: list[timedelta] = []
+    underpressure: list[float] = []
+    water_level: list[float] = []
 
     def _to_internal(self, verticaldrains: vd) -> vd:
         verticaldrains.schedule_type = DrainSchedule.DETAILED_INPUT
@@ -114,9 +113,9 @@ class VerticalDrain(BaseDataClass):
     range_to: float
     bottom_position: float
     center_to_center: float
-    width: Optional[float] = None
-    diameter: Optional[float] = None
-    thickness: Optional[float] = None
+    width: float | None = None
+    diameter: float | None = None
+    thickness: float | None = None
     grid: DrainGridType = DrainGridType.UNDERDETERMINED
     schedule: ScheduleValues = None
 

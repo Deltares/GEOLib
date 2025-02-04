@@ -1,5 +1,3 @@
-from typing import Type
-
 import pytest
 
 from geolib.models import BaseDataClass
@@ -24,7 +22,7 @@ class TestGetFields:
         ],
     )
     def test_given_class_when_get_required_class_field_then_only_valid_fields_returned(
-        self, class_type: Type
+        self, class_type: type
     ):
         filtered_types = get_required_class_field(class_type)
         assert isinstance(filtered_types, list)
@@ -42,7 +40,7 @@ class TestGetFields:
         ],
     )
     def test_given_class_when_get_filtered_type_hints_then_only_valid_fields_returned(
-        self, class_type: Type
+        self, class_type: type
     ):
         filtered_types = get_filtered_type_hints(class_type)
         assert isinstance(filtered_types, list)

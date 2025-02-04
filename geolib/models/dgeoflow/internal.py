@@ -7,7 +7,6 @@ from datetime import date, datetime
 from enum import Enum
 from itertools import chain
 from math import isfinite
-from typing import Dict, List, Optional, Set, Tuple, Union
 
 from pydantic import ConfigDict, Field, field_validator, model_validator
 from typing_extensions import Annotated
@@ -78,16 +77,16 @@ class PersistableShadingTypeEnum(Enum):
 
 
 class PersistableSoilVisualization(DGeoFlowBaseModelStructure):
-    Color: Optional[str]
-    PersistableShadingType: Optional[PersistableShadingTypeEnum]
-    SoilId: Optional[str]
+    Color: str | None
+    PersistableShadingType: PersistableShadingTypeEnum | None
+    SoilId: str | None
 
     id_validator = field_validator("SoilId", mode="before")(transform_id_to_str)
 
 
 class SoilVisualisation(DGeoFlowBaseModelStructure):
-    ContentVersion: Optional[str] = "2"
-    SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
+    ContentVersion: str | None = "2"
+    SoilVisualizations: list[PersistableSoilVisualization | None] | None = []
 
     @classmethod
     def structure_name(cls) -> str:
@@ -95,8 +94,8 @@ class SoilVisualisation(DGeoFlowBaseModelStructure):
 
 
 class PersistableSoilLayer(DGeoFlowBaseModelStructure):
-    LayerId: Optional[str] = None
-    SoilId: Optional[str] = None
+    LayerId: str | None = None
+    SoilId: str | None = None
 
     id_validator = field_validator("LayerId", "SoilId", mode="before")(
         transform_id_to_str
@@ -114,9 +113,9 @@ class SoilLayerCollection(DGeoFlowSubStructure):
     def structure_group(cls) -> str:
         return "soillayers"
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    SoilLayers: List[PersistableSoilLayer] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    SoilLayers: list[PersistableSoilLayer] = []
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -125,7 +124,7 @@ class SoilLayerCollection(DGeoFlowSubStructure):
         self.SoilLayers.append(psl)
         return psl
 
-    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
+    def get_ids(self, exclude_soil_layer_id: int | None) -> set[str]:
         if exclude_soil_layer_id is not None:
             exclude_soil_layer_id = str(exclude_soil_layer_id)
         return {
@@ -149,8 +148,8 @@ class PersistableSoil(DGeoFlowBaseModelStructure):
 class SoilCollection(DGeoFlowSubStructure):
     """soils.json"""
 
-    ContentVersion: Optional[str] = "2"
-    Soils: List[PersistableSoil] = [
+    ContentVersion: str | None = "2"
+    Soils: list[PersistableSoil] = [
         PersistableSoil(
             Code="H_Aa_ht_new",
             Id="2",
@@ -317,7 +316,7 @@ class SoilCollection(DGeoFlowSubStructure):
         raise ValueError(f"Soil code '{code}' not found in the SoilCollection")
 
     def edit_soil_by_name(
-        self, name: Optional[str] = None, **kwargs: dict
+        self, name: str | None = None, **kwargs: dict
     ) -> PersistableSoil:
         """
         Update a soil, searching by name. This method will edit the first occurence of the name
@@ -353,22 +352,22 @@ class SoilCollection(DGeoFlowSubStructure):
 class ProjectInfo(DGeoFlowSubStructure):
     """projectinfo.json."""
 
-    Analyst: Optional[str] = ""
-    ApplicationCreated: Optional[str] = ""
-    ApplicationModified: Optional[str] = ""
-    ContentVersion: Optional[str] = "2"
-    Created: Optional[date] = datetime.now().date()
-    CrossSection: Optional[str] = ""
-    Date: Optional[date] = datetime.now().date()
-    IsDataValidated: Optional[bool] = False
-    LastModified: Optional[date] = datetime.now().date()
-    LastModifier: Optional[str] = "GEOLib"
-    Path: Optional[str] = ""
-    Project: Optional[str] = ""
-    Remarks: Optional[str] = f"Created with GEOLib {version}"
+    Analyst: str | None = ""
+    ApplicationCreated: str | None = ""
+    ApplicationModified: str | None = ""
+    ContentVersion: str | None = "2"
+    Created: date | None = datetime.now().date()
+    CrossSection: str | None = ""
+    Date: date | None = datetime.now().date()
+    IsDataValidated: bool | None = False
+    LastModified: date | None = datetime.now().date()
+    LastModifier: str | None = "GEOLib"
+    Path: str | None = ""
+    Project: str | None = ""
+    Remarks: str | None = f"Created with GEOLib {version}"
 
     @classmethod
-    def nltime(cls, date: Union[date, str]) -> date:
+    def nltime(cls, date: date | str) -> date:
         if isinstance(date, str):
             position = date.index(max(date.split("-"), key=len))
             if position > 0:
@@ -383,15 +382,15 @@ class ProjectInfo(DGeoFlowSubStructure):
 
 
 class PersistablePoint(DGeoFlowBaseModelStructure):
-    X: Optional[float] = 0
-    Z: Optional[float] = 0
+    X: float | None = 0
+    Z: float | None = 0
 
 
 class PersistableLayer(DGeoFlowBaseModelStructure):
-    Id: Optional[str] = None
-    Label: Optional[str] = None
-    Notes: Optional[str] = None
-    Points: Annotated[List[PersistablePoint], Field(min_length=3)]
+    Id: str | None = None
+    Label: str | None = None
+    Notes: str | None = None
+    Points: Annotated[list[PersistablePoint], Field(min_length=3)]
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -422,9 +421,9 @@ class Geometry(DGeoFlowSubStructure):
     def structure_name(cls) -> str:
         return "geometry"
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    Layers: List[PersistableLayer] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    Layers: list[PersistableLayer] = []
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -456,7 +455,7 @@ class Geometry(DGeoFlowSubStructure):
         raise ValueError(f"Layer id {id} not found in this geometry")
 
     def add_layer(
-        self, id: str, label: str, notes: str, points: List[Point]
+        self, id: str, label: str, notes: str, points: list[Point]
     ) -> PersistableLayer:
         """
         Add a new layer to the model. Layers are expected;
@@ -468,7 +467,7 @@ class Geometry(DGeoFlowSubStructure):
             id (str): id of the layer
             label (str): label of the layer
             notes (str): notes for the layers
-            points (List[Points]): list of Point classes
+            points (list[Points]): list of Point classes
 
         Returns:
             PersistableLayer: the layer as a persistable object
@@ -489,10 +488,10 @@ class PersistableFixedHeadBoundaryConditionProperties(DGeoFlowBaseModelStructure
 
 
 class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
-    Label: Optional[str] = None
-    Notes: Optional[str] = None
-    Id: Optional[str] = None
-    Points: Annotated[List[PersistablePoint], Field(min_length=2)]
+    Label: str | None = None
+    Notes: str | None = None
+    Id: str | None = None
+    Points: Annotated[list[PersistablePoint], Field(min_length=2)]
     FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
@@ -501,9 +500,9 @@ class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
 class BoundaryConditionCollection(DGeoFlowSubStructure):
     """boundaryconditions/boundaryconditions_x.json"""
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    BoundaryConditions: List[PersistableBoundaryCondition] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    BoundaryConditions: list[PersistableBoundaryCondition] = []
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -536,7 +535,7 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
         return False
 
     def add_boundary_condition(
-        self, id: int, label: str, notes: str, points: List[Point], head_level: float
+        self, id: int, label: str, notes: str, points: list[Point], head_level: float
     ) -> PersistableBoundaryCondition:
         pbc_properties = PersistableFixedHeadBoundaryConditionProperties(
             HeadLevel=head_level
@@ -553,9 +552,9 @@ class BoundaryConditionCollection(DGeoFlowSubStructure):
 
 
 class PersistableStage(DGeoFlowBaseModelStructure):
-    Label: Optional[str] = None
-    Notes: Optional[str] = None
-    BoundaryConditionCollectionId: Optional[str] = None
+    Label: str | None = None
+    Notes: str | None = None
+    BoundaryConditionCollectionId: str | None = None
 
 
 class ErosionDirectionEnum(Enum):
@@ -564,31 +563,31 @@ class ErosionDirectionEnum(Enum):
 
 
 class InternalPipeTrajectory(DGeoFlowBaseModelStructure):
-    Label: Optional[str] = None
-    Notes: Optional[str] = None
-    D70: Optional[float] = None
-    Points: Optional[List[PersistablePoint]] = None
-    ErosionDirection: Optional[ErosionDirectionEnum] = ErosionDirectionEnum.RIGHT_TO_LEFT
-    ElementSize: Optional[float] = None
+    Label: str | None = None
+    Notes: str | None = None
+    D70: float | None = None
+    Points: list[PersistablePoint] | None = None
+    ErosionDirection: ErosionDirectionEnum | None = ErosionDirectionEnum.RIGHT_TO_LEFT
+    ElementSize: float | None = None
 
 
 class PersistableCriticalHeadSearchSpace(DGeoFlowBaseModelStructure):
-    MinimumHeadLevel: Optional[float] = 0
-    MaximumHeadLevel: Optional[float] = 1
-    StepSize: Optional[float] = 0.1
+    MinimumHeadLevel: float | None = 0
+    MaximumHeadLevel: float | None = 1
+    StepSize: float | None = 0.1
 
 
 class PersistableCalculation(DGeoFlowBaseModelStructure):
-    Label: Optional[str] = None
-    Notes: Optional[str] = None
-    CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.GROUNDWATER_FLOW
-    CriticalHeadId: Optional[str] = None
-    CriticalHeadSearchSpace: Optional[PersistableCriticalHeadSearchSpace] = (
+    Label: str | None = None
+    Notes: str | None = None
+    CalculationType: CalculationTypeEnum | None = CalculationTypeEnum.GROUNDWATER_FLOW
+    CriticalHeadId: str | None = None
+    CriticalHeadSearchSpace: PersistableCriticalHeadSearchSpace | None = (
         PersistableCriticalHeadSearchSpace()
     )
-    PipeTrajectory: Optional[InternalPipeTrajectory] = None
-    MeshPropertiesId: Optional[str] = None
-    ResultsId: Optional[str] = None
+    PipeTrajectory: InternalPipeTrajectory | None = None
+    MeshPropertiesId: str | None = None
+    ResultsId: str | None = None
 
     id_validator = field_validator(
         "CriticalHeadId", "MeshPropertiesId", "ResultsId", mode="before"
@@ -596,32 +595,32 @@ class PersistableCalculation(DGeoFlowBaseModelStructure):
 
 
 class NodeResult(DGeoFlowBaseModelStructure):
-    Point: Optional[PersistablePoint] = None
+    Point: PersistablePoint | None = None
     TotalPorePressure: float = 1
     HydraulicDischarge: float = 1
     HydraulicHead: float = 1
 
 
 class ElementResult(DGeoFlowBaseModelStructure):
-    NodeResults: Optional[List[NodeResult]] = []
+    NodeResults: list[NodeResult] | None = []
 
 
 class PersistablePhreaticLineSegment(DGeoFlowBaseModelStructure):
-    Start: Optional[PersistablePoint] = None
-    End: Optional[PersistablePoint] = None
+    Start: PersistablePoint | None = None
+    End: PersistablePoint | None = None
 
 
 class PipeElementResult(DGeoFlowBaseModelStructure):
-    Nodes: Optional[List[PersistablePoint]] = []
-    IsActive: Optional[bool] = None
-    Height: Optional[float] = None
+    Nodes: list[PersistablePoint] | None = []
+    IsActive: bool | None = None
+    Height: float | None = None
 
 
 class GroundwaterFlowResult(DGeoFlowSubStructure):
-    Id: Optional[str] = None
-    Elements: Optional[List[ElementResult]] = []
-    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
-    ContentVersion: Optional[str] = "2"
+    Id: str | None = None
+    Elements: list[ElementResult] | None = []
+    PhreaticLineSegments: list[PersistablePhreaticLineSegment] | None = []
+    ContentVersion: str | None = "2"
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -631,12 +630,12 @@ class GroundwaterFlowResult(DGeoFlowSubStructure):
 
 
 class PipeLengthResult(DGeoFlowSubStructure):
-    Id: Optional[str] = None
-    PipeLength: Optional[float] = None
-    Elements: Optional[List[ElementResult]] = []
-    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
-    PipeElements: Optional[List[PipeElementResult]] = []
-    ContentVersion: Optional[str] = "2"
+    Id: str | None = None
+    PipeLength: float | None = None
+    Elements: list[ElementResult] | None = []
+    PhreaticLineSegments: list[PersistablePhreaticLineSegment] | None = []
+    PipeElements: list[PipeElementResult] | None = []
+    ContentVersion: str | None = "2"
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -646,13 +645,13 @@ class PipeLengthResult(DGeoFlowSubStructure):
 
 
 class CriticalHeadResult(DGeoFlowSubStructure):
-    Id: Optional[str] = None
-    PipeLength: Optional[float] = None
-    CriticalHead: Optional[float] = None
-    Elements: Optional[List[ElementResult]] = []
-    PhreaticLineSegments: Optional[List[PersistablePhreaticLineSegment]] = []
-    PipeElements: Optional[List[PipeElementResult]] = []
-    ContentVersion: Optional[str] = "2"
+    Id: str | None = None
+    PipeLength: float | None = None
+    CriticalHead: float | None = None
+    Elements: list[ElementResult] | None = []
+    PhreaticLineSegments: list[PersistablePhreaticLineSegment] | None = []
+    PipeElements: list[PipeElementResult] | None = []
+    ContentVersion: str | None = "2"
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -661,20 +660,20 @@ class CriticalHeadResult(DGeoFlowSubStructure):
         return "results/criticalhead/"
 
 
-DGeoFlowResult = Union[GroundwaterFlowResult, PipeLengthResult, CriticalHeadResult]
+DGeoFlowResult = GroundwaterFlowResult | PipeLengthResult | CriticalHeadResult
 
 
 class Scenario(DGeoFlowSubStructure):
     """scenarios/scenario_x.json"""
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    Label: Optional[str] = None
-    Notes: Optional[str] = None
-    GeometryId: Optional[str] = None
-    SoilLayersId: Optional[str] = None
-    Stages: List[PersistableStage] = []
-    Calculations: List[PersistableCalculation] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    Label: str | None = None
+    Notes: str | None = None
+    GeometryId: str | None = None
+    SoilLayersId: str | None = None
+    Stages: list[PersistableStage] = []
+    Calculations: list[PersistableCalculation] = []
 
     id_validator = field_validator("Id", "GeometryId", "SoilLayersId", mode="before")(
         transform_id_to_str
@@ -711,8 +710,8 @@ class Scenario(DGeoFlowSubStructure):
 
 class PersistableMeshProperties(DGeoFlowBaseModelStructure):
     LayerId: str
-    Label: Optional[str] = None
-    ElementSize: Optional[float] = 1
+    Label: str | None = None
+    ElementSize: float | None = 1
 
     id_validator = field_validator("LayerId", mode="before")(transform_id_to_str)
 
@@ -720,9 +719,9 @@ class PersistableMeshProperties(DGeoFlowBaseModelStructure):
 class MeshProperty(DGeoFlowSubStructure):
     """meshproperties/meshproperties_x.json"""
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    MeshProperties: Optional[List[PersistableMeshProperties]] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    MeshProperties: list[PersistableMeshProperties] | None = []
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -743,7 +742,7 @@ class MeshProperty(DGeoFlowSubStructure):
         self.MeshProperties.append(pmp)
         return pmp
 
-    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
+    def get_ids(self, exclude_soil_layer_id: int | None) -> set[str]:
         if exclude_soil_layer_id is not None:
             exclude_soil_layer_id = str(exclude_soil_layer_id)
         return {
@@ -756,7 +755,7 @@ class MeshProperty(DGeoFlowSubStructure):
 class DGeoFlowStructure(BaseModelStructure):
     """Highest level DGeoFlow class that should be parsed to and serialized from.
 
-    The List[] items (one for each scenario in the model) will be stored in a subfolder
+    The list[] items (one for each scenario in the model) will be stored in a subfolder
     to multiple json files. Where the first (0) instance
     has no suffix, but the second one has (1 => _1) etc.
 
@@ -764,19 +763,19 @@ class DGeoFlowStructure(BaseModelStructure):
     """
 
     # input part
-    soillayers: List[SoilLayerCollection] = [
+    soillayers: list[SoilLayerCollection] = [
         SoilLayerCollection(Id="14")
     ]  # soillayers/soillayers_x.json
     soils: SoilCollection = SoilCollection()  # soils.json
     soilvisualizations: SoilVisualisation = SoilVisualisation()  # soilvisualizations.json
 
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
-    geometries: List[Geometry] = [Geometry(Id="1")]  # geometries/geometry_x.json
+    geometries: list[Geometry] = [Geometry(Id="1")]  # geometries/geometry_x.json
 
-    boundary_conditions: List[BoundaryConditionCollection] = [
+    boundary_conditions: list[BoundaryConditionCollection] = [
         BoundaryConditionCollection(Id="15")
     ]  # boundaryconditions/boundaryconditions_x.json
-    scenarios: List[Scenario] = [
+    scenarios: list[Scenario] = [
         Scenario(
             Id="0",
             Label="Scenario 1",
@@ -790,20 +789,20 @@ class DGeoFlowStructure(BaseModelStructure):
             ],
         )
     ]  # scenarios/scenario_x.json
-    mesh_properties: List[MeshProperty] = [
+    mesh_properties: list[MeshProperty] = [
         MeshProperty(Id="16", MeshProperties=[])
     ]  # meshproperties/meshproperties_x.json
 
     # Output parts
-    groundwater_flow_results: List[GroundwaterFlowResult] = []
-    pipe_length_results: List[PipeLengthResult] = []
-    critical_head_results: List[CriticalHeadResult] = []
+    groundwater_flow_results: list[GroundwaterFlowResult] = []
+    pipe_length_results: list[PipeLengthResult] = []
+    critical_head_results: list[CriticalHeadResult] = []
 
     model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True)
 
     def get_result_substructure(
         self, calculation_type: CalculationTypeEnum
-    ) -> List[DGeoFlowResult]:
+    ) -> list[DGeoFlowResult]:
         result_types_mapping = {
             CalculationTypeEnum.GROUNDWATER_FLOW: self.groundwater_flow_results,
             CalculationTypeEnum.PIPE_LENGTH: self.pipe_length_results,
@@ -836,8 +835,8 @@ class DGeoFlowStructure(BaseModelStructure):
         return self
 
     def add_default_scenario(
-        self, label: str, notes: str, unique_start_id: Optional[int] = None
-    ) -> Tuple[int, int]:
+        self, label: str, notes: str, unique_start_id: int | None = None
+    ) -> tuple[int, int]:
         """Add a new default (empty) scenario to DGeoFlow."""
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
@@ -874,7 +873,7 @@ class DGeoFlowStructure(BaseModelStructure):
         scenario_index: int,
         label: str,
         notes: str,
-        unique_start_id: Optional[int] = None,
+        unique_start_id: int | None = None,
     ) -> int:
         """Add a new default (empty) stage to DStability."""
         if unique_start_id is None:
@@ -980,7 +979,7 @@ class ForeignKeys(DGeoFlowBaseModelStructure):
     as (implicit) foreign keys.
     """
 
-    mapping: Dict[str, Tuple[str, ...]] = {
+    mapping: dict[str, tuple[str, ...]] = {
         "PersistableSoil.Id": (
             "PersistableSoilVisualization.SoilId",
             "PersistableSoilLayer.SoilId",
@@ -999,7 +998,7 @@ class ForeignKeys(DGeoFlowBaseModelStructure):
     }
 
     @property
-    def class_fields(self) -> Dict[str, List[str]]:
+    def class_fields(self) -> dict[str, list[str]]:
         """Return a mapping in the form:
         classname: [fields]
         """

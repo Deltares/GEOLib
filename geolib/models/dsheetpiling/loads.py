@@ -1,5 +1,3 @@
-from typing import List
-
 from pydantic import Field, StringConstraints, field_validator
 from typing_extensions import Annotated
 
@@ -159,7 +157,7 @@ class SurchargeLoad(BaseDataClass):
     """
 
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    points: Annotated[List[Point], Field(min_length=1)]
+    points: Annotated[list[Point], Field(min_length=1)]
     verification_load_settings: VerificationLoadSettingsLoads = (
         VerificationLoadSettingsLoads()
     )
