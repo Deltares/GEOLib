@@ -1,5 +1,5 @@
 from random import randint
-from typing import _GenericAlias
+from typing import get_origin
 
 import pytest
 
@@ -8,13 +8,11 @@ from geolib.models.dseries_parser import (
     DSeriesTreeStructure,
     DSeriesTreeStructureCollection,
 )
-from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementStructure
 from geolib.models.dsettlement.internal import (
     Boundaries,
     Boundary,
     Curve,
     Curves,
-    DSeriePoint,
     DSettlementStructure,
     GeometryData,
     Layer,
@@ -59,10 +57,12 @@ def get_structure_content(class_type: type) -> list:
         if field_name == "id":
             continue
         field_value = str(randint(0, 99))
-        if (
-            isinstance(field_type, _GenericAlias)
-            and field_type._name == "List"
-            or issubclass(field_type, list)
+
+        # Extract base type for generic aliases
+        base_type = get_origin(field_type)  # e.g., get list from list[int]
+
+        if base_type is list or (
+            isinstance(field_type, type) and issubclass(field_type, list)
         ):
             field_value = [str(randint(0, 99)), str(randint(0, 99))]
         structure_content.append(field_value)
