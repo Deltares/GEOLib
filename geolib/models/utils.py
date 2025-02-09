@@ -1,22 +1,18 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
-from typing import _GenericAlias
 from typing import get_args as get_args
 from typing import get_type_hints
 
 
 def unpack_if_union(tp):
-    if is_union(tp):
-        return get_args(tp)[0]
-    else:
-        return tp
+    return tp.__args__[0] if is_union(tp) else tp
 
 
 def is_union(tp):
-    return isinstance(tp, _GenericAlias) and tp._name in (None, "Optional")
+    return hasattr(tp, "__args__") and len(tp.__args__) > 1
 
 
 def is_list(tp):
-    return isinstance(tp, _GenericAlias) and tp._name == "List"
+    return tp is list or (hasattr(tp, "__origin__") and tp.__origin__ is list)
 
 
 def get_filtered_type_hints(class_type: type) -> list[tuple[str, type]]:

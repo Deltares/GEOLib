@@ -1,12 +1,11 @@
 import logging
-from typing import _GenericAlias
 from zipfile import ZipFile
 
 from pydantic import DirectoryPath, FilePath
 from zipp import Path
 
 from geolib.models.parsers import BaseParser, BaseParserProvider
-from geolib.models.utils import get_filtered_type_hints
+from geolib.models.utils import get_filtered_type_hints, is_list
 
 from .internal import BaseModelStructure, DGeoFlowStructure
 
@@ -30,9 +29,9 @@ class DGeoFlowParser(BaseParser):
 
         # Find required .json files via type hints
         for field, fieldtype in get_filtered_type_hints(self.structure):
-            # On List types, parse a folder
-            if type(fieldtype) == _GenericAlias:  # quite hacky
-                element_type, *_ = fieldtype.__args__  # use getargs in 3.8
+            # On list types, parse a folder
+            if is_list(fieldtype):
+                element_type = fieldtype.__args__[0]
                 data_structure[field] = self.__parse_folder(element_type, filepath / "")
 
             # Otherwise it is a single .json in the root folder

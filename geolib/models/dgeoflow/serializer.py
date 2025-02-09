@@ -1,13 +1,12 @@
 from abc import ABCMeta, abstractmethod
 from io import BytesIO
-from typing import _GenericAlias
 from zipfile import ZIP_DEFLATED, ZipFile
 
 from pydantic import DirectoryPath, FilePath
 
 from geolib.errors import NotConcreteError
 from geolib.models.serializers import BaseSerializer
-from geolib.models.utils import get_filtered_type_hints
+from geolib.models.utils import get_filtered_type_hints, is_list
 
 from .internal import DGeoFlowStructure
 
@@ -21,9 +20,9 @@ class DGeoFlowBaseSerializer(BaseSerializer, metaclass=ABCMeta):
         serialized_datastructure: dict = {}
 
         for field, fieldtype in get_filtered_type_hints(self.ds):
-            # On List types, write a folder
-            if type(fieldtype) == _GenericAlias:  # quite hacky
-                element_type, *_ = fieldtype.__args__  # use getargs in 3.8
+            # On list types, write a folder
+            if is_list(fieldtype):
+                element_type = fieldtype.__args__[0]
 
                 folder = element_type.structure_group()
                 serialized_datastructure[folder] = {}

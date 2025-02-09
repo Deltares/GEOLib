@@ -7,7 +7,7 @@ import shlex
 from abc import abstractmethod
 from itertools import groupby
 from math import isfinite
-from typing import Iterable, get_type_hints
+from typing import Iterable, get_origin, get_type_hints
 
 from pydantic import FilePath
 
@@ -933,7 +933,11 @@ class DSeriesTreeStructure(DSeriesStructure):
                 tuple[DSeriesStructure, int]: Parsed structure and lines read.
             """
             list_type = get_field_collection_type(cls, struct_idx)
-            if issubclass(list_type, DSeriesTreeStructureCollection):
+
+            # Extract base type (e.g., list from list[int])
+            base_type = get_origin(list_type)
+
+            if base_type is list:  # Ensure we are dealing with a list
                 return list_type.parse_text_lines(text_lines)
             else:
                 return read_property_as_list(field_name, list_type, text_lines)
@@ -953,12 +957,12 @@ class DSeriesTreeStructure(DSeriesStructure):
             iteration_lines = 1
             field = unpack_if_union(field)
             # if the current property is a list, then extract the next line values.
-            if (
-                is_list(field)
-                or issubclass(field, list)
-                or is_structure_collection(field)
-            ):
-                lines_to_parse = cls.get_next_property_text_lines(text_lines[lines_read:])
+            base_type = get_origin(field) or field
+
+            if base_type is list or is_structure_collection(base_type):
+                lines_to_parse = cls.get_next_property_text_lines(
+                    text_lines[lines_read:]
+                )
                 parsed_tuple = get_list_values(struct_idx, field_name, lines_to_parse)
                 (
                     properties[field_name],
