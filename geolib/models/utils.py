@@ -1,18 +1,17 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
-from typing import get_args as get_args
-from typing import get_type_hints
+from typing import get_args, get_origin, get_type_hints
 
 
 def unpack_if_union(tp):
-    return tp.__args__[0] if is_union(tp) else tp
+    return get_args(tp)[0] if is_union(tp) else tp
 
 
 def is_union(tp):
-    return hasattr(tp, "__args__") and len(tp.__args__) > 1
+    return len(get_args(tp)) > 1
 
 
 def is_list(tp):
-    return tp is list or (hasattr(tp, "__origin__") and tp.__origin__ is list)
+    return tp is list or get_origin(tp) is list
 
 
 def get_filtered_type_hints(class_type: type) -> list[tuple[str, type]]:
