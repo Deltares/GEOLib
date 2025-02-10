@@ -435,7 +435,7 @@ class TestDSeriesTreeStructureCollection:
             struct_name: str
             val_1: float
             val_2: float
-            extra_struct: tp_test_collection
+            extra_struct: list[tp_test_collection]
 
         class tp_test_treecollection(DSeriesTreeStructureCollection):
             tree_collection: list[tp_test_compositestruct]
@@ -462,8 +462,11 @@ class TestDSeriesTreeStructureCollection:
         assert isinstance(read_element, tp_test_compositestruct)
         assert read_element.val_1 == 4.2
         assert read_element.val_2 == 2.4
-        assert len(read_element.extra_struct.tp_collection) == 1
-        substruct = read_element.extra_struct.tp_collection[0]
+        assert len(read_element.extra_struct) == 1
+        extra_struct = read_element.extra_struct[0]
+        assert isinstance(extra_struct, tp_test_collection)
+        assert len(extra_struct.tp_collection) == 1
+        substruct = extra_struct.tp_collection[0]
         assert isinstance(substruct, tp_test_simplestruct)
         assert substruct.prop_1 == 24
         assert substruct.prop_2 == 42
