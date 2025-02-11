@@ -934,10 +934,7 @@ class DSeriesTreeStructure(DSeriesStructure):
             """
             list_type = get_field_collection_type(cls, struct_idx)
 
-            # Extract base type (e.g., list from list[int])
-            base_type = get_origin(list_type)
-
-            if base_type is list:  # Ensure we are dealing with a list
+            if issubclass(list_type, DSeriesTreeStructureCollection):
                 return list_type.parse_text_lines(text_lines)
             else:
                 return read_property_as_list(field_name, list_type, text_lines)
