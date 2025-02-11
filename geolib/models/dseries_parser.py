@@ -1503,7 +1503,7 @@ def read_property_as_list(
 
     Args:
         field_name (str): Name of the field to parse.
-        field (type): type to parse the values to.
+        field (type): Type to parse the values to.
         text_lines (list): List of list of strings containing values.
 
     Raises:
