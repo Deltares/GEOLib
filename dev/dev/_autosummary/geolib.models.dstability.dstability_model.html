@@ -116,7 +116,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The scenario index to add the calculation to, defaults to the current scenario.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – The scenario index to add the calculation to, defaults to the current scenario.</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – Label for the calculation.</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – Notes for the calculation.</p></li>
 <li><p><strong>set_current</strong> (<em>bool</em>) – Whether to make the new calculation the current calculation.</p></li>
@@ -137,7 +137,7 @@
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]</span>)</p></li>
+<li><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]</span>)</p></li>
 <li><p><strong>label</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>)</p></li>
 <li><p><strong>notes</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>)</p></li>
 <li><p><strong>scenario_index</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</span>)</p></li>
@@ -154,12 +154,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes</p></li>
+<li><p><strong>points</strong> (<em>list</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
 <li><p><strong>is_phreatic_line</strong> (<em>bool</em>) – set as phreatic line, defaults to False</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -178,12 +178,12 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes, in clockwise order (non closed simple polygon)</p></li>
+<li><p><strong>points</strong> (<em>list</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes, in clockwise order (non closed simple polygon)</p></li>
 <li><p><strong>soil_code</strong> (<em>str</em>) – code of the soil for this layer</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -202,7 +202,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>current_layers</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a>]</span>)</p></li>
+<li><p><strong>current_layers</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a>]</span>)</p></li>
 <li><p><strong>new_layer</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistableLayer" title="geolib.models.dstability.internal.PersistableLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistableLayer</span></code></a></span>)</p></li>
 </ul>
 </dd>
@@ -220,9 +220,9 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>load</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.DStabilityLoad" title="geolib.models.dstability.loads.DStabilityLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityLoad</span></code></a></span>) – A subclass of DStabilityLoad.</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
-<li><p><strong>consolidations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]</span>)</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage.</p></li>
+<li><p><strong>consolidations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]</span>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -241,13 +241,13 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes</p></li>
+<li><p><strong>points</strong> (<em>list</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – list of Point classes</p></li>
 <li><p><strong>bottom_headline_id</strong> (<em>int</em>) – id of the headline to use as the bottom headline</p></li>
 <li><p><strong>top_head_line_id</strong> (<em>int</em>) – id of the headline to use as the top headline</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – label defaults to empty string</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – notes defaults to empty string</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -267,8 +267,8 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>reinforcement</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="geolib.models.dstability.reinforcements.html#geolib.models.dstability.reinforcements.DStabilityReinforcement" title="geolib.models.dstability.reinforcements.DStabilityReinforcement"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityReinforcement</span></code></a></span>) – A subclass of DStabilityReinforcement.</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -327,7 +327,7 @@ It is not possible to set consolidation degrees of loads afterwards since they d
 <dd><p>Add a soil correlation to the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>list_correlated_soil_ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>) – A list of soil ids that are correlated.</p>
+<dd class="field-odd"><p><strong>list_correlated_soil_ids</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>) – A list of soil ids that are correlated.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -343,9 +343,9 @@ the number of consolidations given should equal the amount of layers.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>soil_layer_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Consolidation is set for this soil layer id.</p></li>
-<li><p><strong>consolidations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]</span>) – List of Consolidation. Must contain a Consolidation for every other layer.</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
+<li><p><strong>consolidations</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.loads.html#geolib.models.dstability.loads.Consolidation" title="geolib.models.dstability.loads.Consolidation"><code class="xref py py-class docutils literal notranslate"><span class="pre">Consolidation</span></code></a>]]</span>) – List of Consolidation. Must contain a Consolidation for every other layer.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -364,7 +364,7 @@ the number of consolidations given should equal the amount of layers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The scenario index to add the stage to, defaults to the current scenario.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – The scenario index to add the stage to, defaults to the current scenario.</p></li>
 <li><p><strong>label</strong> (<em>str</em>) – Label for the stage.</p></li>
 <li><p><strong>notes</strong> (<em>str</em>) – Notes for the stage.</p></li>
 <li><p><strong>set_current</strong> (<em>bool</em>) – Whether to make the new stage the current stage.</p></li>
@@ -386,9 +386,9 @@ the number of consolidations given should equal the amount of layers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>correlated_state_ids</strong> (<em>List</em><em>[</em><em>int</em><em>]</em>) – The state point ids to correlate.</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
+<li><p><strong>correlated_state_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The state point ids to correlate.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -406,11 +406,11 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<em>List</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – The geometry points of the state line.</p></li>
-<li><p><strong>state_point</strong> (<em>List</em><em>[</em><a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStatePoint" title="geolib.models.dstability.states.DStabilityStatePoint"><em>DStabilityStatePoint</em></a><em>]</em>) – The list of state point values.</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario.</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage.</p></li>
-<li><p><strong>state_points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStateLinePoint" title="geolib.models.dstability.states.DStabilityStateLinePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityStateLinePoint</span></code></a>]</span>)</p></li>
+<li><p><strong>points</strong> (<em>list</em><em>[</em><a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><em>Point</em></a><em>]</em>) – The geometry points of the state line.</p></li>
+<li><p><strong>state_point</strong> (<em>list</em><em>[</em><a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStatePoint" title="geolib.models.dstability.states.DStabilityStatePoint"><em>DStabilityStatePoint</em></a><em>]</em>) – The list of state point values.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario.</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage.</p></li>
+<li><p><strong>state_points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStateLinePoint" title="geolib.models.dstability.states.DStabilityStateLinePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">DStabilityStateLinePoint</span></code></a>]</span>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -430,8 +430,8 @@ state_point are a list of DStabilityStateLinePoint where ONLY the x is used, the
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>state_point</strong> (<a class="reference internal" href="geolib.models.dstability.states.html#geolib.models.dstability.states.DStabilityStatePoint" title="geolib.models.dstability.states.DStabilityStatePoint"><em>DStabilityStatePoint</em></a>) – DStabilityStatePoint class</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
-<li><p><strong>stage_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – stage to add to, defaults to the current stage</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>stage_index</strong> (<em>int</em><em> | </em><em>None</em>) – stage to add to, defaults to the current stage</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -502,7 +502,7 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <span class="sig-name descname"><span class="pre">dstability_points_to_shapely_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.dstability_points_to_shapely_polygon" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span>)</p>
+<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code></span></p>
@@ -515,7 +515,7 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <span class="sig-name descname"><span class="pre">geolib_points_to_shapely_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.geolib_points_to_shapely_polygon" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]</span>)</p>
+<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]</span>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code></span></p>
@@ -556,8 +556,8 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a scenario, if None is supplied the result of the current scenario is returned.</p></li>
-<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a calculation, if None is supplied the result of the current calculation is returned.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – Index of a scenario, if None is supplied the result of the current scenario is returned.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em><em> | </em><em>None</em>) – Index of a calculation, if None is supplied the result of the current calculation is returned.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -589,15 +589,15 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario for which to get the available results</p></li>
-<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – calculation for which to get the available results</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario for which to get the available results</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em><em> | </em><em>None</em>) – calculation for which to get the available results</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>the slipcircle for the given calculation</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Union[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopSlipCircleResult" title="geolib.models.dstability.internal.BishopSlipCircleResult">BishopSlipCircleResult</a>, <a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanSlipCircleResult" title="geolib.models.dstability.internal.UpliftVanSlipCircleResult">UpliftVanSlipCircleResult</a>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopSlipCircleResult" title="geolib.models.dstability.internal.BishopSlipCircleResult">BishopSlipCircleResult</a> | <a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanSlipCircleResult" title="geolib.models.dstability.internal.UpliftVanSlipCircleResult">UpliftVanSlipCircleResult</a></p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
@@ -615,8 +615,8 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario for which to get the available results</p></li>
-<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – calculation for which to get the available results</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario for which to get the available results</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em><em> | </em><em>None</em>) – calculation for which to get the available results</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -701,8 +701,8 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a scenario, if None the current scenario is used.</p></li>
-<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – Index of a calculation, if None the current calculation is used.</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – Index of a scenario, if None the current scenario is used.</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em><em> | </em><em>None</em>) – Index of a calculation, if None the current calculation is used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -719,10 +719,10 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <span class="sig-name descname"><span class="pre">make_points_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.make_points_valid" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]</span>)</p>
+<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="../geometry.html#geolib.geometry.one.Point" title="geolib.geometry.one.Point"><code class="xref py py-class docutils literal notranslate"><span class="pre">Point</span></code></a>]</span>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -735,7 +735,7 @@ This is needed since Pydantic v2 as the default behavior has changed:
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.output">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanResult" title="geolib.models.dstability.internal.UpliftVanResult"><span class="pre">UpliftVanResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmResult"><span class="pre">UpliftVanParticleSwarmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanReliabilityResult" title="geolib.models.dstability.internal.UpliftVanReliabilityResult"><span class="pre">UpliftVanReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult"><span class="pre">UpliftVanParticleSwarmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmResult"><span class="pre">SpencerGeneticAlgorithmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerReliabilityResult" title="geolib.models.dstability.internal.SpencerReliabilityResult"><span class="pre">SpencerReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult"><span class="pre">SpencerGeneticAlgorithmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerResult" title="geolib.models.dstability.internal.SpencerResult"><span class="pre">SpencerResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceResult" title="geolib.models.dstability.internal.BishopBruteForceResult"><span class="pre">BishopBruteForceResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopReliabilityResult" title="geolib.models.dstability.internal.BishopReliabilityResult"><span class="pre">BishopReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceReliabilityResult" title="geolib.models.dstability.internal.BishopBruteForceReliabilityResult"><span class="pre">BishopBruteForceReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopResult" title="geolib.models.dstability.internal.BishopResult"><span class="pre">BishopResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanResult" title="geolib.models.dstability.internal.UpliftVanResult"><span class="pre">UpliftVanResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmResult"><span class="pre">UpliftVanParticleSwarmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanReliabilityResult" title="geolib.models.dstability.internal.UpliftVanReliabilityResult"><span class="pre">UpliftVanReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult" title="geolib.models.dstability.internal.UpliftVanParticleSwarmReliabilityResult"><span class="pre">UpliftVanParticleSwarmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmResult"><span class="pre">SpencerGeneticAlgorithmResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerReliabilityResult" title="geolib.models.dstability.internal.SpencerReliabilityResult"><span class="pre">SpencerReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult" title="geolib.models.dstability.internal.SpencerGeneticAlgorithmReliabilityResult"><span class="pre">SpencerGeneticAlgorithmReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.SpencerResult" title="geolib.models.dstability.internal.SpencerResult"><span class="pre">SpencerResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceResult" title="geolib.models.dstability.internal.BishopBruteForceResult"><span class="pre">BishopBruteForceResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopReliabilityResult" title="geolib.models.dstability.internal.BishopReliabilityResult"><span class="pre">BishopReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopBruteForceReliabilityResult" title="geolib.models.dstability.internal.BishopBruteForceReliabilityResult"><span class="pre">BishopBruteForceReliabilityResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.BishopResult" title="geolib.models.dstability.internal.BishopResult"><span class="pre">BishopResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.output" title="Link to this definition">¶</a></dt>
 <dd><p>Access internal dict-like datastructure of the output.</p>
 <p>Requires a successful execute.</p>
 </dd></dl>
@@ -748,14 +748,14 @@ This is needed since Pydantic v2 as the default behavior has changed:
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.dstability_parserprovider.html#geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider" title="geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider"><span class="pre">DStabilityParserProvider</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parser_provider_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.dstability_parserprovider.html#geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider" title="geolib.models.dstability.dstability_parserprovider.DStabilityParserProvider"><span class="pre">DStabilityParserProvider</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.parser_provider_type" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the parser provider type of the current concrete class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>NotImplementedError</strong> – If not implemented in the concrete class.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Type[BaseParserProvider] – Concrete parser provider.</p>
+<dd class="field-even"><p>type[BaseParserProvider] – Concrete parser provider.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -781,7 +781,7 @@ This is needed since Pydantic v2 as the default behavior has changed:
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.scenarios">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scenarios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.Scenario" title="geolib.models.dstability.internal.Scenario"><span class="pre">Scenario</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.scenarios" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scenarios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.Scenario" title="geolib.models.dstability.internal.Scenario"><span class="pre">Scenario</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.scenarios" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -803,8 +803,8 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>analysis_method</strong> (<a class="reference internal" href="geolib.models.dstability.analysis.html#geolib.models.dstability.analysis.DStabilityAnalysisMethod" title="geolib.models.dstability.analysis.DStabilityAnalysisMethod"><em>DStabilityAnalysisMethod</em></a>) – A subclass of DStabilityAnalysisMethod.</p></li>
-<li><p><strong>scenario_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – scenario to add to, defaults to the current scenario</p></li>
-<li><p><strong>calculation_index</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – calculation to add to, defaults to the current calculation</p></li>
+<li><p><strong>scenario_index</strong> (<em>int</em><em> | </em><em>None</em>) – scenario to add to, defaults to the current scenario</p></li>
+<li><p><strong>calculation_index</strong> (<em>int</em><em> | </em><em>None</em>) – calculation to add to, defaults to the current calculation</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -835,10 +835,10 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <span class="sig-name descname"><span class="pre">to_dstability_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shapely_object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.to_dstability_points" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>shapely_object</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">LineString</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code>]</span>)</p>
+<dd class="field-odd"><p><strong>shapely_object</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineString</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">Polygon</span></code></span>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -848,7 +848,7 @@ This is needed since Pydantic v2 as the default behavior has changed:
 <span class="sig-name descname"><span class="pre">to_shapely_linestring</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.to_shapely_linestring" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span>)</p>
+<dd class="field-odd"><p><strong>points</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code>[<a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.PersistablePoint" title="geolib.models.dstability.internal.PersistablePoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PersistablePoint</span></code></a>]</span>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineString</span></code></span></p>
@@ -858,7 +858,7 @@ This is needed since Pydantic v2 as the default behavior has changed:
 
 <dl class="py property">
 <dt class="sig sig-object py" id="geolib.models.dstability.dstability_model.DStabilityModel.waternets">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waternets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.Waternet" title="geolib.models.dstability.internal.Waternet"><span class="pre">Waternet</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.waternets" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">waternets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="geolib.models.dstability.internal.html#geolib.models.dstability.internal.Waternet" title="geolib.models.dstability.internal.Waternet"><span class="pre">Waternet</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#geolib.models.dstability.dstability_model.DStabilityModel.waternets" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
