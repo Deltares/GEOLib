@@ -1,11 +1,16 @@
 from abc import ABCMeta, abstractmethod
 from pathlib import Path
-from typing import BinaryIO, List, Optional, Type, Union
+from typing import BinaryIO
 
 from pydantic import FilePath, PositiveFloat
 
 from geolib.models import BaseDataClass, BaseModel
-from geolib.models.dsheetpiling.constructions import DiaphragmWall, Pile, Sheet, VerticalBalance
+from geolib.models.dsheetpiling.constructions import (
+    DiaphragmWall,
+    Pile,
+    Sheet,
+    VerticalBalance,
+)
 from geolib.models.meta import CONSOLE_RUN_BATCH_FLAG
 from geolib.soils import Soil
 
@@ -57,12 +62,12 @@ class BaseModelType(BaseDataClass, metaclass=ABCMeta):
 
 
 class SheetModelType(BaseModelType):
-    method: Optional[LateralEarthPressureMethod] = None
-    check_vertical_balance: Optional[bool] = None
-    verification: Optional[bool] = None
-    trildens_calculation: Optional[bool] = None
-    reliability_analysis: Optional[bool] = None
-    elastic_calculation: Optional[bool] = None
+    method: LateralEarthPressureMethod | None = None
+    check_vertical_balance: bool | None = None
+    verification: bool | None = None
+    trildens_calculation: bool | None = None
+    reliability_analysis: bool | None = None
+    elastic_calculation: bool | None = None
 
     @property
     def model(self) -> ModelType:
@@ -70,9 +75,9 @@ class SheetModelType(BaseModelType):
 
 
 class WoodenSheetPileModelType(BaseModelType):
-    method: Optional[LateralEarthPressureMethod] = None
-    check_vertical_balance: Optional[bool] = None
-    verification: Optional[bool] = None
+    method: LateralEarthPressureMethod | None = None
+    check_vertical_balance: bool | None = None
+    verification: bool | None = None
     elastic_calculation: bool = True
     wooden_sheetpiling: bool = True
 
@@ -82,8 +87,8 @@ class WoodenSheetPileModelType(BaseModelType):
 
 
 class SinglePileModelType(BaseModelType):
-    pile_load_option: Optional[SinglePileLoadOptions] = None
-    elastic_calculation: Optional[bool] = None
+    pile_load_option: SinglePileLoadOptions | None = None
+    elastic_calculation: bool | None = None
 
     @property
     def model(self) -> ModelType:
@@ -102,9 +107,9 @@ class SinglePileModelType(BaseModelType):
 
 
 class DiaphragmModelType(BaseModelType):
-    method: Optional[LateralEarthPressureMethod] = None
-    check_vertical_balance: Optional[bool] = None
-    verification: Optional[bool] = None
+    method: LateralEarthPressureMethod | None = None
+    check_vertical_balance: bool | None = None
+    verification: bool | None = None
     elastic_calculation: bool = False
     diepwand_calculation: bool = True
 
@@ -120,13 +125,13 @@ class DSheetPilingModel(BaseModel):
     This model can read, modify and create \*.shi files, read \*.shd and \*.err files.
     """
 
-    current_stage: Optional[int] = None  # Forces user to always set a stage.
-    datastructure: Union[
-        DSheetPilingStructure, DSheetPilingDumpStructure
-    ] = DSheetPilingStructure()
+    current_stage: int | None = None  # Forces user to always set a stage.
+    datastructure: DSheetPilingStructure | DSheetPilingDumpStructure = (
+        DSheetPilingStructure()
+    )
 
     @property
-    def parser_provider_type(self) -> Type[DSheetPilingParserProvider]:
+    def parser_provider_type(self) -> type[DSheetPilingParserProvider]:
         return DSheetPilingParserProvider
 
     @property
@@ -138,7 +143,7 @@ class DSheetPilingModel(BaseModel):
         return self.get_meta_property("dsheetpiling_console_path")
 
     @property
-    def console_flags(self) -> List[str]:
+    def console_flags(self) -> list[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
     @property
@@ -146,10 +151,10 @@ class DSheetPilingModel(BaseModel):
         return self.datastructure.dumpfile.output_data
 
     @property
-    def model_type(self) -> Union[str, ModelType]:
+    def model_type(self) -> str | ModelType:
         return self.datastructure.input_data.model.model
 
-    def serialize(self, filename: Union[FilePath, BinaryIO]):
+    def serialize(self, filename: FilePath | BinaryIO):
         ds = self.datastructure.input_data.model_dump()
         ds.update(
             {
@@ -251,7 +256,7 @@ class DSheetPilingModel(BaseModel):
                 f"calculation_options_per_stage is not required for stage {stage_id}."
             )
 
-    def _get_default_stage_none_provided(self, stage_id: Optional[int]) -> int:
+    def _get_default_stage_none_provided(self, stage_id: int | None) -> int:
         stage_id = stage_id if stage_id is not None else self.current_stage
         if stage_id is None:
             raise ValueError("No stages available yet: add a stage first.")
@@ -376,7 +381,7 @@ class DSheetPilingModel(BaseModel):
         )
 
     def set_construction(
-        self, top_level: float, elements: List[Union[Sheet, DiaphragmWall, Pile]]
+        self, top_level: float, elements: list[Sheet | DiaphragmWall | Pile]
     ) -> None:
         """Sets construction for the DSheetPilingModel.
 
@@ -405,13 +410,7 @@ class DSheetPilingModel(BaseModel):
 
     def add_load(
         self,
-        load: Union[
-            Moment,
-            HorizontalLineLoad,
-            NormalForce,
-            SoilDisplacement,
-            UniformLoad,
-        ],
+        load: Moment | HorizontalLineLoad | NormalForce | SoilDisplacement | UniformLoad,
         stage_id: int,
     ):
         """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad
@@ -447,7 +446,7 @@ class DSheetPilingModel(BaseModel):
 
     def add_anchor_or_strut(
         self,
-        support: Union[Anchor, Strut],
+        support: Anchor | Strut,
         stage_id: int,
         pre_stress: PositiveFloat = 0,
     ) -> None:
@@ -483,7 +482,7 @@ class DSheetPilingModel(BaseModel):
 
     def add_support(
         self,
-        support: Union[SpringSupport, RigidSupport],
+        support: SpringSupport | RigidSupport,
         stage_id: int,
     ) -> None:
         """Add spring or rigid support to a stage.

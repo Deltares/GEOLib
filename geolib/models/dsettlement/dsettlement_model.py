@@ -1,7 +1,7 @@
 import logging
 from datetime import timedelta
 from pathlib import Path
-from typing import Annotated, BinaryIO, List, Optional, Type, Union
+from typing import Annotated, BinaryIO
 
 from pydantic import FilePath, StringConstraints
 
@@ -58,12 +58,12 @@ class DSettlementModel(BaseModel):
     \*.sli files, read \*.sld and \*.err files.
     """
 
-    datastructure: Union[
-        DSettlementStructure, DSettlementOutputStructure
-    ] = DSettlementStructure()
+    datastructure: DSettlementStructure | DSettlementOutputStructure = (
+        DSettlementStructure()
+    )
 
     @property
-    def parser_provider_type(self) -> Type[DSettlementParserProvider]:
+    def parser_provider_type(self) -> type[DSettlementParserProvider]:
         return DSettlementParserProvider
 
     @property
@@ -75,10 +75,10 @@ class DSettlementModel(BaseModel):
         return self.get_meta_property("dsettlement_console_path")
 
     @property
-    def console_flags(self) -> List[str]:
+    def console_flags(self) -> list[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
-    def serialize(self, filename: Union[FilePath, BinaryIO]):
+    def serialize(self, filename: FilePath | BinaryIO):
         """
         Serialize and pre-process
         Args:
@@ -302,7 +302,7 @@ class DSettlementModel(BaseModel):
     # To create multiple layers
     def add_boundary(
         self,
-        points: List[Point],
+        points: list[Point],
         use_probabilistic_defaults=True,
         stdv=0,
         distribution_boundaries=DistributionType.Undefined,
@@ -337,7 +337,7 @@ class DSettlementModel(BaseModel):
     def headlines(self):
         return self.datastructure.input_data.geometry_data.piezo_lines
 
-    def add_head_line(self, points: List[Point], is_phreatic=False) -> int:
+    def add_head_line(self, points: list[Point], is_phreatic=False) -> int:
         """Add head line to model."""
         # New points have to be created, whether points at the same location exist or not
         # This means that new points from geometry will re-use head line points,
@@ -405,9 +405,9 @@ class DSettlementModel(BaseModel):
         name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
         time: timedelta,
         point: Point,
-        other_load: Union[
-            TrapeziformLoad, RectangularLoad, CircularLoad, TankLoad, UniformLoad
-        ],
+        other_load: (
+            TrapeziformLoad | RectangularLoad | CircularLoad | TankLoad | UniformLoad
+        ),
     ) -> None:
         internal_other_load = other_load._to_internal(time, point)
         if isinstance(self.other_loads, str):
@@ -423,11 +423,11 @@ class DSettlementModel(BaseModel):
     def add_non_uniform_load(
         self,
         name: Annotated[str, StringConstraints(min_length=1, max_length=25)],
-        points: List[Point],
+        points: list[Point],
         time_start: timedelta,
         gamma_dry: float,
         gamma_wet: float,
-        time_end: Optional[timedelta] = None,
+        time_end: timedelta | None = None,
     ):
         """Create non uniform load.
 
@@ -470,7 +470,7 @@ class DSettlementModel(BaseModel):
             name, time.days, phreatic_line_id, headlines
         )
 
-    def set_calculation_times(self, time_steps: List[timedelta]):
+    def set_calculation_times(self, time_steps: list[timedelta]):
         """(Re)set calculation time(s).
 
         Sets a list of calculation times, sorted from low to high with a minimum of 0.
@@ -487,7 +487,7 @@ class DSettlementModel(BaseModel):
         )
         self.datastructure.input_data.residual_times = residual_times
 
-    def set_verticals(self, locations: List[Point]) -> None:
+    def set_verticals(self, locations: list[Point]) -> None:
         """
         Set calculation verticals in geometry.
         X and Y coordinates should be defined for each vertical.

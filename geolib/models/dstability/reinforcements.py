@@ -3,7 +3,6 @@ This module handles the three types of reinforcements in DStability.
 """
 
 import abc
-from typing import List, Optional, Tuple
 
 from pydantic import Field
 from typing_extensions import Annotated
@@ -24,7 +23,7 @@ from .internal import (
 class DStabilityReinforcement(BaseDataClass, metaclass=abc.ABCMeta):
     """Base Class for Reinforcements."""
 
-    label: Optional[str] = None
+    label: str | None = None
 
     @abc.abstractmethod
     def _to_internal_datastructure(self):
@@ -51,8 +50,8 @@ class Nail(DStabilityReinforcement):
     use_shear_stress: bool = (
         False  # TODO set on wether or not shearstresses are provided?
     )
-    lateral_stresses: List[Tuple[float, float]] = []
-    shear_stresses: List[Tuple[float, float]] = []
+    lateral_stresses: list[tuple[float, float]] = []
+    shear_stresses: list[tuple[float, float]] = []
 
     def _to_internal_datastructure(self) -> PersistableNail:
         model_dump = self.model_dump()

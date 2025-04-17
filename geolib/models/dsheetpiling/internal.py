@@ -1,7 +1,7 @@
 import logging
 import warnings
 from inspect import cleandoc
-from typing import Any, Dict, List, Optional, Set, Union
+from typing import Any
 
 from pydantic import Field, StringConstraints
 from typing_extensions import Annotated
@@ -175,10 +175,10 @@ class Soil(DSeriesUnmappedNameProperties):
 
 
 class SoilCollection(DSeriesStructureCollection):
-    soil: List[Soil] = []
+    soil: list[Soil] = []
 
     @property
-    def soil_names(self) -> Set[str]:
+    def soil_names(self) -> set[str]:
         return {soil.name for soil in self.soil}
 
     def add_soil_if_unique(self, soil) -> None:
@@ -213,22 +213,22 @@ class SoilLayer(DSeriesNoParseSubStructure):
 
 class SoilProfile(DSeriesNoParseSubStructure):
     name: Annotated[str, StringConstraints(min_length=1, max_length=25)]
-    layers: List[SoilLayer]
+    layers: list[SoilLayer]
     coordinate: Point
 
 
 class SoilProfiles(DSeriesNoParseSubStructure):
-    soil_profiles: List[SoilProfile] = []
+    soil_profiles: list[SoilProfile] = []
     curve_number: Annotated[int, Field(ge=1, le=4)] = 3
     use_unloading_reloading_curve: bool = False
     modulus_reaction_type: int = ModulusReactionType.SECANT.value
 
     @property
-    def soil_profile_names(self) -> Set[str]:
+    def soil_profile_names(self) -> set[str]:
         return {soil_profile.name for soil_profile in self.soil_profiles}
 
     @property
-    def referenced_soil_names(self) -> Set[str]:
+    def referenced_soil_names(self) -> set[str]:
         return {layer.soil for profile in self.soil_profiles for layer in profile.layers}
 
 
@@ -318,9 +318,9 @@ class CalculationOptions(DSeriesStructure):
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
-    name: Annotated[
-        str, StringConstraints(min_length=1, max_length=50)
-    ] = _DEFAULT_SHEET_PILING_ELEMENT_NAME
+    name: Annotated[str, StringConstraints(min_length=1, max_length=50)] = (
+        _DEFAULT_SHEET_PILING_ELEMENT_NAME
+    )
     sheetpilingelementmaterialtype: SheetPilingElementMaterialType = (
         SheetPilingElementMaterialType.Steel
     )
@@ -357,9 +357,9 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     diaphragmwallposmomelastoplastic: Annotated[float, Field(ge=0, le=100000)] = 0
     diaphragmwallnegeielastoplastic2: Annotated[float, Field(ge=0, le=100000)] = 0
     diaphragmwallnegmomelastoplastic: Annotated[float, Field(ge=0, le=100000)] = 0
-    woodensheetpilingelemente: Annotated[
-        float, Field(ge=0.001, le=1000000000000)
-    ] = 100000
+    woodensheetpilingelemente: Annotated[float, Field(ge=0.001, le=1000000000000)] = (
+        100000
+    )
     woodensheetpilingelementcharacflexuralstrength: Annotated[
         float, Field(ge=0, le=100000)
     ] = 0
@@ -431,7 +431,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
 
 
 class SheetPiling(DSeriesStructureCollection):
-    sheetpiling: Annotated[List[SheetPileElement], Field(min_length=1)] = [
+    sheetpiling: Annotated[list[SheetPileElement], Field(min_length=1)] = [
         SheetPileElement()
     ]
     leveltopsheetpiling: Annotated[float, Field(ge=-10000, le=10000)] = 0.0
@@ -439,29 +439,29 @@ class SheetPiling(DSeriesStructureCollection):
 
 
 class VerticalBalance(DSeriesInlineMappedProperties):
-    sheetpilingqcrep: Optional[Annotated[float, Field(ge=0)]] = 0.001
-    sheetpilingxi: Optional[Annotated[float, Field(ge=0.1)]] = 1.39
+    sheetpilingqcrep: Annotated[float, Field(ge=0)] = 0.001
+    sheetpilingxi: Annotated[float, Field(ge=0.1)] = 1.39
 
 
 class Anchor(DSheetpilingTableEntry):
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float = 0
     e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
-    cross_section: Optional[Annotated[float, Field(gt=0)]] = 1e-3
-    wall_height_kranz: Optional[Annotated[float, Field(ge=0)]] = 0.00
-    length: Optional[Annotated[float, Field(gt=0)]] = 1
-    angle: Optional[float] = 0.00
-    yield_force: Optional[Annotated[float, Field(ge=0)]] = 0.00
+    cross_section: Annotated[float, Field(gt=0)] = 1e-3
+    wall_height_kranz: Annotated[float, Field(ge=0)] = 0.00
+    length: Annotated[float, Field(gt=0)] = 1
+    angle: float | None = 0.00
+    yield_force: Annotated[float, Field(ge=0)] = 0.00
     side: Side = Side.RIGHT
 
 
 class Anchors(DSheetpilingUnwrappedTable):
     """Container for Anchor."""
 
-    anchors: List[Anchor] = []
+    anchors: list[Anchor] = []
 
     @property
-    def anchor_names(self) -> Set[str]:
+    def anchor_names(self) -> set[str]:
         return {anchor.name for anchor in self.anchors}
 
 
@@ -477,20 +477,20 @@ class Strut(DSheetpilingTableEntry):
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     level: float = 0
     e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
-    cross_section: Optional[Annotated[float, Field(gt=0)]] = 1e-4
-    length: Optional[Annotated[float, Field(gt=0)]] = 1
-    angle: Optional[float] = 0.00
-    buckling_force: Optional[Annotated[float, Field(ge=0)]] = 0.00
+    cross_section: Annotated[float, Field(gt=0)] = 1e-4
+    length: Annotated[float, Field(gt=0)] = 1
+    angle: float | None = 0.00
+    buckling_force: Annotated[float, Field(ge=0)] = 0.00
     side: Side = Side.RIGHT
 
 
 class Struts(DSheetpilingUnwrappedTable):
     """Container for Strut."""
 
-    struts: List[Strut] = []
+    struts: list[Strut] = []
 
     @property
-    def strut_names(self) -> Set[str]:
+    def strut_names(self) -> set[str]:
         return {strut.name for strut in self.struts}
 
 
@@ -508,25 +508,25 @@ class ConstructionStage(DSeriesUnmappedNameProperties):
     water_level_right: str = _DEFAULT_WATER_LEVEL_NAME
     surface_left: str = _DEFAULT_SURFACE_NAME
     surface_right: str = _DEFAULT_SURFACE_NAME
-    soil_profile_left: Optional[str] = _DEFAULT_SOIL_PROFILE_NAME
-    soil_profile_right: Optional[str] = _DEFAULT_SOIL_PROFILE_NAME
-    anchors: List[AnchorOrStrutPresstressReference] = []
-    struts: List[AnchorOrStrutPresstressReference] = []
-    spring_supports: List[str] = []
-    rigid_supports: List[str] = []
-    uniform_loads: List[str] = []
-    surcharge_loads_left: List[str] = []
-    surcharge_loads_right: List[str] = []
-    horizontal_line_loads: List[str] = []
-    moment_loads: List[str] = []
-    normal_forces: List[str] = []
+    soil_profile_left: str | None = _DEFAULT_SOIL_PROFILE_NAME
+    soil_profile_right: str | None = _DEFAULT_SOIL_PROFILE_NAME
+    anchors: list[AnchorOrStrutPresstressReference] = []
+    struts: list[AnchorOrStrutPresstressReference] = []
+    spring_supports: list[str] = []
+    rigid_supports: list[str] = []
+    uniform_loads: list[str] = []
+    surcharge_loads_left: list[str] = []
+    surcharge_loads_right: list[str] = []
+    horizontal_line_loads: list[str] = []
+    moment_loads: list[str] = []
+    normal_forces: list[str] = []
 
 
 class ConstructionStages(DSeriesStructureCollection):
-    stages: List[ConstructionStage] = []
+    stages: list[ConstructionStage] = []
 
     @property
-    def stage_names(self) -> Set[str]:
+    def stage_names(self) -> set[str]:
         return {stage.name for stage in self.stages}
 
 
@@ -538,10 +538,10 @@ class WaterLevel(DSeriesNoParseSubStructure):
 
 
 class WaterLevels(DSeriesNoParseSubStructure):
-    levels: List[WaterLevel] = []
+    levels: list[WaterLevel] = []
 
     @property
-    def water_level_names(self) -> Set[str]:
+    def water_level_names(self) -> set[str]:
         return {water_level.name for water_level in self.levels}
 
 
@@ -561,7 +561,7 @@ class StageOptions(DSeriesInlineMappedProperties):
 class CalculationOptionsPerStage(DSeriesStructureCollection):
     """Representation of [CALCULATION OPTIONS PER STAGE] block."""
 
-    stageoptions: List[StageOptions] = []
+    stageoptions: list[StageOptions] = []
 
 
 class UniformLoad(DSeriesUnmappedNameProperties):
@@ -579,10 +579,10 @@ class UniformLoad(DSeriesUnmappedNameProperties):
 
 
 class UniformLoads(DSeriesStructureCollection):
-    loads: List[UniformLoad] = []
+    loads: list[UniformLoad] = []
 
     @property
-    def load_names(self) -> Set[str]:
+    def load_names(self) -> set[str]:
         return {load.name for load in self.loads}
 
 
@@ -593,7 +593,7 @@ class SurchargePoint(DSeriesInlineMappedProperties):
 
 class SurchargeLoad(DSheetpilingSurchargeLoad):
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    points: List[SurchargePoint] = []
+    points: list[SurchargePoint] = []
     surchargeloadpermanent: LoadTypePermanentVariable = (
         LoadTypePermanentVariable.PERMANENT
     )
@@ -605,26 +605,26 @@ class SurchargeLoad(DSheetpilingSurchargeLoad):
 
 
 class SurchargeLoads(DSeriesStructureCollection):
-    loads: List[SurchargeLoad] = []
+    loads: list[SurchargeLoad] = []
 
     @property
-    def load_names(self) -> Set[str]:
+    def load_names(self) -> set[str]:
         return {load.name for load in self.loads}
 
 
 class Surface(DSeriesNoParseSubStructure):  # TODO determine structure
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    points: Annotated[List[Point], Field(min_length=1)]
-    points: Annotated[List[dict], Field(min_length=1)]
+    points: Annotated[list[Point], Field(min_length=1)]
+    points: Annotated[list[dict], Field(min_length=1)]
     distribution_type: DistributionType = DistributionType.NONE
     std: Annotated[float, Field(ge=0.0)] = 0.0
 
 
 class Surfaces(DSeriesNoParseSubStructure):  # TODO GroupList should be suitable?
-    surfaces: List[Surface] = []
+    surfaces: list[Surface] = []
 
     @property
-    def surface_names(self) -> Set[str]:
+    def surface_names(self) -> set[str]:
         return {surface.name for surface in self.surfaces}
 
 
@@ -639,7 +639,7 @@ class HorizontalLineLoad(DSeriesNoParseSubStructure):
 
 
 class HorizontalLineLoads(DSeriesNoParseSubStructure):
-    loads: List[HorizontalLineLoad] = []
+    loads: list[HorizontalLineLoad] = []
 
 
 class Moment(DSeriesNoParseSubStructure):
@@ -653,7 +653,7 @@ class Moment(DSeriesNoParseSubStructure):
 
 
 class Moments(DSeriesNoParseSubStructure):
-    loads: List[Moment] = []
+    loads: list[Moment] = []
 
 
 class NormalForce(DSeriesNoParseSubStructure):
@@ -669,7 +669,7 @@ class NormalForce(DSeriesNoParseSubStructure):
 
 
 class NormalForces(DSeriesNoParseSubStructure):
-    loads: List[NormalForce] = []
+    loads: list[NormalForce] = []
 
 
 class Support(DSeriesNoParseSubStructure):
@@ -682,10 +682,10 @@ class Support(DSeriesNoParseSubStructure):
 
 
 class SupportContainer(DSeriesNoParseSubStructure):
-    supports: List[Support] = []
+    supports: list[Support] = []
 
     @property
-    def support_names(self) -> Set[str]:
+    def support_names(self) -> set[str]:
         return {support.name for support in self.supports}
 
 
@@ -695,7 +695,7 @@ class VibrationPosition(DSeriesNoParseSubStructure):
 
 
 class VibrationPositions(DSeriesNoParseSubStructure):
-    positions: List[VibrationPosition] = []
+    positions: list[VibrationPosition] = []
 
 
 class Water(DSeriesUnmappedNameProperties):
@@ -715,7 +715,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         Count=0
         """
     )
-    sheet_piling: Union[str, SheetPiling] = SheetPiling()
+    sheet_piling: str | SheetPiling = SheetPiling()
     combined_wall: str = ""
     vertical_balance: VerticalBalance = VerticalBalance()
     settlement_by_vibration_params: str = cleandoc(
@@ -723,16 +723,16 @@ class DSheetPilingInputStructure(DSeriesStructure):
         SheetPilingNumberOfPilesDrilled=2
         """
     )
-    horizontal_line_loads: Union[HorizontalLineLoads, str, None] = None
-    uniform_loads: Optional[UniformLoads] = None
-    surcharge_loads: Optional[SurchargeLoads] = None
+    horizontal_line_loads: HorizontalLineLoads | str | None = None
+    uniform_loads: UniformLoads | None = None
+    surcharge_loads: SurchargeLoads | None = None
     water: str = ""
     earth_quake: str = cleandoc(
         """
         0.00
         """
     )
-    soil_profiles: Union[SoilProfiles, str] = cleandoc(
+    soil_profiles: SoilProfiles | str = cleandoc(
         f"""
           1 Number of spring characteristics curves
           0 1/0 : Yes/No Unloading curve
@@ -749,7 +749,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         """
     )
-    surfaces: Union[str, Surfaces] = cleandoc(
+    surfaces: str | Surfaces = cleandoc(
         f"""
         1 Number of surfaces 
         1     1 {_DEFAULT_SURFACE_NAME}
@@ -760,7 +760,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         """
     )
     water: Water = Water()
-    waterlevels: Union[WaterLevels, str] = cleandoc(
+    waterlevels: WaterLevels | str = cleandoc(
         f"""
           1 Number of Waterlevels 
           3 Number of Data per Waterlevel 
@@ -771,7 +771,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
         """
     )
-    construction_stages: Union[str, ConstructionStages] = ConstructionStages()
+    construction_stages: str | ConstructionStages = ConstructionStages()
     calculation_options_per_stage: CalculationOptionsPerStage = (
         CalculationOptionsPerStage()
     )
@@ -799,14 +799,14 @@ class DSheetPilingInputStructure(DSeriesStructure):
     When there are no anchors, struts, supports, vibration positions or soil displacements in the model,
     their respective block is not present in the .shi file.
     """
-    soil_displacements: Optional[str] = None
-    rigid_supports: Union[str, SupportContainer, None] = None
-    spring_supports: Union[str, SupportContainer, None] = None
-    moments: Union[str, Moments, None] = None
-    normal_forces: Union[str, NormalForces, None] = None
-    anchors: Union[str, Anchors, None] = None
-    struts: Union[str, Struts, None] = None
-    vibration_positions: Union[str, VibrationPositions, None] = None
+    soil_displacements: str | None = None
+    rigid_supports: str | SupportContainer | None = None
+    spring_supports: str | SupportContainer | None = None
+    moments: str | Moments | None = None
+    normal_forces: str | NormalForces | None = None
+    anchors: str | Anchors | None = None
+    struts: str | Struts | None = None
+    vibration_positions: str | VibrationPositions | None = None
 
     # Custom validator
     _validate_run_identification = make_newline_validator(
@@ -894,7 +894,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         passive_side: PassiveSide,
         method_left: LateralEarthPressureMethodStage,
         method_right: LateralEarthPressureMethodStage,
-        pile_top_displacement: Optional[float],
+        pile_top_displacement: float | None,
     ) -> None:
         if isinstance(self.construction_stages, str):
             self.construction_stages = ConstructionStages()
@@ -923,7 +923,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.calculation_options_per_stage.stageoptions.append(StageOptions())
 
     def _get_validated_lateral_earth_pressure_method(
-        self, stage_method: Optional[LateralEarthPressureMethodStage]
+        self, stage_method: LateralEarthPressureMethodStage | None
     ) -> LateralEarthPressureMethodStage:
         """When no stage_method is provided, returns the method set in the
         model options.
@@ -963,11 +963,11 @@ class DSheetPilingInputStructure(DSeriesStructure):
                     f"For the Single Pile Model the left and right method must be the same. Received: left {method_left} and right {method_right}"
                 )
 
-    def _filter_none_values_from_key_value_dict(self, dict_: Dict) -> Dict:
+    def _filter_none_values_from_key_value_dict(self, dict_: dict) -> dict:
         # This way defaults can be defined only in the internal.
         return {k: v for k, v in dict_.items() if v is not None}
 
-    def _from_snake_to_pascal_case(self, dict_: Dict) -> Dict:
+    def _from_snake_to_pascal_case(self, dict_: dict) -> dict:
         return {k.replace("_", ""): v for k, v in dict_.items()}
 
     def add_water_level(self, stage_id: int, water_level: WaterLevel, side: Side) -> None:
@@ -1031,7 +1031,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
             raise ValueError(f"Provide a Side, received {side}")
 
     def set_construction(
-        self, top_level: float, elements: List[SheetPileElement]
+        self, top_level: float, elements: list[SheetPileElement]
     ) -> None:
         elements.sort(key=lambda element: element.sheetpilingelementlevel, reverse=True)
         for sheet in elements:
@@ -1050,7 +1050,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
     def add_element_in_sheet_piling(
         self,
         sheet: Any,
-        location_top: Optional[Point] = None,
+        location_top: Point | None = None,
     ) -> None:
         self.sheet_piling.update_level_top_sheet_pile(location_top)
         try:
@@ -1088,9 +1088,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
             )
         )
 
-    def add_load(
-        self, load: Union[HorizontalLineLoad, Moment, NormalForce], stage_id: int
-    ):
+    def add_load(self, load: HorizontalLineLoad | Moment | NormalForce, stage_id: int):
         if isinstance(load, HorizontalLineLoad):
             self.is_valid_unique_load_names(
                 load_list=self.construction_stages.stages[stage_id].horizontal_line_loads,
@@ -1171,7 +1169,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         else:
             raise ValueError(f"Provide a Side, received {side}")
 
-    def is_valid_unique_load_names(self, load_list: List[str], name: str) -> bool:
+    def is_valid_unique_load_names(self, load_list: list[str], name: str) -> bool:
         """Load list should have unique names in list of loads."""
         if name in load_list:
             raise ValueError(
@@ -1197,7 +1195,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
 
 class Resume(DSheetpilingWithNumberOfRowsTable):
-    resume: List[Dict[str, float]]
+    resume: list[dict[str, float]]
 
 
 class BreukData(DSeriesInlineReversedProperties):
@@ -1222,84 +1220,84 @@ class BreukData(DSeriesInlineReversedProperties):
 
 
 class MomentsForcesDisplacements(DSeriesWrappedTableStructure):
-    momentsforcesdisplacements: List[Dict[str, float]]
+    momentsforcesdisplacements: list[dict[str, float]]
 
 
 class AnchorData(DSheetpilingWithNumberOfRowsTable):
-    anchordata: List[Dict[str, Union[float, str]]]
+    anchordata: list[dict[str, float | str]]
 
 
 class Pressures(DSheetpilingWithNumberOfRowsTable):
-    pressures: List[Dict[str, Union[float, str]]]
+    pressures: list[dict[str, float | str]]
 
 
 class SideOutput(DSeriesStructure):
-    calculation_method: Optional[str] = None
-    water_level: Optional[str] = None
-    surface: Optional[str] = None
-    soil_profile_for_single_pile_model: Optional[str] = None
-    soil_profile_for_sheet_piling_model: Optional[str] = None
-    pressures: Optional[Pressures] = None
-    force_from_layer: Optional[str] = None
-    lambdas: Optional[str] = None
-    slide_plane: Optional[str] = None
-    vertical_balance_per_layer: Optional[str] = None
+    calculation_method: str | None = None
+    water_level: str | None = None
+    surface: str | None = None
+    soil_profile_for_single_pile_model: str | None = None
+    soil_profile_for_sheet_piling_model: str | None = None
+    pressures: Pressures | None = None
+    force_from_layer: str | None = None
+    lambdas: str | None = None
+    slide_plane: str | None = None
+    vertical_balance_per_layer: str | None = None
 
 
 class OutputConstructionStage(DSeriesRepeatedGroupedProperties):
-    anchor_data: Optional[AnchorData] = None
-    hload_data: Optional[str] = None
-    breuk_data: Optional[BreukData] = None
-    passive_side_data: Optional[str] = None
-    soil_collapse_data: Optional[str] = None
-    moments_forces_displacements: Optional[MomentsForcesDisplacements] = None
-    side: Optional[List[SideOutput]] = None
-    uniform_load_data: Optional[str] = None
-    horizontal_line_load_data: Optional[str] = None
-    surcharge_data: Optional[str] = None
-    normal_force_data: Optional[str] = None
-    moment_data: Optional[str] = None
-    support_data: Optional[str] = None
-    vertical_balance_data: Optional[str] = None
+    anchor_data: AnchorData | None = None
+    hload_data: str | None = None
+    breuk_data: BreukData | None = None
+    passive_side_data: str | None = None
+    soil_collapse_data: str | None = None
+    moments_forces_displacements: MomentsForcesDisplacements | None = None
+    side: list[SideOutput] | None = None
+    uniform_load_data: str | None = None
+    horizontal_line_load_data: str | None = None
+    surcharge_data: str | None = None
+    normal_force_data: str | None = None
+    moment_data: str | None = None
+    support_data: str | None = None
+    vertical_balance_data: str | None = None
 
     @classmethod
-    def get_list_field_names(cls) -> List[str]:
+    def get_list_field_names(cls) -> list[str]:
         return ["side"]
 
 
 class DesignLengthInfo(DSeriesWrappedTableStructure):
-    designlengthinfo: List[Dict[str, float]]
+    designlengthinfo: list[dict[str, float]]
 
 
 class DesignLengthCalculation(DSeriesWrappedTableStructure):
-    designlengthcalculation: List[Dict[str, float]]
+    designlengthcalculation: list[dict[str, float]]
 
 
 class DesignSheetpileLength(DSeriesStructure):
-    design_length_info: Optional[DesignLengthInfo] = None
-    design_length_calculation: Optional[DesignLengthCalculation] = None
+    design_length_info: DesignLengthInfo | None = None
+    design_length_calculation: DesignLengthCalculation | None = None
 
 
 class PointsOnSheetpile(DSheetpilingWithNumberOfRowsTable):
-    pointsonsheetpile: List[Dict[str, float]]
+    pointsonsheetpile: list[dict[str, float]]
 
 
 class CurAnchorForceResults(DSheetpilingWithNumberOfRowsTable):
-    curanchorforceresults: List[Dict[str, float]]
+    curanchorforceresults: list[dict[str, float]]
 
 
 class BaseVerificationStructureProperties(DSeriesRepeatedGroupedProperties):
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]] = None
-    construction_stage: Optional[List[OutputConstructionStage]] = None
+    points_on_sheetpile: list[PointsOnSheetpile] | None = None
+    construction_stage: list[OutputConstructionStage] | None = None
 
     @classmethod
-    def get_list_field_names(cls) -> List[str]:
+    def get_list_field_names(cls) -> list[str]:
         return ["points_on_sheetpile", "construction_stage"]
 
 
 class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     @classmethod
-    def get_list_field_names(cls) -> List[str]:
+    def get_list_field_names(cls) -> list[str]:
         return ["points_on_sheetpile", "construction_stage"]
 
     @classmethod
@@ -1309,79 +1307,79 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     calculation_type: str
 
     # General data
-    sheet_pile_elements: Optional[str] = None
-    calculated_displacements: Optional[str] = None
+    sheet_pile_elements: str | None = None
+    calculated_displacements: str | None = None
 
     # Standard, Kranz and Reliability calculation
-    points_on_sheetpile: Optional[List[PointsOnSheetpile]] = None
-    construction_stage: Optional[List[OutputConstructionStage]] = None
+    points_on_sheetpile: list[PointsOnSheetpile] | None = None
+    construction_stage: list[OutputConstructionStage] | None = None
 
     # Design Sheet Pile Length calculation
-    design_sheetpile_length: Optional[DesignSheetpileLength] = None
+    design_sheetpile_length: DesignSheetpileLength | None = None
 
     # Settlement by Vibration calculation
-    settlement_by_vibration: Optional[str] = None
+    settlement_by_vibration: str | None = None
 
     # Verify calculation including Overall Stability calculation
-    overall_partial_factor_set: Optional[str] = None
-    factors_for_overall_stability: Optional[str] = None
-    overall_stability_results: Optional[str] = None
+    overall_partial_factor_set: str | None = None
+    factors_for_overall_stability: str | None = None
+    overall_stability_results: str | None = None
 
     # Verify calculation according to CUR or EC7-NL with method B
-    factors_for_verification: Optional[str] = None
+    factors_for_verification: str | None = None
 
     # Verify calculation according to CUR or EC7-NL
-    verify_step_6____5_serviceability_limit_state: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    verify_step_6____5_multiplied_by_factor: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    cur_anchor_force_results: Optional[CurAnchorForceResults] = None
+    verify_step_6____5_serviceability_limit_state: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____5_multiplied_by_factor: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____1_low_modulus_of_subgrade_reaction_and_high_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____2_high_modulus_of_subgrade_reaction_and_high_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____3_low_modulus_of_subgrade_reaction_and_low_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    verify_step_6____4_high_modulus_of_subgrade_reaction_and_low_passive_water_level: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    cur_anchor_force_results: CurAnchorForceResults | None = None
 
     # Verify calculation according to EC7-BE or EC7-General
-    verify_deformation_serviceability_limit_state: Optional[
-        BaseVerificationStructureProperties
-    ] = None
-    eurocode_1_set_1: Optional[BaseVerificationStructureProperties] = None
-    eurocode_1_set_2: Optional[BaseVerificationStructureProperties] = None
-    eurocode_2: Optional[BaseVerificationStructureProperties] = None
-    eurocode_3: Optional[BaseVerificationStructureProperties] = None
-    eurocode_belgium_set_1: Optional[BaseVerificationStructureProperties] = None
-    eurocode_belgium_set_2: Optional[BaseVerificationStructureProperties] = None
+    verify_deformation_serviceability_limit_state: (
+        BaseVerificationStructureProperties | None
+    ) = None
+    eurocode_1_set_1: BaseVerificationStructureProperties | None = None
+    eurocode_1_set_2: BaseVerificationStructureProperties | None = None
+    eurocode_2: BaseVerificationStructureProperties | None = None
+    eurocode_3: BaseVerificationStructureProperties | None = None
+    eurocode_belgium_set_1: BaseVerificationStructureProperties | None = None
+    eurocode_belgium_set_2: BaseVerificationStructureProperties | None = None
 
     # Kranz calculation
-    angles_kranz_calculation: Optional[str] = None
-    kranz_calculation: Optional[str] = None
-    kranz_diagram_results: Optional[str] = None
+    angles_kranz_calculation: str | None = None
+    kranz_calculation: str | None = None
+    kranz_diagram_results: str | None = None
 
     # Resumes
-    resume: Optional[Resume] = None
-    anchors_and_struts_resume: Optional[str] = None
-    supports_resume: Optional[str] = None
-    maximum_anchor_force: Optional[str] = None
-    maximum_anchor_force_be_set_1: Optional[str] = None
-    maximum_summary_results: Optional[str] = None
-    maximum_summary_results_be_set_1: Optional[str] = None
-    warnings: Optional[str] = None
-    errors: Optional[str] = None
+    resume: Resume | None = None
+    anchors_and_struts_resume: str | None = None
+    supports_resume: str | None = None
+    maximum_anchor_force: str | None = None
+    maximum_anchor_force_be_set_1: str | None = None
+    maximum_summary_results: str | None = None
+    maximum_summary_results_be_set_1: str | None = None
+    warnings: str | None = None
+    errors: str | None = None
 
 
 class DSheetPilingStructure(DSeriesPilingParserStructure):
     input_data: DSheetPilingInputStructure = DSheetPilingInputStructure()
-    output_data: Optional[DSheetPilingOutputStructure] = None
+    output_data: DSheetPilingOutputStructure | None = None
 
     @property
     def is_valid(self) -> bool:

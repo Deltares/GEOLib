@@ -1,5 +1,3 @@
-from typing import List
-
 import pytest
 
 from geolib.models.dstability.dstability_model import DStabilityModel
@@ -45,7 +43,7 @@ def _persistable_circle() -> PersistableCircle:
     return PersistableCircle(Center=_left_center_persistable_point(), Radius=5)
 
 
-def _slip_plane() -> List[PersistablePoint]:
+def _slip_plane() -> list[PersistablePoint]:
     x_z_coordinates = [(0, 10), (2.5, 8), (5, 4), (2.5, 2), (10, 0)]
     return [PersistablePoint(X=x, Z=z) for x, z in x_z_coordinates]
 

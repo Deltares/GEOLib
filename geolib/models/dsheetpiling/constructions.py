@@ -1,5 +1,3 @@
-from typing import Optional
-
 from geolib.models import BaseDataClass
 from geolib.models.dsheetpiling.internal import SheetPileElement
 from geolib.models.dsheetpiling.internal import VerticalBalance as InternalVerticalBalance
@@ -31,19 +29,19 @@ class PileProperties(BaseDataClass):
      reduction_factor_on_maximum_moment  : The reduction factor applied to the maximum allowable moment
     """
 
-    material_type: Optional[
-        SheetPilingElementMaterialType
-    ] = SheetPilingElementMaterialType.Steel
-    elastic_stiffness_ei: Optional[float] = None
-    diameter: Optional[float] = None
-    section_bottom_level: Optional[float] = None
-    reduction_factor_on_ei: Optional[float] = None
-    mr_char_el: Optional[float] = None
-    mr_char_pl: Optional[float] = None
-    modification_factor_k_mod: Optional[float] = None
-    material_factor_gamma_m: Optional[float] = None
-    reduction_factor_on_maximum_moment: Optional[float] = None
-    note_on_reduction_factor: Optional[str] = None
+    material_type: SheetPilingElementMaterialType | None = (
+        SheetPilingElementMaterialType.Steel
+    )
+    elastic_stiffness_ei: float | None = None
+    diameter: float | None = None
+    section_bottom_level: float | None = None
+    reduction_factor_on_ei: float | None = None
+    mr_char_el: float | None = None
+    mr_char_pl: float | None = None
+    modification_factor_k_mod: float | None = None
+    material_factor_gamma_m: float | None = None
+    reduction_factor_on_maximum_moment: float | None = None
+    note_on_reduction_factor: str | None = None
 
 
 class WoodenSheetPileProperties(BaseDataClass):
@@ -64,15 +62,15 @@ class WoodenSheetPileProperties(BaseDataClass):
 
     """
 
-    elasticity_modulus_e_m_0_mean: Optional[float] = None
-    charac_flexural_strength_f_m_0_char: Optional[float] = None
-    system_factor_k_sys: Optional[float] = None
-    deform_factor_k_def: Optional[float] = None
-    creep_factor_psi_2_eff: Optional[float] = None
-    material_factor_gamma_m: Optional[float] = None
-    modif_factor_on_f_m_0_char_short_term_k_mod_f_short: Optional[float] = None
-    modif_factor_on_f_m_0_char_long_term_k_mod_f_long: Optional[float] = None
-    modification_factor_on_e_m_0_d_k_mod_e: Optional[float] = None
+    elasticity_modulus_e_m_0_mean: float | None = None
+    charac_flexural_strength_f_m_0_char: float | None = None
+    system_factor_k_sys: float | None = None
+    deform_factor_k_def: float | None = None
+    creep_factor_psi_2_eff: float | None = None
+    material_factor_gamma_m: float | None = None
+    modif_factor_on_f_m_0_char_short_term_k_mod_f_short: float | None = None
+    modif_factor_on_f_m_0_char_long_term_k_mod_f_long: float | None = None
+    modification_factor_on_e_m_0_d_k_mod_e: float | None = None
 
 
 class SheetPileProperties(BaseDataClass):
@@ -110,25 +108,25 @@ class SheetPileProperties(BaseDataClass):
 
     """
 
-    material_type: Optional[
-        SheetPilingElementMaterialType
-    ] = SheetPilingElementMaterialType.Steel
-    elastic_stiffness_ei: Optional[float] = None
-    acting_width: Optional[float] = None
-    section_bottom_level: Optional[
-        float
-    ] = None  # TODO important parameter, shouldn't be default
-    height: Optional[int] = 400  # value is defined in mm
-    width_of_sheet_piles: Optional[float] = None
-    section_area: Optional[int] = None
-    elastic_section_modulus_w_el: Optional[int] = None
-    reduction_factor_on_ei: Optional[float] = None
-    note_on_reduction_factor: Optional[str] = None
-    mr_char_el: Optional[float] = None
-    mr_char_pl: Optional[float] = None
-    modification_factor_k_mod: Optional[float] = None
-    material_factor_gamma_m: Optional[float] = None
-    reduction_factor_on_maximum_moment: Optional[float] = None
+    material_type: SheetPilingElementMaterialType | None = (
+        SheetPilingElementMaterialType.Steel
+    )
+    elastic_stiffness_ei: float | None = None
+    acting_width: float | None = None
+    section_bottom_level: float | None = (
+        None  # TODO important parameter, shouldn't be default
+    )
+    height: int | None = 400  # value is defined in mm
+    width_of_sheet_piles: float | None = None
+    section_area: int | None = None
+    elastic_section_modulus_w_el: int | None = None
+    reduction_factor_on_ei: float | None = None
+    note_on_reduction_factor: str | None = None
+    mr_char_el: float | None = None
+    mr_char_pl: float | None = None
+    modification_factor_k_mod: float | None = None
+    material_factor_gamma_m: float | None = None
+    reduction_factor_on_maximum_moment: float | None = None
 
 
 class SheetPileModelPlasticCalculationProperties(BaseDataClass):
@@ -147,9 +145,9 @@ class SheetPileModelPlasticCalculationProperties(BaseDataClass):
         :align: center
     """
 
-    symmetrical: Optional[bool] = False
-    plastic_moment_positive: Optional[float] = None
-    plastic_moment_negative: Optional[float] = None
+    symmetrical: bool | None = False
+    plastic_moment_positive: float | None = None
+    plastic_moment_negative: float | None = None
 
 
 class FullPlasticCalculationProperties(BaseDataClass):
@@ -177,17 +175,17 @@ class FullPlasticCalculationProperties(BaseDataClass):
         :align: center
     """
 
-    symmetrical: Optional[bool] = False
-    eI_branch_2_positive: Optional[float] = None
-    eI_branch_2_negative: Optional[float] = None
-    moment_point_1_positive: Optional[float] = None
-    moment_point_1_negative: Optional[float] = None
-    plastic_moment_positive: Optional[float] = None
-    plastic_moment_negative: Optional[float] = None
-    eI_branch_3_positive: Optional[float] = None
-    moment_point_2_positive: Optional[float] = None
-    eI_branch_3_negative: Optional[float] = None
-    moment_point_2_negative: Optional[float] = None
+    symmetrical: bool | None = False
+    eI_branch_2_positive: float | None = None
+    eI_branch_2_negative: float | None = None
+    moment_point_1_positive: float | None = None
+    moment_point_1_negative: float | None = None
+    plastic_moment_positive: float | None = None
+    plastic_moment_negative: float | None = None
+    eI_branch_3_positive: float | None = None
+    moment_point_2_positive: float | None = None
+    eI_branch_3_negative: float | None = None
+    moment_point_2_negative: float | None = None
 
 
 class DiaphragmWallProperties(BaseDataClass):
@@ -223,19 +221,19 @@ class DiaphragmWallProperties(BaseDataClass):
 
     """
 
-    material_type: Optional[
-        SheetPilingElementMaterialType
-    ] = SheetPilingElementMaterialType.Steel
-    section_bottom_level: Optional[float] = None
-    elastic_stiffness_ei: Optional[float] = None
-    acting_width: Optional[float] = None
-    reduction_factor_on_ei: Optional[float] = None
-    note_on_reduction_factor: Optional[str] = None
-    mr_char_el: Optional[float] = None
-    mr_char_pl: Optional[float] = None
-    modification_factor_k_mod: Optional[float] = None
-    material_factor_gamma_m: Optional[float] = None
-    reduction_factor_on_maximum_moment: Optional[float] = None
+    material_type: SheetPilingElementMaterialType | None = (
+        SheetPilingElementMaterialType.Steel
+    )
+    section_bottom_level: float | None = None
+    elastic_stiffness_ei: float | None = None
+    acting_width: float | None = None
+    reduction_factor_on_ei: float | None = None
+    note_on_reduction_factor: str | None = None
+    mr_char_el: float | None = None
+    mr_char_pl: float | None = None
+    modification_factor_k_mod: float | None = None
+    material_factor_gamma_m: float | None = None
+    reduction_factor_on_maximum_moment: float | None = None
 
 
 class DiaphragmWall(BaseDataClass):
@@ -250,12 +248,10 @@ class DiaphragmWall(BaseDataClass):
     """
 
     name: str = ""
-    diaphragm_wall_properties: Optional[
-        DiaphragmWallProperties
-    ] = DiaphragmWallProperties()
-    plastic_properties: Optional[
-        FullPlasticCalculationProperties
-    ] = FullPlasticCalculationProperties()
+    diaphragm_wall_properties: DiaphragmWallProperties | None = DiaphragmWallProperties()
+    plastic_properties: FullPlasticCalculationProperties | None = (
+        FullPlasticCalculationProperties()
+    )
 
     def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
@@ -296,13 +292,13 @@ class Sheet(BaseDataClass):
     """
 
     name: str = ""
-    sheet_pile_properties: Optional[SheetPileProperties] = SheetPileProperties()
-    plastic_properties: Optional[
-        SheetPileModelPlasticCalculationProperties
-    ] = SheetPileModelPlasticCalculationProperties()
-    wooden_sheet_pile_properties: Optional[
-        WoodenSheetPileProperties
-    ] = WoodenSheetPileProperties()
+    sheet_pile_properties: SheetPileProperties | None = SheetPileProperties()
+    plastic_properties: SheetPileModelPlasticCalculationProperties | None = (
+        SheetPileModelPlasticCalculationProperties()
+    )
+    wooden_sheet_pile_properties: WoodenSheetPileProperties | None = (
+        WoodenSheetPileProperties()
+    )
 
     def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
@@ -348,10 +344,10 @@ class Pile(BaseDataClass):
     """
 
     name: str = ""
-    pile_properties: Optional[PileProperties] = PileProperties()
-    plastic_properties: Optional[
-        FullPlasticCalculationProperties
-    ] = FullPlasticCalculationProperties()
+    pile_properties: PileProperties | None = PileProperties()
+    plastic_properties: FullPlasticCalculationProperties | None = (
+        FullPlasticCalculationProperties()
+    )
 
     def to_internal(self) -> SheetPileElement:
         return SheetPileElement(
@@ -390,8 +386,8 @@ class VerticalBalance(BaseDataClass):
         xi_factor: Statistic factor related to the number of CPT's used for derivation of the maximum point resistance
     """
 
-    max_point_resistance: Optional[float] = None
-    xi_factor: Optional[float] = None
+    max_point_resistance: float | None = None
+    xi_factor: float | None = None
 
     def to_internal(self) -> InternalVerticalBalance:
         return InternalVerticalBalance(

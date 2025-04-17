@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Dict, List
 
 from geolib.models.dseries_parser import (
     DSeriesRepeatedGroupedProperties,
@@ -77,7 +76,7 @@ class ComplexVerticalSubstructure(DSeriesStructure):
 
                 # duplicate group before end
                 elif currentkey == key:
-                    # If key already exists, this is a group -> List
+                    # If key already exists, this is a group -> list
                     if currentkey in parsed_dict:
                         parsed_dict[currentkey] = parsed_dict[currentkey] + [
                             "".join(data)
@@ -96,7 +95,7 @@ class ComplexVerticalSubstructure(DSeriesStructure):
                 # end of current group
                 elif key == "end_of_" + currentkey:
                     logger.debug(f"Found {key}")
-                    # If key already exists, this is a group -> List
+                    # If key already exists, this is a group -> list
                     if currentkey in parsed_dict:
                         parsed_dict[currentkey] = parsed_dict[currentkey] + [
                             "".join(data)
@@ -136,14 +135,14 @@ class DSerieRepeatedTableStructure(DSeriesRepeatedGroupedProperties):
         return group_key != "column_indication"
 
     @classmethod
-    def get_validated_mappings(cls, generated_dict: Dict[str, str]) -> Dict[str, str]:
+    def get_validated_mappings(cls, generated_dict: dict[str, str]) -> dict[str, str]:
         """Transforms the generated dict from the parent into our own mapping.
 
         Args:
-            generated_dict (Dict[str, str]): Parsed dictionary from parent.
+            generated_dict (dict[str, str]): Parsed dictionary from parent.
 
         Returns:
-            Dict[str, str]: Mapped dictionary with concrete properties.
+            dict[str, str]: Mapped dictionary with concrete properties.
         """
         class_name = cls.__name__.lower()
         n_groups = len(generated_dict.items())
@@ -154,7 +153,7 @@ class DSerieRepeatedTableStructure(DSeriesRepeatedGroupedProperties):
             for line in generated_dict.pop("column_indication").split("\n")
             if line != ""
         ]
-        parsed_dict: Dict[str, str] = {}
+        parsed_dict: dict[str, str] = {}
         # We assume there is only one 'repeated' key, so we get the values from it.
         for group_data in list(generated_dict.values())[0]:
             mapped_group = cls.get_mapped_group(columns, group_data)
@@ -169,18 +168,18 @@ class DSerieRepeatedTableStructure(DSeriesRepeatedGroupedProperties):
 
     @staticmethod
     def get_mapped_group(
-        column_list: List[str], group_line: str
-    ) -> Dict[str, List[Dict[str, str]]]:
+        column_list: list[str], group_line: str
+    ) -> dict[str, list[dict[str, str]]]:
         """Based on the input column and the group line, generates a list of
         dictionary entries which are mapped to the first element of the group
         line.
 
         Args:
-            column_list (List[str]): List of columns to map.
+            column_list (list[str]): List of columns to map.
             group_line (str): Content containing id of dictionary and list values.
 
         Returns:
-            Dict[str, List[Dict[str, str]]]: Generated mapped group.
+            dict[str, list[dict[str, str]]]: Generated mapped group.
         """
         lines = [
             split_line_elements(line) for line in group_line.split("\n") if line != ""

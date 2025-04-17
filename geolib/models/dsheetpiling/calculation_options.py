@@ -1,5 +1,4 @@
 from abc import ABCMeta
-from typing import Optional, Union
 
 from pydantic import Field
 from typing_extensions import Annotated
@@ -31,13 +30,9 @@ class CalculationOptionsPerStage(BaseDataClass):
     """
 
     anchor_factor: float = 1
-    partial_factor_set: Optional[
-        Union[
-            PartialFactorSetEC7NADBE,
-            PartialFactorSetCUR,
-            PartialFactorSetEC7NADNL,
-        ]
-    ] = None
+    partial_factor_set: (
+        PartialFactorSetEC7NADBE | PartialFactorSetCUR | PartialFactorSetEC7NADNL | None
+    ) = None
 
 
 class CalculationOptions(BaseDataClass, metaclass=ABCMeta):
@@ -62,14 +57,9 @@ class CalculationOptions(BaseDataClass, metaclass=ABCMeta):
     @property
     def calculation_properties(
         self,
-    ) -> Union[
-        "StandardCalculationOptions",
-        "DesignSheetpilingLengthCalculationOptions",
-        "VerifyCalculationOptions",
-        "KranzAnchorStrengthCalculationOptions",
-        "OverallStabilityCalculationOptions",
-        "ReliabilityAnalysisCalculationOptions",
-    ]:
+    ) -> (
+        "StandardCalculationOptions | DesignSheetpilingLengthCalculationOptions | VerifyCalculationOptions | KranzAnchorStrengthCalculationOptions | OverallStabilityCalculationOptions | ReliabilityAnalysisCalculationOptions"
+    ):
         _calculation_properties_map = {
             CalculationType.STANDARD: StandardCalculationOptions,
             CalculationType.DESIGN_SHEETPILING_LENGTH: DesignSheetpilingLengthCalculationOptions,

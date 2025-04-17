@@ -1,5 +1,5 @@
 from contextlib import nullcontext as does_not_raise
-from typing import Callable, List
+from typing import Callable
 
 import pytest
 from pydantic import ValidationError
@@ -23,7 +23,7 @@ _SOIL_TEST_NAME_1: str = "Clay"
 _SOIL_TEST_NAME_2: str = "Sand"
 _PROFILE_TEST_NAME: str = "test profiel"
 _PROFILE_TEST_COORDINATES: Point = Point(x=100, y=250)
-_TEST_LAYERS: List[SoilLayer] = [
+_TEST_LAYERS: list[SoilLayer] = [
     SoilLayer(top_of_layer=0, soil=_SOIL_TEST_NAME_1),
     SoilLayer(top_of_layer=-2, soil=_SOIL_TEST_NAME_2),
 ]
@@ -193,7 +193,7 @@ class TestSoilProfile:
         ],
     )
     def test_profile_initialization_with_different_points_arguments(
-        self, layers: List[SoilLayer], raise_context
+        self, layers: list[SoilLayer], raise_context
     ):
         with raise_context:
             profile = SoilProfile(name=_PROFILE_TEST_NAME, layers=layers)

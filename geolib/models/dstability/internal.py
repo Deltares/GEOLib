@@ -7,7 +7,6 @@ from datetime import date, datetime
 from enum import Enum
 from itertools import chain
 from math import isfinite
-from typing import Dict, List, Optional, Set, Tuple, Union
 
 from pydantic import Field, ValidationError, field_validator, model_validator
 from typing_extensions import Annotated
@@ -57,7 +56,7 @@ class UpliftVanSlipCircleResult(DStabilityBaseModelStructure):
 
 
 class SpencerSlipPlaneResult(DStabilityBaseModelStructure):
-    slipplane: List[Point]
+    slipplane: list[Point]
 
 
 class DStabilitySubStructure(DStabilityBaseModelStructure):
@@ -73,15 +72,15 @@ class DStabilitySubStructure(DStabilityBaseModelStructure):
 
 # waternet schema
 class PersistablePoint(DStabilityBaseModelStructure):
-    X: Optional[Union[float, str]] = "NaN"
-    Z: Optional[Union[float, str]] = "NaN"
+    X: float | str | None = "NaN"
+    Z: float | str | None = "NaN"
 
 
 class PersistableHeadLine(DStabilityBaseModelStructure):
-    Id: Optional[str] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Id: str | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    Points: list[PersistablePoint | None] | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -91,12 +90,12 @@ class PersistableHeadLine(DStabilityBaseModelStructure):
 
 
 class PersistableReferenceLine(DStabilityBaseModelStructure):
-    BottomHeadLineId: Optional[str] = None
-    Id: Optional[str] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    TopHeadLineId: Optional[str] = None
+    BottomHeadLineId: str | None = None
+    Id: str | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    Points: list[PersistablePoint | None] | None = None
+    TopHeadLineId: str | None = None
 
     @field_validator("Id", "TopHeadLineId", "BottomHeadLineId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -116,12 +115,12 @@ class Waternet(DStabilitySubStructure):
     def structure_name(cls) -> str:
         return "waternets"
 
-    Id: Optional[str] = None
-    ContentVersion: Optional[str] = "2"
-    PhreaticLineId: Optional[str] = None
-    HeadLines: List[PersistableHeadLine] = []
-    ReferenceLines: List[PersistableReferenceLine] = []
-    UnitWeightWater: Optional[float] = 9.81
+    Id: str | None = None
+    ContentVersion: str | None = "2"
+    PhreaticLineId: str | None = None
+    HeadLines: list[PersistableHeadLine] = []
+    ReferenceLines: list[PersistableReferenceLine] = []
+    UnitWeightWater: float | None = 9.81
 
     @field_validator("Id", "PhreaticLineId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -151,7 +150,7 @@ class Waternet(DStabilitySubStructure):
         head_line_id: str,
         label: str,
         notes: str,
-        points: List[Point],
+        points: list[Point],
         is_phreatic_line: bool,
     ) -> PersistableHeadLine:
         head_line = PersistableHeadLine(Id=head_line_id, Label=label, Notes=notes)
@@ -168,9 +167,9 @@ class Waternet(DStabilitySubStructure):
         reference_line_id: str,
         label: str,
         notes: str,
-        points: List[Point],
-        bottom_head_line_id: Optional[str] = None,
-        top_head_line_id: Optional[str] = None,
+        points: list[Point],
+        bottom_head_line_id: str | None = None,
+        top_head_line_id: str | None = None,
     ) -> PersistableReferenceLine:
         reference_line = PersistableReferenceLine(
             Id=reference_line_id, Label=label, Notes=notes
@@ -197,18 +196,18 @@ class Waternet(DStabilitySubStructure):
 
 
 class PersistableDitchCharacteristics(DStabilityBaseModelStructure):
-    DitchBottomEmbankmentSide: Optional[Union[float, str]] = "NaN"
-    DitchBottomLandSide: Optional[Union[float, str]] = "NaN"
-    DitchEmbankmentSide: Optional[Union[float, str]] = "NaN"
-    DitchLandSide: Optional[Union[float, str]] = "NaN"
+    DitchBottomEmbankmentSide: float | str | None = "NaN"
+    DitchBottomLandSide: float | str | None = "NaN"
+    DitchEmbankmentSide: float | str | None = "NaN"
+    DitchLandSide: float | str | None = "NaN"
 
 
 class PersistableEmbankmentCharacteristics(DStabilityBaseModelStructure):
-    EmbankmentToeLandSide: Optional[Union[float, str]] = "NaN"
-    EmbankmentToeWaterSide: Optional[Union[float, str]] = "NaN"
-    EmbankmentTopLandSide: Optional[Union[float, str]] = "NaN"
-    EmbankmentTopWaterSide: Optional[Union[float, str]] = "NaN"
-    ShoulderBaseLandSide: Optional[Union[float, str]] = "NaN"
+    EmbankmentToeLandSide: float | str | None = "NaN"
+    EmbankmentToeWaterSide: float | str | None = "NaN"
+    EmbankmentTopLandSide: float | str | None = "NaN"
+    EmbankmentTopWaterSide: float | str | None = "NaN"
+    ShoulderBaseLandSide: float | str | None = "NaN"
 
 
 class EmbankmentSoilScenarioEnum(str, Enum):
@@ -221,41 +220,41 @@ class EmbankmentSoilScenarioEnum(str, Enum):
 class WaternetCreatorSettings(DStabilitySubStructure):
     """waternetcreatorsettings/waternetcreatorsettings_x.json"""
 
-    AdjustForUplift: Optional[bool] = False
-    AquiferInsideAquitardLayerId: Optional[str] = None
-    AquiferLayerId: Optional[str] = None
-    AquiferLayerInsideAquitardLeakageLengthInwards: Optional[Union[float, str]] = "NaN"
-    AquiferLayerInsideAquitardLeakageLengthOutwards: Optional[Union[float, str]] = "NaN"
-    AquitardHeadLandSide: Optional[Union[float, str]] = "NaN"
-    AquitardHeadWaterSide: Optional[Union[float, str]] = "NaN"
-    ContentVersion: Optional[str] = "2"
-    DitchCharacteristics: Optional[PersistableDitchCharacteristics] = (
+    AdjustForUplift: bool | None = False
+    AquiferInsideAquitardLayerId: str | None = None
+    AquiferLayerId: str | None = None
+    AquiferLayerInsideAquitardLeakageLengthInwards: float | str | None = "NaN"
+    AquiferLayerInsideAquitardLeakageLengthOutwards: float | str | None = "NaN"
+    AquitardHeadLandSide: float | str | None = "NaN"
+    AquitardHeadWaterSide: float | str | None = "NaN"
+    ContentVersion: str | None = "2"
+    DitchCharacteristics: PersistableDitchCharacteristics | None = (
         PersistableDitchCharacteristics()
     )
-    DrainageConstruction: Optional[PersistablePoint] = PersistablePoint()
-    EmbankmentCharacteristics: Optional[PersistableEmbankmentCharacteristics] = (
+    DrainageConstruction: PersistablePoint | None = PersistablePoint()
+    EmbankmentCharacteristics: PersistableEmbankmentCharacteristics | None = (
         PersistableEmbankmentCharacteristics()
     )
     EmbankmentSoilScenario: EmbankmentSoilScenarioEnum = (
         EmbankmentSoilScenarioEnum.CLAY_EMBANKMENT_ON_CLAY
     )
-    Id: Optional[str] = None
-    InitialLevelEmbankmentTopLandSide: Optional[Union[float, str]] = "NaN"
-    InitialLevelEmbankmentTopWaterSide: Optional[Union[float, str]] = "NaN"
-    IntrusionLength: Optional[Union[float, str]] = "NaN"
-    IsAquiferLayerInsideAquitard: Optional[bool] = False
-    IsDitchPresent: Optional[bool] = False
-    IsDrainageConstructionPresent: Optional[bool] = False
-    MeanWaterLevel: Optional[Union[float, str]] = "NaN"
-    NormativeWaterLevel: Optional[Union[float, str]] = "NaN"
-    OffsetEmbankmentToeLandSide: Optional[Union[float, str]] = "NaN"
-    OffsetEmbankmentTopLandSide: Optional[Union[float, str]] = "NaN"
-    OffsetEmbankmentTopWaterSide: Optional[Union[float, str]] = "NaN"
-    OffsetShoulderBaseLandSide: Optional[Union[float, str]] = "NaN"
-    PleistoceneLeakageLengthInwards: Optional[Union[float, str]] = "NaN"
-    PleistoceneLeakageLengthOutwards: Optional[Union[float, str]] = "NaN"
-    UseDefaultOffsets: Optional[bool] = True
-    WaterLevelHinterland: Optional[Union[float, str]] = "NaN"
+    Id: str | None = None
+    InitialLevelEmbankmentTopLandSide: float | str | None = "NaN"
+    InitialLevelEmbankmentTopWaterSide: float | str | None = "NaN"
+    IntrusionLength: float | str | None = "NaN"
+    IsAquiferLayerInsideAquitard: bool | None = False
+    IsDitchPresent: bool | None = False
+    IsDrainageConstructionPresent: bool | None = False
+    MeanWaterLevel: float | str | None = "NaN"
+    NormativeWaterLevel: float | str | None = "NaN"
+    OffsetEmbankmentToeLandSide: float | str | None = "NaN"
+    OffsetEmbankmentTopLandSide: float | str | None = "NaN"
+    OffsetEmbankmentTopWaterSide: float | str | None = "NaN"
+    OffsetShoulderBaseLandSide: float | str | None = "NaN"
+    PleistoceneLeakageLengthInwards: float | str | None = "NaN"
+    PleistoceneLeakageLengthOutwards: float | str | None = "NaN"
+    UseDefaultOffsets: bool | None = True
+    WaterLevelHinterland: float | str | None = "NaN"
 
     field_validator("Id", "AquiferLayerId", mode="before")
 
@@ -287,19 +286,19 @@ class PersistableStress(DStabilityBaseModelStructure):
     PopStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    StateType: Optional[InternalStateTypeEnum] = None
+    StateType: InternalStateTypeEnum | None = None
     YieldStress: float = 0.0
 
 
 class PersistableStateLinePoint(DStabilityBaseModelStructure):
-    Above: Optional[PersistableStress] = None
-    Below: Optional[PersistableStress] = None
-    Id: Optional[str] = None
-    IsAboveAndBelowCorrelated: Optional[bool] = None
-    IsProbabilistic: Optional[bool] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    X: Optional[Union[float, str]] = "NaN"
+    Above: PersistableStress | None = None
+    Below: PersistableStress | None = None
+    Id: str | None = None
+    IsAboveAndBelowCorrelated: bool | None = None
+    IsProbabilistic: bool | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    X: float | str | None = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -309,18 +308,18 @@ class PersistableStateLinePoint(DStabilityBaseModelStructure):
 
 
 class PersistableStateLine(DStabilityBaseModelStructure):
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    Values: Optional[List[Optional[PersistableStateLinePoint]]] = None
+    Points: list[PersistablePoint | None] | None = None
+    Values: list[PersistableStateLinePoint | None] | None = None
 
 
 class PersistableStatePoint(DStabilityBaseModelStructure):
-    Id: Optional[str] = None
-    IsProbabilistic: Optional[bool] = None
-    Label: Optional[str] = ""
-    LayerId: Optional[str] = None
-    Notes: Optional[str] = ""
-    Point: Optional[PersistablePoint] = None
-    Stress: Optional[PersistableStress] = None
+    Id: str | None = None
+    IsProbabilistic: bool | None = None
+    Label: str | None = ""
+    LayerId: str | None = None
+    Notes: str | None = ""
+    Point: PersistablePoint | None = None
+    Stress: PersistableStress | None = None
 
     @field_validator("Id", "LayerId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -340,10 +339,10 @@ class State(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "states"
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    StateLines: List[PersistableStateLine] = []
-    StatePoints: List[PersistableStatePoint] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    StateLines: list[PersistableStateLine] = []
+    StatePoints: list[PersistableStatePoint] = []
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -356,16 +355,14 @@ class State(DStabilitySubStructure):
 
     def add_state_line(
         self,
-        points: List[PersistablePoint],
-        state_points: List[PersistableStateLinePoint],
+        points: list[PersistablePoint],
+        state_points: list[PersistableStateLinePoint],
     ) -> PersistableStateLine:
         state_line = PersistableStateLine(Points=points, Values=state_points)
         self.StateLines.append(PersistableStateLine(Points=points, Values=state_points))
         return state_line
 
-    def get_state(
-        self, state_id: int
-    ) -> Union[PersistableStatePoint, PersistableStateLine]:
+    def get_state(self, state_id: int) -> PersistableStatePoint | PersistableStateLine:
         for state in self.StatePoints + self.StateLines:
             if state.Id == str(state_id):
                 return state
@@ -377,8 +374,8 @@ class State(DStabilitySubStructure):
 
 
 class PersistableStateCorrelation(DStabilityBaseModelStructure):
-    CorrelatedStateIds: Optional[List[Optional[str]]] = None
-    IsFullyCorrelated: Optional[bool] = None
+    CorrelatedStateIds: list[str | None] | None = None
+    IsFullyCorrelated: bool | None = None
 
     @field_validator("CorrelatedStateIds", mode="before")
     def transform_id_to_str(cls, values) -> str:
@@ -402,9 +399,9 @@ class StateCorrelation(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "statecorrelations"
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    StateCorrelations: Optional[List[Optional[PersistableStateCorrelation]]] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    StateCorrelations: list[PersistableStateCorrelation | None] | None = []
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -429,18 +426,18 @@ class Stage(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "stages"
 
-    DecorationsId: Optional[str] = None
-    GeometryId: Optional[str] = None
-    Id: Optional[str] = None
-    Label: Optional[str] = ""
-    LoadsId: Optional[str] = None
-    Notes: Optional[str] = ""
-    ReinforcementsId: Optional[str] = None
-    SoilLayersId: Optional[str] = None
-    StateCorrelationsId: Optional[str] = None
-    StateId: Optional[str] = None
-    WaternetCreatorSettingsId: Optional[str] = None
-    WaternetId: Optional[str] = None
+    DecorationsId: str | None = None
+    GeometryId: str | None = None
+    Id: str | None = None
+    Label: str | None = ""
+    LoadsId: str | None = None
+    Notes: str | None = ""
+    ReinforcementsId: str | None = None
+    SoilLayersId: str | None = None
+    StateCorrelationsId: str | None = None
+    StateId: str | None = None
+    WaternetCreatorSettingsId: str | None = None
+    WaternetId: str | None = None
 
     @field_validator(
         "DecorationsId",
@@ -460,11 +457,11 @@ class Stage(DStabilitySubStructure):
 
 
 class PersistableCalculation(DStabilityBaseModelStructure):
-    Id: Optional[str] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    ResultId: Optional[str] = None
-    CalculationSettingsId: Optional[str] = None
+    Id: str | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    ResultId: str | None = None
+    CalculationSettingsId: str | None = None
 
     @field_validator("Id", "ResultId", "CalculationSettingsId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -484,12 +481,12 @@ class Scenario(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "scenarios"
 
-    Stages: Optional[List[Stage]] = []
-    Calculations: Optional[List[PersistableCalculation]] = []
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
+    Stages: list[Stage] | None = []
+    Calculations: list[PersistableCalculation] | None = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -513,9 +510,9 @@ class PersistableShadingTypeEnum(Enum):
 
 
 class PersistableSoilVisualization(DStabilityBaseModelStructure):
-    Color: Optional[str] = None
-    PersistableShadingType: Optional[PersistableShadingTypeEnum]
-    SoilId: Optional[str] = None
+    Color: str | None = None
+    PersistableShadingType: PersistableShadingTypeEnum | None
+    SoilId: str | None = None
 
     @field_validator("SoilId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -525,8 +522,8 @@ class PersistableSoilVisualization(DStabilityBaseModelStructure):
 
 
 class SoilVisualisation(DStabilityBaseModelStructure):
-    ContentVersion: Optional[str] = "2"
-    SoilVisualizations: Optional[List[Optional[PersistableSoilVisualization]]] = []
+    ContentVersion: str | None = "2"
+    SoilVisualizations: list[PersistableSoilVisualization | None] | None = []
 
     @classmethod
     def structure_name(cls) -> str:
@@ -534,8 +531,8 @@ class SoilVisualisation(DStabilityBaseModelStructure):
 
 
 class PersistableSoilLayer(DStabilityBaseModelStructure):
-    LayerId: Optional[str] = None
-    SoilId: Optional[str] = None
+    LayerId: str | None = None
+    SoilId: str | None = None
 
     @field_validator("LayerId", "SoilId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -555,9 +552,9 @@ class SoilLayerCollection(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "soillayers"
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    SoilLayers: List[PersistableSoilLayer] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    SoilLayers: list[PersistableSoilLayer] = []
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -570,7 +567,7 @@ class SoilLayerCollection(DStabilitySubStructure):
         self.SoilLayers.append(psl)
         return psl
 
-    def get_ids(self, exclude_soil_layer_id: Optional[int]) -> Set[str]:
+    def get_ids(self, exclude_soil_layer_id: int | None) -> set[str]:
         if exclude_soil_layer_id is not None:
             exclude_soil_layer_id = str(exclude_soil_layer_id)
         return {
@@ -581,7 +578,7 @@ class SoilLayerCollection(DStabilitySubStructure):
 
 
 class PersistableSoilCorrelation(DStabilityBaseModelStructure):
-    CorrelatedSoilIds: Optional[List[str]] = None
+    CorrelatedSoilIds: list[str] | None = None
 
     @field_validator("CorrelatedSoilIds", mode="before")
     def transform_id_to_str(cls, values) -> str:
@@ -597,19 +594,19 @@ class PersistableSoilCorrelation(DStabilityBaseModelStructure):
 class SoilCorrelation(DStabilitySubStructure):
     """soilcorrelations.json"""
 
-    ContentVersion: Optional[str] = "2"
-    SoilCorrelations: Optional[List[Optional[PersistableSoilCorrelation]]] = []
+    ContentVersion: str | None = "2"
+    SoilCorrelations: list[PersistableSoilCorrelation | None] | None = []
 
     @classmethod
     def structure_name(cls) -> str:
         return "soilcorrelations"
 
-    def add_soil_correlation(self, list_correlated_soil_ids: List[str]):
+    def add_soil_correlation(self, list_correlated_soil_ids: list[str]):
         """
         Add a new soil correlation to the model.
 
         Args:
-            list_correlated_soil_ids (List[str]): a list of soil ids that are correlated
+            list_correlated_soil_ids (list[str]): a list of soil ids that are correlated
 
         Returns:
             None
@@ -654,7 +651,7 @@ class PersistableSuTable(DStabilityBaseModelStructure):
     StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    SuTablePoints: List[PersistableSuTablePoint] = []
+    SuTablePoints: list[PersistableSuTablePoint] = []
     IsSuTableProbabilistic: bool = False
     SuTableVariationCoefficient: float = 0.0
 
@@ -675,7 +672,7 @@ class PersistableSigmaTauTablePoint(DStabilitySubStructure):
 
 
 class PersistableSigmaTauTable(DStabilityBaseModelStructure):
-    SigmaTauTablePoints: List[PersistableSigmaTauTablePoint] = []
+    SigmaTauTablePoints: list[PersistableSigmaTauTablePoint] = []
     IsSigmaTauTableProbabilistic: bool = False
     SigmaTauTableVariationCoefficient: float = 0.0
 
@@ -694,40 +691,40 @@ class PersistableSigmaTauTable(DStabilityBaseModelStructure):
 
 
 class PersistableMohrCoulombClassicShearStrengthModel(DStabilityBaseModelStructure):
-    Cohesion: Optional[float] = 0.0
+    Cohesion: float | None = 0.0
     CohesionAndFrictionAngleCorrelated: bool = False
     CohesionStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    FrictionAngle: Optional[float] = 0.0
+    FrictionAngle: float | None = 0.0
     FrictionAngleStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
 
 
 class PersistableMohrCoulombAdvancedShearStrengthModel(DStabilityBaseModelStructure):
-    Cohesion: Optional[float] = 0.0
+    Cohesion: float | None = 0.0
     CohesionAndFrictionAngleCorrelated: bool = False
     CohesionStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    Dilatancy: Optional[float] = 0.0
+    Dilatancy: float | None = 0.0
     DilatancyStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    FrictionAngle: Optional[float] = 0.0
+    FrictionAngle: float | None = 0.0
     FrictionAngleStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
 
 
 class PersistableSuShearStrengthModel(DStabilityBaseModelStructure):
-    ShearStrengthRatio: Optional[float] = 0.0
+    ShearStrengthRatio: float | None = 0.0
     ShearStrengthRatioAndShearStrengthExponentCorrelated: bool = False
     ShearStrengthRatioStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
-    StrengthIncreaseExponent: Optional[float] = 1.0
+    StrengthIncreaseExponent: float | None = 1.0
     StrengthIncreaseExponentStochasticParameter: PersistableStochasticParameter = (
         PersistableStochasticParameter()
     )
@@ -737,8 +734,8 @@ class PersistableSoil(DStabilityBaseModelStructure):
     Code: str = ""
     Id: str = ""
     IsProbabilistic: bool = False
-    Name: Optional[str] = ""
-    Notes: Optional[str] = ""
+    Name: str | None = ""
+    Notes: str | None = ""
     ShearStrengthModelTypeAbovePhreaticLevel: (
         ShearStrengthModelTypePhreaticLevelInternal
     ) = ShearStrengthModelTypePhreaticLevelInternal.MOHR_COULOMB_ADVANCED
@@ -769,8 +766,8 @@ class PersistableSoil(DStabilityBaseModelStructure):
 class SoilCollection(DStabilitySubStructure):
     """soils.json"""
 
-    ContentVersion: Optional[str] = "2"
-    Soils: List[PersistableSoil] = [
+    ContentVersion: str | None = "2"
+    Soils: list[PersistableSoil] = [
         PersistableSoil(
             Id="2",
             Name="Embankment new",
@@ -1131,55 +1128,55 @@ class SoilCollection(DStabilitySubStructure):
 
 
 class PersistableForbiddenLine(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    End: Optional[PersistablePoint] = None
-    Start: Optional[PersistablePoint] = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    End: PersistablePoint | None = None
+    Start: PersistablePoint | None = None
 
 
 class PersistableGeotextile(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    End: Optional[PersistablePoint] = None
-    ReductionArea: Optional[Union[float, str]] = "NaN"
-    Start: Optional[PersistablePoint] = None
-    TensileStrength: Optional[Union[float, str]] = "NaN"
+    Label: str | None = ""
+    Notes: str | None = ""
+    End: PersistablePoint | None = None
+    ReductionArea: float | str | None = "NaN"
+    Start: PersistablePoint | None = None
+    TensileStrength: float | str | None = "NaN"
 
 
 class PersistableStressAtDistance(DStabilityBaseModelStructure):
-    Distance: Optional[Union[float, str]] = "NaN"
-    Stress: Optional[Union[float, str]] = "NaN"
+    Distance: float | str | None = "NaN"
+    Stress: float | str | None = "NaN"
 
 
 class PersistableNail(DStabilityBaseModelStructure):
-    BendingStiffness: Optional[float] = 0.0
-    CriticalAngle: Optional[float] = 0.0
-    Diameter: Optional[Union[float, str]] = "NaN"
-    Direction: Optional[float] = 0.0
-    GroutDiameter: Optional[float] = 0.0
-    HorizontalSpacing: Optional[float] = 0.0
-    Label: Optional[str] = ""
-    LateralStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
-    Length: Optional[Union[float, str]] = "NaN"
-    Location: Optional[PersistablePoint] = None
-    MaxPullForce: Optional[float] = 0.0
-    Key: Optional[int] = 1
-    Notes: Optional[str] = ""
-    PlasticMoment: Optional[float] = 0.0
-    ShearStresses: Optional[List[Optional[PersistableStressAtDistance]]] = []
-    UseFacing: Optional[bool] = False
-    UseLateralStress: Optional[bool] = False
-    UseShearStress: Optional[bool] = False
+    BendingStiffness: float | None = 0.0
+    CriticalAngle: float | None = 0.0
+    Diameter: float | str | None = "NaN"
+    Direction: float | None = 0.0
+    GroutDiameter: float | None = 0.0
+    HorizontalSpacing: float | None = 0.0
+    Label: str | None = ""
+    LateralStresses: list[PersistableStressAtDistance | None] | None = []
+    Length: float | str | None = "NaN"
+    Location: PersistablePoint | None = None
+    MaxPullForce: float | None = 0.0
+    Key: int | None = 1
+    Notes: str | None = ""
+    PlasticMoment: float | None = 0.0
+    ShearStresses: list[PersistableStressAtDistance | None] | None = []
+    UseFacing: bool | None = False
+    UseLateralStress: bool | None = False
+    UseShearStress: bool | None = False
 
 
 class Reinforcements(DStabilitySubStructure):
     """reinforcements/reinforcements_x.json"""
 
-    Id: Optional[str] = None
-    ContentVersion: Optional[str] = "2"
-    ForbiddenLines: List[PersistableForbiddenLine] = []
-    Geotextiles: List[PersistableGeotextile] = []
-    Nails: List[PersistableNail] = []
+    Id: str | None = None
+    ContentVersion: str | None = "2"
+    ForbiddenLines: list[PersistableForbiddenLine] = []
+    Geotextiles: list[PersistableGeotextile] = []
+    Nails: list[PersistableNail] = []
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1189,7 +1186,7 @@ class Reinforcements(DStabilitySubStructure):
 
     def add_reinforcement(
         self, reinforcement: "DStabilityReinforcement"
-    ) -> Union[PersistableForbiddenLine, PersistableGeotextile, PersistableNail]:
+    ) -> PersistableForbiddenLine | PersistableGeotextile | PersistableNail:
         internal_datastructure = reinforcement._to_internal_datastructure()
         plural_class_name = f"{reinforcement.__class__.__name__}s"
         getattr(self, plural_class_name).append(internal_datastructure)
@@ -1199,22 +1196,22 @@ class Reinforcements(DStabilitySubStructure):
 class ProjectInfo(DStabilitySubStructure):
     """projectinfo.json."""
 
-    Analyst: Optional[str] = ""
-    ApplicationCreated: Optional[str] = ""
-    ApplicationModified: Optional[str] = ""
-    ContentVersion: Optional[str] = "2"
-    Created: Optional[date] = datetime.now().date()
-    CrossSection: Optional[str] = ""
-    Date: Optional[date] = datetime.now().date()
-    IsDataValidated: Optional[bool] = False
-    LastModified: Optional[date] = datetime.now().date()
-    LastModifier: Optional[str] = "GEOLib"
-    Path: Optional[str] = ""
-    Project: Optional[str] = ""
-    Remarks: Optional[str] = f"Created with GEOLib {version}"
+    Analyst: str | None = ""
+    ApplicationCreated: str | None = ""
+    ApplicationModified: str | None = ""
+    ContentVersion: str | None = "2"
+    Created: date | None = datetime.now().date()
+    CrossSection: str | None = ""
+    Date: date | None = datetime.now().date()
+    IsDataValidated: bool | None = False
+    LastModified: date | None = datetime.now().date()
+    LastModifier: str | None = "GEOLib"
+    Path: str | None = ""
+    Project: str | None = ""
+    Remarks: str | None = f"Created with GEOLib {version}"
 
     @classmethod
-    def nltime(cls, date: Union[date, str]) -> date:
+    def nltime(cls, date: date | str) -> date:
         if isinstance(date, str):
             position = date.index(max(date.split("-"), key=len))
             if position > 0:
@@ -1229,16 +1226,16 @@ class ProjectInfo(DStabilitySubStructure):
 
 
 class PersistableBondStress(DStabilityBaseModelStructure):
-    Sigma: Optional[Union[float, str]] = "NaN"
-    Tau: Optional[Union[float, str]] = "NaN"
+    Sigma: float | str | None = "NaN"
+    Tau: float | str | None = "NaN"
 
 
 class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
-    AreBondStressesActive: Optional[bool] = False
-    BondStresses: Optional[List[Optional[PersistableBondStress]]] = []
-    CompressionRatio: Optional[Union[float, str]] = "NaN"
-    RheologicalCoefficient: Optional[Union[float, str]] = "NaN"
-    SoilId: Optional[str] = None
+    AreBondStressesActive: bool | None = False
+    BondStresses: list[PersistableBondStress | None] | None = []
+    CompressionRatio: float | str | None = "NaN"
+    RheologicalCoefficient: float | str | None = "NaN"
+    SoilId: str | None = None
 
     @field_validator("SoilId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1250,10 +1247,8 @@ class PersistableNailPropertiesForSoil(DStabilityBaseModelStructure):
 class NailProperties(DStabilitySubStructure):
     """nailpropertiesforsoils.json"""
 
-    ContentVersion: Optional[str] = "2"
-    NailPropertiesForSoils: Optional[List[Optional[PersistableNailPropertiesForSoil]]] = (
-        []
-    )
+    ContentVersion: str | None = "2"
+    NailPropertiesForSoils: list[PersistableNailPropertiesForSoil | None] | None = []
 
     @classmethod
     def structure_name(cls) -> str:
@@ -1261,8 +1256,8 @@ class NailProperties(DStabilitySubStructure):
 
 
 class PersistableConsolidation(DStabilityBaseModelStructure):
-    Degree: Optional[Union[float, str]] = "NaN"
-    LayerId: Optional[str] = None
+    Degree: float | str | None = "NaN"
+    LayerId: str | None = None
 
     @field_validator("LayerId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1272,18 +1267,18 @@ class PersistableConsolidation(DStabilityBaseModelStructure):
 
 
 class PersistableEarthquake(DStabilityBaseModelStructure):
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    FreeWaterFactor: Optional[float] = 0.0
-    HorizontalFactor: Optional[float] = 0.0
-    IsEnabled: Optional[bool] = False
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    VerticalFactor: Optional[float] = 0.0
+    Consolidations: list[PersistableConsolidation | None] | None = []
+    FreeWaterFactor: float | None = 0.0
+    HorizontalFactor: float | None = 0.0
+    IsEnabled: bool | None = False
+    Label: str | None = ""
+    Notes: str | None = ""
+    VerticalFactor: float | None = 0.0
 
 
 class PersistableLayerLoad(DStabilityBaseModelStructure):
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    LayerId: Optional[str] = None
+    Consolidations: list[PersistableConsolidation | None] | None = []
+    LayerId: str | None = None
 
     @field_validator("LayerId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1293,47 +1288,47 @@ class PersistableLayerLoad(DStabilityBaseModelStructure):
 
 
 class PersistableLineLoad(DStabilityBaseModelStructure):
-    Angle: Optional[Union[float, str]] = "NaN"
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    Label: Optional[str] = ""
-    Location: Optional[PersistablePoint] = None
-    Magnitude: Optional[Union[float, str]] = "NaN"
-    Notes: Optional[str] = ""
-    Spread: Optional[Union[float, str]] = "NaN"
+    Angle: float | str | None = "NaN"
+    Consolidations: list[PersistableConsolidation | None] | None = []
+    Label: str | None = ""
+    Location: PersistablePoint | None = None
+    Magnitude: float | str | None = "NaN"
+    Notes: str | None = ""
+    Spread: float | str | None = "NaN"
 
 
 class PersistableTree(DStabilityBaseModelStructure):
-    Force: Optional[Union[float, str]] = "NaN"
-    Label: Optional[str] = ""
-    Location: Optional[PersistablePoint] = None
-    Notes: Optional[str] = ""
-    RootZoneWidth: Optional[Union[float, str]] = "NaN"
-    Spread: Optional[Union[float, str]] = "NaN"
+    Force: float | str | None = "NaN"
+    Label: str | None = ""
+    Location: PersistablePoint | None = None
+    Notes: str | None = ""
+    RootZoneWidth: float | str | None = "NaN"
+    Spread: float | str | None = "NaN"
 
 
 class PersistableUniformLoad(DStabilityBaseModelStructure):
-    Consolidations: Optional[List[Optional[PersistableConsolidation]]] = []
-    End: Optional[Union[float, str]] = "NaN"
-    Label: Optional[str] = ""
-    Magnitude: Optional[Union[float, str]] = "NaN"
-    Notes: Optional[str] = ""
-    Spread: Optional[Union[float, str]] = "NaN"
-    Start: Optional[Union[float, str]] = "NaN"
+    Consolidations: list[PersistableConsolidation | None] | None = []
+    End: float | str | None = "NaN"
+    Label: str | None = ""
+    Magnitude: float | str | None = "NaN"
+    Notes: str | None = ""
+    Spread: float | str | None = "NaN"
+    Start: float | str | None = "NaN"
 
 
-Load = Union[PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad]
+Load = PersistableUniformLoad | PersistableLineLoad | PersistableLayerLoad
 
 
 class Loads(DStabilitySubStructure):
     """loads/loads_x.json"""
 
-    Id: Optional[str] = None
-    ContentVersion: Optional[str] = "2"
-    Earthquake: Optional[PersistableEarthquake] = PersistableEarthquake()
-    LayerLoads: Optional[List[Optional[PersistableLayerLoad]]] = []
-    LineLoads: Optional[List[Optional[PersistableLineLoad]]] = []
-    Trees: Optional[List[Optional[PersistableTree]]] = []
-    UniformLoads: Optional[List[Optional[PersistableUniformLoad]]] = []
+    Id: str | None = None
+    ContentVersion: str | None = "2"
+    Earthquake: PersistableEarthquake | None = PersistableEarthquake()
+    LayerLoads: list[PersistableLayerLoad | None] | None = []
+    LineLoads: list[PersistableLineLoad | None] | None = []
+    Trees: list[PersistableTree | None] | None = []
+    UniformLoads: list[PersistableUniformLoad | None] | None = []
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1342,10 +1337,13 @@ class Loads(DStabilitySubStructure):
         return str(value)
 
     def add_load(
-        self, load: "DStabilityLoad", consolidations: List["Consolidation"]
-    ) -> Union[
-        PersistableUniformLoad, PersistableLineLoad, PersistableLayerLoad, PersistableTree
-    ]:
+        self, load: "DStabilityLoad", consolidations: list["Consolidation"]
+    ) -> (
+        PersistableUniformLoad
+        | PersistableLineLoad
+        | PersistableLayerLoad
+        | PersistableTree
+    ):
         internal_datastructure = load.to_internal_datastructure()
 
         # Add consolidations if the load supports it
@@ -1366,7 +1364,7 @@ class Loads(DStabilitySubStructure):
         return internal_datastructure
 
     def add_layer_load(
-        self, soil_layer_id: int, consolidations: List["Consolidation"]
+        self, soil_layer_id: int, consolidations: list["Consolidation"]
     ) -> PersistableLayerLoad:
         layer_load = PersistableLayerLoad(
             LayerId=str(soil_layer_id),
@@ -1377,10 +1375,10 @@ class Loads(DStabilitySubStructure):
 
 
 class PersistableLayer(DStabilityBaseModelStructure):
-    Id: Optional[str] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    Points: Annotated[List[PersistablePoint], Field(min_length=3)]
+    Id: str | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    Points: Annotated[list[PersistablePoint], Field(min_length=3)]
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1411,9 +1409,9 @@ class Geometry(DStabilitySubStructure):
     def structure_group(cls) -> str:
         return "geometries"
 
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = None
-    Layers: List[PersistableLayer] = []
+    ContentVersion: str | None = "2"
+    Id: str | None = None
+    Layers: list[PersistableLayer] = []
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1449,7 +1447,7 @@ class Geometry(DStabilitySubStructure):
         raise ValueError(f"Layer id {id} not found in this geometry")
 
     def add_layer(
-        self, id: str, label: str, notes: str, points: List[Point]
+        self, id: str, label: str, notes: str, points: list[Point]
     ) -> PersistableLayer:
         """
         Add a new layer to the model. Layers are expected;
@@ -1461,7 +1459,7 @@ class Geometry(DStabilitySubStructure):
             id (str): id of the layer
             label (str): label of the layer
             notes (str): notes for the layers
-            points (List[Points]): list of Point classes
+            points (list[Points]): list of Point classes
 
         Returns:
             PersistableLayer: the layer as a persistable object
@@ -1478,10 +1476,10 @@ class Geometry(DStabilitySubStructure):
 
 
 class PersistableElevation(DStabilityBaseModelStructure):
-    AddedLayerId: Optional[str] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]] = None
+    AddedLayerId: str | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    Points: list[PersistablePoint | None] | None = None
 
     @field_validator("AddedLayerId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1491,18 +1489,18 @@ class PersistableElevation(DStabilityBaseModelStructure):
 
 
 class PersistableExcavation(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    Points: Optional[List[Optional[PersistablePoint]]] = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    Points: list[PersistablePoint | None] | None = None
 
 
 class Decorations(DStabilitySubStructure):
     """decorations/decorations_x.json."""
 
-    Elevations: Optional[List[Optional[PersistableElevation]]] = []
-    ContentVersion: Optional[str] = "2"
-    Excavations: Optional[List[Optional[PersistableExcavation]]] = []
-    Id: Optional[str] = None
+    Elevations: list[PersistableElevation | None] | None = []
+    ContentVersion: str | None = "2"
+    Excavations: list[PersistableExcavation | None] | None = []
+    Id: str | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1518,63 +1516,61 @@ class Decorations(DStabilitySubStructure):
 
 
 class PersistableCircle(DStabilityBaseModelStructure):
-    Center: Optional[PersistablePoint] = PersistablePoint()
-    Radius: Optional[Union[float, str]] = "NaN"
+    Center: PersistablePoint | None = PersistablePoint()
+    Radius: float | str | None = "NaN"
 
 
 class PersistableBishopSettings(DStabilityBaseModelStructure):
-    Circle: Optional[PersistableCircle] = PersistableCircle()
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
+    Circle: PersistableCircle | None = PersistableCircle()
+    Label: str | None = ""
+    Notes: str | None = ""
 
 
 class PersistableGridEnhancements(DStabilityBaseModelStructure):
-    ExtrapolateSearchSpace: Optional[bool] = True
+    ExtrapolateSearchSpace: bool | None = True
 
 
 class NullablePersistablePoint(DStabilityBaseModelStructure):
-    X: Optional[Union[float, str]] = "NaN"
-    Z: Optional[Union[float, str]] = "NaN"
+    X: float | str | None = "NaN"
+    Z: float | str | None = "NaN"
 
 
 class PersistableSearchGrid(DStabilityBaseModelStructure):
-    BottomLeft: Optional[NullablePersistablePoint] = None
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    NumberOfPointsInX: Optional[int] = 1
-    NumberOfPointsInZ: Optional[int] = 1
-    Space: Optional[float] = 1.0
+    BottomLeft: NullablePersistablePoint | None = None
+    Label: str | None = ""
+    Notes: str | None = ""
+    NumberOfPointsInX: int | None = 1
+    NumberOfPointsInZ: int | None = 1
+    Space: float | None = 1.0
 
 
 class PersistableSlipPlaneConstraints(DStabilityBaseModelStructure):
-    IsSizeConstraintsEnabled: Optional[bool] = False
-    IsZoneAConstraintsEnabled: Optional[bool] = False
-    IsZoneBConstraintsEnabled: Optional[bool] = False
-    MinimumSlipPlaneDepth: Optional[float] = 0.0
-    MinimumSlipPlaneLength: Optional[float] = 0.0
-    WidthZoneA: Optional[float] = 0.0
-    WidthZoneB: Optional[float] = 0.0
-    XLeftZoneA: Optional[float] = 0.0
-    XLeftZoneB: Optional[float] = 0.0
+    IsSizeConstraintsEnabled: bool | None = False
+    IsZoneAConstraintsEnabled: bool | None = False
+    IsZoneBConstraintsEnabled: bool | None = False
+    MinimumSlipPlaneDepth: float | None = 0.0
+    MinimumSlipPlaneLength: float | None = 0.0
+    WidthZoneA: float | None = 0.0
+    WidthZoneB: float | None = 0.0
+    XLeftZoneA: float | None = 0.0
+    XLeftZoneB: float | None = 0.0
 
 
 class PersistableTangentLines(DStabilityBaseModelStructure):
-    BottomTangentLineZ: Optional[Union[float, str]] = "NaN"
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    NumberOfTangentLines: Optional[int] = 1
-    Space: Optional[float] = 0.5
+    BottomTangentLineZ: float | str | None = "NaN"
+    Label: str | None = ""
+    Notes: str | None = ""
+    NumberOfTangentLines: int | None = 1
+    Space: float | None = 0.5
 
 
 class PersistableBishopBruteForceSettings(DStabilityBaseModelStructure):
-    GridEnhancements: Optional[PersistableGridEnhancements] = (
-        PersistableGridEnhancements()
-    )
-    SearchGrid: Optional[PersistableSearchGrid] = PersistableSearchGrid()
-    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints] = (
+    GridEnhancements: PersistableGridEnhancements | None = PersistableGridEnhancements()
+    SearchGrid: PersistableSearchGrid | None = PersistableSearchGrid()
+    SlipPlaneConstraints: PersistableSlipPlaneConstraints | None = (
         PersistableSlipPlaneConstraints()
     )
-    TangentLines: Optional[PersistableTangentLines] = PersistableTangentLines()
+    TangentLines: PersistableTangentLines | None = PersistableTangentLines()
 
 
 class CalculationTypeEnum(Enum):
@@ -1588,16 +1584,16 @@ CalculationType = CalculationTypeEnum
 
 
 class PersistableGeneticSlipPlaneConstraints(DStabilityBaseModelStructure):
-    IsEnabled: Optional[bool] = False
-    MinimumAngleBetweenSlices: Optional[float] = 0.0
-    MinimumThrustLinePercentageInsideSlices: Optional[float] = 0.0
+    IsEnabled: bool | None = False
+    MinimumAngleBetweenSlices: float | None = 0.0
+    MinimumThrustLinePercentageInsideSlices: float | None = 0.0
 
 
 class PersistableSpencerSettings(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints] = (
+    Label: str | None = ""
+    Notes: str | None = ""
+    SlipPlane: list[PersistablePoint | None] | None = None
+    SlipPlaneConstraints: PersistableGeneticSlipPlaneConstraints | None = (
         PersistableGeneticSlipPlaneConstraints()
     )
 
@@ -1611,76 +1607,76 @@ OptionsType = OptionsTypeEnum
 
 
 class PersistableSpencerGeneticSettings(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
-    SlipPlaneA: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneB: Optional[List[Optional[PersistablePoint]]] = None
-    SlipPlaneConstraints: Optional[PersistableGeneticSlipPlaneConstraints] = (
+    Label: str | None = ""
+    Notes: str | None = ""
+    OptionsType: OptionsTypeEnum | None = OptionsType.DEFAULT
+    SlipPlaneA: list[PersistablePoint | None] | None = None
+    SlipPlaneB: list[PersistablePoint | None] | None = None
+    SlipPlaneConstraints: PersistableGeneticSlipPlaneConstraints | None = (
         PersistableGeneticSlipPlaneConstraints()
     )
 
 
 class PersistableTwoCirclesOnTangentLine(DStabilityBaseModelStructure):
-    FirstCircleCenter: Optional[NullablePersistablePoint] = NullablePersistablePoint()
-    FirstCircleRadius: Optional[Union[float, str]] = "NaN"
-    SecondCircleCenter: Optional[NullablePersistablePoint] = NullablePersistablePoint()
+    FirstCircleCenter: NullablePersistablePoint | None = NullablePersistablePoint()
+    FirstCircleRadius: float | str | None = "NaN"
+    SecondCircleCenter: NullablePersistablePoint | None = NullablePersistablePoint()
 
 
 class PersistableUpliftVanSettings(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    SlipPlane: Optional[PersistableTwoCirclesOnTangentLine] = (
+    Label: str | None = ""
+    Notes: str | None = ""
+    SlipPlane: PersistableTwoCirclesOnTangentLine | None = (
         PersistableTwoCirclesOnTangentLine()
     )
 
 
 class PersistableSearchArea(DStabilityBaseModelStructure):
-    Height: Optional[float] = 0.0
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    TopLeft: Optional[NullablePersistablePoint] = None
-    Width: Optional[float] = 0.0
+    Height: float | None = 0.0
+    Label: str | None = ""
+    Notes: str | None = ""
+    TopLeft: NullablePersistablePoint | None = None
+    Width: float | None = 0.0
 
 
 class PersistableTangentArea(DStabilityBaseModelStructure):
-    Height: Optional[float] = 0.0
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    TopZ: Optional[Union[float, str]] = "NaN"
+    Height: float | None = 0.0
+    Label: str | None = ""
+    Notes: str | None = ""
+    TopZ: float | str | None = "NaN"
 
 
 class PersistableUpliftVanParticleSwarmSettings(DStabilityBaseModelStructure):
-    Label: Optional[str] = ""
-    Notes: Optional[str] = ""
-    OptionsType: Optional[OptionsTypeEnum] = OptionsType.DEFAULT
-    SearchAreaA: Optional[PersistableSearchArea] = PersistableSearchArea()
-    SearchAreaB: Optional[PersistableSearchArea] = PersistableSearchArea()
-    SlipPlaneConstraints: Optional[PersistableSlipPlaneConstraints] = (
+    Label: str | None = ""
+    Notes: str | None = ""
+    OptionsType: OptionsTypeEnum | None = OptionsType.DEFAULT
+    SearchAreaA: PersistableSearchArea | None = PersistableSearchArea()
+    SearchAreaB: PersistableSearchArea | None = PersistableSearchArea()
+    SlipPlaneConstraints: PersistableSlipPlaneConstraints | None = (
         PersistableSlipPlaneConstraints()
     )
-    TangentArea: Optional[PersistableTangentArea] = PersistableTangentArea()
+    TangentArea: PersistableTangentArea | None = PersistableTangentArea()
 
 
 class CalculationSettings(DStabilitySubStructure):
     """calculationsettings/calculationsettings_x.json"""
 
-    AnalysisType: Optional[AnalysisTypeEnum] = AnalysisTypeEnum.BISHOP_BRUTE_FORCE
-    Bishop: Optional[PersistableBishopSettings] = PersistableBishopSettings()
-    BishopBruteForce: Optional[PersistableBishopBruteForceSettings] = (
+    AnalysisType: AnalysisTypeEnum | None = AnalysisTypeEnum.BISHOP_BRUTE_FORCE
+    Bishop: PersistableBishopSettings | None = PersistableBishopSettings()
+    BishopBruteForce: PersistableBishopBruteForceSettings | None = (
         PersistableBishopBruteForceSettings()
     )
-    CalculationType: Optional[CalculationTypeEnum] = CalculationTypeEnum.DETERMINISTIC
-    ContentVersion: Optional[str] = "2"
-    Id: Optional[str] = "19"
-    ModelFactorMean: Optional[float] = 1.05
-    ModelFactorStandardDeviation: Optional[float] = 0.033
-    Spencer: Optional[PersistableSpencerSettings] = PersistableSpencerSettings()
-    SpencerGenetic: Optional[PersistableSpencerGeneticSettings] = (
+    CalculationType: CalculationTypeEnum | None = CalculationTypeEnum.DETERMINISTIC
+    ContentVersion: str | None = "2"
+    Id: str | None = "19"
+    ModelFactorMean: float | None = 1.05
+    ModelFactorStandardDeviation: float | None = 0.033
+    Spencer: PersistableSpencerSettings | None = PersistableSpencerSettings()
+    SpencerGenetic: PersistableSpencerGeneticSettings | None = (
         PersistableSpencerGeneticSettings()
     )
-    UpliftVan: Optional[PersistableUpliftVanSettings] = PersistableUpliftVanSettings()
-    UpliftVanParticleSwarm: Optional[PersistableUpliftVanParticleSwarmSettings] = (
+    UpliftVan: PersistableUpliftVanSettings | None = PersistableUpliftVanSettings()
+    UpliftVanParticleSwarm: PersistableUpliftVanParticleSwarmSettings | None = (
         PersistableUpliftVanParticleSwarmSettings()
     )
 
@@ -1728,61 +1724,61 @@ class CalculationSettings(DStabilitySubStructure):
 
 
 class PersistableSlice(DStabilityBaseModelStructure):
-    ArcLength: Optional[Union[float, str]] = "NaN"
-    BottomAngle: Optional[Union[float, str]] = "NaN"
-    BottomLeft: Optional[PersistablePoint] = None
-    BottomRight: Optional[PersistablePoint] = None
-    CohesionInput: Optional[Union[float, str]] = "NaN"
-    CohesionOutput: Optional[Union[float, str]] = "NaN"
-    DegreeOfConsolidationLoadPorePressure: Optional[Union[float, str]] = "NaN"
-    DegreeOfConsolidationPorePressure: Optional[Union[float, str]] = "NaN"
-    DilatancyInput: Optional[Union[float, str]] = "NaN"
-    DilatancyOutput: Optional[Union[float, str]] = "NaN"
-    EffectiveStress: Optional[Union[float, str]] = "NaN"
-    HorizontalPorePressure: Optional[Union[float, str]] = "NaN"
-    HorizontalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
-    HydrostaticPorePressure: Optional[Union[float, str]] = "NaN"
-    InputShearStress: Optional[Union[float, str]] = "NaN"
-    Label: Optional[str] = None
-    LoadStress: Optional[Union[float, str]] = "NaN"
-    MInput: Optional[Union[float, str]] = "NaN"
-    NormalStress: Optional[Union[float, str]] = "NaN"
-    Ocr: Optional[Union[float, str]] = "NaN"
-    OutputShearStress: Optional[Union[float, str]] = "NaN"
-    PhiInput: Optional[Union[float, str]] = "NaN"
-    PhiOutput: Optional[Union[float, str]] = "NaN"
-    PiezometricPorePressure: Optional[Union[float, str]] = "NaN"
-    Pop: Optional[Union[float, str]] = "NaN"
-    ResultantForce: Optional[Union[float, str]] = "NaN"
-    ResultantMoment: Optional[Union[float, str]] = "NaN"
-    SInput: Optional[Union[float, str]] = "NaN"
-    ShearStress: Optional[Union[float, str]] = "NaN"
-    SuInput: Optional[Union[float, str]] = "NaN"
-    SuOutput: Optional[Union[float, str]] = "NaN"
-    SurfacePorePressure: Optional[Union[float, str]] = "NaN"
-    TopAngle: Optional[Union[float, str]] = "NaN"
-    TopLeft: Optional[PersistablePoint] = None
-    TopRight: Optional[PersistablePoint] = None
-    TotalPorePressure: Optional[Union[float, str]] = "NaN"
-    TotalStress: Optional[Union[float, str]] = "NaN"
-    UpliftFactor: Optional[Union[float, str]] = "NaN"
-    VerticalPorePressure: Optional[Union[float, str]] = "NaN"
-    VerticalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
-    WaterQuakeStress: Optional[Union[float, str]] = "NaN"
-    Weight: Optional[Union[float, str]] = "NaN"
-    Width: Optional[Union[float, str]] = "NaN"
-    YieldStress: Optional[Union[float, str]] = "NaN"
-    ShearStrengthModelType: Optional[ShearStrengthModelTypePhreaticLevelInternal] = None
+    ArcLength: float | str | None = "NaN"
+    BottomAngle: float | str | None = "NaN"
+    BottomLeft: PersistablePoint | None = None
+    BottomRight: PersistablePoint | None = None
+    CohesionInput: float | str | None = "NaN"
+    CohesionOutput: float | str | None = "NaN"
+    DegreeOfConsolidationLoadPorePressure: float | str | None = "NaN"
+    DegreeOfConsolidationPorePressure: float | str | None = "NaN"
+    DilatancyInput: float | str | None = "NaN"
+    DilatancyOutput: float | str | None = "NaN"
+    EffectiveStress: float | str | None = "NaN"
+    HorizontalPorePressure: float | str | None = "NaN"
+    HorizontalSoilQuakeStress: float | str | None = "NaN"
+    HydrostaticPorePressure: float | str | None = "NaN"
+    InputShearStress: float | str | None = "NaN"
+    Label: str | None = None
+    LoadStress: float | str | None = "NaN"
+    MInput: float | str | None = "NaN"
+    NormalStress: float | str | None = "NaN"
+    Ocr: float | str | None = "NaN"
+    OutputShearStress: float | str | None = "NaN"
+    PhiInput: float | str | None = "NaN"
+    PhiOutput: float | str | None = "NaN"
+    PiezometricPorePressure: float | str | None = "NaN"
+    Pop: float | str | None = "NaN"
+    ResultantForce: float | str | None = "NaN"
+    ResultantMoment: float | str | None = "NaN"
+    SInput: float | str | None = "NaN"
+    ShearStress: float | str | None = "NaN"
+    SuInput: float | str | None = "NaN"
+    SuOutput: float | str | None = "NaN"
+    SurfacePorePressure: float | str | None = "NaN"
+    TopAngle: float | str | None = "NaN"
+    TopLeft: PersistablePoint | None = None
+    TopRight: PersistablePoint | None = None
+    TotalPorePressure: float | str | None = "NaN"
+    TotalStress: float | str | None = "NaN"
+    UpliftFactor: float | str | None = "NaN"
+    VerticalPorePressure: float | str | None = "NaN"
+    VerticalSoilQuakeStress: float | str | None = "NaN"
+    WaterQuakeStress: float | str | None = "NaN"
+    Weight: float | str | None = "NaN"
+    Width: float | str | None = "NaN"
+    YieldStress: float | str | None = "NaN"
+    ShearStrengthModelType: ShearStrengthModelTypePhreaticLevelInternal | None = None
 
 
 class BishopBruteForceResult(DStabilitySubStructure):
-    Circle: Optional[PersistableCircle] = None
-    FactorOfSafety: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    Slices: Optional[List[Optional[PersistableSlice]]] = None
-    ResultThreshold: Optional[Union[float, str]] = "NaN"
-    SlipPlaneResults: Optional[list] = None
+    Circle: PersistableCircle | None = None
+    FactorOfSafety: float | str | None = "NaN"
+    Id: str | None = None
+    Points: list[PersistablePoint | None] | None = None
+    Slices: list[PersistableSlice | None] | None = None
+    ResultThreshold: float | str | None = "NaN"
+    SlipPlaneResults: list | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1807,11 +1803,11 @@ class BishopBruteForceResult(DStabilitySubStructure):
 
 
 class PersistableSoilContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[Union[float, str]] = "NaN"
-    Property: Optional[str] = None
-    SoilId: Optional[str] = None
-    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
-    Value: Optional[Union[float, str]] = "NaN"
+    Alpha: float | str | None = "NaN"
+    Property: str | None = None
+    SoilId: str | None = None
+    UncorrelatedAlpha: float | str | None = "NaN"
+    Value: float | str | None = "NaN"
 
     @field_validator("SoilId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1821,11 +1817,11 @@ class PersistableSoilContribution(DStabilityBaseModelStructure):
 
 
 class PersistableCalculationContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[Union[float, str]] = "NaN"
-    Property: Optional[str] = None
-    CalculationId: Optional[str] = None
-    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
-    Value: Optional[Union[float, str]] = "NaN"
+    Alpha: float | str | None = "NaN"
+    Property: str | None = None
+    CalculationId: str | None = None
+    UncorrelatedAlpha: float | str | None = "NaN"
+    Value: float | str | None = "NaN"
 
     @field_validator("CalculationId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1835,11 +1831,11 @@ class PersistableCalculationContribution(DStabilityBaseModelStructure):
 
 
 class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[Union[float, str]] = "NaN"
-    Property: Optional[str] = None
-    StateLinePointId: Optional[str] = None
-    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
-    Value: Optional[Union[float, str]] = "NaN"
+    Alpha: float | str | None = "NaN"
+    Property: str | None = None
+    StateLinePointId: str | None = None
+    UncorrelatedAlpha: float | str | None = "NaN"
+    Value: float | str | None = "NaN"
 
     @field_validator("StateLinePointId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1849,11 +1845,11 @@ class PersistableStateLinePointContribution(DStabilityBaseModelStructure):
 
 
 class PersistableStatePointContribution(DStabilityBaseModelStructure):
-    Alpha: Optional[Union[float, str]] = "NaN"
-    Property: Optional[str] = None
-    StatePointId: Optional[str] = None
-    UncorrelatedAlpha: Optional[Union[float, str]] = "NaN"
-    Value: Optional[Union[float, str]] = "NaN"
+    Alpha: float | str | None = "NaN"
+    Property: str | None = None
+    StatePointId: str | None = None
+    UncorrelatedAlpha: float | str | None = "NaN"
+    Value: float | str | None = "NaN"
 
     @field_validator("StatePointId", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1863,22 +1859,20 @@ class PersistableStatePointContribution(DStabilityBaseModelStructure):
 
 
 class BishopReliabilityResult(DStabilitySubStructure):
-    Circle: Optional[PersistableCircle] = None
-    Converged: Optional[bool] = None
-    FailureProbability: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
-    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
-    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    CalculationContributions: Optional[
-        List[Optional[PersistableCalculationContribution]]
-    ] = None
-    StateLinePointContributions: Optional[
-        List[Optional[PersistableStateLinePointContribution]]
-    ] = None
-    StatePointContributions: Optional[
-        List[Optional[PersistableStatePointContribution]]
-    ] = None
+    Circle: PersistableCircle | None = None
+    Converged: bool | None = None
+    FailureProbability: float | str | None = "NaN"
+    Id: str | None = None
+    ReliabilityIndex: float | str | None = "NaN"
+    DistanceToConvergence: float | str | None = "NaN"
+    SoilContributions: list[PersistableSoilContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1903,24 +1897,22 @@ class BishopReliabilityResult(DStabilitySubStructure):
 
 
 class BishopBruteForceReliabilityResult(DStabilitySubStructure):
-    Circle: Optional[PersistableCircle] = None
-    Converged: Optional[bool] = None
-    FailureProbability: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
-    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
-    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    CalculationContributions: Optional[
-        List[Optional[PersistableCalculationContribution]]
-    ] = None
-    StateLinePointContributions: Optional[
-        List[Optional[PersistableStateLinePointContribution]]
-    ] = None
-    StatePointContributions: Optional[
-        List[Optional[PersistableStatePointContribution]]
-    ] = None
-    ResultThreshold: Optional[Union[float, str]] = "NaN"
-    SlipPlaneResults: Optional[list] = None
+    Circle: PersistableCircle | None = None
+    Converged: bool | None = None
+    FailureProbability: float | str | None = "NaN"
+    Id: str | None = None
+    ReliabilityIndex: float | str | None = "NaN"
+    DistanceToConvergence: float | str | None = "NaN"
+    SoilContributions: list[PersistableSoilContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    ResultThreshold: float | str | None = "NaN"
+    SlipPlaneResults: list | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1945,11 +1937,11 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
 
 
 class BishopResult(DStabilitySubStructure):
-    Circle: Optional[PersistableCircle] = None
-    FactorOfSafety: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    Slices: Optional[List[Optional[PersistableSlice]]] = None
+    Circle: PersistableCircle | None = None
+    FactorOfSafety: float | str | None = "NaN"
+    Id: str | None = None
+    Points: list[PersistablePoint | None] | None = None
+    Slices: list[PersistableSlice | None] | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1974,67 +1966,67 @@ class BishopResult(DStabilitySubStructure):
 
 
 class PersistableSpencerSlice(DStabilityBaseModelStructure):
-    ArcLength: Optional[Union[float, str]] = "NaN"
-    BottomAngle: Optional[Union[float, str]] = "NaN"
-    BottomLeft: Optional[PersistablePoint] = None
-    BottomRight: Optional[PersistablePoint] = None
-    CohesionInput: Optional[Union[float, str]] = "NaN"
-    CohesionOutput: Optional[Union[float, str]] = "NaN"
-    DegreeOfConsolidationLoadPorePressure: Optional[Union[float, str]] = "NaN"
-    DegreeOfConsolidationPorePressure: Optional[Union[float, str]] = "NaN"
-    DilatancyInput: Optional[Union[float, str]] = "NaN"
-    DilatancyOutput: Optional[Union[float, str]] = "NaN"
-    EffectiveStress: Optional[Union[float, str]] = "NaN"
-    HorizontalPorePressure: Optional[Union[float, str]] = "NaN"
-    HorizontalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
-    HydrostaticPorePressure: Optional[Union[float, str]] = "NaN"
-    InputShearStress: Optional[Union[float, str]] = "NaN"
-    Label: Optional[str] = None
-    LeftForce: Optional[Union[float, str]] = "NaN"
-    LeftForceAngle: Optional[Union[float, str]] = "NaN"
-    LeftForceY: Optional[Union[float, str]] = "NaN"
-    LoadStress: Optional[Union[float, str]] = "NaN"
-    MInput: Optional[Union[float, str]] = "NaN"
-    NormalStress: Optional[Union[float, str]] = "NaN"
-    Ocr: Optional[Union[float, str]] = "NaN"
-    OutputShearStress: Optional[Union[float, str]] = "NaN"
-    PhiInput: Optional[Union[float, str]] = "NaN"
-    PhiOutput: Optional[Union[float, str]] = "NaN"
-    PiezometricPorePressure: Optional[Union[float, str]] = "NaN"
-    Pop: Optional[Union[float, str]] = "NaN"
-    ResultantForce: Optional[Union[float, str]] = "NaN"
-    ResultantMoment: Optional[Union[float, str]] = "NaN"
-    RightForce: Optional[Union[float, str]] = "NaN"
-    RightForceAngle: Optional[Union[float, str]] = "NaN"
-    RightForceY: Optional[Union[float, str]] = "NaN"
-    ShearStress: Optional[Union[float, str]] = "NaN"
-    SInput: Optional[Union[float, str]] = "NaN"
-    SuInput: Optional[Union[float, str]] = "NaN"
-    SuOutput: Optional[Union[float, str]] = "NaN"
-    SurfacePorePressure: Optional[Union[float, str]] = "NaN"
-    TopAngle: Optional[Union[float, str]] = "NaN"
-    TopLeft: Optional[PersistablePoint] = None
-    TopRight: Optional[PersistablePoint] = None
-    TotalPorePressure: Optional[Union[float, str]] = "NaN"
-    TotalStress: Optional[Union[float, str]] = "NaN"
-    UpliftFactor: Optional[Union[float, str]] = "NaN"
-    VerticalPorePressure: Optional[Union[float, str]] = "NaN"
-    VerticalSoilQuakeStress: Optional[Union[float, str]] = "NaN"
-    WaterQuakeStress: Optional[Union[float, str]] = "NaN"
-    Weight: Optional[Union[float, str]] = "NaN"
-    Width: Optional[Union[float, str]] = "NaN"
-    YieldStress: Optional[Union[float, str]] = "NaN"
-    ShearStrengthModelType: Optional[ShearStrengthModelTypePhreaticLevelInternal] = None
+    ArcLength: float | str | None = "NaN"
+    BottomAngle: float | str | None = "NaN"
+    BottomLeft: PersistablePoint | None = None
+    BottomRight: PersistablePoint | None = None
+    CohesionInput: float | str | None = "NaN"
+    CohesionOutput: float | str | None = "NaN"
+    DegreeOfConsolidationLoadPorePressure: float | str | None = "NaN"
+    DegreeOfConsolidationPorePressure: float | str | None = "NaN"
+    DilatancyInput: float | str | None = "NaN"
+    DilatancyOutput: float | str | None = "NaN"
+    EffectiveStress: float | str | None = "NaN"
+    HorizontalPorePressure: float | str | None = "NaN"
+    HorizontalSoilQuakeStress: float | str | None = "NaN"
+    HydrostaticPorePressure: float | str | None = "NaN"
+    InputShearStress: float | str | None = "NaN"
+    Label: str | None = None
+    LeftForce: float | str | None = "NaN"
+    LeftForceAngle: float | str | None = "NaN"
+    LeftForceY: float | str | None = "NaN"
+    LoadStress: float | str | None = "NaN"
+    MInput: float | str | None = "NaN"
+    NormalStress: float | str | None = "NaN"
+    Ocr: float | str | None = "NaN"
+    OutputShearStress: float | str | None = "NaN"
+    PhiInput: float | str | None = "NaN"
+    PhiOutput: float | str | None = "NaN"
+    PiezometricPorePressure: float | str | None = "NaN"
+    Pop: float | str | None = "NaN"
+    ResultantForce: float | str | None = "NaN"
+    ResultantMoment: float | str | None = "NaN"
+    RightForce: float | str | None = "NaN"
+    RightForceAngle: float | str | None = "NaN"
+    RightForceY: float | str | None = "NaN"
+    ShearStress: float | str | None = "NaN"
+    SInput: float | str | None = "NaN"
+    SuInput: float | str | None = "NaN"
+    SuOutput: float | str | None = "NaN"
+    SurfacePorePressure: float | str | None = "NaN"
+    TopAngle: float | str | None = "NaN"
+    TopLeft: PersistablePoint | None = None
+    TopRight: PersistablePoint | None = None
+    TotalPorePressure: float | str | None = "NaN"
+    TotalStress: float | str | None = "NaN"
+    UpliftFactor: float | str | None = "NaN"
+    VerticalPorePressure: float | str | None = "NaN"
+    VerticalSoilQuakeStress: float | str | None = "NaN"
+    WaterQuakeStress: float | str | None = "NaN"
+    Weight: float | str | None = "NaN"
+    Width: float | str | None = "NaN"
+    YieldStress: float | str | None = "NaN"
+    ShearStrengthModelType: ShearStrengthModelTypePhreaticLevelInternal | None = None
 
 
 class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
-    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    ResultThreshold: Optional[Union[float, str]] = "NaN"
-    SlipPlaneResults: Optional[list] = None
+    FactorOfSafety: float | str | None = "NaN"
+    Id: str | None = None
+    Points: list[PersistablePoint | None] | None = None
+    Slices: list[PersistableSpencerSlice | None] | None = None
+    SlipPlane: list[PersistablePoint | None] | None = None
+    ResultThreshold: float | str | None = "NaN"
+    SlipPlaneResults: list | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2059,22 +2051,20 @@ class SpencerGeneticAlgorithmResult(DStabilitySubStructure):
 
 
 class SpencerReliabilityResult(DStabilitySubStructure):
-    Converged: Optional[bool] = None
-    FailureProbability: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
-    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
-    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    CalculationContributions: Optional[
-        List[Optional[PersistableCalculationContribution]]
-    ] = None
-    StateLinePointContributions: Optional[
-        List[Optional[PersistableStateLinePointContribution]]
-    ] = None
-    StatePointContributions: Optional[
-        List[Optional[PersistableStatePointContribution]]
-    ] = None
+    Converged: bool | None = None
+    FailureProbability: float | str | None = "NaN"
+    Id: str | None = None
+    ReliabilityIndex: float | str | None = "NaN"
+    DistanceToConvergence: float | str | None = "NaN"
+    SlipPlane: list[PersistablePoint | None] | None = None
+    SoilContributions: list[PersistableSoilContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2099,22 +2089,20 @@ class SpencerReliabilityResult(DStabilitySubStructure):
 
 
 class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
-    Converged: Optional[bool] = None
-    FailureProbability: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
-    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
-    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
-    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    CalculationContributions: Optional[
-        List[Optional[PersistableCalculationContribution]]
-    ] = None
-    StateLinePointContributions: Optional[
-        List[Optional[PersistableStateLinePointContribution]]
-    ] = None
-    StatePointContributions: Optional[
-        List[Optional[PersistableStatePointContribution]]
-    ] = None
+    Converged: bool | None = None
+    FailureProbability: float | str | None = "NaN"
+    Id: str | None = None
+    ReliabilityIndex: float | str | None = "NaN"
+    DistanceToConvergence: float | str | None = "NaN"
+    SlipPlane: list[PersistablePoint | None] | None = None
+    SoilContributions: list[PersistableSoilContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2139,11 +2127,11 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
 
 
 class SpencerResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    Slices: Optional[List[Optional[PersistableSpencerSlice]]] = None
-    SlipPlane: Optional[List[Optional[PersistablePoint]]] = None
+    FactorOfSafety: float | str | None = "NaN"
+    Id: str | None = None
+    Points: list[PersistablePoint | None] | None = None
+    Slices: list[PersistableSpencerSlice | None] | None = None
+    SlipPlane: list[PersistablePoint | None] | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2168,15 +2156,15 @@ class SpencerResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    LeftCenter: Optional[PersistablePoint] = None
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    RightCenter: Optional[PersistablePoint] = None
-    Slices: Optional[List[Optional[PersistableSlice]]] = None
-    TangentLine: Optional[Union[float, str]] = "NaN"
-    ResultThreshold: Optional[Union[float, str]] = "NaN"
-    SlipPlaneResults: Optional[list] = None
+    FactorOfSafety: float | str | None = "NaN"
+    Id: str | None = None
+    LeftCenter: PersistablePoint | None = None
+    Points: list[PersistablePoint | None] | None = None
+    RightCenter: PersistablePoint | None = None
+    Slices: list[PersistableSlice | None] | None = None
+    TangentLine: float | str | None = "NaN"
+    ResultThreshold: float | str | None = "NaN"
+    SlipPlaneResults: list | None = None
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2205,24 +2193,22 @@ class UpliftVanParticleSwarmResult(DStabilitySubStructure):
 
 
 class UpliftVanReliabilityResult(DStabilitySubStructure):
-    Converged: Optional[bool] = None
-    FailureProbability: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    LeftCenter: Optional[PersistablePoint] = None
-    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
-    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
-    RightCenter: Optional[PersistablePoint] = None
-    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    CalculationContributions: Optional[
-        List[Optional[PersistableCalculationContribution]]
-    ] = None
-    StateLinePointContributions: Optional[
-        List[Optional[PersistableStateLinePointContribution]]
-    ] = None
-    StatePointContributions: Optional[
-        List[Optional[PersistableStatePointContribution]]
-    ] = None
-    TangentLine: Optional[Union[float, str]] = "NaN"
+    Converged: bool | None = None
+    FailureProbability: float | str | None = "NaN"
+    Id: str | None = None
+    LeftCenter: PersistablePoint | None = None
+    ReliabilityIndex: float | str | None = "NaN"
+    DistanceToConvergence: float | str | None = "NaN"
+    RightCenter: PersistablePoint | None = None
+    SoilContributions: list[PersistableSoilContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    TangentLine: float | str | None = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2251,26 +2237,24 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
 
 
 class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
-    ResultThreshold: Optional[Union[float, str]] = "NaN"
-    SlipPlaneResults: Optional[list] = None
-    Converged: Optional[bool] = None
-    FailureProbability: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    LeftCenter: Optional[PersistablePoint] = None
-    ReliabilityIndex: Optional[Union[float, str]] = "NaN"
-    DistanceToConvergence: Optional[Union[float, str]] = "NaN"
-    RightCenter: Optional[PersistablePoint] = None
-    SoilContributions: Optional[List[Optional[PersistableSoilContribution]]] = None
-    CalculationContributions: Optional[
-        List[Optional[PersistableCalculationContribution]]
-    ] = None
-    StateLinePointContributions: Optional[
-        List[Optional[PersistableStateLinePointContribution]]
-    ] = None
-    StatePointContributions: Optional[
-        List[Optional[PersistableStatePointContribution]]
-    ] = None
-    TangentLine: Optional[Union[float, str]] = "NaN"
+    ResultThreshold: float | str | None = "NaN"
+    SlipPlaneResults: list | None = None
+    Converged: bool | None = None
+    FailureProbability: float | str | None = "NaN"
+    Id: str | None = None
+    LeftCenter: PersistablePoint | None = None
+    ReliabilityIndex: float | str | None = "NaN"
+    DistanceToConvergence: float | str | None = "NaN"
+    RightCenter: PersistablePoint | None = None
+    SoilContributions: list[PersistableSoilContribution | None] | None = None
+    CalculationContributions: list[PersistableCalculationContribution | None] | None = (
+        None
+    )
+    StateLinePointContributions: (
+        list[PersistableStateLinePointContribution | None] | None
+    ) = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    TangentLine: float | str | None = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2299,13 +2283,13 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
 
 
 class UpliftVanResult(DStabilitySubStructure):
-    FactorOfSafety: Optional[Union[float, str]] = "NaN"
-    Id: Optional[str] = None
-    LeftCenter: Optional[PersistablePoint] = None
-    Points: Optional[List[Optional[PersistablePoint]]] = None
-    RightCenter: Optional[PersistablePoint] = None
-    Slices: Optional[List[Optional[PersistableSlice]]] = None
-    TangentLine: Optional[Union[float, str]] = "NaN"
+    FactorOfSafety: float | str | None = "NaN"
+    Id: str | None = None
+    LeftCenter: PersistablePoint | None = None
+    Points: list[PersistablePoint | None] | None = None
+    RightCenter: PersistablePoint | None = None
+    Slices: list[PersistableSlice | None] | None = None
+    TangentLine: float | str | None = "NaN"
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2333,21 +2317,21 @@ class UpliftVanResult(DStabilitySubStructure):
             )
 
 
-DStabilityResult = Union[
-    UpliftVanResult,
-    UpliftVanParticleSwarmResult,
-    UpliftVanReliabilityResult,
-    UpliftVanParticleSwarmReliabilityResult,
-    SpencerGeneticAlgorithmResult,
-    SpencerReliabilityResult,
-    SpencerGeneticAlgorithmReliabilityResult,
-    SpencerResult,
-    BishopBruteForceResult,
-    BishopReliabilityResult,
-    BishopBruteForceReliabilityResult,
-    BishopResult,
-    None,
-]
+DStabilityResult = (
+    UpliftVanResult
+    | UpliftVanParticleSwarmResult
+    | UpliftVanReliabilityResult
+    | UpliftVanParticleSwarmReliabilityResult
+    | SpencerGeneticAlgorithmResult
+    | SpencerReliabilityResult
+    | SpencerGeneticAlgorithmReliabilityResult
+    | SpencerResult
+    | BishopBruteForceResult
+    | BishopReliabilityResult
+    | BishopBruteForceReliabilityResult
+    | BishopResult
+    | None
+)
 
 
 ###########################
@@ -2358,7 +2342,7 @@ DStabilityResult = Union[
 class DStabilityStructure(BaseModelStructure):
     """Highest level DStability class that should be parsed to and serialized from.
 
-    The List[] items (one for each stage in the model) will be stored in a subfolder
+    The list[] items (one for each stage in the model) will be stored in a subfolder
     to multiple json files. Where the first (0) instance
     has no suffix, but the second one has (1 => _1) etc.
 
@@ -2366,15 +2350,15 @@ class DStabilityStructure(BaseModelStructure):
     """
 
     # input part
-    waternets: List[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
-    waternetcreatorsettings: List[WaternetCreatorSettings] = [
+    waternets: list[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
+    waternetcreatorsettings: list[WaternetCreatorSettings] = [
         WaternetCreatorSettings(Id="15")
     ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
-    states: List[State] = [State(Id="16")]  # states/states_x.json
-    statecorrelations: List[StateCorrelation] = [
+    states: list[State] = [State(Id="16")]  # states/states_x.json
+    statecorrelations: list[StateCorrelation] = [
         StateCorrelation(Id="17")
     ]  # statecorrelations/statecorrelations_x.json
-    scenarios: List[Scenario] = [
+    scenarios: list[Scenario] = [
         Scenario(
             Id="0",
             Label="Scenario 1",
@@ -2405,35 +2389,35 @@ class DStabilityStructure(BaseModelStructure):
             ],
         )
     ]
-    soillayers: List[SoilLayerCollection] = [SoilLayerCollection(Id="13")]
+    soillayers: list[SoilLayerCollection] = [SoilLayerCollection(Id="13")]
     soilcorrelation: SoilCorrelation = SoilCorrelation()
     soils: SoilCollection = SoilCollection()
     soilvisualizations: SoilVisualisation = SoilVisualisation()
-    reinforcements: List[Reinforcements] = [Reinforcements(Id="19")]
+    reinforcements: list[Reinforcements] = [Reinforcements(Id="19")]
     projectinfo: ProjectInfo = ProjectInfo()
     nailproperties: NailProperties = NailProperties()
-    loads: List[Loads] = [Loads(Id="18")]
-    decorations: List[Decorations] = [Decorations(Id="12")]
-    calculationsettings: List[CalculationSettings] = [CalculationSettings(Id="20")]
-    geometries: List[Geometry] = [Geometry(Id="11")]
+    loads: list[Loads] = [Loads(Id="18")]
+    decorations: list[Decorations] = [Decorations(Id="12")]
+    calculationsettings: list[CalculationSettings] = [CalculationSettings(Id="20")]
+    geometries: list[Geometry] = [Geometry(Id="11")]
 
     # Output parts
-    uplift_van_results: List[UpliftVanResult] = []
-    uplift_van_particle_swarm_results: List[UpliftVanParticleSwarmResult] = []
-    uplift_van_reliability_results: List[UpliftVanReliabilityResult] = []
-    uplift_van_particle_swarm_reliability_results: List[
+    uplift_van_results: list[UpliftVanResult] = []
+    uplift_van_particle_swarm_results: list[UpliftVanParticleSwarmResult] = []
+    uplift_van_reliability_results: list[UpliftVanReliabilityResult] = []
+    uplift_van_particle_swarm_reliability_results: list[
         UpliftVanParticleSwarmReliabilityResult
     ] = []
-    spencer_results: List[SpencerResult] = []
-    spencer_genetic_algorithm_results: List[SpencerGeneticAlgorithmResult] = []
-    spencer_reliability_results: List[SpencerReliabilityResult] = []
-    spencer_genetic_algorithm_reliability_results: List[
+    spencer_results: list[SpencerResult] = []
+    spencer_genetic_algorithm_results: list[SpencerGeneticAlgorithmResult] = []
+    spencer_reliability_results: list[SpencerReliabilityResult] = []
+    spencer_genetic_algorithm_reliability_results: list[
         SpencerGeneticAlgorithmReliabilityResult
     ] = []
-    bishop_results: List[BishopResult] = []
-    bishop_bruteforce_results: List[BishopBruteForceResult] = []
-    bishop_reliability_results: List[BishopReliabilityResult] = []
-    bishop_bruteforce_reliability_results: List[BishopBruteForceReliabilityResult] = []
+    bishop_results: list[BishopResult] = []
+    bishop_bruteforce_results: list[BishopBruteForceResult] = []
+    bishop_reliability_results: list[BishopReliabilityResult] = []
+    bishop_bruteforce_reliability_results: list[BishopBruteForceReliabilityResult] = []
 
     @model_validator(mode="after")
     def ensure_validity_foreign_keys(self):
@@ -2473,8 +2457,8 @@ class DStabilityStructure(BaseModelStructure):
         return self
 
     def add_default_scenario(
-        self, label: str, notes: str, unique_start_id: Optional[int] = None
-    ) -> Tuple[int, int]:
+        self, label: str, notes: str, unique_start_id: int | None = None
+    ) -> tuple[int, int]:
         """Add a new default (empty) scenario to DStability."""
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
@@ -2533,8 +2517,8 @@ class DStabilityStructure(BaseModelStructure):
         scenario_index: int,
         label: str,
         notes: str,
-        unique_start_id: Optional[int] = None,
-    ) -> Tuple[int, int]:
+        unique_start_id: int | None = None,
+    ) -> tuple[int, int]:
         """Add a new default (empty) stage to DStability."""
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
@@ -2582,8 +2566,8 @@ class DStabilityStructure(BaseModelStructure):
         scenario_index: int,
         label: str,
         notes: str,
-        unique_start_id: Optional[int] = None,
-    ) -> Tuple[int, int]:
+        unique_start_id: int | None = None,
+    ) -> tuple[int, int]:
         """Add a new default (empty) calculation to DStability."""
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
@@ -2762,7 +2746,7 @@ class DStabilityStructure(BaseModelStructure):
 
     def get_result_substructure(
         self, analysis_type: AnalysisTypeEnum, calculation_type: CalculationTypeEnum
-    ) -> List[DStabilityResult]:
+    ) -> list[DStabilityResult]:
         result_types_mapping = {
             AnalysisTypeEnum.UPLIFT_VAN: {
                 "non_probabilistic": self.uplift_van_results,
@@ -2802,7 +2786,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
     as (implicit) foreign keys.
     """
 
-    mapping: Dict[str, Tuple[str, ...]] = {
+    mapping: dict[str, tuple[str, ...]] = {
         "Waternet.Id": ("Stage.WaternetId",),
         "PersistableHeadLine.Id": (
             "PersistableReferenceLine.BottomHeadLineId",
@@ -2845,7 +2829,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
     }
 
     @property
-    def class_fields(self) -> Dict[str, List[str]]:
+    def class_fields(self) -> dict[str, list[str]]:
         """Return a mapping in the form:
         classname: [fields]
         """

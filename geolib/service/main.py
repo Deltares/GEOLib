@@ -2,7 +2,6 @@ import secrets
 import shutil
 import uuid
 from pathlib import Path, PosixPath, WindowsPath
-from typing import List
 
 from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
@@ -35,10 +34,10 @@ security = HTTPBasic()
 
 # Models (types) are defined below, because they are used in the
 # signatures of the functions and they differ between Pydantic v1 and v2.
-dsettlement_list = Annotated[List[DSettlementModel], Field(min_length=1)]
-dfoundation_list = Annotated[List[DFoundationsModel], Field(min_length=1)]
-dsheetpile_list = Annotated[List[DSheetPilingModel], Field(min_length=1)]
-dstability_list = Annotated[List[DStabilityModel], Field(min_length=1)]
+dsettlement_list = Annotated[list[DSettlementModel], Field(min_length=1)]
+dfoundation_list = Annotated[list[DFoundationsModel], Field(min_length=1)]
+dsheetpile_list = Annotated[list[DSheetPilingModel], Field(min_length=1)]
+dstability_list = Annotated[list[DStabilityModel], Field(min_length=1)]
 
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
@@ -129,7 +128,7 @@ async def calculate_many_dsettlementmodels(
     models: dsettlement_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
-) -> List[DSettlementModel]:
+) -> list[DSettlementModel]:
     return execute_many(models, background_tasks)
 
 
@@ -138,7 +137,7 @@ async def calculate_many_dfoundationsmodel(
     models: dfoundation_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
-) -> List[DFoundationsModel]:
+) -> list[DFoundationsModel]:
     return execute_many(models, background_tasks)
 
 
@@ -147,7 +146,7 @@ async def calculate_many_dsheetpilingmodel(
     models: dsheetpile_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
-) -> List[DSheetPilingModel]:
+) -> list[DSheetPilingModel]:
     return execute_many(models, background_tasks)
 
 
@@ -156,7 +155,7 @@ async def calculate_many_dstabilitymodel(
     models: dstability_list,
     background_tasks: BackgroundTasks,
     _: str = Depends(get_current_username),
-) -> List[DStabilityModel]:
+) -> list[DStabilityModel]:
     return execute_many(models, background_tasks)
 
 

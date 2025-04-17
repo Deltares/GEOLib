@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import BinaryIO, List, Optional, Type, Union
+from typing import BinaryIO
 
 from pydantic import Field, FilePath
 from typing_extensions import Annotated
@@ -50,9 +50,9 @@ class ModelOptions(BaseDataClass):
     max_allowed_settlement_lim_state_serv: Annotated[float, Field(ge=0, le=100000)] = 0
     max_allowed_rel_rotation_lim_state_serv: Annotated[int, Field(ge=1, le=10000)] = 300
     # Factors
-    factor_xi3: Optional[Annotated[float, Field(ge=0.01, le=10)]] = None
-    factor_xi4: Optional[Annotated[float, Field(ge=0.01, le=10)]] = None
-    ea_gem: Optional[Annotated[float, Field(ge=1)]] = None
+    factor_xi3: Annotated[float, Field(ge=0.01, le=10)] | None = None
+    factor_xi4: Annotated[float, Field(ge=0.01, le=10)] | None = None
+    ea_gem: Annotated[float, Field(ge=1)] | None = None
 
     # Combined Model Options
     is_suppress_qc_reduction: Bool = False
@@ -72,10 +72,10 @@ class ModelOptions(BaseDataClass):
 
 
 class BearingPilesModel(ModelOptions):
-    factor_gamma_b: Optional[Annotated[float, Field(ge=1, le=100)]] = None
-    factor_gamma_s: Optional[Annotated[float, Field(ge=1, le=100)]] = None
-    factor_gamma_fnk: Optional[Annotated[float, Field(ge=-100, le=100)]] = None
-    area: Optional[Annotated[float, Field(ge=0, le=100000)]] = None
+    factor_gamma_b: Annotated[float, Field(ge=1, le=100)] | None = None
+    factor_gamma_s: Annotated[float, Field(ge=1, le=100)] | None = None
+    factor_gamma_fnk: Annotated[float, Field(ge=-100, le=100)] | None = None
+    area: Annotated[float, Field(ge=0, le=100000)] | None = None
 
     @classmethod
     def model_type(cls):
@@ -88,9 +88,9 @@ class TensionPilesModel(ModelOptions):
     surcharge: Annotated[float, Field(ge=0, le=1e7)] = 0
     use_piezometric_levels: Bool = True
 
-    factor_gamma_var: Optional[Annotated[float, Field(ge=0.01, le=100)]] = None
-    factor_gamma_st: Optional[Annotated[float, Field(ge=0.01, le=100)]] = None
-    factor_gamma_gamma: Optional[Annotated[float, Field(ge=0.01, le=100)]] = None
+    factor_gamma_var: Annotated[float, Field(ge=0.01, le=100)] | None = None
+    factor_gamma_st: Annotated[float, Field(ge=0.01, le=100)] | None = None
+    factor_gamma_gamma: Annotated[float, Field(ge=0.01, le=100)] | None = None
 
     @classmethod
     def model_type(cls):
@@ -117,8 +117,8 @@ class CalculationOptions(BaseDataClass):
 
     calculationtype: CalculationType
 
-    net_bearing_capacity: Optional[float] = 0  # [kN]
-    cpt_test_level: Optional[float] = 0.0  # [m]
+    net_bearing_capacity: float | None = 0  # [kN]
+    cpt_test_level: float | None = 0.0  # [m]
 
     trajectory_begin: float = -10.00
     trajectory_end: float = -25.00
@@ -136,13 +136,12 @@ class DFoundationsModel(BaseModel):
     This model can read, modify and create \*.foi files, read \*.fod and \*.err files.
     """
 
-    datastructure: Union[
-        DFoundationsDumpStructure,
-        DFoundationsStructure,
-    ] = DFoundationsStructure()
+    datastructure: DFoundationsDumpStructure | DFoundationsStructure = (
+        DFoundationsStructure()
+    )
 
     @property
-    def parser_provider_type(self) -> Type[DFoundationsParserProvider]:
+    def parser_provider_type(self) -> type[DFoundationsParserProvider]:
         return DFoundationsParserProvider
 
     @property
@@ -154,7 +153,7 @@ class DFoundationsModel(BaseModel):
         return self.get_meta_property("dfoundations_console_path")
 
     @property
-    def console_flags(self) -> List[str]:
+    def console_flags(self) -> list[str]:
         return [CONSOLE_RUN_BATCH_FLAG]
 
     @property
@@ -165,7 +164,7 @@ class DFoundationsModel(BaseModel):
     def input(self):
         return self.datastructure.input_data
 
-    def serialize(self, filename: Union[FilePath, BinaryIO]):
+    def serialize(self, filename: FilePath | BinaryIO):
         serializer = DFoundationsInputSerializer(ds=self.datastructure.model_dump())
         serializer.write(filename)
 
@@ -174,7 +173,7 @@ class DFoundationsModel(BaseModel):
 
     def set_model(
         self,
-        model: Union[BearingPilesModel, TensionPilesModel],
+        model: BearingPilesModel | TensionPilesModel,
         calculation: CalculationOptions,
     ) -> None:
         """(Re)Set ModelType (Bearing/Tension) and ConstructionType for model.

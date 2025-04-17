@@ -1,5 +1,3 @@
-from typing import List, Optional
-
 from pydantic import Field, StringConstraints, field_validator
 from typing_extensions import Annotated
 
@@ -21,9 +19,9 @@ class Surface(BaseDataClass):
     """
 
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    points: Annotated[List[Point], Field(min_length=1)]
-    distribution_type: Optional[DistributionType] = None
-    std: Optional[Annotated[float, Field(ge=0.0)]] = None
+    points: Annotated[list[Point], Field(min_length=1)]
+    distribution_type: DistributionType | None = None
+    std: Annotated[float, Field(ge=0.0)] | None = None
 
     @classmethod
     def points_must_be_increasing_and_greater_or_equal_to_zero(cls, v):

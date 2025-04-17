@@ -1,32 +1,27 @@
 # FROM https://github.com/python/cpython/blob/6292be7adf247589bbf03524f8883cb4cb61f3e9/Lib/typing.py
-from typing import List, Tuple, Type, _GenericAlias
-from typing import get_args as get_args
-from typing import get_type_hints
+from typing import get_args, get_origin, get_type_hints
 
 
 def unpack_if_union(tp):
-    if is_union(tp):
-        return get_args(tp)[0]
-    else:
-        return tp
+    return get_args(tp)[0] if is_union(tp) else tp
 
 
 def is_union(tp):
-    return isinstance(tp, _GenericAlias) and tp._name in (None, "Optional")
+    return len(get_args(tp)) > 1
 
 
 def is_list(tp):
-    return isinstance(tp, _GenericAlias) and tp._name == "List"
+    return tp is list or get_origin(tp) is list
 
 
-def get_filtered_type_hints(class_type: Type) -> List[Tuple[str, Type]]:
+def get_filtered_type_hints(class_type: type) -> list[tuple[str, type]]:
     """Gets all the (valid) type hints for a given class.
 
     Args:
-        class_type (Type): Class to extract property fields.
+        class_type (type): Class to extract property fields.
 
     Returns:
-        List[Tuple[str, Type]]: Filtered list of tuples representing field name and type.
+        list[tuple[str, type]]: Filtered list of tuples representing field name and type.
     """
     return [
         (field_name, field)
@@ -35,14 +30,14 @@ def get_filtered_type_hints(class_type: Type) -> List[Tuple[str, Type]]:
     ]
 
 
-def get_required_class_field(class_type: Type) -> List[Tuple[str, Type]]:
+def get_required_class_field(class_type: type) -> list[tuple[str, type]]:
     """Gets all the (valid) class fields which are mandatory.
 
     Args:
-        class_type (Type): [description]
+        class_type (type): [description]
 
     Returns:
-        List[Tuple[str, Type]]: [description]
+        list[tuple[str, type]]: [description]
     """
     return [
         (field_name, field)

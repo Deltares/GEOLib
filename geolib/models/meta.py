@@ -13,7 +13,6 @@ such as an compute endpoint.
 
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
 
 from pydantic import AnyHttpUrl, DirectoryPath
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -47,11 +46,11 @@ class MetaData(BaseSettings):
 
     # For calculations
     console_folder: DirectoryPath = Path(".")
-    dstability_console_path: Optional[Path] = None
-    dgeoflow_console_path: Optional[Path] = None
-    dsheetpiling_console_path: Optional[Path] = None
-    dsettlement_console_path: Optional[Path] = None
-    dfoundations_console_path: Optional[Path] = None
+    dstability_console_path: Path | None = None
+    dgeoflow_console_path: Path | None = None
+    dsheetpiling_console_path: Path | None = None
+    dsettlement_console_path: Path | None = None
+    dfoundations_console_path: Path | None = None
 
     timeout: int = 10 * 60  # in seconds, so 10 minutes
 

@@ -1,5 +1,5 @@
 from contextlib import nullcontext as does_not_raise
-from typing import Callable, List
+from typing import Callable
 
 import pytest
 from pydantic import ValidationError
@@ -79,7 +79,7 @@ class TestSurfaces:
         ],
     )
     def test_surface_initialization_with_different_points_arguments(
-        self, points: List[Point], run_expectation
+        self, points: list[Point], run_expectation
     ):
         surface_name = "Ground level -2m"
         with run_expectation:

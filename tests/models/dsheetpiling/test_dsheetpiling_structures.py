@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any
 
 import pytest
 
@@ -16,7 +16,7 @@ class TestDSheetpilingSurchargeLoad:
     @pytest.mark.unittest
     def test_when_get_list_field_names_returns_all_fields_and_point(self):
         class dummy_with_lists(DSheetpilingSurchargeLoad):
-            property_one: List[str]
+            property_one: list[str]
             property_two: str
 
         expected_output = ["property_one", "point"]
@@ -66,7 +66,7 @@ class TestDSheetpilingWithNumberOfRowsTable:
     def test_given_table_with_number_of_rows_on_top_structure_is_parsed(self):
         # 1. Define test data
         class test_structure(DSheetpilingWithNumberOfRowsTable):
-            test_structure: List[Dict[str, float]]
+            test_structure: list[dict[str, float]]
 
         text_to_parse = """[TABLE]
             DataCount=2
@@ -135,7 +135,7 @@ class TestDSheetpilingUnwrappedTable:
             value: float
 
         class DummyUnwrappedTable(DSheetpilingUnwrappedTable):
-            dummyunwrappedtable: List[DummyTableEntry]
+            dummyunwrappedtable: list[DummyTableEntry]
 
         # 1. Define test data
         text_to_parse = """ 2 values
@@ -159,7 +159,7 @@ class TestDSheetpilingUnwrappedTable:
             value: float
 
         class DummyUnwrappedTable(DSheetpilingUnwrappedTable):
-            dummyunwrappedtable: List[DummyTableEntry]
+            dummyunwrappedtable: list[DummyTableEntry]
 
         # 1. Define test data
         text_to_parse = """ 1 value
