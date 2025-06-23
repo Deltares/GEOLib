@@ -821,7 +821,6 @@ class DGeoFlowStructure(BaseModelStructure):
 
         for _, scenario in enumerate(self.scenarios):
             for _, stage in enumerate(scenario.Stages):
-                print(self.boundary_conditions[0])
                 if not list_has_id(
                     self.boundary_conditions, stage.BoundaryConditionCollectionId
                 ):
