@@ -30,6 +30,9 @@ class TestDStabilityInputParser:
             pytest.param(
                 "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
+            ),
         ],
     )
     def test_dstability_parse_directory(self, dir_path: str):
