@@ -95,6 +95,9 @@ class TestDStabilityModel:
             pytest.param(
                 "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
+            ),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -847,7 +850,7 @@ class TestDStabilityModel:
     def test_sigmatau_table_version_parsing(self):
         dm = DStabilityModel()
         test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2025_1.stix")
         )
 
         dm.parse(test_filepath)
@@ -867,11 +870,11 @@ class TestDStabilityModel:
     def test_sigmatau_table_version_input(self):
         dm = DStabilityModel()
         test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2025_1.stix")
         )
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir(
-                "dstability/Tutorial_v2024_2_serialized.stix"
+                "dstability/Tutorial_v2025_1_serialized.stix"
             )
         )
 
