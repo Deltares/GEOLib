@@ -169,6 +169,12 @@ class TestInternal:
             == settings.PartialFactorSetEC7NADNL.RC2
         )
         assert (
+            model.calculation_options_per_stage.stageoptions[
+                0
+            ].stageriskclassec7nadbe
+            == settings.RiskClassEC7BE.RC2
+        )
+        assert (
             model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadnl == 1
         )
         assert (
