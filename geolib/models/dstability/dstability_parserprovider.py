@@ -48,6 +48,8 @@ class DStabilityParser(BaseParser):
         folder = filepath / fieldtype.structure_group()
 
         try:
+            if not folder.exists():
+                return out
             files = list(folder.iterdir())
         except FileNotFoundError:  # Not all result folders are required.
             return out

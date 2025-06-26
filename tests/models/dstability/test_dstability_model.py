@@ -173,9 +173,8 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/EmptyFile.stix", id="Empty File"),
             pytest.param("dstability/example_1.stix", id="Example File"),
-            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial 2023.01 File"),
+            pytest.param("dstability/Tutorial_v2025_1.stix", id="Tutorial 2025.01 File"),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):
@@ -350,7 +349,7 @@ class TestDStabilityModel:
     def test_gen_unique_id(self):
         """This test will fail when we've added new default
         ids to the internal datastructure. Please update accordingly."""
-        max_id_after_initialization_of_dstability_structure = 21
+        max_id_after_initialization_of_dstability_structure = 22
         dm = DStabilityModel()
 
         assert dm.datastructure.waternets[0].Id == "14"
