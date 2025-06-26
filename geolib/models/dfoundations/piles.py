@@ -12,6 +12,7 @@ from geolib.geometry import Point
 from geolib.models import BaseDataClass
 
 from .internal import (
+    InstallationMethod,
     BearingPileSlipLayer,
     LoadSettlementCurve,
     PileMaterial,
@@ -133,6 +134,7 @@ class BearingPile(Pile):
             reduction_percentage_qc=self.reduction_percentage_qc,
             material=PileMaterial.USER_DEFINED,
             elasticity_modulus=self.elasticity_modulus,
+            installation_method=InstallationMethod.DRIVING,
             slip_layer=BearingPileSlipLayer.USER_DEFINED,
             characteristic_adhesion=self.characteristic_adhesion,
             overrule_pile_tip_shape_factor=self.overrule_pile_tip_shape_factor,

@@ -33,18 +33,16 @@ SoilColor={{ soil.soilcolor }}
 SoilSoilType={{ soil.soilsoiltype.value }}
 SoilGamDry={{ soil.soilgamdry }}
 SoilGamWet={{ soil.soilgamwet }}
-SoilInitialVoidRatio={{ soil.soilinitialvoidratio }}
 SoilDiameterD50={{ soil.soildiameterd50 }}
 SoilMinVoidRatio={{ soil.soilminvoidratio }}
 SoilMaxVoidRatio={{ soil.soilmaxvoidratio }}
 SoilCohesion={{ soil.soilcohesion }}
 SoilPhi={{ soil.soilphi }}
-SoilCu={{ soil.soilcu }}
 SoilMaxConeResistType={{ soil.soilmaxconeresisttype.value }}
 SoilMaxConeResist={{ soil.soilmaxconeresist }}
 SoilUseTension={{ soil.soilusetension.value }}
 SoilCa={{ soil.soilca }}
-SoilCcIndex={{ soil.soilccindex }}
+SoilCRatio={{ soil.soilcratio }}
 [END OF SOIL]
 {% endfor %}
 [END OF SOIL COLLECTION]
@@ -303,6 +301,7 @@ Layer ({{ loop.index }})
 {% if pile.material.value == 3 %}
     {{ '{:>10.3E}'.format(pile.elasticity_modulus) }} : Elasticity modulus [kN/m2)
 {% endif %}
+{{ '{:>2}'.format(pile.installation_method.value) }} : Installation method = {{ pile.installation_method.name }}
 {{ '{:>2}'.format(pile.slip_layer.value) }} : Slip Layer = {{ pile.slip_layer.name }}
 {{ '{:>12.2f}'.format(pile.characteristic_adhesion) }} : Characteristic adhesion [kN/m2)
 {{ '{:>2}'.format(pile.shape.value) }} : Shape = {{ pile.shape.name }}

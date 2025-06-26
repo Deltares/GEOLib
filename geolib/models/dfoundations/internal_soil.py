@@ -34,18 +34,16 @@ class Soil(DSeriesUnmappedNameProperties):
     soilsoiltype: SoilTypeNl = SoilTypeNl.SAND
     soilgamdry: Annotated[float, Field(ge=0.0, le=100)] = 20.00
     soilgamwet: Annotated[float, Field(ge=0.0, le=100)] = 20.00
-    soilinitialvoidratio: Annotated[float, Field(ge=0.0, le=20.0)] = 0.001001
     soildiameterd50: Annotated[float, Field(ge=0.0, le=1000.0)] = 0.20000
     soilminvoidratio: Annotated[float, Field(ge=0.0, le=1.0)] = 0.400
     soilmaxvoidratio: Annotated[float, Field(ge=0.0, le=1.0)] = 0.800
     soilcohesion: Annotated[float, Field(ge=0.0, le=1000.0)] = 30.00
     soilphi: Annotated[float, Field(ge=0.0, le=89.0)]
-    soilcu: Annotated[float, Field(ge=0.0, le=1000.0)] = 0.00
     soilmaxconeresisttype: MaxConeResistType = MaxConeResistType.STANDARD
     soilmaxconeresist: Annotated[float, Field(ge=0.0, le=1000000.0)] = 0.00
     soilusetension: Bool = Bool.TRUE
     soilca: Annotated[float, Field(ge=0.0, le=10.0)] = 0.0040000
-    soilccindex: Annotated[float, Field(ge=0.0, le=20.0)] = 0.1260000
+    soilcratio: Annotated[float, Field(ge=0.0, le=20.0)] = 0.1260000
 
     def __init__(self, *args, **kwargs):
         if "name" not in kwargs:
@@ -77,13 +75,11 @@ class Soil(DSeriesUnmappedNameProperties):
                 soilgamwet=soilgamwet,
                 soilphi=soilphi,
                 soilcohesion=soilcohesion,
-                soilcu=soilcu,
-                soilccindex=soilccindex,
+                soilcratio=soilcratio,
                 soilca=soilca,
-                soilinitialvoidratio=soilinitialvoidratio,
                 soilcolor=soilcolor,
             )
-            for name, soilsoiltype, soilgamdry, soilgamwet, soilphi, soilcohesion, soilcu, soilccindex, soilca, soilinitialvoidratio, soilcolor in csv_as_namedtuples(
+            for name, soilsoiltype, soilgamdry, soilgamwet, soilphi, soilcohesion, soilcratio, soilca, soilcolor in csv_as_namedtuples(
                 filename
             )
         ]

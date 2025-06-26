@@ -84,6 +84,13 @@ class PileMaterial(IntEnum):
     USER_DEFINED = 3
 
 
+class InstallationMethod(IntEnum):
+    DRIVING = 0
+    VIBRATING = 1
+    PRESSING = 2
+    JETTING = 3
+
+
 class BearingPileSlipLayer(IntEnum):
     NONE = 0
     SYNTHETIC = 1
@@ -119,6 +126,7 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
     pile_type_for_load_settlement_curve: LoadSettlementCurve | None = None
     material: PileMaterial | None = None
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)] | None = None
+    installation_method: InstallationMethod = InstallationMethod.DRIVING
     slip_layer: BearingPileSlipLayer = BearingPileSlipLayer.NONE
     characteristic_adhesion: Annotated[float, Field(ge=0, le=1000)] | None = None
     shape: PileShape = PileShape.RECTANGULAR_PILE
@@ -580,8 +588,8 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 
 class Version(DSerieVersion):
-    soil: int = 1010
-    d__foundations: int = 1024
+    soil: int = 1013
+    d__foundations: int = 1026
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
