@@ -9,6 +9,7 @@ from itertools import chain
 from math import isfinite
 
 from pydantic import Field, ValidationError, field_validator, model_validator
+from typing import Any, Literal
 from typing_extensions import Annotated
 
 from geolib import __version__ as version
@@ -268,6 +269,24 @@ class WaternetCreatorSettings(DStabilitySubStructure):
         return "waternetcreatorsettings"
 
 
+class WaterMesh(DStabilitySubStructure):
+    """watermeshes/watermeshes.json."""
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "watermeshes"
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "watermeshes"
+    
+    Id: str | None = None
+    ContentVersion: str | None = "2"
+    Elements: Any | None = None
+    WaterMeshProperties: Any | None = None
+    UnitWeightWater: float | None = 9.81
+    
+
 class PersistableStochasticParameter(DStabilityBaseModelStructure):
     IsProbabilistic: bool = False
     Mean: float = 1.0
@@ -438,6 +457,8 @@ class Stage(DStabilitySubStructure):
     StateId: str | None = None
     WaternetCreatorSettingsId: str | None = None
     WaternetId: str | None = None
+    WaterMeshId: str | None = None
+    WaterDefinitionType: Literal["WaterLines", "WaterMesh"] = "WaterLines"
 
     @field_validator(
         "DecorationsId",
@@ -2351,6 +2372,7 @@ class DStabilityStructure(BaseModelStructure):
 
     # input part
     waternets: list[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
+    watermeshes: list[WaterMesh] = [WaterMesh(Id="44")]  # watermesh/watermesh_x.json
     waternetcreatorsettings: list[WaternetCreatorSettings] = [
         WaternetCreatorSettings(Id="15")
     ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
@@ -2377,6 +2399,7 @@ class DStabilityStructure(BaseModelStructure):
                     StateCorrelationsId="17",
                     WaternetCreatorSettingsId="15",
                     WaternetId="14",
+                    WaterMeshId="44",
                 )
             ],
             Calculations=[
@@ -2449,6 +2472,8 @@ class DStabilityStructure(BaseModelStructure):
                     raise ValueError("WaternetCreatorSettingsIds not linked!")
                 if not list_has_id(self.waternets, stage.WaternetId):
                     raise ValueError("WaternetIds not linked!")
+                if not list_has_id(self.watermeshes, stage.WaterMeshId):
+                    raise ValueError("WaterMeshIds not linked!")
             for _, calculation in enumerate(scenario.Calculations):
                 if not list_has_id(
                     self.calculationsettings, calculation.CalculationSettingsId
@@ -2463,12 +2488,13 @@ class DStabilityStructure(BaseModelStructure):
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
 
-        scenario_id = unique_start_id + 13
+        scenario_id = unique_start_id + 14
 
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
             WaternetCreatorSettings(Id=str(unique_start_id + 2))
         ]
+        self.watermeshes += [WaterMesh(Id=str(unique_start_id + 13))]
         self.states += [State(Id=str(unique_start_id + 3))]
         self.statecorrelations += [StateCorrelation(Id=str(unique_start_id + 4))]
         self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
@@ -2497,6 +2523,7 @@ class DStabilityStructure(BaseModelStructure):
                         StateCorrelationsId=str(unique_start_id + 4),
                         WaternetCreatorSettingsId=str(unique_start_id + 2),
                         WaternetId=str(unique_start_id + 1),
+                        WaterMeshId=str(unique_start_id + 13),
                     )
                 ],
                 Calculations=[
@@ -2523,12 +2550,13 @@ class DStabilityStructure(BaseModelStructure):
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
 
-        stage_id = unique_start_id + 13
+        stage_id = unique_start_id + 14
 
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
             WaternetCreatorSettings(Id=str(unique_start_id + 2))
         ]
+        self.watermeshes += [WaterMesh(Id=str(unique_start_id + 13))]
         self.states += [State(Id=str(unique_start_id + 3))]
         self.statecorrelations += [StateCorrelation(Id=str(unique_start_id + 4))]
         self.soillayers += [SoilLayerCollection(Id=str(unique_start_id + 5))]
@@ -2551,6 +2579,7 @@ class DStabilityStructure(BaseModelStructure):
             StateCorrelationsId=str(unique_start_id + 4),
             WaternetCreatorSettingsId=str(unique_start_id + 2),
             WaternetId=str(unique_start_id + 1),
+            WaterMeshId=str(unique_start_id + 13),
         )
 
         scenario = self.scenarios[scenario_index]
@@ -2788,6 +2817,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
 
     mapping: dict[str, tuple[str, ...]] = {
         "Waternet.Id": ("Stage.WaternetId",),
+        "WaterMesh.Id": ("Stage.WaterMeshId",),
         "PersistableHeadLine.Id": (
             "PersistableReferenceLine.BottomHeadLineId",
             "PersistableReferenceLine.TopHeadLineId",
