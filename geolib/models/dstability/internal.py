@@ -2372,7 +2372,7 @@ class DStabilityStructure(BaseModelStructure):
 
     # input part
     waternets: list[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
-    watermeshes: list[WaterMesh] = [WaterMesh(Id="44")]  # watermesh/watermesh_x.json
+    watermeshes: list[WaterMesh] = [WaterMesh(Id="21")]  # watermesh/watermesh_x.json
     waternetcreatorsettings: list[WaternetCreatorSettings] = [
         WaternetCreatorSettings(Id="15")
     ]  # waternetcreatorsettings/waternetcreatorsettings_x.json
@@ -2399,7 +2399,7 @@ class DStabilityStructure(BaseModelStructure):
                     StateCorrelationsId="17",
                     WaternetCreatorSettingsId="15",
                     WaternetId="14",
-                    WaterMeshId="44",
+                    WaterMeshId="21",
                 )
             ],
             Calculations=[
@@ -2472,8 +2472,16 @@ class DStabilityStructure(BaseModelStructure):
                     raise ValueError("WaternetCreatorSettingsIds not linked!")
                 if not list_has_id(self.waternets, stage.WaternetId):
                     raise ValueError("WaternetIds not linked!")
-                if not list_has_id(self.watermeshes, stage.WaterMeshId):
-                    raise ValueError("WaterMeshIds not linked!")
+                
+                # MIGRATION: If there are no watermeshes, create a new default one
+                if stage.WaterMeshId is None:
+                    watermesh_id = self.get_unique_id()
+                    self.watermeshes.append(WaterMesh(Id=str(watermesh_id)))
+                    stage.WaterMeshId = str(watermesh_id)
+                else:
+                    if not list_has_id(self.watermeshes, stage.WaterMeshId):
+                        raise ValueError("WaterMeshIds not linked!")
+                
             for _, calculation in enumerate(scenario.Calculations):
                 if not list_has_id(
                     self.calculationsettings, calculation.CalculationSettingsId
