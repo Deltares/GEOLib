@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 def camel_to_snake(name: str) -> str:
-    name = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
     return _CAMEL_TO_SNAKE_PATTERN.sub("_", name).lower()
 
 
