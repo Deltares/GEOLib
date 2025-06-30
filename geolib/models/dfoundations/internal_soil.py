@@ -75,11 +75,9 @@ class Soil(DSeriesUnmappedNameProperties):
                 soilgamwet=soilgamwet,
                 soilphi=soilphi,
                 soilcohesion=soilcohesion,
-                soilcratio=soilcratio,
-                soilca=soilca,
                 soilcolor=soilcolor,
             )
-            for name, soilsoiltype, soilgamdry, soilgamwet, soilphi, soilcohesion, soilcratio, soilca, soilcolor in csv_as_namedtuples(
+            for name, soilsoiltype, soilgamdry, soilgamwet, soilphi, soilcohesion, soilcolor in csv_as_namedtuples(
                 filename
             )
         ]
