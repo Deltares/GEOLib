@@ -70,7 +70,7 @@ def test_run_model_from_scratch_expanded():
                 "reduction_core_resistance": 0,
             },
             {
-                "material": "Clay, clean, weak",
+                "material": "Clay, clean, soft",
                 "top_level": -0.2,
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,

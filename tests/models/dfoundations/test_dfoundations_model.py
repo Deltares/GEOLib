@@ -350,7 +350,7 @@ class TestDFoundationsModel:
                     "reduction_core_resistance": 0,
                 },
                 {
-                    "material": "Clay, clean, weak",
+                    "material": "Clay, clean, soft",
                     "top_level": -0.2,
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
@@ -838,7 +838,7 @@ class TestDFoundationsModel:
 
         # Check assumptions
         assert len(df.soils.soil) != 0
-        assert df.soils.soil[0].name == "BClay, clean, moderate"
+        assert df.soils.soil[0].name == "Gravel, none, loose"
         assert df.soils.soil[0].soilgamdry == 18
 
         # Change model
@@ -846,7 +846,7 @@ class TestDFoundationsModel:
 
         # Verify soils have changed
         assert len(df.soils.soil) != 0
-        assert df.soils.soil[0].name == "BClay, clean, moderate"
+        assert df.soils.soil[0].name == "Gravel, none, loose"
         assert df.soils.soil[0].soilgamdry == 17
 
     @pytest.mark.unittest

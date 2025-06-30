@@ -145,7 +145,7 @@ class TestInternalInputDFoundations:
         from geolib.models.dfoundations.internal_soil import Soil
 
         soils = Soil.default_soils()
-        assert len(soils) == 56
+        assert len(soils) == 27
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
@@ -167,8 +167,8 @@ class TestInternalInputDFoundations:
         from geolib.models.dfoundations.internal_soil import Soil
 
         soils = Soil.default_soils(model=model)
-        assert len(soils) == 56
-        assert soils[0].name == "BClay, clean, moderate"
+        assert len(soils) == 27
+        assert soils[0].name == "Gravel, none, loose"
         assert soils[0].soilgamdry == soilgamdryvalue
 
     @pytest.mark.unittest
