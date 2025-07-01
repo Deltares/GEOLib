@@ -162,6 +162,7 @@ class TypesTensionPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
     pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
     pile_type_for_execution_factor_sand_gravel: PileType | None = None
+    installation_method: InstallationMethod = InstallationMethod.DRIVING
     execution_factor_sand_gravel: Annotated[float, Field(ge=0, le=9)] | None = None
     pile_type_for_execution_factor_clay_loam_peat: PileTypeForClayLoamPeat | None = None
     execution_factor_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None

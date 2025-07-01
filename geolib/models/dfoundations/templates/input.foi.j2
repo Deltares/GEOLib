@@ -370,6 +370,7 @@ Layer ({{ loop.index }})
 {% for pile in types___tension_piles_cur %}
 {{ pile.pile_name }}
 {{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
+{{ '{:>2}'.format(pile.installation_method.value) }} : Installation method = {{ pile.installation_method.name }}
 {{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
 {{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
 {% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}

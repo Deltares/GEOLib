@@ -157,6 +157,7 @@ class TensionPile(Pile):
         return TypesTensionPiles(
             pile_name=self.pile_name,
             pile_type_for_execution_factor_sand_gravel=self.pile_type.value,
+            installation_method=InstallationMethod.DRIVING,
             execution_factor_sand_gravel=self.pile_class_factor_shaft_sand_gravel,
             pile_type_for_execution_factor_clay_loam_peat=(
                 self.preset_pile_class_factor_shaft_clay_loam_peat.value
