@@ -134,7 +134,7 @@ class BearingPile(Pile):
             reduction_percentage_qc=self.reduction_percentage_qc,
             material=PileMaterial.USER_DEFINED,
             elasticity_modulus=self.elasticity_modulus,
-            installation_method=InstallationMethod.DRIVING,
+            installation_method=InstallationMethod.AUTOMATIC,
             slip_layer=BearingPileSlipLayer.USER_DEFINED,
             characteristic_adhesion=self.characteristic_adhesion,
             overrule_pile_tip_shape_factor=self.overrule_pile_tip_shape_factor,
@@ -157,7 +157,7 @@ class TensionPile(Pile):
         return TypesTensionPiles(
             pile_name=self.pile_name,
             pile_type_for_execution_factor_sand_gravel=self.pile_type.value,
-            installation_method=InstallationMethod.DRIVING,
+            installation_method=InstallationMethod.AUTOMATIC,
             execution_factor_sand_gravel=self.pile_class_factor_shaft_sand_gravel,
             pile_type_for_execution_factor_clay_loam_peat=(
                 self.preset_pile_class_factor_shaft_clay_loam_peat.value

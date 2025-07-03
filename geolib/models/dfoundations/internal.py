@@ -85,10 +85,11 @@ class PileMaterial(IntEnum):
 
 
 class InstallationMethod(IntEnum):
-    DRIVING = 0
-    VIBRATING = 1
-    PRESSING = 2
-    JETTING = 3
+    AUTOMATIC = 0
+    DRIVING = 1
+    VIBRATING = 2
+    PRESSING = 3
+    JETTING = 4
 
 
 class BearingPileSlipLayer(IntEnum):
