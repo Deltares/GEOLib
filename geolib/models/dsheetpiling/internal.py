@@ -727,11 +727,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
     uniform_loads: UniformLoads | None = None
     surcharge_loads: SurchargeLoads | None = None
     water: str = ""
-    earth_quake: str = cleandoc(
-        """
-        0.00
-        """
-    )
     soil_profiles: SoilProfiles | str = cleandoc(
         f"""
           1 Number of spring characteristics curves
