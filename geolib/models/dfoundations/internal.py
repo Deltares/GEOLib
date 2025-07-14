@@ -466,7 +466,6 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     ea_gem: Annotated[float, Field(ge=1)] | None = 100000
 
     # Model options combined
-    is_suppress_qc_reduction: Bool = Bool.FALSE
     is_overrule_excavation: Bool = Bool.FALSE
     use_pile_group: Bool = Bool.TRUE
     is_write_intermediate_results: Bool = Bool.FALSE
@@ -591,7 +590,7 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 class Version(DSerieVersion):
     soil: int = 1013
-    d__foundations: int = 1026
+    d__foundations: int = 1027
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
@@ -783,7 +782,7 @@ class DFoundationsDumpfileOutputStructure(DSeriesStructure):
     calculation_parameters_tension_piles: str | None = None
     verification_results_tp: DFoundationsVerificationResults | None = None
 
-    footnote_warnings: str | None = None
+    pile_type_dimensions_warnings: str | None = None
     preliminary_design_results: str | None = None
     verification_results_sf: str | None = None
     verification_results_tp_1b2: str | None = None

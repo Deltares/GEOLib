@@ -2,20 +2,20 @@ D-Foundations DUMP FILE
 ==============================================================================
 COMPANY    :  
 
-DATE       : 26/06/2025
-TIME       : 09:45:23
+DATE       : 13/07/2025
+TIME       : 17:46:18
 FILENAME   : D:\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm1-14b.fod
-CREATED BY : D-Foundations version 24.1.0.2413
+CREATED BY : D-Foundations version 24.1.0.2525
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1026
+D-Foundations=1027
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=24.1.0.2413
+DGSFoundationCalc.dll=24.1.0.2525
 [END OF VERSION EXTERNALS]
 
 [MODEL]
@@ -873,7 +873,7 @@ Layer (5)
     1 = number of items
 Rect 300x500 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
        0.300 : Width [m)
@@ -945,7 +945,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE
@@ -1009,15 +1008,15 @@ DataCount=0
 [DUMPFILE OUTPUT]
 [RESULTS AT CPT TEST LEVEL]
         0.00  = Max Delta Fr;max;i
-     2945.54  = Average Fr;max;i
+     2926.19  = Average Fr;max;i
      0.00000  = VariatieCoef Fr;max;i
 1 = Can Table 10 (ksi3/ksi4) be used in a valid way?
    -1  = PileGroupIndex With Largest Variatie Coef (-1 means not relevant)
 [END OF RESULTS AT CPT TEST LEVEL]
 [VERIFICATION RESULTS]
 [GLOBAL NEN RESULTS]
-0.006743 = wd1B
-0.004546 = w2d
+0.006819 = wd1B
+0.004578 = w2d
 100000.000000 = ReciprocalMaxRelativeRotationCalc1B
 100000.000000 = ReciprocalMaxRelativeRotationCalc2
 [END OF GLOBAL NEN RESULTS]
@@ -1053,7 +1052,7 @@ CptName
  1.00 = Pile point shape factor beta
  0.84 = Factor influence crosssection of pile point s
   1800.000 = Max load on foundation Fs_rep
-  2945.536 = Max bearing capacity foundation Fr;fund;max;d
+  2926.189 = Max bearing capacity foundation Fr;fund;max;d
 1 = Critical pile nr for settlement in GT1B
 1 = Critical CPT nr for settlement in GT1B
 1 = Critical pile nr for settlement in GT2
@@ -1064,17 +1063,17 @@ CptName
 0 = Second pile nr for critical rotation in GT2
   1800.00000 = Fs_tot_d_1B
    885.66299 = Fr_max_punt_d_1B
-  2059.87279 = Fr_max_schacht_d_1B
-   331.59060 = FR_punt_d_1B
-  0.003190 = spunt_d_1B
-     0.00355 = sel_d1B
+  2040.52601 = Fr_max_schacht_d_1B
+   335.17431 = FR_punt_d_1B
+  0.003260 = spunt_d_1B
+     0.00356 = sel_d1B
      0.00000 = s2_d1B
      0.00000 = sneg1B
   1400.00000 = Fs_tot_d_2
    885.66299 = Fr_max_punt_d_2
-  2059.87279 = Fr_max_schacht_d_2
-   259.40451 = FR_punt_d_2
-     0.00178 = spunt_d_2
+  2040.52601 = Fr_max_schacht_d_2
+   260.94038 = FR_punt_d_2
+     0.00181 = spunt_d_2
      0.00277 = sel_d2
      0.00000 = s2_d2
      0.00000 = sneg2
@@ -1088,8 +1087,8 @@ MaxShaft
 MaxPoint
 [END OF COLUMN INDICATION]
 [DATA]
-     1 GT1B  2059.873   885.663
-     1 GT2   2059.873   885.663
+     1 GT1B  2040.526   885.663
+     1 GT2   2040.526   885.663
 [END OF DATA]
 [END OF TABLE]
 [END OF MAX SHAFT AND POINT]
@@ -1123,12 +1122,12 @@ IsKsi3Used = 1
 
 [END OF NEN PILE RESULTS]
 [END OF VERIFICATION RESULTS]
-[FOOTNOTE WARNINGS]
+[PILE TYPE DIMENSIONS WARNINGS]
 [PILE TYPE]
 PileTypeNumber = 1
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
-[END OF FOOTNOTE WARNINGS]
+[END OF PILE TYPE DIMENSIONS WARNINGS]
 [CALCULATION WARNINGS]
 0 = IsWarningF1Given (1=true, 0=false)
 0 = F1GreaterThan1Found (1=true, 0=false)

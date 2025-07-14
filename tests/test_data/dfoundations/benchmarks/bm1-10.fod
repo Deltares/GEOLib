@@ -2,20 +2,20 @@ D-Foundations DUMP FILE
 ==============================================================================
 COMPANY    :  
 
-DATE       : 26/06/2025
-TIME       : 09:43:18
+DATE       : 13/07/2025
+TIME       : 17:43:27
 FILENAME   : D:\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm1-10.fod
-CREATED BY : D-Foundations version 24.1.0.2413
+CREATED BY : D-Foundations version 24.1.0.2525
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1026
+D-Foundations=1027
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=24.1.0.2413
+DGSFoundationCalc.dll=24.1.0.2525
 [END OF VERSION EXTERNALS]
 
 [MODEL]
@@ -948,7 +948,7 @@ Layer (8)
    28 = number of items
 Rect 300x500 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
        0.300 : Width [m)
@@ -962,7 +962,7 @@ Rect 300x500 prefab
  1 : User defined name
 Rect 300x500 bored
 12 : Pile type = Bored pile (drilling mud, uncased borehole)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
        0.300 : Width [m)
@@ -976,7 +976,7 @@ Rect 300x500 bored
  1 : User defined name
 RectEnl 300x500 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  1 : Slip Layer = Synthetic
  3 : Shape = Rectangular pile with enlarged base
        0.300 : Base width [m)
@@ -993,7 +993,7 @@ RectEnl 300x500 prefab
  1 : User defined name
 Section 300x500
 10 : Pile type = Steel section
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  1 : Slip Layer = Synthetic
  8 : Shape = Section
        0.300 : Width [m)
@@ -1007,7 +1007,7 @@ Section 300x500
  0 : Program defined name
 Round 550 driven 1
  2 : Pile type = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1020,7 +1020,7 @@ Round 550 driven 1
  1 : User defined name
 Round 550 driven 2
  3 : Pile type = Driven cast-in-place pile, tube back by vibration
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1033,7 +1033,7 @@ Round 550 driven 2
  1 : User defined name
 Round 550 timber
  5 : Pile type = Straight timber pile
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1046,7 +1046,7 @@ Round 550 timber
  1 : User defined name
 Round 550 screw
  7 : Pile type = Screw pile, cast in place, with grout
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1059,7 +1059,7 @@ Round 550 screw
  1 : User defined name
 Round 550 cfa
 11 : Pile type = Continuous flight auger pile
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1072,7 +1072,7 @@ Round 550 cfa
  1 : User defined name
 Round 550 bored 1
 12 : Pile type = Bored pile (drilling mud, uncased borehole)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1085,7 +1085,7 @@ Round 550 bored 1
  1 : User defined name
 Round 550 bored 2
 13 : Pile type = Bored pile (shelling tech. , permanent casing)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1098,7 +1098,7 @@ Round 550 bored 2
  1 : User defined name
 Round 550 micro d e
 16 : Pile type = Micro pile, double pipe, extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1111,7 +1111,7 @@ Round 550 micro d e
  1 : User defined name
 Round 550 micro d ne
 17 : Pile type = Micro pile, double pipe, not extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1124,7 +1124,7 @@ Round 550 micro d ne
  1 : User defined name
 Round 550 micro s e
 18 : Pile type = Micro pile, single pipe, extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1137,7 +1137,7 @@ Round 550 micro s e
  1 : User defined name
 Round 550 micro s ne
 19 : Pile type = Micro pile, single pipe, not extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1150,7 +1150,7 @@ Round 550 micro s ne
  1 : User defined name
 Round 550 micro bored
 20 : Pile type = Micro pile, anchor, bored
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1163,7 +1163,7 @@ Round 550 micro bored
  1 : User defined name
 Round 550 micro screw
 21 : Pile type = Micro pile, anchor, screwed
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1176,7 +1176,7 @@ Round 550 micro screw
  1 : User defined name
 Round 550 micro vib
 22 : Pile type = Micro pile, vibrated
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1189,7 +1189,7 @@ Round 550 micro vib
  1 : User defined name
 Taper 550 timber
  4 : Pile type = Tapered timber pile
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  3 : Slip Layer = Bitumen
  4 : Shape = Round tapered pile
        0.550 : Diameter [m)
@@ -1203,7 +1203,7 @@ Taper 550 timber
  1 : User defined name
 Hollow 550 steel
  1 : Pile type = Closed-ended steel pipe pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
        0.550 : External diameter [m)
@@ -1217,7 +1217,7 @@ Hollow 550 steel
  1 : User defined name
 Hollow 550 prefab 1
  8 : Pile type = Prefabricated screw pile with grout*
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
        0.550 : External diameter [m)
@@ -1231,7 +1231,7 @@ Hollow 550 prefab 1
  1 : User defined name
 Hollow 550 prefab 2
  9 : Pile type = Prefabricated screw pile without grout
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
        0.550 : External diameter [m)
@@ -1245,7 +1245,7 @@ Hollow 550 prefab 2
  1 : User defined name
 HolOpen 550 steel
 14 : Pile type = Open-ended steel pipe pile
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  4 : Slip Layer = User defined
        40.00 : Characteristic adhesion [kN/m2]
  9 : Shape = Round open-ended hollow pile
@@ -1260,7 +1260,7 @@ HolOpen 550 steel
  1 : User defined name
 RoundEnl 550 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  4 : Slip Layer = User defined
        25.00 : Characteristic adhesion [kN/m2]
  2 : Shape = Round pile with enlarged base
@@ -1276,7 +1276,7 @@ RoundEnl 550 prefab
  1 : User defined name
 LostTip 550
  6 : Pile type = Screw pile, cast in place, lost tip
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        60.00 : Characteristic adhesion [kN/m2]
  6 : Shape = Round pile with lost tip
@@ -1291,7 +1291,7 @@ LostTip 550
  0 : Program defined name
 DrivenBase driving
  2 : Pile type = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
  7 : Shape = Round pile with in situ formed base
@@ -1307,7 +1307,7 @@ DrivenBase driving
  1 : User defined name
 DrivenBase vibrate
  3 : Pile type = Driven cast-in-place pile, tube back by vibration
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
  7 : Shape = Round pile with in situ formed base
@@ -1323,7 +1323,7 @@ DrivenBase vibrate
  1 : User defined name
 HShaped 300x500
 10 : Pile type = Steel section
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  4 : Slip Layer = User defined
        15.00 : Characteristic adhesion [kN/m2]
 10 : Shape = H-shaped profile
@@ -1398,7 +1398,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE
@@ -1517,8 +1516,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00      886     2416     3302     3302        0        0     3302     0.00 'CPT 1'
-  2   1   -17.00      886     2552     3438     3438        0        0     3438     0.00 'CPT 1'
+  1   1   -16.00      886     2272     3158     3158        0        0     3158     0.00 'CPT 1'
+  2   1   -17.00      886     2408     3294     3294        0        0     3294     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -1682,8 +1681,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00      886     1402     2288     2288        0        0     2288     0.00 'CPT 1'
-  2   1   -17.00      886     1474     2360     2360        0        0     2360     0.00 'CPT 1'
+  1   1   -16.00      886      922     1808     1808        0        0     1808     0.00 'CPT 1'
+  2   1   -17.00      886      970     1856     1856        0        0     1856     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -1847,8 +1846,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00     1663     2523     4186     4186        0        0     4186     0.00 'CPT 1'
-  2   1   -17.00     1663     2652     4315     4315        0        0     4315     0.00 'CPT 1'
+  1   1   -16.00     1663     2212     3875     3875        0        0     3875     0.00 'CPT 1'
+  2   1   -17.00     1663     2341     4004     4004        0        0     4004     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -1957,8 +1956,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00      798     1659     2457     2457        0        0     2457     0.00 'CPT 1'
-  2   1   -17.00      798     1762     2560     2560        0        0     2560     0.00 'CPT 1'
+  1   1   -16.00     1330     1659     2989     2989        0        0     2989     0.00 'CPT 1'
+  2   1   -17.00     1330     1762     3092     3092        0        0     3092     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2507,8 +2506,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00     1663     4801     6464     6464        0        0     6464     0.00 'CPT 1'
-  2   1   -17.00     1663     5182     6845     6845        0        0     6845     0.00 'CPT 1'
+  1   1   -16.00     1663     4246     5909     5909        0        0     5909     0.00 'CPT 1'
+  2   1   -17.00     1663     4601     6264     6264        0        0     6264     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2562,8 +2561,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00     1663     2609     4272     4272        0        0     4272     0.00 'CPT 1'
-  2   1   -17.00     1663     2756     4419     4419        0        0     4419     0.00 'CPT 1'
+  1   1   -16.00     1663     2454     4117     4117        0        0     4117     0.00 'CPT 1'
+  2   1   -17.00     1663     2600     4263     4263        0        0     4263     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2617,8 +2616,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00     1330     2270     3600     3600        0        0     3600     0.00 'CPT 1'
-  2   1   -17.00     1330     2387     3717     3717        0        0     3717     0.00 'CPT 1'
+  1   1   -16.00     1330     1991     3321     3321        0        0     3321     0.00 'CPT 1'
+  2   1   -17.00     1330     2107     3437     3437        0        0     3437     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2672,8 +2671,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00     1330     1514     2844     2844        0        0     2844     0.00 'CPT 1'
-  2   1   -17.00     1330     1591     2921     2921        0        0     2921     0.00 'CPT 1'
+  1   1   -16.00     1330     1327     2657     2657        0        0     2657     0.00 'CPT 1'
+  2   1   -17.00     1330     1405     2735     2735        0        0     2735     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2727,8 +2726,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00      142     2637     2779     2779        0        0     2779     0.00 'CPT 1'
-  2   1   -17.00      142     2737     2879     2879        0        0     2879     0.00 'CPT 1'
+  1   1   -16.00      142     1918     2060     2060        0        0     2060     0.00 'CPT 1'
+  2   1   -17.00      142     2018     2160     2160        0        0     2160     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3002,8 +3001,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -16.00      208     1848     2056     2056        0        0     2056     0.00 'CPT 1'
-  2   1   -17.00      208     1943     2151     2151        0        0     2151     0.00 'CPT 1'
+  1   1   -16.00      208     1215     1423     1423        0        0     1423     0.00 'CPT 1'
+  2   1   -17.00      208     1279     1487     1487        0        0     1487     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3034,127 +3033,127 @@ IsKsi3Used = 0
 
 [END OF PILE]
 [END OF PRELIMINARY DESIGN RESULTS]
-[FOOTNOTE WARNINGS]
+[PILE TYPE DIMENSIONS WARNINGS]
 [PILE TYPE]
 PileTypeNumber = 1
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 2
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 3
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 4
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 5
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 6
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 7
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 8
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 9
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 10
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 11
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 12
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 13
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 14
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 15
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 16
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.400
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 17
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.400
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 18
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 19
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 20
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 21
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 22
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 23
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 24
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 25
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 26
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 27
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 28
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
-[END OF FOOTNOTE WARNINGS]
+[END OF PILE TYPE DIMENSIONS WARNINGS]
 [CALCULATION WARNINGS]
 0 = IsWarningF1Given (1=true, 0=false)
 0 = F1GreaterThan1Found (1=true, 0=false)

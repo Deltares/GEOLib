@@ -55,7 +55,6 @@ class ModelOptions(BaseDataClass):
     ea_gem: Annotated[float, Field(ge=1)] | None = None
 
     # Combined Model Options
-    is_suppress_qc_reduction: Bool = False
     is_overrule_excavation: Bool = False
     use_pile_group: Bool = True
     is_write_intermediate_results: Bool = False

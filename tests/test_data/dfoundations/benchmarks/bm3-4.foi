@@ -2,19 +2,19 @@ INPUT FILE FOR D-FOUNDATIONS
 ==============================================================================
 COMPANY    :  
 
-DATE       : 26/06/2025
-TIME       : 09:47:34
+DATE       : 13/07/2025
+TIME       : 17:48:46
 FILENAME   : D:\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm3-4.foi
-CREATED BY : D-Foundations version 24.1.0.2413
+CREATED BY : D-Foundations version 24.1.0.2525
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1026
+D-Foundations=1027
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=24.1.0.2413
+DGSFoundationCalc.dll=24.1.0.2525
 [END OF VERSION EXTERNALS]
 
 [MODEL]
@@ -711,7 +711,7 @@ Layer (1)
     1 = number of items
 DrivenBase 1000
  2 : Pile type = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  7 : Shape = Round pile with in situ formed base
        1.000 : Base diameter [m)
@@ -730,7 +730,7 @@ DrivenBase 1000
     6 = number of items
 DrivenBase driv 1000 / 949
  2 : Pile type for execution factor sand/gravel = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
         0.00 : Unit weight filling material [kN/m3]
@@ -741,7 +741,7 @@ DrivenBase driv 1000 / 949
  1 : User defined name
 DrivenBase driv 1000 / 951
  2 : Pile type for execution factor sand/gravel = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
         0.00 : Unit weight filling material [kN/m3]
@@ -752,7 +752,7 @@ DrivenBase driv 1000 / 951
  1 : User defined name
 DrivenBase vib 1000 / 949
  3 : Pile type for execution factor sand/gravel = Driven cast-in-place pile, tube back by vibration
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
         0.00 : Unit weight filling material [kN/m3]
@@ -763,7 +763,7 @@ DrivenBase vib 1000 / 949
  1 : User defined name
 DrivenBase vib 1000 / 951
  3 : Pile type for execution factor sand/gravel = Driven cast-in-place pile, tube back by vibration
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
         0.00 : Unit weight filling material [kN/m3]
@@ -774,7 +774,7 @@ DrivenBase vib 1000 / 951
  1 : User defined name
 DrivenBase user vib 1000 / 949
 25 : Pile type for execution factor sand/gravel = User defined (vibrating)
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
       0.0000 : Execution factor sand/gravel, vibrating [-]
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
@@ -786,7 +786,7 @@ DrivenBase user vib 1000 / 949
  1 : User defined name
 DrivenBase user low vib1000 / 949
 26 : Pile type for execution factor sand/gravel = User defined (low vibrating)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
       0.0000 : Execution factor sand/gravel, non vibrating [-]
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
@@ -850,7 +850,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 0 : Write intermediate results = FALSE

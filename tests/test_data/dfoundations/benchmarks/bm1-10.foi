@@ -2,19 +2,19 @@ INPUT FILE FOR D-FOUNDATIONS
 ==============================================================================
 COMPANY    :  
 
-DATE       : 26/06/2025
-TIME       : 09:43:18
+DATE       : 13/07/2025
+TIME       : 17:43:27
 FILENAME   : D:\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm1-10.foi
-CREATED BY : D-Foundations version 24.1.0.2413
+CREATED BY : D-Foundations version 24.1.0.2525
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1026
+D-Foundations=1027
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=24.1.0.2413
+DGSFoundationCalc.dll=24.1.0.2525
 [END OF VERSION EXTERNALS]
 
 [MODEL]
@@ -947,7 +947,7 @@ Layer (8)
    28 = number of items
 Rect 300x500 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
        0.300 : Width [m)
@@ -961,7 +961,7 @@ Rect 300x500 prefab
  1 : User defined name
 Rect 300x500 bored
 12 : Pile type = Bored pile (drilling mud, uncased borehole)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
        0.300 : Width [m)
@@ -975,7 +975,7 @@ Rect 300x500 bored
  1 : User defined name
 RectEnl 300x500 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  1 : Slip Layer = Synthetic
  3 : Shape = Rectangular pile with enlarged base
        0.300 : Base width [m)
@@ -992,7 +992,7 @@ RectEnl 300x500 prefab
  1 : User defined name
 Section 300x500
 10 : Pile type = Steel section
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  1 : Slip Layer = Synthetic
  8 : Shape = Section
        0.300 : Width [m)
@@ -1006,7 +1006,7 @@ Section 300x500
  0 : Program defined name
 Round 550 driven 1
  2 : Pile type = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1019,7 +1019,7 @@ Round 550 driven 1
  1 : User defined name
 Round 550 driven 2
  3 : Pile type = Driven cast-in-place pile, tube back by vibration
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1032,7 +1032,7 @@ Round 550 driven 2
  1 : User defined name
 Round 550 timber
  5 : Pile type = Straight timber pile
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1045,7 +1045,7 @@ Round 550 timber
  1 : User defined name
 Round 550 screw
  7 : Pile type = Screw pile, cast in place, with grout
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1058,7 +1058,7 @@ Round 550 screw
  1 : User defined name
 Round 550 cfa
 11 : Pile type = Continuous flight auger pile
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1071,7 +1071,7 @@ Round 550 cfa
  1 : User defined name
 Round 550 bored 1
 12 : Pile type = Bored pile (drilling mud, uncased borehole)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1084,7 +1084,7 @@ Round 550 bored 1
  1 : User defined name
 Round 550 bored 2
 13 : Pile type = Bored pile (shelling tech. , permanent casing)
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1097,7 +1097,7 @@ Round 550 bored 2
  1 : User defined name
 Round 550 micro d e
 16 : Pile type = Micro pile, double pipe, extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1110,7 +1110,7 @@ Round 550 micro d e
  1 : User defined name
 Round 550 micro d ne
 17 : Pile type = Micro pile, double pipe, not extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1123,7 +1123,7 @@ Round 550 micro d ne
  1 : User defined name
 Round 550 micro s e
 18 : Pile type = Micro pile, single pipe, extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1136,7 +1136,7 @@ Round 550 micro s e
  1 : User defined name
 Round 550 micro s ne
 19 : Pile type = Micro pile, single pipe, not extorted
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1149,7 +1149,7 @@ Round 550 micro s ne
  1 : User defined name
 Round 550 micro bored
 20 : Pile type = Micro pile, anchor, bored
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1162,7 +1162,7 @@ Round 550 micro bored
  1 : User defined name
 Round 550 micro screw
 21 : Pile type = Micro pile, anchor, screwed
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1175,7 +1175,7 @@ Round 550 micro screw
  1 : User defined name
 Round 550 micro vib
 22 : Pile type = Micro pile, vibrated
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1188,7 +1188,7 @@ Round 550 micro vib
  1 : User defined name
 Taper 550 timber
  4 : Pile type = Tapered timber pile
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  3 : Slip Layer = Bitumen
  4 : Shape = Round tapered pile
        0.550 : Diameter [m)
@@ -1202,7 +1202,7 @@ Taper 550 timber
  1 : User defined name
 Hollow 550 steel
  1 : Pile type = Closed-ended steel pipe pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
        0.550 : External diameter [m)
@@ -1216,7 +1216,7 @@ Hollow 550 steel
  1 : User defined name
 Hollow 550 prefab 1
  8 : Pile type = Prefabricated screw pile with grout*
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
        0.550 : External diameter [m)
@@ -1230,7 +1230,7 @@ Hollow 550 prefab 1
  1 : User defined name
 Hollow 550 prefab 2
  9 : Pile type = Prefabricated screw pile without grout
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
        0.550 : External diameter [m)
@@ -1244,7 +1244,7 @@ Hollow 550 prefab 2
  1 : User defined name
 HolOpen 550 steel
 14 : Pile type = Open-ended steel pipe pile
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  4 : Slip Layer = User defined
        40.00 : Characteristic adhesion [kN/m2]
  9 : Shape = Round open-ended hollow pile
@@ -1259,7 +1259,7 @@ HolOpen 550 steel
  1 : User defined name
 RoundEnl 550 prefab
  0 : Pile type = Prefabricated concrete pile
- 0 : Installation method = Driving
+ 1 : Installation method = Driving
  4 : Slip Layer = User defined
        25.00 : Characteristic adhesion [kN/m2]
  2 : Shape = Round pile with enlarged base
@@ -1275,7 +1275,7 @@ RoundEnl 550 prefab
  1 : User defined name
 LostTip 550
  6 : Pile type = Screw pile, cast in place, lost tip
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        60.00 : Characteristic adhesion [kN/m2]
  6 : Shape = Round pile with lost tip
@@ -1290,7 +1290,7 @@ LostTip 550
  0 : Program defined name
 DrivenBase driving
  2 : Pile type = Driven cast-in-place pile, tube back by driving
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
  7 : Shape = Round pile with in situ formed base
@@ -1306,7 +1306,7 @@ DrivenBase driving
  1 : User defined name
 DrivenBase vibrate
  3 : Pile type = Driven cast-in-place pile, tube back by vibration
- 0 : Installation method = Driving
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
  7 : Shape = Round pile with in situ formed base
@@ -1322,7 +1322,7 @@ DrivenBase vibrate
  1 : User defined name
 HShaped 300x500
 10 : Pile type = Steel section
- 1 : Installation method = Vibrating
+ 2 : Installation method = Vibrating
  4 : Slip Layer = User defined
        15.00 : Characteristic adhesion [kN/m2]
 10 : Shape = H-shaped profile
@@ -1397,7 +1397,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE

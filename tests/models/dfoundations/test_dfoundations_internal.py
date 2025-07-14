@@ -430,8 +430,8 @@ class TestInternalOutputDFoundations:
         + "[RESULTS AT CPT TEST LEVEL]\n"
         + "[END OF RESULTS AT CPT TEST LEVEL]\n"
         + f"{verification_results}\n"
-        + "[FOOTNOTE WARNINGS]\n"
-        + "[END OF FOOTNOTE WARNINGS]\n"
+        + "[PILE TYPE DIMENSIONS WARNINGS]\n"
+        + "[END OF PILE TYPE DIMENSIONS WARNINGS]\n"
         + f"{calculation_warnings}\n"
         + "[END OF DUMPFILE OUTPUT]"
     )

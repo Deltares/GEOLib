@@ -2,20 +2,20 @@ D-Foundations DUMP FILE
 ==============================================================================
 COMPANY    :  
 
-DATE       : 26/06/2025
-TIME       : 09:48:04
+DATE       : 13/07/2025
+TIME       : 17:49:16
 FILENAME   : D:\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm3-9b.fod
-CREATED BY : D-Foundations version 24.1.0.2413
+CREATED BY : D-Foundations version 24.1.0.2525
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1026
+D-Foundations=1027
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=24.1.0.2413
+DGSFoundationCalc.dll=24.1.0.2525
 [END OF VERSION EXTERNALS]
 
 [MODEL]
@@ -1379,7 +1379,7 @@ Layer (7)
     1 = number of items
 Round 550
 11 : Pile type = Continuous flight auger pile
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  0 : Shape = Round pile
        0.550 : Diameter [m)
@@ -1396,7 +1396,7 @@ Round 550
     1 = number of items
 Round 550
 11 : Pile type for execution factor sand/gravel = Continuous flight auger pile
- 1 : Installation method = Vibrating
+ 0 : Installation method = Automatic
  0 : Pile type for execution factor clay/peat/silt = According to standard
  0 : Material = Concrete
         0.00 : Unit weight filling material [kN/m3]
@@ -1548,7 +1548,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE
@@ -1677,13 +1676,13 @@ DataCount=0
      0.00000 = sneg2
 [END OF VERIFICATION RESULTS TP LOAD-SETTLEMENT CURVE 2]
 [END OF VERIFICATION RESULTS TP]
-[FOOTNOTE WARNINGS]
+[PILE TYPE DIMENSIONS WARNINGS]
 [PILE TYPE]
 PileTypeNumber = 1
-WarningFootNoteCTable7c = 0
-WarningFootNoteDTable7c = 0
+ConcretePileDimensionsWarning = 0
+MicroPileDimensionsWarning = 0
 [END OF PILE TYPE]
-[END OF FOOTNOTE WARNINGS]
+[END OF PILE TYPE DIMENSIONS WARNINGS]
 [CALCULATION WARNINGS]
 0 = IsWarningF1Given (1=true, 0=false)
 0 = F1GreaterThan1Found (1=true, 0=false)
