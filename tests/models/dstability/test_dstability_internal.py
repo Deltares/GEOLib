@@ -45,7 +45,7 @@ class TestDStabilityInternal:
 
         # Validate "Stage" has 9 Id like fields defined
         assert "Stage" in mapping
-        assert len(mapping["Stage"]) == 9
+        assert len(mapping["Stage"]) == 10
 
     @pytest.mark.unittest
     def test_find_subclass_from_children(self):
@@ -56,7 +56,7 @@ class TestDStabilityInternal:
         )
         dm.parse(test_filepath)
 
-        # Verify expecations
+        # Verify expectations
         assert isinstance(dm.datastructure.waternets[0], Waternet)
 
         # Test

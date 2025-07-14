@@ -48,12 +48,14 @@ class DStabilityParser(BaseParser):
         folder = filepath / fieldtype.structure_group()
 
         try:
+            if not folder.exists():
+                return out
             files = list(folder.iterdir())
         except FileNotFoundError:  # Not all result folders are required.
             return out
 
         # We need to sort to make sure that files such as x.json, x_1.json,
-        # x_2.json etc. are stored sequentally, scandir produces arbitrary order.
+        # x_2.json etc. are stored sequentially, scandir produces arbitrary order.
         sorted_files = sorted(files, key=lambda x: x.name)
         for file in sorted_files:
             if fieldtype.structure_name() in file.name:
