@@ -43,7 +43,7 @@ class TestDStabilityInternal:
         fk = ForeignKeys()
         mapping = fk.class_fields
 
-        # Validate "Stage" has 9 Id like fields defined
+        # Validate "Stage" has 10 Id like fields defined
         assert "Stage" in mapping
         assert len(mapping["Stage"]) == 10
 
