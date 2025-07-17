@@ -343,10 +343,6 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
  {{ water.unit_weight_of_water }} Unit weight of water
 [END OF WATER]
 
-[EARTH QUAKE]
-{{ earth_quake }}
-[END OF EARTH QUAKE]
-
 [SOIL PROFILES]
 {% if soil_profiles is mapping %}
   {{ soil_profiles.curve_number }} Number of spring characteristics curves
@@ -476,6 +472,7 @@ StagePartialFactorSetCUR={{ stage.stagepartialfactorsetcur.value }}
 StageVerify={{ stage.stageverify }}
 StageAnchorFactor={{ stage.stageanchorfactor }}
 StagePartialFactorSetEC7NADNL={{ stage.stagepartialfactorsetec7nadnl.value }}
+StageRiskClassEC7NADBE={{ stage.stageriskclassec7nadbe.value }}
 StageVerifyEC7NADNL={{ stage.stageverifyec7nadnl }}
 StageAnchorFactorEC7NADNL={{ stage.stageanchorfactorec7nadnl }}
 StageVerifyEC7NADBE={{ stage.stageverifyec7nadbe }}

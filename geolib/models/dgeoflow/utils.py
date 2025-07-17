@@ -1,3 +1,5 @@
+import logging
+
 from pydantic import BaseModel
 
 
@@ -10,7 +12,7 @@ def children(instance, filter=BaseModel):
                     yield f
                     yield from children(f)
                 else:
-                    print(f"Ignoring {f.__class__.__name__}")
+                    logging.debug(f"Ignoring {f.__class__.__name__}")
         elif filter in field.__class__.__mro__:
             yield field
             yield from children(field)

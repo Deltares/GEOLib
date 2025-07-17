@@ -94,8 +94,8 @@ _DEFAULT_SHEET_PILING_ELEMENT_NAME: str = "New element"
 _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
-_DEFAULT_SOIL_VERSION: int = 1010
-_DEFAULT_SHEETPILING_VERSION: int = 1033
+_DEFAULT_SOIL_VERSION: int = 1012
+_DEFAULT_SHEETPILING_VERSION: int = 1034
 
 REQ_RUN_LINES = 2
 
@@ -727,11 +727,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
     uniform_loads: UniformLoads | None = None
     surcharge_loads: SurchargeLoads | None = None
     water: str = ""
-    earth_quake: str = cleandoc(
-        """
-        0.00
-        """
-    )
     soil_profiles: SoilProfiles | str = cleandoc(
         f"""
           1 Number of spring characteristics curves
