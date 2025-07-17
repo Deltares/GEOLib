@@ -43,9 +43,10 @@ class TestDStabilityInternal:
         fk = ForeignKeys()
         mapping = fk.class_fields
 
-        # Validate "Stage" has 9 Id like fields defined
+        # Validate "Stage" has 10 Id like fields defined
+        # NOTE: 26/06/2025 - This is now 10, because of the new WaterMesh class introduced in v2025.1
         assert "Stage" in mapping
-        assert len(mapping["Stage"]) == 9
+        assert len(mapping["Stage"]) == 10
 
     @pytest.mark.unittest
     def test_find_subclass_from_children(self):

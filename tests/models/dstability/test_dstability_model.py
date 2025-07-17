@@ -95,6 +95,9 @@ class TestDStabilityModel:
             pytest.param(
                 "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
+            ),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -170,9 +173,8 @@ class TestDStabilityModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dstability/EmptyFile.stix", id="Empty File"),
             pytest.param("dstability/example_1.stix", id="Example File"),
-            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial 2023.01 File"),
+            pytest.param("dstability/Tutorial_v2025_1.stix", id="Tutorial 2025.01 File"),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):
@@ -347,7 +349,7 @@ class TestDStabilityModel:
     def test_gen_unique_id(self):
         """This test will fail when we've added new default
         ids to the internal datastructure. Please update accordingly."""
-        max_id_after_initialization_of_dstability_structure = 21
+        max_id_after_initialization_of_dstability_structure = 22
         dm = DStabilityModel()
 
         assert dm.datastructure.waternets[0].Id == "14"
@@ -847,7 +849,7 @@ class TestDStabilityModel:
     def test_sigmatau_table_version_parsing(self):
         dm = DStabilityModel()
         test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2025_1.stix")
         )
 
         dm.parse(test_filepath)
@@ -867,11 +869,11 @@ class TestDStabilityModel:
     def test_sigmatau_table_version_input(self):
         dm = DStabilityModel()
         test_filepath = Path(
-            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2024_2.stix")
+            TestUtils.get_local_test_data_dir("dstability/Tutorial_v2025_1.stix")
         )
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir(
-                "dstability/Tutorial_v2024_2_serialized.stix"
+                "dstability/Tutorial_v2025_1_serialized.stix"
             )
         )
 

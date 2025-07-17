@@ -102,8 +102,11 @@ class TestDStabilityStates:
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
 
+        # NOTE: 26/6/2025 - The state point id's have changed in the example file.
+        # The original id was 55, but now it is 59. The shift of 4 is due to the
+        # new watermeshes added in the 2025.1 release (4 stages = 4 watermeshes).
         expected_state_point = DStabilityStatePoint(
-            id=55,
+            id=59,
             layer_id=30,
             label="SP 1",
             point=Point(x=45.0, z=4.0),
@@ -135,8 +138,11 @@ class TestDStabilityStates:
 
         points = [Point(x=20.0, z=0.0), Point(x=70.0, z=0.0)]
 
+        # NOTE: 26/6/2025 - The state point id's have changed in the example file.
+        # The original id was 55, but now it is 59. The shift of 4 is due to the
+        # new watermeshes added in the 2025.1 release (4 stages = 4 watermeshes).
         state_line_point = DStabilityStateLinePoint(
-            id=56,
+            id=60,
             label="SP 2",
             above=DStabilityStress(pop=20),
             below=DStabilityStress(pop=30),
