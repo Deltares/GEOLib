@@ -111,17 +111,12 @@ class PersistableWaterMeshProperties(DStabilityBaseModelStructure):
     ScenarioName: str | None = None
     CalculationName: str | None = None
 
-
-class PersistableElement(DStabilityBaseModelStructure):
-    WaterMeshNodes: list[WaterMeshNodes] | None = []
-
-class WaterMeshNodes(DStabilityBaseModelStructure):
-    WaterMeshNode: list[WaterMeshNode] | None = []
-
 class WaterMeshNode(DStabilityBaseModelStructure):
     Point: PersistablePoint | None = None
     TotalPorePressure: float = 1
 
+class PersistableElement(DStabilityBaseModelStructure):
+    WaterMeshNodes: list[WaterMeshNode] | None = []
 
 class WaterMesh(DStabilitySubStructure):
     """watermeshes/watermeshes_x.json."""
