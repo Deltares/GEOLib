@@ -1,7 +1,6 @@
 from typing import Callable
 
 import pytest
-
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_WATER_LEVEL_NAME
 from geolib.models.dsheetpiling.internal import WaterLevel as InternalWaterLevel

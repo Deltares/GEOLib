@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import pytest
-
 from geolib.models.dgeoflow import DGeoFlowModel
 from geolib.models.dgeoflow.dgeoflow_parserprovider import (
     DGeoFlowParser,
@@ -12,6 +11,7 @@ from geolib.models.dgeoflow.serializer import (
     DGeoFlowInputSerializer,
     DGeoFlowInputZipSerializer,
 )
+
 from tests.utils import TestUtils
 
 

@@ -4,7 +4,6 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
@@ -40,6 +39,7 @@ from geolib.soils import (
     Soil,
     SuTablePoint,
 )
+
 from tests.utils import TestUtils
 
 

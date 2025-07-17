@@ -1,8 +1,6 @@
 from random import randint
 
 import pytest
-from pydantic_core._pydantic_core import ValidationError
-
 from geolib.models.dseries_parser import (
     DSeriesInlineMappedProperties,
     DSeriesInlineProperties,
@@ -22,6 +20,7 @@ from geolib.models.dseries_parser import (
     get_line_property_value,
     make_key,
 )
+from pydantic_core._pydantic_core import ValidationError
 
 
 class TestParserUtil:

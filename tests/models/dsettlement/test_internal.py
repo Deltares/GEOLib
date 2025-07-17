@@ -2,7 +2,6 @@ from random import randint
 from typing import get_origin
 
 import pytest
-
 from geolib.geometry.one import Point
 from geolib.models.dseries_parser import (
     DSeriesTreeStructure,

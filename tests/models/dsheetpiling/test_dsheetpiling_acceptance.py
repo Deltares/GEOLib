@@ -3,8 +3,6 @@ import random
 from pathlib import Path
 
 import pytest
-from pydantic_extra_types.color import Color
-
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.calculation_options import (
     CalculationOptionsPerStage,
@@ -74,6 +72,8 @@ from geolib.soils import (
     Soil,
     SoilType,
 )
+from pydantic_extra_types.color import Color
+
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/acceptance"

@@ -33,8 +33,8 @@ from .internal import (
     SoilVisualisation,
     SpencerSlipPlaneResult,
     UpliftVanSlipCircleResult,
-    Waternet,
     WaterMesh,
+    Waternet,
 )
 from .loads import Consolidation, DStabilityLoad
 from .reinforcements import DStabilityReinforcement

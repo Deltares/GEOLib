@@ -2,7 +2,6 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
-
 from geolib.geometry.one import Point
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.analysis import (

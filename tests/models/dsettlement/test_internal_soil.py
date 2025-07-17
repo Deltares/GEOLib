@@ -1,12 +1,12 @@
 from pathlib import Path
 
-import pytest
-
 import geolib.soils as soil_external
+import pytest
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
 from geolib.models.dsettlement.internal import DSettlementStructure
 from geolib.models.dsettlement.internal_soil import PreconType
 from geolib.soils import Soil, SoilClassificationParameters, StateType
+
 from tests.utils import TestUtils
 
 
