@@ -24,7 +24,7 @@ python-dotenv = "^1.0.0"
 matplotlib = "^3.9.0"
 pydantic-settings = "^2.1.0"
 pydantic-extra-types = "^2.5.0"
-python-multipart = ">=0.0.9,<0.0.19"
+python-multipart = { version = ">=0.0.9,<0.0.19", optional = true }
 
 [tool.poetry.group.dev.dependencies]
 teamcity-messages = "^1.32"
@@ -44,7 +44,7 @@ commitizen = "^3.1.0"
 tomlkit = "^0.11.8"
 
 [tool.poetry.extras]
-server = ["fastapi", "uvicorn", "httpx", "starlette"]
+server = ["fastapi", "uvicorn", "httpx", "starlette", "python-multipart"]
 
 [tool.poetry.scripts]
 geolib_server = "geolib.service.main:app"
