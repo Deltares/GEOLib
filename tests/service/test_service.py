@@ -2,11 +2,11 @@ from pathlib import Path, PosixPath, WindowsPath
 
 import pytest
 from fastapi.testclient import TestClient
+from geolib.models import BaseModelList, DFoundationsModel, DSettlementModel
+from geolib.service.main import app
 from pydantic.deprecated import json as pydantic_json
 from requests.auth import HTTPBasicAuth
 
-from geolib.models import BaseModelList, DFoundationsModel, DSettlementModel
-from geolib.service.main import app
 from tests.utils import TestUtils, only_teamcity
 
 pydantic_json.ENCODERS_BY_TYPE[Path] = str

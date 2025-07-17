@@ -3,13 +3,12 @@ from random import choice, randint
 from string import ascii_lowercase
 
 import pytest
-from pydantic_core._pydantic_core import ValidationError
-
 from geolib.models.dfoundations.dfoundations_structures import (
     DFoundationsCPTCollectionWrapper,
     DFoundationsEnumStructure,
     DFoundationsTableWrapper,
 )
+from pydantic_core._pydantic_core import ValidationError
 
 
 class TestDFoundationsEnumStructure:

@@ -2,8 +2,6 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable
 
 import pytest
-from pydantic import ValidationError
-
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_SOIL_PROFILE_NAME
@@ -18,6 +16,7 @@ from geolib.models.dsheetpiling.settings import (
     Side,
 )
 from geolib.soils import Soil
+from pydantic import ValidationError
 
 _SOIL_TEST_NAME_1: str = "Clay"
 _SOIL_TEST_NAME_2: str = "Sand"

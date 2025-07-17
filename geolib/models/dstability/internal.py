@@ -111,12 +111,15 @@ class PersistableWaterMeshProperties(DStabilityBaseModelStructure):
     ScenarioName: str | None = None
     CalculationName: str | None = None
 
+
 class WaterMeshNode(DStabilityBaseModelStructure):
     Point: PersistablePoint | None = None
     TotalPorePressure: float = 1
 
+
 class PersistableElement(DStabilityBaseModelStructure):
     WaterMeshNodes: list[WaterMeshNode] | None = []
+
 
 class WaterMesh(DStabilitySubStructure):
     """watermeshes/watermeshes_x.json."""
@@ -446,11 +449,14 @@ class StateCorrelation(DStabilitySubStructure):
     ) -> None:
         self.StateCorrelations.append(state_correlation)
 
+
 class WaterDefinitionTypeEnum(Enum):
     WATERLINES = "WaterLines"
     WATERMESH = "WaterMesh"
 
+
 WaterDefinitionType = WaterDefinitionTypeEnum
+
 
 class Stage(DStabilitySubStructure):
     """stages/stage_x.json"""
@@ -473,7 +479,9 @@ class Stage(DStabilitySubStructure):
     SoilLayersId: str | None = None
     StateCorrelationsId: str | None = None
     StateId: str | None = None
-    WaterDefinitionType: WaterDefinitionTypeEnum | None = WaterDefinitionTypeEnum.WATERLINES
+    WaterDefinitionType: WaterDefinitionTypeEnum | None = (
+        WaterDefinitionTypeEnum.WATERLINES
+    )
     WaterMeshId: str | None = None
     WaternetCreatorSettingsId: str | None = None
     WaternetId: str | None = None
@@ -2390,7 +2398,7 @@ class DStabilityStructure(BaseModelStructure):
     """
 
     # input part
-    watermeshes: list[WaterMesh] = [WaterMesh(Id="21")] # watermeshes/watermeshes_x.json
+    watermeshes: list[WaterMesh] = [WaterMesh(Id="21")]  # watermeshes/watermeshes_x.json
     waternets: list[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
     waternetcreatorsettings: list[WaternetCreatorSettings] = [
         WaternetCreatorSettings(Id="15")
@@ -2419,7 +2427,7 @@ class DStabilityStructure(BaseModelStructure):
                     WaternetCreatorSettingsId="15",
                     WaternetId="14",
                     WaterMeshId="21",
-                    WaterDefinitionType = WaterDefinitionTypeEnum.WATERLINES
+                    WaterDefinitionType=WaterDefinitionTypeEnum.WATERLINES,
                 )
             ],
             Calculations=[
@@ -2608,7 +2616,7 @@ class DStabilityStructure(BaseModelStructure):
             WaternetCreatorSettingsId=str(unique_start_id + 2),
             WaternetId=str(unique_start_id + 1),
             WaterMeshId=str(unique_start_id + 13),
-            WaterDefinitionType=WaterDefinitionTypeEnum.WATERLINES
+            WaterDefinitionType=WaterDefinitionTypeEnum.WATERLINES,
         )
 
         scenario = self.scenarios[scenario_index]

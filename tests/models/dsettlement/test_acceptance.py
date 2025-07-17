@@ -6,13 +6,10 @@ from datetime import timedelta
 from pathlib import Path
 from warnings import warn
 
-import pydantic
-import pytest
-from pydantic.color import Color
-from teamcity import is_running_under_teamcity
-
 import geolib.models.dsettlement.loads as loads
 import geolib.soils as soil_external
+import pydantic
+import pytest
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
@@ -47,6 +44,9 @@ from geolib.soils import (
     SoilWeightParameters,
     StateType,
 )
+from pydantic.color import Color
+from teamcity import is_running_under_teamcity
+
 from tests.utils import TestUtils, only_teamcity
 
 

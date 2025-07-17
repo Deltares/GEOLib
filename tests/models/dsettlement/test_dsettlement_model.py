@@ -3,11 +3,9 @@ from datetime import timedelta
 from io import BytesIO
 from pathlib import Path
 
-import pytest
-from pydantic import ValidationError
-
 import geolib.models.dsettlement.loads as loads
 import geolib.soils as soil_external
+import pytest
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.drain_types import DrainGridType, DrainType
@@ -52,6 +50,8 @@ from geolib.soils import (
     StateType,
     StochasticParameter,
 )
+from pydantic import ValidationError
+
 from tests.utils import TestUtils, only_teamcity
 
 test_data_path = Path(TestUtils.get_local_test_data_dir("dsettlement"))

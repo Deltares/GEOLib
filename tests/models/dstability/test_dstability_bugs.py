@@ -1,13 +1,13 @@
 from pathlib import Path
 
 import pytest
-
 from geolib.geometry import Point
 from geolib.models import DStabilityModel
 from geolib.models.dstability.analysis import (
     DStabilityBishopAnalysisMethod,
     DStabilityCircle,
 )
+
 from tests.utils import TestUtils
 
 

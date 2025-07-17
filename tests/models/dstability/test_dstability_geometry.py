@@ -2,12 +2,12 @@ import os
 from pathlib import Path
 
 import pytest
-from pydantic import ValidationError
-
 from geolib.geometry import Point
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import PersistablePoint
 from geolib.soils import Soil
+from pydantic import ValidationError
+
 from tests.utils import TestUtils
 
 

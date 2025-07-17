@@ -2,7 +2,6 @@ import os
 import pathlib
 
 import pytest
-
 from geolib.models.dsettlement.dsettlement_parserprovider import *
 from geolib.models.dsettlement.internal import (
     Boundaries,
@@ -12,6 +11,7 @@ from geolib.models.dsettlement.internal import (
     PiezoLines,
     Points,
 )
+
 from tests.utils import TestUtils
 
 

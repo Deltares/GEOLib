@@ -1,9 +1,8 @@
 import warnings
 from typing import Callable
 
-import pytest
-
 import geolib.models.dsheetpiling.settings as settings
+import pytest
 from geolib.geometry import Point
 from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.calculation_options import CalculationOptionsPerStage

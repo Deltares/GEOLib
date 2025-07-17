@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import pytest
-
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.dstability_parserprovider import (
     DStabilityParser,
@@ -12,6 +11,7 @@ from geolib.models.dstability.serializer import (
     DStabilityInputSerializer,
     DStabilityInputZipSerializer,
 )
+
 from tests.utils import TestUtils
 
 

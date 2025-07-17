@@ -1,5 +1,4 @@
 import pytest
-
 from geolib import __version__
 
 from .context import geolib
