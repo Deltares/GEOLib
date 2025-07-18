@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import pytest
-
 from geolib.geometry.one import Point
 from geolib.models.dstability.analysis import (
     DStabilityBishopAnalysisMethod,
@@ -18,6 +17,7 @@ from geolib.models.dstability.analysis import (
     DStabilityUpliftVanParticleSwarmAnalysisMethod,
 )
 from geolib.models.dstability.dstability_model import DStabilityModel
+
 from tests.utils import TestUtils
 
 

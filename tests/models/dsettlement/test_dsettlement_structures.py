@@ -1,5 +1,4 @@
 import pytest
-
 from geolib.models.dseries_parser import DSeriesRepeatedGroupedProperties
 from geolib.models.dsettlement.dsettlement_structures import (
     ComplexVerticalSubstructure,

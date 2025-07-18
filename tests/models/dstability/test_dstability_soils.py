@@ -1,5 +1,4 @@
 import pytest
-
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.soils import MohrCoulombParameters, ShearStrengthModelTypePhreaticLevel, Soil
 

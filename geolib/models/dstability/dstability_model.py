@@ -33,6 +33,7 @@ from .internal import (
     SoilVisualisation,
     SpencerSlipPlaneResult,
     UpliftVanSlipCircleResult,
+    WaterMesh,
     Waternet,
 )
 from .loads import Consolidation, DStabilityLoad
@@ -107,6 +108,10 @@ class DStabilityModel(BaseModel):
     def parse(self, *args, **kwargs):
         super().parse(*args, **kwargs)
         self.current_id = self.datastructure.get_unique_id()
+
+    @property
+    def watermeshes(self) -> list[WaterMesh]:
+        return self.datastructure.watermeshes
 
     @property
     def waternets(self) -> list[Waternet]:
@@ -290,6 +295,19 @@ class DStabilityModel(BaseModel):
 
     def _get_soil_layers(self, scenario_index: int, stage_index: int):
         return self.datastructure._get_soil_layers(scenario_index, stage_index)
+
+    def _get_watermesh(self, scenario_index: int, stage_index: int):
+        watermesh_id = (
+            self.datastructure.scenarios[scenario_index].Stages[stage_index].WaterMeshId
+        )
+
+        for watermesh in self.datastructure.watermeshes:
+            if watermesh.Id == watermesh_id:
+                return watermesh
+
+        raise ValueError(
+            f"No waterMesh found for stage {stage_index} in scenario {scenario_index}."
+        )
 
     def _get_waternet(self, scenario_index: int, stage_index: int):
         waternet_id = (

@@ -2,8 +2,6 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable
 
 import pytest
-from pydantic import ValidationError
-
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_SURFACE_NAME
@@ -15,6 +13,7 @@ from geolib.models.dsheetpiling.settings import (
     Side,
 )
 from geolib.models.dsheetpiling.surface import Surface
+from pydantic import ValidationError
 
 
 @pytest.fixture

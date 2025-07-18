@@ -1,5 +1,4 @@
 import pytest
-
 from geolib.models.dsheetpiling.constructions import Sheet, SheetPileProperties
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 

@@ -1,12 +1,11 @@
 import pytest
-from pydantic_core._pydantic_core import ValidationError
-
 from geolib.soils import (
     MohrCoulombParameters,
     Soil,
     SoilClassificationParameters,
     StochasticParameter,
 )
+from pydantic_core._pydantic_core import ValidationError
 
 
 class TestSoils:

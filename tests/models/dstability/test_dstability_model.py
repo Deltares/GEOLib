@@ -4,7 +4,6 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
@@ -40,6 +39,7 @@ from geolib.soils import (
     Soil,
     SuTablePoint,
 )
+
 from tests.utils import TestUtils
 
 
@@ -95,6 +95,9 @@ class TestDStabilityModel:
             pytest.param(
                 "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
+            ),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -138,6 +141,12 @@ class TestDStabilityModel:
             ),
             pytest.param(
                 "dstability/Tutorial_v2024_1.stix", id="Tutorial DStability 2024.1"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
             ),
         ],
     )
@@ -347,7 +356,7 @@ class TestDStabilityModel:
     def test_gen_unique_id(self):
         """This test will fail when we've added new default
         ids to the internal datastructure. Please update accordingly."""
-        max_id_after_initialization_of_dstability_structure = 21
+        max_id_after_initialization_of_dstability_structure = 22
         dm = DStabilityModel()
 
         assert dm.datastructure.waternets[0].Id == "14"
@@ -392,13 +401,13 @@ class TestDStabilityModel:
 
         layer_ids = [dm.add_layer(points, soil) for points, soil in layers_and_soils]
         for layer_id in layer_ids:
-            # Has to be done in separate loop since all layers first need to be defined.
+            # Has to be done in a separate loop since all layers first need to be defined.
             dm.add_soil_layer_consolidations(soil_layer_id=layer_id)
 
         assert len(dm.datastructure.loads[0].LayerLoads) == 4
         assert dm.is_valid
 
-        # Serialize model to input file.
+        # Serialize model to the input file.
         path = Path(TestUtils.get_output_test_data_dir("dstability"), "test.stix")
         dm.serialize(path)
 

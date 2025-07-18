@@ -6,8 +6,6 @@ from pathlib import Path
 from tkinter import Label
 
 import pytest
-from teamcity import is_running_under_teamcity
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dgeoflow import DGeoFlowModel
@@ -18,6 +16,8 @@ from geolib.models.dgeoflow.internal import (
     InternalPipeTrajectory,
     PersistablePoint,
 )
+from teamcity import is_running_under_teamcity
+
 from tests.utils import TestUtils, only_teamcity
 
 

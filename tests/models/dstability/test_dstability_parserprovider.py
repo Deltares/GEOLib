@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import pytest
-
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.dstability_parserprovider import (
     DStabilityParser,
@@ -12,6 +11,7 @@ from geolib.models.dstability.serializer import (
     DStabilityInputSerializer,
     DStabilityInputZipSerializer,
 )
+
 from tests.utils import TestUtils
 
 
@@ -29,6 +29,9 @@ class TestDStabilityInputParser:
             ),
             pytest.param(
                 "dstability/Tutorial_v2024_2.stix", id="Tutorial DStability 2024.2"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
             ),
         ],
     )

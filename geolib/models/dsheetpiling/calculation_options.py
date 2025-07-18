@@ -57,9 +57,7 @@ class CalculationOptions(BaseDataClass, metaclass=ABCMeta):
     @property
     def calculation_properties(
         self,
-    ) -> (
-        "StandardCalculationOptions | DesignSheetpilingLengthCalculationOptions | VerifyCalculationOptions | KranzAnchorStrengthCalculationOptions | OverallStabilityCalculationOptions | ReliabilityAnalysisCalculationOptions"
-    ):
+    ) -> "StandardCalculationOptions | DesignSheetpilingLengthCalculationOptions | VerifyCalculationOptions | KranzAnchorStrengthCalculationOptions | OverallStabilityCalculationOptions | ReliabilityAnalysisCalculationOptions":
         _calculation_properties_map = {
             CalculationType.STANDARD: StandardCalculationOptions,
             CalculationType.DESIGN_SHEETPILING_LENGTH: DesignSheetpilingLengthCalculationOptions,
