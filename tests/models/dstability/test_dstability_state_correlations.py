@@ -1,5 +1,4 @@
 import pytest
-
 from geolib.geometry import Point
 from geolib.models import DStabilityModel
 from geolib.models.dstability.internal import StateCorrelation

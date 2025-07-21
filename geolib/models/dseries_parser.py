@@ -957,9 +957,7 @@ class DSeriesTreeStructure(DSeriesStructure):
             base_type = get_origin(field) or field
 
             if base_type is list or is_structure_collection(base_type):
-                lines_to_parse = cls.get_next_property_text_lines(
-                    text_lines[lines_read:]
-                )
+                lines_to_parse = cls.get_next_property_text_lines(text_lines[lines_read:])
                 parsed_tuple = get_list_values(struct_idx, field_name, lines_to_parse)
                 (
                     properties[field_name],

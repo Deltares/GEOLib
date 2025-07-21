@@ -1,5 +1,4 @@
 import pytest
-
 from geolib.models.dsheetpiling.dsheetpiling_model import (
     DiaphragmModelType,
     SheetModelType,

@@ -104,6 +104,41 @@ class PersistableReferenceLine(DStabilityBaseModelStructure):
         return str(value)
 
 
+class PersistableWaterMeshProperties(DStabilityBaseModelStructure):
+    Date: str | None = None
+    Time: str | None = None
+    FileName: str | None = None
+    ScenarioName: str | None = None
+    CalculationName: str | None = None
+
+
+class WaterMeshNode(DStabilityBaseModelStructure):
+    Point: PersistablePoint | None = None
+    TotalPorePressure: float = 1
+
+
+class PersistableElement(DStabilityBaseModelStructure):
+    WaterMeshNodes: list[WaterMeshNode] | None = []
+
+
+class WaterMesh(DStabilitySubStructure):
+    """watermeshes/watermeshes_x.json."""
+
+    @classmethod
+    def structure_group(cls) -> str:
+        return "watermeshes"
+
+    @classmethod
+    def structure_name(cls) -> str:
+        return "watermeshes"
+
+    Id: str | None = None
+    ContentVersion: str | None = "2"
+    Elements: list[PersistableElement] | None = None
+    WaterMeshProperties: PersistableWaterMeshProperties | None = None
+    UnitWeightWater: float | None = 9.81
+
+
 class Waternet(DStabilitySubStructure):
     """waternets/waternet_x.json."""
 
@@ -415,6 +450,14 @@ class StateCorrelation(DStabilitySubStructure):
         self.StateCorrelations.append(state_correlation)
 
 
+class WaterDefinitionTypeEnum(Enum):
+    WATERLINES = "WaterLines"
+    WATERMESH = "WaterMesh"
+
+
+WaterDefinitionType = WaterDefinitionTypeEnum
+
+
 class Stage(DStabilitySubStructure):
     """stages/stage_x.json"""
 
@@ -436,6 +479,10 @@ class Stage(DStabilitySubStructure):
     SoilLayersId: str | None = None
     StateCorrelationsId: str | None = None
     StateId: str | None = None
+    WaterDefinitionType: WaterDefinitionTypeEnum | None = (
+        WaterDefinitionTypeEnum.WATERLINES
+    )
+    WaterMeshId: str | None = None
     WaternetCreatorSettingsId: str | None = None
     WaternetId: str | None = None
 
@@ -447,6 +494,7 @@ class Stage(DStabilitySubStructure):
         "ReinforcementsId",
         "SoilLayersId",
         "StateId",
+        "WaterMeshId",
         "WaternetId",
         mode="before",
     )
@@ -2346,10 +2394,11 @@ class DStabilityStructure(BaseModelStructure):
     to multiple json files. Where the first (0) instance
     has no suffix, but the second one has (1 => _1) etc.
 
-    also parses the outputs which are part of the json files
+    Also parses the outputs which are part of the json files
     """
 
     # input part
+    watermeshes: list[WaterMesh] = [WaterMesh(Id="21")]  # watermeshes/watermeshes_x.json
     waternets: list[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
     waternetcreatorsettings: list[WaternetCreatorSettings] = [
         WaternetCreatorSettings(Id="15")
@@ -2377,6 +2426,8 @@ class DStabilityStructure(BaseModelStructure):
                     StateCorrelationsId="17",
                     WaternetCreatorSettingsId="15",
                     WaternetId="14",
+                    WaterMeshId="21",
+                    WaterDefinitionType=WaterDefinitionTypeEnum.WATERLINES,
                 )
             ],
             Calculations=[
@@ -2449,6 +2500,15 @@ class DStabilityStructure(BaseModelStructure):
                     raise ValueError("WaternetCreatorSettingsIds not linked!")
                 if not list_has_id(self.waternets, stage.WaternetId):
                     raise ValueError("WaternetIds not linked!")
+
+                if stage.WaterMeshId is None:
+                    watermesh_id = self.get_unique_id()
+                    self.watermeshes.append(WaterMesh(Id=str(watermesh_id)))
+                    stage.WaterMeshId = str(watermesh_id)
+                else:
+                    if not list_has_id(self.watermeshes, stage.WaterMeshId):
+                        raise ValueError("WatermeshIds not linked!")
+
             for _, calculation in enumerate(scenario.Calculations):
                 if not list_has_id(
                     self.calculationsettings, calculation.CalculationSettingsId
@@ -2463,8 +2523,9 @@ class DStabilityStructure(BaseModelStructure):
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
 
-        scenario_id = unique_start_id + 13
+        scenario_id = unique_start_id + 14
 
+        self.watermeshes += [WaterMesh(Id=str(unique_start_id + 13))]
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
             WaternetCreatorSettings(Id=str(unique_start_id + 2))
@@ -2495,8 +2556,10 @@ class DStabilityStructure(BaseModelStructure):
                         SoilLayersId=str(unique_start_id + 5),
                         StateId=str(unique_start_id + 3),
                         StateCorrelationsId=str(unique_start_id + 4),
+                        WaterDefinitionType=WaterDefinitionTypeEnum.WATERLINES,
                         WaternetCreatorSettingsId=str(unique_start_id + 2),
                         WaternetId=str(unique_start_id + 1),
+                        WaterMeshId=str(unique_start_id + 13),
                     )
                 ],
                 Calculations=[
@@ -2523,8 +2586,9 @@ class DStabilityStructure(BaseModelStructure):
         if unique_start_id is None:
             unique_start_id = self.get_unique_id()
 
-        stage_id = unique_start_id + 13
+        stage_id = unique_start_id + 14
 
+        self.watermeshes += [WaterMesh(Id=str(unique_start_id + 13))]
         self.waternets += [Waternet(Id=str(unique_start_id + 1))]
         self.waternetcreatorsettings += [
             WaternetCreatorSettings(Id=str(unique_start_id + 2))
@@ -2551,6 +2615,8 @@ class DStabilityStructure(BaseModelStructure):
             StateCorrelationsId=str(unique_start_id + 4),
             WaternetCreatorSettingsId=str(unique_start_id + 2),
             WaternetId=str(unique_start_id + 1),
+            WaterMeshId=str(unique_start_id + 13),
+            WaterDefinitionType=WaterDefinitionTypeEnum.WATERLINES,
         )
 
         scenario = self.scenarios[scenario_index]
@@ -2787,6 +2853,7 @@ class ForeignKeys(DStabilityBaseModelStructure):
     """
 
     mapping: dict[str, tuple[str, ...]] = {
+        "WaterMesh.Id": ("Stage.WaterMeshId",),
         "Waternet.Id": ("Stage.WaternetId",),
         "PersistableHeadLine.Id": (
             "PersistableReferenceLine.BottomHeadLineId",

@@ -2,8 +2,6 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
-from pydantic_core._pydantic_core import ValidationError
-
 from geolib.models.dstability import DStabilityModel
 from geolib.models.dstability.internal import (
     DStabilityStructure,
@@ -12,6 +10,8 @@ from geolib.models.dstability.internal import (
     Waternet,
 )
 from geolib.models.dstability.utils import children
+from pydantic_core._pydantic_core import ValidationError
+
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -43,9 +43,9 @@ class TestDStabilityInternal:
         fk = ForeignKeys()
         mapping = fk.class_fields
 
-        # Validate "Stage" has 9 Id like fields defined
+        # Validate "Stage" has 10 Id like fields defined
         assert "Stage" in mapping
-        assert len(mapping["Stage"]) == 9
+        assert len(mapping["Stage"]) == 10
 
     @pytest.mark.unittest
     def test_find_subclass_from_children(self):
@@ -56,7 +56,7 @@ class TestDStabilityInternal:
         )
         dm.parse(test_filepath)
 
-        # Verify expecations
+        # Verify expectations
         assert isinstance(dm.datastructure.waternets[0], Waternet)
 
         # Test

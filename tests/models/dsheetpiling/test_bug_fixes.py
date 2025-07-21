@@ -1,8 +1,7 @@
 from pathlib import Path
 
-import pytest
-
 import geolib as gl
+import pytest
 from geolib.models.dsheetpiling.calculation_options import *
 from geolib.models.dsheetpiling.constructions import *
 from geolib.models.dsheetpiling.dsheetpiling_model import *
@@ -10,6 +9,7 @@ from geolib.models.dsheetpiling.loads import *
 from geolib.models.dsheetpiling.profiles import *
 from geolib.models.dsheetpiling.settings import *
 from geolib.soils import *
+
 from tests.utils import TestUtils
 
 test_file_directory = "dsheetpiling/bugfixes"

@@ -4,8 +4,6 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
-from teamcity import is_running_under_teamcity
-
 from geolib.errors import CalculationError
 from geolib.geometry.one import Point
 from geolib.models import BaseModel, DFoundationsModel
@@ -56,6 +54,8 @@ from geolib.models.dfoundations.piles import (
 from geolib.models.dfoundations.profiles import CPT, Excavation, Profile
 from geolib.models.internal import Bool
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
+from teamcity import is_running_under_teamcity
+
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dfoundations/benchmarks"

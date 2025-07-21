@@ -4,7 +4,6 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
-
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.constructions import (
@@ -49,6 +48,7 @@ from geolib.models.dsheetpiling.settings import (
 )
 from geolib.models.dsheetpiling.supports import Anchor
 from geolib.soils import Soil, SoilType
+
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/benchmarks"

@@ -19,7 +19,7 @@ import geolib  # isort:skip
 # -- Project information -----------------------------------------------------
 
 project = "geolib"
-copyright = "2023, Deltares"
+copyright = "2025, Deltares"
 author = "Deltares"
 
 

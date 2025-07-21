@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import pytest
+from geolib.models import DSettlementModel
 from teamcity import is_running_under_teamcity
 
-from geolib.models import DSettlementModel
 from tests.utils import TestUtils, only_teamcity
 
 benchmark_directory = "dsettlement/benchmarks"

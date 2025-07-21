@@ -1,7 +1,6 @@
 from random import randint
 
 import pytest
-
 from geolib.models.dfoundations.dfoundations_structures import DFoundationsTableWrapper
 from geolib.models.dfoundations.internal import (
     CPT,

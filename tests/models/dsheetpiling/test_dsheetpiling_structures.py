@@ -1,7 +1,6 @@
 from typing import Any
 
 import pytest
-
 from geolib.errors import ParserError
 from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.dsheetpiling_structures import (
