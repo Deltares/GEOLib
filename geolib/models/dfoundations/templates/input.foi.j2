@@ -353,7 +353,7 @@ Layer ({{ loop.index }})
 {% if pile.overrule_pile_tip_cross_section_factors.value == 1 %}
 {{ '{:>12.2f}'.format(pile.pile_tip_cross_section_factor) }} : Factor s user defined
 {% endif %}
-{{ '{:>2}'.format(pile.use_pre_2016.value) }} : Use Pre 2016 Alpha P Factor = {{ pile.use_pre_2016.name }}
+{{ '{:>2}'.format(pile.use_pre_2025.value) }} : Use pre 2025 alpha factors = {{ pile.use_pre_2025.name }}
 {{ '{:>2}'.format(pile.user_defined_pile_type_as_prefab.value) }} : User Defined piletype as Overig = {{ '{:>2}'.format(pile.user_defined_pile_type_as_prefab.name) }}
 {{ '{:>2}'.format(pile.use_manual_reduction_for_qc.value) }} : Use manual reduction for qc;III = {{ '{:>2}'.format(pile.use_manual_reduction_for_qc.name) }}
 {{ '{:>6.2f}'.format(pile.reduction_percentage_qc) }} : Reduction percentage qc;III

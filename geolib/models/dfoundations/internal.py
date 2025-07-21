@@ -152,7 +152,7 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
     pile_tip_shape_factor: Annotated[float, Field(ge=0, le=10)] | None = None
     overrule_pile_tip_cross_section_factors: Bool = Bool.FALSE
     pile_tip_cross_section_factor: Annotated[float, Field(ge=0, le=10)] | None = None
-    use_pre_2016: Bool = Bool.FALSE
+    use_pre_2025: Bool = Bool.FALSE
     user_defined_pile_type_as_prefab: Bool = Bool.FALSE
     use_manual_reduction_for_qc: Bool = Bool.FALSE
     reduction_percentage_qc: Annotated[float, Field(ge=25, le=100)] = 25
@@ -590,7 +590,7 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 class Version(DSerieVersion):
     soil: int = 1013
-    d__foundations: int = 1027
+    d__foundations: int = 1029
 
 
 class VersionExternal(DSeriesInlineMappedProperties):

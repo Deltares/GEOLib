@@ -144,7 +144,7 @@ class BearingPile(Pile):
             ),
             pile_tip_cross_section_factor=self.pile_tip_cross_section_factor,
             is_user_defined=True,
-            use_pre_2016=False,
+            use_pre_2025=False,
         )
 
 
