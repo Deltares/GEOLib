@@ -1,21 +1,21 @@
 D-Foundations DUMP FILE
 ==============================================================================
-COMPANY    :  
+COMPANY    :    
 
-DATE       : 13/07/2025
-TIME       : 17:47:34
-FILENAME   : D:\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm1-1a.fod
-CREATED BY : D-Foundations version 24.1.0.2525
+DATE       : 21-7-2025
+TIME       : 11:17:39
+FILENAME   : D:\DelphiProjects\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm1-1a.fod
+CREATED BY : D-Foundations version 24.1.0.2585
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1027
+D-Foundations=1029
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=24.1.0.2525
+DGSFoundationCalc.dll=24.1.0.2585
 [END OF VERSION EXTERNALS]
 
 [MODEL]
@@ -1174,14 +1174,14 @@ Layer (7)
 0 : pile type shown in main graph
     1 = number of items
 Round 550
-11 : Pile type = Continuous flight auger pile
+11 : Pile type = B7-Continuous flight auger pile
  0 : Installation method = Automatic
  0 : Slip Layer = None
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-1 : Use Pre 2016 Alpha P Factor = TRUE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
@@ -1345,18 +1345,18 @@ DataCount=0
 [END OF INPUT DATA]
 [DUMPFILE OUTPUT]
 [RESULTS AT CPT TEST LEVEL]
-      155.54  = Max Delta Fr;max;i
-     5182.16  = Average Fr;max;i
-     0.01576  = VariatieCoef Fr;max;i
-1 = Can Table 10 (ksi3/ksi4) be used in a valid way?
+     1902.87  = Max Delta Fr;max;i
+     4231.83  = Average Fr;max;i
+     0.22790  = VariatieCoef Fr;max;i
+0 = Can Table 10 (ksi3/ksi4) be used in a valid way?
    -1  = PileGroupIndex With Largest Variatie Coef (-1 means not relevant)
 [END OF RESULTS AT CPT TEST LEVEL]
 [VERIFICATION RESULTS]
 [GLOBAL NEN RESULTS]
-0.034280 = wd1B
-0.021001 = w2d
-208.741890 = ReciprocalMaxRelativeRotationCalc1B
-348.640862 = ReciprocalMaxRelativeRotationCalc2
+0.105603 = wd1B
+0.027643 = w2d
+64.114589 = ReciprocalMaxRelativeRotationCalc1B
+258.084548 = ReciprocalMaxRelativeRotationCalc2
 [END OF GLOBAL NEN RESULTS]
 [DEMANDS NEN-EN]
 0.066 = wreq1b
@@ -1392,29 +1392,29 @@ CptName
  1.00 = Pile point shape factor beta
  1.00 = Factor influence crosssection of pile point s
   1800.000 = Max load on foundation Fs_rep
-  2982.228 = Max bearing capacity foundation Fr;fund;max;d
+  1862.147 = Max bearing capacity foundation Fr;fund;max;d
 6 = Critical pile nr for settlement in GT1B
-1 = Critical CPT nr for settlement in GT1B
+2 = Critical CPT nr for settlement in GT1B
 6 = Critical pile nr for settlement in GT2
-1 = Critical CPT nr for settlement in GT2
+2 = Critical CPT nr for settlement in GT2
 1 = First pile nr for critical rotation in GT1B
 6 = Second pile nr for critical rotation in GT1B
 1 = First pile nr for critical rotation in GT2
 6 = Second pile nr for critical rotation in GT2
   1800.00000 = Fs_tot_d_1B
-  2284.45139 = Fr_max_punt_d_1B
-   697.77691 = Fr_max_schacht_d_1B
-  1150.07590 = FR_punt_d_1B
-  0.016770 = spunt_d_1B
-     0.00880 = sel_d1B
+  1142.22569 = Fr_max_punt_d_1B
+   719.92118 = Fr_max_schacht_d_1B
+  1080.08862 = FR_punt_d_1B
+  0.088220 = spunt_d_1B
+     0.00867 = sel_d1B
      0.00871 = s2_d1B
      0.00000 = sneg1B
   1400.00000 = Fs_tot_d_2
-  2741.34167 = Fr_max_punt_d_2
-   837.33229 = Fr_max_schacht_d_2
-   829.62967 = FR_punt_d_2
-     0.00743 = spunt_d_2
-     0.00680 = sel_d2
+  1370.67083 = Fr_max_punt_d_2
+   863.90542 = Fr_max_schacht_d_2
+   630.50858 = FR_punt_d_2
+     0.01430 = spunt_d_2
+     0.00657 = sel_d2
      0.00677 = s2_d2
      0.00000 = sneg2
 [MAX SHAFT AND POINT]
@@ -1427,11 +1427,11 @@ MaxShaft
 MaxPoint
 [END OF COLUMN INDICATION]
 [DATA]
-     1 GT1B   697.777  2284.451
-     2 GT1B   719.921  2284.451
+     1 GT1B   697.777  1599.116
+     2 GT1B   719.921  1142.226
      3 GT1B   797.481  2284.451
-     1 GT2    837.332  2741.342
-     2 GT2    863.905  2741.342
+     1 GT2    837.332  1918.939
+     2 GT2    863.905  1370.671
      3 GT2    956.977  2741.342
 [END OF DATA]
 [END OF TABLE]
@@ -1451,9 +1451,9 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0060  0.0000  0.8000 'FUGBEN1'
-  2  0.0060  0.0200  0.8000 'FUGBEN2'
-  3  0.0060  0.0000  0.8000 'FUGBEN3'
+  1  0.0060  0.0000  0.3000 'FUGBEN1'
+  2  0.0060  0.0200  0.3000 'FUGBEN2'
+  3  0.0060  0.0000  0.3000 'FUGBEN3'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
