@@ -15,6 +15,6 @@ sand = Soil(id="sand", name="Sand")
 
 # Others
 gravel = Soil(id="gravel", name="Gravel")
-loam = Soil(id="loam", name="Loam")
+silt = Soil(id="silt", name="Silt")
 muck = Soil(id="muck", name="Muck")
 undetermined = Soil(id="undetermined", name="Undetermined")

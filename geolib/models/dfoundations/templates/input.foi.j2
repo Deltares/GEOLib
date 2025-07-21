@@ -290,9 +290,9 @@ Layer ({{ loop.index }})
 {{ '{:>2}'.format(pile.pile_type.value) }} : Pile Type = {{ pile.pile_type.name }}
 {{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
 {{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
-{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
-{% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}
-    {{ '{:>12.4f}'.format(pile.execution_factor_clay_loam_peat) }} : Execution factor clay/loam/peat [-)
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_silt_peat.value) }} : Pile type for execution factor clay/silt/peat = {{ pile.pile_type_for_execution_factor_clay_silt_peat.name }}
+{% if pile.pile_type_for_execution_factor_clay_silt_peat.value == 1 %}
+    {{ '{:>12.4f}'.format(pile.execution_factor_clay_silt_peat) }} : Execution factor clay/silt/peat [-)
 {% endif %}
 {{ '{:>2}'.format(pile.pile_type_for_pile_class_factor.value) }} : Pile type for pile class factor = {{ pile.pile_type_for_pile_class_factor.name }}
 {{ '{:>12.4f}'.format(pile.pile_class_factor) }} : Pile class factor [-)
@@ -372,9 +372,9 @@ Layer ({{ loop.index }})
 {{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
 {{ '{:>2}'.format(pile.installation_method.value) }} : Installation method = {{ pile.installation_method.name }}
 {{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
-{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
-{% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}
-    {{ '{:>12.4f}'.format(pile.execution_factor_clay_loam_peat) }} : Execution factor clay/loam/peat [-)
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_silt_peat.value) }} : Pile type for execution factor clay/silt/peat = {{ pile.pile_type_for_execution_factor_clay_silt_peat.name }}
+{% if pile.pile_type_for_execution_factor_clay_silt_peat.value == 1 %}
+    {{ '{:>12.4f}'.format(pile.execution_factor_clay_silt_peat) }} : Execution factor clay/silt/peat [-)
 {% endif %}
 {{ '{:>2}'.format(pile.material.value) }} : Material = {{ pile.material.name }}
 {% if pile.material.value == 3 %}

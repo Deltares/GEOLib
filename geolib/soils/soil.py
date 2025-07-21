@@ -374,11 +374,11 @@ class SoilState(SoilBaseModel):
 class SoilType(IntEnum):
     GRAVEL = 0
     SAND = 1
-    LOAM = 2
+    SILT = 2
     CLAY = 3
     PEAT = 4
-    SANDY_LOAM = 5
-    TERTCLAY = 6
+    TERTCLAY = 5
+    SANDY_SILT = 6
     CLAYEYSAND = 7
 
 

@@ -120,4 +120,4 @@ is shown on how to set an enumeration for the soil.
     soil.soil_type_nl = SoilType.CLAY
 
 Note that this "SoilType" enumeration is reused for three different soil parameters: "soil_type_nl", "soil_type_be" and
-"soil_type_settlement_by_vibrations". However only "soil_type_nl" accepts SoilType.SANDY_LOAM.
+"soil_type_settlement_by_vibrations". However only "soil_type_nl" accepts SoilType.SANDY_SILT.

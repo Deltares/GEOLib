@@ -175,7 +175,7 @@ class PartialFactorSetVerifyEC(IntEnum):
 class SoilTypeModulusSubgradeReaction(IntEnum):
     GRAVEL = 0
     SAND = 1
-    LOAM = 2
+    SILT = 2
     CLAY = 3
     PEAT = 4
 

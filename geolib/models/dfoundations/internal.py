@@ -66,7 +66,7 @@ class PileType(IntEnum):
     USER_DEFINED = 27
 
 
-class PileTypeForClayLoamPeat(IntEnum):
+class PileTypeForClaySiltPeat(IntEnum):
     STANDARD = 0
     USER_DEFINED = 1
 
@@ -120,8 +120,8 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
     pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
     pile_type_for_execution_factor_sand_gravel: PileType | None = None
     execution_factor_sand_gravel: Annotated[float, Field(ge=0, le=9)] | None = None
-    pile_type_for_execution_factor_clay_loam_peat: PileTypeForClayLoamPeat | None = None
-    execution_factor_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None
+    pile_type_for_execution_factor_clay_silt_peat: PileTypeForClaySiltPeat | None = None
+    execution_factor_clay_silt_peat: Annotated[float, Field(ge=0, le=9)] | None = None
     pile_type_for_pile_class_factor: PileType | None = None
     pile_class_factor: Annotated[float, Field(ge=0, le=9)] | None = None
     pile_type_for_load_settlement_curve: LoadSettlementCurve | None = None
@@ -165,8 +165,8 @@ class TypesTensionPiles(DSeriesNoParseSubStructure):
     pile_type_for_execution_factor_sand_gravel: PileType | None = None
     installation_method: InstallationMethod = InstallationMethod.DRIVING
     execution_factor_sand_gravel: Annotated[float, Field(ge=0, le=9)] | None = None
-    pile_type_for_execution_factor_clay_loam_peat: PileTypeForClayLoamPeat | None = None
-    execution_factor_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None
+    pile_type_for_execution_factor_clay_silt_peat: PileTypeForClaySiltPeat | None = None
+    execution_factor_clay_silt_peat: Annotated[float, Field(ge=0, le=9)] | None = None
     material: PileMaterial | None = None
     unit_weight_pile: Annotated[float, Field(ge=0, le=1000)] | None = None
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)] | None = None

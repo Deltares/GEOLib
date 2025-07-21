@@ -15,11 +15,11 @@ logger = logging.getLogger(__name__)
 class SoilTypeNl(IntEnum):
     GRAVEL = 0
     SAND = 1
-    LOAM = 2
+    SILT = 2
     CLAY = 3
     PEAT = 4
-    SANDYLOAM = 5
-    TERTCLAY = 6
+    TERTCLAY = 5
+    SANDYSILT = 6
     CLAYEYSAND = 7
 
 
