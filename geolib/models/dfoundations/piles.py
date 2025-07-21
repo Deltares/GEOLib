@@ -166,6 +166,7 @@ class TensionPile(Pile):
             material=PileMaterial.USER_DEFINED,
             unit_weight_pile=self.unit_weight_pile,
             elasticity_modulus=self.elasticity_modulus,
+            use_pre_2025=False,
         )
 
 
