@@ -260,7 +260,7 @@ DataCount={{ '{:>4}'.format(cpt.measured_data.data|length) }}
 {{ '{:>12.2f}'.format(profile.placement_depth_of_foundation) }} : Placement depth of foundation element [m]
 {{ '{:>12}'.format(profile.concentration_value_frohlich) }} : Concentration value according to Frohlich [-]
 {{ '{:>12.2f}'.format(profile.top_tension_zone) }} : Top of tension zone [m]
-{{ '{:>12}'.format(profile.reduction_of_core_resistance) }} : Reduction type of cone resistance = {{ 'Standard' if cone_resistance_reduction_type == 0 else 'Begemann' if cone_resistance_reduction_type == 1 else 'Manual' }}
+{{ '{:>12}'.format(profile.reduction_of_cone_resistance) }} : Reduction type of cone resistance = {{ 'Standard' if cone_resistance_reduction_type == 0 else 'Begemann' if cone_resistance_reduction_type == 1 else 'Manual' }}
 {{ '{:>12.2f}'.format(profile.excavation_level) }} : Excavation level [m]
 {{ '{}'.format(profile.excavation_width_infinite) }} : Excavation width infinite = TRUE
 {{ '{}'.format(profile.excavation_length_infinite) }} : Excavation length infinite = TRUE
@@ -273,7 +273,7 @@ Layer ({{ loop.index }})
 {{ '{:>12.2f}'.format(layer.excess_pore_pressure_top) }} : Excess pore pressure at top [kN/m3]
 {{ '{:>12.2f}'.format(layer.excess_pore_pressure_bottom) }} : Excess pore pressure at bottom [kN/m3]
 {{ '{:>12.2f}'.format(layer.ocr_value) }} : OCR value [-]
-{{ '{:>12}'.format(layer.reduction_core_resistance) }} : Reduction of cone resistance [%]
+{{ '{:>12}'.format(layer.reduction_cone_resistance) }} : Reduction of cone resistance [%]
 {% endfor %}
 {% endfor %}
 [END OF PROFILES]

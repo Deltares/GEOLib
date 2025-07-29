@@ -347,7 +347,7 @@ class TestDFoundationsModel:
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
                     "ocr_value": 1.0,
-                    "reduction_core_resistance": 0,
+                    "reduction_cone_resistance": 0,
                 },
                 {
                     "material": "Clay, clean, soft",
@@ -355,7 +355,7 @@ class TestDFoundationsModel:
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
                     "ocr_value": 1.0,
-                    "reduction_core_resistance": 0,
+                    "reduction_cone_resistance": 0,
                 },
                 {
                     "material": "Clay, clean, stiff",
@@ -363,7 +363,7 @@ class TestDFoundationsModel:
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
                     "ocr_value": 1.0,
-                    "reduction_core_resistance": 0,
+                    "reduction_cone_resistance": 0,
                 },
             ],
         )
@@ -389,7 +389,7 @@ class TestDFoundationsModel:
             {
                 "material": "Foo Bar Clay",
                 "top_level": -0.3,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
         )
         with pytest.raises(KeyError):

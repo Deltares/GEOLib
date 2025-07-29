@@ -67,7 +67,7 @@ def test_run_model_from_scratch_expanded():
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
             {
                 "material": "Clay, clean, soft",
@@ -75,7 +75,7 @@ def test_run_model_from_scratch_expanded():
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
             {
                 "material": "Clay, clean, stiff",
@@ -83,7 +83,7 @@ def test_run_model_from_scratch_expanded():
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
         ],
     )

@@ -82,7 +82,7 @@ The layers can be input as a list of dicts.
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
             {
                 "material": "Clay, clean, weak",
@@ -90,7 +90,7 @@ The layers can be input as a list of dicts.
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
             {
                 "material": "Clay, clean, stiff",
@@ -98,7 +98,7 @@ The layers can be input as a list of dicts.
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
         ],
     )

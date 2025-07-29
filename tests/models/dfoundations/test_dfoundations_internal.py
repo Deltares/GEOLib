@@ -53,7 +53,7 @@ class TestInternalInputDFoundations:
         assert parsed_layer.excess_pore_pressure_top == excess_top
         assert parsed_layer.excess_pore_pressure_bottom == excess_bottom
         assert parsed_layer.ocr_value == ocr
-        assert parsed_layer.reduction_core_resistance == reduction
+        assert parsed_layer.reduction_cone_resistance == reduction
 
     @pytest.mark.integrationtest
     def test_given_single_profile_text_when_parse_then_structure_parsed(self):

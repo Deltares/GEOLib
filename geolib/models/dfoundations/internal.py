@@ -227,10 +227,10 @@ class Layer(DSeriesTreeStructure):
     excess_pore_pressure_top: float = 0.0  # [kN/m3]
     excess_pore_pressure_bottom: float = 0.0  # [kN/m3]
     ocr_value: float = 1.0  # [-]
-    reduction_core_resistance: float = 0.0  # [%]
+    reduction_cone_resistance: float = 0.0  # [%]
 
 
-class ReductionCoreResistanceEnum(IntEnum):
+class ReductionConeResistanceEnum(IntEnum):
     SAFE = 0
     BEGEMANN = 1
     MANUAL = 2
@@ -252,8 +252,8 @@ class Profile(DSeriesTreeStructure):
     top_tension_zone: float = 0.0
 
     # Excavation part
-    reduction_of_core_resistance: ReductionCoreResistanceEnum = (
-        ReductionCoreResistanceEnum.SAFE
+    reduction_of_cone_resistance: ReductionConeResistanceEnum = (
+        ReductionConeResistanceEnum.SAFE
     )
     excavation_level: float
     excavation_width_infinite: Bool = Bool.TRUE
