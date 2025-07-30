@@ -209,7 +209,8 @@ class TestDGeoFlowModel:
             (embankment, "H_Aa_ht_old"),
         ]
 
-        [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+        for points, soil in layers_and_soils:
+            dm.add_layer(points, soil)
 
         dm.add_boundary_condition([Point(x=-50, z=0), Point(x=-10, z=0)], 3, "River")
         dm.add_boundary_condition([Point(x=30, z=0), Point(x=50, z=0)], 0, "Polder")
@@ -266,7 +267,8 @@ class TestDGeoFlowModel:
             (embankment, "H_Aa_ht_old"),
         ]
 
-        [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+        for points, soil in layers_and_soils:
+            dm.add_layer(points, soil)
 
         dm.add_boundary_condition([Point(x=-50, z=0), Point(x=-10, z=0)], 17, "River")
         dm.add_boundary_condition([Point(x=30, z=0), Point(x=50, z=0)], 0, "Polder")
@@ -338,7 +340,8 @@ class TestDGeoFlowModel:
             (embankment, "H_Aa_ht_old"),
         ]
 
-        [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+        for points, soil in layers_and_soils:
+            dm.add_layer(points, soil)
 
         river_boundary_id = dm.add_boundary_condition(
             [Point(x=-50, z=0), Point(x=-10, z=0)], 17, "River"
