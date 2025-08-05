@@ -508,3 +508,55 @@ class TensionHShapedPile(TensionPile):
         types_tension_pile.thickness_flange = self.thickness_flange
         types_tension_pile.shape = PileShape.H_SHAPED_PROFILE
         return types_tension_pile
+
+
+class BearingRoundPileWithScrewShapedShaft(BearingPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_bearing_pile = super()._to_internal()
+        types_bearing_pile.base_diameter = self.base_diameter
+        types_bearing_pile.pile_diameter = self.pile_diameter
+        types_bearing_pile.shape = PileShape.ROUND_PILE_WITH_SCREW_SHAPED_SHAFT
+        return types_bearing_pile
+
+
+class TensionRoundPileWithScrewShapedShaft(TensionPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_tension_pile = super()._to_internal()
+        types_tension_pile.base_diameter = self.base_diameter
+        types_tension_pile.pile_diameter = self.pile_diameter
+        types_tension_pile.shape = PileShape.ROUND_PILE_WITH_SCREW_SHAPED_SHAFT
+        return types_tension_pile
+
+
+class BearingRoundPileWithBaseEqualsToShaftLostTip(BearingPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_bearing_pile = super()._to_internal()
+        types_bearing_pile.base_diameter = self.base_diameter
+        types_bearing_pile.shape = PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        return types_bearing_pile
+
+
+class TensionRoundPileWithBaseEqualsToShaftLostTip(TensionPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_tension_pile = super()._to_internal()
+        types_tension_pile.base_diameter = self.base_diameter
+        types_tension_pile.shape = PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        return types_tension_pile

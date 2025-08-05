@@ -344,6 +344,11 @@ Layer ({{ loop.index }})
     {{ '{:>12.2f}'.format(pile.width_h_shape) }} : Width H-shape [m)
     {{ '{:>12.2f}'.format(pile.thickness_web) }} : Thickness web [m)
     {{ '{:>12.2f}'.format(pile.thickness_flange) }} : Thickness flange [m)
+{% elif pile.shape.value == 12 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+{% elif pile.shape.value == 13 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
 {% endif %}
 {{ '{:>2}'.format(pile.overrule_pile_tip_shape_factor.value) }} : Factor beta overruled = {{ pile.overrule_pile_tip_shape_factor.name }}
 {% if pile.overrule_pile_tip_shape_factor.value == 1 %}
@@ -422,6 +427,11 @@ Layer ({{ loop.index }})
 {% elif pile.shape.value == 11 %}
     {{ '{:>12.2f}'.format(pile.circumference) }} : Circumference of pile [m)
     {{ '{:>12.2f}'.format(pile.cross_section) }} : Pile area [m)
+{% elif pile.shape.value == 12 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+{% elif pile.shape.value == 13 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
 {% endif %}
 {{ '{:>2}'.format(pile.is_user_defined.value) }} : User defined name
 {% endfor %}

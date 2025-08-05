@@ -38,6 +38,8 @@ from geolib.models.dfoundations.piles import (
     BearingRoundPileWithLostTip,
     BearingRoundTaperedPile,
     BearingSection,
+    BearingRoundPileWithScrewShapedShaft,
+    BearingRoundPileWithBaseEqualsToShaftLostTip,
     TensionHShapedPile,
     TensionPileLocation,
     TensionRectangularPile,
@@ -50,6 +52,8 @@ from geolib.models.dfoundations.piles import (
     TensionRoundPileWithLostTip,
     TensionRoundTaperedPile,
     TensionSection,
+    TensionRoundPileWithScrewShapedShaft,
+    TensionRoundPileWithBaseEqualsToShaftLostTip,
 )
 from geolib.models.dfoundations.profiles import CPT, Excavation, Profile
 from geolib.models.internal import Bool
@@ -962,6 +966,16 @@ def create_tension_pile():
             ),
             BearingHShapedPile,
         ],
+        [
+            "test_add_bearing_round_pile_with_screw_shaped_shaft.foi",
+            dict(base_diameter=0.8, pile_diameter=0.9),
+            BearingRoundPileWithScrewShapedShaft,
+        ],
+        [
+            "test_add_bearing_round_pile_with_base_equals_to_shaft_lost_tip.foi",
+            dict(base_diameter=1),
+            BearingRoundPileWithBaseEqualsToShaftLostTip,
+        ],
     ]
 )
 def create_bearing_pile_shape(request):
@@ -1031,6 +1045,16 @@ def create_bearing_pile_shape(request):
                 thickness_flange=0.01,
             ),
             TensionHShapedPile,
+        ],
+        [
+            "test_add_tension_round_pile_with_screw_shaped_shaft.foi",
+            dict(base_diameter=0.8, pile_diameter=0.9),
+            TensionRoundPileWithScrewShapedShaft,
+        ],
+        [
+            "test_add_tension_round_pile_with_base_equals_to_shaft_lost_tip.foi",
+            dict(base_diameter=1),
+            TensionRoundPileWithBaseEqualsToShaftLostTip,
         ],
     ]
 )
