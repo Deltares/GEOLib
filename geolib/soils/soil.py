@@ -610,6 +610,7 @@ class Soil(SoilBaseModel):
             soilmaxvoidratio=self.soil_classification_parameters.max_void_ratio,
             soilcohesion=self.mohr_coulomb_parameters.cohesion.mean,
             soilphi=self.mohr_coulomb_parameters.friction_angle.mean,
+            soilcu=self.undrained_parameters.undrained_shear_strength,
             soilmaxconeresisttype=self.cone_resistance.max_cone_resistance_type,
             soilmaxconeresist=self.cone_resistance.max_cone_resistance_type,
             soilusetension=self.use_tension,
