@@ -23,6 +23,7 @@ DGSFoundationCalc.dll={{ version_externals.dgsfoundationcalc____dll }}
 {# {% else %} #}
 {# {{ model }} #}
 {# {% endif %} #}
+{{ model.cu_values.value }} : CuValues = {{ 'Based on CPTs' if model.cu_values.value == 0 else 'Manual' }}
 [END OF MODEL]
 [SOIL COLLECTION]
     {{ soil_collection.soil|length }} = number of items
@@ -38,6 +39,7 @@ SoilMinVoidRatio={{ soil.soilminvoidratio }}
 SoilMaxVoidRatio={{ soil.soilmaxvoidratio }}
 SoilCohesion={{ soil.soilcohesion }}
 SoilPhi={{ soil.soilphi }}
+SoilCu={{ soil.soilcu }}
 SoilMaxConeResistType={{ soil.soilmaxconeresisttype.value }}
 SoilMaxConeResist={{ soil.soilmaxconeresist }}
 SoilUseTension={{ soil.soilusetension.value }}

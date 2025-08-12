@@ -539,8 +539,14 @@ class ModelTypeEnum(IntEnum):
     SHALLOW_FOUNDATIONS = 2
 
 
+"""Note that CuValues is only relevant for Shallow Foundations, which is not supported."""
+class CuValuesEnum(IntEnum):
+    CU_VALUES_BASED_ON_CPTS = 0
+    CU_VALUES_MANUAL = 1
+
 class ModelType(DFoundationsInlineProperties):
     model: ModelTypeEnum = ModelTypeEnum.BEARING_PILES
+    cu_values: CuValuesEnum = CuValuesEnum.CU_VALUES_BASED_ON_CPTS
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -596,7 +602,7 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 class Version(DSerieVersion):
     soil: int = 1013
-    d__foundations: int = 1031
+    d__foundations: int = 1032
 
 
 class VersionExternal(DSeriesInlineMappedProperties):

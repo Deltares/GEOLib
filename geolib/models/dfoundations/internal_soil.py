@@ -39,6 +39,7 @@ class Soil(DSeriesUnmappedNameProperties):
     soilmaxvoidratio: Annotated[float, Field(ge=0.0, le=1.0)] = 0.800
     soilcohesion: Annotated[float, Field(ge=0.0, le=1000.0)] = 30.00
     soilphi: Annotated[float, Field(ge=0.0, le=89.0)]
+    soilcu: Annotated[float, Field(ge=0.0, le=1000.0)] = 0.00
     soilmaxconeresisttype: MaxConeResistType = MaxConeResistType.STANDARD
     soilmaxconeresist: Annotated[float, Field(ge=0.0, le=1000000.0)] = 0.00
     soilusetension: Bool = Bool.TRUE
