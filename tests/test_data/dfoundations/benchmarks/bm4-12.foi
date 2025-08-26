@@ -2,24 +2,24 @@ INPUT FILE FOR D-FOUNDATIONS
 ==============================================================================
 COMPANY    :    
 
-DATE       : 12-8-2025
-TIME       : 12:57:44
-FILENAME   : D:\DelphiProjects\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm4-12.foi
-CREATED BY : D-Foundations version 25.1.0.0
+DATE       : 21-08-2025
+TIME       : 17:20:48
+FILENAME   : C:\DelphiProjects\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm4-12.foi
+CREATED BY : D-Foundations version 25.1.0.2830
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Foundations=1032
+D-Foundations=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=25.1.0.0
+DGSFoundationCalc.dll=25.1.0.2830
 [END OF VERSION EXTERNALS]
 
 [MODEL]
 2 : Model = Shallow Foundations (EC7-NL)
-0 : CuValues = Based on CPTs
+1 : CuValues = Manual
 [END OF MODEL]
 [SOIL COLLECTION]
    30 = number of items
@@ -304,7 +304,7 @@ SoilMinVoidRatio=0.001
 SoilMaxVoidRatio=0.001
 SoilCohesion=0.00
 SoilPhi=17.50
-SoilCu=0.01
+SoilCu=25.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
@@ -322,7 +322,7 @@ SoilMinVoidRatio=0.001
 SoilMaxVoidRatio=0.001
 SoilCohesion=10.00
 SoilPhi=17.50
-SoilCu=0.01
+SoilCu=50.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
@@ -340,7 +340,7 @@ SoilMinVoidRatio=0.001
 SoilMaxVoidRatio=0.001
 SoilCohesion=0.00
 SoilPhi=32.50
-SoilCu=0.01
+SoilCu=0.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
@@ -556,7 +556,7 @@ SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=0.00
-SoilCu=0.01
+SoilCu=0.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
@@ -739,16 +739,14 @@ Unknown
 [END OF VOID VALUE EQUIVALENT ELECTRONIC QC]
 [MEASURED DATA]
 [TABLE]
-DataCount=4
+DataCount=2
 [COLUMN INDICATION]
 z
 qc
 [END OF COLUMN INDICATION]
 [DATA]
-       0.000        0.833
-      -0.700        0.833
-      -0.701        1.667
-     -20.000        1.667
+       0.000        0.010
+     -10.000        0.010
 [END OF DATA]
 [END OF TABLE]
 [END OF MEASURED DATA]
@@ -762,7 +760,7 @@ Profile (1)
         0.00 : X coordinate [m]
         0.00 : Y coordinate [m]
      -100.00 : Phreatic level [m]
-      -19.00 : Pile tip level [m]
+        0.80 : Pile tip level [m]
         1.00 : Overconsolidation ratio of bearing layer [m]
       -19.00 : Top of positive skin friction zone [m]
         0.00 : Bottom of negative skin friction zone [m]
