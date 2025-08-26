@@ -104,7 +104,7 @@ class BearingPileSlipLayer(IntEnum):
 
 class OpenPipePileCalculationMethod(IntEnum):
     OPEN_PIPE_PILE = 0
-    STANDARD_2017 = 1
+    STANDARD_METHOD = 1
 
 class PileShape(IntEnum):
     ROUND_PILE = 0

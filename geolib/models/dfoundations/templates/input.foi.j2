@@ -353,7 +353,7 @@ Layer ({{ loop.index }})
     {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
 {% endif %}
 {% if pile.shape.value == 9 %}
-{{ '{:>2}'.format(pile.open_pipe_pile_calculation_method.value) }} : Open pipe pile calculation method = {{ 'Open pipe pile' if pile.open_pipe_pile_calculation_method.value == 0 else 'According to NEN 9997-1:2017' }}
+{{ '{:>2}'.format(pile.open_pipe_pile_calculation_method.value) }} : Open pipe pile calculation method = {{ 'Open pipe pile' if pile.open_pipe_pile_calculation_method.value == 0 else 'Standard method' }}
 {% endif %}
 {{ '{:>2}'.format(pile.overrule_pile_tip_shape_factor.value) }} : Factor beta overruled = {{ pile.overrule_pile_tip_shape_factor.name }}
 {% if pile.overrule_pile_tip_shape_factor.value == 1 %}
