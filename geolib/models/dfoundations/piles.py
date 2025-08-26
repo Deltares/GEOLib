@@ -23,6 +23,7 @@ from .internal import (
     PositionTensionPile,
     TypesBearingPiles,
     TypesTensionPiles,
+    OpenPipePileCalculationMethod,
 )
 
 
@@ -145,6 +146,7 @@ class BearingPile(Pile):
             pile_tip_cross_section_factor=self.pile_tip_cross_section_factor,
             is_user_defined=True,
             use_pre_2025=False,
+            open_pipe_pile_calculation_method=OpenPipePileCalculationMethod.OPEN_PIPE_PILE,
         )
 
 

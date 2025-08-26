@@ -102,6 +102,9 @@ class BearingPileSlipLayer(IntEnum):
     BITUMEN = 3
     USER_DEFINED = 4
 
+class OpenPipePileCalculationMethod(IntEnum):
+    OPEN_PIPE_PILE = 0
+    STANDARD_2017 = 1
 
 class PileShape(IntEnum):
     ROUND_PILE = 0
@@ -153,6 +156,7 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
     width_h_shape: Annotated[float, Field(ge=0, le=100)] | None = None
     thickness_web: Annotated[float, Field(ge=0, le=100)] | None = None
     thickness_flange: Annotated[float, Field(ge=0, le=100)] | None = None
+    open_pipe_pile_calculation_method: OpenPipePileCalculationMethod = OpenPipePileCalculationMethod.OPEN_PIPE_PILE
     overrule_pile_tip_shape_factor: Bool = Bool.FALSE
     pile_tip_shape_factor: Annotated[float, Field(ge=0, le=10)] | None = None
     overrule_pile_tip_cross_section_factors: Bool = Bool.FALSE
@@ -602,7 +606,7 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 class Version(DSerieVersion):
     soil: int = 1013
-    d__foundations: int = 1032
+    d__foundations: int = 1033
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
