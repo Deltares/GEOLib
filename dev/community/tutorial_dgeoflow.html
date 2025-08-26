@@ -118,7 +118,8 @@ it to the model.</p>
     <span class="p">(</span><span class="n">embankment</span><span class="p">,</span> <span class="s2">&quot;H_Aa_ht_old&quot;</span><span class="p">),</span>
 <span class="p">]</span>
 
-<span class="p">[</span><span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">soil</span><span class="p">)</span> <span class="k">for</span> <span class="n">points</span><span class="p">,</span> <span class="n">soil</span> <span class="ow">in</span> <span class="n">layers_and_soils</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">points</span><span class="p">,</span> <span class="n">soil</span> <span class="ow">in</span> <span class="n">layers_and_soils</span><span class="p">:</span>
+    <span class="n">dm</span><span class="o">.</span><span class="n">add_layer</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">soil</span><span class="p">)</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="5">

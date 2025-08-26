@@ -74,7 +74,8 @@ it to the model.
         (embankment, "H_Aa_ht_old"),
     ]
     
-    [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+    for points, soil in layers_and_soils:
+        dm.add_layer(points, soil)
 
 5. With the geometry defined, let's add the boundary conditions.
 
