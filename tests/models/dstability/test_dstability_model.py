@@ -399,7 +399,12 @@ class TestDStabilityModel:
             (embankment, "H_Aa_ht_old"),
         ]
 
-        layer_ids = [dm.add_layer(points, soil) for points, soil in layers_and_soils]
+        layer_ids = []
+
+        for points, soil in layers_and_soils:
+            layer_id = dm.add_layer(points, soil)
+            layer_ids.append(layer_id)
+
         for layer_id in layer_ids:
             # Has to be done in a separate loop since all layers first need to be defined.
             dm.add_soil_layer_consolidations(soil_layer_id=layer_id)
