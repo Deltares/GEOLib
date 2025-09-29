@@ -82,7 +82,7 @@ The layers can be input as a list of dicts.
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
             {
                 "material": "Clay, clean, weak",
@@ -90,7 +90,7 @@ The layers can be input as a list of dicts.
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
             {
                 "material": "Clay, clean, stiff",
@@ -98,7 +98,7 @@ The layers can be input as a list of dicts.
                 "excess_pore_pressure_top": 0.0,
                 "excess_pore_pressure_bottom": 0.0,
                 "ocr_value": 1.0,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
         ],
     )
@@ -141,8 +141,8 @@ the inputs that are related to the factors concerning the pile.
         pile_name="test",
         pile_type=piles.BasePileType.USER_DEFINED_VIBRATING,
         pile_class_factor_shaft_sand_gravel=1,  # alpha_s
-        preset_pile_class_factor_shaft_clay_loam_peat=piles.BasePileTypeForClayLoamPeat.STANDARD,
-        pile_class_factor_shaft_clay_loam_peat=1,  # alpha_s
+        preset_pile_class_factor_shaft_clay_silt_peat=piles.BasePileTypeForClaySiltPeat.STANDARD,
+        pile_class_factor_shaft_clay_silt_peat=1,  # alpha_s
         pile_class_factor_tip=1,  # alpha_p
         load_settlement_curve=piles.LoadSettlementCurve.ONE,
         user_defined_pile_type_as_prefab=False,
