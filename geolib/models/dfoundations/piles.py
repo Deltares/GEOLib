@@ -12,16 +12,18 @@ from geolib.geometry import Point
 from geolib.models import BaseDataClass
 
 from .internal import (
+    InstallationMethod,
     BearingPileSlipLayer,
     LoadSettlementCurve,
     PileMaterial,
     PileShape,
     PileType,
-    PileTypeForClayLoamPeat,
+    PileTypeForClaySiltPeat,
     PositionBearingPile,
     PositionTensionPile,
     TypesBearingPiles,
     TypesTensionPiles,
+    OpenPipePileCalculationMethod,
 )
 
 
@@ -80,11 +82,11 @@ class BasePileType(Enum):
     USER_DEFINED_LOW_VIBRATING = PileType.USER_DEFINED_LOW_VIBRATING.value
 
 
-class BasePileTypeForClayLoamPeat(Enum):
-    """Pile types for clay loam and peat enum"""
+class BasePileTypeForClaySiltPeat(Enum):
+    """Pile types for clay silt and peat enum"""
 
-    STANDARD = PileTypeForClayLoamPeat.STANDARD.value
-    USER_DEFINED = PileTypeForClayLoamPeat.USER_DEFINED.value
+    STANDARD = PileTypeForClaySiltPeat.STANDARD.value
+    USER_DEFINED = PileTypeForClaySiltPeat.USER_DEFINED.value
 
 
 class Pile(BaseDataClass):
@@ -93,10 +95,10 @@ class Pile(BaseDataClass):
     pile_name: str
     pile_type: BasePileType
     pile_class_factor_shaft_sand_gravel: Annotated[float, Field(ge=0, le=9)]
-    pile_class_factor_shaft_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = (
+    pile_class_factor_shaft_clay_silt_peat: Annotated[float, Field(ge=0, le=9)] | None = (
         None
     )
-    preset_pile_class_factor_shaft_clay_loam_peat: BasePileTypeForClayLoamPeat
+    preset_pile_class_factor_shaft_clay_silt_peat: BasePileTypeForClaySiltPeat
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)]
 
 
@@ -121,10 +123,10 @@ class BearingPile(Pile):
             pile_type=self.pile_type.value,
             pile_type_for_execution_factor_sand_gravel=PileType.USER_DEFINED,
             execution_factor_sand_gravel=self.pile_class_factor_shaft_sand_gravel,
-            pile_type_for_execution_factor_clay_loam_peat=(
-                self.preset_pile_class_factor_shaft_clay_loam_peat.value
+            pile_type_for_execution_factor_clay_silt_peat=(
+                self.preset_pile_class_factor_shaft_clay_silt_peat.value
             ),
-            execution_factor_clay_loam_peat=self.pile_class_factor_shaft_clay_loam_peat,
+            execution_factor_clay_silt_peat=self.pile_class_factor_shaft_clay_silt_peat,
             pile_type_for_pile_class_factor=PileType.USER_DEFINED,
             pile_class_factor=self.pile_class_factor_tip,
             pile_type_for_load_settlement_curve=self.load_settlement_curve,
@@ -133,6 +135,7 @@ class BearingPile(Pile):
             reduction_percentage_qc=self.reduction_percentage_qc,
             material=PileMaterial.USER_DEFINED,
             elasticity_modulus=self.elasticity_modulus,
+            installation_method=InstallationMethod.AUTOMATIC,
             slip_layer=BearingPileSlipLayer.USER_DEFINED,
             characteristic_adhesion=self.characteristic_adhesion,
             overrule_pile_tip_shape_factor=self.overrule_pile_tip_shape_factor,
@@ -142,7 +145,8 @@ class BearingPile(Pile):
             ),
             pile_tip_cross_section_factor=self.pile_tip_cross_section_factor,
             is_user_defined=True,
-            use_pre_2016=False,
+            use_pre_2025=False,
+            open_pipe_pile_calculation_method=OpenPipePileCalculationMethod.OPEN_PIPE_PILE,
         )
 
 
@@ -155,14 +159,16 @@ class TensionPile(Pile):
         return TypesTensionPiles(
             pile_name=self.pile_name,
             pile_type_for_execution_factor_sand_gravel=self.pile_type.value,
+            installation_method=InstallationMethod.AUTOMATIC,
             execution_factor_sand_gravel=self.pile_class_factor_shaft_sand_gravel,
-            pile_type_for_execution_factor_clay_loam_peat=(
-                self.preset_pile_class_factor_shaft_clay_loam_peat.value
+            pile_type_for_execution_factor_clay_silt_peat=(
+                self.preset_pile_class_factor_shaft_clay_silt_peat.value
             ),
-            execution_factor_clay_loam_peat=self.pile_class_factor_shaft_clay_loam_peat,
+            execution_factor_clay_silt_peat=self.pile_class_factor_shaft_clay_silt_peat,
             material=PileMaterial.USER_DEFINED,
             unit_weight_pile=self.unit_weight_pile,
             elasticity_modulus=self.elasticity_modulus,
+            use_pre_2025=False,
         )
 
 
@@ -503,4 +509,56 @@ class TensionHShapedPile(TensionPile):
         types_tension_pile.thickness_web = self.thickness_web
         types_tension_pile.thickness_flange = self.thickness_flange
         types_tension_pile.shape = PileShape.H_SHAPED_PROFILE
+        return types_tension_pile
+
+
+class BearingRoundPileWithScrewShapedShaft(BearingPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_bearing_pile = super()._to_internal()
+        types_bearing_pile.base_diameter = self.base_diameter
+        types_bearing_pile.pile_diameter = self.pile_diameter
+        types_bearing_pile.shape = PileShape.ROUND_PILE_WITH_SCREW_SHAPED_SHAFT
+        return types_bearing_pile
+
+
+class TensionRoundPileWithScrewShapedShaft(TensionPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+    pile_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_tension_pile = super()._to_internal()
+        types_tension_pile.base_diameter = self.base_diameter
+        types_tension_pile.pile_diameter = self.pile_diameter
+        types_tension_pile.shape = PileShape.ROUND_PILE_WITH_SCREW_SHAPED_SHAFT
+        return types_tension_pile
+
+
+class BearingRoundPileWithBaseEqualsToShaftLostTip(BearingPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.BearingPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_bearing_pile = super()._to_internal()
+        types_bearing_pile.base_diameter = self.base_diameter
+        types_bearing_pile.shape = PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        return types_bearing_pile
+
+
+class TensionRoundPileWithBaseEqualsToShaftLostTip(TensionPile):
+    """Inherits :class:`~geolib.models.dfoundations.piles.TensionPile`."""
+
+    base_diameter: Annotated[float, Field(ge=0, le=100)]
+
+    def _to_internal(self):
+        types_tension_pile = super()._to_internal()
+        types_tension_pile.base_diameter = self.base_diameter
+        types_tension_pile.shape = PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
         return types_tension_pile

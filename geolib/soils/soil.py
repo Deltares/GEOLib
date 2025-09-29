@@ -374,11 +374,11 @@ class SoilState(SoilBaseModel):
 class SoilType(IntEnum):
     GRAVEL = 0
     SAND = 1
-    LOAM = 2
+    SILT = 2
     CLAY = 3
     PEAT = 4
-    SANDY_LOAM = 5
-    TERTCLAY = 6
+    TERTCLAY = 5
+    SANDY_SILT = 6
     CLAYEYSAND = 7
 
 
@@ -605,7 +605,6 @@ class Soil(SoilBaseModel):
             soilsoiltype=self.soil_type_nl,
             soilgamdry=self.soil_weight_parameters.unsaturated_weight.mean,
             soilgamwet=self.soil_weight_parameters.saturated_weight.mean,
-            soilinitialvoidratio=self.soil_classification_parameters.initial_void_ratio.mean,
             soildiameterd50=self.soil_classification_parameters.d_50,
             soilminvoidratio=self.soil_classification_parameters.min_void_ratio,
             soilmaxvoidratio=self.soil_classification_parameters.max_void_ratio,
@@ -616,7 +615,7 @@ class Soil(SoilBaseModel):
             soilmaxconeresist=self.cone_resistance.max_cone_resistance_type,
             soilusetension=self.use_tension,
             soilca=self.bjerrum_parameters.coef_secondary_compression_Ca.mean,
-            soilccindex=self.bjerrum_parameters.compression_index_Cc.mean,
+            soilcratio=self.bjerrum_parameters.compression_ratio_CR.mean,
         )
 
     @staticmethod

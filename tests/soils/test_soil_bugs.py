@@ -23,7 +23,7 @@ class TestNaNSoils:
             soil = Soil(mohr_coulomb_parameters=kwargs)
 
     @pytest.mark.unittest
-    def test_set_cu_is_optional(self):
+    def test_set_ca_is_optional(self):
         SOIL_PARAMETERS = [
             {
                 "materiaal": "Onbekend materiaal",
@@ -108,5 +108,5 @@ class TestNaNSoils:
             soil_type.soil_weight_parameters.unsaturated_weight = soil["unsat"]
             model.add_soil(soil_type)
             assert (
-                model.soils[soil_type.name].soilcu == 0.00
-            ), "Should have default Cu with 0"
+                model.soils[soil_type.name].soilca == 0.0040000
+            ), "Should have default Ca with 0.004000"

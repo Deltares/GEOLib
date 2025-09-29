@@ -1,46 +1,46 @@
 D-Foundations DUMP FILE
 ==============================================================================
-COMPANY    : Stichting Deltares 
+COMPANY    :    
 
-DATE       : 4/7/2023
-TIME       : 2:01:46 PM
-FILENAME   : D:\pvcsprojects\applications\DFoundations\trunk\release\Projects\Benchmarks\bm1-12b.fod
-CREATED BY : D-Foundations version 23.1.1.40340
+DATE       : 21-08-2025
+TIME       : 17:19:12
+FILENAME   : C:\DelphiProjects\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm1-12b.fod
+CREATED BY : D-Foundations version 25.1.0.2830
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
-Soil=1010
-D-Foundations=1024
+Soil=1013
+D-Foundations=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=23.1.1.40340
+DGSFoundationCalc.dll=25.1.0.2830
 [END OF VERSION EXTERNALS]
 
 [MODEL]
 0 : Model = Bearing Piles (EC7-NL)
+0 : CuValues = Based on CPTs
 [END OF MODEL]
 [SOIL COLLECTION]
-   34 = number of items
+   32 = number of items
 [SOIL]
 Clay
 SoilColor=9764853
 SoilSoilType=3
 SoilGamDry=15.00
 SoilGamWet=15.00
-SoilInitialVoidRatio=0.000000
 SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
 SoilCohesion=0.00
 SoilPhi=25.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0000000
+SoilCRatio=0.0000001
 [END OF SOIL]
 [SOIL]
 Clay, clean, moderate
@@ -48,18 +48,35 @@ SoilColor=10871201
 SoilSoilType=3
 SoilGamDry=19.00
 SoilGamWet=19.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=13.00
 SoilPhi=17.50
-SoilCu=100.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0037000
-SoilCcIndex=0.0921000
+SoilCRatio=0.0920079
+[END OF SOIL]
+[SOIL]
+Clay, clean, soft
+SoilColor=13824161
+SoilSoilType=3
+SoilGamDry=17.00
+SoilGamWet=17.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=5.00
+SoilPhi=17.50
+SoilCu=50.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0061000
+SoilCRatio=0.1530000
 [END OF SOIL]
 [SOIL]
 Clay, clean, stiff
@@ -67,75 +84,17 @@ SoilColor=11526561
 SoilSoilType=3
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=30.00
 SoilPhi=25.00
-SoilCu=200.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0040000
-SoilCcIndex=0.1260000
-[END OF SOIL]
-[SOIL]
-Clay, clean, weak
-SoilColor=12181921
-SoilSoilType=3
-SoilGamDry=17.00
-SoilGamWet=17.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=10.00
-SoilPhi=17.50
-SoilCu=50.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0130000
-SoilCcIndex=0.3620000
-[END OF SOIL]
-[SOIL]
-Clay, organ, moderate
-SoilColor=12841121
-SoilSoilType=3
-SoilGamDry=16.00
-SoilGamWet=16.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=15.00
-SoilCu=30.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0120000
-SoilCcIndex=0.4200000
-[END OF SOIL]
-[SOIL]
-Clay, organ, weak
-SoilColor=14151841
-SoilSoilType=3
-SoilGamDry=15.00
-SoilGamWet=15.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=15.00
-SoilCu=25.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0150000
-SoilCcIndex=0.7600000
+SoilCRatio=0.1258740
 [END OF SOIL]
 [SOIL]
 Clay, sl san, moderate
@@ -143,46 +102,25 @@ SoilColor=11527841
 SoilSoilType=3
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=25.00
 SoilPhi=22.50
-SoilCu=120.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0050000
-SoilCcIndex=0.1260000
+SoilCRatio=0.1258740
 [END OF SOIL]
 [SOIL]
-Clay, sl san, stiff
-SoilColor=12183201
-SoilSoilType=3
-SoilGamDry=21.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=15.00
-SoilPhi=27.50
-SoilCu=170.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0018000
-SoilCcIndex=0.0460000
-[END OF SOIL]
-[SOIL]
-Clay, sl san, weak
-SoilColor=12838561
+Clay, sl san, soft
+SoilColor=12510881
 SoilSoilType=3
 SoilGamDry=18.00
 SoilGamWet=18.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=5.00
@@ -192,26 +130,79 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0046000
-SoilCcIndex=0.1151000
+SoilCRatio=0.1150000
 [END OF SOIL]
 [SOIL]
-Clay, ve san, stiff
-SoilColor=12839841
+Clay, sl san, stiff
+SoilColor=12183201
 SoilSoilType=3
-SoilGamDry=20.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
+SoilGamDry=21.00
+SoilGamWet=21.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
+SoilCohesion=15.00
+SoilPhi=27.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0018000
+SoilCRatio=0.0459540
+[END OF SOIL]
+[SOIL]
+Clay, slightly organic
+SoilColor=15791521
+SoilSoilType=3
+SoilGamDry=15.00
+SoilGamWet=15.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=15.00
+SoilCu=25.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0115000
+SoilCRatio=0.2310000
+[END OF SOIL]
+[SOIL]
+Clay, very organic
+SoilColor=16448161
+SoilSoilType=3
+SoilGamDry=16.00
+SoilGamWet=16.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=15.00
+SoilCu=30.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0077000
+SoilCRatio=0.1530000
+[END OF SOIL]
+[SOIL]
+Clay, very sandy
+SoilColor=14478241
+SoilSoilType=3
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
 SoilPhi=32.50
 SoilCu=10.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0040000
-SoilCcIndex=0.0270000
+SoilCa=0.0007000
+SoilCRatio=0.0160000
 [END OF SOIL]
 [SOIL]
 Gravel
@@ -219,27 +210,43 @@ SoilColor=536870911
 SoilSoilType=0
 SoilGamDry=21.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.000000
 SoilDiameterD50=0.30000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
 SoilCohesion=0.00
 SoilPhi=37.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=0
 SoilCa=0.0000000
-SoilCcIndex=0.0000000
+SoilCRatio=0.0000001
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, loose
+Gravel, none, dense
+SoilColor=7892605
+SoilSoilType=0
+SoilGamDry=20.00
+SoilGamWet=22.00
+SoilDiameterD50=6.30000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=40.00
+SoilCu=0.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0016000
+[END OF SOIL]
+[SOIL]
+Gravel, none, loose
 SoilColor=7237245
 SoilSoilType=0
 SoilGamDry=18.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
@@ -249,16 +256,15 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0029000
+SoilCRatio=0.0023000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, moderate
-SoilColor=7892605
+Gravel, none, medium
+SoilColor=7564925
 SoilSoilType=0
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
@@ -267,16 +273,159 @@ SoilCu=0.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0000001
-SoilCcIndex=0.0030000
+SoilCa=0.0000000
+SoilCRatio=0.0019000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, stiff
-SoilColor=8547965
+Gravel, silty, dense
+SoilColor=8549245
+SoilSoilType=0
+SoilGamDry=21.00
+SoilGamWet=22.50
+SoilDiameterD50=6.30000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=40.00
+SoilCu=0.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0015000
+[END OF SOIL]
+[SOIL]
+Gravel, silty, loose
+SoilColor=7893885
+SoilSoilType=0
+SoilGamDry=19.00
+SoilGamWet=21.00
+SoilDiameterD50=6.30000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=32.50
+SoilCu=0.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0038000
+[END OF SOIL]
+[SOIL]
+Gravel, silty, medium
+SoilColor=8221565
 SoilSoilType=0
 SoilGamDry=20.00
 SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
+SoilDiameterD50=6.30000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=35.00
+SoilCu=0.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0023000
+[END OF SOIL]
+[SOIL]
+Loam
+SoilColor=7648893
+SoilSoilType=2
+SoilGamDry=13.00
+SoilGamWet=13.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
+SoilCohesion=0.00
+SoilPhi=22.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0000001
+[END OF SOIL]
+[SOIL]
+Peat
+SoilColor=10944420
+SoilSoilType=4
+SoilGamDry=11.00
+SoilGamWet=11.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
+SoilCohesion=0.00
+SoilPhi=20.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0000001
+[END OF SOIL]
+[SOIL]
+Peat, none, moderate
+SoilColor=3087269
+SoilSoilType=4
+SoilGamDry=13.00
+SoilGamWet=13.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=5.00
+SoilPhi=15.00
+SoilCu=30.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0120000
+SoilCRatio=0.2300000
+[END OF SOIL]
+[SOIL]
+Peat, none, weak
+SoilColor=2759589
+SoilSoilType=4
+SoilGamDry=12.00
+SoilGamWet=12.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=2.50
+SoilPhi=15.00
+SoilCu=20.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0150000
+SoilCRatio=0.3060000
+[END OF SOIL]
+[SOIL]
+Sand
+SoilColor=5953498
+SoilSoilType=1
+SoilGamDry=18.00
+SoilGamWet=20.00
+SoilDiameterD50=0.30000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
+SoilCohesion=0.00
+SoilPhi=35.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0000001
+[END OF SOIL]
+[SOIL]
+Sand, none, dense
+SoilColor=710639
+SoilSoilType=1
+SoilGamDry=20.00
+SoilGamWet=22.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
@@ -287,15 +436,14 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0020000
+SoilCRatio=0.0015000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, loose
-SoilColor=7893885
-SoilSoilType=0
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
+Sand, none, loose
+SoilColor=55279
+SoilSoilType=1
+SoilGamDry=18.00
+SoilGamWet=20.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
@@ -306,15 +454,14 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0048000
+SoilCRatio=0.0038000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, moderate
-SoilColor=8549245
-SoilSoilType=0
-SoilGamDry=20.00
-SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
+Sand, none, medium
+SoilColor=382959
+SoilSoilType=1
+SoilGamDry=19.00
+SoilGamWet=21.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
@@ -325,54 +472,51 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0027000
+SoilCRatio=0.0023000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, stiff
-SoilColor=9204605
-SoilSoilType=0
-SoilGamDry=21.00
-SoilGamWet=22.50
-SoilInitialVoidRatio=0.180505
+Sand, sil/cla, qc=12
+SoilColor=2679279
+SoilSoilType=1
+SoilGamDry=19.00
+SoilGamWet=21.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
-SoilPhi=40.00
+SoilPhi=32.50
 SoilCu=0.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0018000
+SoilCRatio=0.0035000
 [END OF SOIL]
 [SOIL]
-Loam
-SoilColor=7648893
-SoilSoilType=2
-SoilGamDry=13.00
-SoilGamWet=13.00
-SoilInitialVoidRatio=0.000000
+Sand, sil/cla, qc=8
+SoilColor=2351599
+SoilSoilType=1
+SoilGamDry=19.00
+SoilGamWet=21.00
 SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
-SoilPhi=22.00
+SoilPhi=30.00
 SoilCu=0.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0000000
+SoilCRatio=0.0058000
 [END OF SOIL]
 [SOIL]
-Loam, sl san, moderate
-SoilColor=11506812
+Silt, sl san, moderate
+SoilColor=13145212
 SoilSoilType=2
 SoilGamDry=21.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=2.50
@@ -382,16 +526,33 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0013000
-SoilCcIndex=0.0329000
+SoilCRatio=0.0330000
 [END OF SOIL]
 [SOIL]
-Loam, sl san, stiff
-SoilColor=12162172
+Silt, sl san, soft
+SoilColor=12489852
+SoilSoilType=2
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=30.00
+SoilCu=100.00
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0020000
+SoilCRatio=0.0510000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, stiff
+SoilColor=13472892
 SoilSoilType=2
 SoilGamDry=22.00
 SoilGamWet=22.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=3.80
@@ -401,254 +562,25 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0009000
-SoilCcIndex=0.0230000
+SoilCRatio=0.0230000
 [END OF SOIL]
 [SOIL]
-Loam, sl san, weak
-SoilColor=12817532
+Silt, very sandy
+SoilColor=14457212
 SoilSoilType=2
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=30.00
-SoilCu=100.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0040000
-SoilCcIndex=0.0840000
-[END OF SOIL]
-[SOIL]
-Loam, ve san, stiff
-SoilColor=12818812
-SoilSoilType=2
-SoilGamDry=20.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
+SoilCohesion=1.00
 SoilPhi=35.00
 SoilCu=100.00
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0020000
-SoilCcIndex=0.0550000
-[END OF SOIL]
-[SOIL]
-Material (5)
-SoilColor=9094655
-SoilSoilType=4
-SoilGamDry=11.00
-SoilGamWet=11.00
-SoilInitialVoidRatio=0.000000
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
-SoilCohesion=0.00
-SoilPhi=20.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0000000
-[END OF SOIL]
-[SOIL]
-Material (6)
-SoilColor=9094655
-SoilSoilType=1
-SoilGamDry=18.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.000000
-SoilDiameterD50=0.30000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
-SoilCohesion=0.00
-SoilPhi=35.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0000000
-[END OF SOIL]
-[SOIL]
-Peat
-SoilColor=10944420
-SoilSoilType=4
-SoilGamDry=11.00
-SoilGamWet=11.00
-SoilInitialVoidRatio=0.000000
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
-SoilCohesion=0.00
-SoilPhi=20.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0000000
-[END OF SOIL]
-[SOIL]
-Peat, mod pl, moderate
-SoilColor=6045349
-SoilSoilType=4
-SoilGamDry=13.00
-SoilGamWet=13.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=10.00
-SoilPhi=15.00
-SoilCu=30.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0160000
-SoilCcIndex=0.9000000
-[END OF SOIL]
-[SOIL]
-Peat, not pl, weak
-SoilColor=6699429
-SoilSoilType=4
-SoilGamDry=12.00
-SoilGamWet=12.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=5.00
-SoilPhi=15.00
-SoilCu=20.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0230000
-SoilCcIndex=1.8100000
-[END OF SOIL]
-[SOIL]
-Sand
-SoilColor=5953498
-SoilSoilType=1
-SoilGamDry=18.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.000000
-SoilDiameterD50=0.30000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
-SoilCohesion=0.00
-SoilPhi=35.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0000000
-[END OF SOIL]
-[SOIL]
-Sand, clean, loose
-SoilColor=1368559
-SoilSoilType=1
-SoilGamDry=18.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=32.50
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0048000
-[END OF SOIL]
-[SOIL]
-Sand, clean, moderate
-SoilColor=2023919
-SoilSoilType=1
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=35.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0029000
-[END OF SOIL]
-[SOIL]
-Sand, clean, stiff
-SoilColor=2679279
-SoilSoilType=1
-SoilGamDry=20.00
-SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=40.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000001
-SoilCcIndex=0.0020000
-[END OF SOIL]
-[SOIL]
-Sand, sl sil, moderate
-SoilColor=710639
-SoilSoilType=1
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=32.50
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000001
-SoilCcIndex=0.0050000
-[END OF SOIL]
-[SOIL]
-Sand, ve sil, loose
-SoilColor=711919
-SoilSoilType=1
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=30.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000001
-SoilCcIndex=0.0090000
+SoilCa=0.0013000
+SoilCRatio=0.0330000
 [END OF SOIL]
 [SOIL]
 Undetermined
@@ -656,7 +588,6 @@ SoilColor=16777215
 SoilSoilType=2
 SoilGamDry=0.01
 SoilGamWet=0.02
-SoilInitialVoidRatio=0.000000
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
@@ -667,7 +598,7 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=1.0000000
-SoilCcIndex=1.0000000
+SoilCRatio=1.0000000
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 
@@ -902,7 +833,7 @@ Layer (1)
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (2)
-   27 : Material = Sand
+   21 : Material = Sand
       -7.000 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
@@ -923,7 +854,7 @@ Layer (4)
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (5)
-   24 : Material = Peat
+   18 : Material = Peat
      -13.000 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
@@ -940,916 +871,969 @@ Layer (5)
 0 : pile type shown in main graph
    50 = number of items
 Rect 300x500 prefab
- 0 : Pile type = Prefabricated concrete pile
+ 0 : Pile type = B1-Prefabricated concrete pile
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Rect 300x500 bored
-12 : Pile type = Bored pile (drilling mud, uncased borehole)
+12 : Pile type = B8-Bored pile (drilling mud, uncased borehole)
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Rect 300x500 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0020 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0030 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0030 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.1000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  5.000E+0010 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 1 : Factor beta overruled = TRUE
         0.90 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.80 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Rect 300x500 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0020 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0030 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0030 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.1000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  5.000E+0010 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 1 : Factor beta overruled = TRUE
         0.90 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.80 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 RectEnl 300x500 prefab
- 0 : Pile type = Prefabricated concrete pile
+ 0 : Pile type = B1-Prefabricated concrete pile
+ 1 : Installation method = Driving
  1 : Slip Layer = Synthetic
  3 : Shape = Rectangular pile with enlarged base
-       0.300 : Base width [m)
-       0.500 : Base length [m)
-       1.500 : Base height [m)
-       0.200 : Shaft width [m)
-       0.400 : Shaft length [m)
+       0.300 : Base width [m]
+       0.500 : Base length [m]
+       1.500 : Base height [m]
+       0.200 : Shaft width [m]
+       0.400 : Shaft length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 RectEnl 300x500 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0090 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0060 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0060 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.8000 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  2.000E+0010 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  1 : Slip Layer = Synthetic
  3 : Shape = Rectangular pile with enlarged base
-       0.300 : Base width [m)
-       0.500 : Base length [m)
-       1.500 : Base height [m)
-       0.200 : Shaft width [m)
-       0.400 : Shaft length [m)
+       0.300 : Base width [m]
+       0.500 : Base length [m]
+       1.500 : Base height [m]
+       0.200 : Shaft width [m]
+       0.400 : Shaft length [m]
 1 : Factor beta overruled = TRUE
         0.80 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.90 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 RectEnl 300x500 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0090 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0060 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0060 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.8000 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  2.000E+0010 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  1 : Slip Layer = Synthetic
  3 : Shape = Rectangular pile with enlarged base
-       0.300 : Base width [m)
-       0.500 : Base length [m)
-       1.500 : Base height [m)
-       0.200 : Shaft width [m)
-       0.400 : Shaft length [m)
+       0.300 : Base width [m]
+       0.500 : Base length [m]
+       1.500 : Base height [m]
+       0.200 : Shaft width [m]
+       0.400 : Shaft length [m]
 1 : Factor beta overruled = TRUE
         0.80 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.90 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Section 300x500
-10 : Pile type = Steel section
+10 : Pile type = S2-Steel section
+ 3 : Installation method = Pressing
  1 : Slip Layer = Synthetic
  8 : Shape = Section
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  0 : Program defined name
 Section 300x500 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0030 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0070 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0070 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.2500 : Pile class factor [-)
  2 : Pile type for load-settlement curve = 3
  3 : Material = User defined material type
  7.000E+0008 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  1 : Slip Layer = Synthetic
  8 : Shape = Section
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 1 : Factor beta overruled = TRUE
         1.20 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.10 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Section 300x500 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0030 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0070 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0070 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.2500 : Pile class factor [-)
  2 : Pile type for load-settlement curve = 3
  3 : Material = User defined material type
  7.000E+0008 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  1 : Slip Layer = Synthetic
  8 : Shape = Section
-       0.300 : Width [m)
-       0.500 : Length [m)
+       0.300 : Width [m]
+       0.500 : Length [m]
 1 : Factor beta overruled = TRUE
         1.20 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.10 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 driven 1
- 2 : Pile type = Driven cast-in-place pile, tube back by driving
+ 2 : Pile type = B2-Driven cast-in-place pile, tube back by driving
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 driven 2
- 3 : Pile type = Driven cast-in-place pile, tube back by vibration
+ 3 : Pile type = B3-Driven cast-in-place pile, tube back by vibration
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 timber
- 5 : Pile type = Straight timber pile
+ 5 : Pile type = H1-Straight timber pile
+ 1 : Installation method = Driving
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 screw
- 7 : Pile type = Screw pile, cast in place, with grout
+ 7 : Pile type = B4-Screw pile, cast in place, with grout
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 cfa
-11 : Pile type = Continuous flight auger pile
+11 : Pile type = B7-Continuous flight auger pile
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 bored 1
-12 : Pile type = Bored pile (drilling mud, uncased borehole)
+12 : Pile type = B8-Bored pile (drilling mud, uncased borehole)
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 bored 2
-13 : Pile type = Bored pile (shelling tech. , permanent casing)
+13 : Pile type = S7-Bored pile (shelling tech. , permanent casing)
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro d e
-16 : Pile type = Micro pile, double pipe, extorted
+16 : Pile type = MA2-Micro pile, double pipe, extorted
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro d ne
-17 : Pile type = Micro pile, double pipe, not extorted
+17 : Pile type = MA1-Micro pile, double pipe, not extorted
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro s e
-18 : Pile type = Micro pile, single pipe, extorted
+18 : Pile type = MB2-Micro pile, single pipe, extorted
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro s ne
-19 : Pile type = Micro pile, single pipe, not extorted
+19 : Pile type = MB1-Micro pile, single pipe, not extorted
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro bored
-20 : Pile type = Micro pile, anchor, bored
+20 : Pile type = MC-Micro pile, anchor, bored
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro screw
-21 : Pile type = Micro pile, anchor, screwed
+21 : Pile type = MD-Micro pile, anchor, screwed
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 micro vib
-22 : Pile type = Micro pile, vibrated
+22 : Pile type = ME-Micro pile, vibrated
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0300 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0200 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0200 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       1.3000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  3.000E+0006 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 1 : Factor beta overruled = TRUE
         0.70 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.80 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Round 550 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0300 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0200 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0200 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       1.3000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  3.000E+0006 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  2 : Slip Layer = Bentonite
  0 : Shape = Round pile
-       0.550 : Diameter [m)
+       0.550 : Diameter [m]
 1 : Factor beta overruled = TRUE
         0.70 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.80 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Taper 550 timber
- 4 : Pile type = Tapered timber pile
+ 4 : Pile type = H2-Tapered timber pile
+ 1 : Installation method = Driving
  3 : Slip Layer = Bitumen
  4 : Shape = Round tapered pile
-       0.550 : Diameter [m)
-       0.020 : Increase in diameter [m/m)
+       0.550 : Diameter [m]
+       0.020 : Increase in radius [m/m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Taper 550 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0060 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0060 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0060 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.6000 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  3.600E+0006 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  3 : Slip Layer = Bitumen
  4 : Shape = Round tapered pile
-       0.550 : Diameter [m)
-       0.020 : Increase in diameter [m/m)
+       0.550 : Diameter [m]
+       0.020 : Increase in radius [m/m]
 1 : Factor beta overruled = TRUE
         1.30 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.05 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Taper 550 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0060 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0060 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0060 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.6000 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  3.600E+0006 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  3 : Slip Layer = Bitumen
  4 : Shape = Round tapered pile
-       0.550 : Diameter [m)
-       0.020 : Increase in diameter [m/m)
+       0.550 : Diameter [m]
+       0.020 : Increase in radius [m/m]
 1 : Factor beta overruled = TRUE
         1.30 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.05 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Hollow 550 steel
- 1 : Pile type = Closed-ended steel pipe pile
+ 1 : Pile type = S1-Closed-ended steel pipe pile
+ 1 : Installation method = Driving
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Hollow 550 prefab 1
- 8 : Pile type = Prefabricated screw pile with grout*
+ 8 : Pile type = Old-Prefabricated screw pile with grout*
+ 0 : Installation method = Automatic
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Hollow 550 prefab 2
- 9 : Pile type = Prefabricated screw pile without grout
+ 9 : Pile type = S5-Prefabricated screw pile without grout
+ 0 : Installation method = Automatic
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Hollow 550 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0069 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0033 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0033 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.5300 : Pile class factor [-)
  2 : Pile type for load-settlement curve = 3
  3 : Material = User defined material type
  4.000E+0005 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
 1 : Factor beta overruled = TRUE
         0.60 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.50 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 Hollow 550 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0069 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0033 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0033 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.5300 : Pile class factor [-)
  2 : Pile type for load-settlement curve = 3
  3 : Material = User defined material type
  4.000E+0005 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  3 : Slip Layer = Bitumen
  5 : Shape = Round hollow pile with closed base
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
 1 : Factor beta overruled = TRUE
         0.60 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.50 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 HolOpen 550 steel
-14 : Pile type = Open-ended steel pipe pile
+14 : Pile type = S3-Open-ended steel pipe pile
+ 3 : Installation method = Pressing
  4 : Slip Layer = User defined
        40.00 : Characteristic adhesion [kN/m2]
  9 : Shape = Round open-ended hollow pile
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
+ 0 : Open pipe pile calculation method = Open pipe pile
 0 : Factor beta overruled = FALSE
 1 : Factor s overruled = TRUE
         1.10 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 HolOpen 550 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0020 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0030 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0030 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.1000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  2.000E+0009 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        40.00 : Characteristic adhesion [kN/m2]
  9 : Shape = Round open-ended hollow pile
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
+ 0 : Open pipe pile calculation method = Open pipe pile
 1 : Factor beta overruled = TRUE
         1.10 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.10 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 HolOpen 550 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0020 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0030 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0030 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.1000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  2.000E+0009 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        40.00 : Characteristic adhesion [kN/m2]
  9 : Shape = Round open-ended hollow pile
-       0.550 : External diameter [m)
-      0.5100 : Internal diameter [m)
+       0.550 : External diameter [m]
+      0.5100 : Internal diameter [m]
+ 0 : Open pipe pile calculation method = Open pipe pile
 1 : Factor beta overruled = TRUE
         1.10 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.10 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 RoundEnl 550 prefab
- 0 : Pile type = Prefabricated concrete pile
+ 0 : Pile type = B1-Prefabricated concrete pile
+ 1 : Installation method = Driving
  4 : Slip Layer = User defined
        25.00 : Characteristic adhesion [kN/m2]
  2 : Shape = Round pile with enlarged base
-       0.550 : Base diameter [m)
-       0.400 : Pile diameter [m)
-       1.200 : Base height [m)
+       0.550 : Base diameter [m]
+       0.400 : Pile diameter [m]
+       1.200 : Base height [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 RoundEnl 550 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0020 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0030 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0030 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.0050 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  2.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        25.00 : Characteristic adhesion [kN/m2]
  2 : Shape = Round pile with enlarged base
-       0.550 : Base diameter [m)
-       0.400 : Pile diameter [m)
-       1.200 : Base height [m)
+       0.550 : Base diameter [m]
+       0.400 : Pile diameter [m]
+       1.200 : Base height [m]
 1 : Factor beta overruled = TRUE
         0.90 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.60 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 RoundEnl 550 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0020 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0030 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0030 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.0050 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  2.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        25.00 : Characteristic adhesion [kN/m2]
  2 : Shape = Round pile with enlarged base
-       0.550 : Base diameter [m)
-       0.400 : Pile diameter [m)
-       1.200 : Base height [m)
+       0.550 : Base diameter [m]
+       0.400 : Pile diameter [m]
+       1.200 : Base height [m]
 1 : Factor beta overruled = TRUE
         0.90 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.60 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 LostTip 550
- 6 : Pile type = Screw pile, cast in place, lost tip
+ 6 : Pile type = B4-Screw pile, cast in place, lost tip
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        60.00 : Characteristic adhesion [kN/m2]
- 6 : Shape = Round pile with lost tip
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
+ 6 : Shape = Round with enlarged lost tip
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  0 : Program defined name
 LostTip 550 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0010 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0020 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0020 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.0040 : Pile class factor [-)
  2 : Pile type for load-settlement curve = 3
  3 : Material = User defined material type
  5.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        60.00 : Characteristic adhesion [kN/m2]
- 6 : Shape = Round pile with lost tip
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
+ 6 : Shape = Round with enlarged lost tip
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
 1 : Factor beta overruled = TRUE
         1.00 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.00 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 LostTip 550 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0010 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0020 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0020 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.0040 : Pile class factor [-)
  2 : Pile type for load-settlement curve = 3
  3 : Material = User defined material type
  5.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        60.00 : Characteristic adhesion [kN/m2]
- 6 : Shape = Round pile with lost tip
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
+ 6 : Shape = Round with enlarged lost tip
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
 1 : Factor beta overruled = TRUE
         1.00 : Factor beta user defined
 1 : Factor s overruled = TRUE
         1.00 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 DrivenBase driving
- 2 : Pile type = Driven cast-in-place pile, tube back by driving
+ 2 : Pile type = B2-Driven cast-in-place pile, tube back by driving
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
- 7 : Shape = Round pile with in situ formed base
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
-       0.600 : Base height [m)
+ 7 : Shape = Round with driven enlarged base
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
+       0.600 : Base height [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 DrivenBase vibrate
- 3 : Pile type = Driven cast-in-place pile, tube back by vibration
+ 3 : Pile type = B3-Driven cast-in-place pile, tube back by vibration
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
- 7 : Shape = Round pile with in situ formed base
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
-       0.600 : Base height [m)
+ 7 : Shape = Round with driven enlarged base
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
+       0.600 : Base height [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 DrivenBase user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0250 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0300 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0300 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.4000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  2.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
- 7 : Shape = Round pile with in situ formed base
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
-       0.600 : Base height [m)
+ 7 : Shape = Round with driven enlarged base
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
+       0.600 : Base height [m]
 1 : Factor beta overruled = TRUE
         0.80 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.90 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 DrivenBase user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0250 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0300 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0300 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       0.4000 : Pile class factor [-)
  0 : Pile type for load-settlement curve = 1
  3 : Material = User defined material type
  2.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        80.00 : Characteristic adhesion [kN/m2]
- 7 : Shape = Round pile with in situ formed base
-       0.550 : Base diameter [m)
-       0.430 : Pile diameter [m)
-       0.600 : Base height [m)
+ 7 : Shape = Round with driven enlarged base
+       0.550 : Base diameter [m]
+       0.430 : Pile diameter [m]
+       0.600 : Base height [m]
 1 : Factor beta overruled = TRUE
         0.80 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.90 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 HShaped 300x500
-10 : Pile type = Steel section
+10 : Pile type = S2-Steel section
+ 3 : Installation method = Pressing
  4 : Slip Layer = User defined
        15.00 : Characteristic adhesion [kN/m2]
 10 : Shape = H-shaped profile
-       0.500 : Height H-shape [m)
-       0.300 : Width H-shape [m)
-      0.0450 : Thickness web [m)
-      0.0250 : Thickness flange [m)
+       0.500 : Height H-shape [m]
+       0.300 : Width H-shape [m]
+      0.0450 : Thickness web [m]
+      0.0250 : Thickness flange [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  0 : Program defined name
 HShaped 300x500 user
-25 : Pile type = User defined (vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+28 : Pile type = User defined (vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0060 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0900 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0900 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       1.1000 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  2.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        15.00 : Characteristic adhesion [kN/m2]
 10 : Shape = H-shaped profile
-       0.500 : Height H-shape [m)
-       0.300 : Width H-shape [m)
-      0.0450 : Thickness web [m)
-      0.0250 : Thickness flange [m)
+       0.500 : Height H-shape [m]
+       0.300 : Width H-shape [m]
+      0.0450 : Thickness web [m]
+      0.0250 : Thickness flange [m]
 1 : Factor beta overruled = TRUE
         1.30 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.70 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  1 : User defined name
 HShaped 300x500 user low
-26 : Pile type = User defined (low vibrating)
-27 : Pile type for execution factor sand/gravel = User defined
+29 : Pile type = User defined (low vibrating)
+30 : Pile type for execution factor sand/gravel = User defined
       0.0060 : Execution factor sand/gravel [-)
- 1 : Pile type for execution factor clay/loam/peat = User defined
-      0.0900 : Execution factor clay/loam/peat [-)
-27 : Pile type for pile class factor = User defined
+ 1 : Pile type for execution factor clay/silt/peat = User defined
+      0.0900 : Execution factor clay/silt/peat [-)
+30 : Pile type for pile class factor = User defined
       1.1000 : Pile class factor [-)
  1 : Pile type for load-settlement curve = 2
  3 : Material = User defined material type
  2.000E+0007 : Elasticity modulus [kN/m2]
+ 0 : Installation method = Automatic
  4 : Slip Layer = User defined
        15.00 : Characteristic adhesion [kN/m2]
 10 : Shape = H-shaped profile
-       0.500 : Height H-shape [m)
-       0.300 : Width H-shape [m)
-      0.0450 : Thickness web [m)
-      0.0250 : Thickness flange [m)
+       0.500 : Height H-shape [m]
+       0.300 : Width H-shape [m]
+      0.0450 : Thickness web [m]
+      0.0250 : Thickness flange [m]
 1 : Factor beta overruled = TRUE
         1.30 : Factor beta user defined
 1 : Factor s overruled = TRUE
         0.70 : Factor s user defined
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
@@ -1914,7 +1898,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE
@@ -1949,7 +1932,7 @@ DataCount=0
 0 : Use Almere rules = FALSE
 0 : Use Extra Almere rules = FALSE
 1 : Eea;gem overruled = TRUE
-100000.00 : Eea;gem user defined
+   100000.00 : Eea;gem user defined
 1 : Gamma s for NEN overruled = TRUE
         1.00 : Factor Gamma s for NEN user defined
 [END OF CALCULATION OPTIONS]
@@ -2055,8 +2038,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      886     2224     3110     3110        0        0     3110     0.00 'CPT 1'
-  2   1   -16.00      886     2224     3110     3110        0        0     3110     0.00 'CPT 1'
+  1   1   -15.00      886     2193     3079     3079        0        0     3079     0.00 'CPT 1'
+  2   1   -16.00      886     2193     3079     3079        0        0     3079     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2715,8 +2698,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00     1663     2402     4065     4065        0        0     4065     0.00 'CPT 1'
-  2   1   -16.00     1663     2402     4065     4065        0        0     4065     0.00 'CPT 1'
+  1   1   -15.00     1663     2368     4031     4031        0        0     4031     0.00 'CPT 1'
+  2   1   -16.00     1663     2368     4031     4031        0        0     4031     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2770,8 +2753,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00     1497     2352     3849     3849        0        0     3849     0.00 'CPT 1'
-  2   1   -16.00     1497     2352     3849     3849        0        0     3849     0.00 'CPT 1'
+  1   1   -15.00      713     2352     3065     3065        0        0     3065     0.00 'CPT 1'
+  2   1   -16.00      713     2352     3065     3065        0        0     3065     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2787,7 +2770,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0090  0.0157  0.6300 'CPT 1'
+  1  0.0090  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -2825,8 +2808,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      798     2201     2999     2999        0        0     2999     0.00 'CPT 1'
-  2   1   -16.00      798     2201     2999     2999        0        0     2999     0.00 'CPT 1'
+  1   1   -15.00      713     2201     2914     2914        0        0     2914     0.00 'CPT 1'
+  2   1   -16.00      713     2201     2914     2914        0        0     2914     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2842,7 +2825,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0060  0.0157  0.5600 'CPT 1'
+  1  0.0060  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -2935,8 +2918,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2151     2983     2983        0        0     2983     0.00 'CPT 1'
-  2   1   -16.00      832     2151     2983     2983        0        0     2983     0.00 'CPT 1'
+  1   1   -15.00      713     2151     2864     2864        0        0     2864     0.00 'CPT 1'
+  2   1   -16.00      713     2151     2864     2864        0        0     2864     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -2952,7 +2935,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0050  0.0157  0.3500 'CPT 1'
+  1  0.0050  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -2990,8 +2973,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2452     3284     3284        0        0     3284     0.00 'CPT 1'
-  2   1   -16.00      832     2452     3284     3284        0        0     3284     0.00 'CPT 1'
+  1   1   -15.00      713     2452     3165     3165        0        0     3165     0.00 'CPT 1'
+  2   1   -16.00      713     2452     3165     3165        0        0     3165     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3007,7 +2990,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0110  0.0157  0.3500 'CPT 1'
+  1  0.0110  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3045,8 +3028,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
-  2   1   -16.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
+  1   1   -15.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
+  2   1   -16.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3062,7 +3045,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0080  0.0157  0.3500 'CPT 1'
+  1  0.0080  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3100,8 +3083,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2452     3284     3284        0        0     3284     0.00 'CPT 1'
-  2   1   -16.00      832     2452     3284     3284        0        0     3284     0.00 'CPT 1'
+  1   1   -15.00      713     2452     3165     3165        0        0     3165     0.00 'CPT 1'
+  2   1   -16.00      713     2452     3165     3165        0        0     3165     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3117,7 +3100,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0110  0.0157  0.3500 'CPT 1'
+  1  0.0110  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3155,8 +3138,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
-  2   1   -16.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
+  1   1   -15.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
+  2   1   -16.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3172,7 +3155,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0080  0.0157  0.3500 'CPT 1'
+  1  0.0080  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3210,8 +3193,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
-  2   1   -16.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
+  1   1   -15.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
+  2   1   -16.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3227,7 +3210,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0080  0.0157  0.3500 'CPT 1'
+  1  0.0080  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3265,8 +3248,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
-  2   1   -16.00      832     2302     3134     3134        0        0     3134     0.00 'CPT 1'
+  1   1   -15.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
+  2   1   -16.00      713     2302     3015     3015        0        0     3015     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3282,7 +3265,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0080  0.0157  0.3500 'CPT 1'
+  1  0.0080  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3320,8 +3303,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00      832     2201     3033     3033        0        0     3033     0.00 'CPT 1'
-  2   1   -16.00      832     2201     3033     3033        0        0     3033     0.00 'CPT 1'
+  1   1   -15.00      713     2402     3115     3115        0        0     3115     0.00 'CPT 1'
+  2   1   -16.00      713     2402     3115     3115        0        0     3115     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3337,7 +3320,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0060  0.0157  0.3500 'CPT 1'
+  1  0.0100  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3485,8 +3468,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00     1663     3387     5050     5050        0        0     5050     0.00 'CPT 1'
-  2   1   -16.00     1663     3569     5232     5232        0        0     5232     0.00 'CPT 1'
+  1   1   -15.00     1663     3320     4983     4983        0        0     4983     0.00 'CPT 1'
+  2   1   -16.00     1663     3499     5162     5162        0        0     5162     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3650,8 +3633,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00     1663     2402     4065     4065        0        0     4065     0.00 'CPT 1'
-  2   1   -16.00     1663     2402     4065     4065        0        0     4065     0.00 'CPT 1'
+  1   1   -15.00     1663     2275     3938     3938        0        0     3938     0.00 'CPT 1'
+  2   1   -16.00     1663     2275     3938     3938        0        0     3938     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3667,7 +3650,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0100  0.0157  0.7000 'CPT 1'
+  1  0.0080  0.0157  0.7000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -3760,8 +3743,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00     1330     2201     3531     3531        0        0     3531     0.00 'CPT 1'
-  2   1   -16.00     1330     2201     3531     3531        0        0     3531     0.00 'CPT 1'
+  1   1   -15.00      713     2201     2914     2914        0        0     2914     0.00 'CPT 1'
+  2   1   -16.00      713     2201     2914     2914        0        0     2914     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -3777,7 +3760,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0060  0.0157  0.5600 'CPT 1'
+  1  0.0060  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -4255,8 +4238,8 @@ Hmv
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1   1   -15.00     1153     1839     2992     2992        0        0     2992     0.00 'CPT 1'
-  2   1   -16.00     1153     1839     2992     2992        0        0     2992     0.00 'CPT 1'
+  1   1   -15.00      549     1839     2388     2388        0        0     2388     0.00 'CPT 1'
+  2   1   -16.00      549     1839     2388     2388        0        0     2388     0.00 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF ITERATION RESULTS]
@@ -4272,7 +4255,7 @@ AlphaPGem
 CptName
 [END OF COLUMN INDICATION]
 [DATA]
-  1  0.0090  0.0157  0.6300 'CPT 1'
+  1  0.0090  0.0157  0.3000 'CPT 1'
 [END OF DATA]
 [END OF TABLE]
 [END OF NEN AVERAGE PILE FACTORS]
@@ -4782,215 +4765,265 @@ IsKsi3Used = 0
 
 [END OF PILE]
 [END OF PRELIMINARY DESIGN RESULTS]
-[FOOTNOTE WARNINGS]
+[PILE TYPE DIMENSIONS WARNINGS]
 [PILE TYPE]
 PileTypeNumber = 1
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 2
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 3
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 4
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 5
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 6
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 7
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 8
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 9
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 10
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 11
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 12
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 13
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 14
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 15
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 16
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 17
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 18
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 19
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 20
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 21
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 22
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.400
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 23
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.400
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 24
-WarningFootNoteDTable7c = 1
+MicroPileDimensionsWarning = 1
 MaxDiameterAllowed = 0.200
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 25
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 26
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 27
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 28
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 29
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 30
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 31
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 32
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 33
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 34
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 35
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 36
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 37
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 38
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 39
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 40
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 41
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 42
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 43
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 44
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 45
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 46
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 47
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 48
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 49
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
 [PILE TYPE]
 PileTypeNumber = 50
-WarningFootNoteDTable7c = 0
+MicroPileDimensionsWarning = 0
+B6DimensionsWarning = 0
 [END OF PILE TYPE]
-[END OF FOOTNOTE WARNINGS]
+[END OF PILE TYPE DIMENSIONS WARNINGS]
 [CALCULATION WARNINGS]
 0 = IsWarningF1Given (1=true, 0=false)
 0 = F1GreaterThan1Found (1=true, 0=false)

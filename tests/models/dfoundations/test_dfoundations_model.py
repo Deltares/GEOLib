@@ -25,7 +25,7 @@ from geolib.models.dfoundations.internal import (
 )
 from geolib.models.dfoundations.piles import (
     BasePileType,
-    BasePileTypeForClayLoamPeat,
+    BasePileTypeForClaySiltPeat,
     BearingHShapedPile,
     BearingPileLocation,
     BearingRectangularPile,
@@ -38,6 +38,8 @@ from geolib.models.dfoundations.piles import (
     BearingRoundPileWithLostTip,
     BearingRoundTaperedPile,
     BearingSection,
+    BearingRoundPileWithScrewShapedShaft,
+    BearingRoundPileWithBaseEqualsToShaftLostTip,
     TensionHShapedPile,
     TensionPileLocation,
     TensionRectangularPile,
@@ -50,6 +52,8 @@ from geolib.models.dfoundations.piles import (
     TensionRoundPileWithLostTip,
     TensionRoundTaperedPile,
     TensionSection,
+    TensionRoundPileWithScrewShapedShaft,
+    TensionRoundPileWithBaseEqualsToShaftLostTip,
 )
 from geolib.models.dfoundations.profiles import CPT, Excavation, Profile
 from geolib.models.internal import Bool
@@ -286,21 +290,21 @@ class TestDFoundationsModel:
         gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
         gravel.undrained_parameters.undrained_shear_strength = 1000
 
-        sandy_loam = Soil(name="Sandy loam")
-        sandy_loam.soil_type_nl = SoilType.TERTCLAY
-        sandy_loam.mohr_coulomb_parameters = mohr_coulomb_parameters
-        sandy_loam.undrained_parameters.undrained_shear_strength = 1000
+        silt = Soil(name="Silt")
+        silt.soil_type_nl = SoilType.SILT
+        silt.mohr_coulomb_parameters = mohr_coulomb_parameters
+        silt.undrained_parameters.undrained_shear_strength = 1000
 
-        sandy_loam_and_gravel = Soil(name="Sandy loam")
-        sandy_loam_and_gravel.soil_type_nl = SoilType.SANDY_LOAM
-        sandy_loam_and_gravel.mohr_coulomb_parameters = mohr_coulomb_parameters
-        sandy_loam_and_gravel.undrained_parameters.undrained_shear_strength = 1000
+        sandy_silt = Soil(name="Silt")
+        sandy_silt.soil_type_nl = SoilType.SANDY_SILT
+        sandy_silt.mohr_coulomb_parameters = mohr_coulomb_parameters
+        sandy_silt.undrained_parameters.undrained_shear_strength = 1000
 
         # 3. Run test
         df.add_soil(gravel)
-        df.add_soil(sandy_loam)
+        df.add_soil(silt)
         with pytest.raises(NameError):
-            df.add_soil(sandy_loam_and_gravel)
+            df.add_soil(sandy_silt)
 
         # 4. Verify final expectations.
         assert (
@@ -310,7 +314,7 @@ class TestDFoundationsModel:
 
         assert (
             df.datastructure.input_data.soil_collection.soil[-1].soilsoiltype
-            == SoilType.TERTCLAY
+            == SoilType.SILT
         )
 
     @pytest.fixture
@@ -347,15 +351,15 @@ class TestDFoundationsModel:
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
                     "ocr_value": 1.0,
-                    "reduction_core_resistance": 0,
+                    "reduction_cone_resistance": 0,
                 },
                 {
-                    "material": "Clay, clean, weak",
+                    "material": "Clay, clean, soft",
                     "top_level": -0.2,
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
                     "ocr_value": 1.0,
-                    "reduction_core_resistance": 0,
+                    "reduction_cone_resistance": 0,
                 },
                 {
                     "material": "Clay, clean, stiff",
@@ -363,7 +367,7 @@ class TestDFoundationsModel:
                     "excess_pore_pressure_top": 0.0,
                     "excess_pore_pressure_bottom": 0.0,
                     "ocr_value": 1.0,
-                    "reduction_core_resistance": 0,
+                    "reduction_cone_resistance": 0,
                 },
             ],
         )
@@ -389,7 +393,7 @@ class TestDFoundationsModel:
             {
                 "material": "Foo Bar Clay",
                 "top_level": -0.3,
-                "reduction_core_resistance": 0,
+                "reduction_cone_resistance": 0,
             },
         )
         with pytest.raises(KeyError):
@@ -420,8 +424,8 @@ class TestDFoundationsModel:
             pile_name="test",
             pile_type=BasePileType.USER_DEFINED_VIBRATING,
             pile_class_factor_shaft_sand_gravel=1,
-            preset_pile_class_factor_shaft_clay_loam_peat=BasePileTypeForClayLoamPeat.STANDARD,
-            pile_class_factor_shaft_clay_loam_peat=1,
+            preset_pile_class_factor_shaft_clay_silt_peat=BasePileTypeForClaySiltPeat.STANDARD,
+            pile_class_factor_shaft_clay_silt_peat=1,
             pile_class_factor_tip=1,
             load_settlement_curve=LoadSettlementCurve.ONE,
             user_defined_pile_type_as_prefab=False,
@@ -838,7 +842,7 @@ class TestDFoundationsModel:
 
         # Check assumptions
         assert len(df.soils.soil) != 0
-        assert df.soils.soil[0].name == "BClay, clean, moderate"
+        assert df.soils.soil[0].name == "Gravel, none, loose"
         assert df.soils.soil[0].soilgamdry == 18
 
         # Change model
@@ -846,7 +850,7 @@ class TestDFoundationsModel:
 
         # Verify soils have changed
         assert len(df.soils.soil) != 0
-        assert df.soils.soil[0].name == "BClay, clean, moderate"
+        assert df.soils.soil[0].name == "Gravel, none, loose"
         assert df.soils.soil[0].soilgamdry == 17
 
     @pytest.mark.unittest
@@ -872,8 +876,8 @@ def create_bearing_pile():
         pile_name="test",
         pile_type=BasePileType.USER_DEFINED_VIBRATING,
         pile_class_factor_shaft_sand_gravel=1,
-        preset_pile_class_factor_shaft_clay_loam_peat=BasePileTypeForClayLoamPeat.STANDARD,
-        pile_class_factor_shaft_clay_loam_peat=1,
+        preset_pile_class_factor_shaft_clay_silt_peat=BasePileTypeForClaySiltPeat.STANDARD,
+        pile_class_factor_shaft_clay_silt_peat=1,
         pile_class_factor_tip=1,
         load_settlement_curve=LoadSettlementCurve.ONE,
         user_defined_pile_type_as_prefab=False,
@@ -891,8 +895,8 @@ def create_tension_pile():
         pile_name="test",
         pile_type=BasePileType.USER_DEFINED_VIBRATING,
         pile_class_factor_shaft_sand_gravel=1,
-        preset_pile_class_factor_shaft_clay_loam_peat=BasePileTypeForClayLoamPeat.STANDARD,
-        pile_class_factor_shaft_clay_loam_peat=1,
+        preset_pile_class_factor_shaft_clay_silt_peat=BasePileTypeForClaySiltPeat.STANDARD,
+        pile_class_factor_shaft_clay_silt_peat=1,
         elasticity_modulus=1e7,
         unit_weight_pile=20,
     )
@@ -961,6 +965,16 @@ def create_tension_pile():
                 thickness_flange=0.01,
             ),
             BearingHShapedPile,
+        ],
+        [
+            "test_add_bearing_round_pile_with_screw_shaped_shaft.foi",
+            dict(base_diameter=0.8, pile_diameter=0.9),
+            BearingRoundPileWithScrewShapedShaft,
+        ],
+        [
+            "test_add_bearing_round_pile_with_base_equals_to_shaft_lost_tip.foi",
+            dict(base_diameter=1),
+            BearingRoundPileWithBaseEqualsToShaftLostTip,
         ],
     ]
 )
@@ -1031,6 +1045,16 @@ def create_bearing_pile_shape(request):
                 thickness_flange=0.01,
             ),
             TensionHShapedPile,
+        ],
+        [
+            "test_add_tension_round_pile_with_screw_shaped_shaft.foi",
+            dict(base_diameter=0.8, pile_diameter=0.9),
+            TensionRoundPileWithScrewShapedShaft,
+        ],
+        [
+            "test_add_tension_round_pile_with_base_equals_to_shaft_lost_tip.foi",
+            dict(base_diameter=1),
+            TensionRoundPileWithBaseEqualsToShaftLostTip,
         ],
     ]
 )

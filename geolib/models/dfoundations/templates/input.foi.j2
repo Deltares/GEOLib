@@ -23,6 +23,7 @@ DGSFoundationCalc.dll={{ version_externals.dgsfoundationcalc____dll }}
 {# {% else %} #}
 {# {{ model }} #}
 {# {% endif %} #}
+{{ model.cu_values.value }} : CuValues = {{ 'Based on CPTs' if model.cu_values.value == 0 else 'Manual' }}
 [END OF MODEL]
 [SOIL COLLECTION]
     {{ soil_collection.soil|length }} = number of items
@@ -33,7 +34,6 @@ SoilColor={{ soil.soilcolor }}
 SoilSoilType={{ soil.soilsoiltype.value }}
 SoilGamDry={{ soil.soilgamdry }}
 SoilGamWet={{ soil.soilgamwet }}
-SoilInitialVoidRatio={{ soil.soilinitialvoidratio }}
 SoilDiameterD50={{ soil.soildiameterd50 }}
 SoilMinVoidRatio={{ soil.soilminvoidratio }}
 SoilMaxVoidRatio={{ soil.soilmaxvoidratio }}
@@ -44,7 +44,7 @@ SoilMaxConeResistType={{ soil.soilmaxconeresisttype.value }}
 SoilMaxConeResist={{ soil.soilmaxconeresist }}
 SoilUseTension={{ soil.soilusetension.value }}
 SoilCa={{ soil.soilca }}
-SoilCcIndex={{ soil.soilccindex }}
+SoilCRatio={{ soil.soilcratio }}
 [END OF SOIL]
 {% endfor %}
 [END OF SOIL COLLECTION]
@@ -262,7 +262,7 @@ DataCount={{ '{:>4}'.format(cpt.measured_data.data|length) }}
 {{ '{:>12.2f}'.format(profile.placement_depth_of_foundation) }} : Placement depth of foundation element [m]
 {{ '{:>12}'.format(profile.concentration_value_frohlich) }} : Concentration value according to Frohlich [-]
 {{ '{:>12.2f}'.format(profile.top_tension_zone) }} : Top of tension zone [m]
-{{ '{:>12}'.format(profile.reduction_of_core_resistance) }} : Reduction type of cone resistance = {{ 'Standard' if cone_resistance_reduction_type == 0 else 'Begemann' if cone_resistance_reduction_type == 1 else 'Manual' }}
+{{ '{:>12}'.format(profile.reduction_of_cone_resistance) }} : Reduction type of cone resistance = {{ 'Standard' if cone_resistance_reduction_type == 0 else 'Begemann' if cone_resistance_reduction_type == 1 else 'Manual' }}
 {{ '{:>12.2f}'.format(profile.excavation_level) }} : Excavation level [m]
 {{ '{}'.format(profile.excavation_width_infinite) }} : Excavation width infinite = TRUE
 {{ '{}'.format(profile.excavation_length_infinite) }} : Excavation length infinite = TRUE
@@ -275,7 +275,7 @@ Layer ({{ loop.index }})
 {{ '{:>12.2f}'.format(layer.excess_pore_pressure_top) }} : Excess pore pressure at top [kN/m3]
 {{ '{:>12.2f}'.format(layer.excess_pore_pressure_bottom) }} : Excess pore pressure at bottom [kN/m3]
 {{ '{:>12.2f}'.format(layer.ocr_value) }} : OCR value [-]
-{{ '{:>12}'.format(layer.reduction_core_resistance) }} : Reduction of cone resistance [%]
+{{ '{:>12}'.format(layer.reduction_cone_resistance) }} : Reduction of cone resistance [%]
 {% endfor %}
 {% endfor %}
 [END OF PROFILES]
@@ -292,9 +292,9 @@ Layer ({{ loop.index }})
 {{ '{:>2}'.format(pile.pile_type.value) }} : Pile Type = {{ pile.pile_type.name }}
 {{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
 {{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
-{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
-{% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}
-    {{ '{:>12.4f}'.format(pile.execution_factor_clay_loam_peat) }} : Execution factor clay/loam/peat [-)
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_silt_peat.value) }} : Pile type for execution factor clay/silt/peat = {{ pile.pile_type_for_execution_factor_clay_silt_peat.name }}
+{% if pile.pile_type_for_execution_factor_clay_silt_peat.value == 1 %}
+    {{ '{:>12.4f}'.format(pile.execution_factor_clay_silt_peat) }} : Execution factor clay/silt/peat [-)
 {% endif %}
 {{ '{:>2}'.format(pile.pile_type_for_pile_class_factor.value) }} : Pile type for pile class factor = {{ pile.pile_type_for_pile_class_factor.name }}
 {{ '{:>12.4f}'.format(pile.pile_class_factor) }} : Pile class factor [-)
@@ -303,6 +303,7 @@ Layer ({{ loop.index }})
 {% if pile.material.value == 3 %}
     {{ '{:>10.3E}'.format(pile.elasticity_modulus) }} : Elasticity modulus [kN/m2)
 {% endif %}
+{{ '{:>2}'.format(pile.installation_method.value) }} : Installation method = {{ pile.installation_method.name }}
 {{ '{:>2}'.format(pile.slip_layer.value) }} : Slip Layer = {{ pile.slip_layer.name }}
 {{ '{:>12.2f}'.format(pile.characteristic_adhesion) }} : Characteristic adhesion [kN/m2)
 {{ '{:>2}'.format(pile.shape.value) }} : Shape = {{ pile.shape.name }}
@@ -345,6 +346,14 @@ Layer ({{ loop.index }})
     {{ '{:>12.2f}'.format(pile.width_h_shape) }} : Width H-shape [m)
     {{ '{:>12.2f}'.format(pile.thickness_web) }} : Thickness web [m)
     {{ '{:>12.2f}'.format(pile.thickness_flange) }} : Thickness flange [m)
+{% elif pile.shape.value == 12 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+{% elif pile.shape.value == 13 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+{% endif %}
+{% if pile.shape.value == 9 %}
+{{ '{:>2}'.format(pile.open_pipe_pile_calculation_method.value) }} : Open pipe pile calculation method = {{ 'Open pipe pile' if pile.open_pipe_pile_calculation_method.value == 0 else 'Standard method' }}
 {% endif %}
 {{ '{:>2}'.format(pile.overrule_pile_tip_shape_factor.value) }} : Factor beta overruled = {{ pile.overrule_pile_tip_shape_factor.name }}
 {% if pile.overrule_pile_tip_shape_factor.value == 1 %}
@@ -354,7 +363,7 @@ Layer ({{ loop.index }})
 {% if pile.overrule_pile_tip_cross_section_factors.value == 1 %}
 {{ '{:>12.2f}'.format(pile.pile_tip_cross_section_factor) }} : Factor s user defined
 {% endif %}
-{{ '{:>2}'.format(pile.use_pre_2016.value) }} : Use Pre 2016 Alpha P Factor = {{ pile.use_pre_2016.name }}
+{{ '{:>2}'.format(pile.use_pre_2025.value) }} : Use pre 2025 alpha factors = {{ pile.use_pre_2025.name }}
 {{ '{:>2}'.format(pile.user_defined_pile_type_as_prefab.value) }} : User Defined piletype as Overig = {{ '{:>2}'.format(pile.user_defined_pile_type_as_prefab.name) }}
 {{ '{:>2}'.format(pile.use_manual_reduction_for_qc.value) }} : Use manual reduction for qc;III = {{ '{:>2}'.format(pile.use_manual_reduction_for_qc.name) }}
 {{ '{:>6.2f}'.format(pile.reduction_percentage_qc) }} : Reduction percentage qc;III
@@ -371,10 +380,12 @@ Layer ({{ loop.index }})
 {% for pile in types___tension_piles_cur %}
 {{ pile.pile_name }}
 {{ '{:>2}'.format(pile.pile_type_for_execution_factor_sand_gravel.value) }} : Pile type for execution factor sand/gravel = {{ pile.pile_type_for_execution_factor_sand_gravel.name }}
+{{ '{:>2}'.format(pile.use_pre_2025.value) }} : Use pre 2025 alpha factors = {{ pile.use_pre_2025.name }}
+{{ '{:>2}'.format(pile.installation_method.value) }} : Installation method = {{ pile.installation_method.name }}
 {{ '{:>12.4f}'.format(pile.execution_factor_sand_gravel) }} : Execution factor sand/gravel [-)
-{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_loam_peat.value) }} : Pile type for execution factor clay/loam/peat = {{ pile.pile_type_for_execution_factor_clay_loam_peat.name }}
-{% if pile.pile_type_for_execution_factor_clay_loam_peat.value == 1 %}
-    {{ '{:>12.4f}'.format(pile.execution_factor_clay_loam_peat) }} : Execution factor clay/loam/peat [-)
+{{ '{:>2}'.format(pile.pile_type_for_execution_factor_clay_silt_peat.value) }} : Pile type for execution factor clay/silt/peat = {{ pile.pile_type_for_execution_factor_clay_silt_peat.name }}
+{% if pile.pile_type_for_execution_factor_clay_silt_peat.value == 1 %}
+    {{ '{:>12.4f}'.format(pile.execution_factor_clay_silt_peat) }} : Execution factor clay/silt/peat [-)
 {% endif %}
 {{ '{:>2}'.format(pile.material.value) }} : Material = {{ pile.material.name }}
 {% if pile.material.value == 3 %}
@@ -421,6 +432,11 @@ Layer ({{ loop.index }})
 {% elif pile.shape.value == 11 %}
     {{ '{:>12.2f}'.format(pile.circumference) }} : Circumference of pile [m)
     {{ '{:>12.2f}'.format(pile.cross_section) }} : Pile area [m)
+{% elif pile.shape.value == 12 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
+    {{ '{:>12.2f}'.format(pile.pile_diameter) }} : Pile diameter [m)
+{% elif pile.shape.value == 13 %}
+    {{ '{:>12.2f}'.format(pile.base_diameter) }} : Base diameter [m)
 {% endif %}
 {{ '{:>2}'.format(pile.is_user_defined.value) }} : User defined name
 {% endfor %}
@@ -525,7 +541,6 @@ PileName
 {{ '{:>12.2f}'.format(co.qcza_low) }} : Qc;z;a low user defined
 {{ co.is_qcza_high_overruled.value }} : Qc;z;a high overruled = {{ co.is_qcza_high_overruled.name }}
 {{ '{:>12.2f}'.format(co.qcza_high) }} : Qc;z;a high user defined
-{{ co.is_suppress_qc_reduction.value }} : Suppress qcIII reduction = {{ co.is_suppress_qc_reduction.name }}
 {{ co.is_overrule_excavation.value }} : Overrule excavation = {{ co.is_overrule_excavation.name }}
 {{ co.use_pile_group.value }} : Use pile group = {{ co.use_pile_group.name }}
 {{ co.is_write_intermediate_results.value }} : Write intermediate results = {{ co.is_write_intermediate_results.name }}

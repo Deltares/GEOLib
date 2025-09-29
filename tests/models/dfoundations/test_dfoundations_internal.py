@@ -53,7 +53,7 @@ class TestInternalInputDFoundations:
         assert parsed_layer.excess_pore_pressure_top == excess_top
         assert parsed_layer.excess_pore_pressure_bottom == excess_bottom
         assert parsed_layer.ocr_value == ocr
-        assert parsed_layer.reduction_core_resistance == reduction
+        assert parsed_layer.reduction_cone_resistance == reduction
 
     @pytest.mark.integrationtest
     def test_given_single_profile_text_when_parse_then_structure_parsed(self):
@@ -144,7 +144,7 @@ class TestInternalInputDFoundations:
         from geolib.models.dfoundations.internal_soil import Soil
 
         soils = Soil.default_soils()
-        assert len(soils) == 56
+        assert len(soils) == 27
 
     @pytest.mark.unittest
     @pytest.mark.parametrize(
@@ -166,8 +166,8 @@ class TestInternalInputDFoundations:
         from geolib.models.dfoundations.internal_soil import Soil
 
         soils = Soil.default_soils(model=model)
-        assert len(soils) == 56
-        assert soils[0].name == "BClay, clean, moderate"
+        assert len(soils) == 27
+        assert soils[0].name == "Gravel, none, loose"
         assert soils[0].soilgamdry == soilgamdryvalue
 
     @pytest.mark.unittest
@@ -429,8 +429,8 @@ class TestInternalOutputDFoundations:
         + "[RESULTS AT CPT TEST LEVEL]\n"
         + "[END OF RESULTS AT CPT TEST LEVEL]\n"
         + f"{verification_results}\n"
-        + "[FOOTNOTE WARNINGS]\n"
-        + "[END OF FOOTNOTE WARNINGS]\n"
+        + "[PILE TYPE DIMENSIONS WARNINGS]\n"
+        + "[END OF PILE TYPE DIMENSIONS WARNINGS]\n"
         + f"{calculation_warnings}\n"
         + "[END OF DUMPFILE OUTPUT]"
     )

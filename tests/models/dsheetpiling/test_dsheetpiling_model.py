@@ -557,13 +557,13 @@ class TestDsheetPilingModel:
         gravel = Soil(name="Gravel")
         gravel.soil_type_settlement_by_vibrations = SoilType.GRAVEL
 
-        sandy_loam = Soil(name="Sandy loam")
-        sandy_loam.soil_type_settlement_by_vibrations = SoilType.SANDY_LOAM
+        sandy_silt = Soil(name="Sandy silt")
+        sandy_silt.soil_type_settlement_by_vibrations = SoilType.SANDY_SILT
 
         # 3. Run test
         ds.add_soil(gravel)
         with pytest.raises(ValueError):
-            ds.add_soil(sandy_loam)
+            ds.add_soil(sandy_silt)
 
         # 4. Verify final expectations.
         assert len(ds.datastructure.input_data.soil_collection.soil) == 1

@@ -1,24 +1,25 @@
 INPUT FILE FOR D-FOUNDATIONS
 ==============================================================================
-COMPANY    : Stichting Deltares 
+COMPANY    :    
 
-DATE       : 4/7/2023
-TIME       : 2:03:09 PM
-FILENAME   : D:\pvcsprojects\applications\DFoundations\trunk\release\Projects\Benchmarks\bm4-12.foi
-CREATED BY : D-Foundations version 23.1.1.40340
+DATE       : 21-08-2025
+TIME       : 17:20:48
+FILENAME   : C:\DelphiProjects\DSerie\applications\DFoundations\trunk\data\Benchmarks\bm4-12.foi
+CREATED BY : D-Foundations version 25.1.0.2830
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
-Soil=1010
-D-Foundations=1024
+Soil=1013
+D-Foundations=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=23.1.1.40340
+DGSFoundationCalc.dll=25.1.0.2830
 [END OF VERSION EXTERNALS]
 
 [MODEL]
 2 : Model = Shallow Foundations (EC7-NL)
+1 : CuValues = Manual
 [END OF MODEL]
 [SOIL COLLECTION]
    30 = number of items
@@ -28,18 +29,35 @@ SoilColor=10871201
 SoilSoilType=3
 SoilGamDry=17.00
 SoilGamWet=17.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=5.00
 SoilPhi=17.50
-SoilCu=50.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0061000
-SoilCcIndex=0.1535000
+SoilCRatio=0.1533465
+[END OF SOIL]
+[SOIL]
+Clay, clean, soft
+SoilColor=13824161
+SoilSoilType=3
+SoilGamDry=17.00
+SoilGamWet=17.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=5.00
+SoilPhi=17.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0061000
+SoilCRatio=0.1530000
 [END OF SOIL]
 [SOIL]
 Clay, clean, stiff
@@ -47,75 +65,17 @@ SoilColor=11526561
 SoilSoilType=3
 SoilGamDry=19.00
 SoilGamWet=19.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=13.00
 SoilPhi=17.50
-SoilCu=100.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0037000
-SoilCcIndex=0.0921000
-[END OF SOIL]
-[SOIL]
-Clay, clean, weak
-SoilColor=12181921
-SoilSoilType=3
-SoilGamDry=14.00
-SoilGamWet=14.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=17.50
-SoilCu=25.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0131000
-SoilCcIndex=0.3289000
-[END OF SOIL]
-[SOIL]
-Clay, organ, moderate
-SoilColor=12841121
-SoilSoilType=3
-SoilGamDry=15.00
-SoilGamWet=15.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=15.00
-SoilCu=25.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0115000
-SoilCcIndex=0.2302000
-[END OF SOIL]
-[SOIL]
-Clay, organ, weak
-SoilColor=14151841
-SoilSoilType=3
-SoilGamDry=13.00
-SoilGamWet=13.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=15.00
-SoilCu=10.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0153000
-SoilCcIndex=0.3070000
+SoilCRatio=0.0920079
 [END OF SOIL]
 [SOIL]
 Clay, sl san, moderate
@@ -123,18 +83,35 @@ SoilColor=11527841
 SoilSoilType=3
 SoilGamDry=18.00
 SoilGamWet=18.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=5.00
 SoilPhi=22.50
-SoilCu=80.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0046000
-SoilCcIndex=0.1151000
+SoilCRatio=0.1149849
+[END OF SOIL]
+[SOIL]
+Clay, sl san, soft
+SoilColor=12510881
+SoilSoilType=3
+SoilGamDry=15.00
+SoilGamWet=15.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=22.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0092000
+SoilCRatio=0.2300000
 [END OF SOIL]
 [SOIL]
 Clay, sl san, stiff
@@ -142,246 +119,179 @@ SoilColor=12183201
 SoilSoilType=3
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=13.00
 SoilPhi=22.50
-SoilCu=120.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0031000
-SoilCcIndex=0.0768000
+SoilCRatio=0.0767232
 [END OF SOIL]
 [SOIL]
-Clay, sl san, weak
-SoilColor=12838561
+Clay, slightly organic
+SoilColor=15791521
 SoilSoilType=3
 SoilGamDry=15.00
 SoilGamWet=15.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=22.50
-SoilCu=40.00
+SoilCohesion=1.00
+SoilPhi=15.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0092000
-SoilCcIndex=0.2302000
+SoilCa=0.0115000
+SoilCRatio=0.2310000
 [END OF SOIL]
 [SOIL]
-Clay, ve san, stiff
-SoilColor=12839841
+Clay, very organic
+SoilColor=16448161
 SoilSoilType=3
-SoilGamDry=18.00
-SoilGamWet=18.00
-SoilInitialVoidRatio=0.001001
+SoilGamDry=16.00
+SoilGamWet=16.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=27.50
-SoilCu=0.00
+SoilCohesion=1.00
+SoilPhi=15.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0037000
-SoilCcIndex=0.0921000
+SoilCa=0.0077000
+SoilCRatio=0.1530000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, loose
-SoilColor=7237245
-SoilSoilType=0
-SoilGamDry=17.00
-SoilGamWet=19.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=32.50
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0058000
-[END OF SOIL]
-[SOIL]
-Gravel, sl sil, moderate
-SoilColor=7892605
-SoilSoilType=0
-SoilGamDry=18.00
+Clay, very sandy
+SoilColor=14478241
+SoilSoilType=3
+SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=35.00
-SoilCu=0.00
+SoilCohesion=1.00
+SoilPhi=32.50
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0029000
+SoilCa=0.0007000
+SoilCRatio=0.0160000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, stiff
-SoilColor=8547965
+Gravel, none, dense
+SoilColor=7892605
 SoilSoilType=0
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=37.50
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0024000
+SoilCRatio=0.0019000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, loose
-SoilColor=7893885
+Gravel, none, loose
+SoilColor=7237245
 SoilSoilType=0
-SoilGamDry=18.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=30.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0073000
-[END OF SOIL]
-[SOIL]
-Gravel, ve sil, moderate
-SoilColor=8549245
-SoilSoilType=0
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
+SoilGamDry=17.00
+SoilGamWet=19.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=32.50
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0048000
+SoilCRatio=0.0046000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, stiff
-SoilColor=9204605
+Gravel, none, medium
+SoilColor=7564925
+SoilSoilType=0
+SoilGamDry=19.00
+SoilGamWet=21.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=37.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0019000
+[END OF SOIL]
+[SOIL]
+Gravel, silty, dense
+SoilColor=8549245
 SoilSoilType=0
 SoilGamDry=20.00
 SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=35.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0029000
+SoilCRatio=0.0023000
 [END OF SOIL]
 [SOIL]
-Loam, sl san, moderate
-SoilColor=11506812
-SoilSoilType=2
-SoilGamDry=20.00
+Gravel, silty, loose
+SoilColor=7893885
+SoilSoilType=0
+SoilGamDry=18.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=1.00
-SoilPhi=27.50
-SoilCu=100.00
+SoilCohesion=0.00
+SoilPhi=30.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0020000
-SoilCcIndex=0.0512000
+SoilCa=0.0000000
+SoilCRatio=0.0058000
 [END OF SOIL]
 [SOIL]
-Loam, sl san, stiff
-SoilColor=12162172
-SoilSoilType=2
-SoilGamDry=21.00
+Gravel, silty, medium
+SoilColor=8221565
+SoilSoilType=0
+SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.50
-SoilPhi=27.50
-SoilCu=200.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0013000
-SoilCcIndex=0.0329000
-[END OF SOIL]
-[SOIL]
-Loam, sl san, weak
-SoilColor=12817532
-SoilSoilType=2
-SoilGamDry=19.00
-SoilGamWet=19.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
-SoilPhi=27.50
-SoilCu=50.00
+SoilPhi=32.50
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0037000
-SoilCcIndex=0.0921000
-[END OF SOIL]
-[SOIL]
-Loam, ve san, stiff
-SoilColor=12818812
-SoilSoilType=2
-SoilGamDry=19.00
-SoilGamWet=19.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=27.50
-SoilCu=50.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0020000
-SoilCcIndex=0.0512000
+SoilCa=0.0000000
+SoilCRatio=0.0038000
 [END OF SOIL]
 [SOIL]
 Material (1)
@@ -389,10 +299,9 @@ SoilColor=7648893
 SoilSoilType=3
 SoilGamDry=14.00
 SoilGamWet=14.00
-SoilInitialVoidRatio=1.360000
 SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
 SoilCohesion=0.00
 SoilPhi=17.50
 SoilCu=25.00
@@ -400,7 +309,7 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0130000
-SoilCcIndex=1.3570000
+SoilCRatio=0.5750000
 [END OF SOIL]
 [SOIL]
 Material (2)
@@ -408,10 +317,9 @@ SoilColor=9764853
 SoilSoilType=3
 SoilGamDry=17.00
 SoilGamWet=17.00
-SoilInitialVoidRatio=0.830000
 SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
 SoilCohesion=10.00
 SoilPhi=17.50
 SoilCu=50.00
@@ -419,7 +327,7 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0060000
-SoilCcIndex=0.3620000
+SoilCRatio=0.1978142
 [END OF SOIL]
 [SOIL]
 Material (3)
@@ -427,10 +335,9 @@ SoilColor=5953498
 SoilSoilType=1
 SoilGamDry=18.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.500000
-SoilDiameterD50=0.00000
-SoilMinVoidRatio=0.000
-SoilMaxVoidRatio=0.000
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.001
+SoilMaxVoidRatio=0.001
 SoilCohesion=0.00
 SoilPhi=32.50
 SoilCu=0.00
@@ -438,140 +345,205 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0060000
+SoilCRatio=0.0040000
 [END OF SOIL]
 [SOIL]
-Peat, mod pl, moderate
-SoilColor=6045349
+Peat, none, moderate
+SoilColor=3087269
+SoilSoilType=4
+SoilGamDry=13.00
+SoilGamWet=13.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=5.00
+SoilPhi=15.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0120000
+SoilCRatio=0.2300000
+[END OF SOIL]
+[SOIL]
+Peat, none, weak
+SoilColor=2759589
 SoilSoilType=4
 SoilGamDry=12.00
 SoilGamWet=12.00
-SoilInitialVoidRatio=0.001001
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=2.50
 SoilPhi=15.00
-SoilCu=20.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0153000
-SoilCcIndex=0.3070000
+SoilCa=0.0150000
+SoilCRatio=0.3060000
 [END OF SOIL]
 [SOIL]
-Peat, not pl, weak
-SoilColor=6699429
-SoilSoilType=4
-SoilGamDry=10.00
-SoilGamWet=10.00
-SoilInitialVoidRatio=0.001001
+Sand, none, dense
+SoilColor=710639
+SoilSoilType=1
+SoilGamDry=20.00
+SoilGamWet=22.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=1.00
-SoilPhi=15.00
-SoilCu=10.00
+SoilCohesion=0.00
+SoilPhi=40.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0230000
-SoilCcIndex=0.4605000
+SoilCa=0.0000000
+SoilCRatio=0.0015000
 [END OF SOIL]
 [SOIL]
-Sand, clean, loose
-SoilColor=1368559
+Sand, none, loose
+SoilColor=55279
 SoilSoilType=1
 SoilGamDry=17.00
 SoilGamWet=19.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=30.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0144000
+SoilCRatio=0.0115000
 [END OF SOIL]
 [SOIL]
-Sand, clean, moderate
-SoilColor=2023919
+Sand, none, medium
+SoilColor=382959
 SoilSoilType=1
 SoilGamDry=18.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=32.50
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0048000
+SoilCRatio=0.0038000
 [END OF SOIL]
 [SOIL]
-Sand, clean, stiff
+Sand, sil/cla, qc=12
 SoilColor=2679279
 SoilSoilType=1
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
-SoilPhi=35.00
-SoilCu=0.00
+SoilPhi=32.50
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0029000
+SoilCRatio=0.0035000
 [END OF SOIL]
 [SOIL]
-Sand, sl sil, moderate
-SoilColor=710639
-SoilSoilType=1
-SoilGamDry=18.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=27.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0064000
-[END OF SOIL]
-[SOIL]
-Sand, ve sil, loose
-SoilColor=711919
+Sand, sil/cla, qc=8
+SoilColor=2351599
 SoilSoilType=1
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=30.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0073000
+SoilCRatio=0.0058000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, moderate
+SoilColor=13145212
+SoilSoilType=2
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=27.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0020000
+SoilCRatio=0.0510000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, soft
+SoilColor=12489852
+SoilSoilType=2
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=30.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0020000
+SoilCRatio=0.0510000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, stiff
+SoilColor=13472892
+SoilSoilType=2
+SoilGamDry=21.00
+SoilGamWet=21.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=2.50
+SoilPhi=27.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0013000
+SoilCRatio=0.0330000
+[END OF SOIL]
+[SOIL]
+Silt, very sandy
+SoilColor=14457212
+SoilSoilType=2
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=35.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0013000
+SoilCRatio=0.0330000
 [END OF SOIL]
 [SOIL]
 Undetermined
@@ -579,7 +551,6 @@ SoilColor=16777215
 SoilSoilType=2
 SoilGamDry=0.01
 SoilGamWet=0.02
-SoilInitialVoidRatio=0.000000
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
@@ -590,7 +561,7 @@ SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=1.0000000
-SoilCcIndex=1.0000000
+SoilCRatio=1.0000000
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 
@@ -775,7 +746,7 @@ qc
 [END OF COLUMN INDICATION]
 [DATA]
        0.000        0.010
-     -20.000        0.020
+     -10.000        0.010
 [END OF DATA]
 [END OF TABLE]
 [END OF MEASURED DATA]
@@ -789,7 +760,7 @@ Profile (1)
         0.00 : X coordinate [m]
         0.00 : Y coordinate [m]
      -100.00 : Phreatic level [m]
-      -19.00 : Pile tip level [m]
+        0.80 : Pile tip level [m]
         1.00 : Overconsolidation ratio of bearing layer [m]
       -19.00 : Top of positive skin friction zone [m]
         0.00 : Bottom of negative skin friction zone [m]
@@ -802,24 +773,31 @@ Profile (1)
 1 : Excavation width infinite = TRUE
 1 : Excavation length infinite = TRUE
         0.00 : Distance edge pile to excavation boundary [m]
-    3 : Number of layers
+    4 : Number of layers
 Layer (1)
-   19 : Material = Material (1)
+   15 : Material = Material (1)
        0.000 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (2)
-   20 : Material = Material (2)
+   16 : Material = Material (2)
       -0.700 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         0.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (3)
-   21 : Material = Material (3)
+   17 : Material = Material (3)
       -1.100 : Top level [m]
+        0.00 : Excess pore pressure at top [kN/m3]
+        0.00 : Excess pore pressure at bottom [kN/m3]
+        0.00 : OCR value [-]
+        0.00 : Reduction of cone resistance [%]
+Layer (4)
+   17 : Material = Material (3)
+     -10.000 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         0.00 : OCR value [-]
@@ -835,14 +813,15 @@ Layer (3)
 0 : pile type shown in main graph
     1 = number of items
 Rect 0x0
- 0 : Pile type = Prefabricated concrete pile
+ 0 : Pile type = B1-Prefabricated concrete pile
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.000 : Width [m)
-       0.000 : Length [m)
+       0.000 : Width [m]
+       0.000 : Length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
@@ -870,17 +849,17 @@ Cast in Place
 [LOADS]
     1 = number of items
 Load (1)
-    90.00 : Angle in horizontal area [deg]
-     1.25 : Initial excentricity to foundation level [m]; lim. state EQU/STR/GEO
-     1.25 : Initial excentricity to foundation level [m]; serv. lim. state
-       4.00 : Design load parallel to foundation level [kN]; lim. state EQU/STR/GEO
-       2.67 : Design load parallel to foundation level [kN]; serv. lim. state
-     0.00 : Initial excentricity to latitudal axis [m]; lim. state EQU/STR/GEO
-     0.00 : Initial excentricity to latitudal axis [m]; serv. lim. state
-     0.00 : Initial excentricity to longitudal axis [m]; lim. state EQU/STR/GEO
-     0.00 : Initial excentricity to longitudal axis [m]; serv. lim. state
-      20.00 : Design load perpendicular to foundation area [kN]; lim. state EQU/STR/GEO
-      16.67 : Design load perpendicular to foundation area [kN]; serv. lim. state
+90.00 : Angle in horizontal area [deg]
+1.25 : Initial eccentricity to foundation level [m]; lim. state EQU/STR/GEO
+1.25 : Initial eccentricity to foundation level [m]; serv. lim. state
+4.00 : Design load parallel to foundation level [kN]; lim. state EQU/STR/GEO
+2.67 : Design load parallel to foundation level [kN]; serv. lim. state
+0.00 : Initial eccentricity along latitudinal axis [m]; lim. state EQU/STR/GEO
+0.00 : Initial eccentricity along latitudinal axis [m]; serv. lim. state
+0.00 : Initial eccentricity along longitudinal axis [m]; lim. state EQU/STR/GEO
+0.00 : Initial eccentricity along longitudinal axis [m]; serv. lim. state
+20.00 : Design load perpendicular to foundation area [kN]; lim. state EQU/STR/GEO
+16.67 : Design load perpendicular to foundation area [kN]; serv. lim. state
 [END OF LOADS]
 [POSITIONS - BEARING PILES]
 [TABLE]
@@ -929,7 +908,6 @@ PileName
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE
@@ -964,7 +942,7 @@ PileName
 0 : Use Almere rules = FALSE
 0 : Use Extra Almere rules = FALSE
 0 : Eea;gem overruled = FALSE
-50000.00 : Eea;gem user defined
+    50000.00 : Eea;gem user defined
 0 : Gamma s for NEN overruled = FALSE
         1.00 : Factor Gamma s for NEN user defined
 [END OF CALCULATION OPTIONS]

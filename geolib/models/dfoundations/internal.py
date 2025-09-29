@@ -36,37 +36,40 @@ REQ_RUN_LINES = 6
 
 
 class PileType(IntEnum):
-    PREFABRICATED_CONCRETE_PILE = 0
-    CLOSED_ENDED_STEEL_PIPE_PILE = 1
-    DRIVEN_CAST_IN_PLACE_PILE_TUBE_BACK_BY_DRIVING = 2
-    DRIVEN_CAST_IN_PLACE_PILE_TUBE_BACK_BY_VIBRATION = 3
-    TAPERED_TIMBER_PILE = 4
-    STRAIGHT_TIMBER_PILE = 5
-    SCREW_PILE_CAST_IN_PLACE_LOST_TIP = 6
-    SCREW_PILE_CAST_IN_PLACE_WITH_GROUT = 7
-    PREFABRICATED_SCREW_PILE_WITH_GROUT = 8
-    PREFABRICATED_SCREW_PILE_WITHOUT_GROUT = 9
-    STEEL_SECTION = 10
-    CONTINUOUS_FLIGHT_AUGER_PILE = 11
-    BORED_PILE_DRILLING_MUD_UNCASED_BOREHOLE = 12
-    BORED_PILE_SHELLING_TECH_PERMANENT_CASING = 13
-    OPEN_ENDED_STEEL_PIPE_PILE = 14
-    MV_PILE = 15
-    MICRO_PILE_DOUBLE_PIPE_EXTORTED = 16
-    MICRO_PILE_DOUBLE_PIPE_NOT_EXTORTED = 17
-    MICRO_PILE_SINGLE_PIPE_EXTORTED = 18
-    MICRO_PILE_SINGLE_PIPE_NOT_EXTORTED = 19
-    MICRO_PILE_ANCHOR_BORED = 20
-    MICRO_PILE_ANCHOR_SCREWED = 21
-    MICRO_PILE_VIBRATED = 22
-    GROUTED_STEEL_PROFILE_WITH_FOOTPLATE = 23
-    GROUTED_STEEL_PIPE_PILE_SCREWED = 24
-    USER_DEFINED_VIBRATING = 25
-    USER_DEFINED_LOW_VIBRATING = 26
-    USER_DEFINED = 27
+    B1_PREFABRICATED_CONCRETE_PILE = 0
+    S1_CLOSED_ENDED_STEEL_PIPE_PILE = 1
+    B2_DRIVEN_CAST_IN_PLACE_PILE_TUBE_BACK_BY_DRIVING = 2
+    B3_DRIVEN_CAST_IN_PLACE_PILE_TUBE_BACK_BY_VIBRATION = 3
+    H2_TAPERED_TIMBER_PILE = 4
+    H1_STRAIGHT_TIMBER_PILE = 5
+    B4_SCREW_PILE_CAST_IN_PLACE_LOST_TIP = 6
+    B4_SCREW_PILE_CAST_IN_PLACE_WITH_GROUT = 7
+    Old_PREFABRICATED_SCREW_PILE_WITH_GROUT = 8
+    S5_PREFABRICATED_SCREW_PILE_WITHOUT_GROUT = 9
+    S2_STEEL_SECTION = 10
+    B7_CONTINUOUS_FLIGHT_AUGER_PILE = 11
+    B8_BORED_PILE_DRILLING_MUD_UNCASED_BOREHOLE = 12
+    S7_BORED_PILE_SHELLING_TECH_PERMANENT_CASING = 13
+    S3_OPEN_ENDED_STEEL_PIPE_PILE = 14
+    S4_MV_PILE = 15
+    MA2_MICRO_PILE_DOUBLE_PIPE_EXTORTED = 16
+    MA1_MICRO_PILE_DOUBLE_PIPE_NOT_EXTORTED = 17
+    MB2_MICRO_PILE_SINGLE_PIPE_EXTORTED = 18
+    MB1_MICRO_PILE_SINGLE_PIPE_NOT_EXTORTED = 19
+    MC_MICRO_PILE_ANCHOR_BORED = 20
+    MD_MICRO_PILE_ANCHOR_SCREWED = 21
+    ME_MICRO_PILE_VIBRATED = 22
+    S4_GROUTED_STEEL_PROFILE_WITH_FOOTPLATE = 23
+    S6_GROUTED_STEEL_PIPE_PILE_SCREWED = 24
+    B5_SCREW_PILE_WITH_AUGER = 25
+    B6_ROUND_SCREW_PILE_WITH_GROUT = 26
+    MF_ANY_OTHER_MICRO_PILE = 27
+    USER_DEFINED_VIBRATING = 28
+    USER_DEFINED_LOW_VIBRATING = 29
+    USER_DEFINED = 30
 
 
-class PileTypeForClayLoamPeat(IntEnum):
+class PileTypeForClaySiltPeat(IntEnum):
     STANDARD = 0
     USER_DEFINED = 1
 
@@ -84,6 +87,14 @@ class PileMaterial(IntEnum):
     USER_DEFINED = 3
 
 
+class InstallationMethod(IntEnum):
+    AUTOMATIC = 0
+    DRIVING = 1
+    VIBRATING = 2
+    PRESSING = 3
+    JETTING = 4
+
+
 class BearingPileSlipLayer(IntEnum):
     NONE = 0
     SYNTHETIC = 1
@@ -91,6 +102,9 @@ class BearingPileSlipLayer(IntEnum):
     BITUMEN = 3
     USER_DEFINED = 4
 
+class OpenPipePileCalculationMethod(IntEnum):
+    OPEN_PIPE_PILE = 0
+    STANDARD_METHOD = 1
 
 class PileShape(IntEnum):
     ROUND_PILE = 0
@@ -105,20 +119,23 @@ class PileShape(IntEnum):
     ROUND_OPEN_ENDED_HOLLOW_PILE = 9
     H_SHAPED_PROFILE = 10
     USER_DEFINED = 11
+    ROUND_PILE_WITH_SCREW_SHAPED_SHAFT = 12
+    ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP = 13
 
 
 class TypesBearingPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
-    pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
+    pile_type: PileType = PileType.B1_PREFABRICATED_CONCRETE_PILE
     pile_type_for_execution_factor_sand_gravel: PileType | None = None
     execution_factor_sand_gravel: Annotated[float, Field(ge=0, le=9)] | None = None
-    pile_type_for_execution_factor_clay_loam_peat: PileTypeForClayLoamPeat | None = None
-    execution_factor_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None
+    pile_type_for_execution_factor_clay_silt_peat: PileTypeForClaySiltPeat | None = None
+    execution_factor_clay_silt_peat: Annotated[float, Field(ge=0, le=9)] | None = None
     pile_type_for_pile_class_factor: PileType | None = None
     pile_class_factor: Annotated[float, Field(ge=0, le=9)] | None = None
     pile_type_for_load_settlement_curve: LoadSettlementCurve | None = None
     material: PileMaterial | None = None
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)] | None = None
+    installation_method: InstallationMethod = InstallationMethod.DRIVING
     slip_layer: BearingPileSlipLayer = BearingPileSlipLayer.NONE
     characteristic_adhesion: Annotated[float, Field(ge=0, le=1000)] | None = None
     shape: PileShape = PileShape.RECTANGULAR_PILE
@@ -139,11 +156,12 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
     width_h_shape: Annotated[float, Field(ge=0, le=100)] | None = None
     thickness_web: Annotated[float, Field(ge=0, le=100)] | None = None
     thickness_flange: Annotated[float, Field(ge=0, le=100)] | None = None
+    open_pipe_pile_calculation_method: OpenPipePileCalculationMethod = OpenPipePileCalculationMethod.OPEN_PIPE_PILE
     overrule_pile_tip_shape_factor: Bool = Bool.FALSE
     pile_tip_shape_factor: Annotated[float, Field(ge=0, le=10)] | None = None
     overrule_pile_tip_cross_section_factors: Bool = Bool.FALSE
     pile_tip_cross_section_factor: Annotated[float, Field(ge=0, le=10)] | None = None
-    use_pre_2016: Bool = Bool.FALSE
+    use_pre_2025: Bool = Bool.FALSE
     user_defined_pile_type_as_prefab: Bool = Bool.FALSE
     use_manual_reduction_for_qc: Bool = Bool.FALSE
     reduction_percentage_qc: Annotated[float, Field(ge=25, le=100)] = 25
@@ -152,11 +170,13 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
 
 class TypesTensionPiles(DSeriesNoParseSubStructure):
     pile_name: str = ""
-    pile_type: PileType = PileType.PREFABRICATED_CONCRETE_PILE
+    pile_type: PileType = PileType.B1_PREFABRICATED_CONCRETE_PILE
     pile_type_for_execution_factor_sand_gravel: PileType | None = None
+    use_pre_2025: Bool = Bool.FALSE
+    installation_method: InstallationMethod = InstallationMethod.DRIVING
     execution_factor_sand_gravel: Annotated[float, Field(ge=0, le=9)] | None = None
-    pile_type_for_execution_factor_clay_loam_peat: PileTypeForClayLoamPeat | None = None
-    execution_factor_clay_loam_peat: Annotated[float, Field(ge=0, le=9)] | None = None
+    pile_type_for_execution_factor_clay_silt_peat: PileTypeForClaySiltPeat | None = None
+    execution_factor_clay_silt_peat: Annotated[float, Field(ge=0, le=9)] | None = None
     material: PileMaterial | None = None
     unit_weight_pile: Annotated[float, Field(ge=0, le=1000)] | None = None
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)] | None = None
@@ -216,10 +236,10 @@ class Layer(DSeriesTreeStructure):
     excess_pore_pressure_top: float = 0.0  # [kN/m3]
     excess_pore_pressure_bottom: float = 0.0  # [kN/m3]
     ocr_value: float = 1.0  # [-]
-    reduction_core_resistance: float = 0.0  # [%]
+    reduction_cone_resistance: float = 0.0  # [%]
 
 
-class ReductionCoreResistanceEnum(IntEnum):
+class ReductionConeResistanceEnum(IntEnum):
     SAFE = 0
     BEGEMANN = 1
     MANUAL = 2
@@ -241,8 +261,8 @@ class Profile(DSeriesTreeStructure):
     top_tension_zone: float = 0.0
 
     # Excavation part
-    reduction_of_core_resistance: ReductionCoreResistanceEnum = (
-        ReductionCoreResistanceEnum.SAFE
+    reduction_of_cone_resistance: ReductionConeResistanceEnum = (
+        ReductionConeResistanceEnum.SAFE
     )
     excavation_level: float
     excavation_width_infinite: Bool = Bool.TRUE
@@ -456,7 +476,6 @@ class CalculationOptions(DSeriesNoParseSubStructure):
     ea_gem: Annotated[float, Field(ge=1)] | None = 100000
 
     # Model options combined
-    is_suppress_qc_reduction: Bool = Bool.FALSE
     is_overrule_excavation: Bool = Bool.FALSE
     use_pile_group: Bool = Bool.TRUE
     is_write_intermediate_results: Bool = Bool.FALSE
@@ -524,8 +543,14 @@ class ModelTypeEnum(IntEnum):
     SHALLOW_FOUNDATIONS = 2
 
 
+"""Note that CuValues is only relevant for Shallow Foundations, which is not supported."""
+class CuValuesEnum(IntEnum):
+    CU_VALUES_BASED_ON_CPTS = 0
+    CU_VALUES_MANUAL = 1
+
 class ModelType(DFoundationsInlineProperties):
     model: ModelTypeEnum = ModelTypeEnum.BEARING_PILES
+    cu_values: CuValuesEnum = CuValuesEnum.CU_VALUES_BASED_ON_CPTS
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -580,8 +605,8 @@ class PreliminaryDesign(DSeriesNoParseSubStructure):
 
 
 class Version(DSerieVersion):
-    soil: int = 1010
-    d__foundations: int = 1024
+    soil: int = 1013
+    d__foundations: int = 1033
 
 
 class VersionExternal(DSeriesInlineMappedProperties):
@@ -773,7 +798,7 @@ class DFoundationsDumpfileOutputStructure(DSeriesStructure):
     calculation_parameters_tension_piles: str | None = None
     verification_results_tp: DFoundationsVerificationResults | None = None
 
-    footnote_warnings: str | None = None
+    pile_type_dimensions_warnings: str | None = None
     preliminary_design_results: str | None = None
     verification_results_sf: str | None = None
     verification_results_tp_1b2: str | None = None

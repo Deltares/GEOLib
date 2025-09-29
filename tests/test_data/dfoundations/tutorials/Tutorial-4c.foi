@@ -1,24 +1,25 @@
 INPUT FILE FOR D-FOUNDATIONS
 ==============================================================================
-COMPANY    : Stichting Deltares 
+COMPANY    :    
 
-DATE       : 4/7/2023
-TIME       : 2:03:29 PM
-FILENAME   : D:\pvcsprojects\applications\DFoundations\trunk\release\Projects\Examples\Tutorial-4c.foi
-CREATED BY : D-Foundations version 23.1.1.40340
+DATE       : 21-08-2025
+TIME       : 17:21:51
+FILENAME   : C:\DelphiProjects\DSerie\applications\DFoundations\trunk\data\Examples\Tutorial-4c.foi
+CREATED BY : D-Foundations version 25.1.0.2830
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
-Soil=1010
-D-Foundations=1024
+Soil=1013
+D-Foundations=1033
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSFoundationCalc.dll=23.1.1.40340
+DGSFoundationCalc.dll=25.1.0.2830
 [END OF VERSION EXTERNALS]
 
 [MODEL]
 0 : Model = Bearing Piles (EC7-NL)
+0 : CuValues = Based on CPTs
 [END OF MODEL]
 [SOIL COLLECTION]
    27 = number of items
@@ -28,18 +29,35 @@ SoilColor=10871201
 SoilSoilType=3
 SoilGamDry=19.00
 SoilGamWet=19.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=25.00
+SoilCohesion=13.00
 SoilPhi=17.50
-SoilCu=100.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0060000
-SoilCcIndex=0.1680000
+SoilCa=0.0037000
+SoilCRatio=0.0920000
+[END OF SOIL]
+[SOIL]
+Clay, clean, soft
+SoilColor=13824161
+SoilSoilType=3
+SoilGamDry=17.00
+SoilGamWet=17.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=5.00
+SoilPhi=17.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0061000
+SoilCRatio=0.1530000
 [END OF SOIL]
 [SOIL]
 Clay, clean, stiff
@@ -47,75 +65,17 @@ SoilColor=11526561
 SoilSoilType=3
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=30.00
+SoilCohesion=15.00
 SoilPhi=25.00
-SoilCu=200.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0040000
-SoilCcIndex=0.1260000
-[END OF SOIL]
-[SOIL]
-Clay, clean, weak
-SoilColor=12181921
-SoilSoilType=3
-SoilGamDry=17.00
-SoilGamWet=17.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=10.00
-SoilPhi=17.50
-SoilCu=50.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0130000
-SoilCcIndex=0.3620000
-[END OF SOIL]
-[SOIL]
-Clay, organ, moderate
-SoilColor=12841121
-SoilSoilType=3
-SoilGamDry=16.00
-SoilGamWet=16.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=15.00
-SoilCu=30.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0120000
-SoilCcIndex=0.4200000
-[END OF SOIL]
-[SOIL]
-Clay, organ, weak
-SoilColor=14151841
-SoilSoilType=3
-SoilGamDry=15.00
-SoilGamWet=15.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=15.00
-SoilCu=25.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0150000
-SoilCcIndex=0.7600000
+SoilCa=0.0031000
+SoilCRatio=0.0770000
 [END OF SOIL]
 [SOIL]
 Clay, sl san, moderate
@@ -123,18 +83,35 @@ SoilColor=11527841
 SoilSoilType=3
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=25.00
+SoilCohesion=13.00
 SoilPhi=22.50
-SoilCu=120.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0050000
-SoilCcIndex=0.1260000
+SoilCa=0.0031000
+SoilCRatio=0.0770000
+[END OF SOIL]
+[SOIL]
+Clay, sl san, soft
+SoilColor=12510881
+SoilSoilType=3
+SoilGamDry=18.00
+SoilGamWet=18.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=5.00
+SoilPhi=22.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0046000
+SoilCRatio=0.1150000
 [END OF SOIL]
 [SOIL]
 Clay, sl san, stiff
@@ -142,379 +119,377 @@ SoilColor=12183201
 SoilSoilType=3
 SoilGamDry=21.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=30.00
+SoilCohesion=15.00
 SoilPhi=27.50
-SoilCu=170.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0030000
-SoilCcIndex=0.0690000
+SoilCa=0.0018000
+SoilCRatio=0.0460000
 [END OF SOIL]
 [SOIL]
-Clay, sl san, weak
-SoilColor=12838561
+Clay, slightly organic
+SoilColor=15791521
 SoilSoilType=3
-SoilGamDry=18.00
-SoilGamWet=18.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilGamDry=15.00
+SoilGamWet=15.00
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=10.00
-SoilPhi=22.50
-SoilCu=80.00
+SoilCohesion=1.00
+SoilPhi=15.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0090000
-SoilCcIndex=0.2370000
+SoilCa=0.0115000
+SoilCRatio=0.2310000
 [END OF SOIL]
 [SOIL]
-Clay, ve san, stiff
-SoilColor=12839841
+Clay, very organic
+SoilColor=16448161
+SoilSoilType=3
+SoilGamDry=16.00
+SoilGamWet=16.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=15.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0077000
+SoilCRatio=0.1530000
+[END OF SOIL]
+[SOIL]
+Clay, very sandy
+SoilColor=14478241
 SoilSoilType=3
 SoilGamDry=20.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
+SoilCohesion=1.00
 SoilPhi=32.50
-SoilCu=10.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0040000
-SoilCcIndex=0.0270000
+SoilCa=0.0007000
+SoilCRatio=0.0160000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, loose
+Gravel, none, dense
+SoilColor=7892605
+SoilSoilType=0
+SoilGamDry=20.00
+SoilGamWet=22.00
+SoilDiameterD50=6.30000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=40.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0016000
+[END OF SOIL]
+[SOIL]
+Gravel, none, loose
 SoilColor=7237245
 SoilSoilType=0
 SoilGamDry=18.00
 SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=35.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0040000
+SoilCRatio=0.0023000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, moderate
-SoilColor=7892605
+Gravel, none, medium
+SoilColor=7564925
 SoilSoilType=0
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=37.50
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0030000
+SoilCRatio=0.0019000
 [END OF SOIL]
 [SOIL]
-Gravel, sl sil, stiff
-SoilColor=8547965
+Gravel, silty, dense
+SoilColor=8549245
 SoilSoilType=0
-SoilGamDry=20.00
-SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilGamDry=21.00
+SoilGamWet=22.50
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=40.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0020000
+SoilCRatio=0.0015000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, loose
+Gravel, silty, loose
 SoilColor=7893885
 SoilSoilType=0
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=32.50
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0060000
+SoilCRatio=0.0038000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, moderate
-SoilColor=8549245
+Gravel, silty, medium
+SoilColor=8221565
 SoilSoilType=0
 SoilGamDry=20.00
 SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+SoilDiameterD50=6.30000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=35.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0030000
+SoilCRatio=0.0023000
 [END OF SOIL]
 [SOIL]
-Gravel, ve sil, stiff
-SoilColor=9204605
-SoilSoilType=0
-SoilGamDry=21.00
-SoilGamWet=22.50
-SoilInitialVoidRatio=0.180505
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=40.50
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0020000
-[END OF SOIL]
-[SOIL]
-Loam, sl san, moderate
-SoilColor=11506812
-SoilSoilType=2
-SoilGamDry=21.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=5.00
-SoilPhi=32.50
-SoilCu=200.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0020000
-SoilCcIndex=0.0490000
-[END OF SOIL]
-[SOIL]
-Loam, sl san, stiff
-SoilColor=12162172
-SoilSoilType=2
-SoilGamDry=22.00
-SoilGamWet=22.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=7.50
-SoilPhi=35.00
-SoilCu=300.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0010000
-SoilCcIndex=0.0300000
-[END OF SOIL]
-[SOIL]
-Loam, sl san, weak
-SoilColor=12817532
-SoilSoilType=2
-SoilGamDry=20.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=30.00
-SoilCu=100.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0040000
-SoilCcIndex=0.0840000
-[END OF SOIL]
-[SOIL]
-Loam, ve san, stiff
-SoilColor=12818812
-SoilSoilType=2
-SoilGamDry=20.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=2.00
-SoilPhi=35.00
-SoilCu=100.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0020000
-SoilCcIndex=0.0550000
-[END OF SOIL]
-[SOIL]
-Peat, mod pl, moderate
-SoilColor=6045349
+Peat, none, moderate
+SoilColor=3087269
 SoilSoilType=4
 SoilGamDry=13.00
 SoilGamWet=13.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=10.00
-SoilPhi=15.00
-SoilCu=30.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0160000
-SoilCcIndex=0.9000000
-[END OF SOIL]
-[SOIL]
-Peat, not pl, weak
-SoilColor=6699429
-SoilSoilType=4
-SoilGamDry=12.00
-SoilGamWet=12.00
-SoilInitialVoidRatio=0.001001
-SoilDiameterD50=0.20000
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=5.00
 SoilPhi=15.00
-SoilCu=20.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0230000
-SoilCcIndex=1.8100000
+SoilCa=0.0120000
+SoilCRatio=0.2300000
 [END OF SOIL]
 [SOIL]
-Sand, clean, loose
-SoilColor=1368559
-SoilSoilType=1
-SoilGamDry=18.00
-SoilGamWet=20.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
+Peat, none, weak
+SoilColor=2759589
+SoilSoilType=4
+SoilGamDry=12.00
+SoilGamWet=12.00
+SoilDiameterD50=0.00001
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=32.50
-SoilCu=0.00
+SoilCohesion=2.50
+SoilPhi=15.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0060000
+SoilCa=0.0150000
+SoilCRatio=0.3060000
 [END OF SOIL]
 [SOIL]
-Sand, clean, moderate
-SoilColor=2023919
-SoilSoilType=1
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
-SoilDiameterD50=0.20000
-SoilMinVoidRatio=0.400
-SoilMaxVoidRatio=0.800
-SoilCohesion=0.00
-SoilPhi=35.00
-SoilCu=0.00
-SoilMaxConeResistType=0
-SoilMaxConeResist=0.00
-SoilUseTension=1
-SoilCa=0.0000000
-SoilCcIndex=0.0030000
-[END OF SOIL]
-[SOIL]
-Sand, clean, stiff
-SoilColor=2679279
+Sand, none, dense
+SoilColor=710639
 SoilSoilType=1
 SoilGamDry=20.00
 SoilGamWet=22.00
-SoilInitialVoidRatio=0.256082
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=40.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0020000
+SoilCRatio=0.0015000
 [END OF SOIL]
 [SOIL]
-Sand, sl sil, moderate
-SoilColor=710639
+Sand, none, loose
+SoilColor=55279
 SoilSoilType=1
-SoilGamDry=19.00
-SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
+SoilGamDry=18.00
+SoilGamWet=20.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=32.50
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0050000
+SoilCRatio=0.0038000
 [END OF SOIL]
 [SOIL]
-Sand, ve sil, loose
-SoilColor=711919
+Sand, none, medium
+SoilColor=382959
 SoilSoilType=1
 SoilGamDry=19.00
 SoilGamWet=21.00
-SoilInitialVoidRatio=0.256082
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=35.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0023000
+[END OF SOIL]
+[SOIL]
+Sand, sil/cla, qc=12
+SoilColor=2679279
+SoilSoilType=1
+SoilGamDry=19.00
+SoilGamWet=21.00
+SoilDiameterD50=0.20000
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=0.00
+SoilPhi=32.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0000000
+SoilCRatio=0.0035000
+[END OF SOIL]
+[SOIL]
+Sand, sil/cla, qc=8
+SoilColor=2351599
+SoilSoilType=1
+SoilGamDry=19.00
+SoilGamWet=21.00
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=30.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=0.0000000
-SoilCcIndex=0.0090000
+SoilCRatio=0.0058000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, moderate
+SoilColor=13145212
+SoilSoilType=2
+SoilGamDry=21.00
+SoilGamWet=21.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=2.50
+SoilPhi=32.50
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0013000
+SoilCRatio=0.0330000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, soft
+SoilColor=12489852
+SoilSoilType=2
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=30.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0020000
+SoilCRatio=0.0510000
+[END OF SOIL]
+[SOIL]
+Silt, sl san, stiff
+SoilColor=13472892
+SoilSoilType=2
+SoilGamDry=22.00
+SoilGamWet=22.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=3.80
+SoilPhi=35.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0009000
+SoilCRatio=0.0230000
+[END OF SOIL]
+[SOIL]
+Silt, very sandy
+SoilColor=14457212
+SoilSoilType=2
+SoilGamDry=20.00
+SoilGamWet=20.00
+SoilDiameterD50=0.00001
+SoilMinVoidRatio=0.400
+SoilMaxVoidRatio=0.800
+SoilCohesion=1.00
+SoilPhi=35.00
+SoilCu=0.01
+SoilMaxConeResistType=0
+SoilMaxConeResist=0.00
+SoilUseTension=1
+SoilCa=0.0013000
+SoilCRatio=0.0330000
 [END OF SOIL]
 [SOIL]
 Undetermined
@@ -522,18 +497,17 @@ SoilColor=16777215
 SoilSoilType=2
 SoilGamDry=0.01
 SoilGamWet=0.02
-SoilInitialVoidRatio=0.000000
 SoilDiameterD50=0.20000
 SoilMinVoidRatio=0.400
 SoilMaxVoidRatio=0.800
 SoilCohesion=0.00
 SoilPhi=0.00
-SoilCu=0.00
+SoilCu=0.01
 SoilMaxConeResistType=0
 SoilMaxConeResist=0.00
 SoilUseTension=1
 SoilCa=1.0000000
-SoilCcIndex=1.0000000
+SoilCRatio=1.0000000
 [END OF SOIL]
 [END OF SOIL COLLECTION]
 
@@ -6823,658 +6797,658 @@ GEFFrict
         0.00 : Distance edge pile to excavation boundary [m]
    94 : Number of layers
 Layer (1)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
        1.300 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (2)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -0.205 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (3)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -0.305 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (4)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -0.355 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (5)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -0.455 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (6)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -0.605 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (7)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -0.755 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (8)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -0.805 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (9)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -0.855 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (10)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -0.905 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (11)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -0.955 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (12)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
       -1.005 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (13)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -1.110 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (14)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -1.160 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (15)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -1.410 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (16)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -1.460 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (17)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -1.510 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (18)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -1.610 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (19)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -1.660 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (20)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -1.810 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (21)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -1.910 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (22)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -1.960 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (23)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
       -2.160 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (24)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
       -2.260 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (25)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
       -2.310 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (26)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -2.960 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (27)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
       -3.110 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (28)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
       -3.160 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (29)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
       -3.360 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (30)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -3.460 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (31)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -3.510 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (32)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -3.610 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (33)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
       -3.660 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (34)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
       -3.810 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (35)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
       -3.860 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (36)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -3.910 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (37)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -3.960 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (38)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -4.010 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (39)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -4.210 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (40)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -4.760 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (41)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -5.510 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (42)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -6.060 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (43)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -7.310 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (44)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -7.925 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (45)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -7.980 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (46)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -8.234 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (47)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -8.434 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (48)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -9.684 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (49)
-   19 : Material = Peat, mod pl, moderate
+   15 : Material = Peat, none, moderate
      -10.184 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (50)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
      -10.584 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (51)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
      -10.684 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (52)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
      -10.884 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (53)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
      -11.134 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (54)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
      -11.284 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (55)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
      -11.334 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (56)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
      -11.384 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (57)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
      -11.484 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (58)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
      -11.634 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (59)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
      -11.934 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (60)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
      -12.084 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (61)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
      -12.284 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (62)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -12.584 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (63)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -12.734 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (64)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -12.988 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (65)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -13.038 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (66)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -13.238 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (67)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -13.438 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (68)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -13.538 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (69)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -13.688 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (70)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -13.738 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (71)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -14.438 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (72)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -15.992 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (73)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -16.492 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (74)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -16.642 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (75)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -16.692 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (76)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -16.942 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (77)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -17.442 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (78)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -17.942 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (79)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -18.596 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (80)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -19.096 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (81)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -19.696 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (82)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -19.996 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (83)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -20.500 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (84)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -21.150 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (85)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -21.350 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (86)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -21.700 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (87)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -22.254 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (88)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -22.354 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (89)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -23.204 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (90)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -23.408 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (91)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -23.458 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (92)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -23.608 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (93)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -23.658 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (94)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -23.708 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
@@ -7500,651 +7474,651 @@ Layer (94)
         0.00 : Distance edge pile to excavation boundary [m]
    93 : Number of layers
 Layer (1)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
        1.000 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (2)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
        0.995 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (3)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
        0.875 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (4)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
        0.755 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (5)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
        0.695 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (6)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
        0.635 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (7)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -0.685 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (8)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -1.225 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (9)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -1.585 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (10)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -1.645 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (11)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -1.885 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (12)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -1.945 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (13)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -2.005 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (14)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -2.185 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (15)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -2.245 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (16)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -2.305 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (17)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -3.265 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (18)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -3.445 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (19)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -3.684 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (20)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -3.745 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (21)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -3.984 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (22)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -4.044 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (23)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -4.104 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (24)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -4.224 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (25)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -4.285 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (26)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -4.344 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (27)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -4.404 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (28)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -4.524 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (29)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -4.584 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (30)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -4.764 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (31)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -4.884 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (32)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -5.064 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (33)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -5.184 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (34)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -5.423 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (35)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -5.484 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (36)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -5.663 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (37)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
       -5.723 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (38)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
       -5.903 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (39)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
       -5.963 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (40)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -6.263 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (41)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -6.323 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (42)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -6.383 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (43)
-   19 : Material = Peat, mod pl, moderate
+   15 : Material = Peat, none, moderate
       -7.162 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (44)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -8.060 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (45)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -8.300 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (46)
-    2 : Material = Clay, clean, weak
+    1 : Material = Clay, clean, soft
       -8.659 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (47)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
       -9.557 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (48)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -9.676 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (49)
-   19 : Material = Peat, mod pl, moderate
+   15 : Material = Peat, none, moderate
       -9.796 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (50)
-    4 : Material = Clay, organ, weak
+    6 : Material = Clay, slightly organic
       -9.915 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (51)
-    3 : Material = Clay, organ, moderate
+    7 : Material = Clay, very organic
      -10.015 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (52)
-    1 : Material = Clay, clean, stiff
+    2 : Material = Clay, clean, stiff
      -10.065 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (53)
-    5 : Material = Clay, sl san, moderate
+    3 : Material = Clay, sl san, moderate
      -10.115 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (54)
-    8 : Material = Clay, ve san, stiff
+    8 : Material = Clay, very sandy
      -10.165 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (55)
-   17 : Material = Loam, sl san, weak
+   23 : Material = Silt, sl san, soft
      -10.225 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (56)
-   18 : Material = Loam, ve san, stiff
+   25 : Material = Silt, very sandy
      -10.525 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (57)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -11.065 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (58)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -11.485 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (59)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -11.605 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (60)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -11.785 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (61)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -11.905 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (62)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -12.325 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (63)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -12.863 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (64)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -13.161 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (65)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -13.519 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (66)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -13.757 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (67)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -14.105 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (68)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -14.265 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (69)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -14.925 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (70)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -15.105 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (71)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -15.225 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (72)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -16.416 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (73)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -16.645 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (74)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -17.065 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (75)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -18.305 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (76)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -18.785 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (77)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -19.202 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (78)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -19.320 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (79)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -19.616 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (80)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -19.905 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (81)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -20.560 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (82)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -20.796 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (83)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -21.145 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (84)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -21.265 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (85)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -21.797 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (86)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -21.915 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (87)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -22.025 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (88)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -22.265 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (89)
-   25 : Material = Sand, ve sil, loose
+   21 : Material = Sand, sil/cla, qc=8
      -22.796 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (90)
-   24 : Material = Sand, sl sil, moderate
+   20 : Material = Sand, sil/cla, qc=12
      -23.025 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (91)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -23.265 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (92)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -23.735 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
         1.00 : OCR value [-]
         0.00 : Reduction of cone resistance [%]
 Layer (93)
-   23 : Material = Sand, clean, stiff
+   17 : Material = Sand, none, dense
      -23.785 : Top level [m]
         0.00 : Excess pore pressure at top [kN/m3]
         0.00 : Excess pore pressure at bottom [kN/m3]
@@ -8161,27 +8135,29 @@ Layer (93)
 1 : pile type shown in main graph
     2 = number of items
 Rect 400x400
- 0 : Pile type = Prefabricated concrete pile
+ 0 : Pile type = B1-Prefabricated concrete pile
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.400 : Width [m)
-       0.400 : Length [m)
+       0.400 : Width [m]
+       0.400 : Length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
  0 : Program defined name
 Rect 500x500
- 0 : Pile type = Prefabricated concrete pile
+ 0 : Pile type = B1-Prefabricated concrete pile
+ 1 : Installation method = Driving
  0 : Slip Layer = None
  1 : Shape = Rectangular pile
-       0.500 : Width [m)
-       0.500 : Length [m)
+       0.500 : Width [m]
+       0.500 : Length [m]
 0 : Factor beta overruled = FALSE
 0 : Factor s overruled = FALSE
-0 : Use Pre 2016 Alpha P Factor = FALSE
+0 : Use pre 2025 alpha factors = FALSE
 1 : User Defined piletype as Overig = TRUE
 0 : Use manual reduction for qc;III = FALSE
  25.00 : Reduction percentage qc;III
@@ -8251,7 +8227,6 @@ DataCount=0
        12.00 : Qc;z;a Low user defined
 0 : Qc;z;a High overruled = FALSE
        15.00 : Qc;z;a High user defined
-0 : Suppress qcIII reduction = FALSE
 0 : Overrule excavation = FALSE
 1 : Use pile group = TRUE
 1 : Write intermediate results = TRUE
@@ -8286,7 +8261,7 @@ DataCount=0
 0 : Use Almere rules = FALSE
 0 : Use Extra Almere rules = FALSE
 0 : Eea;gem overruled = FALSE
-50000.00 : Eea;gem user defined
+    50000.00 : Eea;gem user defined
 0 : Gamma s for NEN overruled = FALSE
         1.00 : Factor Gamma s for NEN user defined
 [END OF CALCULATION OPTIONS]

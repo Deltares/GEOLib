@@ -22,7 +22,7 @@ In the *geolib.env* file, you can set the paths to the console applications, for
     DSTABILITY_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Stability 2025.01\\bin\\D-Stability Console.exe"
     DGEOFLOW_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Geo Flow 2025.01\\bin\\D-GeoFlow Console.exe"
     DSHEETPILING_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Sheet Piling 23.1.1\\DSheetPiling.exe"
-    DFOUNDATIONS_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Foundations 23.1.1\\DFoundations.exe"
+    DFOUNDATIONS_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Foundations 25.1.1\\DFoundations.exe"
     DSETTLEMENT_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Settlement 23.1.1\\DSettlement.exe"
 
 Settings the console path using the common CONSOLE_FOLDER variable
@@ -124,7 +124,7 @@ GEOLib only supports the files used by the D-Serie / D-GEO Suite consoles and th
 At the moment that version number is:
 
 * D-Settlement **23.2**
-* D-Foundations **23.1**
+* D-Foundations **25.1**
 * D-SheetPiling **24.1**
 * D-Stability **2025.01**
 * D-Geo Flow **2025.01**

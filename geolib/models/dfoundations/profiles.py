@@ -7,7 +7,7 @@ from geolib.models.internal import Bool
 from .internal import CPT as InternalCPT
 from .internal import ExcavationType, InterpretationType, Layer
 from .internal import Profile as InternalProfile
-from .internal import ReductionCoreResistanceEnum, TimeOrderType
+from .internal import ReductionConeResistanceEnum, TimeOrderType
 
 
 class CPT(BaseDataClass):
@@ -60,8 +60,8 @@ class Excavation(BaseDataClass):
     Note that using an excavation level will
     override all previous set excavation levels in the same model."""
 
-    reduction_of_core_resistance: ReductionCoreResistanceEnum = (
-        ReductionCoreResistanceEnum.SAFE
+    reduction_of_cone_resistance: ReductionConeResistanceEnum = (
+        ReductionConeResistanceEnum.SAFE
     )
     excavation_level: float
     excavation_width_infinite: Bool = Bool.TRUE
@@ -81,7 +81,7 @@ class Profile(BaseDataClass):
             "excess_pore_pressure_top": float = 0.0  # [kN/m3]
             "excess_pore_pressure_bottom": float = 0.0  # [kN/m3]
             "ocr_value": float = 1.0  # [-]
-            "reduction_core_resistance": float = 0.0  # [%]
+            "reduction_cone_resistance": float = 0.0  # [%]
         },]
 
     """
