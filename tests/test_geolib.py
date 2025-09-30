@@ -3,7 +3,7 @@ from geolib import __version__
 
 from .context import geolib
 
-version = "2.7.0"
+version = "2.8.0"
 
 
 @pytest.mark.systemtest
