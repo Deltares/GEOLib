@@ -298,7 +298,6 @@ class TestDsheetPilingModel:
         model.set_construction(top_level=top_level, elements=sheets)
 
         # test final
-        assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
         assert (
             model.datastructure.input_data.sheet_piling.sheetpiling[0].name
@@ -342,7 +341,6 @@ class TestDsheetPilingModel:
         model.set_construction(top_level=top_level, elements=piles)
 
         # test final
-        assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
         assert (
             model.datastructure.input_data.sheet_piling.sheetpiling[0].name
@@ -385,7 +383,6 @@ class TestDsheetPilingModel:
         model.set_construction(top_level=top_level, elements=walls)
 
         # test final
-        assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
         assert (
             model.datastructure.input_data.sheet_piling.sheetpiling[0].name

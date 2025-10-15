@@ -107,7 +107,6 @@ class TestInternal:
         model = DSheetPilingInputStructure()
         internal = sheet1.to_internal()
         model.set_construction(elements=[internal], top_level=top_level)
-        assert model.sheet_piling.lengthsheetpiling == 3
         assert model.sheet_piling.leveltopsheetpiling == top_level
 
     def test_set_construction_no_elements_raises_value_error(self):

@@ -95,7 +95,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1034
+_DEFAULT_SHEETPILING_VERSION: int = 1035
 
 REQ_RUN_LINES = 2
 
@@ -435,7 +435,6 @@ class SheetPiling(DSeriesStructureCollection):
         SheetPileElement()
     ]
     leveltopsheetpiling: Annotated[float, Field(ge=-10000, le=10000)] = 0.0
-    lengthsheetpiling: Annotated[float, Field(gt=0)] = 10
 
 
 class VerticalBalance(DSeriesInlineMappedProperties):
@@ -1039,7 +1038,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.sheet_piling = SheetPiling(
             sheetpiling=elements,
             leveltopsheetpiling=top_level,
-            lengthsheetpiling=top_level - bottom_level,
         )
 
     def add_element_in_sheet_piling(

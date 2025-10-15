@@ -110,9 +110,7 @@ SoilDefaultElasticity={{ soil.soildefaultelasticity }}
 
 [SHEET PILING]
 {% if sheet_piling is mapping %}
-0
 {{ "%10.2f"|format(sheet_piling.leveltopsheetpiling) }} Level top sheet piling
-{{ "%10.2f"|format(sheet_piling.lengthsheetpiling) }} Length
   {{ sheet_piling.sheetpiling|length }} Number of elements
 {% for element in sheet_piling.sheetpiling %}
 [SHEET PILING ELEMENT]
