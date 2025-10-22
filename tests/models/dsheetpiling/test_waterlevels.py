@@ -62,7 +62,7 @@ class TestWaterLevels:
     def test_dsheetpilingmodel_add_water_level_internal_water_levels_updated(
         self, _model: DSheetPilingModel, make_water_level: Callable, side: Side
     ):
-        """Validate if water_level is refered in [WATERLEVELS]"""
+        """Validate if water_level is refered in [WATER LEVELS]"""
 
         water_level_name = "Ground water level -1m"
         current_stage = _model.current_stage
@@ -71,9 +71,9 @@ class TestWaterLevels:
 
         _model.add_head_line(water_level=water_level, side=side, stage_id=current_stage)
 
-        assert isinstance(_model.datastructure.input_data.waterlevels, WaterLevels)
-        assert len(_model.datastructure.input_data.waterlevels.levels) == 1
-        internal = _model.datastructure.input_data.waterlevels.levels[current_stage]
+        assert isinstance(_model.datastructure.input_data.water_levels, WaterLevels)
+        assert len(_model.datastructure.input_data.water_levels.levels) == 1
+        internal = _model.datastructure.input_data.water_levels.levels[current_stage]
         assert isinstance(internal, InternalWaterLevel)
         assert internal.name == water_level_name
         assert internal.level == water_level.level
