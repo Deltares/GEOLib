@@ -95,7 +95,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1035
+_DEFAULT_SHEETPILING_VERSION: int = 1036
 
 REQ_RUN_LINES = 2
 
@@ -534,6 +534,7 @@ class WaterLevel(DSeriesNoParseSubStructure):
     level: float
     distribution_type: DistributionType = DistributionType.NONE
     standard_deviation: float = 0.0
+    delta_h_deci_CROW: float = 0.0
 
 
 class WaterLevels(DSeriesNoParseSubStructure):
