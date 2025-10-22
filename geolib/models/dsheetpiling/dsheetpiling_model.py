@@ -315,9 +315,9 @@ class DSheetPilingModel(BaseModel):
     ) -> None:
         """Set water level for a stage.
 
-        If a water level already exists, it is refered to that water level.
+        If a water level already exists, it is referred to that water level.
 
-        Related to the [WATERLEVELS] block in the .shi file.
+        Related to the [WATER LEVELS] block in the .shi file.
 
         Args:
             water_level: WaterLevel.

@@ -384,9 +384,9 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
 [END OF SURFACES]
 
 [WATER LEVELS]
-{% if waterlevels is mapping %}
-  {{ waterlevels.levels | length }} Water level count
-{% for waterlevel in waterlevels.levels %}
+{% if water_levels is mapping %}
+  {{ water_levels.levels | length }} Water level count
+{% for waterlevel in water_levels.levels %}
 {{ waterlevel.name }}
 {{ "%10.2f"|format(waterlevel.level) }} Level
 {{ "%10.2f"|format(waterlevel.standard_deviation) }} Standard deviation
@@ -394,7 +394,7 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
 {{ "%10.2f"|format(waterlevel.delta_h_deci_CROW) }} Delta h_deci (CROW)
 {% endfor %}
 {% else %}
-{{ waterlevels }}
+{{ water_levels }}
 {% endif %}
 [END OF WATER LEVELS]
 

@@ -755,14 +755,14 @@ class DSheetPilingInputStructure(DSeriesStructure):
         """
     )
     water: Water = Water()
-    waterlevels: WaterLevels | str = cleandoc(
+    water_levels: WaterLevels | str = cleandoc(
         f"""
-          1 Number of Waterlevels 
-          3 Number of Data per Waterlevel 
+          1 Water level count           
         {_DEFAULT_WATER_LEVEL_NAME}
-              0.00
-              0.00
-                 2
+              0.00 Level
+              0.00 Standard deviation
+                 2 Distribution type
+              0.00 Delta h_deci (CROW)                 
 
         """
     )
@@ -967,10 +967,10 @@ class DSheetPilingInputStructure(DSeriesStructure):
 
     def add_water_level(self, stage_id: int, water_level: WaterLevel, side: Side) -> None:
         # Add water level to water levels
-        if isinstance(self.waterlevels, str):
-            self.waterlevels = WaterLevels()
-        if water_level.name not in self.waterlevels.water_level_names:
-            self.waterlevels.levels.append(water_level)
+        if isinstance(self.water_levels, str):
+            self.water_levels = WaterLevels()
+        if water_level.name not in self.water_levels.water_level_names:
+            self.water_levels.levels.append(water_level)
 
         # Add water level to stages.
         stage = self.construction_stages.stages[stage_id]
