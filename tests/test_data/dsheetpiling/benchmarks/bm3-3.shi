@@ -1,16 +1,16 @@
 INPUT FILE FOR D-SHEET PILING
 ==============================================================================
-COMPANY    :    
+COMPANY    :  
 
-DATE       : 11/07/2024
-TIME       : 08:24:52
-FILENAME   : C:\Deltares\D-Sheet Piling\Benchmarks\bm3-3.shi
-CREATED BY : D-Sheet Piling version 24.1.1.1735
+DATE       : 17/10/2025
+TIME       : 09:06:33
+FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\Benchmarks\bm3-3.shi
+CREATED BY : D-Sheet Piling version 24.1.0.3218
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
-Soil=1012
-D-Sheet Piling=1034
+Soil=1013
+D-Sheet Piling=1036
 [END OF VERSION]
 
 [VERSION EXTERNALS]
@@ -25,8 +25,8 @@ Soil 1
 SoilColor=9764853
 SoilSoilType=2
 SoilGrainType=0
-SoilGamDry=0.00
-SoilGamWet=0.00
+SoilGamDry=0.01
+SoilGamWet=10.00
 SoilRelativeDensity=72.5
 SoilEModMenard=0.01
 SoilCohesion=2.00
@@ -96,9 +96,7 @@ Count=0
 [END OF CPT LIST]
 
 [SHEET PILING]
-0
      10.00 Level top sheet piling
-     20.00 Length
   1 Number of elements
 [SHEET PILING ELEMENT]
 Sheet piling
@@ -222,15 +220,14 @@ SheetPilingNumberOfPilesDrilled=2
 
 [END OF SURFACES]
 
-[WATERLEVELS]
-  1 Number of Waterlevels 
-  3 Number of Data per Waterlevel 
-Level -11.00
-    -11.00
-      0.00
-         2
-
-[END OF WATERLEVELS]
+[WATER LEVELS]
+  1 Water level count
+WL 10m
+     10.00 Level
+      0.00 Standard deviation
+         2 Distribution type
+      0.00 Delta h_deci (CROW)
+[END OF WATER LEVELS]
 
 [CONSTRUCTION STAGES]
   4 Number of Construction stages 
@@ -238,8 +235,8 @@ First branch
          1          1 Method Left: Ka, Ko, Kp  Method Right: Ka, Ko, Kp  
 Surface 1
 Surface 2
-Level -11.00
-Level -11.00
+WL 10m
+WL 10m
 1
 1
      0.000             Displacement top sheet piling
@@ -260,8 +257,8 @@ Second branch
          1          1 Method Left: Ka, Ko, Kp  Method Right: Ka, Ko, Kp  
 Surface 1
 Surface 2
-Level -11.00
-Level -11.00
+WL 10m
+WL 10m
 1
 1
      0.000             Displacement top sheet piling
@@ -282,8 +279,8 @@ Third branch
          1          1 Method Left: Ka, Ko, Kp  Method Right: Ka, Ko, Kp  
 Surface 1
 Surface 2
-Level -11.00
-Level -11.00
+WL 10m
+WL 10m
 1
 1
      0.000             Displacement top sheet piling
@@ -304,8 +301,8 @@ Fourth branch
          1          1 Method Left: Ka, Ko, Kp  Method Right: Ka, Ko, Kp  
 Surface 1
 Surface 2
-Level -11.00
-Level -11.00
+WL 10m
+WL 10m
 1
 1
      0.000             Displacement top sheet piling

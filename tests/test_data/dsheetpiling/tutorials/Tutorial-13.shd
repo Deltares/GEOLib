@@ -1,17 +1,17 @@
 DUMP FILE FOR D-SHEET PILING
 ==============================================================================
-COMPANY    :    
+COMPANY    :  
 
-DATE       : 11/07/2024
-TIME       : 08:59:59
-FILENAME   : C:\Deltares\D-Sheet Piling\Examples\Tutorial-13.shd
-CREATED BY : D-Sheet Piling version 24.1.1.1735
+DATE       : 17/10/2025
+TIME       : 10:15:38
+FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\Examples\Tutorial-13.shd
+CREATED BY : D-Sheet Piling version 24.1.0.3218
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
-Soil=1012
-D-Sheet Piling=1034
+Soil=1013
+D-Sheet Piling=1036
 [END OF VERSION]
 
 [VERSION EXTERNALS]
@@ -342,9 +342,7 @@ Count=0
 [END OF CPT LIST]
 
 [SHEET PILING]
-0
      -0.50 Level top sheet piling
-     20.00 Length
   1 Number of elements
 [SHEET PILING ELEMENT]
 Mooring post
@@ -465,15 +463,14 @@ standard profile
 
 [END OF SURFACES]
 
-[WATERLEVELS]
-  1 Number of Waterlevels 
-  3 Number of Data per Waterlevel 
+[WATER LEVELS]
+  1 Water level count
 New Water Level
-     -2.00
-      0.00
-         2
-
-[END OF WATERLEVELS]
+     -2.00 Level
+      0.00 Standard deviation
+         2 Distribution type
+      0.00 Delta h_deci (CROW)
+[END OF WATER LEVELS]
 
 [CONSTRUCTION STAGES]
   1 Number of Construction stages 
@@ -517,7 +514,7 @@ StageVerifyEC7NADBE=0
 
 [CALCULATION OPTIONS]
 CalcFirstStageInitial=0
-CalcMinorNodesOn=1
+CalcMinorNodesOn=0
 CalcReduceDeltas=1
 InputCalculationType=0
 IsVibrationCalculation=0
