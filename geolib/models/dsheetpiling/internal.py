@@ -95,7 +95,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1036
+_DEFAULT_SHEETPILING_VERSION: int = 1037
 
 REQ_RUN_LINES = 2
 
@@ -507,6 +507,8 @@ class ConstructionStage(DSeriesUnmappedNameProperties):
     water_level_right: str = _DEFAULT_WATER_LEVEL_NAME
     surface_left: str = _DEFAULT_SURFACE_NAME
     surface_right: str = _DEFAULT_SURFACE_NAME
+    is_rep_passive_surface_level_user_defined: bool = False
+    user_defined_rep_passive_surface_level: float = 0
     soil_profile_left: str | None = _DEFAULT_SOIL_PROFILE_NAME
     soil_profile_right: str | None = _DEFAULT_SOIL_PROFILE_NAME
     anchors: list[AnchorOrStrutPresstressReference] = []
@@ -890,6 +892,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
         method_left: LateralEarthPressureMethodStage,
         method_right: LateralEarthPressureMethodStage,
         pile_top_displacement: float | None,
+        is_rep_passive_surface_level_user_defined: bool,
+        user_defined_rep_passive_surface_level: float | None,
     ) -> None:
         if isinstance(self.construction_stages, str):
             self.construction_stages = ConstructionStages()
@@ -911,6 +915,8 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 "passive_side": passive_side,
                 "method_left": method_left,
                 "method_right": method_right,
+                "is_rep_passive_surface_level_user_defined": is_rep_passive_surface_level_user_defined,
+                "user_defined_rep_passive_surface_level": user_defined_rep_passive_surface_level
             }
         )
         self.construction_stages.stages.append(ConstructionStage(**kwargs))

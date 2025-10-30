@@ -406,6 +406,8 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
          {{ stage.method_left.value }}          {{ stage.method_right.value }} Method Left: {{ {1: 'Ka, Ko, Kp', 2: 'C, phi, delta'}[stage.method_left.value] }}  Method Right: {{ {1: 'Ka, Ko, Kp', 2: 'C, phi, delta'}[stage.method_left.value] }}
 {{ stage.surface_left }}
 {{ stage.surface_right }}
+{{ "%10d"|format(stage.is_rep_passive_surface_level_user_defined | int) }}             Is rep. passive surface level overruled
+{{ "%10.3f"|format(stage.user_defined_rep_passive_surface_level) }}             Overruled rep. passive surface level
 {{ stage.water_level_left }}
 {{ stage.water_level_right }}
 {{ stage.soil_profile_left }}

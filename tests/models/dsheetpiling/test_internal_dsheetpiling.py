@@ -49,6 +49,8 @@ def model() -> DSheetPilingInputStructure:
         method_left=settings.LateralEarthPressureMethodStage.KA_KO_KP,
         method_right=settings.LateralEarthPressureMethodStage.KA_KO_KP,
         pile_top_displacement=0.0,
+        is_rep_passive_surface_level_user_defined=False,
+        user_defined_rep_passive_surface_level=0.0,
     )
     return model
 
