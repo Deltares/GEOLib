@@ -2,20 +2,20 @@ INPUT FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    :  
 
-DATE       : 17/10/2025
-TIME       : 09:43:14
+DATE       : 29/10/2025
+TIME       : 20:01:55
 FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\ComplexProjects05.shi
-CREATED BY : D-Sheet Piling version 24.1.0.3218
+CREATED BY : D-Sheet Piling version 24.1.0.3358
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Sheet Piling=1036
+D-Sheet Piling=1037
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=21.3.1.35380
-DGSCPTipUI.dll=21.3.1.35380
+DGSCPTipCalc.dll=24.1.0.3264
+DGSCPTipUI.dll=24.1.0.3264
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -1077,15 +1077,17 @@ Gem. Grachtniveau
 [CONSTRUCTION STAGES]
   8 Number of Construction stages 
 Initieel
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 NAP -3,5 m
 NAP -3,5 m
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 Gem GWS = NAP -0,4 m
 Gem GWS = NAP -0,4 m
 Initieel (Gem GWS)
 Initieel (Gem GWS)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          0              Struts present in stage
          0              Spring supports present in stage
@@ -1098,18 +1100,20 @@ Initieel (Gem GWS)
          0              Passive side overrule
 
 Nat ontgraven + nat stempelraam + 1e ontgr voetgan
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 1e ontgraving
 NAP -3,0 m
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 Gem GWS = NAP -0,4 m
 NAP -3.5m
 Initieel (Gem GWS)
 Initieel (Gem GWS - voet)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          1              Struts present in stage
-         1       0.00 Stempelraam boven dek
+         1      0.000 Stempelraam boven dek
          0              Spring supports present in stage
          0              Rigid supports present in stage
          0              Uniform loads in stage
@@ -1121,18 +1125,20 @@ Initieel (Gem GWS - voet)
          0              Passive side overrule
 
 Nat ontgraven tot o.k. OWB
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 Max. ontgraving
 NAP -3,0 m
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 Gem GWS = NAP -0,4 m
 NAP -3.5m
 Initieel (Gem GWS)
 Initieel (Gem GWS - voet)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          1              Struts present in stage
-         1       0.00 Stempelraam boven dek
+         1      0.000 Stempelraam boven dek
          0              Spring supports present in stage
          0              Rigid supports present in stage
          0              Uniform loads in stage
@@ -1144,18 +1150,20 @@ Initieel (Gem GWS - voet)
          0              Passive side overrule
 
 Nat ontgraven tot o.k. OWB - voetgangersentree
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 Max. ontgraving
 Max. ontgraving
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 Gem GWS = NAP -0,4 m
 Gem GWS = NAP -0,4 m
 Initieel (Gem GWS)
 Initieel (Gem GWS)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          1              Struts present in stage
-         1       0.00 Stempelraam boven dek
+         1      0.000 Stempelraam boven dek
          0              Spring supports present in stage
          0              Rigid supports present in stage
          0              Uniform loads in stage
@@ -1167,19 +1175,21 @@ Initieel (Gem GWS)
          0              Passive side overrule
 
 Stort OWB + halverwege leegpompen
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 b.k. OWB 2-laags
 Max. ontgraving
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 NAP -4,0 m
 Gem GWS = NAP -0,4 m
 Halverwege leegpompen
 Initieel (Gem GWS)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          2              Struts present in stage
-         1       0.00 Stempelraam boven dek
-         2       0.00 Onderwaterbeton 2-laags
+         1      0.000 Stempelraam boven dek
+         2      0.000 Onderwaterbeton 2-laags
          0              Spring supports present in stage
          0              Rigid supports present in stage
          1              Uniform loads in stage
@@ -1192,19 +1202,21 @@ Initieel (Gem GWS)
          0              Passive side overrule
 
 Volledig leegpompen
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 b.k. OWB 2-laags
 Max. ontgraving
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 o.k. OWB 2-laags
 Gem GWS = NAP -0,4 m
 Na leegpompen (Gem GWS)
 Initieel (Gem GWS)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          2              Struts present in stage
-         1       0.00 Stempelraam boven dek
-         2       0.00 Onderwaterbeton 2-laags
+         1      0.000 Stempelraam boven dek
+         2      0.000 Onderwaterbeton 2-laags
          0              Spring supports present in stage
          0              Rigid supports present in stage
          1              Uniform loads in stage
@@ -1217,19 +1229,21 @@ Initieel (Gem GWS)
          0              Passive side overrule
 
 Stort OWB + volledig leegpompen - voetgangersentre
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 b.k. OWB 2-laags
 b.k. OWB 2-laags
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 o.k. OWB 2-laags
 o.k. OWB 2-laags
 Na leegpompen (Gem GWS)
 Na leegpompen (Gem GWS)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          2              Struts present in stage
-         1       0.00 Stempelraam boven dek
-         2       0.00 Onderwaterbeton 2-laags
+         1      0.000 Stempelraam boven dek
+         2      0.000 Onderwaterbeton 2-laags
          0              Spring supports present in stage
          0              Rigid supports present in stage
          2              Uniform loads in stage
@@ -1244,19 +1258,21 @@ Na leegpompen (Gem GWS)
          0              Passive side overrule
 
 Stort vloer + dek + verwijderen stempelraam
-         2          2 Method Left: C, phi, delta   Method Right: C, phi, delta
+         2          2 Method Left: C, phi, delta  Method Right: C, phi, delta
 b.k. OWB 2-laags
 b.k. OWB 2-laags
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
 o.k. OWB 2-laags
 o.k. OWB 2-laags
 Na leegpompen (Gem GWS)
 Na leegpompen (Gem GWS)
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          2              Struts present in stage
-         1       0.00 Onderwaterbeton 2-laags
-         2       0.00 Dek
+         1      0.000 Onderwaterbeton 2-laags
+         2      0.000 Dek
          0              Spring supports present in stage
          0              Rigid supports present in stage
          2              Uniform loads in stage
