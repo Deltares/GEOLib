@@ -175,6 +175,7 @@ class TestDsheetPilingBugFixes:
         assert len(model.output.construction_stage) == 1
 
     @pytest.mark.integrationtest
+    @pytest.mark.xfail(reason="replace CUR with CROW. bm3-1d was temporarily removed")
     def test_parse_field_verify_sheet_piling_according_to_cur_method_a(self):
         # Former test of test_geolib_173
         # 1. Define test data
@@ -200,6 +201,7 @@ class TestDsheetPilingBugFixes:
         )
 
     @pytest.mark.integrationtest
+    @pytest.mark.xfail(reason="replace CUR with CROW. bm4-17a was temporarily removed")
     def test_parse_field_verify_sheet_piling_according_to_cur_method_b(self):
         # Former test of test_geolib_173
         # 1. Define test data

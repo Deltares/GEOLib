@@ -117,6 +117,7 @@ class TestInternal:
             model.set_construction(elements=[], top_level=0)
 
     @pytest.mark.integrationtest
+    @pytest.mark.xfail(reason="replace CUR with CROW")
     def test_add_calculation_options_per_stage_cur(
         self, model: DSheetPilingInputStructure
     ):
