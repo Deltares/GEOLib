@@ -47,7 +47,7 @@ from geolib.models.dsheetpiling.settings import (
     LateralEarthPressureMethodStage,
     ModulusReactionType,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
+    # PartialFactorSetCUR,
     PartialFactorSetEC7NADNL,
     PassiveSide,
     SheetPilingElementMaterialType,
@@ -96,8 +96,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC1,
                     stability_export=True,
                 )
             ),
@@ -902,8 +902,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC1,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -1214,8 +1214,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC2,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -1537,8 +1537,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC2,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
