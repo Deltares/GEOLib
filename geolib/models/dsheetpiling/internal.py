@@ -51,6 +51,18 @@ from .internal_partial_factors import (
     PartialFactorsEurocodeDa1Set2,
     PartialFactorsEurocodeDa2,
     PartialFactorsEurocodeDa3,
+    PartialFactorsCrowB1C0,
+    PartialFactorsCrowB1C1,
+    PartialFactorsCrowB1C2,
+    PartialFactorsCrowB1C3,
+    PartialFactorsCrowB2C0,
+    PartialFactorsCrowB2C1,
+    PartialFactorsCrowB2C2,
+    PartialFactorsCrowB2C3,
+    PartialFactorsCrowB3C0,
+    PartialFactorsCrowB3C1,
+    PartialFactorsCrowB3C2,
+    PartialFactorsCrowB3C3,
 )
 from .settings import (
     AssessmentTypeEC7NL,
@@ -278,6 +290,8 @@ class CalculationOptions(DSeriesStructure):
     curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
     curoverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     curoverallstability: bool = False
+    crowassessmenttype: AssessmentTypeEC7NL = AssessmentTypeEC7NL.NewConstruction
+    crowreferenceperiod: Annotated[int, Field(ge=1, le=100)] = 50
     # Characteristic Kranz Anchor Strength calculation
     curanchorforcestage: Annotated[int, Field(ge=0)] = 0
     # Overall stability calculation
@@ -315,6 +329,18 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
     partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
     partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
+    partial_factors_crow_b1_c0: PartialFactorsCrowB1C0 = PartialFactorsCrowB1C0()
+    partial_factors_crow_b1_c1: PartialFactorsCrowB1C1 = PartialFactorsCrowB1C1()
+    partial_factors_crow_b1_c2: PartialFactorsCrowB1C2 = PartialFactorsCrowB1C2()
+    partial_factors_crow_b1_c3: PartialFactorsCrowB1C3 = PartialFactorsCrowB1C3()
+    partial_factors_crow_b2_c0: PartialFactorsCrowB2C0 = PartialFactorsCrowB2C0()
+    partial_factors_crow_b2_c1: PartialFactorsCrowB2C1 = PartialFactorsCrowB2C1()
+    partial_factors_crow_b2_c2: PartialFactorsCrowB2C2 = PartialFactorsCrowB2C2()
+    partial_factors_crow_b2_c3: PartialFactorsCrowB2C3 = PartialFactorsCrowB2C3()
+    partial_factors_crow_b3_c0: PartialFactorsCrowB3C0 = PartialFactorsCrowB3C0()
+    partial_factors_crow_b3_c1: PartialFactorsCrowB3C1 = PartialFactorsCrowB3C1()
+    partial_factors_crow_b3_c2: PartialFactorsCrowB3C2 = PartialFactorsCrowB3C2()
+    partial_factors_crow_b3_c3: PartialFactorsCrowB3C3 = PartialFactorsCrowB3C3()
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):

@@ -125,8 +125,8 @@ class PartialFactorSetEC7NADNL(IntEnum):
 
 class AssessmentTypeEC7NL(IntEnum):
     NewConstruction = 0
-    Reconstruction = 1
-    ReconstructionAccordingToBouwBesluit2003OrBefore = 2
+    ReconstructionBouwBesluit2012 = 1
+    ReconstructionBouwBesluit2003 = 2
     Disapproval = 3
 
 
