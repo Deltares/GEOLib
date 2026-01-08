@@ -76,11 +76,11 @@ class TestDFoundationsModel:
         )
 
     @pytest.mark.unittest
-    def test_intialized_model_can_be_serialized(self):
-        """Internal datastructure should be serializable from a intialized model"""
+    def test_initialized_model_can_be_serialized(self):
+        """Internal data structure should be serializable from an initialized model"""
         # 1. setup test
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
-        filename = "serialized_from_intialized_model.foi"
+        filename = "serialized_from_initialized_model.foi"
         output_test_file = output_test_folder / filename
 
         # 2. Verify initial expectations
@@ -93,8 +93,8 @@ class TestDFoundationsModel:
         assert output_test_file.is_file()
 
     @pytest.mark.unittest
-    def test_intialized_model_can_be_serialized_bytesio(self):
-        """Internal datastructure should be serializable from a intialized model"""
+    def test_initialized_model_can_be_serialized_bytesio(self):
+        """Internal data structure should be serializable from an initialized model"""
         # 1. setup test
         output_test_file = BytesIO()
 
@@ -748,7 +748,7 @@ class TestDFoundationsModel:
         with open(log_output_test_file) as f:
             text = f.read()
         is_text_ok = text.__contains__(
-            "Number of CPTs (0 ) is outside its limits (1 - 350)"
+            "Number of CPTs (0) is outside its limits (1 - 350)"
         )
         assert is_text_ok
 
