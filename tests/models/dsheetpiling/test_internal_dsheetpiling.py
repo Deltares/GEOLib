@@ -51,6 +51,7 @@ def model() -> DSheetPilingInputStructure:
         pile_top_displacement=0.0,
         is_rep_passive_surface_level_user_defined=False,
         user_defined_rep_passive_surface_level=0.0,
+        is_fixed_level_on_passive_side_crow=False,
     )
     return model
 

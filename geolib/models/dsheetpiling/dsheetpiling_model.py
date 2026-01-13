@@ -206,6 +206,7 @@ class DSheetPilingModel(BaseModel):
         pile_top_displacement: float = 0.0,
         is_rep_passive_surface_level_user_defined: bool = False,
         user_defined_rep_passive_surface_level: float = 0.0,
+        is_fixed_level_on_passive_side_crow: bool = False
 
     ) -> int:
         """Add a new stage to the model.
@@ -224,6 +225,8 @@ class DSheetPilingModel(BaseModel):
                 If automatically calculated, the minimum level of the passive surface line is used.
             user_defined_rep_passive_surface_level: (Only relevant for a Verification calculation)
                 The user-defined representative level at passive side [m ref] is used for the determination of the retaining height.
+            is_fixed_level_on_passive_side_crow: (Only relevant for a CROW calculation)
+                Indicates if the passive side has a fixed level .
 
         Raises:
             ValidationError: when input arguments are not within constraints
@@ -233,7 +236,14 @@ class DSheetPilingModel(BaseModel):
         """
         new_stage_id = self.current_stage + 1 if self.current_stage is not None else 0
         self.datastructure.input_data.add_stage(
-            name, passive_side, method_left, method_right, pile_top_displacement, is_rep_passive_surface_level_user_defined, user_defined_rep_passive_surface_level
+            name,
+            passive_side,
+            method_left,
+            method_right,
+            pile_top_displacement,
+            is_rep_passive_surface_level_user_defined,
+            user_defined_rep_passive_surface_level,
+            is_fixed_level_on_passive_side_crow
         )
         self.current_stage = new_stage_id
         return new_stage_id
