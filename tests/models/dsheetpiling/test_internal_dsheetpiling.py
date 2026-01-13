@@ -376,16 +376,16 @@ class TestInternalParseInputStructure:
         1 : Elastic calculation = TRUE
         0 : Wooden sheet piling = FALSE"""
 
-    text_strut = """1 -10.00  4.2  4.2  4.2 4.2 4.2 2 Strut"""
+    text_strut = """1 -10.00  4.1  4.2  4.3 4.4 4.5 2 1 Strut"""
 
     text_struts = f"""1 Number of struts  
-    Nr        Level        E-mod     Cross sect.    Length     YieldF   Side 
+    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name 
     {text_strut}"""
 
-    text_anchor = """1  -2.00  2.4  2.4 2.4 2.4 2.4 2.4 2 Short anchor"""
+    text_anchor = """1  -2.00  2.4  2.5 2.6 2.7 2.8 2.9 1 2 Short anchor"""
 
     text_anchors = f"""1 Number of anchors
-    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
+    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side   Type Name
     {text_anchor}"""
 
     text_breuk_data = """22.11 : Percentage mobilized resistance left
@@ -518,12 +518,13 @@ class TestInternalParseInputStructure:
         assert anchor.name == "Short anchor"
         assert anchor.level == -2.00
         assert anchor.e_modulus == 2.4
-        assert anchor.cross_section == 2.4
-        assert anchor.wall_height_kranz == 2.4
-        assert anchor.length == 2.4
-        assert anchor.angle == 2.4
-        assert anchor.yield_force == 2.4
-        assert anchor.side == 2
+        assert anchor.cross_section == 2.5
+        assert anchor.length == 2.6
+        assert anchor.yield_force == 2.7
+        assert anchor.angle == 2.8
+        assert anchor.wall_height_kranz == 2.9
+        assert anchor.side == 1
+        assert anchor.type == 2
 
     def validate_anchors(self, anchor_list: Anchors):
         assert anchor_list
@@ -534,12 +535,13 @@ class TestInternalParseInputStructure:
         assert strut
         assert strut.name == "Strut"
         assert strut.level == -10.00
-        assert strut.e_modulus == 4.2
+        assert strut.e_modulus == 4.1
         assert strut.cross_section == 4.2
-        assert strut.length == 4.2
-        assert strut.angle == 4.2
-        assert strut.buckling_force == 4.2
+        assert strut.length == 4.3
+        assert strut.buckling_force == 4.4
+        assert strut.angle == 4.5
         assert strut.side == 2
+        assert strut.type == 1
 
     def validate_struts(self, strut_list: Struts):
         assert strut_list

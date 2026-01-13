@@ -205,7 +205,7 @@ class TestDsheetPilingModel:
         output_datastructure = DSheetPilingModel().parse(output_test_file).input_data
         anchorline = output_datastructure.anchors.split("\n")[2].strip()  # dataline
         values = list(filter(lambda x: (len(x) != 0), anchorline.split(" ")))
-        assert len(values) == 10
+        assert len(values) == 11
 
     @pytest.mark.acceptance
     @only_teamcity

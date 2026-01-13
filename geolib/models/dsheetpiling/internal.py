@@ -94,6 +94,7 @@ from .settings import (
     Side,
     SoilTypeModulusSubgradeReaction,
     VerifyType,
+    CrowAnchorOrStrutType,
 )
 
 logger = logging.getLogger(__name__)
@@ -107,7 +108,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1037
+_DEFAULT_SHEETPILING_VERSION: int = 1038
 
 REQ_RUN_LINES = 2
 
@@ -473,11 +474,12 @@ class Anchor(DSheetpilingTableEntry):
     level: float = 0
     e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
     cross_section: Annotated[float, Field(gt=0)] = 1e-3
-    wall_height_kranz: Annotated[float, Field(ge=0)] = 0.00
     length: Annotated[float, Field(gt=0)] = 1
-    angle: float | None = 0.00
     yield_force: Annotated[float, Field(ge=0)] = 0.00
+    angle: float | None = 0.00
+    wall_height_kranz: Annotated[float, Field(ge=0)] = 0.00
     side: Side = Side.RIGHT
+    type: CrowAnchorOrStrutType = CrowAnchorOrStrutType.TensionPileGroutAnchor
 
 
 class Anchors(DSheetpilingUnwrappedTable):
@@ -504,9 +506,10 @@ class Strut(DSheetpilingTableEntry):
     e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
     cross_section: Annotated[float, Field(gt=0)] = 1e-4
     length: Annotated[float, Field(gt=0)] = 1
-    angle: float | None = 0.00
     buckling_force: Annotated[float, Field(ge=0)] = 0.00
+    angle: float | None = 0.00
     side: Side = Side.RIGHT
+    type: CrowAnchorOrStrutType = CrowAnchorOrStrutType.TensionPileGroutAnchor
 
 
 class Struts(DSheetpilingUnwrappedTable):

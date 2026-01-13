@@ -99,8 +99,8 @@ class DSheetpilingUnwrappedTable(DSeriesStructure):
 class DSheetpilingTableEntry(DSeriesStructure):
     """Parses a table entry where the latest column is actually a name (which can be composed by a few strings.)
     E.g.:
-        Nr        Level        E-mod     Cross sect.    Length     YieldF   Side
-        1 -10.00  2.100E+0008  1.000E-0004  10.00 500.00 -30  0.00 2 Strut
+        Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name
+         1 -10.00  2.100E+0008  1.000E-0004    10.00   500.00   -30.00      2      0 Strut
     """
 
     @classmethod

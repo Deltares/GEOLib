@@ -174,9 +174,9 @@ SheetPilingXi={{ "%.2f"|format(vertical_balance.sheetpilingxi) }}
 [ANCHORS]
 {% if anchors is mapping %}
   {{ anchors.anchors | length }} Number of anchors
- Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side   Type Name
 {% for anchor in anchors.anchors %}
-  {{ loop.index }} {{ "%7.2f"|format(anchor.level) }} {{ "%11.4E"|format(anchor.e_modulus) }} {{ "%11.4E"|format(anchor.cross_section) }} {{ "%9.2f"|format(anchor.length) }} {{ "%8.2f"|format(anchor.yield_force) }} {{ "%9.2f"|format(anchor.angle) }} {{ "%9.2f"|format(anchor.wall_height_kranz) }} {{ "%7d"|format(anchor.side.value) }} {{ anchor.name }}
+  {{ loop.index }} {{ "%7.2f"|format(anchor.level) }} {{ "%11.4E"|format(anchor.e_modulus) }} {{ "%11.4E"|format(anchor.cross_section) }} {{ "%9.2f"|format(anchor.length) }} {{ "%8.2f"|format(anchor.yield_force) }} {{ "%9.2f"|format(anchor.angle) }} {{ "%9.2f"|format(anchor.wall_height_kranz) }} {{ "%7d"|format(anchor.side.value) }} {{ "%7d"|format(anchor.type.value) }} {{ anchor.name }}
 
 {% endfor %}
 
@@ -190,9 +190,9 @@ SheetPilingXi={{ "%.2f"|format(vertical_balance.sheetpilingxi) }}
 [STRUTS]
 {% if struts is mapping %}
   {{ struts.struts | length }} Number of struts
- Nr        Level        E-mod     Cross sect.    Length     YieldF   Side
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name
 {% for strut in struts.struts %}
-  {{ loop.index }} {{ "%7.2f"|format(strut.level) }} {{ "%11.4E"|format(strut.e_modulus) }} {{ "%11.4E"|format(strut.cross_section) }} {{ "%7.2f"|format(strut.length) }} {{ "%6.2f"|format(strut.buckling_force) }} {{ "%2d"|format(strut.angle) }} 0.00 {{ strut.side.value }} {{ strut.name }}
+  {{ loop.index }} {{ "%7.2f"|format(strut.level) }} {{ "%11.4E"|format(strut.e_modulus) }} {{ "%11.4E"|format(strut.cross_section) }} {{ "%7.2f"|format(strut.length) }} {{ "%6.2f"|format(strut.buckling_force) }} {{ "%2d"|format(strut.angle) }} {{ strut.side.value }} {{ strut.type.value }} {{ strut.name }}
 {% endfor %}
 
 {% else %}
