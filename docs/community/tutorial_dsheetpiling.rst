@@ -303,11 +303,12 @@ The following section lists the way they can be initialised. The stage_id input 
         level=-2,
         side=Side.RIGHT,
         e_modulus=100000,
-        C=10,
+        cross_section=10,
         wall_height_kranz=1,
         length=2,
         angle=3,
         yield_force=100,
+        type=CrowAnchorOrStrutType.TensionPileGroutAnchor
     )
     model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
@@ -317,9 +318,12 @@ The following section lists the way they can be initialised. The stage_id input 
         level=-10,
         side=Side.LEFT,
         e_modulus=100000,
+        cross_section=10,
         angle=1,
+        length=2,
         buckling_force=100,
         pre_compression=10,
+        type=CrowAnchorOrStrutType.TensionPileGroutAnchor
     )
     model.add_anchor_or_strut(support=floor, stage_id=stage_id)
 
