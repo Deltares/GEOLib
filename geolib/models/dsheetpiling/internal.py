@@ -108,7 +108,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1039
+_DEFAULT_SHEETPILING_VERSION: int = 1040
 
 REQ_RUN_LINES = 2
 
@@ -644,12 +644,20 @@ class SurchargeLoads(DSeriesStructureCollection):
         return {load.name for load in self.loads}
 
 
+class SurfacePoint(DSeriesInlineMappedProperties):
+    x: float = 0
+    z: float = 0
+    rep_erosion_height: float = 0
+
+
 class Surface(DSeriesNoParseSubStructure):  # TODO determine structure
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    points: Annotated[list[Point], Field(min_length=1)]
+    points: Annotated[list[SurfacePoint], Field(min_length=1)]
     points: Annotated[list[dict], Field(min_length=1)]
     distribution_type: DistributionType = DistributionType.NONE
     std: Annotated[float, Field(ge=0.0)] = 0.0
+    construction_level_tolerance: Annotated[float, Field(ge=0.0)] = 0.0
+    survey_uncertainty: Annotated[float, Field(ge=0.0)] = 0.0
 
 
 class Surfaces(DSeriesNoParseSubStructure):  # TODO GroupList should be suitable?

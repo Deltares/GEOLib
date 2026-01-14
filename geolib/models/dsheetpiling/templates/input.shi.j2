@@ -372,9 +372,11 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
   {{ loop.index }}     {{ surface.points | length }} {{ surface.name }}
 {{ "%.2f"|format(surface.std) }}  Standard deviation
   {{ surface.distribution_type.value }}  Distribution type
- Nr     X-coord     Value
+{{ "%10.2f"|format(surface.construction_level_tolerance) }} Construction level tolerance
+{{ "%10.2f"|format(surface.survey_uncertainty) }} Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
 {% for point in surface.points %}
-   {{ point["Nr"] }} {{ "%11.2f"|format(point["X-coord"]) }} {{ "%11.2f"|format(point["Value"]) }}
+   {{ point["Nr"] }} {{ "%11.2f"|format(point["X-coord"]) }} {{ "%11.2f"|format(point["Value"]) }} {{ "%11.2f"|format(point["Rep. erosion height"]) }}
 {% endfor %}
 {% endfor %}
 {% else %}

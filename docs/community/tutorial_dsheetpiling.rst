@@ -203,9 +203,9 @@ is used. Two surface are initialised in this case and are added in the first sta
 
 .. code-block:: python
 
-    ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+    ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
     ground_level_minus_7_meter_surface = Surface(
-        name="GL-7", points=[Point(x=0, z=-7)]
+        name="GL-7", points=[SurfacePoint(x=0, z=-7)]
     )
     model.add_surface(
         surface=ground_level_surface, side=Side.RIGHT, stage_id=stage_id

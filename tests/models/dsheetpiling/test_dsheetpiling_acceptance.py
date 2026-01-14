@@ -31,6 +31,7 @@ from geolib.models.dsheetpiling.dsheetpiling_model import (
     SinglePileModelType,
     WoodenSheetPileModelType,
 )
+from geolib.models.dsheetpiling.internal import SurfacePoint
 from geolib.models.dsheetpiling.loads import (
     HorizontalLineLoad,
     Moment,
@@ -254,10 +255,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -539,10 +540,10 @@ class TestDsheetPilingAcceptance:
             )
             model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-            ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+            ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
             ground_level_minus_7_meter_surface = Surface(
                 name="GL-7" + "-stage-" + str(stage),
-                points=[Point(x=0, z=-7 + variation)],
+                points=[SurfacePoint(x=0, z=-7 + variation)],
             )
 
             model.add_surface(
@@ -799,7 +800,7 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
 
         model.add_surface(surface=ground_level_surface, side=Side.BOTH, stage_id=stage_id)
 
@@ -1066,10 +1067,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1389,10 +1390,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1697,10 +1698,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(

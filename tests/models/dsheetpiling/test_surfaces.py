@@ -2,9 +2,8 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable
 
 import pytest
-from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
-from geolib.models.dsheetpiling.internal import _DEFAULT_SURFACE_NAME
+from geolib.models.dsheetpiling.internal import _DEFAULT_SURFACE_NAME, SurfacePoint
 from geolib.models.dsheetpiling.internal import Surface as InternalSurface
 from geolib.models.dsheetpiling.internal import Surfaces
 from geolib.models.dsheetpiling.settings import (
@@ -31,7 +30,7 @@ def _model() -> DSheetPilingModel:
 @pytest.fixture
 def make_surface() -> Surface:
     def _make_surface(name: str):
-        return Surface(name=name, points=[Point(x=0, z=0), Point(x=1, z=0)])
+        return Surface(name=name, points=[SurfacePoint(x=0, z=0), SurfacePoint(x=1, z=0)])
 
     return _make_surface
 
@@ -41,9 +40,9 @@ class TestSurfaces:
     @pytest.mark.parametrize(
         "points,run_expectation",
         [
-            pytest.param([Point(x=0, z=0)], does_not_raise(), id="Single point"),
+            pytest.param([SurfacePoint(x=0, z=0)], does_not_raise(), id="Single point"),
             pytest.param(
-                [Point(x=0, z=0), Point(x=1, z=0)], does_not_raise(), id="Multiple points"
+                [SurfacePoint(x=0, z=0), SurfacePoint(x=1, z=0)], does_not_raise(), id="Multiple points"
             ),
             pytest.param(
                 [],
@@ -53,7 +52,7 @@ class TestSurfaces:
                 id="No points",
             ),
             pytest.param(
-                [Point(x=-1, z=0)],
+                [SurfacePoint(x=-1, z=0)],
                 pytest.raises(
                     ValidationError,
                     match=r"All x-coordinates must be greater than or equal to 0, found",
@@ -61,7 +60,7 @@ class TestSurfaces:
                 id="Negative x-coordinates",
             ),
             pytest.param(
-                [Point(x=1, z=0)],
+                [SurfacePoint(x=1, z=0)],
                 pytest.raises(
                     ValidationError,
                     match=r"X-coordinate first point should be zero, received",
@@ -69,7 +68,7 @@ class TestSurfaces:
                 id="First x-coordinate not zero",
             ),
             pytest.param(
-                [Point(x=0, z=0), Point(x=10, z=0), Point(x=5, z=0)],
+                [SurfacePoint(x=0, z=0), SurfacePoint(x=10, z=0), SurfacePoint(x=5, z=0)],
                 pytest.raises(
                     ValidationError, match=r"x-coordinates must be strictly increasing"
                 ),
@@ -78,7 +77,7 @@ class TestSurfaces:
         ],
     )
     def test_surface_initialization_with_different_points_arguments(
-        self, points: list[Point], run_expectation
+        self, points: list[SurfacePoint], run_expectation
     ):
         surface_name = "Ground level -2m"
         with run_expectation:
@@ -132,6 +131,7 @@ class TestSurfaces:
             assert i == internal_point["Nr"]
             assert point.x == internal_point["X-coord"]
             assert point.z == internal_point["Value"]
+            assert point.rep_erosion_height == internal_point["Rep. erosion height"]
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
