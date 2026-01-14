@@ -645,6 +645,14 @@ class SurchargeLoads(DSeriesStructureCollection):
 
 
 class SurfacePoint(DSeriesInlineMappedProperties):
+    """Surface point.
+
+       Attributes:
+           x: X-coordinate of the point (distance from the sheet piling).
+           z: Z-coordinate of the point.
+           rep_erosion_height: (Only relevant for CROW calculation) Representative erosion height at the point.
+       """
+
     x: float = 0
     z: float = 0
     rep_erosion_height: float = 0
