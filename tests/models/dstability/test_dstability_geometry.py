@@ -189,17 +189,67 @@ class TestDStabilityGeometry:
         dstability_model.add_layer(points=layer3, soil_code="Peat", label="L3")
 
         expected_layer = [
-            PersistablePoint(X=100, Z=0),
-            PersistablePoint(X=0, Z=0),
-            PersistablePoint(X=0, Z=10),
-            PersistablePoint(X=10, Z=10),
-            PersistablePoint(X=20, Z=10),
-            PersistablePoint(X=25, Z=10),
-            PersistablePoint(X=30, Z=10),
-            PersistablePoint(X=100, Z=10),
+            PersistablePoint(X=30.0, Z=10.0),
+            PersistablePoint(X=25.0, Z=10.0),
+            PersistablePoint(X=20.0, Z=10.0),
+            PersistablePoint(X=10.0, Z=10.0),
+            PersistablePoint(X=0.0, Z=10.0),
+            PersistablePoint(X=0.0, Z=0.0),
+            PersistablePoint(X=100.0, Z=0.0),
+            PersistablePoint(X=100.0, Z=10.0)
         ]
 
         assert (
             dstability_model.datastructure.geometries[0].Layers[0].Points
+            == expected_layer
+        )
+
+    @pytest.mark.unittest
+    def test_enclosed_layer_with_missing_points_on_edge_is_fixed(self):
+        layer1 = [
+            Point(x=0, z=0),
+            Point(x=0, z=10),
+            Point(x=10, z=10),
+            Point(x=10, z=0),
+            Point(x=9, z=0),
+            Point(x=9, z=9),
+            Point(x=5, z=9), # Point to add
+            Point(x=1, z=9),
+            Point(x=1, z=0),
+        ]
+
+        layer2 = [
+            Point(x=1, z=0),
+            Point(x=1, z=5),
+            Point(x=5, z=5), # Point to add
+            Point(x=9, z=5),
+            Point(x=9, z=0),
+        ]
+
+        # Enclosed layer
+        layer3 = [
+            Point(x=1, z=5),
+            Point(x=1, z=9),
+            Point(x=9, z=9),
+            Point(x=9, z=5),
+        ]
+
+        dstability_model = DStabilityModel()
+        dstability_model.add_soil(Soil(code="Peat"))
+        dstability_model.add_layer(points=layer1, soil_code="Peat", label="L1")
+        dstability_model.add_layer(points=layer2, soil_code="Peat", label="L2")
+        dstability_model.add_layer(points=layer3, soil_code="Peat", label="L3")
+
+        expected_layer = [
+            PersistablePoint(X=9.0, Z=9.0),
+            PersistablePoint(X=9.0, Z=5.0),
+            PersistablePoint(X=5.0, Z=5.0),
+            PersistablePoint(X=1.0, Z=5.0),
+            PersistablePoint(X=1.0, Z=9.0),
+            PersistablePoint(X=5.0, Z=9.0),
+        ]
+
+        assert (
+            dstability_model.datastructure.geometries[0].Layers[2].Points
             == expected_layer
         )

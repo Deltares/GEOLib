@@ -6,6 +6,7 @@ from typing import BinaryIO
 import matplotlib.pyplot as plt
 from pydantic import DirectoryPath, FilePath
 from shapely.geometry import LineString, Polygon
+from shapely.geometry import Point as ShapelyPoint
 from shapely.ops import polygonize
 from shapely.validation import make_valid
 
@@ -552,20 +553,66 @@ class DStabilityModel(BaseModel):
         valid_points = make_valid(self.geolib_points_to_shapely_polygon(points))
         return self.to_dstability_points(valid_points)
 
-    def connect_layers(self, layer1: PersistableLayer, layer2: PersistableLayer):
-        """Connects two polygons by adding a the missing points on the polygon edges. Returns the two new polygons."""
+    def add_point_to_list(self, new_point: ShapelyPoint, points: list[ShapelyPoint], tol: float = 1e-4):
+        """Adds a point to a list of points. The point is added at the correct location.
+        This is done by checking pairwise if the point lies between two points and adding it 
+        between the points if this is the case.
+        
+        Args:
+            new_point (ShapelyPoint): the point to add
+            points (list[ShapelyPoint]): the list of points. Should start and end with the same point.
+            tol (float): the tolerance for checking if the point lies on the line between two points.
+
+        Returns:
+            list[ShapelyPoint]: the list of points
+        """
+
+        for i in range(len(points) - 1):           
+            # If the point is already present, skip it
+            if (new_point.equals_exact(points[i], tolerance=tol)
+                    or new_point.equals_exact(points[i + 1], tolerance=tol)): 
+                break
+
+            # Create a LineString between the two points
+            line = LineString([points[i], points[i + 1]])
+
+            # Check if the new_point lies between the considered points
+            if line.distance(new_point) < tol:
+                points.insert(i + 1, new_point)
+                break
+        
+        # Points is always returned, also if the point is not added
+        return points
+
+    def connect_layers(self, layer1: PersistableLayer, layer2: PersistableLayer, tolerance: float = 1e-4):
+        """Connects two polygons by adding a the missing points on the polygon edges. 
+        Returns the two new polygons."""
+
         linestring1 = self.to_shapely_linestring(layer1.Points)
         linestring2 = self.to_shapely_linestring(layer2.Points)
 
-        # Create a union of the two polygons and polygonize it creating two connected polygons
-        union = linestring1.union(linestring2)
-        result = [geom for geom in polygonize(union)]
+        # Create Shapely Points of PersistableLayers
+        points_1 = self.to_shapely_points(layer1.Points)
+        points_2 = self.to_shapely_points(layer2.Points)
 
-        # If the result has two polygons, we return them, otherwise we return the original polygons
-        if len(result) == 2:
-            return result[0].exterior, result[1].exterior
-        else:
-            return linestring1, linestring2
+        # Create subsets of points that intersect both polygons
+        intersect_points_1 = [p for p in points_1 if linestring2.distance(p) < tolerance and p not in points_2]
+        intersect_points_2 = [p for p in points_2 if linestring1.distance(p) < tolerance and p not in points_1]
+
+        # Repeat the first point
+        points_1.append(points_1[0])
+        points_2.append(points_2[0])
+
+        # Add the missing points to the polygons. The points should be added at the correct locations
+        for points, intersect_points in [(points_1, intersect_points_2), (points_2, intersect_points_1)]:
+            for new_point in intersect_points:
+                points = self.add_point_to_list(new_point, points, tolerance)
+
+        # Create Shapely Polygons from the points - remove the last point to avoid duplicate points
+        polygon_1 = Polygon(points_1[:-1])
+        polygon_2 = Polygon(points_2[:-1])
+
+        return polygon_1, polygon_2
 
     def add_layer_and_connect_points(
         self, current_layers: list[PersistableLayer], new_layer: PersistableLayer
@@ -582,20 +629,23 @@ class DStabilityModel(BaseModel):
                 self.dstability_points_to_shapely_polygon(new_layer.Points).exterior
             ):
                 # If it does, connect the layers
-                linestring1, linestring2 = self.connect_layers(layer, new_layer)
+                polygon_1, polygon_2 = self.connect_layers(layer, new_layer)
 
                 # Update the points of the layers
                 current_layers[current_layers.index(layer)].Points = (
-                    self.to_dstability_points(linestring1)
+                    self.to_dstability_points(polygon_1)
                 )
                 current_layers[current_layers.index(new_layer)].Points = (
-                    self.to_dstability_points(linestring2)
+                    self.to_dstability_points(polygon_2)
                 )
 
     def to_shapely_linestring(self, points: list[PersistablePoint]) -> LineString:
         converted_points = [(p.X, p.Z) for p in points]
         converted_points.append(converted_points[0])
         return LineString(converted_points)
+
+    def to_shapely_points(self, points: list[PersistablePoint]) -> list[ShapelyPoint]:
+        return [ShapelyPoint(p.X, p.Z) for p in points]
 
     def dstability_points_to_shapely_polygon(
         self, points: list[PersistablePoint]
