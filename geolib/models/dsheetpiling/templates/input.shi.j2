@@ -190,9 +190,9 @@ SheetPilingXi={{ "%.2f"|format(vertical_balance.sheetpilingxi) }}
 [STRUTS]
 {% if struts is mapping %}
   {{ struts.struts | length }} Number of struts
- Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side Name
 {% for strut in struts.struts %}
-  {{ loop.index }} {{ "%7.2f"|format(strut.level) }} {{ "%11.4E"|format(strut.e_modulus) }} {{ "%11.4E"|format(strut.cross_section) }} {{ "%7.2f"|format(strut.length) }} {{ "%6.2f"|format(strut.buckling_force) }} {{ "%2d"|format(strut.angle) }} {{ strut.side.value }} {{ strut.type.value }} {{ strut.name }}
+  {{ loop.index }} {{ "%7.2f"|format(strut.level) }} {{ "%11.4E"|format(strut.e_modulus) }} {{ "%11.4E"|format(strut.cross_section) }} {{ "%7.2f"|format(strut.length) }} {{ "%6.2f"|format(strut.buckling_force) }} {{ "%2d"|format(strut.angle) }} {{ strut.side.value }} {{ strut.name }}
 {% endfor %}
 
 {% else %}

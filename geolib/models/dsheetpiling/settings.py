@@ -76,8 +76,8 @@ class Side(IntEnum):
     BOTH = 3
 
 
-class CrowAnchorOrStrutType(IntEnum):
-    """Defines the type of anchor or strut (for CROW)"""
+class CrowAnchorType(IntEnum):
+    """Defines the type of anchor (for CROW)"""
 
     TensionPileGroutAnchor = 1
     Other = 2

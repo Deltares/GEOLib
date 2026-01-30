@@ -377,10 +377,10 @@ class TestInternalParseInputStructure:
         1 : Elastic calculation = TRUE
         0 : Wooden sheet piling = FALSE"""
 
-    text_strut = """1 -10.00  4.1  4.2  4.3 4.4 4.5 2 1 Strut"""
+    text_strut = """1 -10.00  4.1  4.2  4.3 4.4 4.5 2 Strut"""
 
     text_struts = f"""1 Number of struts  
-    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name 
+    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side Name 
     {text_strut}"""
 
     text_anchor = """1  -2.00  2.4  2.5 2.6 2.7 2.8 2.9 1 2 Short anchor"""
@@ -542,7 +542,6 @@ class TestInternalParseInputStructure:
         assert strut.buckling_force == 4.4
         assert strut.angle == 4.5
         assert strut.side == 2
-        assert strut.type == 1
 
     def validate_struts(self, strut_list: Struts):
         assert strut_list
