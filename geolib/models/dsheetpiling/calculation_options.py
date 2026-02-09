@@ -10,7 +10,7 @@ from .settings import (
     CalculationType,
     DesignType,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
+    PartialFactorSetCrow,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
@@ -31,7 +31,7 @@ class CalculationOptionsPerStage(BaseDataClass):
 
     anchor_factor: float = 1
     partial_factor_set: (
-        PartialFactorSetEC7NADBE | PartialFactorSetCUR | PartialFactorSetEC7NADNL | None
+        PartialFactorSetEC7NADBE | PartialFactorSetCrow | PartialFactorSetEC7NADNL | None
     ) = None
 
 
@@ -85,7 +85,7 @@ class OverallStabilityCalculationOptions(CalculationOptions):
      stability_eurocode_partial_factor_set: partial factor set selected for the EC7 General calculation
      stability_ec7_nl_partial_factor_set: partial factor set selected for the EC7 NL calculation
      stability_ec7_be_partial_factor_set: partial factor set selected for the EC7 BE calculation
-     stability_cur_partial_factor_set: partial factor set selected for the CUR calculation
+     stability_crow_partial_factor_set: partial factor set selected for the CROW calculation
      stability_export: Set on True to generate an input file with STI format which can be opened with D-Geo Stability
     """
 
@@ -99,7 +99,9 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     overall_stability_ec7_be_partial_factor_set: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.RC1SET1
     )
-    stability_cur_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
+    stability_crow_class: PartialFactorSetCrow = (
+        PartialFactorSetCrow.CC0
+    )
     stability_export: bool = False
 
 
@@ -142,14 +144,11 @@ class VerifyCalculationOptions(CalculationOptions):
      ec7_be_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
      ec7_be_method: Select method of calculation for EC7 BE
      ec7_be_overall_risk_class: Select risk class
-     cur_method: Select method of calculation according to CUR 166 design procedure
-     cur_overall_partial_factor_set: Select partial factor set
-     cur_overall_anchor_factor: multiplication factor for the anchor stiffness
-     cur_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
+     crow_overall_stability: Set to True to perform an overall stability calculation using modified values for soil properties (cohesion, friction angle and unit weight) depending on the Design approach chosen for all stages.
     """
 
     input_calculation_type: CalculationType = CalculationType.VERIFY_SHEETPILING
-    verify_type: VerifyType = VerifyType.CUR
+    verify_type: VerifyType = VerifyType.EC7NL
     eurocode_partial_factor_set: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocode_overall_stability: bool = False
     ec7_nl_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -161,14 +160,11 @@ class VerifyCalculationOptions(CalculationOptions):
     ec7_be_overall_stability: bool = False
     ec7_be_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7_be_overall_risk_class: RiskClassEC7BE = RiskClassEC7BE.RC2
-    cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    cur_overall_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    cur_overall_anchor_factor: Annotated[float, Field(ge=0.001, le=1000)] = 1
-    cur_overall_stability: bool = False
+    crow_overall_stability: bool = False
 
     @property
     def allowable_anchor_force_calculation_type(self) -> bool:
-        return (self.verify_type == VerifyType.CUR) or (
+        return (self.verify_type == VerifyType.CROW) or (
             self.verify_type == VerifyType.EC7NL
         )
 
@@ -190,8 +186,7 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
      design_ec7_nl_method: Select method of calculation according to CUR 166 design procedure
      design_ec7_be_partial_factor_set: Select partial factor set
      design_ec7_be_method: Select method of calculation according to CUR 166 design procedure
-     design_partial_factor_set: Select partial factor set
-     design_cur_method: Select method of calculation according to CUR 166 design procedure
+     design_crow_partial_factor_set: Select partial factor set
     """
 
     input_calculation_type: CalculationType = CalculationType.DESIGN_SHEETPILING_LENGTH
@@ -213,5 +208,4 @@ class DesignSheetpilingLengthCalculationOptions(CalculationOptions):
     design_ec7_be_method: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
-    design_partial_factor_set: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    design_cur_method: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    design_crow_class: PartialFactorSetCrow = ( PartialFactorSetCrow.CC0 )

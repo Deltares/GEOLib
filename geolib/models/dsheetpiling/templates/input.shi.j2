@@ -470,8 +470,8 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
 {{ calculation_options_per_stage.stageoptions | length }} = number of items
 {% for stage in calculation_options_per_stage.stageoptions %}
 [STAGE]
-StagePartialFactorSetCUR={{ stage.stagepartialfactorsetcur.value }}
-StageVerify={{ stage.stageverify }}
+StageClassCrow={{ stage.stageclasscrow.value }}
+StageVerifyCrow={{ stage.stageverifycrow }}
 StageAnchorFactor={{ stage.stageanchorfactor }}
 StagePartialFactorSetEC7NADNL={{ stage.stagepartialfactorsetec7nadnl.value }}
 StageRiskClassEC7NADBE={{ stage.stageriskclassec7nadbe.value }}
@@ -505,8 +505,7 @@ DesignPartialFactorSetEC7NADNL={{ calculation_options.designpartialfactorsetec7n
 DesignEC7NLMethod={{ calculation_options.designec7nlmethod.value }}
 DesignEC7BEPartialFactorSet={{ calculation_options.designec7bepartialfactorset.value }}
 DesignEC7BEMethod={{ calculation_options.designec7bemethod.value }}
-DesignPartialFactorSet={{ calculation_options.designpartialfactorset.value }}
-DesignCURMethod={{ calculation_options.designcurmethod.value }}
+DesignCrowClass={{ calculation_options.designcrowclass.value }}
 VerifyType={{ calculation_options.verifytype.value }}
 EuroCodePartialFactorSet={{ calculation_options.eurocodepartialfactorset.value }}
 EuroCodeOverallStability={{ calculation_options.eurocodeoverallstability|int }}
@@ -518,12 +517,9 @@ EC7NLAssessmentType={{ calculation_options.ec7nlassessmenttype.value }}
 EC7BEOverallStability={{ calculation_options.ec7beoverallstability|int }}
 EC7BEMethod={{ calculation_options.ec7bemethod.value}}
 EC7BEOverallRiskClass={{ calculation_options.ec7beoverallriskclass.value}}
-CURMethod={{ calculation_options.curmethod.value }}
-CUROverallPartialFactorSet={{ calculation_options.curoverallpartialfactorset.value }}
-CUROverallAnchorFactor={{ calculation_options.curoverallanchorfactor }}
-CUROverallStability={{ calculation_options.curoverallstability|int }}
 CrowAssessmentType={{ calculation_options.crowassessmenttype.value }}
 CrowReferencePeriod={{ calculation_options.crowreferenceperiod }}
+VerifyCrowOverallStability={{ calculation_options.crowoverallstability|int }}
 CURAnchorForceStage={{ calculation_options.curanchorforcestage }}
 CURStabilityStage={{ calculation_options.curstabilitystage }}
 OverallStabilityType={{ calculation_options.overallstabilitytype.value }}
@@ -531,7 +527,7 @@ StabilityExport={{ calculation_options.stabilityexport|int }}
 StabilityEuroCodePartialFactorSet={{ calculation_options.stabilityeurocodepartialfactorset.value }}
 StabilityEC7NLPartialFactorSet={{ calculation_options.stabilityec7nlpartialfactorset.value }}
 OverallStabilityEC7BEPartialFactorSet={{ calculation_options.overallstabilityec7bepartialfactorset.value }}
-StabilityCURPartialFactorSet={{ calculation_options.stabilitycurpartialfactorset.value }}
+StabilityCrowClass={{ calculation_options.stabilitycrowclass.value }}
 {% else %}
 {{ calculation_options }}
 {% endif %}

@@ -34,9 +34,6 @@ from .dsheetpiling_structures import (
 )
 from .dsheetpiling_validator import DSheetPilingValidator
 from .internal_partial_factors import (
-    PartialFactorsCurI,
-    PartialFactorsCurIi,
-    PartialFactorsCurIii,
     PartialFactorsEc7BE1Set1,
     PartialFactorsEc7BE1Set2,
     PartialFactorsEc7BE2Set1,
@@ -83,7 +80,7 @@ from .settings import (
     ModulusReactionType,
     ModulusSubgradeReaction,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
+    PartialFactorSetCrow,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
@@ -272,10 +269,9 @@ class CalculationOptions(DSeriesStructure):
         PartialFactorSetEC7NADBE.RC1SET1
     )
     designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    designcrowclass: PartialFactorSetCrow = PartialFactorSetCrow.CC0
     # verify sheet piling calculation
-    verifytype: VerifyType = VerifyType.CUR
+    verifytype: VerifyType = VerifyType.EC7NL
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocodeoverallstability: bool = False
     ec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -287,10 +283,7 @@ class CalculationOptions(DSeriesStructure):
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7beoverallriskclass: RiskClassEC7BE = RiskClassEC7BE.RC2
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    curoverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
-    curoverallstability: bool = False
+    crowoverallstability: bool = False
     crowassessmenttype: AssessmentTypeEC7NL = AssessmentTypeEC7NL.NewConstruction
     crowreferenceperiod: Annotated[int, Field(ge=1, le=100)] = 50
     # Characteristic Kranz Anchor Strength calculation
@@ -306,7 +299,7 @@ class CalculationOptions(DSeriesStructure):
     overallstabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.RC1SET1
     )
-    stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
+    stabilitycrowclass: PartialFactorSetCrow = ( PartialFactorSetCrow.CC0 )
 
     # These are all subgroups (key=value)
     partial_factors_eurocode_da1_set1: PartialFactorsEurocodeDa1Set1 = (
@@ -327,9 +320,6 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_be_2_set2: PartialFactorsEc7BE2Set2 = PartialFactorsEc7BE2Set2()
     partial_factors_ec7_be_3_set1: PartialFactorsEc7BE3Set1 = PartialFactorsEc7BE3Set1()
     partial_factors_ec7_be_3_set2: PartialFactorsEc7BE3Set2 = PartialFactorsEc7BE3Set2()
-    partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
-    partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
-    partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
     partial_factors_crow_b1_c0: PartialFactorsCrowB1C0 = PartialFactorsCrowB1C0()
     partial_factors_crow_b1_c1: PartialFactorsCrowB1C1 = PartialFactorsCrowB1C1()
     partial_factors_crow_b1_c2: PartialFactorsCrowB1C2 = PartialFactorsCrowB1C2()
@@ -579,8 +569,8 @@ class WaterLevels(DSeriesNoParseSubStructure):
 class StageOptions(DSeriesInlineMappedProperties):
     """Representation of [STAGE] block."""
 
-    stagepartialfactorsetcur: PartialFactorSetCUR = PartialFactorSetCUR.UNKNOWN
-    stageverify: int = 0
+    stageclasscrow: PartialFactorSetCrow = PartialFactorSetCrow.CC0
+    stageverifycrow: int = 0
     stageanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
     stageriskclassec7nadbe: RiskClassEC7BE = RiskClassEC7BE.RC2
@@ -900,10 +890,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
-            VerifyType.CUR: {
-                "stagepartialfactorsetcur": input_calc_options.partial_factor_set,
-                "stageverify": stage_id + 1,
-                "stageanchorfactor": input_calc_options.anchor_factor,
+            VerifyType.CROW: {
+                "stagepartialfactorsetcrow": input_calc_options.partial_factor_set,
+                "stageverifycrow": stage_id + 1,
             },
             VerifyType.EC7NL: {
                 "stagepartialfactorsetec7nadnl": input_calc_options.partial_factor_set,
@@ -1372,10 +1361,10 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     factors_for_overall_stability: str | None = None
     overall_stability_results: str | None = None
 
-    # Verify calculation according to CUR or EC7-NL with method B
+    # Verify calculation according to EC7-NL with method B
     factors_for_verification: str | None = None
 
-    # Verify calculation according to CUR or EC7-NL
+    # Verify calculation according to EC7-NL
     verify_step_6____5_serviceability_limit_state: (
         BaseVerificationStructureProperties | None
     ) = None

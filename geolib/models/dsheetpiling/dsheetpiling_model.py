@@ -170,7 +170,7 @@ class DSheetPilingModel(BaseModel):
     def _is_calculation_per_stage_required(self) -> bool:
         """Function that checks if [CALCULATION PER STAGE] can be modified. This is true for a verify sheet-piling calculation and method B."""
         _map_method_b_available = {
-            VerifyType.CUR: self.datastructure.input_data.calculation_options.curmethod,
+            VerifyType.CROW: PartialFactorCalculationType.METHODB,
             VerifyType.EC7NL: self.datastructure.input_data.calculation_options.ec7nlmethod,
             VerifyType.EC7BE: self.datastructure.input_data.calculation_options.ec7bemethod,
         }

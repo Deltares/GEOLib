@@ -108,7 +108,7 @@ class CalculationType(IntEnum):
 
 class DesignType(IntEnum):
     REPRESENTATIVE = 0
-    CUR = 1
+    CROW = 1
     EC7GENERAL = 2
     EC7NL = 3
     EC7BE = 4
@@ -152,12 +152,12 @@ class RiskClassEC7BE(IntEnum):
     RC3 = 2
 
 
-class PartialFactorSetCUR(IntEnum):
-    UNKNOWN = -1
-    CLASSI = 0
-    CLASSII = 1
-    CLASSIII = 2
-    SLS = 3
+class PartialFactorSetCrow(IntEnum):
+    CC0 = 0
+    CC1 = 1
+    CC2 = 2
+    CC3 = 3
+    SLS = 4
 
 
 class PartialFactorCalculationType(IntEnum):
@@ -166,7 +166,7 @@ class PartialFactorCalculationType(IntEnum):
 
 
 class VerifyType(IntEnum):
-    CUR = 0
+    CROW = 0
     EC7GENERAL = 1
     EC7NL = 2
     EC7BE = 3
