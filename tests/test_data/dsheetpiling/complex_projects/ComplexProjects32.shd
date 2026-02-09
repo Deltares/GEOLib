@@ -2,21 +2,21 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    :  
 
-DATE       : 08/01/2026
-TIME       : 15:36:46
-FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\batch\ComplexProjects32.shd
-CREATED BY : D-Sheet Piling version 24.1.0.3814
+DATE       : 30/01/2026
+TIME       : 13:23:39
+FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\ComplexProjects32.shd
+CREATED BY : D-Sheet Piling version 24.1.0.4018
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Sheet Piling=1039
+D-Sheet Piling=1041
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=24.1.0.3810
-DGSCPTipUI.dll=24.1.0.3810
+DGSCPTipCalc.dll=24.1.0.3996
+DGSCPTipUI.dll=24.1.0.3996
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -663,34 +663,41 @@ S19
   1     2 SF left start
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       7.90
-  2       3.60       6.00
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       7.90                   0.00
+  2       3.60       6.00                   0.00
   2     5 SF right start
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       7.90
-  2       1.50       8.70
-  3       3.50       8.70
-  4      10.00       4.50
-  5      30.00       4.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       7.90                   0.00
+  2       1.50       8.70                   0.00
+  3       3.50       8.70                   0.00
+  4      10.00       4.50                   0.00
+  5      30.00       4.50                   0.00
   3     2 SF left def
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       6.00
-  2      30.00       6.00
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       6.00                   0.00
+  2      30.00       6.00                   0.00
   4     5 SF right def
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       8.45
-  2       1.50       8.70
-  3       3.50       8.70
-  4      10.00       4.50
-  5      30.00       4.50
-
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       8.45                   0.00
+  2       1.50       8.70                   0.00
+  3       3.50       8.70                   0.00
+  4      10.00       4.50                   0.00
+  5      30.00       4.50                   0.00
 [END OF SURFACES]
 
 [WATER LEVELS]
@@ -764,8 +771,8 @@ S19
 [CALCULATION OPTIONS PER STAGE]
 2 = number of items
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -774,8 +781,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=1
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -804,8 +811,7 @@ DesignPartialFactorSetEC7NADNL=0
 DesignEC7NLMethod=0
 DesignEC7BEPartialFactorSet=3
 DesignEC7BEMethod=1
-DesignPartialFactorSet=0
-DesignCURMethod=0
+DesignCrowClass=0
 VerifyType=3
 EuroCodePartialFactorSet=0
 EuroCodeOverallStability=0
@@ -817,12 +823,9 @@ EC7NLAssessmentType=0
 EC7BEOverallStability=1
 EC7BEMethod=1
 EC7BEOverallRiskClass=1
-CURMethod=0
-CUROverallPartialFactorSet=0
-CUROverallAnchorFactor=1.000
-CUROverallStability=0
 CrowAssessmentType=0
 CrowReferencePeriod=50
+VerifyCrowOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=1
 OverallStabilityType=4
@@ -830,7 +833,7 @@ StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=0
 OverallStabilityEC7BEPartialFactorSet=3
-StabilityCURPartialFactorSet=0
+StabilityCrowClass=0
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
@@ -1465,12 +1468,22 @@ ConstructLoadTempFav
 ConstructLoadTempUnfav
 ConstructLoadPermFav
 ConstructLoadPermUnfav
+LoadFactorVarUnfavWaterLevel
+LoadFactorPerm
+CombiLoadFactorVarUnfav
+CombiLoadFactorVarUnfavWaterLevel
+CombiLoadFactorConstructVarUnfav
+MaterialFactorUnitWeight
+GeometryMinIncRetainingHeight
+GeometryFixedRetainingHeight
+FactorRepValuesMD
+ModelFactorAnchorForce
 [END OF COLUMN INDICATION]
 [DATA]
-    1    12   1.000  1.000  1.000   0.00   0.00   0.00  0.00  0.00  0.00  0.000  1.111  1.000  1.000  1.350  1.111  1.000   1.000   1.000  0.000  1.111  1.000  1.000
-    1    13   1.250  1.250  1.000  10.00   0.50   0.30  0.00  0.00  0.00  0.000  1.100  1.000  1.000  1.000  1.000  1.000   1.300   1.000  0.000  1.100  1.000  1.000
-    2    12   1.000  1.000  1.000   0.00   0.00   0.00  0.00  0.00  0.00  0.000  1.111  1.000  1.000  1.350  1.111  1.000   1.000   1.000  0.000  1.111  1.000  1.000
-    2    13   1.250  1.250  1.000  10.00   0.50   0.30  0.00  0.00  0.00  0.000  1.100  1.000  1.000  1.000  1.000  1.000   1.300   1.000  0.000  1.100  1.000  1.000
+    1    12   1.000  1.000  1.000   0.00   0.00   0.00  0.00  0.00  0.00  0.000  1.111  1.000  1.000  1.350  1.111  1.000   1.000   1.000  0.000  1.111  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    1    13   1.250  1.250  1.000  10.00   0.50   0.30  0.00  0.00  0.00  0.000  1.100  1.000  1.000  1.000  1.000  1.000   1.300   1.000  0.000  1.100  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    2    12   1.000  1.000  1.000   0.00   0.00   0.00  0.00  0.00  0.00  0.000  1.111  1.000  1.000  1.350  1.111  1.000   1.000   1.000  0.000  1.111  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    2    13   1.250  1.250  1.000  10.00   0.50   0.30  0.00  0.00  0.00  0.000  1.100  1.000  1.000  1.000  1.000  1.000   1.300   1.000  0.000  1.100  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
 [END OF DATA]
 [END OF TABLE]
 [END OF FACTORS FOR VERIFICATION]

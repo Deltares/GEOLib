@@ -2,21 +2,21 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    :  
 
-DATE       : 22/12/2025
-TIME       : 11:34:28
+DATE       : 29/01/2026
+TIME       : 20:27:35
 FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\Benchmarks\bm3-5b.shd
-CREATED BY : D-Sheet Piling version 24.1.0.3753
+CREATED BY : D-Sheet Piling version 24.1.0.4018
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Sheet Piling=1039
+D-Sheet Piling=1041
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=24.1.0.3738
-DGSCPTipUI.dll=24.1.0.3738
+DGSCPTipCalc.dll=24.1.0.3996
+DGSCPTipUI.dll=24.1.0.3996
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -178,8 +178,8 @@ SheetPilingNumberOfPilesDrilled=2
 
 [STRUTS]
   1 Number of struts
- Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name
-  1 -10.00  2.100E+0008  1.000E-0004    10.00   500.00   -30.00      2      0 Strut
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side Name
+  1 -10.00  2.100E+0008  1.000E-0004    10.00   500.00   -30.00      2 Strut
 
 [END OF STRUTS]
 
@@ -215,14 +215,17 @@ SheetPilingNumberOfPilesDrilled=2
   1     1 Surface 1
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       0.00
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       0.00                   0.00
   2     1 Surface 2
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       0.00
-
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       0.00                   0.00
 [END OF SURFACES]
 
 [WATER LEVELS]
@@ -267,8 +270,8 @@ Level -20.00
 [CALCULATION OPTIONS PER STAGE]
 1 = number of items
 [STAGE]
-StagePartialFactorSetCUR=-1
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=1
 StageRiskClassEC7NADBE=1
@@ -297,8 +300,7 @@ DesignPartialFactorSetEC7NADNL=1
 DesignEC7NLMethod=0
 DesignEC7BEPartialFactorSet=2
 DesignEC7BEMethod=0
-DesignPartialFactorSet=0
-DesignCURMethod=0
+DesignCrowClass=0
 VerifyType=0
 EuroCodePartialFactorSet=0
 EuroCodeOverallStability=0
@@ -310,12 +312,9 @@ EC7NLAssessmentType=0
 EC7BEOverallStability=0
 EC7BEMethod=0
 EC7BEOverallRiskClass=1
-CURMethod=0
-CUROverallPartialFactorSet=0
-CUROverallAnchorFactor=1.000
-CUROverallStability=0
 CrowAssessmentType=0
 CrowReferencePeriod=50
+VerifyCrowOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=0
 OverallStabilityType=0
@@ -323,7 +322,7 @@ StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=1
 OverallStabilityEC7BEPartialFactorSet=2
-StabilityCURPartialFactorSet=0
+StabilityCrowClass=0
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000

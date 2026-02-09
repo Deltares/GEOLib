@@ -2,21 +2,21 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    :  
 
-DATE       : 08/01/2026
-TIME       : 15:29:02
-FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\batch\ComplexProjects16.shd
-CREATED BY : D-Sheet Piling version 24.1.0.3814
+DATE       : 30/01/2026
+TIME       : 13:14:51
+FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\ComplexProjects16.shd
+CREATED BY : D-Sheet Piling version 24.1.0.4018
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Sheet Piling=1039
+D-Sheet Piling=1041
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=24.1.0.3810
-DGSCPTipUI.dll=24.1.0.3810
+DGSCPTipCalc.dll=24.1.0.3996
+DGSCPTipUI.dll=24.1.0.3996
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -766,11 +766,11 @@ SheetPilingNumberOfPilesDrilled=4
 
 [STRUTS]
   4 Number of struts
- Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side   Type Name
-  1  -2.43  2.100E+0008  4.350E-0003    12.50  9999.00     0.00      1      0 Stempelraam boven dek
-  2 -10.19  1.000E+0007  8.000E-0001    12.50  9999.00     0.00      1      0 Onderwaterbeton 2-laags
-  3  -3.40  1.000E+0007  8.000E-0001    12.50  9999.00     0.00      1      0 Dek
-  4  -5.00  2.100E+0008  4.350E-0003    12.50  9999.00     0.00      1      0 Stempelraam boven -1 vloer
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side Name
+  1  -2.43  2.100E+0008  4.350E-0003    12.50  9999.00     0.00      1 Stempelraam boven dek
+  2 -10.19  1.000E+0007  8.000E-0001    12.50  9999.00     0.00      1 Onderwaterbeton 2-laags
+  3  -3.40  1.000E+0007  8.000E-0001    12.50  9999.00     0.00      1 Dek
+  4  -5.00  2.100E+0008  4.350E-0003    12.50  9999.00     0.00      1 Stempelraam boven -1 vloer
 
 [END OF STRUTS]
 
@@ -997,48 +997,63 @@ Initieel (Gem GWS - voet)
   1     1 Nassaukade
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       0.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       0.50                   0.00
   2     3 1e ontgraving
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -4.50
-  2       3.00      -4.50
-  3       6.00      -5.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -4.50                   0.00
+  2       3.00      -4.50                   0.00
+  3       6.00      -5.50                   0.00
   3     1 Max. ontgraving
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00     -11.09
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00     -11.09                   0.00
   4     1 b.k. OWB 2-laags
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -9.99
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -9.99                   0.00
   5     1 NAP -2,5 m
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.50                   0.00
   6     3 Nassaukade eindfase
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -3.00
-  2       4.20      -1.00
-  3       5.80       0.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -3.00                   0.00
+  2       4.20      -1.00                   0.00
+  3       5.80       0.50                   0.00
   7     1 NAP -3,0 m
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -3.00
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -3.00                   0.00
   8     1 NAP -3,5 m
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -3.50
-
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -3.50                   0.00
 [END OF SURFACES]
 
 [WATER LEVELS]
@@ -1301,8 +1316,8 @@ Na leegpompen (Gem GWS)
 [CALCULATION OPTIONS PER STAGE]
 8 = number of items
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=2
 StageRiskClassEC7NADBE=1
@@ -1311,8 +1326,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=2
 StageRiskClassEC7NADBE=1
@@ -1321,8 +1336,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=2
 StageRiskClassEC7NADBE=1
@@ -1331,8 +1346,8 @@ StageAnchorFactorEC7NADNL=1.100
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=2
 StageRiskClassEC7NADBE=1
@@ -1341,8 +1356,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=3
 StageRiskClassEC7NADBE=1
@@ -1351,8 +1366,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=2
 StageRiskClassEC7NADBE=1
@@ -1361,8 +1376,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=2
 StageRiskClassEC7NADBE=1
@@ -1371,8 +1386,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=1
-StageVerify=1
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1401,8 +1416,7 @@ DesignPartialFactorSetEC7NADNL=0
 DesignEC7NLMethod=0
 DesignEC7BEPartialFactorSet=2
 DesignEC7BEMethod=0
-DesignPartialFactorSet=0
-DesignCURMethod=0
+DesignCrowClass=0
 VerifyType=2
 EuroCodePartialFactorSet=0
 EuroCodeOverallStability=0
@@ -1414,12 +1428,9 @@ EC7NLAssessmentType=0
 EC7BEOverallStability=0
 EC7BEMethod=0
 EC7BEOverallRiskClass=1
-CURMethod=1
-CUROverallPartialFactorSet=1
-CUROverallAnchorFactor=1.000
-CUROverallStability=1
 CrowAssessmentType=0
 CrowReferencePeriod=50
+VerifyCrowOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=0
 OverallStabilityType=0
@@ -1427,7 +1438,7 @@ StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=0
 OverallStabilityEC7BEPartialFactorSet=2
-StabilityCURPartialFactorSet=0
+StabilityCrowClass=0
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
@@ -2062,11 +2073,21 @@ ConstructLoadTempFav
 ConstructLoadTempUnfav
 ConstructLoadPermFav
 ConstructLoadPermUnfav
+LoadFactorVarUnfavWaterLevel
+LoadFactorPerm
+CombiLoadFactorVarUnfav
+CombiLoadFactorVarUnfavWaterLevel
+CombiLoadFactorConstructVarUnfav
+MaterialFactorUnitWeight
+GeometryMinIncRetainingHeight
+GeometryFixedRetainingHeight
+FactorRepValuesMD
+ModelFactorAnchorForce
 [END OF COLUMN INDICATION]
 [DATA]
-    3    10   1.250  1.175  1.300  10.00   0.50   0.00  0.05  0.25  0.25  0.000  1.100  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.500  0.900  1.350
-    5    11   1.400  1.200  1.300  10.00   0.50   0.00  0.05  0.25  0.25  0.000  1.250  1.000  1.000  1.000  1.000  1.000   1.200   1.350  0.000  1.650  0.900  1.485
-    8    14   1.000  1.050  1.300  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000
+    3    10   1.250  1.175  1.300  10.00   0.50   0.00  0.05  0.25  0.25  0.000  1.100  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.500  0.900  1.350  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    5    11   1.400  1.200  1.300  10.00   0.50   0.00  0.05  0.25  0.25  0.000  1.250  1.000  1.000  1.000  1.000  1.000   1.200   1.350  0.000  1.650  0.900  1.485  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    8    14   1.000  1.050  1.300  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
 [END OF DATA]
 [END OF TABLE]
 [END OF FACTORS FOR VERIFICATION]

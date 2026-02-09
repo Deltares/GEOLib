@@ -1,21 +1,21 @@
 INPUT FILE FOR D-SHEET PILING
 ==============================================================================
-COMPANY    :  
+COMPANY    :    
 
-DATE       : 22/12/2025
-TIME       : 13:41:35
-FILENAME   : D:\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\ComplexProjects33.shi
-CREATED BY : D-Sheet Piling version 24.1.0.3753
+DATE       : 23-01-2026
+TIME       : 00:44:45
+FILENAME   : C:\DelphiProjects\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\ComplexProjects33.shi
+CREATED BY : D-Sheet Piling version 24.1.0.3929
 ==========================    BEGINNING OF DATA     ==========================
 [INPUT DATA]
 [VERSION]
 Soil=1013
-D-Sheet Piling=1039
+D-Sheet Piling=1040
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=24.1.0.3738
-DGSCPTipUI.dll=24.1.0.3738
+DGSCPTipCalc.dll=24.1.0.3810
+DGSCPTipUI.dll=24.1.0.3810
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -1280,37 +1280,44 @@ DKM205 (passief verkeer
   1     4 watergang
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.99
-  2       2.00      -2.99
-  3       5.70      -1.50
-  4      25.00      -1.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.99                   0.00
+  2       2.00      -2.99                   0.00
+  3       5.70      -1.50                   0.00
+  4      25.00      -1.50                   0.00
   2     4 bestaand
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.07
-  2       1.51      -0.96
-  3       2.26      -0.96
-  4      10.00      -0.93
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.07                   0.00
+  2       1.51      -0.96                   0.00
+  3       2.26      -0.96                   0.00
+  4      10.00      -0.93                   0.00
   3     5 talud
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -1.87
-  2       1.55      -0.97
-  3       2.30      -0.94
-  4       5.68      -0.93
-  5      30.00      -0.92
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -1.87                   0.00
+  2       1.55      -0.97                   0.00
+  3       2.30      -0.94                   0.00
+  4       5.68      -0.93                   0.00
+  5      30.00      -0.92                   0.00
   4     4 watergang vlak
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.99
-  2       2.00      -2.99
-  3       5.70      -2.99
-  4      25.00      -2.99
-
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.99                   0.00
+  2       2.00      -2.99                   0.00
+  3       5.70      -2.99                   0.00
+  4      25.00      -2.99                   0.00
 [END OF SURFACES]
 
 [WATER LEVELS]
@@ -1407,8 +1414,8 @@ DKM205 (passief verkeer
 [CALCULATION OPTIONS PER STAGE]
 3 = number of items
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1417,8 +1424,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1427,8 +1434,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1457,8 +1464,7 @@ DesignPartialFactorSetEC7NADNL=1
 DesignEC7NLMethod=0
 DesignEC7BEPartialFactorSet=2
 DesignEC7BEMethod=0
-DesignPartialFactorSet=0
-DesignCURMethod=0
+DesignCrowClass=0
 VerifyType=2
 EuroCodePartialFactorSet=1
 EuroCodeOverallStability=0
@@ -1470,12 +1476,9 @@ EC7NLAssessmentType=0
 EC7BEOverallStability=0
 EC7BEMethod=0
 EC7BEOverallRiskClass=1
-CURMethod=0
-CUROverallPartialFactorSet=0
-CUROverallAnchorFactor=1.000
-CUROverallStability=0
 CrowAssessmentType=0
 CrowReferencePeriod=50
+VerifyCrowOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=2
 OverallStabilityType=3
@@ -1483,7 +1486,7 @@ StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=0
 OverallStabilityEC7BEPartialFactorSet=2
-StabilityCURPartialFactorSet=0
+StabilityCrowClass=0
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
