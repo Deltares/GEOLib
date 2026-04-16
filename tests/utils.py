@@ -4,12 +4,22 @@ import sys
 from pathlib import Path
 
 import pytest
-from teamcity import is_running_under_teamcity
+
+try:
+    from teamcity import is_running_under_teamcity
+except ImportError:
+    def is_running_under_teamcity():
+        return False
 
 try:
     from pip import main as pipmain
-except:
-    from pip._internal import main as pipmain
+except ImportError:
+    try:
+        from pip._internal import main as pipmain
+    except ImportError:
+        def pipmain(args):
+            """Fallback stub when pip is not available"""
+            pass
 
 only_teamcity = pytest.mark.skipif(
     not (is_running_under_teamcity() or "FORCE_TEAMCITY" in os.environ),
