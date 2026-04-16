@@ -54,8 +54,8 @@ line-length = 90
 target-version = ['py37']
 
 [build-system]
-requires = ["poetry>=1.2.2"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tox]
 isolated_build = true
@@ -82,3 +82,19 @@ version_files = [
     "geolib/__init__.py:__version__",
 ]
 annotated_tag = true
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[tool.pixi.pypi-dependencies]
+d-geolib = { path = ".", editable = true }
+pytest = ">=7.3.1,<8"
+pytest-cov = ">=4.0.0,<5"
+mypy = ">=1.2.0,<2"
+teamcity-messages = ">=1.32,<2"
+fastapi = ">=0.95.1"
+uvicorn = ">=0.21.1"
+httpx = ">=0.24.0"
+
+[tool.pixi.tasks]
