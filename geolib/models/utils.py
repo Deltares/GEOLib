@@ -15,14 +15,18 @@ def is_list(tp):
 
 
 def get_filtered_type_hints(class_type: type) -> list[tuple[str, type]]:
-    """Gets all the (valid) type hints for a given class.
+    """Gets all the (valid) type hints for a given class or instance.
 
     Args:
-        class_type (type): Class to extract property fields.
+        class_type (type): Class or instance to extract property fields.
 
     Returns:
         list[tuple[str, type]]: Filtered list of tuples representing field name and type.
     """
+    # If an instance was passed, get its class
+    if not isinstance(class_type, type):
+        class_type = class_type.__class__
+    
     return [
         (field_name, field)
         for field_name, field in get_type_hints(class_type).items()

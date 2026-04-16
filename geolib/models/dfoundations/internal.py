@@ -523,7 +523,7 @@ class CalculationOptions(DSeriesNoParseSubStructure):
             if value is None:
                 continue  # Nones will be passed by default settings
             toggle_field = self.find_toggle(field)
-            fields = self.model_fields
+            fields = self.__class__.model_fields
             if toggle_field in fields:
                 toggles[toggle_field] = Bool.TRUE
         kwargs.update(toggles)

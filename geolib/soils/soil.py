@@ -450,7 +450,7 @@ class Soil(SoilBaseModel):
         except AttributeError:
             return input_class
 
-        fields = input_class.model_fields
+        fields = type(input_class).model_fields
         for field in fields:
             parameter = fields[field]
             if isinstance(parameter.default, StochasticParameter):
@@ -468,7 +468,7 @@ class Soil(SoilBaseModel):
         Returns:
 
         """
-        fields = self.model_fields
+        fields = self.__class__.model_fields
         for field in fields:
             self.set_stochastic_parameters(self.__getattribute__(field))
 

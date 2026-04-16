@@ -25,7 +25,7 @@ class ComplexVerticalSubstructure(DSeriesStructure):
         them.
         """
         largs = list(args)
-        fields = self.model_fields
+        fields = self.__class__.model_fields
         for field, fieldtype in fields.items():
             if len(largs) == 0:
                 break

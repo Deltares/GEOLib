@@ -372,7 +372,7 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     woodensheetpilingelementkmode: Annotated[float, Field(ge=0.01, le=10)] = 0.8
 
     def __init__(self, *args, **kwargs) -> "SheetPileElement":
-        default_dict = dict(self.model_fields)
+        default_dict = dict(self.__class__.model_fields)
         for field, value in kwargs.items():
             if value is None:
                 kwargs[field] = default_dict[field].default
