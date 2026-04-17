@@ -27,11 +27,11 @@ def test_read_main():
 def test_post_calculate_empty_model_fails():
     model = DFoundationsModel()
 
-    data = model.model_dump_json()
+    payload = model.model_dump(mode="json")
 
     response = client.post(
         "/calculate/dfoundationsmodel",
-        data=data,
+        json=payload,
         auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 500
@@ -46,11 +46,11 @@ def test_post_calculate():
     benchmark_fn = input_folder / "bm1-1.sli"
     model.parse(benchmark_fn)
 
-    data = model.model_dump_json()
+    payload = model.model_dump(mode="json")
 
     response = client.post(
         "/calculate/dsettlementmodel",
-        data=data,
+        json=payload,
         auth=HTTPBasicAuth("test", "test"),
     )
 
