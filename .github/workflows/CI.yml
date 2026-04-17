@@ -28,31 +28,23 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.3.0
-        with:
-          poetry-version: 1.6.1
+      - name: Set up UV
+        uses: astral-sh/setup-uv@v3
 
-      - name: Cache Poetry virtualenv
+      - name: Cache UV virtualenv
         uses: actions/cache@v3
         with:
-          path: ~/.virtualenvs
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/uv.lock') }}
           restore-keys: |
-            venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
-
-      - name: Set Poetry config
-        run: |
-          poetry config virtualenvs.in-project false
-          poetry config virtualenvs.path ~/.virtualenvs
-          poetry env remove --all || true
+            uv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-
 
       - name: Install Dependencies
-        run: poetry install -E server
+        run: uv sync --extra server
 
       - name: Test with pytest
         run: >
-          poetry run pytest
+          uv run pytest
           --cov=geolib
           --cov-report xml:coverage-reports/coverage-hydrolib-core.xml
           --junitxml=xunit-reports/xunit-result-hydrolib-core.xml
