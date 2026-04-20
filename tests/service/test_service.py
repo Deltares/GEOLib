@@ -72,9 +72,11 @@ def test_post_calculate_many():
         model.parse(benchmark_fn)
     ml.models.append(DSettlementModel(filename=Path("c.sli")))
 
+    payload = [model.model_dump(mode="json") for model in ml.models]
+
     response = client.post(
         "/calculate/dsettlementmodels",
-        data="[" + ",".join((model.model_dump_json() for model in ml.models)) + "]",
+        json=payload,
         auth=HTTPBasicAuth("test", "test"),
     )
     assert response.status_code == 200
