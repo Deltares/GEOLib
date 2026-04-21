@@ -58,7 +58,7 @@ class Test_DSettlementInputParser:
 
         # 2. Verify expectations.
         parsed_struct_asdict = dict(parsed_structure)
-        assert geometry_data_key in parsed_struct_asdict.keys(), (
+        assert geometry_data_key in parsed_struct_asdict, (
             ""
             + "Geometry should be wrapping the piezo lines and "
             + "was not imported."
@@ -66,7 +66,7 @@ class Test_DSettlementInputParser:
         geometry_dict: dict = dict(parsed_struct_asdict[geometry_data_key])
         errors: list = []
         for key, key_type in keys_in_structure.items():
-            if not (key in geometry_dict.keys()):
+            if not (key in geometry_dict):
                 errors.append(f"Key {key} has not been parsed.")
             elif not (isinstance(geometry_dict[key], key_type)):
                 errors.append(
@@ -93,20 +93,20 @@ class Test_DSettlementInputParser:
 
         # 2. Verify final expectations.
         parsed_struct_asdict = dict(parsed_structure)
-        assert geometry_data_key in parsed_struct_asdict.keys(), (
+        assert geometry_data_key in parsed_struct_asdict, (
             ""
             + "Geometry should be wrapping the piezo lines and "
             + "was not imported."
         )
 
         geometry_dict = dict(parsed_struct_asdict[geometry_data_key])
-        assert piezo_lines_key in geometry_dict.keys(), (
+        assert piezo_lines_key in geometry_dict, (
             "" + "The piezo key was not found as parsed structure."
         )
         assert isinstance(geometry_dict[piezo_lines_key], PiezoLines)
 
         piezo_lines_dict = dict(geometry_dict[piezo_lines_key])
-        assert piezolines_key in piezo_lines_dict.keys()
+        assert piezolines_key in piezo_lines_dict
         assert len(piezo_lines_dict[piezolines_key]) == len(
             expected_piezolines_curves
         ), ("" + "The generated piezolines were not as expected.")
