@@ -41,8 +41,12 @@ dstability_list = Annotated[list[DStabilityModel], Field(min_length=1)]
 
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, settings.gl_username)
-    correct_password = secrets.compare_digest(credentials.password, settings.gl_password)
+    correct_username = secrets.compare_digest(
+        credentials.username, settings.gl_username
+    )
+    correct_password = secrets.compare_digest(
+        credentials.password, settings.gl_password
+    )
     if not (correct_username and correct_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -1,4 +1,5 @@
 import pytest
+
 from geolib.models.dgeoflow.dgeoflow_model import DGeoFlowModel
 from geolib.soils import Soil
 from geolib.soils.soil import StorageParameters
@@ -22,7 +23,9 @@ class TestDGeoFlowSoil:
         storage_parameters = StorageParameters(
             horizontal_permeability=10.0, vertical_permeability=20.0
         )
-        soil_1 = Soil(name="TestName", code="Test", storage_parameters=storage_parameters)
+        soil_1 = Soil(
+            name="TestName", code="Test", storage_parameters=storage_parameters
+        )
         added_soil_id = dgeoflow_model.add_soil(soil_1)
 
         assert added_soil_id == "18"
@@ -54,7 +57,9 @@ class TestDGeoFlowSoil:
         storage_parameters = StorageParameters(
             horizontal_permeability=10.0, vertical_permeability=20.0
         )
-        soil_1 = Soil(name="TestName", code="Test", storage_parameters=storage_parameters)
+        soil_1 = Soil(
+            name="TestName", code="Test", storage_parameters=storage_parameters
+        )
         added_soil_id = dgeoflow_model.add_soil(soil_1)
 
         assert added_soil_id == "18"

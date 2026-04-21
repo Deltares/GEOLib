@@ -102,9 +102,11 @@ class BearingPileSlipLayer(IntEnum):
     BITUMEN = 3
     USER_DEFINED = 4
 
+
 class OpenPipePileCalculationMethod(IntEnum):
     OPEN_PIPE_PILE = 0
     STANDARD_METHOD = 1
+
 
 class PileShape(IntEnum):
     ROUND_PILE = 0
@@ -156,7 +158,9 @@ class TypesBearingPiles(DSeriesNoParseSubStructure):
     width_h_shape: Annotated[float, Field(ge=0, le=100)] | None = None
     thickness_web: Annotated[float, Field(ge=0, le=100)] | None = None
     thickness_flange: Annotated[float, Field(ge=0, le=100)] | None = None
-    open_pipe_pile_calculation_method: OpenPipePileCalculationMethod = OpenPipePileCalculationMethod.OPEN_PIPE_PILE
+    open_pipe_pile_calculation_method: OpenPipePileCalculationMethod = (
+        OpenPipePileCalculationMethod.OPEN_PIPE_PILE
+    )
     overrule_pile_tip_shape_factor: Bool = Bool.FALSE
     pile_tip_shape_factor: Annotated[float, Field(ge=0, le=10)] | None = None
     overrule_pile_tip_cross_section_factors: Bool = Bool.FALSE
@@ -544,9 +548,12 @@ class ModelTypeEnum(IntEnum):
 
 
 """Note that CuValues is only relevant for Shallow Foundations, which is not supported."""
+
+
 class CuValuesEnum(IntEnum):
     CU_VALUES_BASED_ON_CPTS = 0
     CU_VALUES_MANUAL = 1
+
 
 class ModelType(DFoundationsInlineProperties):
     model: ModelTypeEnum = ModelTypeEnum.BEARING_PILES
@@ -623,61 +630,45 @@ class DFoundationsInputStructure(DSeriesStructure):
     run_identification: str = 6 * "\n"
     cpt_list: CPTList = CPTList()
     profiles: Profiles = Profiles()
-    user_classification_method: str = cleandoc(
-        """          
+    user_classification_method: str = cleandoc("""          
         [USER CLASSIFICATION METHOD]
         0
         [END OF USER CLASSIFICATION METHOD]
-        """
-    )
-    slopes: str = cleandoc(
-        """
+        """)
+    slopes: str = cleandoc("""
             0 = number of items
-        """
-    )
-    types___bearing_piles: list[TypesBearingPiles] | str = cleandoc(
-        """
+        """)
+    types___bearing_piles: list[TypesBearingPiles] | str = cleandoc("""
         -1 : pile type shown in main graph
             0 = number of items
-        """
-    )
-    types___tension_piles_cur: list[TypesTensionPiles] | str = cleandoc(
-        """
+        """)
+    types___tension_piles_cur: list[TypesTensionPiles] | str = cleandoc("""
         -1 : pile type shown in main graph
             0 = number of items
-        """
-    )
-    types___shallow_foundations: str = cleandoc(
-        """
+        """)
+    types___shallow_foundations: str = cleandoc("""
             0 = number of items
-        """
-    )
-    loads: str = cleandoc(
-        """
+        """)
+    loads: str = cleandoc("""
             0 = number of items
-        """
-    )
+        """)
     positions___bearing_piles: PositionsBearingPiles | str = PositionsBearingPiles()
 
     positions___tension_piles_cur: PositionsTensionPiles | str = PositionsTensionPiles()
-    positions___shallow_foundations: str = cleandoc(
-        """
+    positions___shallow_foundations: str = cleandoc("""
         [TABLE]
         DataCount=0
         [END OF TABLE]
-        """
-    )
+        """)
     calculation_options: CalculationOptions | str = CalculationOptions()
     calculationtype: CalculationType = CalculationType()
     preliminary_design: PreliminaryDesign | str = PreliminaryDesign()
-    location_map: str = cleandoc(
-        """
+    location_map: str = cleandoc("""
          0.0000
                 0.0000
                 0.0000
                 0.0000
-        """
-    )
+        """)
 
     # Custom validator
     _validate_run_identification = make_newline_validator(

@@ -1,6 +1,7 @@
 from typing import Any
 
 import pytest
+
 from geolib.errors import ParserError
 from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.dsheetpiling_structures import (
@@ -96,7 +97,8 @@ class TestDSheetpilingWithNumberOfRowsTable:
 class TestDSheetpilingTableEntry:
     @pytest.mark.unittest
     @pytest.mark.parametrize(
-        "separator", [pytest.param(" ", id="Space"), pytest.param("\t", id="Tabulator.")]
+        "separator",
+        [pytest.param(" ", id="Space"), pytest.param("\t", id="Tabulator.")],
     )
     def test_given_text_with_columns_returns_list_structure(self, separator: str):
         class DummyUnwrapped(DSheetpilingTableEntry):

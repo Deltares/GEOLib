@@ -226,7 +226,9 @@ dm.add_reinforcement(
 )
 
 # create reinforcements FORBIDDEN LINE
-dm.add_reinforcement(ForbiddenLine(start=Point(x=30.0, z=0.0), end=Point(x=30.0, z=-4.0)))
+dm.add_reinforcement(
+    ForbiddenLine(start=Point(x=30.0, z=0.0), end=Point(x=30.0, z=-4.0))
+)
 
 from geolib.models.dstability.states import (
     DStabilityStateLinePoint,

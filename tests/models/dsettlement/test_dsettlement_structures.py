@@ -1,4 +1,5 @@
 import pytest
+
 from geolib.models.dseries_parser import DSeriesRepeatedGroupedProperties
 from geolib.models.dsettlement.dsettlement_structures import (
     ComplexVerticalSubstructure,
@@ -80,7 +81,9 @@ class TestDSerieRepeatedTableStructure:
         # 1. Define test data.
         class_name = DSerieRepeatedTableStructure.__name__.lower()
         group_key = "dumb_key"
-        expected_error = f"No repeated table keys ({group_key}) allowed for {class_name}."
+        expected_error = (
+            f"No repeated table keys ({group_key}) allowed for {class_name}."
+        )
         test_dict = {
             "column_indication": "a\nb\n",
             "group_data": [f"{group_key}\n4 2\n", "24\n2 4\n", f"{group_key}\n0 5\n"],

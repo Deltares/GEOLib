@@ -6,6 +6,8 @@ from pathlib import Path
 from tkinter import Label
 
 import pytest
+from teamcity import is_running_under_teamcity
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dgeoflow import DGeoFlowModel
@@ -16,8 +18,6 @@ from geolib.models.dgeoflow.internal import (
     InternalPipeTrajectory,
     PersistablePoint,
 )
-from teamcity import is_running_under_teamcity
-
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -95,7 +95,9 @@ class TestDGeoFlowModel:
             pytest.param("dgeoflow/Berekening3", id="Input Structure"),
         ],
     )
-    def test_given_data_when_parse_and_serialize_then_does_not_raise(self, dir_path: str):
+    def test_given_data_when_parse_and_serialize_then_does_not_raise(
+        self, dir_path: str
+    ):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dgeoflow_model = DGeoFlowModel(filename=None)
@@ -401,10 +403,14 @@ class TestDGeoFlowModel:
         dm.add_calculation(label="New Calculation 1", set_current=True)
 
         dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
-        dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+        dm.add_calculation(
+            scenario_index=0, label="New Calculation 2", set_current=True
+        )
 
         dm.add_stage(scenario_index=1, label="New Stage 3", set_current=True)
-        dm.add_calculation(scenario_index=1, label="New Calculation 3", set_current=True)
+        dm.add_calculation(
+            scenario_index=1, label="New Calculation 3", set_current=True
+        )
 
         assert len(dm.scenarios) == 2
         assert len(dm.scenarios[0].Stages) == 2

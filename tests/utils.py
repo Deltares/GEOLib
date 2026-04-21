@@ -8,8 +8,10 @@ import pytest
 try:
     from teamcity import is_running_under_teamcity
 except ImportError:
+
     def is_running_under_teamcity():
         return False
+
 
 try:
     from pip import main as pipmain
@@ -17,9 +19,11 @@ except ImportError:
     try:
         from pip._internal import main as pipmain
     except ImportError:
+
         def pipmain(args):
             """Fallback stub when pip is not available"""
             pass
+
 
 only_teamcity = pytest.mark.skipif(
     not (is_running_under_teamcity() or "FORCE_TEAMCITY" in os.environ),
@@ -43,7 +47,9 @@ class TestUtils:
         pipmain(["install", package])
 
     @staticmethod
-    def get_test_files_from_local_test_dir(dir_name: str, glob_filter: str) -> list[Path]:
+    def get_test_files_from_local_test_dir(
+        dir_name: str, glob_filter: str
+    ) -> list[Path]:
         """Returns all the files that need to be used as test input parameters from a given directory.
 
         Args:

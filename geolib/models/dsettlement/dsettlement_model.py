@@ -325,7 +325,9 @@ class DSettlementModel(BaseModel):
             use_probabilistic_defaults
         )
         self.stdv_boundaries.append_stdv_boundary(stdv)
-        self.distribution_boundaries.append_distribution_boundary(distribution_boundaries)
+        self.distribution_boundaries.append_distribution_boundary(
+            distribution_boundaries
+        )
         return boundary.id
 
     @property

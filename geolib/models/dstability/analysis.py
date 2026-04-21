@@ -60,7 +60,8 @@ class DStabilityCircle(DStabilityObject):
 
     def _to_internal_datastructure(self) -> PersistableCircle:
         return PersistableCircle(
-            Center=PersistablePoint(X=self.center.x, Z=self.center.z), Radius=self.radius
+            Center=PersistablePoint(X=self.center.x, Z=self.center.z),
+            Radius=self.radius,
         )
 
 
@@ -174,7 +175,9 @@ class DStabilityBishopAnalysisMethod(DStabilityAnalysisMethod):
     circle: DStabilityCircle
 
     def _to_internal_datastructure(self) -> PersistableBishopSettings:
-        return PersistableBishopSettings(Circle=self.circle._to_internal_datastructure())
+        return PersistableBishopSettings(
+            Circle=self.circle._to_internal_datastructure()
+        )
 
 
 class DStabilityBishopBruteForceAnalysisMethod(DStabilityAnalysisMethod):

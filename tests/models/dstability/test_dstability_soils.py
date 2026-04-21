@@ -1,6 +1,11 @@
 import pytest
+
 from geolib.models.dstability.dstability_model import DStabilityModel
-from geolib.soils import MohrCoulombParameters, ShearStrengthModelTypePhreaticLevel, Soil
+from geolib.soils import (
+    MohrCoulombParameters,
+    ShearStrengthModelTypePhreaticLevel,
+    Soil,
+)
 
 
 class TestDStabilitySoil:
@@ -89,7 +94,9 @@ class TestDStabilitySoil:
         dstability_model = DStabilityModel(filename=None)
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
         soil_1 = Soil(
-            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+            name="TestName",
+            code="Test",
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
         )
 
         dstability_model.add_soil(soil_1)
@@ -112,7 +119,9 @@ class TestDStabilitySoil:
         dstability_model = DStabilityModel(filename=None)
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
         soil_1 = Soil(
-            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+            name="TestName",
+            code="Test",
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
         )
 
         dstability_model.add_soil(soil_1)
@@ -142,7 +151,9 @@ class TestDStabilitySoil:
         dstability_model = DStabilityModel(filename=None)
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
         soil_1 = Soil(
-            name="TestName", code="Test", mohr_coulomb_parameters=mohr_coulomb_parameters
+            name="TestName",
+            code="Test",
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
         )
         dstability_model.add_soil(soil_1)
 

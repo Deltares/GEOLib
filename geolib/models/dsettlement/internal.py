@@ -111,7 +111,9 @@ class Points(DSeriesMatrixTreeStructureCollection):
 
     points: list[DSeriePoint] = []
 
-    def add_point_if_unique(self, point: DSeriePoint, tolerance=TOLERANCE) -> DSeriePoint:
+    def add_point_if_unique(
+        self, point: DSeriePoint, tolerance=TOLERANCE
+    ) -> DSeriePoint:
         if point in self.points:
             point = self.points[self.points.index(point)]
         else:
@@ -119,7 +121,9 @@ class Points(DSeriesMatrixTreeStructureCollection):
         return point
 
     def add_point(self, point: DSeriePoint) -> DSeriePoint:
-        new_point_id = max(self.points, key=attrgetter("id")).id + 1 if self.points else 1
+        new_point_id = (
+            max(self.points, key=attrgetter("id")).id + 1 if self.points else 1
+        )
         point.id = new_point_id
         self.points.append(point)
         return point
@@ -382,7 +386,9 @@ class GeometryData(DSeriesStructure):
     phreatic_line: PhreaticLine = PhreaticLine()
     layers: Layers = Layers()
 
-    def boundary_area_above_horizontal(self, boundary: Boundary, y: float = 0.0) -> float:
+    def boundary_area_above_horizontal(
+        self, boundary: Boundary, y: float = 0.0
+    ) -> float:
         """Area above horizontal line defined by y-coordinate."""
         area = 0.0
 
@@ -703,7 +709,9 @@ class CalculationOptions(DSeriesNoParseSubStructure):
         DispersionConditionLayerBoundary.DRAINED
     )
     stress_distribution_soil: StressDistributionSoil = StressDistributionSoil.BUISMAN
-    stress_distribution_loads: StressDistributionLoads = StressDistributionLoads.SIMULATE
+    stress_distribution_loads: StressDistributionLoads = (
+        StressDistributionLoads.SIMULATE
+    )
     iteration_stop_criteria_submerging: Annotated[float, Field(ge=0.0, le=1.0)] = 0.0
     iteration_stop_criteria_submerging_layer_height: Annotated[
         float, Field(ge=0, le=99.999)
@@ -846,16 +854,13 @@ class DSettlementInputStructure(DSeriesStructure):
     other_loads: OtherLoads | str = OtherLoads()
     calculation_options: CalculationOptions | str = CalculationOptions()
     residual_times: ResidualTimes | str = ResidualTimes()
-    filter_band_width: str = cleandoc(
-        """
+    filter_band_width: str = cleandoc("""
         1 : Number of items
         0.05
-        """
-    )
+        """)
     vertical_drain: VerticalDrain | str = VerticalDrain()
     probabilistic_data: ProbabilisticData = ProbabilisticData()
-    probabilistic_defaults: str = cleandoc(
-        """
+    probabilistic_defaults: str = cleandoc("""
         ProbDefGamDryVar=0.05
         ProbDefGamWetVar=0.05
         ProbDefPOPVar=0.25
@@ -907,8 +912,7 @@ class DSettlementInputStructure(DSeriesStructure):
         ProbDefSecCompRateDist=2
         ProbDefLayerStd=0.10
         ProbDefLayerDist=0
-        """
-    )
+        """)
     fit_options: FitOptions = FitOptions()
     fit_calculation: FitCalculation = FitCalculation()
     fit: str = ZERO_ITEMS

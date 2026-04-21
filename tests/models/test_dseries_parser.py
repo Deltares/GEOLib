@@ -1,6 +1,8 @@
 from random import randint
 
 import pytest
+from pydantic_core._pydantic_core import ValidationError
+
 from geolib.models.dseries_parser import (
     DSeriesInlineMappedProperties,
     DSeriesInlineProperties,
@@ -20,7 +22,6 @@ from geolib.models.dseries_parser import (
     get_line_property_value,
     make_key,
 )
-from pydantic_core._pydantic_core import ValidationError
 
 
 class TestParserUtil:
@@ -142,7 +143,9 @@ class TestDSeriesTreeStructure:
         single_property: int
 
     @pytest.mark.unittest
-    def test_given_notenoughlistvalues_when_parse_text_lines_then_raises_valueerror(self):
+    def test_given_notenoughlistvalues_when_parse_text_lines_then_raises_valueerror(
+        self,
+    ):
         # 1. Set up test data
         text_lines = ["2", "4", "2"]
         expected_error = "Expected text line property for single_property."
@@ -196,14 +199,18 @@ class TestDSeriesTreeStructure:
         assert str(e_info.value) == expected_error
 
     @pytest.mark.unittest
-    def test_given_linesofproperties_when_parse_then_creates_class_with_properties(self):
+    def test_given_linesofproperties_when_parse_then_creates_class_with_properties(
+        self,
+    ):
         # 1. Set up test data.
         text_lines = [["2"], ["2"], ["4", "2"]]
         expected_id = 2
         expected_values = [4, 2]
 
         # 2. Run test.
-        parsed_structure, consumed_lines = DummyTreeStructure.parse_text_lines(text_lines)
+        parsed_structure, consumed_lines = DummyTreeStructure.parse_text_lines(
+            text_lines
+        )
 
         # 3. Verify final expectations
         assert parsed_structure, "No structure was parsed."
@@ -365,7 +372,9 @@ class TestDSeriesTreeStructureCollection:
             ]
             for step_value in step_values:
                 content_lines += f"{separator*3}"
-                content_lines += f"{separator}".join([str(value) for value in step_value])
+                content_lines += f"{separator}".join(
+                    [str(value) for value in step_value]
+                )
                 content_lines += "\n"
 
         # 2. Run test.
@@ -571,7 +580,9 @@ class TestDSeriesTreeStructureAsMatrix:
 
 class TestDSeriesTableStructure:
     @pytest.mark.integrationtest
-    def test_given_column_with_string_value_when_parse_then_returns_valid_structure(self):
+    def test_given_column_with_string_value_when_parse_then_returns_valid_structure(
+        self,
+    ):
         # 1. Define test data
         class test_table(DSeriesTableStructure):
             test_table: list[dict[str, str]]
@@ -914,7 +925,9 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         assert output_dict == expected_dict
 
     @pytest.mark.integrationtest
-    def test_given_mixed_group_with_inline_mapped_when_parse_text_returns_structure(self):
+    def test_given_mixed_group_with_inline_mapped_when_parse_text_returns_structure(
+        self,
+    ):
         # 1. Set up test data.
         class mixed_group(DSeriesRepeatedGroupsWithInlineMappedProperties):
             property_one: int
@@ -948,9 +961,7 @@ class TestDSeriesStructureCollection:
             property_one: list[DSeriesStructure]
             property_two: list[DSeriesStructure]
 
-        expected_error = (
-            "This type of collection is only meant to have one field but 2 were defined."
-        )
+        expected_error = "This type of collection is only meant to have one field but 2 were defined."
         parsed_collection = None
 
         # 2. Run test

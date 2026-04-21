@@ -1,6 +1,7 @@
 from random import randint
 
 import pytest
+
 from geolib.models.dfoundations.dfoundations_structures import DFoundationsTableWrapper
 from geolib.models.dfoundations.internal import (
     CPT,
@@ -436,7 +437,10 @@ class TestInternalOutputDFoundations:
     )
 
     dfoundations_structure_text = (
-        "[DUMPFILE]\n" + f"{input_data}\n" + f"{dumpfile_output}\n" + "[END OF DUMPFILE]"
+        "[DUMPFILE]\n"
+        + f"{input_data}\n"
+        + f"{dumpfile_output}\n"
+        + "[END OF DUMPFILE]"
     )
 
     # endregion
@@ -457,7 +461,9 @@ class TestInternalOutputDFoundations:
         assert parsed_warnings.is_warning_nen_spacing_given == 12
 
     @pytest.mark.integrationtest
-    def test_given_nen_average_pile_factors_text_when_parse_then_returns_structure(self):
+    def test_given_nen_average_pile_factors_text_when_parse_then_returns_structure(
+        self,
+    ):
         # 1. Set up test data
         group_text = self.get_group_text(self.nen_average_pile_factors)
         first_expected_value = {

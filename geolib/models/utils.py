@@ -26,7 +26,7 @@ def get_filtered_type_hints(class_type: type) -> list[tuple[str, type]]:
     # If an instance was passed, get its class
     if not isinstance(class_type, type):
         class_type = class_type.__class__
-    
+
     return [
         (field_name, field)
         for field_name, field in get_type_hints(class_type).items()

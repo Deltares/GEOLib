@@ -4,6 +4,8 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
+from teamcity import is_running_under_teamcity
+
 from geolib.errors import CalculationError
 from geolib.geometry.one import Point
 from geolib.models import BaseModel, DFoundationsModel
@@ -33,13 +35,13 @@ from geolib.models.dfoundations.piles import (
     BearingRoundHollowPileWithClosedBase,
     BearingRoundOpenEndedHollowPile,
     BearingRoundPile,
+    BearingRoundPileWithBaseEqualsToShaftLostTip,
     BearingRoundPileWithEnlargedBase,
     BearingRoundPileWithInSituFormedBase,
     BearingRoundPileWithLostTip,
+    BearingRoundPileWithScrewShapedShaft,
     BearingRoundTaperedPile,
     BearingSection,
-    BearingRoundPileWithScrewShapedShaft,
-    BearingRoundPileWithBaseEqualsToShaftLostTip,
     TensionHShapedPile,
     TensionPileLocation,
     TensionRectangularPile,
@@ -47,19 +49,17 @@ from geolib.models.dfoundations.piles import (
     TensionRoundHollowPileWithClosedBase,
     TensionRoundOpenEndedHollowPile,
     TensionRoundPile,
+    TensionRoundPileWithBaseEqualsToShaftLostTip,
     TensionRoundPileWithEnlargedBase,
     TensionRoundPileWithInSituFormedBase,
     TensionRoundPileWithLostTip,
+    TensionRoundPileWithScrewShapedShaft,
     TensionRoundTaperedPile,
     TensionSection,
-    TensionRoundPileWithScrewShapedShaft,
-    TensionRoundPileWithBaseEqualsToShaftLostTip,
 )
 from geolib.models.dfoundations.profiles import CPT, Excavation, Profile
 from geolib.models.internal import Bool
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
-from teamcity import is_running_under_teamcity
-
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dfoundations/benchmarks"
@@ -113,17 +113,20 @@ class TestDFoundationsModel:
         assert dfoundation_model is not None
         # Default is 6
         assert (
-            dfoundation_model.datastructure.input_data.run_identification.count("\n") == 6
+            dfoundation_model.datastructure.input_data.run_identification.count("\n")
+            == 6
         )
         # Less than that should be set to 6 again
         dfoundation_model.datastructure.input_data.run_identification = ""
         assert (
-            dfoundation_model.datastructure.input_data.run_identification.count("\n") == 6
+            dfoundation_model.datastructure.input_data.run_identification.count("\n")
+            == 6
         )
         # More than that should be left as is
         dfoundation_model.datastructure.input_data.run_identification = 8 * "\n"
         assert (
-            dfoundation_model.datastructure.input_data.run_identification.count("\n") == 8
+            dfoundation_model.datastructure.input_data.run_identification.count("\n")
+            == 8
         )
 
     @pytest.mark.integrationtest
@@ -131,7 +134,9 @@ class TestDFoundationsModel:
         "filename,structure",
         [
             pytest.param(Path("bm1-1a.foi"), DFoundationsStructure, id="Input file"),
-            pytest.param(Path("bm1-1a.fod"), DFoundationsDumpStructure, id="Output file"),
+            pytest.param(
+                Path("bm1-1a.fod"), DFoundationsDumpStructure, id="Output file"
+            ),
         ],
     )
     def test_given_filepath_when_parse_then_does_not_raise(
@@ -530,7 +535,9 @@ class TestDFoundationsModel:
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
-        output_test_file = output_test_folder / "test_add_two_bearing_pile_locations.foi"
+        output_test_file = (
+            output_test_folder / "test_add_two_bearing_pile_locations.foi"
+        )
 
         df.parse(test_file)
 
@@ -617,7 +624,9 @@ class TestDFoundationsModel:
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
-        output_test_file = output_test_folder / "test_add_two_tension_pile_locations.foi"
+        output_test_file = (
+            output_test_folder / "test_add_two_tension_pile_locations.foi"
+        )
 
         df.parse(test_file)
 
@@ -655,7 +664,9 @@ class TestDFoundationsModel:
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1a.foi"
         output_test_folder = Path(TestUtils.get_output_test_data_dir("dfoundations"))
-        output_test_file = output_test_folder / "test_add_two_tension_pile_locations.foi"
+        output_test_file = (
+            output_test_folder / "test_add_two_tension_pile_locations.foi"
+        )
 
         df.parse(test_file)
 

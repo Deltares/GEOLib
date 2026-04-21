@@ -2,6 +2,7 @@ from random import randint
 from typing import get_origin
 
 import pytest
+
 from geolib.geometry.one import Point
 from geolib.models.dseries_parser import (
     DSeriesTreeStructure,
@@ -226,7 +227,9 @@ class TestInternalDSeriesListStructureCollections:
                     parsed_values = [str(value) for value in property_value]
                 else:
                     parsed_values = str(property_value)
-                for a, b in zip(parsed_values, structure_content[structure_id][prop_idx]):
+                for a, b in zip(
+                    parsed_values, structure_content[structure_id][prop_idx]
+                ):
                     assert b.startswith(a), (
                         ""
                         + f"Structure {structure_id}, "

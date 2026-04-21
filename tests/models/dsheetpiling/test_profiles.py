@@ -2,6 +2,8 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable
 
 import pytest
+from pydantic import ValidationError
+
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_SOIL_PROFILE_NAME
@@ -16,7 +18,6 @@ from geolib.models.dsheetpiling.settings import (
     Side,
 )
 from geolib.soils import Soil
-from pydantic import ValidationError
 
 _SOIL_TEST_NAME_1: str = "Clay"
 _SOIL_TEST_NAME_2: str = "Sand"
@@ -149,7 +150,9 @@ class TestCurveSettings:
             _model.datastructure.input_data.soil_profiles.use_unloading_reloading_curve
             == use_unloading_reloading_curve
         )
-        assert _model.datastructure.input_data.soil_profiles.curve_number == curve_number
+        assert (
+            _model.datastructure.input_data.soil_profiles.curve_number == curve_number
+        )
 
 
 class TestSoilProfile:
@@ -242,7 +245,9 @@ class TestSoilProfile:
         with pytest.raises(
             ValueError, match=r"Stage \d+ is not added to the internal datastructure"
         ):
-            _model.add_profile(profile=profile, side=Side.BOTH, stage_id=invalid_stage_id)
+            _model.add_profile(
+                profile=profile, side=Side.BOTH, stage_id=invalid_stage_id
+            )
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(

@@ -1,11 +1,12 @@
 import pytest
+from pydantic_core._pydantic_core import ValidationError
+
 from geolib.soils import (
     MohrCoulombParameters,
     Soil,
     SoilClassificationParameters,
     StochasticParameter,
 )
-from pydantic_core._pydantic_core import ValidationError
 
 
 class TestSoils:
@@ -36,7 +37,9 @@ class TestSoils:
     @pytest.mark.unittest
     def test_set_all_stochastic_parameters(self):
         mohr_coulomb_parameters = MohrCoulombParameters(cohesion=2, friction_angle=30)
-        soil_classification_parameters = SoilClassificationParameters(min_void_ratio=0.3)
+        soil_classification_parameters = SoilClassificationParameters(
+            min_void_ratio=0.3
+        )
         soil = Soil(
             mohr_coulomb_parameters=mohr_coulomb_parameters,
             soil_classification_parameters=soil_classification_parameters,
