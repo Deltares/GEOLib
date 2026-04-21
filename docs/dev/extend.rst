@@ -148,17 +148,12 @@ advise to also add type hints. An example:
 Adding requirements
 -------------------
 
-New requirements can be added using Poetry: https://python-poetry.org/docs/
-For example, adding a new package:
+New requirements can be added through Pixi and hatchling.
+
+For example, to add a new package:
 
 .. code-block:: bash
 
-    $ poetry add new_package
+    $ pixi add new_package
 
-It's good to keep the `requirements.txt` up to date, so afterwards run:
-
-.. code-block:: bash
-
-    $ poetry install
-    $ poetry export -E server -f requirements.txt --output requirements.txt --without-hashes
-    $ poetry export -E server -f requirements.txt --output requirements-dev.txt --with dev --without-hashes
+This updates both `pyproject.toml` and `pixi.lock` with the new dependency and its transitive dependencies.
