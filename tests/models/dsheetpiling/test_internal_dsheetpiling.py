@@ -177,9 +177,11 @@ class TestInternal:
             model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadnl == 1
         )
         assert (
-            model.calculation_options_per_stage.stageoptions[
+            pytest.approx(
+                model.calculation_options_per_stage.stageoptions[
                 0
             ].stageanchorfactorec7nadnl
+            )
             == 1.5
         )
 
