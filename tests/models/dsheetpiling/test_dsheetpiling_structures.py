@@ -57,7 +57,7 @@ class TestDSheetpilingSurchargeLoad:
 
         # 3. Verify final expectations
         assert output_dict
-        assert input_key not in output_dict.keys()
+        assert input_key not in output_dict
         assert output_dict[replace_key] == value
 
 
