@@ -177,12 +177,8 @@ class TestInternal:
             model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadnl == 1
         )
         assert (
-            pytest.approx(
-                model.calculation_options_per_stage.stageoptions[
-                0
-            ].stageanchorfactorec7nadnl
-            )
-            == 1.5
+            model.calculation_options_per_stage.stageoptions[0].stageanchorfactorec7nadnl
+            == pytest.approx(1.5)
         )
 
     @pytest.mark.integrationtest

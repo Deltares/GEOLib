@@ -151,18 +151,8 @@ class TestDSettlementModel:
         assert len(ds.output.vertical[0].depths.depths) == 14
 
         # 5. Verify Stresses substructure
-        assert (
-            pytest.approx(
-                ds.output.vertical[0].stresses.stresses[0]["final_water_stress"]
-            )
-            == 0.0
-        )
-        assert (
-            pytest.approx(
-                ds.output.vertical[0].stresses.stresses[-1]["initial_total_stress"]
-            )
-            == 40.0
-        )
+        assert (ds.output.vertical[0].stresses.stresses[0]["final_water_stress"]== pytest.approx(0.0))
+        assert (ds.output.vertical[0].stresses.stresses[-1]["initial_total_stress"] == pytest.approx(40.0))
         assert (
             type(ds.output.vertical[0].stresses.stresses[-1]["initial_total_stress"])
             == float
@@ -876,42 +866,13 @@ class TestDSettlementModel:
         ds.add_other_load(name, time, point, otc)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
         assert list(ds.other_loads.loads.values())[0].time == 1
-        assert (
-            pytest.approx(
-                list(ds.other_loads.loads.values())[0].load_values_circular.weight
-            )
-            == 10.1
-        )
-        assert (
-            pytest.approx(
-                list(ds.other_loads.loads.values())[0].load_values_circular.alpha
-            )
-            == 0.1
-        )
-        assert (
-            pytest.approx(
-                list(ds.other_loads.loads.values())[0].load_values_circular.Xcp
-            )
-            == 0.2
-        )
-        assert (
-            pytest.approx(
-                list(ds.other_loads.loads.values())[0].load_values_circular.Ycp
-            )
-            == 0.3
-        )
-        assert (
-            pytest.approx(
-                list(ds.other_loads.loads.values())[0].load_values_circular.Zcp
-            )
-            == 0.4
-        )
-        assert (
-            pytest.approx(
-                list(ds.other_loads.loads.values())[0].load_values_circular.R
-            )
-            == 0.5
-        )
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.weight == pytest.approx(10.1)
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.alpha == pytest.approx(0.1)
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.Xcp == pytest.approx(0.2)
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.Ycp == pytest.approx(0.3)
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.Zcp == pytest.approx(0.4)
+        assert list(ds.other_loads.loads.values())[0].load_values_circular.R == pytest.approx(0.5)
+
 
     @pytest.mark.integrationtest
     def test_other_loads_rectangular(self):
