@@ -22,42 +22,6 @@ from tests.utils import TestUtils, only_teamcity
 
 
 class TestDGeoFlowModel:
-    @staticmethod
-    def _get_standard_layers():
-        layer_1 = [
-            Point(x=-50, z=-10),
-            Point(x=50, z=-10),
-            Point(x=50, z=-20),
-            Point(x=-50, z=-20),
-        ]
-        layer_2 = [
-            Point(x=-50, z=-5),
-            Point(x=50, z=-5),
-            Point(x=50, z=-10),
-            Point(x=-50, z=-10),
-        ]
-        layer_3 = [
-            Point(x=-50, z=0),
-            Point(x=-10, z=0),
-            Point(x=30, z=0),
-            Point(x=50, z=0),
-            Point(x=50, z=-5),
-            Point(x=-50, z=-5),
-        ]
-        embankment = [
-            Point(x=-10, z=0),
-            Point(x=0, z=2),
-            Point(x=10, z=2),
-            Point(x=30, z=0),
-        ]
-        layers_and_soils = [
-            (layer_1, "Sand"),
-            (layer_2, "H_Ro_z&k"),
-            (layer_3, "H_Rk_k_shallow"),
-            (embankment, "H_Aa_ht_old"),
-        ]
-        return layers_and_soils
-
     @pytest.mark.unittest
     def test_instantiate_dgeoflow_model(self):
         assert isinstance(DGeoFlowModel(filename=None), BaseModel), (
@@ -213,7 +177,7 @@ class TestDGeoFlowModel:
     def test_generate_groundwater_flow_model(self):
         dm = DGeoFlowModel()
 
-        layers_and_soils = self._get_standard_layers()
+        layers_and_soils = TestUtils._get_standard_layers()
 
         for points, soil in layers_and_soils:
             dm.add_layer(points, soil)
@@ -239,7 +203,7 @@ class TestDGeoFlowModel:
     def test_generate_pipe_length_model(self):
         dm = DGeoFlowModel()
 
-        layers_and_soils = self._get_standard_layers()
+        layers_and_soils = TestUtils._get_standard_layers()
 
         for points, soil in layers_and_soils:
             dm.add_layer(points, soil)
@@ -280,7 +244,7 @@ class TestDGeoFlowModel:
     def test_generate_critical_head_model(self):
         dm = DGeoFlowModel()
 
-        layers_and_soils = self._get_standard_layers()
+        layers_and_soils = TestUtils._get_standard_layers()
 
         for points, soil in layers_and_soils:
             dm.add_layer(points, soil)

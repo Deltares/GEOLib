@@ -2,6 +2,7 @@ import os
 import shutil
 import sys
 from pathlib import Path
+from geolib.geometry.one import Point
 
 import pytest
 
@@ -137,3 +138,39 @@ class TestUtils:
         test_dir = os.path.dirname(__file__)
         dir_path = os.path.join(test_dir, dir_name)
         return dir_path
+    
+    @staticmethod
+    def _get_standard_layers():
+        layer_1 = [
+            Point(x=-50, z=-10),
+            Point(x=50, z=-10),
+            Point(x=50, z=-20),
+            Point(x=-50, z=-20),
+        ]
+        layer_2 = [
+            Point(x=-50, z=-5),
+            Point(x=50, z=-5),
+            Point(x=50, z=-10),
+            Point(x=-50, z=-10),
+        ]
+        layer_3 = [
+            Point(x=-50, z=0),
+            Point(x=-10, z=0),
+            Point(x=30, z=0),
+            Point(x=50, z=0),
+            Point(x=50, z=-5),
+            Point(x=-50, z=-5),
+        ]
+        embankment = [
+            Point(x=-10, z=0),
+            Point(x=0, z=2),
+            Point(x=10, z=2),
+            Point(x=30, z=0),
+        ]
+        layers_and_soils = [
+            (layer_1, "Sand"),
+            (layer_2, "H_Ro_z&k"),
+            (layer_3, "H_Rk_k_shallow"),
+            (embankment, "H_Aa_ht_old"),
+        ]
+        return layers_and_soils
