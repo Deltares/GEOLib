@@ -889,22 +889,13 @@ class TestDSettlementModel:
         ds.add_other_load(name, time, point, olr)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
         assert list(ds.other_loads.loads.values())[0].time == 1
-        assert (
-            list(ds.other_loads.loads.values())[0].load_values_rectangular.weight
-            == 10.1
-        )
-        assert (
-            list(ds.other_loads.loads.values())[0].load_values_rectangular.alpha == 0.1
-        )
-        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Xcp == 0.2
-        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Ycp == 0.3
-        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Zcp == 0.4
-        assert (
-            list(ds.other_loads.loads.values())[0].load_values_rectangular.xwidth == 0.5
-        )
-        assert (
-            list(ds.other_loads.loads.values())[0].load_values_rectangular.zwidth == 0.6
-        )
+        assert (list(ds.other_loads.loads.values())[0].load_values_rectangular.weight == pytest.approx(10.1))
+        assert (list(ds.other_loads.loads.values())[0].load_values_rectangular.alpha == pytest.approx(0.1))
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Xcp == pytest.approx(0.2)
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Ycp == pytest.approx(0.3)
+        assert list(ds.other_loads.loads.values())[0].load_values_rectangular.Zcp == pytest.approx(0.4)
+        assert (list(ds.other_loads.loads.values())[0].load_values_rectangular.xwidth == pytest.approx(0.5))
+        assert (list(ds.other_loads.loads.values())[0].load_values_rectangular.zwidth == pytest.approx(0.6))
 
     @pytest.mark.integrationtest
     def test_other_loads_tank(self):
@@ -922,19 +913,14 @@ class TestDSettlementModel:
         ds.add_other_load(name, time, point, olt)
         assert list(ds.other_loads.loads.keys())[0] == "Load 1"
         assert list(ds.other_loads.loads.values())[0].time == 1
-        assert (
-            list(ds.other_loads.loads.values())[0].load_values_tank.wallweight == 10.1
-        )
-        assert (
-            list(ds.other_loads.loads.values())[0].load_values_tank.internalweight
-            == 10.2
-        )
-        assert list(ds.other_loads.loads.values())[0].load_values_tank.alpha == 0.1
-        assert list(ds.other_loads.loads.values())[0].load_values_tank.Xcp == 0.2
-        assert list(ds.other_loads.loads.values())[0].load_values_tank.Ycp == 0.3
-        assert list(ds.other_loads.loads.values())[0].load_values_tank.Zcp == 0.4
-        assert list(ds.other_loads.loads.values())[0].load_values_tank.Rintern == 0.5
-        assert list(ds.other_loads.loads.values())[0].load_values_tank.dWall == 0.6
+        assert (list(ds.other_loads.loads.values())[0].load_values_tank.wallweight == pytest.approx(10.1))
+        assert (list(ds.other_loads.loads.values())[0].load_values_tank.internalweight == pytest.approx(10.2))
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.alpha == pytest.approx(0.1)
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Xcp == pytest.approx(0.2)
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Ycp == pytest.approx(0.3)
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Zcp == pytest.approx(0.4)
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.Rintern == pytest.approx(0.5)
+        assert list(ds.other_loads.loads.values())[0].load_values_tank.dWall == pytest.approx(0.6)
 
     @pytest.mark.integrationtest
     def test_other_loads_uniform(self):
