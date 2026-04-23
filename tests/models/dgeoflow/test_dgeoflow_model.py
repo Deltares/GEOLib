@@ -6,6 +6,8 @@ from pathlib import Path
 from tkinter import Label
 
 import pytest
+from teamcity import is_running_under_teamcity
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dgeoflow import DGeoFlowModel
@@ -16,8 +18,6 @@ from geolib.models.dgeoflow.internal import (
     InternalPipeTrajectory,
     PersistablePoint,
 )
-from teamcity import is_running_under_teamcity
-
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -95,7 +95,9 @@ class TestDGeoFlowModel:
             pytest.param("dgeoflow/Berekening3", id="Input Structure"),
         ],
     )
-    def test_given_data_when_parse_and_serialize_then_does_not_raise(self, dir_path: str):
+    def test_given_data_when_parse_and_serialize_then_does_not_raise(
+        self, dir_path: str
+    ):
         # 1. Set up test data.
         test_input_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
         dgeoflow_model = DGeoFlowModel(filename=None)
@@ -175,39 +177,7 @@ class TestDGeoFlowModel:
     def test_generate_groundwater_flow_model(self):
         dm = DGeoFlowModel()
 
-        layer_1 = [
-            Point(x=-50, z=-10),
-            Point(x=50, z=-10),
-            Point(x=50, z=-20),
-            Point(x=-50, z=-20),
-        ]
-        layer_2 = [
-            Point(x=-50, z=-5),
-            Point(x=50, z=-5),
-            Point(x=50, z=-10),
-            Point(x=-50, z=-10),
-        ]
-        layer_3 = [
-            Point(x=-50, z=0),
-            Point(x=-10, z=0),
-            Point(x=30, z=0),
-            Point(x=50, z=0),
-            Point(x=50, z=-5),
-            Point(x=-50, z=-5),
-        ]
-        embankment = [
-            Point(x=-10, z=0),
-            Point(x=0, z=2),
-            Point(x=10, z=2),
-            Point(x=30, z=0),
-        ]
-
-        layers_and_soils = [
-            (layer_1, "Sand"),
-            (layer_2, "H_Ro_z&k"),
-            (layer_3, "H_Rk_k_shallow"),
-            (embankment, "H_Aa_ht_old"),
-        ]
+        layers_and_soils = TestUtils._get_standard_layers()
 
         for points, soil in layers_and_soils:
             dm.add_layer(points, soil)
@@ -233,39 +203,7 @@ class TestDGeoFlowModel:
     def test_generate_pipe_length_model(self):
         dm = DGeoFlowModel()
 
-        layer_1 = [
-            Point(x=-50, z=-10),
-            Point(x=50, z=-10),
-            Point(x=50, z=-20),
-            Point(x=-50, z=-20),
-        ]
-        layer_2 = [
-            Point(x=-50, z=-5),
-            Point(x=50, z=-5),
-            Point(x=50, z=-10),
-            Point(x=-50, z=-10),
-        ]
-        layer_3 = [
-            Point(x=-50, z=0),
-            Point(x=-10, z=0),
-            Point(x=30, z=0),
-            Point(x=50, z=0),
-            Point(x=50, z=-5),
-            Point(x=-50, z=-5),
-        ]
-        embankment = [
-            Point(x=-10, z=0),
-            Point(x=0, z=2),
-            Point(x=10, z=2),
-            Point(x=30, z=0),
-        ]
-
-        layers_and_soils = [
-            (layer_1, "Sand"),
-            (layer_2, "H_Ro_z&k"),
-            (layer_3, "H_Rk_k_shallow"),
-            (embankment, "H_Aa_ht_old"),
-        ]
+        layers_and_soils = TestUtils._get_standard_layers()
 
         for points, soil in layers_and_soils:
             dm.add_layer(points, soil)
@@ -306,39 +244,7 @@ class TestDGeoFlowModel:
     def test_generate_critical_head_model(self):
         dm = DGeoFlowModel()
 
-        layer_1 = [
-            Point(x=-50, z=-10),
-            Point(x=50, z=-10),
-            Point(x=50, z=-20),
-            Point(x=-50, z=-20),
-        ]
-        layer_2 = [
-            Point(x=-50, z=-5),
-            Point(x=50, z=-5),
-            Point(x=50, z=-10),
-            Point(x=-50, z=-10),
-        ]
-        layer_3 = [
-            Point(x=-50, z=0),
-            Point(x=-10, z=0),
-            Point(x=30, z=0),
-            Point(x=50, z=0),
-            Point(x=50, z=-5),
-            Point(x=-50, z=-5),
-        ]
-        embankment = [
-            Point(x=-10, z=0),
-            Point(x=0, z=2),
-            Point(x=10, z=2),
-            Point(x=30, z=0),
-        ]
-
-        layers_and_soils = [
-            (layer_1, "Sand"),
-            (layer_2, "H_Ro_z&k"),
-            (layer_3, "H_Rk_k_shallow"),
-            (embankment, "H_Aa_ht_old"),
-        ]
+        layers_and_soils = TestUtils._get_standard_layers()
 
         for points, soil in layers_and_soils:
             dm.add_layer(points, soil)
@@ -401,10 +307,14 @@ class TestDGeoFlowModel:
         dm.add_calculation(label="New Calculation 1", set_current=True)
 
         dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
-        dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+        dm.add_calculation(
+            scenario_index=0, label="New Calculation 2", set_current=True
+        )
 
         dm.add_stage(scenario_index=1, label="New Stage 3", set_current=True)
-        dm.add_calculation(scenario_index=1, label="New Calculation 3", set_current=True)
+        dm.add_calculation(
+            scenario_index=1, label="New Calculation 3", set_current=True
+        )
 
         assert len(dm.scenarios) == 2
         assert len(dm.scenarios[0].Stages) == 2

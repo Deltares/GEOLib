@@ -25,7 +25,7 @@ class ComplexVerticalSubstructure(DSeriesStructure):
         them.
         """
         largs = list(args)
-        fields = self.model_fields
+        fields = self.__class__.model_fields
         for field, fieldtype in fields.items():
             if len(largs) == 0:
                 break
@@ -158,7 +158,7 @@ class DSerieRepeatedTableStructure(DSeriesRepeatedGroupedProperties):
         for group_data in list(generated_dict.values())[0]:
             mapped_group = cls.get_mapped_group(columns, group_data)
             group_key = list(mapped_group.keys())[0]
-            if group_key in parsed_dict.keys():
+            if group_key in parsed_dict:
                 raise ValueError(
                     f"No repeated table keys ({group_key}) allowed for {class_name}."
                 )

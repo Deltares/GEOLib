@@ -1,8 +1,9 @@
 import warnings
 from typing import Callable
 
-import geolib.models.dsheetpiling.settings as settings
 import pytest
+
+import geolib.models.dsheetpiling.settings as settings
 from geolib.geometry import Point
 from geolib.models.dseries_parser import DSeriesStructure
 from geolib.models.dsheetpiling.calculation_options import CalculationOptionsPerStage
@@ -169,9 +170,7 @@ class TestInternal:
             == settings.PartialFactorSetEC7NADNL.RC2
         )
         assert (
-            model.calculation_options_per_stage.stageoptions[
-                0
-            ].stageriskclassec7nadbe
+            model.calculation_options_per_stage.stageoptions[0].stageriskclassec7nadbe
             == settings.RiskClassEC7BE.RC2
         )
         assert (
@@ -179,7 +178,7 @@ class TestInternal:
         )
         assert (
             model.calculation_options_per_stage.stageoptions[0].stageanchorfactorec7nadnl
-            == 1.5
+            == pytest.approx(1.5)
         )
 
     @pytest.mark.integrationtest
@@ -574,7 +573,9 @@ class TestInternalParseInputStructure:
         assert side_output.calculation_method == self.not_parsable_struct
         assert side_output.water_level == self.not_parsable_struct
         assert side_output.surface == self.not_parsable_struct
-        assert side_output.soil_profile_for_sheet_piling_model == self.not_parsable_struct
+        assert (
+            side_output.soil_profile_for_sheet_piling_model == self.not_parsable_struct
+        )
         self.validate_pressures_structure(side_output.pressures)
         assert side_output.force_from_layer == self.not_parsable_struct
 
@@ -732,7 +733,9 @@ class TestInternalParseInputStructure:
                 text_uniform_loads, "uniform_loads", __verify_expected_uniform_load
             ),
             pytest.param(
-                text_surcharge_loads, "surcharge_loads", __verify_expected_surcharge_load
+                text_surcharge_loads,
+                "surcharge_loads",
+                __verify_expected_surcharge_load,
             ),
         ],
     )
@@ -1086,7 +1089,9 @@ class TestInternalParseOutputStructure:
         assert side_output.calculation_method == self.not_parsable_struct
         assert side_output.water_level == self.not_parsable_struct
         assert side_output.surface == self.not_parsable_struct
-        assert side_output.soil_profile_for_sheet_piling_model == self.not_parsable_struct
+        assert (
+            side_output.soil_profile_for_sheet_piling_model == self.not_parsable_struct
+        )
         self.validate_pressures_structure(side_output.pressures)
         assert side_output.force_from_layer == self.not_parsable_struct
 

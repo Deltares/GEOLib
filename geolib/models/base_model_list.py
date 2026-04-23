@@ -114,7 +114,7 @@ class BaseModelList(BaseDataClass):
             requests.compat.urljoin(
                 endpoint, f"calculate/{lead_model.__class__.__name__.lower()}s"
             ),
-            data="[" + ",".join((model.json() for model in self.models)) + "]",
+            json=[model.model_dump(mode="json") for model in self.models],
             auth=HTTPBasicAuth(meta.gl_username, meta.gl_password),
         )
         if response.status_code == 200:

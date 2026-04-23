@@ -34,13 +34,13 @@ Packages used
 This package, unlike GEOLib+, tries to limit the number of
 *heavy* depedencies. The main packages used are:
 
-- Poetry_ for package management (replacing setuptools) see also `PEP 518 <https://www.python.org/dev/peps/pep-0518/>`_.
+- Pixi_ for package and dependency management (local development).
 - Pydantic_ for validation of types and some parameters (min/max/defaults).
 
-.. _Poetry: https://python-poetry.org/docs/
+.. _Pixi: https://pixi.sh
 .. _Pydantic: https://pydantic-docs.helpmanual.io/
 
-You don't need to install anything manually, as the pip installation should take care of it.
+You don't need to install anything manually, as the Pixi installation should take care of it.
 
 Get the Source Code
 -------------------
@@ -52,9 +52,13 @@ You can either clone the public repository::
 
     $ git clone git@github.com:Deltares/GEOLib.git
 
-Once you have a copy of the source, you can embed it in your own Python
-package, or install it into your site-packages easily::
+Once you have a copy of the source, you can set up a development environment using `Pixi <https://pixi.sh>`_::
 
     $ cd geolib
-    $ pip install poetry
-    $ poetry install
+    $ pixi install
+
+For development, you can then run commands with::
+
+    $ pixi run pytest          # Run tests
+    $ pixi run mypy geolib     # Type checking
+    $ pixi run sphinx ...      # Build documentation

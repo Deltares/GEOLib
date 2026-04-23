@@ -4,6 +4,7 @@ from unittest import mock
 
 import pytest
 from fastapi.testclient import TestClient
+
 from geolib.models import BaseDataClass, DSettlementModel
 from geolib.models.base_model import BaseModel, MetaData
 from geolib.models.base_model_list import BaseModelList
@@ -12,7 +13,6 @@ from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.internal import Bool
 from geolib.service.main import app
-
 from tests.utils import TestUtils, only_teamcity
 
 client = TestClient(app)
@@ -181,7 +181,9 @@ class TestBaseModel:
         modelinstance.parse(benchmark_fn)
 
         # Execute and make sure there's output
-        model = modelinstance.execute_remote("/")  # no url is needed with the TestClient
+        model = modelinstance.execute_remote(
+            "/"
+        )  # no url is needed with the TestClient
         assert model.output
 
 

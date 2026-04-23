@@ -1,12 +1,12 @@
 from pathlib import Path
 
-import geolib as gl
 import pytest
+
+import geolib as gl
 from geolib.geometry import Point
 from geolib.models.dfoundations import piles, profiles
 from geolib.models.dfoundations.internal import DFoundationsDumpStructure
 from geolib.soils import Soil
-
 from tests.utils import TestUtils, only_teamcity
 
 

@@ -1,6 +1,8 @@
 from typing import Any
 
 import pytest
+from pydantic import ValidationError
+
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_PRE_STRESS
 from geolib.models.dsheetpiling.internal import Anchor as InternalAnchor
@@ -20,7 +22,6 @@ from geolib.models.dsheetpiling.supports import (
     Strut,
     SupportType,
 )
-from pydantic import ValidationError
 
 
 @pytest.fixture
@@ -107,7 +108,9 @@ class TestAnchor:
             == 1
         )
         assert (
-            _model.datastructure.input_data.construction_stages.stages[0].anchors[0].name
+            _model.datastructure.input_data.construction_stages.stages[0]
+            .anchors[0]
+            .name
             == _anchor.name
         )
         assert (
@@ -141,7 +144,9 @@ class TestAnchor:
             == 1
         )
         assert (
-            _model.datastructure.input_data.construction_stages.stages[0].anchors[0].name
+            _model.datastructure.input_data.construction_stages.stages[0]
+            .anchors[0]
+            .name
             == _anchor.name
         )
         assert (
@@ -158,7 +163,9 @@ class TestAnchor:
         pre_stress = -10
 
         with pytest.raises(ValidationError):
-            _model.add_anchor_or_strut(support=_anchor, pre_stress=pre_stress, stage_id=0)
+            _model.add_anchor_or_strut(
+                support=_anchor, pre_stress=pre_stress, stage_id=0
+            )
 
 
 class TestStrut:
@@ -202,7 +209,9 @@ class TestStrut:
             _model.add_anchor_or_strut(support=None, stage_id=0)
 
     @pytest.mark.integrationtest
-    def test_dsheetpilingmodel_add_strut(self, _model: DSheetPilingModel, _strut: Strut):
+    def test_dsheetpilingmodel_add_strut(
+        self, _model: DSheetPilingModel, _strut: Strut
+    ):
         _model.add_anchor_or_strut(
             support=_strut, pre_stress=_DEFAULT_PRE_STRESS, stage_id=0
         )
@@ -218,7 +227,8 @@ class TestStrut:
         # Validate [CONSTRUCTION STAGES]
         assert len(_model.datastructure.input_data.construction_stages.stages) == 1
         assert (
-            len(_model.datastructure.input_data.construction_stages.stages[0].struts) == 1
+            len(_model.datastructure.input_data.construction_stages.stages[0].struts)
+            == 1
         )
         assert (
             _model.datastructure.input_data.construction_stages.stages[0].struts[0].name
@@ -249,7 +259,8 @@ class TestStrut:
         # Validate [CONSTRUCTION STAGES]
         assert len(_model.datastructure.input_data.construction_stages.stages) == 1
         assert (
-            len(_model.datastructure.input_data.construction_stages.stages[0].struts) == 1
+            len(_model.datastructure.input_data.construction_stages.stages[0].struts)
+            == 1
         )
         assert (
             _model.datastructure.input_data.construction_stages.stages[0].struts[0].name
@@ -269,7 +280,9 @@ class TestStrut:
         pre_stress = -10
 
         with pytest.raises(ValidationError):
-            _model.add_anchor_or_strut(support=_strut, pre_stress=pre_stress, stage_id=0)
+            _model.add_anchor_or_strut(
+                support=_strut, pre_stress=pre_stress, stage_id=0
+            )
 
 
 class TestSpringSupport:
@@ -341,7 +354,8 @@ class TestSpringSupport:
                 "rotational_stiffness",
                 -1,
                 pytest.raises(
-                    ValidationError, match=r"Input should be greater than or equal to 0 "
+                    ValidationError,
+                    match=r"Input should be greater than or equal to 0 ",
                 ),
                 id="Name too long",
             ),
@@ -349,7 +363,8 @@ class TestSpringSupport:
                 "translational_stiffness",
                 -1,
                 pytest.raises(
-                    ValidationError, match=r"Input should be greater than or equal to 0 "
+                    ValidationError,
+                    match=r"Input should be greater than or equal to 0 ",
                 ),
                 id="Negative translational stiffness",
             ),
@@ -442,9 +457,9 @@ class TestSpringSupport:
             == 1
         )
         assert (
-            _model.datastructure.input_data.construction_stages.stages[0].spring_supports[
+            _model.datastructure.input_data.construction_stages.stages[
                 0
-            ]
+            ].spring_supports[0]
             == support.name
         )
 
@@ -602,8 +617,8 @@ class TestRigidSupport:
             == 1
         )
         assert (
-            _model.datastructure.input_data.construction_stages.stages[0].rigid_supports[
+            _model.datastructure.input_data.construction_stages.stages[
                 0
-            ]
+            ].rigid_supports[0]
             == support.name
         )

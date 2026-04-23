@@ -50,7 +50,7 @@ class Soil(DSeriesUnmappedNameProperties):
         if "name" not in kwargs:
             name = None
             for key, value in kwargs.items():
-                fields = self.model_fields
+                fields = self.__class__.model_fields
                 if key not in fields:
                     name = key + value
                     break

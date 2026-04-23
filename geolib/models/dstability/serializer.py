@@ -30,7 +30,9 @@ class DStabilityBaseSerializer(BaseSerializer, metaclass=ABCMeta):
                 for i, data in enumerate(getattr(self.ds, field)):
                     suffix = f"_{i}" if i > 0 else ""
                     fn = element_type.structure_name() + suffix + ".json"
-                    serialized_datastructure[folder][fn] = data.model_dump_json(indent=4)
+                    serialized_datastructure[folder][fn] = data.model_dump_json(
+                        indent=4
+                    )
 
             # Otherwise its a single .json in the root folder
             else:

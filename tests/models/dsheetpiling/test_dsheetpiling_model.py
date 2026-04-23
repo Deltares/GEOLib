@@ -4,6 +4,7 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsheetpiling.constructions import (
@@ -48,7 +49,6 @@ from geolib.models.dsheetpiling.settings import (
 )
 from geolib.models.dsheetpiling.supports import Anchor
 from geolib.soils import Soil, SoilType
-
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/benchmarks"
@@ -94,7 +94,9 @@ class TestDsheetPilingModel:
         "filename,structure",
         [
             pytest.param(Path("bm1-1.shi"), DSheetPilingStructure, id="Input file"),
-            pytest.param(Path("bm1-1.shd"), DSheetPilingDumpStructure, id="Output file"),
+            pytest.param(
+                Path("bm1-1.shd"), DSheetPilingDumpStructure, id="Output file"
+            ),
         ],
     )
     def test_given_filepath_when_parse_then_does_not_raise(
@@ -123,7 +125,9 @@ class TestDsheetPilingModel:
         # 1. Set up test data
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -177,7 +181,9 @@ class TestDsheetPilingModel:
         # 1. Set up test data
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / filename
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / filename
         ds = DSheetPilingModel()
 
@@ -214,7 +220,9 @@ class TestDsheetPilingModel:
         df = DSheetPilingModel()
         test_folder = Path(TestUtils.get_local_test_data_dir(test_file_directory))
         test_file = test_folder / "bm1-1.shi"
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         serialized_input_test_file = output_test_folder / "test.shi"
 
         # 2. Verify initial expectations.
@@ -234,7 +242,9 @@ class TestDsheetPilingModel:
     @only_teamcity
     def test_import_output(self):
         # 1. Set up test data.
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / "test.shd"
 
         # 2. Verify initial expectations.
@@ -369,9 +379,13 @@ class TestDsheetPilingModel:
         # first define the top level of the sheet pile
         top_level = 1
         wall1 = DiaphragmWall(name="First inputted pile")
-        wall1.diaphragm_wall_properties = DiaphragmWallProperties(section_bottom_level=-2)
+        wall1.diaphragm_wall_properties = DiaphragmWallProperties(
+            section_bottom_level=-2
+        )
         wall2 = DiaphragmWall(name="Second inputted pile")
-        wall2.diaphragm_wall_properties = DiaphragmWallProperties(section_bottom_level=-7)
+        wall2.diaphragm_wall_properties = DiaphragmWallProperties(
+            section_bottom_level=-7
+        )
         walls = [wall1, wall2]
         if reverse_elements:
             walls.reverse()
@@ -479,7 +493,9 @@ class TestDsheetPilingModel:
     @pytest.mark.parametrize(
         "method_left",
         [
-            pytest.param(LateralEarthPressureMethodStage.KA_KO_KP, id="Left, not right"),
+            pytest.param(
+                LateralEarthPressureMethodStage.KA_KO_KP, id="Left, not right"
+            ),
             pytest.param(
                 LateralEarthPressureMethodStage.C_PHI_DELTA, id="Not left, right"
             ),
@@ -488,7 +504,9 @@ class TestDsheetPilingModel:
     @pytest.mark.parametrize(
         "method_right",
         [
-            pytest.param(LateralEarthPressureMethodStage.KA_KO_KP, id="Left, not right"),
+            pytest.param(
+                LateralEarthPressureMethodStage.KA_KO_KP, id="Left, not right"
+            ),
             pytest.param(
                 LateralEarthPressureMethodStage.C_PHI_DELTA, id="Not left, right"
             ),
@@ -547,7 +565,9 @@ class TestDsheetPilingModel:
         assert new_soil == "Test Soil"
         assert new_soil2 == "Test Soil 2"
         assert ds.datastructure.input_data.soil_collection.soil[0].name == "Test Soil"
-        assert ds.datastructure.input_data.soil_collection.soil[-1].name == "Test Soil 2"
+        assert (
+            ds.datastructure.input_data.soil_collection.soil[-1].name == "Test Soil 2"
+        )
 
     @pytest.mark.integrationtest
     def test_add_soil_with_soil_type(self):
@@ -608,9 +628,9 @@ class TestDsheetPilingModel:
         if isinstance(testload, Moment):
             comparison_load = model.datastructure.input_data.moments
             assert (
-                model.datastructure.input_data.construction_stages.stages[0].moment_loads[
+                model.datastructure.input_data.construction_stages.stages[
                     0
-                ]
+                ].moment_loads[0]
                 == "New load"
             )
         elif isinstance(testload, HorizontalLineLoad):
@@ -661,7 +681,9 @@ class TestDsheetPilingModel:
 
         # test expectations
         assert (
-            model.datastructure.input_data.construction_stages.stages[0].normal_forces[0]
+            model.datastructure.input_data.construction_stages.stages[0].normal_forces[
+                0
+            ]
             == "New load"
         )
 

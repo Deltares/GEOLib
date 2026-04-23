@@ -1,6 +1,4 @@
-"""Pile Library for D-Foundations.
-
-"""
+"""Pile Library for D-Foundations."""
 
 from enum import Enum
 
@@ -12,9 +10,10 @@ from geolib.geometry import Point
 from geolib.models import BaseDataClass
 
 from .internal import (
-    InstallationMethod,
     BearingPileSlipLayer,
+    InstallationMethod,
     LoadSettlementCurve,
+    OpenPipePileCalculationMethod,
     PileMaterial,
     PileShape,
     PileType,
@@ -23,7 +22,6 @@ from .internal import (
     PositionTensionPile,
     TypesBearingPiles,
     TypesTensionPiles,
-    OpenPipePileCalculationMethod,
 )
 
 
@@ -95,9 +93,9 @@ class Pile(BaseDataClass):
     pile_name: str
     pile_type: BasePileType
     pile_class_factor_shaft_sand_gravel: Annotated[float, Field(ge=0, le=9)]
-    pile_class_factor_shaft_clay_silt_peat: Annotated[float, Field(ge=0, le=9)] | None = (
-        None
-    )
+    pile_class_factor_shaft_clay_silt_peat: (
+        Annotated[float, Field(ge=0, le=9)] | None
+    ) = None
     preset_pile_class_factor_shaft_clay_silt_peat: BasePileTypeForClaySiltPeat
     elasticity_modulus: Annotated[float, Field(ge=0, le=1e25)]
 
@@ -548,7 +546,9 @@ class BearingRoundPileWithBaseEqualsToShaftLostTip(BearingPile):
     def _to_internal(self):
         types_bearing_pile = super()._to_internal()
         types_bearing_pile.base_diameter = self.base_diameter
-        types_bearing_pile.shape = PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        types_bearing_pile.shape = (
+            PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        )
         return types_bearing_pile
 
 
@@ -560,5 +560,7 @@ class TensionRoundPileWithBaseEqualsToShaftLostTip(TensionPile):
     def _to_internal(self):
         types_tension_pile = super()._to_internal()
         types_tension_pile.base_diameter = self.base_diameter
-        types_tension_pile.shape = PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        types_tension_pile.shape = (
+            PileShape.ROUND_PILE_WITH_BASE_EQUALS_TO_SHAFT_LOST_TIP
+        )
         return types_tension_pile

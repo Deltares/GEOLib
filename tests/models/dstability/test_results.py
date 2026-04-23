@@ -1,4 +1,5 @@
 import pytest
+
 from geolib.models.dstability.dstability_model import DStabilityModel
 from geolib.models.dstability.internal import (
     AnalysisType,
@@ -228,9 +229,12 @@ def _get_dstability_model() -> DStabilityModel:
     model.datastructure.scenarios = [Scenario(Id=str(999))]
     model.datastructure.calculationsettings = []
 
-    for i, (analysis_type, calculation_type, result_attribute, result_class) in enumerate(
-        test_cases
-    ):
+    for i, (
+        analysis_type,
+        calculation_type,
+        result_attribute,
+        result_class,
+    ) in enumerate(test_cases):
         calculation_id = str(i)
         result_id = str(100 + i)
         calculation_settings_id = str(200 + i)
@@ -317,7 +321,8 @@ class TestDStabilityResults:
                 )
 
                 assert isinstance(
-                    slipplane_result, (BishopSlipCircleResult, UpliftVanSlipCircleResult)
+                    slipplane_result,
+                    (BishopSlipCircleResult, UpliftVanSlipCircleResult),
                 )
 
     @pytest.mark.unittest

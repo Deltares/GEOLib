@@ -35,7 +35,9 @@ class DFoundationsEnumStructure(DSeriesStructure):
 
 class DFoundationsInlineProperties(DSeriesInlineProperties):
     @classmethod
-    def get_property_key_value(cls, text: str, expected_property: str) -> tuple[str, str]:
+    def get_property_key_value(
+        cls, text: str, expected_property: str
+    ) -> tuple[str, str]:
         """Returns the value content for a line of format:
         value : key || value = key
 
