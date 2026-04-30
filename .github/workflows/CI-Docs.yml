@@ -36,6 +36,8 @@ jobs:
         run: pixi run --manifest-path . python -m sphinx docs docs/build -b html -c docs
 
       - name: Commit and push documentation changes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git clone https://github.com/Deltares/GEOLib.git --branch gh-pages --single-branch gh-pages
           rm -r -f gh-pages/dev
@@ -48,4 +50,4 @@ jobs:
           git commit -m "Update dev version documentation" -a || true
           # The above command will fail if no changes were present, so we ignore
           # the return code.
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Deltares/GEOLib.git gh-pages
+          git push https://x-access-token:${GH_TOKEN}@github.com/Deltares/GEOLib.git gh-pages
