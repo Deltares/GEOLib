@@ -48,10 +48,4 @@ jobs:
           git commit -m "Update dev version documentation" -a || true
           # The above command will fail if no changes were present, so we ignore
           # the return code.
-          
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          branch: gh-pages
-          directory: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Deltares/GEOLib.git gh-pages
