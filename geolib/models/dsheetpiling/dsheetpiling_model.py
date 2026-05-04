@@ -276,7 +276,9 @@ class DSheetPilingModel(BaseModel):
                 f"model should be of subtype BaseModelType, received {model}"
             )
 
-        self.datastructure.input_data.set_model(**model.to_internal(), model=model.model)
+        self.datastructure.input_data.set_model(
+            **model.to_internal(), model=model.model
+        )
 
     def set_calculation_options(self, calculation_options: CalculationOptions) -> None:
         """Set calculation options.
@@ -393,7 +395,8 @@ class DSheetPilingModel(BaseModel):
             elements: List of sheet piling elements (can be Sheet, DiaphragmWall, or Pile elements) which are sorted on sheetpilingelementlevel.
         """
         self.datastructure.input_data.set_construction(
-            top_level=top_level, elements=[element.to_internal() for element in elements]
+            top_level=top_level,
+            elements=[element.to_internal() for element in elements],
         )
 
     def set_vertical_balance(self, vertical_balance: VerticalBalance) -> None:
@@ -410,7 +413,9 @@ class DSheetPilingModel(BaseModel):
 
     def add_load(
         self,
-        load: Moment | HorizontalLineLoad | NormalForce | SoilDisplacement | UniformLoad,
+        load: (
+            Moment | HorizontalLineLoad | NormalForce | SoilDisplacement | UniformLoad
+        ),
         stage_id: int,
     ):
         """Adds other loads of type Moment, HorizontalLineLoad, NormalForce, SoilDisplacement or UniformLoad
@@ -426,9 +431,13 @@ class DSheetPilingModel(BaseModel):
             ValueError: When a verification calculation is selected but duration_type and load_type are not defined for the load.
         """
         self._check_if_stage_id_exists(stage_id)
-        self.datastructure.input_data.add_load(load=load.to_internal(), stage_id=stage_id)
+        self.datastructure.input_data.add_load(
+            load=load.to_internal(), stage_id=stage_id
+        )
 
-    def add_surcharge_load(self, load: SurchargeLoad, side: Side, stage_id: int) -> None:
+    def add_surcharge_load(
+        self, load: SurchargeLoad, side: Side, stage_id: int
+    ) -> None:
         """Add surcharge load to a stage.
 
         Args:

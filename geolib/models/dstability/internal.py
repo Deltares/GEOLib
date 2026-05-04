@@ -709,7 +709,9 @@ class PersistableSuTable(DStabilityBaseModelStructure):
         su_table = []
         for su_table_point in self.SuTablePoints:
             su_table.append(
-                SuTablePoint(su=su_table_point.Su, stress=su_table_point.EffectiveStress)
+                SuTablePoint(
+                    su=su_table_point.Su, stress=su_table_point.EffectiveStress
+                )
             )
         return su_table
 
@@ -988,7 +990,9 @@ class SoilCollection(DStabilitySubStructure):
                     PersistableSigmaTauTablePoint(EffectiveStress=0, ShearStrength=5),
                     PersistableSigmaTauTablePoint(EffectiveStress=10, ShearStrength=5),
                     PersistableSigmaTauTablePoint(EffectiveStress=35, ShearStrength=30),
-                    PersistableSigmaTauTablePoint(EffectiveStress=100, ShearStrength=60),
+                    PersistableSigmaTauTablePoint(
+                        EffectiveStress=100, ShearStrength=60
+                    ),
                 ]
             ),
             VolumetricWeightAbovePhreaticLevel=16.0,
@@ -1268,9 +1272,9 @@ class ProjectInfo(DStabilitySubStructure):
                 date = datetime.strptime(date, "%Y-%m-%d").date()
         return date
 
-    nltime_validator = field_validator("Created", "Date", "LastModified", mode="before")(
-        nltime
-    )
+    nltime_validator = field_validator(
+        "Created", "Date", "LastModified", mode="before"
+    )(nltime)
 
 
 class PersistableBondStress(DStabilityBaseModelStructure):
@@ -1842,7 +1846,9 @@ class BishopBruteForceResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius,
             )
         except (ValidationError, AttributeError):
             raise ValueError(
@@ -1920,7 +1926,9 @@ class BishopReliabilityResult(DStabilitySubStructure):
     StateLinePointContributions: (
         list[PersistableStateLinePointContribution | None] | None
     ) = None
-    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = (
+        None
+    )
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -1936,7 +1944,9 @@ class BishopReliabilityResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius,
             )
         except (ValidationError, AttributeError):
             raise ValueError(
@@ -1958,7 +1968,9 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
     StateLinePointContributions: (
         list[PersistableStateLinePointContribution | None] | None
     ) = None
-    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = (
+        None
+    )
     ResultThreshold: float | str | None = "NaN"
     SlipPlaneResults: list | None = None
 
@@ -1976,7 +1988,9 @@ class BishopBruteForceReliabilityResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius,
             )
         except (ValidationError, AttributeError):
             raise ValueError(
@@ -2005,7 +2019,9 @@ class BishopResult(DStabilitySubStructure):
         """Get condensed slipcircle data"""
         try:
             return BishopSlipCircleResult(
-                x=self.Circle.Center.X, z=self.Circle.Center.Z, radius=self.Circle.Radius
+                x=self.Circle.Center.X,
+                z=self.Circle.Center.Z,
+                radius=self.Circle.Radius,
             )
         except (ValidationError, AttributeError):
             raise ValueError(
@@ -2112,7 +2128,9 @@ class SpencerReliabilityResult(DStabilitySubStructure):
     StateLinePointContributions: (
         list[PersistableStateLinePointContribution | None] | None
     ) = None
-    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = (
+        None
+    )
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2150,7 +2168,9 @@ class SpencerGeneticAlgorithmReliabilityResult(DStabilitySubStructure):
     StateLinePointContributions: (
         list[PersistableStateLinePointContribution | None] | None
     ) = None
-    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = (
+        None
+    )
 
     @field_validator("Id", mode="before")
     def transform_id_to_str(cls, value) -> str:
@@ -2255,7 +2275,9 @@ class UpliftVanReliabilityResult(DStabilitySubStructure):
     StateLinePointContributions: (
         list[PersistableStateLinePointContribution | None] | None
     ) = None
-    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = (
+        None
+    )
     TangentLine: float | str | None = "NaN"
 
     @field_validator("Id", mode="before")
@@ -2301,7 +2323,9 @@ class UpliftVanParticleSwarmReliabilityResult(DStabilitySubStructure):
     StateLinePointContributions: (
         list[PersistableStateLinePointContribution | None] | None
     ) = None
-    StatePointContributions: list[PersistableStatePointContribution | None] | None = None
+    StatePointContributions: list[PersistableStatePointContribution | None] | None = (
+        None
+    )
     TangentLine: float | str | None = "NaN"
 
     @field_validator("Id", mode="before")
@@ -2398,7 +2422,9 @@ class DStabilityStructure(BaseModelStructure):
     """
 
     # input part
-    watermeshes: list[WaterMesh] = [WaterMesh(Id="21")]  # watermeshes/watermeshes_x.json
+    watermeshes: list[WaterMesh] = [
+        WaterMesh(Id="21")
+    ]  # watermeshes/watermeshes_x.json
     waternets: list[Waternet] = [Waternet(Id="14")]  # waternets/waternet_x.json
     waternetcreatorsettings: list[WaternetCreatorSettings] = [
         WaternetCreatorSettings(Id="15")
@@ -2789,7 +2815,9 @@ class DStabilityStructure(BaseModelStructure):
         )
 
     def _get_excavations(self, scenario_index: int, stage_index: int):
-        decorations_id = self.scenarios[scenario_index].Stages[stage_index].DecorationsId
+        decorations_id = (
+            self.scenarios[scenario_index].Stages[stage_index].DecorationsId
+        )
 
         for decoration in self.decorations:
             if decoration.Id == decorations_id:

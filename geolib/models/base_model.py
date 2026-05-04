@@ -3,6 +3,7 @@
 """
 This module contains the primary objects that power GEOLib.
 """
+
 import abc
 import logging
 from abc import abstractmethod
@@ -100,7 +101,7 @@ class BaseModel(BaseDataClass, abc.ABC):
             requests.compat.urljoin(
                 endpoint, f"calculate/{self.__class__.__name__.lower()}"
             ),
-            data=self.json(),
+            json=self.model_dump(mode="json"),
             auth=HTTPBasicAuth(meta.gl_username, meta.gl_password),
         )
         if response.status_code == 200:

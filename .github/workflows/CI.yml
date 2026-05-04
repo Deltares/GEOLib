@@ -2,50 +2,43 @@ name: ci
 
 on:
   push:
-    branches:
-    - master
+    branches: [ master ]
   pull_request:
-    branches:
-    - master
+    branches: [ master ]
 
 jobs:
   CI:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         os: [ubuntu-22.04, macos-latest, windows-latest]
+
     runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v4.1.0
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v4.7.1
-        with:
-          python-version: ${{ matrix.python-version }}
+      - name: Set up Pixi
+        uses: prefix-dev/setup-pixi@a0af7a228712d6121d37aba47adf55c1332c9c2e # v0.9.4
 
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.3.0
-        with:
-          poetry-version: 1.6.1
-      - name: Cache Poetry virtualenv
+      - name: Cache Pixi
         uses: actions/cache@v3
-        id: cache
         with:
-          path: ~/.virtualenvs
-          key: venv--${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          path: ~/.cache/pixi
+          key: pixi-${{ runner.os }}-${{ hashFiles('**/pixi.lock') }}
           restore-keys: |
-            venv--${{ matrix.os }}-${{ matrix.python-version }}-
-
-      - name: Set Poetry config
-        run: |
-          poetry config virtualenvs.in-project false
-          poetry config virtualenvs.path ~/.virtualenvs
+            pixi-${{ runner.os }}-
 
       - name: Install Dependencies
-        run: poetry install -E server
-        
+        run: pixi install
+
       - name: Test with pytest
-        run: poetry run pytest --cov=geolib --cov-report xml:coverage-reports/coverage-hydrolib-core.xml --junitxml=xunit-reports/xunit-result-hydrolib-core.xml -m "unittest and not workinprogress"
+        run: >
+          pixi run pytest
+          --cov=geolib
+          --cov-report xml:coverage-reports/coverage-hydrolib-core.xml
+          --junitxml=xunit-reports/xunit-result-hydrolib-core.xml
+          -m "unittest and not workinprogress"

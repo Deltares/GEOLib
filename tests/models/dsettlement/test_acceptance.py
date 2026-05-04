@@ -6,10 +6,13 @@ from datetime import timedelta
 from pathlib import Path
 from warnings import warn
 
-import geolib.models.dsettlement.loads as loads
-import geolib.soils as soil_external
 import pydantic
 import pytest
+from pydantic.color import Color
+from teamcity import is_running_under_teamcity
+
+import geolib.models.dsettlement.loads as loads
+import geolib.soils as soil_external
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dsettlement.dsettlement_model import DSettlementModel
@@ -44,9 +47,6 @@ from geolib.soils import (
     SoilWeightParameters,
     StateType,
 )
-from pydantic.color import Color
-from teamcity import is_running_under_teamcity
-
 from tests.utils import TestUtils, only_teamcity
 
 
@@ -680,7 +680,9 @@ class TestDSettlementAcceptance:
         dm.fit_options.fit_maximum_number_of_iterations = 2
         assert dm.fit_options.fit_required_iteration_accuracy == pytest.approx(0.0001)
         dm.fit_options.fit_required_iteration_accuracy = 0.001
-        assert dm.fit_options.fit_required_correlation_coefficient == pytest.approx(0.99)
+        assert dm.fit_options.fit_required_correlation_coefficient == pytest.approx(
+            0.99
+        )
         dm.fit_options.fit_required_correlation_coefficient = 0.9
 
         # 7. Serialize file

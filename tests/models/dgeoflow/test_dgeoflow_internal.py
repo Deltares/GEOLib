@@ -2,6 +2,8 @@ from datetime import datetime
 from pathlib import Path
 
 import pytest
+from pydantic_core._pydantic_core import ValidationError
+
 from geolib.models.dgeoflow import DGeoFlowModel
 from geolib.models.dgeoflow.internal import (
     BoundaryConditionCollection,
@@ -10,8 +12,6 @@ from geolib.models.dgeoflow.internal import (
     ProjectInfo,
 )
 from geolib.models.dstability.utils import children
-from pydantic_core._pydantic_core import ValidationError
-
 from tests.utils import TestUtils
 
 

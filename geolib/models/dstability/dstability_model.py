@@ -137,7 +137,8 @@ class DStabilityModel(BaseModel):
             for calculation_index, _ in enumerate(scenario.Calculations):
                 all_results.append(
                     _get_result_or_none(
-                        scenario_index=scenario_index, calculation_index=calculation_index
+                        scenario_index=scenario_index,
+                        calculation_index=calculation_index,
                     )
                 )
 
@@ -458,8 +459,10 @@ class DStabilityModel(BaseModel):
         scenario_index = self.get_scenario_index(scenario_index)
 
         new_id = self._get_next_id()
-        new_calculation_index, new_unique_id = self.datastructure.add_default_calculation(
-            scenario_index, label, notes, new_id
+        new_calculation_index, new_unique_id = (
+            self.datastructure.add_default_calculation(
+                scenario_index, label, notes, new_id
+            )
         )
 
         if set_current:
@@ -758,7 +761,9 @@ class DStabilityModel(BaseModel):
                 state_point.layer_id
             )
         except ValueError:
-            raise ValueError(f"No layer with id '{state_point.layer_id} in this geometry")
+            raise ValueError(
+                f"No layer with id '{state_point.layer_id} in this geometry"
+            )
 
         state_point.id = (
             self._get_next_id()
@@ -804,7 +809,9 @@ class DStabilityModel(BaseModel):
         persistable_state_line_points = []
         for state_point in state_points:
             state_point.id = self._get_next_id()  # assign a new id
-            persistable_state_line_points.append(state_point._to_internal_datastructure())
+            persistable_state_line_points.append(
+                state_point._to_internal_datastructure()
+            )
 
         return states.add_state_line(persistable_points, persistable_state_line_points)
 
@@ -858,7 +865,9 @@ class DStabilityModel(BaseModel):
             Notes=notes,
             Points=[PersistablePoint(X=p.x, Z=p.z) for p in points],
         )
-        self._get_excavations(scenario_index, stage_index).append(persistable_excavation)
+        self._get_excavations(scenario_index, stage_index).append(
+            persistable_excavation
+        )
 
     def add_load(
         self,

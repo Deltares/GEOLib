@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import pytest
-from geolib.models import DSettlementModel
 from teamcity import is_running_under_teamcity
 
+from geolib.models import DSettlementModel
 from tests.utils import TestUtils, only_teamcity
 
 benchmark_directory = "dsettlement/benchmarks"
@@ -37,7 +37,9 @@ class TestDSettlementRegressionSuite:
     def test_parse_output_benchmarks_dsettlement(self, test_file):
         # 1. Set up test data
         filename = test_file.stem
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(benchmark_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(benchmark_directory)
+        )
         output_test_file = output_test_folder / (filename + output_test_file_extension)
         ds = DSettlementModel()
 
@@ -61,7 +63,9 @@ class TestDSettlementRegressionSuite:
     def test_parse_output_tutorials_dsettlement(self, test_file: Path):
         # 1. Set up test data
         filename = test_file.stem
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(tutorials_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(tutorials_directory)
+        )
         output_test_file = output_test_folder / (filename + output_test_file_extension)
         ds = DSettlementModel()
 

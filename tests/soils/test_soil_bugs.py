@@ -1,7 +1,8 @@
 import pytest
+from pydantic_core._pydantic_core import ValidationError
+
 from geolib.models.dfoundations.dfoundations_model import DFoundationsModel
 from geolib.soils import MohrCoulombParameters, Soil, SoilType
-from pydantic_core._pydantic_core import ValidationError
 
 
 class TestNaNSoils:

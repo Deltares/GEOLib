@@ -4,6 +4,7 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
+
 from geolib.geometry.one import Point
 from geolib.models import BaseModel
 from geolib.models.dstability import DStabilityModel
@@ -39,11 +40,10 @@ from geolib.soils import (
     Soil,
     SuTablePoint,
 )
-
 from tests.utils import TestUtils
 
 
-class TestDStabilityModel:
+class TestDStabilityModel: 
     @pytest.mark.unittest
     def test_instantiate_stability_model(self):
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
@@ -181,7 +181,9 @@ class TestDStabilityModel:
         [
             pytest.param("dstability/EmptyFile.stix", id="Empty File"),
             pytest.param("dstability/example_1.stix", id="Example File"),
-            pytest.param("dstability/Tutorial_v2023_1.stix", id="Tutorial 2023.01 File"),
+            pytest.param(
+                "dstability/Tutorial_v2023_1.stix", id="Tutorial 2023.01 File"
+            ),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):
@@ -246,10 +248,14 @@ class TestDStabilityModel:
         dm.add_calculation(label="New Calculation 1", set_current=True)
 
         dm.add_stage(scenario_index=0, label="New Stage 2", set_current=True)
-        dm.add_calculation(scenario_index=0, label="New Calculation 2", set_current=True)
+        dm.add_calculation(
+            scenario_index=0, label="New Calculation 2", set_current=True
+        )
 
         dm.add_stage(scenario_index=1, label="New Stage 3", set_current=True)
-        dm.add_calculation(scenario_index=1, label="New Calculation 3", set_current=True)
+        dm.add_calculation(
+            scenario_index=1, label="New Calculation 3", set_current=True
+        )
 
         assert len(dm.scenarios) == 2
         assert len(dm.scenarios[0].Stages) == 2
@@ -367,37 +373,7 @@ class TestDStabilityModel:
     def test_generate_simple_model(self):
         dm = DStabilityModel()
 
-        layer_1 = [
-            Point(x=-50, z=-10),
-            Point(x=50, z=-10),
-            Point(x=50, z=-20),
-            Point(x=-50, z=-20),
-        ]
-        layer_2 = [
-            Point(x=-50, z=-5),
-            Point(x=50, z=-5),
-            Point(x=50, z=-10),
-            Point(x=-50, z=-10),
-        ]
-        layer_3 = [
-            Point(x=-50, z=0),
-            Point(x=50, z=0),
-            Point(x=50, z=-5),
-            Point(x=-50, z=-5),
-        ]
-        embankment = [
-            Point(x=-10, z=0),
-            Point(x=0, z=2),
-            Point(x=10, z=2),
-            Point(x=30, z=0),
-        ]
-
-        layers_and_soils = [
-            (layer_1, "Sand"),
-            (layer_2, "H_Ro_z&k"),
-            (layer_3, "H_Rk_k_shallow"),
-            (embankment, "H_Aa_ht_old"),
-        ]
+        layers_and_soils = TestUtils._get_standard_layers()
 
         layer_ids = []
 
@@ -465,43 +441,7 @@ class TestDStabilityModel:
         soil_peat_id.mohr_coulomb_parameters.cohesion.mean = 0.5
         soil_peat_id = dm.add_soil(soil_peat_id)
 
-        # add layers
-        layer_1 = [
-            Point(x=-50, z=-10),
-            Point(x=50, z=-10),
-            Point(x=50, z=-20),
-            Point(x=-50, z=-20),
-        ]
-
-        layer_2 = [
-            Point(x=-50, z=-5),
-            Point(x=50, z=-5),
-            Point(x=50, z=-10),
-            Point(x=-50, z=-10),
-        ]
-
-        layer_3 = [
-            Point(x=-50, z=0),
-            Point(x=-10, z=0),
-            Point(x=30, z=0),
-            Point(x=50, z=0),
-            Point(x=50, z=-5),
-            Point(x=-50, z=-5),
-        ]
-
-        embankment = [
-            Point(x=-10, z=0),
-            Point(x=0, z=2),
-            Point(x=10, z=2),
-            Point(x=30, z=0),
-        ]
-
-        layers_and_soils = [
-            (layer_1, "Sand"),
-            (layer_2, "H_Ro_z&k"),
-            (layer_3, "HV"),
-            (embankment, "H_Aa_ht_old"),
-        ]
+        layers_and_soils = TestUtils._get_standard_layers()
 
         layer_ids = []
 
@@ -509,7 +449,9 @@ class TestDStabilityModel:
             layer_id = dm.add_layer(layer, soil)
             layer_ids.append(layer_id)
 
-        outputdir = Path(TestUtils.get_output_test_data_dir("dstability/acceptancetest/"))
+        outputdir = Path(
+            TestUtils.get_output_test_data_dir("dstability/acceptancetest/")
+        )
         path = outputdir / "test_layers.stix"
         dm.serialize(path)
 
@@ -805,7 +747,9 @@ class TestDStabilityModel:
             TestUtils.get_local_test_data_dir("dstability/example_1.stix")
         )
         test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir("dstability/Tutorial_serialized_new.stix")
+            TestUtils.get_output_test_data_dir(
+                "dstability/Tutorial_serialized_new.stix"
+            )
         )
 
         dm.parse(test_filepath)
