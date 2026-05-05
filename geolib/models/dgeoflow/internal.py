@@ -376,9 +376,9 @@ class ProjectInfo(DGeoFlowSubStructure):
                 date = datetime.strptime(date, "%Y-%m-%d").date()
         return date
 
-    nltime_validator = field_validator("Created", "Date", "LastModified", mode="before")(
-        nltime
-    )
+    nltime_validator = field_validator(
+        "Created", "Date", "LastModified", mode="before"
+    )(nltime)
 
 
 class PersistablePoint(DGeoFlowBaseModelStructure):
@@ -492,7 +492,9 @@ class PersistableBoundaryCondition(DGeoFlowBaseModelStructure):
     Notes: str | None = None
     Id: str | None = None
     Points: Annotated[list[PersistablePoint], Field(min_length=2)]
-    FixedHeadBoundaryConditionProperties: PersistableFixedHeadBoundaryConditionProperties
+    FixedHeadBoundaryConditionProperties: (
+        PersistableFixedHeadBoundaryConditionProperties
+    )
 
     id_validator = field_validator("Id", mode="before")(transform_id_to_str)
 
@@ -767,7 +769,9 @@ class DGeoFlowStructure(BaseModelStructure):
         SoilLayerCollection(Id="14")
     ]  # soillayers/soillayers_x.json
     soils: SoilCollection = SoilCollection()  # soils.json
-    soilvisualizations: SoilVisualisation = SoilVisualisation()  # soilvisualizations.json
+    soilvisualizations: SoilVisualisation = (
+        SoilVisualisation()
+    )  # soilvisualizations.json
 
     projectinfo: ProjectInfo = ProjectInfo()  # projectinfo.json
     geometries: list[Geometry] = [Geometry(Id="1")]  # geometries/geometry_x.json
@@ -905,7 +909,9 @@ class DGeoFlowStructure(BaseModelStructure):
         """Add a new default (empty) calculation to DStability."""
 
         new_calculation = PersistableCalculation(
-            Label=label, Notes=notes, CalculationType=CalculationTypeEnum.GROUNDWATER_FLOW
+            Label=label,
+            Notes=notes,
+            CalculationType=CalculationTypeEnum.GROUNDWATER_FLOW,
         )
 
         scenario = self.scenarios[scenario_index]

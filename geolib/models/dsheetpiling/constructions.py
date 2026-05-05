@@ -1,6 +1,8 @@
 from geolib.models import BaseDataClass
 from geolib.models.dsheetpiling.internal import SheetPileElement
-from geolib.models.dsheetpiling.internal import VerticalBalance as InternalVerticalBalance
+from geolib.models.dsheetpiling.internal import (
+    VerticalBalance as InternalVerticalBalance,
+)
 from geolib.models.dsheetpiling.settings import SheetPilingElementMaterialType
 
 
@@ -13,13 +15,13 @@ class PileProperties(BaseDataClass):
      elastic_stiffness_ei  : Stiffness of the section per running meter.
      section_bottom_level  : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
      mr_char_el : Characteristic elastic moment without safety factors.
-     material_factor_gamma_m  : The partial safety factor \u03B3 m should be defined, only if the User defined material type
+     material_factor_gamma_m  : The partial safety factor \u03b3 m should be defined, only if the User defined material type
      is selected. Otherwise, the program will automatically apply the following factors
      (acc. to the corresponding Eurocode) to calculate the design allowable moment
-     * Steel : \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
-     * Concrete : \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6
-     * Wood : \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)
-     * Synthetic : \u03B3m = 1.2
+     * Steel : \u03b3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
+     * Concrete : \u03b3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6
+     * Wood : \u03b3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)
+     * Synthetic : \u03b3m = 1.2
      modification_factor_k_mod  :  The modification factor kmod should be defined, only if the User defined
      and synthetic material type is selected.
      Otherwise, the program will automatically apply the following factors
@@ -84,12 +86,12 @@ class SheetPileProperties(BaseDataClass):
      elastic_stiffness_ei : Stiffness of the section per running meter.
      section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
      mr_char_el: Characteristic elastic moment without safety factors.
-     material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type is selected. Otherwise, the program will automatically apply the following factors (acc. to the corresponding Eurocode) to calculate the design allowable moment:
+     material_factor_gamma_m : The partial safety factor \u03b3m should be defined, only if the User defined material type is selected. Otherwise, the program will automatically apply the following factors (acc. to the corresponding Eurocode) to calculate the design allowable moment:
 
-        * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
-        * Concrete: \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6
-        * Wood: \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)
-        * Synthetic: \u03B3m = 1.2
+        * Steel: \u03b3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4)
+        * Concrete: \u03b3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6
+        * Wood: \u03b3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1)
+        * Synthetic: \u03b3m = 1.2
 
      modification_factor_k_mod :  The modification factor kmod should be defined, only if the User defined and synthetic material type is selected. Otherwise, the program will automatically apply the following factors:
 
@@ -200,14 +202,14 @@ class DiaphragmWallProperties(BaseDataClass):
         elastic_stiffness_ei : Stiffness of the section per running meter.
         section_bottom_level : the vertical co-ordinate of the bottom of the sheet piling, in relation to the reference level.
         mr_char_el:: Characterictic elastic moment without safety factors.
-        material_factor_gamma_m : The partial safety factor \u03B3m should be defined, only if the User defined material type
+        material_factor_gamma_m : The partial safety factor \u03b3m should be defined, only if the User defined material type
             is selected. Otherwise, the program will automatically apply the following factors
             (acc. to the corresponding Eurocode) to calculate the design allowable moment:
 
-            * Steel: \u03B3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4) ;
-            * Concrete: \u03B3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6;
-            * Wood: \u03B3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1);
-            * Synthetic: \u03B3m = 1.2
+            * Steel: \u03b3m = 1 , acc. to Eurocode 3 – Part 5, art. 5.1.1(4) ;
+            * Concrete: \u03b3m = 1.1, acc. to Eurocode 2 – Part 1.1, art. 3.1.6;
+            * Wood: \u03b3m = 1 , acc. to Eurocode 5 – Part 1-2, art. 2.3(1);
+            * Synthetic: \u03b3m = 1.2
 
         modification_factor_k_mod :  The modification factor kmod should be defined, only if the User defined
             and synthetic material type is selected.
@@ -248,7 +250,9 @@ class DiaphragmWall(BaseDataClass):
     """
 
     name: str = ""
-    diaphragm_wall_properties: DiaphragmWallProperties | None = DiaphragmWallProperties()
+    diaphragm_wall_properties: DiaphragmWallProperties | None = (
+        DiaphragmWallProperties()
+    )
     plastic_properties: FullPlasticCalculationProperties | None = (
         FullPlasticCalculationProperties()
     )

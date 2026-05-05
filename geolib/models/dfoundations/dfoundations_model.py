@@ -251,7 +251,9 @@ class DFoundationsModel(BaseModel):
         if isinstance(pile, BearingPile) and isinstance(location, BearingPileLocation):
             piles = self.bearing_piles
             locations = self.bearing_pile_locations
-        elif isinstance(pile, TensionPile) and isinstance(location, TensionPileLocation):
+        elif isinstance(pile, TensionPile) and isinstance(
+            location, TensionPileLocation
+        ):
             piles = self.tension_piles
             locations = self.tension_pile_locations
         else:

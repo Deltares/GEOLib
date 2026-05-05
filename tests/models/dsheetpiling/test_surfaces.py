@@ -2,6 +2,9 @@ from contextlib import nullcontext as does_not_raise
 from typing import Callable
 
 import pytest
+from pydantic import ValidationError
+
+from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import DSheetPilingModel
 from geolib.models.dsheetpiling.internal import _DEFAULT_SURFACE_NAME, SurfacePoint
 from geolib.models.dsheetpiling.internal import Surface as InternalSurface
@@ -12,7 +15,6 @@ from geolib.models.dsheetpiling.settings import (
     Side,
 )
 from geolib.models.dsheetpiling.surface import Surface
-from pydantic import ValidationError
 
 
 @pytest.fixture
@@ -42,7 +44,9 @@ class TestSurfaces:
         [
             pytest.param([SurfacePoint(x=0, z=0)], does_not_raise(), id="Single point"),
             pytest.param(
-                [SurfacePoint(x=0, z=0), SurfacePoint(x=1, z=0)], does_not_raise(), id="Multiple points"
+                [SurfacePoint(x=0, z=0), SurfacePoint(x=1, z=0)], 
+                does_not_raise(), 
+                id="Multiple points"
             ),
             pytest.param(
                 [],
@@ -95,7 +99,9 @@ class TestSurfaces:
         with pytest.raises(
             ValueError, match=r"Stage \d+ is not added to the internal datastructure"
         ):
-            _model.add_surface(surface=surface, side=Side.BOTH, stage_id=invalid_stage_id)
+            _model.add_surface(
+                surface=surface, side=Side.BOTH, stage_id=invalid_stage_id
+            )
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(

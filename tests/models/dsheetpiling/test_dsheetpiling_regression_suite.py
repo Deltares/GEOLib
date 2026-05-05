@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import pytest
-from geolib.models import DSheetPilingModel
 
+from geolib.models import DSheetPilingModel
 from tests.utils import TestUtils, only_teamcity
 
 benchmark_directory = "dsheetpiling/benchmarks"
@@ -44,7 +44,9 @@ class TestDSheetPilingRegressionSuite:
     def test_parse_output_benchmarks_dsheetpiling(self, test_file: Path):
         # 1. Set up test data
         filename = test_file.stem
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(benchmark_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(benchmark_directory)
+        )
         output_test_file = output_test_folder / (filename + output_test_file_extension)
         ds = DSheetPilingModel()
 
@@ -94,7 +96,9 @@ class TestDSheetPilingRegressionSuite:
     def test_parse_output_tutorials_dsheetpiling(self, test_file: Path):
         # 1. Set up test data
         filename = test_file.stem
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(tutorials_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(tutorials_directory)
+        )
         output_test_file = output_test_folder / (filename + output_test_file_extension)
         ds = DSheetPilingModel()
 

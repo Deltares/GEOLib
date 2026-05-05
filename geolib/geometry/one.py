@@ -1,8 +1,8 @@
 """
 For all geometries and locations we try to use
-a single Point class. 
+a single Point class.
 
-In 1D applications it's only used to 
+In 1D applications it's only used to
 specify, for example height, other fields left None.
 
 For profiles used in 1D applications, see :class:`~geolib.soils.layers.ProfileLayer`

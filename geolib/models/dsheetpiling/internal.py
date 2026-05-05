@@ -135,7 +135,9 @@ class VersionExternals(DSeriesInlineMappedProperties):
 
 
 class Soil(DSeriesUnmappedNameProperties):
-    name: Annotated[str, StringConstraints(min_length=1, max_length=25)] = "default soil"
+    name: Annotated[str, StringConstraints(min_length=1, max_length=25)] = (
+        "default soil"
+    )
     soilcolor: int = 9764853
     soilsoiltype: SoilTypeModulusSubgradeReaction = SoilTypeModulusSubgradeReaction.SAND
     soilgraintype: GrainType = GrainType.FINE
@@ -239,7 +241,9 @@ class SoilProfiles(DSeriesNoParseSubStructure):
 
     @property
     def referenced_soil_names(self) -> set[str]:
-        return {layer.soil for profile in self.soil_profiles for layer in profile.layers}
+        return {
+            layer.soil for profile in self.soil_profiles for layer in profile.layers
+        }
 
 
 class CalculationOptions(DSeriesStructure):
@@ -263,19 +267,27 @@ class CalculationOptions(DSeriesStructure):
     designpartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
-    designec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designec7bmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    designec7nlmethod: PartialFactorCalculationType = (
+        PartialFactorCalculationType.METHODA
+    )
+    designec7bmethod: PartialFactorCalculationType = (
+        PartialFactorCalculationType.METHODA
+    )
     designec7bepartialfactorset: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.RC1SET1
     )
-    designec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    designcrowclass: PartialFactorSetCrow = PartialFactorSetCrow.CC0
+        PartialFactorCalculationType.METHODA
+    )
+        PartialFactorSetCrow.CC0
+    )
     # verify sheet piling calculation
     verifytype: VerifyType = VerifyType.EC7NL
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocodeoverallstability: bool = False
     ec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    ec7nloverallpartialfactorset: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     ec7nloverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     ec7nadnloverallstability: bool = False
     ec7nlassessmenttype: AssessmentTypeEC7NL = AssessmentTypeEC7NL.NewConstruction
@@ -308,8 +320,12 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_eurocode_da1_set2: PartialFactorsEurocodeDa1Set2 = (
         PartialFactorsEurocodeDa1Set2()
     )
-    partial_factors_eurocode_da2: PartialFactorsEurocodeDa2 = PartialFactorsEurocodeDa2()
-    partial_factors_eurocode_da3: PartialFactorsEurocodeDa3 = PartialFactorsEurocodeDa3()
+    partial_factors_eurocode_da2: PartialFactorsEurocodeDa2 = (
+        PartialFactorsEurocodeDa2()
+    )
+    partial_factors_eurocode_da3: PartialFactorsEurocodeDa3 = (
+        PartialFactorsEurocodeDa3()
+    )
     partial_factors_ec7_nl_0: PartialFactorsEc7Nl0 = PartialFactorsEc7Nl0()
     partial_factors_ec7_nl_1: PartialFactorsEc7Nl1 = PartialFactorsEc7Nl1()
     partial_factors_ec7_nl_2: PartialFactorsEc7Nl2 = PartialFactorsEc7Nl2()
@@ -383,13 +399,15 @@ class SheetPileElement(DSeriesUnmappedNameProperties):
     woodensheetpilingelementksys: Annotated[float, Field(ge=0.01, le=10)] = 1.15
     woodensheetpilingelementkdef: Annotated[float, Field(ge=0.01, le=10)] = 1
     woodensheetpilingelementpsi2eff: Annotated[float, Field(ge=0, le=10)] = 1
-    woodensheetpilingelementmaterialfactor: Annotated[float, Field(ge=0.01, le=10)] = 1.3
+    woodensheetpilingelementmaterialfactor: Annotated[float, Field(ge=0.01, le=10)] = (
+        1.3
+    )
     woodensheetpilingelementkmodfshort: Annotated[float, Field(ge=0.01, le=10)] = 0.65
     woodensheetpilingelementkmodflong: Annotated[float, Field(ge=0.01, le=10)] = 0.5
     woodensheetpilingelementkmode: Annotated[float, Field(ge=0.01, le=10)] = 0.8
 
     def __init__(self, *args, **kwargs) -> "SheetPileElement":
-        default_dict = dict(self.model_fields)
+        default_dict = dict(self.__class__.model_fields)
         for field, value in kwargs.items():
             if value is None:
                 kwargs[field] = default_dict[field].default
@@ -572,7 +590,9 @@ class StageOptions(DSeriesInlineMappedProperties):
     stageclasscrow: PartialFactorSetCrow = PartialFactorSetCrow.CC0
     stageverifycrow: int = 0
     stageanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
-    stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = PartialFactorSetEC7NADNL.RC0
+    stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = (
+        PartialFactorSetEC7NADNL.RC0
+    )
     stageriskclassec7nadbe: RiskClassEC7BE = RiskClassEC7BE.RC2
     stageverifyec7nadnl: int = 0
     stageanchorfactorec7nadnl: Annotated[float, Field(ge=0.001, le=1000)] = 1
@@ -589,7 +609,9 @@ class UniformLoad(DSeriesUnmappedNameProperties):
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
     uniformloadleft: float
     uniformloadright: float
-    uniformloadpermanent: LoadTypePermanentVariable = LoadTypePermanentVariable.PERMANENT
+    uniformloadpermanent: LoadTypePermanentVariable = (
+        LoadTypePermanentVariable.PERMANENT
+    )
     uniformloadfavourable: LoadTypeFavourableUnfavourable = (
         LoadTypeFavourableUnfavourable.DSHEETPILING_DETERMINED
     )
@@ -747,25 +769,20 @@ class DSheetPilingInputStructure(DSeriesStructure):
     soil_collection: SoilCollection = SoilCollection()
     run_identification: str = 2 * "\n"
     model: Model = Model()
-    cpt_list: str = cleandoc(
-        """
+    cpt_list: str = cleandoc("""
         Count=0
-        """
-    )
+        """)
     sheet_piling: str | SheetPiling = SheetPiling()
     combined_wall: str = ""
     vertical_balance: VerticalBalance = VerticalBalance()
-    settlement_by_vibration_params: str = cleandoc(
-        """
+    settlement_by_vibration_params: str = cleandoc("""
         SheetPilingNumberOfPilesDrilled=2
-        """
-    )
+        """)
     horizontal_line_loads: HorizontalLineLoads | str | None = None
     uniform_loads: UniformLoads | None = None
     surcharge_loads: SurchargeLoads | None = None
     water: str = ""
-    soil_profiles: SoilProfiles | str = cleandoc(
-        f"""
+    soil_profiles: SoilProfiles | str = cleandoc(f"""
           1 Number of spring characteristics curves
           0 1/0 : Yes/No Unloading curve
           1 1/0 : Yes/No Use Cur values
@@ -779,21 +796,17 @@ class DSheetPilingInputStructure(DSeriesStructure):
          Nr      Level   Wosp Top  Wosp Bott Material Name
           1       0.00       0.00       0.00 New Material
 
-        """
-    )
-    surfaces: str | Surfaces = cleandoc(
-        f"""
+        """)
+    surfaces: str | Surfaces = cleandoc(f"""
         1 Number of surfaces 
         1     1 {_DEFAULT_SURFACE_NAME}
         0.00  Standard deviation
         2  Distribution type
         Nr     X-coord     Value
         1       0.00       0.00
-        """
-    )
+        """)
     water: Water = Water()
-    water_levels: WaterLevels | str = cleandoc(
-        f"""
+    water_levels: WaterLevels | str = cleandoc(f"""
           1 Water level count           
         {_DEFAULT_WATER_LEVEL_NAME}
               0.00 Level
@@ -801,31 +814,26 @@ class DSheetPilingInputStructure(DSeriesStructure):
                  2 Distribution type
               0.00 Delta h_deci (CROW)                 
 
-        """
-    )
+        """)
     construction_stages: str | ConstructionStages = ConstructionStages()
     calculation_options_per_stage: CalculationOptionsPerStage = (
         CalculationOptionsPerStage()
     )
     calculation_options: CalculationOptions = CalculationOptions()
-    probabilistic_calculation_options: str = cleandoc(
-        """
+    probabilistic_calculation_options: str = cleandoc("""
         ZFunctionType=1
         ZFunctionMobilisation=100.00
         ZFunctionMoment=0.00
         ZFunctionAnchorForce=0.00
         ZFunctionAnchor=-1
-        """
-    )
-    probabilistic_control_parameters: str = cleandoc(
-        """
+        """)
+    probabilistic_control_parameters: str = cleandoc("""
         IterationFactor=1.000
         IterationNumber=15
         CriteriaLimit1=0.010000
         CriteriaLimit2=0.010000
         ReliabilityStage=0
-        """
-    )
+        """)
 
     """
     When there are no anchors, struts, supports, vibration positions or soil displacements in the model,
@@ -1007,7 +1015,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
     def _from_snake_to_pascal_case(self, dict_: dict) -> dict:
         return {k.replace("_", ""): v for k, v in dict_.items()}
 
-    def add_water_level(self, stage_id: int, water_level: WaterLevel, side: Side) -> None:
+    def add_water_level(
+        self, stage_id: int, water_level: WaterLevel, side: Side
+    ) -> None:
         # Add water level to water levels
         if isinstance(self.water_levels, str):
             self.water_levels = WaterLevels()
@@ -1127,7 +1137,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
     def add_load(self, load: HorizontalLineLoad | Moment | NormalForce, stage_id: int):
         if isinstance(load, HorizontalLineLoad):
             self.is_valid_unique_load_names(
-                load_list=self.construction_stages.stages[stage_id].horizontal_line_loads,
+                load_list=self.construction_stages.stages[
+                    stage_id
+                ].horizontal_line_loads,
                 name=load.name,
             )
             if (
@@ -1176,7 +1188,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
             self.uniform_loads.loads.append(load)
         self.construction_stages.stages[stage_id].uniform_loads.append(load.name)
 
-    def add_surcharge_load(self, stage_id: int, load: SurchargeLoad, side: Side) -> None:
+    def add_surcharge_load(
+        self, stage_id: int, load: SurchargeLoad, side: Side
+    ) -> None:
         if not isinstance(self.surcharge_loads, SurchargeLoads):
             self.surcharge_loads = SurchargeLoads()
         if load not in self.surcharge_loads.loads:

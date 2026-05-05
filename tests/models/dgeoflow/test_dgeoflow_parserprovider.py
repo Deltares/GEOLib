@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import pytest
+
 from geolib.models.dgeoflow import DGeoFlowModel
 from geolib.models.dgeoflow.dgeoflow_parserprovider import (
     DGeoFlowParser,
@@ -11,7 +12,6 @@ from geolib.models.dgeoflow.serializer import (
     DGeoFlowInputSerializer,
     DGeoFlowInputZipSerializer,
 )
-
 from tests.utils import TestUtils
 
 
@@ -29,7 +29,9 @@ class TestDGeoFlowInputParser:
         # 1. Set up test model
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        test_output_filepath = Path(TestUtils.get_output_test_data_dir(self.output_path))
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir(self.output_path)
+        )
 
         # 2. Verify initial expectations
         assert os.path.exists(test_filepath), "Testing directory not found."
@@ -91,7 +93,9 @@ class TestDGeoFlowInputParser:
         # 1. Set up test model
         input_parser = DGeoFlowParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
-        test_output_filepath = Path(TestUtils.get_output_test_data_dir(self.output_path))
+        test_output_filepath = Path(
+            TestUtils.get_output_test_data_dir(self.output_path)
+        )
 
         # 3. Run test.
         input_structure = input_parser.parse(test_filepath)

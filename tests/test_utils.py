@@ -1,4 +1,5 @@
 import pytest
+
 from geolib.models import BaseDataClass
 from geolib.models.utils import get_filtered_type_hints, get_required_class_field
 

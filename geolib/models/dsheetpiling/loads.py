@@ -192,7 +192,9 @@ class SurchargeLoad(BaseDataClass):
         surchargeload.surchargeloadpermanent = (
             self.verification_load_settings.duration_type
         )
-        surchargeload.surchargeloadfavourable = self.verification_load_settings.load_type
+        surchargeload.surchargeloadfavourable = (
+            self.verification_load_settings.load_type
+        )
         if self.standard_deviation:
             surchargeload.surchargeloadstandarddeviation = self.standard_deviation
         if self.distribution_type:

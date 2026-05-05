@@ -127,7 +127,9 @@ class SoilInternal(DSeriesUnmappedNameProperties):
     soilpricompindex: float = 0.01  # SoilPriCompIndex
     soilseccompindex: float = 0.1  # SoilSecCompIndex
     soilseccomprate: float = 0.005  # SoilSecCompRate
-    soilhorizontalbehaviourtype: HorizontalBehaviourType = HorizontalBehaviourType.Elastic
+    soilhorizontalbehaviourtype: HorizontalBehaviourType = (
+        HorizontalBehaviourType.Elastic
+    )
     soilelasticity: float = 1000
     soildefaultelasticity: Bool = Bool.TRUE
     soilsecondaryswellingreduced: Bool = (

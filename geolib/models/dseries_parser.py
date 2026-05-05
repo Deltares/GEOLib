@@ -53,9 +53,30 @@ class DSeriesStructure(BaseModelStructure):
         # Remove fields that are None so defaults will be used
         kwargs = {field: value for field, value in kwargs.items() if value is not None}
 
-        if len(kwargs) > len(get_type_hints(self)):
+        # Try multiple strategies to get type hints
+        type_hints = {}
+
+        # Strategy 1: Try get_type_hints with proper namespace
+        try:
+            type_hints = get_type_hints(self, include_extras=True)
+        except (NameError, AttributeError, TypeError):
+            # Strategy 2: If get_type_hints fails, use model_fields from Pydantic
+            if hasattr(self.__class__, "model_fields") and self.__class__.model_fields:
+                type_hints = {
+                    name: field.annotation
+                    for name, field in self.__class__.model_fields.items()
+                }
+
+        # Strategy 3: If still empty, fallback to model_fields
+        if not type_hints and hasattr(self.__class__, "model_fields"):
+            type_hints = {
+                name: field.annotation
+                for name, field in self.__class__.model_fields.items()
+            }
+
+        if len(kwargs) > len(type_hints):
             a = set(kwargs.keys())
-            b = set(get_type_hints(self).keys())
+            b = set(type_hints.keys())
             raise ValueError(
                 f"""Got more fields than defined on model {self.__class__.__name__}:
                 parser has {a.difference(b)} fields and
@@ -63,7 +84,7 @@ class DSeriesStructure(BaseModelStructure):
                 """
             )
 
-        for field, fieldtype in get_type_hints(self).items():
+        for field, fieldtype in type_hints.items():
             # If the body is a string, we should check
             # whether we can parse it further.
             if field in kwargs and isinstance(kwargs[field], str):
@@ -507,7 +528,9 @@ class DSeriesInlineProperties(DSeriesStructure):
         return 0
 
     @classmethod
-    def get_property_key_value(cls, text: str, expected_property: str) -> tuple[str, str]:
+    def get_property_key_value(
+        cls, text: str, expected_property: str
+    ) -> tuple[str, str]:
         """Gets the property key and value for a given text line.
         It allows concrete classes to override it and either use the expected property
         name or another value.
@@ -597,7 +620,9 @@ class DSeriesInlineMappedProperties(DSeriesInlineProperties):
     """
 
     @classmethod
-    def get_property_key_value(cls, text: str, expected_property: str) -> tuple[str, str]:
+    def get_property_key_value(
+        cls, text: str, expected_property: str
+    ) -> tuple[str, str]:
         """Gets both property key and value from the text line.
 
         Args:
@@ -618,7 +643,7 @@ class DSerieVersion(DSeriesInlineMappedProperties):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for k, v in self.model_dump().items():
-            if self.model_fields.get(k).get_default() != v:
+            if self.__class__.model_fields.get(k).get_default() != v:
                 logger.warning(
                     """The version of the input file is unsupported.
                 Check the documentation on how to prevent this warning in the future."""
@@ -628,7 +653,9 @@ class DSerieVersion(DSeriesInlineMappedProperties):
 
 class DSeriesInlineReversedProperties(DSeriesInlineProperties):
     @classmethod
-    def get_property_key_value(cls, text: str, expected_property: str) -> tuple[str, str]:
+    def get_property_key_value(
+        cls, text: str, expected_property: str
+    ) -> tuple[str, str]:
         """Returns the value content for a line of format:
         value : key || value = key
 
@@ -665,7 +692,9 @@ class DSeriesUnmappedNameProperties(DSeriesInlineMappedProperties):
     """
 
     @classmethod
-    def get_property_key_value(cls, text: str, expected_property: str) -> tuple[str, str]:
+    def get_property_key_value(
+        cls, text: str, expected_property: str
+    ) -> tuple[str, str]:
         """Gets both property key and value from the text line.
 
         Args:
@@ -957,7 +986,9 @@ class DSeriesTreeStructure(DSeriesStructure):
             base_type = get_origin(field) or field
 
             if base_type is list or is_structure_collection(base_type):
-                lines_to_parse = cls.get_next_property_text_lines(text_lines[lines_read:])
+                lines_to_parse = cls.get_next_property_text_lines(
+                    text_lines[lines_read:]
+                )
                 parsed_tuple = get_list_values(struct_idx, field_name, lines_to_parse)
                 (
                     properties[field_name],
@@ -1128,7 +1159,10 @@ class DSeriesTreeStructureCollection(DSeriesStructure):
             read_lines += parsed_lines
             parsed_structures_collection.append(parsed_structure)
 
-        return cls(**{collection_property_name: parsed_structures_collection}), read_lines
+        return (
+            cls(**{collection_property_name: parsed_structures_collection}),
+            read_lines,
+        )
 
 
 class DSeriesMatrixTreeStructureCollection(DSeriesTreeStructureCollection):
@@ -1331,7 +1365,9 @@ class DSerieParser(BaseParser):
             if sline.startswith("[") and sline.endswith("]"):
                 # [ key name ] => key_name
                 key = make_key(sline[1:-1])
-                if skipped_keys and any(s_key for s_key in skipped_keys if s_key in key):
+                if skipped_keys and any(
+                    s_key for s_key in skipped_keys if s_key in key
+                ):
                     continue
 
                 # new group

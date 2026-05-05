@@ -3,6 +3,8 @@ import random
 from pathlib import Path
 
 import pytest
+from pydantic_extra_types.color import Color
+
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.calculation_options import (
     CalculationOptionsPerStage,
@@ -73,8 +75,6 @@ from geolib.soils import (
     Soil,
     SoilType,
 )
-from pydantic_extra_types.color import Color
-
 from tests.utils import TestUtils, only_teamcity
 
 test_file_directory = "dsheetpiling/acceptance"
@@ -122,7 +122,9 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -203,7 +205,9 @@ class TestDsheetPilingAcceptance:
         soil_peat.mohr_coulomb_parameters.cohesion = 2
         soil_peat.mohr_coulomb_parameters.friction_angle = 20
         soil_peat.mohr_coulomb_parameters.friction_angle_interface = 0
-        soil_peat.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = False
+        soil_peat.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = (
+            False
+        )
         soil_peat.shell_factor = 1
         soil_peat.soil_state.ocr_layer = 1
         soil_peat.soil_classification_parameters.grain_type = GrainType.FINE
@@ -265,7 +269,9 @@ class TestDsheetPilingAcceptance:
             surface=ground_level_surface, side=Side.RIGHT, stage_id=stage_id
         )
         model.add_surface(
-            surface=ground_level_minus_7_meter_surface, side=Side.LEFT, stage_id=stage_id
+            surface=ground_level_minus_7_meter_surface,
+            side=Side.LEFT,
+            stage_id=stage_id,
         )
 
         initial_water_level = WaterLevel(name="WL=GL-2", level=-2)
@@ -348,7 +354,9 @@ class TestDsheetPilingAcceptance:
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
-        uniform_load = UniformLoad(name="New UniformLoad", left_load=10, right_load=12.5)
+        uniform_load = UniformLoad(
+            name="New UniformLoad", left_load=10, right_load=12.5
+        )
         model.add_load(load=uniform_load, stage_id=stage_id)
 
         # add surcharge load
@@ -379,7 +387,9 @@ class TestDsheetPilingAcceptance:
         # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
-        with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
+        with open(
+            "data" + output_test_file.name.split(".")[0] + ".json", "w"
+        ) as outfile:
             json.dump(
                 model.datastructure.model_dump(),
                 outfile,
@@ -478,7 +488,9 @@ class TestDsheetPilingAcceptance:
         soil_peat.mohr_coulomb_parameters.cohesion = 2
         soil_peat.mohr_coulomb_parameters.friction_angle = 20
         soil_peat.mohr_coulomb_parameters.friction_angle_interface = 0
-        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = False
+        soil_clay.mohr_coulomb_parameters.is_delta_angle_automatically_calculated = (
+            False
+        )
         soil_peat.shell_factor = 1
         soil_peat.soil_state.ocr_layer = 1
         soil_peat.soil_classification_parameters.grain_type = GrainType.FINE
@@ -620,7 +632,9 @@ class TestDsheetPilingAcceptance:
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
-        uniform_load = UniformLoad(name="New UniformLoad", left_load=10, right_load=12.5)
+        uniform_load = UniformLoad(
+            name="New UniformLoad", left_load=10, right_load=12.5
+        )
         model.add_load(load=uniform_load, stage_id=1)
 
         # add normal force
@@ -644,7 +658,9 @@ class TestDsheetPilingAcceptance:
         # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
-        with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
+        with open(
+            "data" + output_test_file.name.split(".")[0] + ".json", "w"
+        ) as outfile:
             json.dump(
                 model.datastructure.model_dump(),
                 outfile,
@@ -678,7 +694,9 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -802,7 +820,9 @@ class TestDsheetPilingAcceptance:
 
         ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
 
-        model.add_surface(surface=ground_level_surface, side=Side.BOTH, stage_id=stage_id)
+        model.add_surface(
+            surface=ground_level_surface, side=Side.BOTH, stage_id=stage_id
+        )
 
         initial_water_level = WaterLevel(name="WL=GL-2", level=-2)
         model.add_head_line(
@@ -927,7 +947,9 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -1077,7 +1099,9 @@ class TestDsheetPilingAcceptance:
             surface=ground_level_surface, side=Side.RIGHT, stage_id=stage_id
         )
         model.add_surface(
-            surface=ground_level_minus_7_meter_surface, side=Side.LEFT, stage_id=stage_id
+            surface=ground_level_minus_7_meter_surface,
+            side=Side.LEFT,
+            stage_id=stage_id,
         )
 
         initial_water_level = WaterLevel(name="WL=GL-2", level=-2)
@@ -1160,7 +1184,9 @@ class TestDsheetPilingAcceptance:
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
-        uniform_load = UniformLoad(name="New UniformLoad", left_load=10, right_load=12.5)
+        uniform_load = UniformLoad(
+            name="New UniformLoad", left_load=10, right_load=12.5
+        )
         model.add_load(load=uniform_load, stage_id=stage_id)
 
         # add surcharge load
@@ -1191,7 +1217,9 @@ class TestDsheetPilingAcceptance:
         # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
-        with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
+        with open(
+            "data" + output_test_file.name.split(".")[0] + ".json", "w"
+        ) as outfile:
             json.dump(
                 model.datastructure.model_dump(),
                 outfile,
@@ -1239,7 +1267,9 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -1400,7 +1430,9 @@ class TestDsheetPilingAcceptance:
             surface=ground_level_surface, side=Side.RIGHT, stage_id=stage_id
         )
         model.add_surface(
-            surface=ground_level_minus_7_meter_surface, side=Side.LEFT, stage_id=stage_id
+            surface=ground_level_minus_7_meter_surface,
+            side=Side.LEFT,
+            stage_id=stage_id,
         )
 
         initial_water_level = WaterLevel(name="WL=GL-2", level=-2)
@@ -1483,7 +1515,9 @@ class TestDsheetPilingAcceptance:
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
-        uniform_load = UniformLoad(name="New UniformLoad", left_load=10, right_load=12.5)
+        uniform_load = UniformLoad(
+            name="New UniformLoad", left_load=10, right_load=12.5
+        )
         model.add_load(load=uniform_load, stage_id=stage_id)
 
         # add surcharge load
@@ -1514,7 +1548,9 @@ class TestDsheetPilingAcceptance:
         # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
-        with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
+        with open(
+            "data" + output_test_file.name.split(".")[0] + ".json", "w"
+        ) as outfile:
             json.dump(
                 model.datastructure.model_dump(),
                 outfile,
@@ -1562,7 +1598,9 @@ class TestDsheetPilingAcceptance:
         # 0. Set up test data.
         model = DSheetPilingModel()
         test_name_with_id = request.node.name
-        output_test_folder = Path(TestUtils.get_output_test_data_dir(test_file_directory))
+        output_test_folder = Path(
+            TestUtils.get_output_test_data_dir(test_file_directory)
+        )
         output_test_file = output_test_folder / f"{test_name_with_id}.shi"
 
         # 1. Build model.
@@ -1708,7 +1746,9 @@ class TestDsheetPilingAcceptance:
             surface=ground_level_surface, side=Side.RIGHT, stage_id=stage_id
         )
         model.add_surface(
-            surface=ground_level_minus_7_meter_surface, side=Side.LEFT, stage_id=stage_id
+            surface=ground_level_minus_7_meter_surface,
+            side=Side.LEFT,
+            stage_id=stage_id,
         )
 
         initial_water_level = WaterLevel(name="WL=GL-2", level=-2)
@@ -1791,7 +1831,9 @@ class TestDsheetPilingAcceptance:
         model.add_load(load=moment_load, stage_id=0)
 
         # add uniform load
-        uniform_load = UniformLoad(name="New UniformLoad", left_load=10, right_load=12.5)
+        uniform_load = UniformLoad(
+            name="New UniformLoad", left_load=10, right_load=12.5
+        )
         model.add_load(load=uniform_load, stage_id=stage_id)
 
         # add surcharge load
@@ -1822,7 +1864,9 @@ class TestDsheetPilingAcceptance:
         # 4. Verify successful parsing of output datastructure
         assert model.datastructure
         assert model.datastructure.is_valid
-        with open("data" + output_test_file.name.split(".")[0] + ".json", "w") as outfile:
+        with open(
+            "data" + output_test_file.name.split(".")[0] + ".json", "w"
+        ) as outfile:
             json.dump(
                 model.datastructure.model_dump(),
                 outfile,

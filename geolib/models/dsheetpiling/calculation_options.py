@@ -92,7 +92,9 @@ class OverallStabilityCalculationOptions(CalculationOptions):
     input_calculation_type: CalculationType = CalculationType.OVERALL_STABILITY
     cur_stability_stage: Annotated[int, Field(ge=0)] = 0
     overall_stability_type: DesignType = DesignType.REPRESENTATIVE
-    stability_eurocode_partial_factor_set: PartialFactorSetEC = PartialFactorSetEC.DA1SET1
+    stability_eurocode_partial_factor_set: PartialFactorSetEC = (
+        PartialFactorSetEC.DA1SET1
+    )
     stability_ec7_nl_partial_factor_set: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
     )
