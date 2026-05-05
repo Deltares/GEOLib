@@ -276,8 +276,10 @@ class CalculationOptions(DSeriesStructure):
     designec7bepartialfactorset: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.RC1SET1
     )
+    designec7bemethod: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
+    designcrowclass: PartialFactorSetCrow = (
         PartialFactorSetCrow.CC0
     )
     # verify sheet piling calculation
