@@ -174,17 +174,12 @@ advise to also add type hints. An example:</p>
 </section>
 <section id="adding-requirements">
 <h2>Adding requirements<a class="headerlink" href="#adding-requirements" title="Link to this heading">¶</a></h2>
-<p>New requirements can be added using Poetry: <a class="reference external" href="https://python-poetry.org/docs/">https://python-poetry.org/docs/</a>
-For example, adding a new package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>poetry<span class="w"> </span>add<span class="w"> </span>new_package
+<p>New requirements can be added through Pixi and hatchling.</p>
+<p>For example, to add a new package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pixi<span class="w"> </span>add<span class="w"> </span>new_package
 </pre></div>
 </div>
-<p>It’s good to keep the <cite>requirements.txt</cite> up to date, so afterwards run:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>poetry<span class="w"> </span>install
-$<span class="w"> </span>poetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-E<span class="w"> </span>server<span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span>--output<span class="w"> </span>requirements.txt<span class="w"> </span>--without-hashes
-$<span class="w"> </span>poetry<span class="w"> </span><span class="nb">export</span><span class="w"> </span>-E<span class="w"> </span>server<span class="w"> </span>-f<span class="w"> </span>requirements.txt<span class="w"> </span>--output<span class="w"> </span>requirements-dev.txt<span class="w"> </span>--with<span class="w"> </span>dev<span class="w"> </span>--without-hashes
-</pre></div>
-</div>
+<p>This updates both <cite>pyproject.toml</cite> and <cite>pixi.lock</cite> with the new dependency and its transitive dependencies.</p>
 </section>
 </section>
 

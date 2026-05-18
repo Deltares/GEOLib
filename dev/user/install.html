@@ -76,10 +76,10 @@ install some extra packages:</p>
 <p>This package, unlike GEOLib+, tries to limit the number of
 <em>heavy</em> depedencies. The main packages used are:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://python-poetry.org/docs/">Poetry</a> for package management (replacing setuptools) see also <a class="reference external" href="https://www.python.org/dev/peps/pep-0518/">PEP 518</a>.</p></li>
+<li><p><a class="reference external" href="https://pixi.sh">Pixi</a> for package and dependency management (local development).</p></li>
 <li><p><a class="reference external" href="https://pydantic-docs.helpmanual.io/">Pydantic</a> for validation of types and some parameters (min/max/defaults).</p></li>
 </ul>
-<p>You don’t need to install anything manually, as the pip installation should take care of it.</p>
+<p>You don’t need to install anything manually, as the Pixi installation should take care of it.</p>
 </section>
 <section id="get-the-source-code">
 <h2>Get the Source Code<a class="headerlink" href="#get-the-source-code" title="Link to this heading">¶</a></h2>
@@ -89,11 +89,15 @@ install some extra packages:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:Deltares/GEOLib.git
 </pre></div>
 </div>
-<p>Once you have a copy of the source, you can embed it in your own Python
-package, or install it into your site-packages easily:</p>
+<p>Once you have a copy of the source, you can set up a development environment using <a class="reference external" href="https://pixi.sh">Pixi</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd geolib
-$ pip install poetry
-$ poetry install
+$ pixi install
+</pre></div>
+</div>
+<p>For development, you can then run commands with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pixi run pytest          # Run tests
+$ pixi run mypy geolib     # Type checking
+$ pixi run sphinx ...      # Build documentation
 </pre></div>
 </div>
 </section>
