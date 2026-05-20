@@ -650,6 +650,7 @@ class CriticalHeadResult(DGeoFlowSubStructure):
     Id: str | None = None
     PipeLength: float | None = None
     CriticalHead: float | None = None
+    CriticalHeadDrop: float | None = None
     Elements: list[ElementResult] | None = []
     PhreaticLineSegments: list[PersistablePhreaticLineSegment] | None = []
     PipeElements: list[PipeElementResult] | None = []
