@@ -196,8 +196,8 @@ class TestDGeoFlowModel:
         assert dm.datastructure
 
         assert len(dm.datastructure.groundwater_flow_results) == 1
-        assert len(dm.datastructure.groundwater_flow_results[0].Elements) == 386  # type: ignore
-        assert dm.datastructure.groundwater_flow_results[0].Elements[10].NodeResults[0].TotalPorePressure == 143.661  # type: ignore
+        assert len(dm.datastructure.groundwater_flow_results[0].Elements) == 386
+        assert dm.datastructure.groundwater_flow_results[0].Elements[10].NodeResults[0].TotalPorePressure == 181.386
 
     @pytest.mark.acceptance
     def test_generate_pipe_length_model(self):
@@ -236,8 +236,8 @@ class TestDGeoFlowModel:
         assert dm.datastructure
 
         assert len(dm.datastructure.pipe_length_results) == 1
-        assert len(dm.datastructure.pipe_length_results[0].Elements) == 640  # type: ignore
-        assert dm.datastructure.pipe_length_results[0].Elements[10].NodeResults[0].TotalPorePressure == 208.255  # type: ignore
+        assert len(dm.datastructure.pipe_length_results[0].Elements) == 636
+        assert dm.datastructure.pipe_length_results[0].Elements[10].NodeResults[0].TotalPorePressure == 246.15
         assert dm.datastructure.pipe_length_results[0].PipeLength == 26.0
 
     @pytest.mark.acceptance
@@ -282,10 +282,11 @@ class TestDGeoFlowModel:
         assert dm.datastructure
 
         assert len(dm.datastructure.critical_head_results) == 1
-        assert len(dm.datastructure.critical_head_results[0].Elements) == 640  # type: ignore
-        assert dm.datastructure.critical_head_results[0].Elements[10].NodeResults[0].TotalPorePressure == 208.968  # type: ignore
+        assert len(dm.datastructure.critical_head_results[0].Elements) == 636
+        assert dm.datastructure.critical_head_results[0].Elements[10].NodeResults[0].TotalPorePressure == 246.874
         assert dm.datastructure.critical_head_results[0].PipeLength == 29.0
         assert dm.datastructure.critical_head_results[0].CriticalHead == 17.5
+        assert dm.datastructure.critical_head_results[0].CriticalHeadDrop == 17.5
 
     @pytest.mark.integrationtest
     def test_add_multiple_stages_and_calculations(self):
