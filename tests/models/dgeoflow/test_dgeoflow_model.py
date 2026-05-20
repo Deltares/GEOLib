@@ -64,9 +64,8 @@ class TestDGeoFlowModel:
     @pytest.mark.parametrize(
         "filepath",
         [
-            pytest.param("dgeoflow/Berekening3", id="Input Structure"),
             pytest.param(
-                "dgeoflow/Berekening3/Berekening3.flox", id="Input Structure for zip"
+                "dgeoflow/Berekening3.flox", id="Input Structure for zip"
             ),
         ],
     )
@@ -92,7 +91,7 @@ class TestDGeoFlowModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dgeoflow/Berekening3", id="Input Structure"),
+            pytest.param("dgeoflow/Berekening3.flox", id="Input Structure"),
         ],
     )
     def test_given_data_when_parse_and_serialize_then_does_not_raise(
@@ -126,8 +125,8 @@ class TestDGeoFlowModel:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dgeoflow/Berekening3", id="Basic flow"),
-            pytest.param("dgeoflow/Tutorial", id="Tutorial"),
+            pytest.param("dgeoflow/Berekening3.flox", id="Basic flow"),
+            pytest.param("dgeoflow/Tutorial.flox", id="Tutorial"),
         ],
     )
     def test_execute_model_successfully(self, dir_path: str):

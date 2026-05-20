@@ -22,7 +22,7 @@ class TestDGeoFlowInputParser:
     @pytest.mark.parametrize(
         "dir_path",
         [
-            pytest.param("dgeoflow/Berekening3", id="ex 1"),
+            pytest.param("dgeoflow/Berekening3.flox", id="ex 1"),
         ],
     )
     def test_dgeoflow_parse_directory(self, dir_path: str):
@@ -71,7 +71,7 @@ class TestDGeoFlowInputParser:
     def test_dgeoflow_serialize_flox(self):
         # 1. Set up test model
         input_parser = DGeoFlowParser()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dgeoflow"))
             / "Berekening3_serialized.flox"
@@ -92,7 +92,7 @@ class TestDGeoFlowInputParser:
     def test_dgeoflow_serialize_folders(self):
         # 1. Set up test model
         input_parser = DGeoFlowParser()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3"))
+        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir(self.output_path)
         )
