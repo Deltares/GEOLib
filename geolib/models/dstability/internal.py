@@ -1723,6 +1723,7 @@ class CalculationSettings(DStabilitySubStructure):
     Id: str | None = "19"
     ModelFactorMean: float | None = 1.05
     ModelFactorStandardDeviation: float | None = 0.033
+    MinimumEffectiveStress: float | None = 0.0
     Spencer: PersistableSpencerSettings | None = PersistableSpencerSettings()
     SpencerGenetic: PersistableSpencerGeneticSettings | None = (
         PersistableSpencerGeneticSettings()
