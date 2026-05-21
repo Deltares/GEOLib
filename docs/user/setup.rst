@@ -19,7 +19,7 @@ Setting the console paths per application
 
 In the *geolib.env* file, you can set the paths to the console applications, for example::
 
-    DSTABILITY_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Stability 2025.01\\bin\\D-Stability Console.exe"
+    DSTABILITY_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Stability 2026.01\\bin\\D-Stability Console.exe"
     DGEOFLOW_CONSOLE_PATH="C:\\Program Files\\Deltares\\D-GEO Suite\\D-Geo Flow 2026.01\\bin\\D-GeoFlow Console.exe"
     DSHEETPILING_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Sheet Piling 24.1.1\\DSheetPiling.exe"
     DFOUNDATIONS_CONSOLE_PATH="C:\\Program Files (x86)\\Deltares\\D-Foundations 25.1.1\\DFoundations.exe"
