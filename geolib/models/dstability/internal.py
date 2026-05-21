@@ -1252,11 +1252,11 @@ class ProjectInfo(DStabilitySubStructure):
     ApplicationCreated: str | None = ""
     ApplicationModified: str | None = ""
     ContentVersion: str | None = "2"
-    Created: date | None = datetime.now().date()
+    Created: date | None = Field(default_factory=lambda: datetime.now().date())
     CrossSection: str | None = ""
-    Date: date | None = datetime.now().date()
+    Date: date | None = Field(default_factory=lambda: datetime.now().date())
     IsDataValidated: bool | None = False
-    LastModified: date | None = datetime.now().date()
+    LastModified: date | None = Field(default_factory=lambda: datetime.now().date())
     LastModifier: str | None = "GEOLib"
     Path: str | None = ""
     Project: str | None = ""
