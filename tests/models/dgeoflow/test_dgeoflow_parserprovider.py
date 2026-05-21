@@ -28,22 +28,27 @@ class TestDGeoFlowInputParser:
     def test_dgeoflow_parse_directory(self, dir_path: str):
         # 1. Set up test model
         input_parser = DGeoFlowParser()
-        test_filepath = Path(TestUtils.get_local_test_data_dir(dir_path))
-        test_output_filepath = Path(
-            TestUtils.get_output_test_data_dir(self.output_path)
+        test_input_file_path = Path(TestUtils.get_local_test_data_dir(dir_path))
+        test_output_file_path = Path(
+            TestUtils.get_output_test_data_dir(
+                "dgeoflow/test_dgeoflow_parse_directory", clean_dir=True
+            )
+        )
+        TestUtils.extract_zip_to_output_test_data_dir(
+            str(test_input_file_path), "dgeoflow/test_dgeoflow_parse_directory"
         )
 
         # 2. Verify initial expectations
-        assert os.path.exists(test_filepath), "Testing directory not found."
+        assert os.path.exists(test_input_file_path), "Testing directory not found."
 
         # 3. Run test.
-        input_structure = input_parser.parse(test_filepath)
+        input_structure = input_parser.parse(test_output_file_path)
         assert input_structure.is_valid
 
         # 4. Verify final expectations.
         assert input_structure is not None
         data = input_structure.model_dump_json(indent=4)
-        with open(test_output_filepath / "dstability_parsed_input.json", "w") as io:
+        with open(test_output_file_path / "dgeoflow_parsed_input.json", "w") as io:
             io.write(data)
 
     @pytest.mark.integrationtest
@@ -70,7 +75,7 @@ class TestDGeoFlowInputParser:
     @pytest.mark.integrationtest
     def test_dgeoflow_serialize_flox(self):
         # 1. Set up test model
-        input_parser = DGeoFlowParser()
+        input_parser = DGeoFlowZipParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dgeoflow"))
@@ -91,7 +96,7 @@ class TestDGeoFlowInputParser:
     @pytest.mark.integrationtest
     def test_dgeoflow_serialize_folders(self):
         # 1. Set up test model
-        input_parser = DGeoFlowParser()
+        input_parser = DGeoFlowZipParser()
         test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir(self.output_path)
