@@ -403,7 +403,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
+        assert dm.output[-1].FactorOfSafety == pytest.approx(0.723, rel=1e-3)
 
     def test_get_slip_plane(self):
         test_filepath = Path(
