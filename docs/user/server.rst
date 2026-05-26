@@ -16,7 +16,7 @@ server. Note that this server needs to be configured correctly as a standalone
 GEOLib client first. Note that any customization to the `console_folder` meta variable is reset
 after remote execution, as it is lost in transit.
 
-For hosting a more production ready environment, such as services, see the documentation at https://www.uvicorn.org/deployment/. 
+For hosting a more production ready environment, such as services, see the documentation at https://www.uvicorn.dev/deployment/. 
 Note that not all options work on the Windows platform, but Circus will.
 
 Authentication
