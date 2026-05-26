@@ -1,7 +1,8 @@
+from datetime import date
 from pathlib import Path
-from typing import Any, BinaryIO
+from typing import Annotated, Any, BinaryIO
 
-from pydantic import FilePath
+from pydantic import FilePath, PlainSerializer
 
 from geolib.models import BaseDataClass
 
@@ -24,3 +25,11 @@ class BaseSerializer(BaseDataClass):
         # if filename is opened file (in binary mode) or BytesIO object, write render as bytes
         else:
             filename.write(self.render().encode("cp1252"))
+
+FormattedDate = Annotated[
+    date | None,
+    PlainSerializer(
+        lambda v: v.strftime("%d-%m-%Y") if v is not None else None,
+        return_type=str | None
+    )
+]

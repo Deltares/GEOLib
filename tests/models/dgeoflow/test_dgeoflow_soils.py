@@ -29,8 +29,8 @@ class TestDGeoFlowSoil:
         added_soil_id = dgeoflow_model.add_soil(soil_1)
 
         assert added_soil_id == "18"
-        assert soil_1.storage_parameters.horizontal_permeability.mean == 10.0
-        assert soil_1.storage_parameters.vertical_permeability.mean == 20.0
+        assert soil_1.storage_parameters.horizontal_permeability.mean == pytest.approx(10.0)
+        assert soil_1.storage_parameters.vertical_permeability.mean == pytest.approx(20.0)
 
         dgeoflow_model.edit_soil(
             code=soil_1.code, horizontal_permeability=2.0, vertical_permeability=35.0
@@ -41,7 +41,7 @@ class TestDGeoFlowSoil:
                     "Test"
                 ).storage_parameters.horizontal_permeability
             )
-            == 2.0
+            == pytest.approx(2.0)
         )
         assert (
             pytest.approx(
@@ -49,7 +49,7 @@ class TestDGeoFlowSoil:
                     "Test"
                 ).storage_parameters.vertical_permeability
             )
-            == 35.0
+            == pytest.approx(35.0)
         )
 
     def test_dgeoflow_edit_soil_by_name(self):
@@ -63,8 +63,8 @@ class TestDGeoFlowSoil:
         added_soil_id = dgeoflow_model.add_soil(soil_1)
 
         assert added_soil_id == "18"
-        assert soil_1.storage_parameters.horizontal_permeability.mean == 10.0
-        assert soil_1.storage_parameters.vertical_permeability.mean == 20.0
+        assert soil_1.storage_parameters.horizontal_permeability.mean == pytest.approx(10.0)
+        assert soil_1.storage_parameters.vertical_permeability.mean == pytest.approx(20.0)
 
         dgeoflow_model.edit_soil_by_name(
             name=soil_1.name, horizontal_permeability=2.0, vertical_permeability=35.0
@@ -75,7 +75,7 @@ class TestDGeoFlowSoil:
                     "Test"
                 ).storage_parameters.horizontal_permeability
             )
-            == 2.0
+            == pytest.approx(2.0)
         )
         assert (
             pytest.approx(
@@ -83,7 +83,7 @@ class TestDGeoFlowSoil:
                     "Test"
                 ).storage_parameters.vertical_permeability
             )
-            == 35.0
+            == pytest.approx(35.0)
         )
 
     def test_has_10_default_soils(self):
