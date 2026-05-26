@@ -126,7 +126,7 @@ class TestDGeoFlowModel:
         "dir_path",
         [
             pytest.param("dgeoflow/Berekening3.flox", id="Basic flow"),
-            pytest.param("dgeoflow/Tutorial.flox", id="Tutorial"),
+            pytest.param("dgeoflow/Tutorial_v2022_1.flox", id="Tutorial"),
             pytest.param("dgeoflow/Tutorial_v2026_1.flox", id="Tutorial v2026_1"),
         ],
     )
