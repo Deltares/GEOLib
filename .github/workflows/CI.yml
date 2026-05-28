@@ -38,7 +38,4 @@ jobs:
       - name: Test with pytest
         run: >
           pixi run -e test pytest
-          --cov=geolib
-          --cov-report xml:coverage-reports/coverage-hydrolib-core.xml
-          --junitxml=xunit-reports/xunit-result-hydrolib-core.xml
           -m "unittest and not workinprogress"
