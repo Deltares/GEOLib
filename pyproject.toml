@@ -3,11 +3,20 @@ name = "d-geolib"
 version = "2.8.0"
 description = "Python wrappers around the input and output files of the Deltares D-Serie and D-GEO Suite models"
 authors = [
-    { name = "Maarten Pronk", email = "maarten.pronk@deltares.nl" },
     { name = "Deltares" }
 ]
 license = { text = "MIT" }
 readme = "README.rst"
+keywords = ["civil-engineering", "dikes", "flood-defence", "deltares"]
+classifiers = [
+  'Programming Language :: Python :: 3',
+  'Natural Language :: English',
+  'Intended Audience :: Science/Research',
+  'Topic :: Software Development :: Libraries :: Python Modules',
+  'Topic :: Scientific/Engineering',
+  'Topic :: Scientific/Engineering :: Mathematics',
+  'Topic :: Scientific/Engineering :: Physics',
+]
 requires-python = ">=3.10,<3.15"
 dependencies = [
     "pydantic",
@@ -22,9 +31,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://deltares.github.io/GEOLib/"
-Documentation = "https://deltares.github.io/GEOLib/"
-Repository = "https://github.com/Deltares/GEOLib"
+homepage = "https://deltares.github.io/GEOLib/"
+documentation = "https://deltares.github.io/GEOLib/"
+repository = "https://github.com/Deltares/GEOLib"
+issues = "https://github.com/Deltares/GEOLib/issues"
+changelog = "https://github.com/Deltares/GEOLib/releases"
 
 [project.scripts]
 geolib_server = "geolib.service.main:app"
