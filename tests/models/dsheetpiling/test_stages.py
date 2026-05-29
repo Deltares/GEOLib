@@ -225,5 +225,4 @@ class TestStage:
                 passive_side=PassiveSide.DSHEETPILING_DETERMINED,
                 method_left=LateralEarthPressureMethodStage.KA_KO_KP,
                 method_right=LateralEarthPressureMethodStage.KA_KO_KP,
-                copy=True,
             )
