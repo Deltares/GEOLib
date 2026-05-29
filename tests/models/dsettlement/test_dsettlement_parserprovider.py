@@ -19,7 +19,6 @@ class Test_DSettlementInputParser:
     @pytest.mark.unittest
     def test_instantiate(self):
         parser = DSettlementInputParser()
-        assert parser is not None
         assert len(parser.suffix_list) == 1
 
     @pytest.fixture
@@ -213,7 +212,6 @@ class Test_DSettlementOutputParser:
     @pytest.mark.unittest
     def test_instantiate(self):
         parser = DSettlementOutputParser()
-        assert parser is not None
         assert len(parser.suffix_list) == 1
 
 

@@ -76,7 +76,6 @@ class TestDSettlementModel:
     @pytest.mark.workinprogress
     def test_DSettlementModel_instance(self):
         dsettlement_model = DSettlementModel()
-        assert dsettlement_model is not None
         assert isinstance(
             dsettlement_model, BaseModel
         ), "DSettlementModel does not instanciate BaseModel"

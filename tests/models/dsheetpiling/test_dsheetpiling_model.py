@@ -84,7 +84,6 @@ class TestDsheetPilingModel:
     @pytest.mark.workinprogress
     def test_DSheetPilingModel_instance(self):
         dsheetpiling_model = DSheetPilingModel()
-        assert dsheetpiling_model is not None
         assert isinstance(dsheetpiling_model, BaseModel), (
             "" + "DSheetPilingModel does not instanciate BaseModel"
         )
