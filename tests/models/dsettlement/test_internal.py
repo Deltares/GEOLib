@@ -72,7 +72,7 @@ def get_structure_content(class_type: type) -> list:
 
 def get_structure_collection_content(class_type: type, collection_size: int) -> dict:
     collection_dict = {}
-    for struct_id in range(collection_size):
+    for _ in range(collection_size):
         collection_dict[str(randint(1, 99))] = get_structure_content(class_type)
     return collection_dict
 

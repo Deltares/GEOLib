@@ -275,7 +275,7 @@ class TestDFoundationsModel:
         assert ds.datastructure.input_data.soil_collection.soil
 
         # 3. Run test.
-        new_soil = ds.add_soil(soil)
+        ds.add_soil(soil)
 
         # 4. Verify final expectations.
         assert ds.datastructure.input_data.soil_collection.soil[-1].name == "Test Soil"

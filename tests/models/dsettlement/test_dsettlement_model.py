@@ -557,10 +557,6 @@ class TestDSettlementModel:
         # Set up test data.
         point1 = Point(x=0.0, y=0.0, z=0.0)
         point2 = Point(x=100.0, y=0.0, z=0.0)
-        point3 = Point(x=0.0, y=0.0, z=1.0)
-        point4 = Point(x=100.0, y=0.0, z=1.0)
-        point5 = Point(x=0.0, y=0.0, z=-1.0)
-        point6 = Point(x=100.0, y=0.0, z=-1.0)
         # Set up model
         ds = DSettlementModel()
         ds.datastructure = DSettlementStructure()
@@ -1425,41 +1421,37 @@ class TestDSettlementModel:
                     correlation_coefficient=0.01,
                 )
             )
-            s1 = dm.add_soil(soil)
+            dm.add_soil(soil)
 
-            l1 = dm.add_layer(
+            dm.add_layer(
                 material_name="Sand",
                 head_line_top=pl_id,
                 head_line_bottom=pl_id,
                 boundary_top=b1,
                 boundary_bottom=b2,
             )
-            l2 = dm.add_layer(
-                # material_name="H_Ro_z&k",
+            dm.add_layer(
                 material_name="Sand",
                 head_line_top=pl_id,
                 head_line_bottom=pl_id,
                 boundary_top=b2,
                 boundary_bottom=b3,
             )
-            l3 = dm.add_layer(
-                # material_name="HV",
+            dm.add_layer(
                 material_name="Sand",
                 head_line_top=pl_id,
                 head_line_bottom=pl_id,
                 boundary_top=b3,
                 boundary_bottom=b4,
             )
-            l4 = dm.add_layer(
-                # material_name="H_Aa_ht_old",
+            dm.add_layer(
                 material_name="Sand",
                 head_line_top=pl_id,
                 head_line_bottom=pl_id,
                 boundary_top=b4,
                 boundary_bottom=b5,
             )
-            l5 = dm.add_layer(
-                # material_name="H_Aa_ht_old",
+            dm.add_layer(
                 material_name="Sand",
                 head_line_top=pl_id,
                 head_line_bottom=pl_id,
@@ -1870,40 +1862,36 @@ class TestDSettlementModel:
         soil.isotache_parameters.secondary_compression_constant_c = StochasticParameter(
             mean=5.000e-03, standard_deviation=1.250e-03, correlation_coefficient=0.01
         )
-        s1 = dm.add_soil(soil)
-        l1 = dm.add_layer(
+        dm.add_soil(soil)
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b1,
             boundary_bottom=b2,
         )
-        l2 = dm.add_layer(
-            # material_name="H_Ro_z&k",
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b2,
             boundary_bottom=b3,
         )
-        l3 = dm.add_layer(
-            # material_name="HV",
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b4,
         )
-        l4 = dm.add_layer(
-            # material_name="H_Aa_ht_old",
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b4,
             boundary_bottom=b5,
         )
-        l5 = dm.add_layer(
-            # material_name="H_Aa_ht_old",
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
