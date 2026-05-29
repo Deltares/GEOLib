@@ -43,7 +43,7 @@ from geolib.soils import (
 from tests.utils import TestUtils
 
 
-class TestDStabilityModel: 
+class TestDStabilityModel:
     @pytest.mark.unittest
     def test_instantiate_stability_model(self):
         assert isinstance(DStabilityModel(filename=None), BaseModel), (

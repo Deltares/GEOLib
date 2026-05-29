@@ -176,10 +176,9 @@ class TestInternal:
         assert (
             model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadnl == 1
         )
-        assert (
-            model.calculation_options_per_stage.stageoptions[0].stageanchorfactorec7nadnl
-            == pytest.approx(1.5)
-        )
+        assert model.calculation_options_per_stage.stageoptions[
+            0
+        ].stageanchorfactorec7nadnl == pytest.approx(1.5)
 
     @pytest.mark.integrationtest
     def test_add_calculation_options_per_stage_ec7_be(

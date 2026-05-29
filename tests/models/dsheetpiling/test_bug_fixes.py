@@ -5,8 +5,18 @@ import pytest
 import geolib as gl
 from geolib.geometry.one import Point
 from geolib.models.dsheetpiling.dsheetpiling_model import SheetModelType
-from geolib.models.dsheetpiling.loads import Moment, NormalForce, SurchargeLoad, UniformLoad
-from geolib.models.dsheetpiling.settings import LateralEarthPressureMethod, LateralEarthPressureMethodStage, PassiveSide, Side
+from geolib.models.dsheetpiling.loads import (
+    Moment,
+    NormalForce,
+    SurchargeLoad,
+    UniformLoad,
+)
+from geolib.models.dsheetpiling.settings import (
+    LateralEarthPressureMethod,
+    LateralEarthPressureMethodStage,
+    PassiveSide,
+    Side,
+)
 from tests.utils import TestUtils
 
 test_file_directory = "dsheetpiling/bugfixes"

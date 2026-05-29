@@ -3,7 +3,11 @@ import pathlib
 
 import pytest
 
-from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementInputParser, DSettlementOutputParser, DSettlementParserProvider
+from geolib.models.dsettlement.dsettlement_parserprovider import (
+    DSettlementInputParser,
+    DSettlementOutputParser,
+    DSettlementParserProvider,
+)
 from geolib.models.dsettlement.internal import (
     Boundaries,
     Curves,
@@ -66,7 +70,7 @@ class Test_DSettlementInputParser:
         geometry_dict: dict = dict(parsed_struct_asdict[geometry_data_key])
         errors: list = []
         for key, key_type in keys_in_structure.items():
-            if (key not in geometry_dict):
+            if key not in geometry_dict:
                 errors.append(f"Key {key} has not been parsed.")
             elif not (isinstance(geometry_dict[key], key_type)):
                 errors.append(

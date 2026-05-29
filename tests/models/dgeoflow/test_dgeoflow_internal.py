@@ -51,7 +51,9 @@ class TestDGeoFlowInternal:
     def test_find_subclass_from_children(self):
         # Setup
         dm = DGeoFlowModel()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox")
+        )
         dm.parse(test_filepath)
 
         # Verify expecations
