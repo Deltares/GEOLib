@@ -28,6 +28,8 @@ dependencies = [
     "matplotlib",
     "pydantic-settings",
     "pydantic-extra-types",
+    "numpy",
+    "scipy",
 ]
 
 [project.urls]
@@ -70,11 +72,14 @@ version_files = [
 annotated_tag = true
 
 [tool.pixi.workspace]
-channels = ["conda-forge"]
+channels = ["conda-forge", "pypi"]
 platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 
 [tool.pixi.pypi-dependencies]
 build = "*"
+numpy = ">=1.24"
+scipy = ">=1.10"
+matplotlib = ">=3.9.0"
 
 [tool.pixi.dependencies]
 pydantic = ">=2.0.0"
@@ -83,7 +88,6 @@ requests = ">=2.29.0"
 jinja2 = ">=3.1.2"
 shapely = ">=2.0.1"
 python-dotenv = ">=1.0.0"
-matplotlib = ">=3.9.0"
 pydantic-settings = ">=2.1.0"
 pydantic-extra-types = ">=2.5.0"
 
