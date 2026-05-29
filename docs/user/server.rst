@@ -6,10 +6,15 @@ Server
 GEOLib comes with a built-in webservice that enables users to use it as a remote
 endpoint for their calculations.
 
-You should install GEOLib with `pip install geolib[server]` as described in :ref:`install`. 
-That enables you to run::
+To set up the server environment, install with the server feature as described in :ref:`install`.
+You can then start the server with::
 
+    $ pixi shell -e server
     $ uvicorn geolib.service.main:app
+
+Or run it directly without activating the environment::
+
+    $ pixi run -e server uvicorn geolib.service.main:app
 
 Now you can use the *execute_remote* methods on the GEOLib models, pointing to this
 server. Note that this server needs to be configured correctly as a standalone
