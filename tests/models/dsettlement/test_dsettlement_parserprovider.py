@@ -3,10 +3,11 @@ import pathlib
 
 import pytest
 
-from geolib.models.dsettlement.dsettlement_parserprovider import *
+from geolib.models.dsettlement.dsettlement_parserprovider import DSettlementInputParser, DSettlementOutputParser, DSettlementParserProvider
 from geolib.models.dsettlement.internal import (
     Boundaries,
     Curves,
+    DSettlementStructure,
     Layers,
     PiezoLine,
     PiezoLines,
