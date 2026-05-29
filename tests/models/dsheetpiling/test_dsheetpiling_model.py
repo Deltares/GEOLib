@@ -262,7 +262,7 @@ class TestDsheetPilingModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            df.execute()
 
     @pytest.mark.unittest
     def test_execute_console_with_bytesio_raises_exception(self):
@@ -274,7 +274,7 @@ class TestDsheetPilingModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            df.execute()
 
     @pytest.mark.parametrize(
         "reverse_elements",

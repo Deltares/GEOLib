@@ -159,7 +159,7 @@ class TestDGeoFlowModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert dm.execute()
+            dm.execute()
 
     @pytest.mark.unittest
     def test_execute_console_with_bytesio_raises_exception(self):
@@ -171,7 +171,7 @@ class TestDGeoFlowModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert dm.execute()
+            dm.execute()
 
     @pytest.mark.acceptance
     def test_generate_groundwater_flow_model(self):
