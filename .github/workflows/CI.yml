@@ -33,9 +33,9 @@ jobs:
             pixi-${{ runner.os }}-
 
       - name: Install Dependencies
-        run: pixi install
+        run: pixi install -e test
 
       - name: Test with pytest
         run: >
-          pixi run pytest
+          pixi run -e test pytest
           -m "unittest and not workinprogress"

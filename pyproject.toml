@@ -3,54 +3,41 @@ name = "d-geolib"
 version = "2.8.0"
 description = "Python wrappers around the input and output files of the Deltares D-Serie and D-GEO Suite models"
 authors = [
-    { name = "Maarten Pronk", email = "maarten.pronk@deltares.nl" },
     { name = "Deltares" }
 ]
 license = { text = "MIT" }
 readme = "README.rst"
-requires-python = ">=3.10"
+keywords = ["civil-engineering", "dikes", "flood-defence", "deltares"]
+classifiers = [
+  'Programming Language :: Python :: 3',
+  'Natural Language :: English',
+  'Intended Audience :: Science/Research',
+  'Topic :: Software Development :: Libraries :: Python Modules',
+  'Topic :: Scientific/Engineering',
+  'Topic :: Scientific/Engineering :: Mathematics',
+  'Topic :: Scientific/Engineering :: Physics',
+]
+requires-python = ">=3.10,<3.15"
 dependencies = [
-    "pydantic>=2.0.0",
-    "zipp>=3.15.0",
-    "requests>=2.29.0",
-    "jinja2>=3.1.2",
-    "shapely>=2.0.1",
-    "python-dotenv>=1.0.0",
-    "matplotlib>=3.9.0",
-    "pydantic-settings>=2.1.0",
-    "pydantic-extra-types>=2.5.0",
+    "pydantic",
+    "zipp",
+    "requests",
+    "jinja2",
+    "shapely",
+    "python-dotenv",
+    "matplotlib",
+    "pydantic-settings",
+    "pydantic-extra-types",
+    "numpy",
+    "scipy",
 ]
 
 [project.urls]
-Homepage = "https://deltares.github.io/GEOLib/"
-Documentation = "https://deltares.github.io/GEOLib/"
-Repository = "https://github.com/Deltares/GEOLib"
-
-[project.optional-dependencies]
-server = [
-    "fastapi>=0.95.1",
-    "uvicorn>=0.21.1",
-    "httpx>=0.24.0",
-    "python-multipart>=0.0.9",
-]
-dev = [
-    "teamcity-messages>=1.32,<2",
-    "flake8>=6.0.0,<7",
-    "black>=23.3,<27.0",
-    "devtools>=0.11.0,<1",
-    "pytest>=7.3.1,<10",
-    "pytest-cov>=4.0.0,<5",
-    "coverage>=6.5,<7",
-    "mypy>=1.2.0,<2",
-    "sphinx>=7.0.1,<8",
-    "recommonmark>=0.7.1,<1",
-    "sphinx-autodoc-typehints>=1.23.0,<2",
-    "releases>=2.1.0,<3",
-    "sphinx-multiversion>=0.2.4,<1",
-    "isort>=5.12.0,<6",
-    "commitizen>=3.1.0,<4",
-    "tomlkit>=0.11.8,<1",
-]
+homepage = "https://deltares.github.io/GEOLib/"
+documentation = "https://deltares.github.io/GEOLib/"
+repository = "https://github.com/Deltares/GEOLib"
+issues = "https://github.com/Deltares/GEOLib/issues"
+changelog = "https://github.com/Deltares/GEOLib/releases"
 
 [project.scripts]
 geolib_server = "geolib.service.main:app"
@@ -85,20 +72,58 @@ version_files = [
 annotated_tag = true
 
 [tool.pixi.workspace]
-channels = ["conda-forge"]
+channels = ["conda-forge", "pypi"]
 platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
 
 [tool.pixi.pypi-dependencies]
+build = "*"
+numpy = ">=1.24"
+scipy = ">=1.10"
+matplotlib = ">=3.9.0"
+
+[tool.pixi.dependencies]
+pydantic = ">=2.0.0"
+zipp = ">=3.15.0"
+requests = ">=2.29.0"
+jinja2 = ">=3.1.2"
+shapely = ">=2.0.1"
+python-dotenv = ">=1.0.0"
+pydantic-settings = ">=2.1.0"
+pydantic-extra-types = ">=2.5.0"
+
+[tool.pixi.feature.test.dependencies]
 pytest = ">=7.3.1,<8"
 pytest-cov = ">=4.0.0,<5"
-mypy = ">=1.2.0,<2"
+coverage = ">=7.13.0,<8"
 teamcity-messages = ">=1.32,<2"
 fastapi = ">=0.95.1"
-uvicorn = ">=0.21.1"
-httpx = ">=0.24.0"
-build = "*"
+
+[tool.pixi.feature.dev.dependencies]
+mypy = ">=1.2.0,<2"
+black = ">=23.3,<27.0"
+flake8 = ">=6.0.0,<7"
+isort = ">=5.12.0,<6"
+commitizen = ">=3.1.0,<4"
+tomlkit = ">=0.11.8,<1"
+devtools = ">=0.11.0,<1"
+
+[tool.pixi.feature.docs.dependencies]
 sphinx = ">=7.0.1,<8"
 recommonmark = ">=0.7.1,<1"
 sphinx-autodoc-typehints = ">=1.23.0,<2"
-releases = ">=2.1.0,<3"
 sphinx-multiversion = ">=0.2.4,<1"
+
+[tool.pixi.feature.docs.pypi-dependencies]
+releases = ">=2.1.0,<3"
+
+[tool.pixi.feature.server.dependencies]
+uvicorn = ">=0.21.1"
+httpx = ">=0.24.0"
+python-multipart = ">=0.0.9"
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+test = { features = ["test"], solve-group = "default" }
+dev = { features = ["dev", "docs", "test"], solve-group = "default" }
+server = { features = ["server", "test"], solve-group = "default" }
+docs = { features = ["docs"], solve-group = "default" }
