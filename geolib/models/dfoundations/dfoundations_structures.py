@@ -92,11 +92,11 @@ class DFoundationsTableWrapper(DSeriesStructure):
                         parts.append(part)
             return parts
 
-        table_text = list(DSerieParser.parse_list_group(text).values())[0]
+        table_text = next(iter(DSerieParser.parse_list_group(text).values()))
         table_data = list(DSerieParser.parse_list_group(table_text).values())
         if len(table_data) == 0:
             values_dict_list = table_data
-            collection_property_name = list(cls.model_fields.items())[0][0]
+            collection_property_name = next(iter(cls.model_fields.items()))[0]
             return cls(**{collection_property_name: values_dict_list})
         else:
             # Expected two groups (column_indication and data)
@@ -105,7 +105,7 @@ class DFoundationsTableWrapper(DSeriesStructure):
                 dict(zip(keys, values))
                 for values in map(split_line, table_data[1].split("\n"))
             ]
-            collection_property_name = list(cls.model_fields.items())[0][0]
+            collection_property_name = next(iter(cls.model_fields.items()))[0]
 
         return cls(**{collection_property_name: values_dict_list})
 
