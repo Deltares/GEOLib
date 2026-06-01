@@ -14,7 +14,7 @@ such as an compute endpoint.
 from datetime import datetime
 from pathlib import Path
 
-from pydantic import AnyHttpUrl, DirectoryPath
+from pydantic import AnyHttpUrl, DirectoryPath, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from geolib import __version__ as version
@@ -35,7 +35,7 @@ class MetaData(BaseSettings):
 
     company: str = ""
     analyst: str = ""
-    startdate: datetime = datetime.now()
+    startdate: datetime = Field(default_factory=lambda: datetime.now())
     project: str = ""
     remarks: str = f"Created by GEOLib {version}"
 
