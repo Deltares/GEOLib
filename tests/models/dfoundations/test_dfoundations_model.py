@@ -877,7 +877,7 @@ class TestDFoundationsModel:
         co = InternalCalculationOptions(factor_xi3=0.1)
 
         # Verify expectations
-        assert co.factor_xi3 == 0.1
+        assert co.factor_xi3 == pytest.approx(0.1)
         assert co.is_xi3_overruled == Bool.TRUE
 
 

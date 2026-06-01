@@ -24,8 +24,8 @@ class TestInternal:
             internal_sheet_pile["sheetpilingelementmaterialtype"]
             == SheetPilingElementMaterialType.Steel
         )
-        assert internal_sheet_pile["sheetpilingelementei"] == 100.05
+        assert internal_sheet_pile["sheetpilingelementei"] == pytest.approx(100.05)
         # Test defaults
-        assert internal_sheet_pile["sheetpilingelementkmod"] == 0.01
+        assert internal_sheet_pile["sheetpilingelementkmod"] == pytest.approx(0.01)
         assert internal_sheet_pile["diaphragmwallposeielastoplastic2"] == 0
-        assert internal_sheet_pile["woodensheetpilingelementmaterialfactor"] == 1.3
+        assert internal_sheet_pile["woodensheetpilingelementmaterialfactor"] == pytest.approx(1.3)

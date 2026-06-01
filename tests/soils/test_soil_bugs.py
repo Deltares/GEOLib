@@ -109,5 +109,5 @@ class TestNaNSoils:
             soil_type.soil_weight_parameters.unsaturated_weight = soil["unsat"]
             model.add_soil(soil_type)
             assert (
-                model.soils[soil_type.name].soilca == 0.0040000
+                model.soils[soil_type.name].soilca == pytest.approx(0.0040000)
             ), "Should have default Ca with 0.004000"

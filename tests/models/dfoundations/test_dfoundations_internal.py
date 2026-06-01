@@ -50,7 +50,7 @@ class TestInternalInputDFoundations:
         assert parsed_layer
         assert parsed_layer.name == layer_name
         assert parsed_layer.material == material
-        assert parsed_layer.top_level == top_level
+        assert parsed_layer.top_level == pytest.approx(top_level)
         assert parsed_layer.excess_pore_pressure_top == excess_top
         assert parsed_layer.excess_pore_pressure_bottom == excess_bottom
         assert parsed_layer.ocr_value == ocr
@@ -552,10 +552,10 @@ class TestInternalOutputDFoundations:
         # 2. Parse text.
         parsed_structure = DFoundationsGlobalNenResults.parse_text(group_text)
         # 3. Verify results
-        assert parsed_structure.wd1b == 0.063203
-        assert parsed_structure.w2d == 0.024783
-        assert parsed_structure.reciprocal_max_relative_rotation_calc_1B == 0.009173
-        assert parsed_structure.reciprocal_max_relative_rotation_calc_2 == 0.003441
+        assert parsed_structure.wd1b == pytest.approx(0.063203)
+        assert parsed_structure.w2d == pytest.approx(0.024783)
+        assert parsed_structure.reciprocal_max_relative_rotation_calc_1B == pytest.approx(0.009173)
+        assert parsed_structure.reciprocal_max_relative_rotation_calc_2 == pytest.approx(0.003441)
 
     @pytest.mark.integrationtest
     def test_given_calculation_parameters_bearing_piles_ec_7_when_parse_then_returns_structure(
@@ -570,10 +570,10 @@ class TestInternalOutputDFoundations:
         )
 
         # 3. Verify results.
-        assert parsed_structure.ksi3used == 1.3
-        assert parsed_structure.ksi4used == 1.3
-        assert parsed_structure.gammabused == 1.2
-        assert parsed_structure.gammasused == 1.2
+        assert parsed_structure.ksi3used == pytest.approx(1.3)
+        assert parsed_structure.ksi4used == pytest.approx(1.3)
+        assert parsed_structure.gammabused == pytest.approx(1.2)
+        assert parsed_structure.gammasused == pytest.approx(1.2)
         assert parsed_structure.isksi3used is False
 
     @pytest.mark.integrationtest

@@ -167,7 +167,7 @@ class TestDSettlementModel:
             ds.output.residual_settlements[0].residualsettlements[0][
                 "residual_settlement"
             ]
-            == 0.1889574
+            == pytest.approx(0.1889574)
         )
         assert (
             ds.output.residual_settlements[0].residualsettlements[-1]["vertical"] == 1
@@ -845,11 +845,11 @@ class TestDSettlementModel:
         assert (
             list(ds.other_loads.loads.values())[0].load_values_trapeziform.height == 2
         )
-        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xl == 0.1
-        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xm == 0.2
-        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xr == 0.3
-        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.Xp == 0.4
-        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.Yp == 0.5
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xl == pytest.approx(0.1)
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xm == pytest.approx(0.2)
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.xr == pytest.approx(0.3)
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.Xp == pytest.approx(0.4)
+        assert list(ds.other_loads.loads.values())[0].load_values_trapeziform.Yp == pytest.approx(0.5)
 
     @pytest.mark.integrationtest
     def test_other_loads_circular(self):
@@ -975,12 +975,12 @@ class TestDSettlementModel:
         assert (
             list(ds.other_loads.loads.values())[0].load_values_uniform.unit_weight == 2
         )
-        assert list(ds.other_loads.loads.values())[0].load_values_uniform.height == 0.1
+        assert list(ds.other_loads.loads.values())[0].load_values_uniform.height == pytest.approx(0.1)
         assert (
             list(ds.other_loads.loads.values())[0].load_values_uniform.y_application
-            == 0.2
+            == pytest.approx(0.2)
         )
-        assert list(ds.other_loads.loads.values())[0].load_values_uniform.gamma == 0.3
+        assert list(ds.other_loads.loads.values())[0].load_values_uniform.gamma == pytest.approx(0.3)
 
     @pytest.mark.integrationtest
     def test_piezo_lines(self):
@@ -1078,7 +1078,7 @@ class TestDSettlementModel:
         assert model_dump["name"] == "MyNewSoil"
         assert model_dump["soilgamdry"] == 30
         assert model_dump["soilgamwet"] == 20
-        assert model_dump["soilinitialvoidratio"] == 0.1
+        assert model_dump["soilinitialvoidratio"] == pytest.approx(0.1)
 
     @pytest.mark.integrationtest
     def test_add_soil_name_already_defined(self):
@@ -1171,10 +1171,10 @@ class TestDSettlementModel:
             calculation_options.stress_distribution_loads
             == StressDistributionLoads.SIMULATE
         )
-        assert calculation_options.iteration_stop_criteria_submerging == 0.0
+        assert calculation_options.iteration_stop_criteria_submerging == pytest.approx(0.0)
         assert calculation_options.iteration_stop_criteria_submerging_layer_height == 0
         assert calculation_options.maximum_iteration_steps_for_submerging == 1
-        assert calculation_options.iteration_stop_criteria_desired_profile == 0.1
+        assert calculation_options.iteration_stop_criteria_desired_profile == pytest.approx(0.1)
         assert calculation_options.load_column_width_imaginary_surface == 1
         assert calculation_options.load_column_width_non_uniform_loads == 1
         assert calculation_options.load_column_width_trapeziform_loads == 1
@@ -1182,9 +1182,9 @@ class TestDSettlementModel:
         assert calculation_options.number_of_subtime_steps == 2
         assert calculation_options.reference_time == 1
         assert calculation_options.dissipation == Bool.FALSE
-        assert calculation_options.x_coord_dissipation == 0.0
+        assert calculation_options.x_coord_dissipation == pytest.approx(0.0)
         assert calculation_options.use_fit_factors == Bool.FALSE
-        assert calculation_options.x_coord_fit == 0.0
+        assert calculation_options.x_coord_fit == pytest.approx(0.0)
         assert (
             calculation_options.is_predict_settlements_omitting_additional_load_steps
             == Bool.FALSE
@@ -1257,10 +1257,10 @@ class TestDSettlementModel:
             calculation_options.stress_distribution_loads
             == StressDistributionLoads.NONE
         )
-        assert calculation_options.iteration_stop_criteria_submerging == 1.0
+        assert calculation_options.iteration_stop_criteria_submerging == pytest.approx(1.0)
         assert calculation_options.iteration_stop_criteria_submerging_layer_height == 1
         assert calculation_options.maximum_iteration_steps_for_submerging == 2
-        assert calculation_options.iteration_stop_criteria_desired_profile == 0.2
+        assert calculation_options.iteration_stop_criteria_desired_profile == pytest.approx(0.2)
         assert calculation_options.load_column_width_imaginary_surface == 2
         assert calculation_options.load_column_width_non_uniform_loads == 2
         assert calculation_options.load_column_width_trapeziform_loads == 2
@@ -1268,9 +1268,9 @@ class TestDSettlementModel:
         assert calculation_options.number_of_subtime_steps == 3
         assert calculation_options.reference_time == 2
         assert calculation_options.dissipation == Bool.TRUE
-        assert calculation_options.x_coord_dissipation == 1.0
+        assert calculation_options.x_coord_dissipation == pytest.approx(1.0)
         assert calculation_options.use_fit_factors == Bool.TRUE
-        assert calculation_options.x_coord_fit == 1.0
+        assert calculation_options.x_coord_fit == pytest.approx(1.0)
         assert (
             calculation_options.is_predict_settlements_omitting_additional_load_steps
             == Bool.TRUE

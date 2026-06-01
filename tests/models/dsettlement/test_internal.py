@@ -171,7 +171,7 @@ class TestInternalDSeriesListStructureCollections:
             is_reliability_calculation=is_reliability_calculation,
         )
         assert test_data.reliability_x_co__ordinate == 1
-        assert test_data.residual_settlement == 0.01
+        assert test_data.residual_settlement == pytest.approx(0.01)
         assert test_data.maximum_drawings == 15
         assert test_data.maximum_iterations == 10
         assert test_data.reliability_type.value == 0

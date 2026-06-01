@@ -89,8 +89,8 @@ class TestDSheetpilingWithNumberOfRowsTable:
         assert parsed_structure.test_structure[0]["a"] == 4
         assert parsed_structure.test_structure[0]["b"] == 2
         assert parsed_structure.test_structure[0]["c"] == 4
-        assert parsed_structure.test_structure[1]["a"] == 2.4
-        assert parsed_structure.test_structure[1]["b"] == 4.2
+        assert parsed_structure.test_structure[1]["a"] == pytest.approx(2.4)
+        assert parsed_structure.test_structure[1]["b"] == pytest.approx(4.2)
         assert parsed_structure.test_structure[1]["c"] == 42
 
 
@@ -111,7 +111,7 @@ class TestDSheetpilingTableEntry:
         unwrapped_struct = DummyUnwrapped.parse_text(text_to_parse)
         # 3. Verify expectations.
         assert unwrapped_struct.prop_1 == "property_two"
-        assert unwrapped_struct.prop_2 == 4.2
+        assert unwrapped_struct.prop_2 == pytest.approx(4.2)
 
     @pytest.mark.unittest
     def test_given_text_with_composite_name_returns_list_structure(self):
@@ -125,7 +125,7 @@ class TestDSheetpilingTableEntry:
         unwrapped_struct = DummyUnwrapped.parse_text(text_to_parse)
         # 3. Verify expectations.
         assert unwrapped_struct.prop_1 == "property two"
-        assert unwrapped_struct.prop_2 == 4.2
+        assert unwrapped_struct.prop_2 == pytest.approx(4.2)
 
 
 class TestDSheetpilingUnwrappedTable:
@@ -148,7 +148,7 @@ class TestDSheetpilingUnwrappedTable:
         # 3. Validate output.
         assert structure.dummyunwrappedtable
         assert len(structure.dummyunwrappedtable) == 2
-        assert structure.dummyunwrappedtable[0].value == 4.2
+        assert structure.dummyunwrappedtable[0].value == pytest.approx(4.2)
         assert structure.dummyunwrappedtable[0].name == "first value"
         assert structure.dummyunwrappedtable[1].value == 24
         assert structure.dummyunwrappedtable[1].name == "second value"
