@@ -36,7 +36,7 @@ jobs:
         run: pixi install -e docs
         
       - name: Build sphinx documentation
-        run: pixi run --manifest-path -e docs . python -m sphinx docs docs/build -b html -c docs
+        run: pixi run --manifest-path . -e docs python -m sphinx docs docs/build -b html -c docs
 
       - name: Commit and push documentation changes
         env:
