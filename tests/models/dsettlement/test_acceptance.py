@@ -99,7 +99,7 @@ class TestDSettlementAcceptance:
             Point(x=50, z=1),  # 15
         ]
 
-        dm = DSettlementModel()
+        DSettlementModel()
         self.outputdir = Path(
             TestUtils.get_output_test_data_dir("dsettlement/acceptancetest/")
         )
@@ -188,28 +188,28 @@ class TestDSettlementAcceptance:
             ]
         )
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b2,
             boundary_bottom=b1,
         )
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b2,
         )
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="Peat",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b4,
             boundary_bottom=b3,
         )
-        l4 = dm.add_layer(
+        dm.add_layer(
             material_name="Embankement",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
@@ -250,28 +250,28 @@ class TestDSettlementAcceptance:
             ]
         )
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=hl_id,
             head_line_bottom=hl_id,
             boundary_top=b2,
             boundary_bottom=b1,
         )
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=99,
             head_line_bottom=hl_id,
             boundary_top=b3,
             boundary_bottom=b2,
         )
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="Peat",
             head_line_top=pl_id,
             head_line_bottom=99,
             boundary_top=b4,
             boundary_bottom=b3,
         )
-        l4 = dm.add_layer(
+        dm.add_layer(
             material_name="Embankement",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
@@ -309,28 +309,28 @@ class TestDSettlementAcceptance:
             ]
         )
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b2,
             boundary_bottom=b1,
         )
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b2,
         )
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="Peat",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b4,
             boundary_bottom=b3,
         )
-        l4 = dm.add_layer(
+        dm.add_layer(
             material_name="Embankement",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
@@ -377,28 +377,28 @@ class TestDSettlementAcceptance:
             ]
         )
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b2,
             boundary_bottom=b1,
         )
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b2,
         )
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="Peat",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b4,
             boundary_bottom=b3,
         )
-        l4 = dm.add_layer(
+        dm.add_layer(
             material_name="Embankement",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
@@ -471,28 +471,28 @@ class TestDSettlementAcceptance:
             ]
         )
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b2,
             boundary_bottom=b1,
         )
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b2,
         )
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="Peat",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b4,
             boundary_bottom=b3,
         )
-        l4 = dm.add_layer(
+        dm.add_layer(
             material_name="Embankement",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
@@ -530,28 +530,28 @@ class TestDSettlementAcceptance:
             ]
         )
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b2,
             boundary_bottom=b1,
         )
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b2,
         )
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="Peat",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b4,
             boundary_bottom=b3,
         )
-        l4 = dm.add_layer(
+        dm.add_layer(
             material_name="Embankement",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
@@ -602,23 +602,21 @@ class TestDSettlementAcceptance:
         b3 = dm.add_boundary(points=[points[0], points[4], points[3], points[7]])
         b4 = dm.add_boundary(points=[points[5], points[6]])
 
-        l1 = dm.add_layer(
+        dm.add_layer(
             material_name="Sand",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b1,
             boundary_bottom=b4,
         )
-
-        l2 = dm.add_layer(
+        dm.add_layer(
             material_name="Clay",
             head_line_top=pl_id,
             head_line_bottom=pl_id,
             boundary_top=b3,
             boundary_bottom=b1,
         )
-
-        l3 = dm.add_layer(
+        dm.add_layer(
             material_name="peat",
             head_line_top=pl_id,
             head_line_bottom=pl_id,

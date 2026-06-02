@@ -84,7 +84,6 @@ class TestDsheetPilingModel:
     @pytest.mark.workinprogress
     def test_DSheetPilingModel_instance(self):
         dsheetpiling_model = DSheetPilingModel()
-        assert dsheetpiling_model is not None
         assert isinstance(dsheetpiling_model, BaseModel), (
             "" + "DSheetPilingModel does not instanciate BaseModel"
         )
@@ -262,7 +261,7 @@ class TestDsheetPilingModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            df.execute()
 
     @pytest.mark.unittest
     def test_execute_console_with_bytesio_raises_exception(self):
@@ -274,7 +273,7 @@ class TestDsheetPilingModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            df.execute()
 
     @pytest.mark.parametrize(
         "reverse_elements",

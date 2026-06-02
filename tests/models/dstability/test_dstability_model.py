@@ -43,7 +43,7 @@ from geolib.soils import (
 from tests.utils import TestUtils
 
 
-class TestDStabilityModel: 
+class TestDStabilityModel:
     @pytest.mark.unittest
     def test_instantiate_stability_model(self):
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
@@ -220,7 +220,7 @@ class TestDStabilityModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert dm.execute()
+            dm.execute()
 
     @pytest.mark.unittest
     def test_execute_console_with_bytesio_raises_exception(self):
@@ -232,7 +232,7 @@ class TestDStabilityModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert dm.execute()
+            dm.execute()
 
     @pytest.mark.unittest
     def test_add_multiple_stages_and_calculations(self):

@@ -212,18 +212,3 @@ class TestStage:
                 method_left=LateralEarthPressureMethodStage.KA_KO_KP,
                 method_right=LateralEarthPressureMethodStage.KA_KO_KP,
             )
-
-    @pytest.mark.unittest
-    @pytest.mark.xfail(reason="Not yet implemented")
-    def test_add_stage_copy_is_true_raises_valueError(self):
-        model = DSheetPilingModel()
-        name_1st_stage = "Initial stage"
-
-        with pytest.raises(ValueError):
-            model.add_stage(
-                name=name_1st_stage,
-                passive_side=PassiveSide.DSHEETPILING_DETERMINED,
-                method_left=LateralEarthPressureMethodStage.KA_KO_KP,
-                method_right=LateralEarthPressureMethodStage.KA_KO_KP,
-                copy=True,
-            )

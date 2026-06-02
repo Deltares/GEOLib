@@ -144,7 +144,9 @@ class TestDStabilitySoil:
         soil.SuShearStrengthModel.ShearStrengthRatio = 13.0
 
         soil = dstability_model.soils.get_soil("Test")
-        assert soil.MohrCoulombAdvancedShearStrengthModel.Cohesion == pytest.approx(99.0)
+        assert soil.MohrCoulombAdvancedShearStrengthModel.Cohesion == pytest.approx(
+            99.0
+        )
         assert soil.SuShearStrengthModel.ShearStrengthRatio == pytest.approx(13.0)
 
     def test_dstability_get_global_soil(self):

@@ -240,7 +240,7 @@ class TestDFoundationsModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            df.execute()
 
     @pytest.mark.unittest
     def test_execute_console_with_bytesio_raises_exception(self):
@@ -252,7 +252,7 @@ class TestDFoundationsModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert df.execute()
+            df.execute()
 
     @pytest.mark.integrationtest
     def test_add_generic_soil(self):
@@ -275,7 +275,7 @@ class TestDFoundationsModel:
         assert ds.datastructure.input_data.soil_collection.soil
 
         # 3. Run test.
-        new_soil = ds.add_soil(soil)
+        ds.add_soil(soil)
 
         # 4. Verify final expectations.
         assert ds.datastructure.input_data.soil_collection.soil[-1].name == "Test Soil"
@@ -877,7 +877,7 @@ class TestDFoundationsModel:
         co = InternalCalculationOptions(factor_xi3=0.1)
 
         # Verify expectations
-        assert co.factor_xi3 == 0.1
+        assert co.factor_xi3 == pytest.approx(0.1)
         assert co.is_xi3_overruled == Bool.TRUE
 
 

@@ -3,13 +3,20 @@ from pathlib import Path
 import pytest
 
 import geolib as gl
-from geolib.models.dsheetpiling.calculation_options import *
-from geolib.models.dsheetpiling.constructions import *
-from geolib.models.dsheetpiling.dsheetpiling_model import *
-from geolib.models.dsheetpiling.loads import *
-from geolib.models.dsheetpiling.profiles import *
-from geolib.models.dsheetpiling.settings import *
-from geolib.soils import *
+from geolib.geometry.one import Point
+from geolib.models.dsheetpiling.dsheetpiling_model import SheetModelType
+from geolib.models.dsheetpiling.loads import (
+    Moment,
+    NormalForce,
+    SurchargeLoad,
+    UniformLoad,
+)
+from geolib.models.dsheetpiling.settings import (
+    LateralEarthPressureMethod,
+    LateralEarthPressureMethodStage,
+    PassiveSide,
+    Side,
+)
 from tests.utils import TestUtils
 
 test_file_directory = "dsheetpiling/bugfixes"

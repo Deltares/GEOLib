@@ -76,7 +76,9 @@ class TestDGeoFlowInputParser:
     def test_dgeoflow_serialize_flox(self):
         # 1. Set up test model
         input_parser = DGeoFlowZipParser()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox")
+        )
         test_output_filepath = (
             Path(TestUtils.get_output_test_data_dir("dgeoflow"))
             / "Berekening3_serialized.flox"
@@ -97,7 +99,9 @@ class TestDGeoFlowInputParser:
     def test_dgeoflow_serialize_folders(self):
         # 1. Set up test model
         input_parser = DGeoFlowZipParser()
-        test_filepath = Path(TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox"))
+        test_filepath = Path(
+            TestUtils.get_local_test_data_dir("dgeoflow/Berekening3.flox")
+        )
         test_output_filepath = Path(
             TestUtils.get_output_test_data_dir(self.output_path)
         )

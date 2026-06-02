@@ -158,7 +158,7 @@ class TestDFoundationsTableWrapper:
                 keys[1]: float(randint(0, 100)),
                 keys[2]: "".join(choice(ascii_lowercase) for _ in range(4)),
             }
-            for idx in range(1, 4)
+            for _ in range(1, 4)
         ]
         text_to_parse = (
             ""
