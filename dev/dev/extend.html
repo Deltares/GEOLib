@@ -174,12 +174,38 @@ advise to also add type hints. An example:</p>
 </section>
 <section id="adding-requirements">
 <h2>Adding requirements<a class="headerlink" href="#adding-requirements" title="Link to this heading">¶</a></h2>
-<p>New requirements can be added through Pixi and hatchling.</p>
-<p>For example, to add a new package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pixi<span class="w"> </span>add<span class="w"> </span>new_package
+<p>New requirements can be added through Pixi.</p>
+<p>For the default environment, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pixi add new_package
 </pre></div>
 </div>
 <p>This updates both <cite>pyproject.toml</cite> and <cite>pixi.lock</cite> with the new dependency and its transitive dependencies.</p>
+<p>To add a package to a specific feature/environment, use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pixi add --feature dev new_dev_package       # Add to dev feature
+$ pixi add --feature test new_test_package     # Add to test feature
+$ pixi add --feature server new_server_package # Add to server feature
+$ pixi add --feature docs new_docs_package     # Add to docs feature
+</pre></div>
+</div>
+</section>
+<section id="available-tasks">
+<h2>Available Tasks<a class="headerlink" href="#available-tasks" title="Link to this heading">¶</a></h2>
+<p>GEOLib provides several predefined tasks for common development operations:</p>
+<p><strong>Development tasks</strong> (run with <code class="docutils literal notranslate"><span class="pre">pixi</span> <span class="pre">run</span> <span class="pre">-e</span> <span class="pre">dev</span> <span class="pre">&lt;task&gt;</span></code>):</p>
+<blockquote>
+<div><p>$ pixi run -e dev format          # Auto-format code with black and isort
+$ pixi run -e dev lint            # Check code style with black, flake8, and isort
+$ pixi run -e dev type-check      # Type checking with mypy</p>
+</div></blockquote>
+<p><strong>Testing tasks</strong> (run with <code class="docutils literal notranslate"><span class="pre">pixi</span> <span class="pre">run</span> <span class="pre">-e</span> <span class="pre">test</span> <span class="pre">&lt;task&gt;</span></code>):</p>
+<blockquote>
+<div><p>$ pixi run -e test test            # Run pytest
+$ pixi run -e test test-cov        # Run pytest with coverage report</p>
+</div></blockquote>
+<p><strong>Documentation tasks</strong> (run with <code class="docutils literal notranslate"><span class="pre">pixi</span> <span class="pre">run</span> <span class="pre">-e</span> <span class="pre">docs</span> <span class="pre">&lt;task&gt;</span></code>):</p>
+<blockquote>
+<div><p>$ pixi run -e docs build-docs      # Build HTML documentation</p>
+</div></blockquote>
 </section>
 </section>
 
@@ -240,6 +266,7 @@ advise to also add type hints. An example:</p>
 <li class="toctree-l2"><a class="reference internal" href="#inheritance">Inheritance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#type-hinting">Type hinting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-requirements">Adding requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-tasks">Available Tasks</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="todo.html">To Do</a></li>

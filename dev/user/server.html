@@ -51,9 +51,14 @@
 <span id="id1"></span><h1>Server<a class="headerlink" href="#server" title="Link to this heading">¶</a></h1>
 <p>GEOLib comes with a built-in webservice that enables users to use it as a remote
 endpoint for their calculations.</p>
-<p>You should install GEOLib with <cite>pip install geolib[server]</cite> as described in <a class="reference internal" href="install.html#install"><span class="std std-ref">Installation</span></a>.
-That enables you to run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ uvicorn geolib.service.main:app
+<p>To set up the server environment, install with the server feature as described in <a class="reference internal" href="install.html#install"><span class="std std-ref">Installation</span></a>.
+You can then start the server with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pixi shell -e server
+$ uvicorn geolib.service.main:app
+</pre></div>
+</div>
+<p>Or run it directly without activating the environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pixi run -e server uvicorn geolib.service.main:app
 </pre></div>
 </div>
 <p>Now you can use the <em>execute_remote</em> methods on the GEOLib models, pointing to this

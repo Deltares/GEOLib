@@ -81,6 +81,24 @@ install some extra packages:</p>
 </ul>
 <p>You don’t need to install anything manually, as the Pixi installation should take care of it.</p>
 </section>
+<section id="available-environments">
+<h2>Available Environments<a class="headerlink" href="#available-environments" title="Link to this heading">¶</a></h2>
+<p>GEOLib provides several Pixi environments for different use cases:</p>
+<ul class="simple">
+<li><p><strong>default</strong> - Base environment with core dependencies only</p></li>
+<li><p><strong>test</strong> - Testing environment with pytest and coverage tools</p></li>
+<li><p><strong>dev</strong> - Complete development environment (includes dev tools, docs, and test utilities)</p></li>
+<li><p><strong>server</strong> - Server environment with FastAPI and Uvicorn</p></li>
+<li><p><strong>docs</strong> - Documentation building environment with Sphinx</p></li>
+</ul>
+<p>To activate a specific environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pixi shell -e dev      # Activate full development environment
+$ pixi shell -e test     # Activate testing environment
+$ pixi shell -e server   # Activate server environment
+$ pixi shell -e docs     # Activate documentation environment
+</pre></div>
+</div>
+</section>
 <section id="get-the-source-code">
 <h2>Get the Source Code<a class="headerlink" href="#get-the-source-code" title="Link to this heading">¶</a></h2>
 <p>GEOLib is actively developed on Github, where the code is
@@ -146,6 +164,7 @@ $ pixi run sphinx ...      # Build documentation
 <li class="toctree-l2"><a class="reference internal" href="#geolib-installation">GEOLib installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#geolib-service">GEOLib service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#packages-used">Packages used</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-environments">Available Environments</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-the-source-code">Get the Source Code</a></li>
 </ul>
 </li>
