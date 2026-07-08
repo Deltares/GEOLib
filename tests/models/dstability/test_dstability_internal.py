@@ -99,3 +99,40 @@ class TestDStabilityInternal:
 
         projectinfo = ProjectInfo(Created="2022-11-23")
         assert projectinfo.Created == datetime(2022, 11, 23).date()
+
+    @pytest.mark.unittest
+    def test_projectinfo_iso_datetime_format(self):
+        """Test that ProjectInfo can parse ISO format dates with time (YYYY-MM-DDTHH:MM:SS).
+        
+        This test covers the fix for parsing dates from D-Stability Console output,
+        which serializes dates with time component in ISO format.
+        """
+        # Parse ISO format with time (from console output)
+        projectinfo = ProjectInfo(Created="2019-10-17T00:00:00")
+        assert projectinfo.Created == datetime(2019, 10, 17).date()
+
+        projectinfo = ProjectInfo(Date="2019-11-28T12:30:45")
+        assert projectinfo.Date == datetime(2019, 11, 28).date()
+
+        projectinfo = ProjectInfo(LastModified="2026-03-16T00:00:00")
+        assert projectinfo.LastModified == datetime(2026, 3, 16).date()
+
+    @pytest.mark.unittest
+    def test_projectinfo_date_serialization_format(self):
+        """Test that ProjectInfo serializes dates to DD-MM-YYYY format.
+        
+        This test ensures dates are serialized in the format expected by D-Stability Console.
+        """
+        projectinfo = ProjectInfo(
+            Created="2019-10-17T00:00:00",
+            Date="2019-11-28T00:00:00",
+            LastModified="2026-03-16T00:00:00"
+        )
+
+        # Serialize to JSON
+        json_str = projectinfo.model_dump_json()
+
+        # Verify DD-MM-YYYY format in JSON output
+        assert '"Created":"17-10-2019"' in json_str
+        assert '"Date":"28-11-2019"' in json_str
+        assert '"LastModified":"16-03-2026"' in json_str
