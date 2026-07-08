@@ -366,19 +366,9 @@ class ProjectInfo(DGeoFlowSubStructure):
     Project: str | None = ""
     Remarks: str | None = f"Created with GEOLib {version}"
 
-    @classmethod
-    def nltime(cls, date: date | str) -> date:
-        if isinstance(date, str):
-            position = date.index(max(date.split("-"), key=len))
-            if position > 0:
-                date = datetime.strptime(date, "%d-%m-%Y").date()
-            else:
-                date = datetime.strptime(date, "%Y-%m-%d").date()
-        return date
-
     nltime_validator = field_validator(
         "Created", "Date", "LastModified", mode="before"
-    )(nltime)
+    )(lambda cls, v: cls.nltime(v))
 
 
 class PersistablePoint(DGeoFlowBaseModelStructure):
