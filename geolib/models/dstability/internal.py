@@ -14,6 +14,7 @@ from typing_extensions import Annotated
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
+from geolib.models.serializers import FormattedDate
 from geolib.soils import Soil
 
 from .dstability_validator import DStabilityValidator
@@ -1252,11 +1253,11 @@ class ProjectInfo(DStabilitySubStructure):
     ApplicationCreated: str | None = ""
     ApplicationModified: str | None = ""
     ContentVersion: str | None = "2"
-    Created: date | None = Field(default_factory=lambda: datetime.now().date())
+    Created: FormattedDate = Field(default_factory=lambda: datetime.now().date())
     CrossSection: str | None = ""
-    Date: date | None = Field(default_factory=lambda: datetime.now().date())
+    Date: FormattedDate = Field(default_factory=lambda: datetime.now().date())
     IsDataValidated: bool | None = False
-    LastModified: date | None = Field(default_factory=lambda: datetime.now().date())
+    LastModified: FormattedDate = Field(default_factory=lambda: datetime.now().date())
     LastModifier: str | None = "GEOLib"
     Path: str | None = ""
     Project: str | None = ""
