@@ -30,9 +30,7 @@ class TestDGeoFlowInternal:
         assert dm is not None
 
         # 3. Unlink a foreign key
-        scenario = dm.datastructure.scenarios[0]
-        scenario.GeometryId = -1
-        dm.datastructure.scenarios[0] = scenario
+        dm.datastructure.scenarios[0].GeometryId = -1
 
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):

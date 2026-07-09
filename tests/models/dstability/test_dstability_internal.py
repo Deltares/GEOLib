@@ -30,9 +30,7 @@ class TestDStabilityInternal:
         assert dm is not None
 
         # 3. Unlink a foreign key
-        stage = dm.datastructure.scenarios[0].Stages[0]
-        stage.GeometryId = -1
-        dm.datastructure.scenarios[0].Stages[0] = stage
+        dm.datastructure.scenarios[0].Stages[0].GeometryId = -1
 
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):
