@@ -31,10 +31,11 @@ class TestDStabilityInternal:
 
         # 3. Unlink a foreign key
         dm.datastructure.scenarios[0].Stages[0].GeometryId = -1
+        datastructure_dict = dict(dm.datastructure)
 
         # 4. Verify structure is invalid, recreating triggers validation
         with pytest.raises(ValidationError):
-            DStabilityStructure(**dict(dm.datastructure))
+            DStabilityStructure(**datastructure_dict)
 
     @pytest.mark.unittest
     def test_foreign_keys(self):
