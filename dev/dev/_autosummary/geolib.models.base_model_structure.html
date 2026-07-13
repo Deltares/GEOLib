@@ -78,6 +78,24 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="geolib.models.base_model_structure.BaseModelStructure.nltime">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nltime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date_input</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model_structure.BaseModelStructure.nltime" title="Link to this definition">¶</a></dt>
+<dd><p>Parse date from multiple formats: DD-MM-YYYY, YYYY-MM-DD, or ISO with time.</p>
+<p>Handles:
+- ISO format with time: YYYY-MM-DDTHH:MM:SS
+- Dutch format: DD-MM-YYYY
+- ISO format: YYYY-MM-DD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>date_input</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]</span>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">date</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="geolib.models.base_model_structure.BaseModelStructure.validator">
 <span class="sig-name descname"><span class="pre">validator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#geolib.models.base_model_structure.BaseModelStructure.validator" title="Link to this definition">¶</a></dt>
 <dd><p>Set the Validator class.</p>
