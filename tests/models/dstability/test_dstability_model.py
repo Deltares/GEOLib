@@ -43,7 +43,7 @@ from geolib.soils import (
 from tests.utils import TestUtils
 
 
-class TestDStabilityModel: 
+class TestDStabilityModel:
     @pytest.mark.unittest
     def test_instantiate_stability_model(self):
         assert isinstance(DStabilityModel(filename=None), BaseModel), (
@@ -98,6 +98,9 @@ class TestDStabilityModel:
             pytest.param(
                 "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
             ),
+            pytest.param(
+                "dstability/Tutorial_v2026_1.stix", id="Tutorial DStability 2026.1"
+            ),
         ],
     )
     def test_given_datadir_when_parse_then_datastructure_of_expected_type(
@@ -147,6 +150,9 @@ class TestDStabilityModel:
             ),
             pytest.param(
                 "dstability/Tutorial_v2025_1.stix", id="Tutorial DStability 2025.1"
+            ),
+            pytest.param(
+                "dstability/Tutorial_v2026_1.stix", id="Tutorial DStability 2026.1"
             ),
         ],
     )
@@ -214,7 +220,7 @@ class TestDStabilityModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert dm.execute()
+            dm.execute()
 
     @pytest.mark.unittest
     def test_execute_console_with_bytesio_raises_exception(self):
@@ -226,7 +232,7 @@ class TestDStabilityModel:
 
         # 2. Run test
         with pytest.raises(Exception):
-            assert dm.execute()
+            dm.execute()
 
     @pytest.mark.unittest
     def test_add_multiple_stages_and_calculations(self):
@@ -403,7 +409,7 @@ class TestDStabilityModel:
         )
         dm = DStabilityModel()
         dm.parse(test_filepath)
-        assert pytest.approx(dm.output[-1].FactorOfSafety, rel=1e-3) == 0.723
+        assert dm.output[-1].FactorOfSafety == pytest.approx(0.723, rel=1e-3)
 
     def test_get_slip_plane(self):
         test_filepath = Path(

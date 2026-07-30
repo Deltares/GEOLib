@@ -42,6 +42,24 @@ This package, unlike GEOLib+, tries to limit the number of
 
 You don't need to install anything manually, as the Pixi installation should take care of it.
 
+Available Environments
+----------------------
+
+GEOLib provides several Pixi environments for different use cases:
+
+- **default** - Base environment with core dependencies only
+- **test** - Testing environment with pytest and coverage tools
+- **dev** - Complete development environment (includes dev tools, docs, and test utilities)
+- **server** - Server environment with FastAPI and Uvicorn
+- **docs** - Documentation building environment with Sphinx
+
+To activate a specific environment::
+
+    $ pixi shell -e dev      # Activate full development environment
+    $ pixi shell -e test     # Activate testing environment
+    $ pixi shell -e server   # Activate server environment
+    $ pixi shell -e docs     # Activate documentation environment
+
 Get the Source Code
 -------------------
 

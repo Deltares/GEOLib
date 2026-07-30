@@ -33,12 +33,9 @@ jobs:
             pixi-${{ runner.os }}-
 
       - name: Install Dependencies
-        run: pixi install
+        run: pixi install -e test
 
       - name: Test with pytest
         run: >
-          pixi run pytest
-          --cov=geolib
-          --cov-report xml:coverage-reports/coverage-hydrolib-core.xml
-          --junitxml=xunit-reports/xunit-result-hydrolib-core.xml
+          pixi run -e test pytest
           -m "unittest and not workinprogress"

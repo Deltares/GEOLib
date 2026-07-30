@@ -72,7 +72,7 @@ def get_structure_content(class_type: type) -> list:
 
 def get_structure_collection_content(class_type: type, collection_size: int) -> dict:
     collection_dict = {}
-    for struct_id in range(collection_size):
+    for _ in range(collection_size):
         collection_dict[str(randint(1, 99))] = get_structure_content(class_type)
     return collection_dict
 
@@ -171,7 +171,7 @@ class TestInternalDSeriesListStructureCollections:
             is_reliability_calculation=is_reliability_calculation,
         )
         assert test_data.reliability_x_co__ordinate == 1
-        assert test_data.residual_settlement == 0.01
+        assert test_data.residual_settlement == pytest.approx(0.01)
         assert test_data.maximum_drawings == 15
         assert test_data.maximum_iterations == 10
         assert test_data.reliability_type.value == 0

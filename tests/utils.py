@@ -138,7 +138,7 @@ class TestUtils:
         test_dir = os.path.dirname(__file__)
         dir_path = os.path.join(test_dir, dir_name)
         return dir_path
-    
+
     @staticmethod
     def _get_standard_layers():
         layer_1 = [

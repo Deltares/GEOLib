@@ -216,7 +216,7 @@ class DSerieListGroupNextStructure(DSeriesStructure):
     @classmethod
     def parse_text(cls, text: str):
         # Strip outer wrapper
-        body = list(DSerieParser.parse_group(text))[0][1]
+        body = next(iter(DSerieParser.parse_group(text)))[1]
 
         num_elements = int(body.strip().split("\n")[0])
         elements = body.split(cls.group_delimiter())
@@ -231,7 +231,7 @@ class DSerieListGroupNextStructure(DSeriesStructure):
         else:
             if not len(elements) == num_elements:
                 raise ParserError(f"Error in parsing in number of elements for {cls}")
-        collection_property_name = list(cls.model_fields.items())[0][0]
+        collection_property_name = next(iter(cls.model_fields.items()))[0]
         return cls(**{collection_property_name: elements})
 
 
@@ -349,11 +349,11 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
                         parts.append(part)
             return parts
 
-        table_text = list(DSerieParser.parse_list_group(text).values())[0]
+        table_text = next(iter(DSerieParser.parse_list_group(text).values()))
         table_data = list(DSerieParser.parse_list_group(table_text).values())
         if len(table_data) == 0:
             values_dict_list = table_data
-            collection_property_name = list(cls.model_fields.items())[0][0]
+            collection_property_name = next(iter(cls.model_fields.items()))[0]
             return cls(**{collection_property_name: values_dict_list})
         else:
             # Expected two groups (column_indication and data)
@@ -364,7 +364,7 @@ class DSeriesWrappedTableStructure(DSeriesTableStructure):
                 dict(zip(keys, values))
                 for values in map(split_line, table_data[1].split("\n"))
             ]
-            collection_property_name = list(cls.model_fields.items())[0][0]
+            collection_property_name = next(iter(cls.model_fields.items()))[0]
 
         return cls(**{collection_property_name: values_dict_list})
 
@@ -1140,7 +1140,7 @@ class DSeriesTreeStructureCollection(DSeriesStructure):
     @classmethod
     def parse_text_lines(cls, lines: list[str]) -> tuple[DSeriesStructure, int]:
         # Get class types
-        collection_property_name = list(cls.model_fields.items())[0][0]
+        collection_property_name = next(iter(cls.model_fields.items()))[0]
         structure_type = get_field_collection_type(cls, 0)
         # Parse elements.
         number_of_structures = cls.get_number_of_structures(lines)

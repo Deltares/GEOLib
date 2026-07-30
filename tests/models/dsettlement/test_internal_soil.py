@@ -46,7 +46,7 @@ class TestSoil_Internal:
 
         assert soil_input.soil_weight_parameters.saturated_weight.mean == 14
         assert soil_input.soil_weight_parameters.unsaturated_weight.mean == 15
-        assert soil_input.soil_classification_parameters.initial_void_ratio.mean == 0.1
+        assert soil_input.soil_classification_parameters.initial_void_ratio.mean == pytest.approx(0.1)
         assert soil_input.koppejan_parameters.precon_koppejan_type == StateType.OCR
         assert soil_input.soil_state.use_equivalent_age
         assert soil_input.bjerrum_parameters.input_type_is_comp_ratio == False
@@ -67,7 +67,7 @@ class TestSoil_Internal:
         assert test_soil.name == "MyNewSoil"
         assert test_soil.soilgamdry == 15
         assert test_soil.soilgamwet == 14
-        assert test_soil.soilinitialvoidratio == 0.1
+        assert test_soil.soilinitialvoidratio == pytest.approx(0.1)
         assert test_soil.soilpreconkoppejantype == PreconType.OCR
         assert test_soil.soiluseequivalentage
         assert test_soil.soilcompratio == False
