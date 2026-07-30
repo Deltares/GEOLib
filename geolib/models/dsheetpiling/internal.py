@@ -105,7 +105,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1041
+_DEFAULT_SHEETPILING_VERSION: int = 1042
 
 REQ_RUN_LINES = 2
 
@@ -575,7 +575,14 @@ class WaterLevel(DSeriesNoParseSubStructure):
     level: float
     distribution_type: DistributionType = DistributionType.NONE
     standard_deviation: float = 0.0
-    delta_h_deci_CROW: float = 0.0
+    rep_low_passive_CROW: float = 0.0
+    delta_h_deci_low_passive_CROW: float = 0.0
+    rep_high_passive_CROW: float = 0.0
+    delta_h_deci_high_passive_CROW: float = 0.0
+    average_low_passive_CROW: float = 0.0
+    rep_high_active_CROW: float = 0.0
+    delta_h_deci_high_active_CROW: float = 0.0
+    average_high_active_CROW: float = 0.0
 
 
 class WaterLevels(DSeriesNoParseSubStructure):
@@ -809,15 +816,24 @@ class DSheetPilingInputStructure(DSeriesStructure):
         """)
     water: Water = Water()
     water_levels: WaterLevels | str = cleandoc(f"""
-          1 Water level count           
+        1 = number of items           
+        [WATER LEVEL]
         {_DEFAULT_WATER_LEVEL_NAME}
-              0.00 Level
-              0.00 Standard deviation
-                 2 Distribution type
-              0.00 Delta h_deci (CROW)                 
-
+        WaterLevelValue = 0.00
+        WaterLevelStandardDeviation = 0.00
+        WaterLevelDistribution = 2
+        WaterLevelRepLowPassiveCrow = 0.00
+        WaterLevelDeltaHDeciLowPassiveCrow = 0.00
+        WaterLevelRepHighPassiveCrow = 0.00
+        WaterLevelDeltaHDeciHighPassiveCrow = 0.00
+        WaterLevelAverageLowPassiveCrow = 0.00
+        WaterLevelRepHighActiveCrow = 0.00
+        WaterLevelDeltaHDeciHighActiveCrow = 0.00
+        WaterLevelAverageHighActiveCrow = 0.00
+        [END OF WATER LEVEL]
         """)
-    construction_stages: str | ConstructionStages = ConstructionStages()
+
+construction_stages: str | ConstructionStages = ConstructionStages()
     calculation_options_per_stage: CalculationOptionsPerStage = (
         CalculationOptionsPerStage()
     )

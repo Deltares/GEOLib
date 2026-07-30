@@ -80,7 +80,14 @@ class TestWaterLevels:
         assert internal.level == water_level.level
         assert internal.distribution_type == water_level.distribution_type
         assert internal.standard_deviation == water_level.standard_deviation
-        assert internal.delta_h_deci_CROW == water_level.delta_h_deci_CROW
+        assert internal.rep_low_passive_CROW == water_level.rep_low_passive_CROW
+        assert internal.delta_h_deci_low_passive_CROW == water_level.delta_h_deci_low_passive_CROW
+        assert internal.rep_high_passive_CROW == water_level.rep_high_passive_CROW
+        assert internal.delta_h_deci_high_passive_CROW == water_level.delta_h_deci_high_passive_CROW
+        assert internal.average_low_passive_CROW == water_level.average_low_passive_CROW
+        assert internal.rep_high_active_CROW == water_level.rep_high_active_CROW
+        assert internal.delta_h_deci_high_active_CROW == water_level.delta_h_deci_high_active_CROW
+        assert internal.average_high_active_CROW == water_level.average_high_active_CROW
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(

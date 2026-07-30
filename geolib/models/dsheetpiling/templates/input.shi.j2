@@ -387,13 +387,22 @@ SurchargeLoadDistribution={{ load.surchargeloaddistribution.value }}
 
 [WATER LEVELS]
 {% if water_levels is mapping %}
-  {{ water_levels.levels | length }} Water level count
-{% for waterlevel in water_levels.levels %}
-{{ waterlevel.name }}
-{{ "%10.2f"|format(waterlevel.level) }} Level
-{{ "%10.2f"|format(waterlevel.standard_deviation) }} Standard deviation
-{{ "%10d"|format(waterlevel.distribution_type.value) }} Distribution type
-{{ "%10.2f"|format(waterlevel.delta_h_deci_CROW) }} Delta h_deci (CROW)
+{{ "%5d"|format(water_levels.levels | length) }} = number of items
+{% for water_level in water_levels.levels %}
+[WATER LEVEL]
+{{ water_level.name }}
+WaterLevelValue={{ "%10.2f"|format(water_level.level) }}
+WaterLevelStandardDeviation={{ "%10.2f"|format(water_level.standard_deviation) }}
+WaterLevelDistribution={{ "%10d"|format(water_level.distribution_type.value) }}
+WaterLevelRepLowPassiveCrow={{ "%10.2f"|format(water_level.rep_low_passive_CROW) }}
+WaterLevelDeltaHDeciLowPassiveCrow={{ "%10.2f"|format(water_level.delta_h_deci_low_passive_CROW) }}
+WaterLevelRepHighPassiveCrow={{ "%10.2f"|format(water_level.rep_high_passive_CROW) }}
+WaterLevelDeltaHDeciHighPassiveCrow={{ "%10.2f"|format(water_level.delta_h_deci_high_passive_CROW) }}
+WaterLevelAverageLowPassiveCrow={{ "%10.2f"|format(water_level.average_low_passive_CROW) }}
+WaterLevelRepHighActiveCrow={{ "%10.2f"|format(water_level.rep_high_active_CROW) }}
+WaterLevelDeltaHDeciHighActiveCrow={{ "%10.2f"|format(water_level.delta_h_deci_high_active_CROW) }}
+WaterLevelAverageHighActiveCrow={{ "%10.2f"|format(water_level.average_high_active_CROW) }}
+[END OF WATER LEVEL]
 {% endfor %}
 {% else %}
 {{ water_levels }}
