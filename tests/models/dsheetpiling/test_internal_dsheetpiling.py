@@ -79,7 +79,7 @@ class TestInternal:
                 in str(w[1].message)
             )
         assert sheet_piling_element.sheetpilingelementkmod == 1
-        assert sheet_piling_element.sheetpilingelementmaterialfactor == 1.1
+        assert sheet_piling_element.sheetpilingelementmaterialfactor == pytest.approx(1.1)
         # Set correct values, expected no warnings
         sheet_piling_element = SheetPileElement(
             sheetpilingelementkmod=1.0,
@@ -140,7 +140,7 @@ class TestInternal:
         )
         assert model.calculation_options_per_stage.stageoptions[0].stageverify == 1
         assert (
-            model.calculation_options_per_stage.stageoptions[0].stageanchorfactor == 1.5
+            model.calculation_options_per_stage.stageoptions[0].stageanchorfactor == pytest.approx(1.5)
         )
 
     @pytest.mark.integrationtest
@@ -176,10 +176,9 @@ class TestInternal:
         assert (
             model.calculation_options_per_stage.stageoptions[0].stageverifyec7nadnl == 1
         )
-        assert (
-            model.calculation_options_per_stage.stageoptions[0].stageanchorfactorec7nadnl
-            == pytest.approx(1.5)
-        )
+        assert model.calculation_options_per_stage.stageoptions[
+            0
+        ].stageanchorfactorec7nadnl == pytest.approx(1.5)
 
     @pytest.mark.integrationtest
     def test_add_calculation_options_per_stage_ec7_be(
@@ -514,12 +513,12 @@ class TestInternalParseInputStructure:
         assert anchor
         assert anchor.name == "Short anchor"
         assert anchor.level == -2.00
-        assert anchor.e_modulus == 2.4
-        assert anchor.cross_section == 2.4
-        assert anchor.wall_height_kranz == 2.4
-        assert anchor.length == 2.4
-        assert anchor.angle == 2.4
-        assert anchor.yield_force == 2.4
+        assert anchor.e_modulus == pytest.approx(2.4)
+        assert anchor.cross_section == pytest.approx(2.4)
+        assert anchor.wall_height_kranz == pytest.approx(2.4)
+        assert anchor.length == pytest.approx(2.4)
+        assert anchor.angle == pytest.approx(2.4)
+        assert anchor.yield_force == pytest.approx(2.4)
         assert anchor.side == 2
 
     def validate_anchors(self, anchor_list: Anchors):
@@ -531,11 +530,11 @@ class TestInternalParseInputStructure:
         assert strut
         assert strut.name == "Strut"
         assert strut.level == -10.00
-        assert strut.e_modulus == 4.2
-        assert strut.cross_section == 4.2
-        assert strut.length == 4.2
-        assert strut.angle == 4.2
-        assert strut.buckling_force == 4.2
+        assert strut.e_modulus == pytest.approx(4.2)
+        assert strut.cross_section == pytest.approx(4.2)
+        assert strut.length == pytest.approx(4.2)
+        assert strut.angle == pytest.approx(4.2)
+        assert strut.buckling_force == pytest.approx(4.2)
         assert strut.side == 2
 
     def validate_struts(self, strut_list: Struts):
@@ -560,10 +559,10 @@ class TestInternalParseInputStructure:
         assert pressures
         assert len(pressures.pressures) == 1
         p_table = pressures.pressures[0]
-        assert p_table["horizontal_pressure"] == 0.09882
+        assert p_table["horizontal_pressure"] == pytest.approx(0.09882)
         assert p_table["pore_pressure"] == 0
-        assert p_table["passive_pressure"] == 10.14826
-        assert p_table["neutral_pressure"] == 2.20017
+        assert p_table["passive_pressure"] == pytest.approx(10.14826)
+        assert p_table["neutral_pressure"] == pytest.approx(2.20017)
         assert p_table["status_on_branches"] == 1
         assert p_table["percentage_of_mobilisation"] == 0
         assert p_table["status_character"] == "A"
@@ -581,20 +580,20 @@ class TestInternalParseInputStructure:
 
     def validate_breuk_data_structure(self, breuk_data: BreukData):
         assert breuk_data is not None
-        assert breuk_data.percentage_mobilized_resistance_left == 22.11
-        assert breuk_data.percentage_mobilized_resistance_right == 8.36
-        assert breuk_data.effective_left == 329.04
-        assert breuk_data.effective_right == 329.13
-        assert breuk_data.water_pressure_left == 961.38
-        assert breuk_data.water_pressure_right == 961.38
-        assert breuk_data.max_passive_effect_resistance_left == 1488.18
-        assert breuk_data.max_passive_effect_resistance_right == 3939.32
+        assert breuk_data.percentage_mobilized_resistance_left == pytest.approx(22.11)
+        assert breuk_data.percentage_mobilized_resistance_right == pytest.approx(8.36)
+        assert breuk_data.effective_left == pytest.approx(329.04)
+        assert breuk_data.effective_right == pytest.approx(329.13)
+        assert breuk_data.water_pressure_left == pytest.approx(961.38)
+        assert breuk_data.water_pressure_right == pytest.approx(961.38)
+        assert breuk_data.max_passive_effect_resistance_left == pytest.approx(1488.18)
+        assert breuk_data.max_passive_effect_resistance_right == pytest.approx(3939.32)
         assert breuk_data.max_passive_moment_left == 0
         assert breuk_data.max_passive_moment_right == 0
         assert breuk_data.max_mobilized_passive_moment_left == 0
         assert breuk_data.max_mobilized_passive_moment_right == 0
-        assert breuk_data.vertical_force_left == 93.87
-        assert breuk_data.vertical_force_right == 88.75
+        assert breuk_data.vertical_force_left == pytest.approx(93.87)
+        assert breuk_data.vertical_force_right == pytest.approx(88.75)
         assert breuk_data.level_of_single_support == 0
         assert breuk_data.node_of_single_support == 1
         assert breuk_data.moment_present == 0
@@ -606,7 +605,7 @@ class TestInternalParseInputStructure:
         ad_table = anchor_data.anchordata[0]
         assert ad_table["node_number"] == 7
         assert ad_table["position"] == -2
-        assert ad_table["force"] == 17.97193
+        assert ad_table["force"] == pytest.approx(17.97193)
         assert ad_table["e_modulus"] == 190000000
         assert ad_table["status"] == 1
         assert ad_table["side"] == 2
@@ -1016,11 +1015,11 @@ class TestInternalParseOutputStructure:
         assert resume_structure
         assert len(resume_structure.resume) == 1
         rs_table = resume_structure.resume[0]
-        assert rs_table["moment"] == 11.64788
-        assert rs_table["shearforce"] == -5.00187
-        assert rs_table["displacement"] == 117.98290
+        assert rs_table["moment"] == pytest.approx(11.64788)
+        assert rs_table["shearforce"] == pytest.approx(-5.00187)
+        assert rs_table["displacement"] == pytest.approx(117.98290)
         assert rs_table["percentagemobilizedmoment"] == 0
-        assert rs_table["percentagemobilizedresistance"] == 6.97007
+        assert rs_table["percentagemobilizedresistance"] == pytest.approx(6.97007)
         assert rs_table["stagenumber"] == 1
         assert rs_table["verificationtype"] == 15
         assert rs_table["partialfactorset"] == 4
@@ -1046,11 +1045,11 @@ class TestInternalParseOutputStructure:
         assert len(design_length_calc.designlengthcalculation) == 1
         dlc_table = design_length_calc.designlengthcalculation[0]
         assert dlc_table["design_length"] == 15
-        assert dlc_table["design_displacement"] == -180.020
-        assert dlc_table["design_max_moment"] == 286.526
-        assert dlc_table["design_min_moment"] == -118.981
-        assert dlc_table["design_anchor_force"] == -38.182
-        assert dlc_table["design_mobilisation_percentage"] == 29.945
+        assert dlc_table["design_displacement"] == pytest.approx(-180.020)
+        assert dlc_table["design_max_moment"] == pytest.approx(286.526)
+        assert dlc_table["design_min_moment"] == pytest.approx(-118.981)
+        assert dlc_table["design_anchor_force"] == pytest.approx(-38.182)
+        assert dlc_table["design_mobilisation_percentage"] == pytest.approx(29.945)
 
     def validate_design_length_info(self, design_length_info: DesignLengthInfo):
         assert design_length_info
@@ -1076,10 +1075,10 @@ class TestInternalParseOutputStructure:
         assert pressures
         assert len(pressures.pressures) == 1
         p_table = pressures.pressures[0]
-        assert p_table["horizontal_pressure"] == 0.09882
+        assert p_table["horizontal_pressure"] == pytest.approx(0.09882)
         assert p_table["pore_pressure"] == 0
-        assert p_table["passive_pressure"] == 10.14826
-        assert p_table["neutral_pressure"] == 2.20017
+        assert p_table["passive_pressure"] == pytest.approx(10.14826)
+        assert p_table["neutral_pressure"] == pytest.approx(2.20017)
         assert p_table["status_on_branches"] == 1
         assert p_table["percentage_of_mobilisation"] == 0
         assert p_table["status_character"] == "A"
@@ -1097,20 +1096,20 @@ class TestInternalParseOutputStructure:
 
     def validate_breuk_data_structure(self, breuk_data: BreukData):
         assert breuk_data is not None
-        assert breuk_data.percentage_mobilized_resistance_left == 22.11
-        assert breuk_data.percentage_mobilized_resistance_right == 8.36
-        assert breuk_data.effective_left == 329.04
-        assert breuk_data.effective_right == 329.13
-        assert breuk_data.water_pressure_left == 961.38
-        assert breuk_data.water_pressure_right == 961.38
-        assert breuk_data.max_passive_effect_resistance_left == 1488.18
-        assert breuk_data.max_passive_effect_resistance_right == 3939.32
+        assert breuk_data.percentage_mobilized_resistance_left == pytest.approx(22.11)
+        assert breuk_data.percentage_mobilized_resistance_right == pytest.approx(8.36)
+        assert breuk_data.effective_left == pytest.approx(329.04)
+        assert breuk_data.effective_right == pytest.approx(329.13)
+        assert breuk_data.water_pressure_left == pytest.approx(961.38)
+        assert breuk_data.water_pressure_right == pytest.approx(961.38)
+        assert breuk_data.max_passive_effect_resistance_left == pytest.approx(1488.18)
+        assert breuk_data.max_passive_effect_resistance_right == pytest.approx(3939.32)
         assert breuk_data.max_passive_moment_left == 0
         assert breuk_data.max_passive_moment_right == 0
         assert breuk_data.max_mobilized_passive_moment_left == 0
         assert breuk_data.max_mobilized_passive_moment_right == 0
-        assert breuk_data.vertical_force_left == 93.87
-        assert breuk_data.vertical_force_right == 88.75
+        assert breuk_data.vertical_force_left == pytest.approx(93.87)
+        assert breuk_data.vertical_force_right == pytest.approx(88.75)
         assert breuk_data.level_of_single_support == 0
         assert breuk_data.node_of_single_support == 1
         assert breuk_data.moment_present == 0
@@ -1122,7 +1121,7 @@ class TestInternalParseOutputStructure:
         ad_table = anchor_data.anchordata[0]
         assert ad_table["node_number"] == 7
         assert ad_table["position"] == -2
-        assert ad_table["force"] == 17.97193
+        assert ad_table["force"] == pytest.approx(17.97193)
         assert ad_table["e_modulus"] == 190000000
         assert ad_table["status"] == 1
         assert ad_table["side"] == 2

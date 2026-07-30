@@ -124,7 +124,6 @@ class TestDStabilityAnalysis:
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
-        assert dstability_model is not None
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
@@ -149,7 +148,6 @@ class TestDStabilityAnalysis:
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
-        assert dstability_model is not None
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
@@ -180,7 +178,6 @@ class TestDStabilityAnalysis:
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
-        assert dstability_model is not None
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
@@ -215,7 +212,6 @@ class TestDStabilityAnalysis:
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
-        assert dstability_model is not None
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
@@ -250,7 +246,6 @@ class TestDStabilityAnalysis:
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
-        assert dstability_model is not None
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)
@@ -279,7 +274,6 @@ class TestDStabilityAnalysis:
 
         # 2. Verify initial expectations.
         assert os.path.exists(test_input_filepath)
-        assert dstability_model is not None
 
         # 3. Run test.
         dstability_model.parse(test_input_filepath)

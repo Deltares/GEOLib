@@ -155,9 +155,9 @@ class DSerieRepeatedTableStructure(DSeriesRepeatedGroupedProperties):
         ]
         parsed_dict: dict[str, str] = {}
         # We assume there is only one 'repeated' key, so we get the values from it.
-        for group_data in list(generated_dict.values())[0]:
+        for group_data in next(iter(generated_dict.values())):
             mapped_group = cls.get_mapped_group(columns, group_data)
-            group_key = list(mapped_group.keys())[0]
+            group_key = next(iter(mapped_group.keys()))
             if group_key in parsed_dict:
                 raise ValueError(
                     f"No repeated table keys ({group_key}) allowed for {class_name}."

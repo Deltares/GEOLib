@@ -329,7 +329,7 @@ class TestDSeriesTreeStructure:
         # 3. Verify final expectations.
         assert isinstance(struct_result, tp_test_composite_element)
         assert struct_result.struct_name == "Struct_1"
-        assert struct_result.val_0 == 4.2
+        assert struct_result.val_0 == pytest.approx(4.2)
         assert len(struct_result.composite_val) == 2
         first_element = struct_result.composite_val[0]
         assert isinstance(first_element, tp_test_simple_element)
@@ -424,8 +424,8 @@ class TestDSeriesTreeStructureCollection:
         assert len(struct_result.tree_collection) == 1
         read_element = struct_result.tree_collection[0]
         assert isinstance(read_element, tp_test_element)
-        assert read_element.val_1 == 4.2
-        assert read_element.val_2 == 2.4
+        assert read_element.val_1 == pytest.approx(4.2)
+        assert read_element.val_2 == pytest.approx(2.4)
 
     @pytest.mark.integrationtest
     @pytest.mark.parametrize(
@@ -468,8 +468,8 @@ class TestDSeriesTreeStructureCollection:
         assert len(struct_result.tree_collection) == 1
         read_element = struct_result.tree_collection[0]
         assert isinstance(read_element, tp_test_compositestruct)
-        assert read_element.val_1 == 4.2
-        assert read_element.val_2 == 2.4
+        assert read_element.val_1 == pytest.approx(4.2)
+        assert read_element.val_2 == pytest.approx(2.4)
         assert len(read_element.extra_struct.tp_collection) == 1
         substruct = read_element.extra_struct.tp_collection[0]
         assert isinstance(substruct, tp_test_simplestruct)
@@ -947,7 +947,7 @@ class TestDSeriesRepeatedGroupsWithInlineMappedProperties:
         # 3. Verify final expectations.
         assert parsed_structure
         assert parsed_structure.property_one == 42
-        assert parsed_structure.property_two == 4.2
+        assert parsed_structure.property_two == pytest.approx(4.2)
         assert parsed_structure.property_list == ["Lorem", "Ipsum"]
 
 

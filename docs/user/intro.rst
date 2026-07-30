@@ -6,8 +6,8 @@ Introduction
 Philosophy
 ----------
 
-GEOLib is a Python package that wraps four D-Serie models; D-Stability, 
-D-Settlement, D-SheetPiling and D-Foundations. It does this on a file 
+GEOLib is a Python package that wraps three D-Serie models; D-Settlement, D-SheetPiling and D-Foundations
+and two D-Geo Suite models; D-Stability and D-Geo Flow. It does this on a file 
 based level, by producing the required input files and reading the output files, 
 calling the numerical model as a subprocess in between.
 

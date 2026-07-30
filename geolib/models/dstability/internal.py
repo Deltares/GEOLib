@@ -14,6 +14,7 @@ from typing_extensions import Annotated
 from geolib import __version__ as version
 from geolib.geometry import Point
 from geolib.models.base_model_structure import BaseModelStructure
+from geolib.models.serializers import FormattedDate
 from geolib.soils import Soil
 
 from .dstability_validator import DStabilityValidator
@@ -1252,29 +1253,19 @@ class ProjectInfo(DStabilitySubStructure):
     ApplicationCreated: str | None = ""
     ApplicationModified: str | None = ""
     ContentVersion: str | None = "2"
-    Created: date | None = datetime.now().date()
+    Created: FormattedDate = Field(default_factory=lambda: datetime.now().date())
     CrossSection: str | None = ""
-    Date: date | None = datetime.now().date()
+    Date: FormattedDate = Field(default_factory=lambda: datetime.now().date())
     IsDataValidated: bool | None = False
-    LastModified: date | None = datetime.now().date()
+    LastModified: FormattedDate = Field(default_factory=lambda: datetime.now().date())
     LastModifier: str | None = "GEOLib"
     Path: str | None = ""
     Project: str | None = ""
     Remarks: str | None = f"Created with GEOLib {version}"
 
-    @classmethod
-    def nltime(cls, date: date | str) -> date:
-        if isinstance(date, str):
-            position = date.index(max(date.split("-"), key=len))
-            if position > 0:
-                date = datetime.strptime(date, "%d-%m-%Y").date()
-            else:
-                date = datetime.strptime(date, "%Y-%m-%d").date()
-        return date
-
     nltime_validator = field_validator(
         "Created", "Date", "LastModified", mode="before"
-    )(nltime)
+    )(lambda cls, v: cls.nltime(v))
 
 
 class PersistableBondStress(DStabilityBaseModelStructure):
@@ -1723,6 +1714,7 @@ class CalculationSettings(DStabilitySubStructure):
     Id: str | None = "19"
     ModelFactorMean: float | None = 1.05
     ModelFactorStandardDeviation: float | None = 0.033
+    MinimumEffectiveStress: float | None = 0.0
     Spencer: PersistableSpencerSettings | None = PersistableSpencerSettings()
     SpencerGenetic: PersistableSpencerGeneticSettings | None = (
         PersistableSpencerGeneticSettings()
