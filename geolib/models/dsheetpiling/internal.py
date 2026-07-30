@@ -833,7 +833,7 @@ class DSheetPilingInputStructure(DSeriesStructure):
         [END OF WATER LEVEL]
         """)
 
-construction_stages: str | ConstructionStages = ConstructionStages()
+    construction_stages: str | ConstructionStages = ConstructionStages()
     calculation_options_per_stage: CalculationOptionsPerStage = (
         CalculationOptionsPerStage()
     )
