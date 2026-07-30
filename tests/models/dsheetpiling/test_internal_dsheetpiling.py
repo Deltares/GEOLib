@@ -521,7 +521,7 @@ class TestInternalParseInputStructure:
         assert anchor.length == pytest.approx(2.6)
         assert anchor.yield_force == pytest.approx(2.7)
         assert anchor.angle == pytest.approx(2.8)
-        assert anchor.wall_height_kranz == pytest.approx(2.8)
+        assert anchor.wall_height_kranz == pytest.approx(2.9)
         assert anchor.side == 1
         assert anchor.type == 2
 
