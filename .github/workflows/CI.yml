@@ -38,4 +38,5 @@ jobs:
       - name: Test with pytest
         run: >
           pixi run -e test pytest
+          --cov=geolib
           -m "unittest and not workinprogress"
