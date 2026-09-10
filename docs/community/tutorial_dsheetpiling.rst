@@ -203,9 +203,9 @@ is used. Two surface are initialised in this case and are added in the first sta
 
 .. code-block:: python
 
-    ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+    ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
     ground_level_minus_7_meter_surface = Surface(
-        name="GL-7", points=[Point(x=0, z=-7)]
+        name="GL-7", points=[SurfacePoint(x=0, z=-7)]
     )
     model.add_surface(
         surface=ground_level_surface, side=Side.RIGHT, stage_id=stage_id
@@ -303,11 +303,11 @@ The following section lists the way they can be initialised. The stage_id input 
         level=-2,
         side=Side.RIGHT,
         e_modulus=100000,
-        C=10,
+        cross_section=10,
         wall_height_kranz=1,
         length=2,
         angle=3,
-        yield_force=100,
+        yield_force=100
     )
     model.add_anchor_or_strut(support=anchor, stage_id=stage_id)
 
@@ -317,9 +317,11 @@ The following section lists the way they can be initialised. The stage_id input 
         level=-10,
         side=Side.LEFT,
         e_modulus=100000,
+        cross_section=10,
         angle=1,
+        length=2,
         buckling_force=100,
-        pre_compression=10,
+        pre_compression=10
     )
     model.add_anchor_or_strut(support=floor, stage_id=stage_id)
 

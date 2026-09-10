@@ -170,7 +170,7 @@ class DSheetPilingModel(BaseModel):
     def _is_calculation_per_stage_required(self) -> bool:
         """Function that checks if [CALCULATION PER STAGE] can be modified. This is true for a verify sheet-piling calculation and method B."""
         _map_method_b_available = {
-            VerifyType.CUR: self.datastructure.input_data.calculation_options.curmethod,
+            VerifyType.CROW: PartialFactorCalculationType.METHODB,
             VerifyType.EC7NL: self.datastructure.input_data.calculation_options.ec7nlmethod,
             VerifyType.EC7BE: self.datastructure.input_data.calculation_options.ec7bemethod,
         }
@@ -204,11 +204,15 @@ class DSheetPilingModel(BaseModel):
         method_left: LateralEarthPressureMethodStage,
         method_right: LateralEarthPressureMethodStage,
         pile_top_displacement: float = 0.0,
+        is_rep_passive_surface_level_user_defined: bool = False,
+        user_defined_rep_passive_surface_level: float = 0.0,
+        is_fixed_level_on_passive_side_crow: bool = False
+
     ) -> int:
         """Add a new stage to the model.
 
         When using a Single Pile model, the lateral earth pressure method left and right need to be the same.
-        Their inputs however do not effect the outcome of the calculation.
+        Their inputs however do not affect the outcome of the calculation.
 
         Args:
             name: Name of the stage.
@@ -216,6 +220,13 @@ class DSheetPilingModel(BaseModel):
             method_left: LateralEarthPressureMethodStage applied to left side, must be compatible with the Model LateralEarthPressureMethod
             method_right: LateralEarthPressureMethodStage applied to right side, must be compatible with the Model LateralEarthPressureMethod
             pile_top_displacement: Pile top displacement [m]. When not provided, Use top displacement will be set to false.
+            is_rep_passive_surface_level_user_defined: (Only relevant for a Verification calculation)
+                Indicates if the representative level at passive side is user-defined or automatically calculated.
+                If automatically calculated, the minimum level of the passive surface line is used.
+            user_defined_rep_passive_surface_level: (Only relevant for a Verification calculation)
+                The user-defined representative level at passive side [m ref] is used for the determination of the retaining height.
+            is_fixed_level_on_passive_side_crow: (Only relevant for a CROW calculation)
+                Indicates if the passive side has a fixed level .
 
         Raises:
             ValidationError: when input arguments are not within constraints
@@ -225,7 +236,14 @@ class DSheetPilingModel(BaseModel):
         """
         new_stage_id = self.current_stage + 1 if self.current_stage is not None else 0
         self.datastructure.input_data.add_stage(
-            name, passive_side, method_left, method_right, pile_top_displacement
+            name,
+            passive_side,
+            method_left,
+            method_right,
+            pile_top_displacement,
+            is_rep_passive_surface_level_user_defined,
+            user_defined_rep_passive_surface_level,
+            is_fixed_level_on_passive_side_crow
         )
         self.current_stage = new_stage_id
         return new_stage_id
@@ -317,9 +335,9 @@ class DSheetPilingModel(BaseModel):
     ) -> None:
         """Set water level for a stage.
 
-        If a water level already exists, it is refered to that water level.
+        If a water level already exists, it is referred to that water level.
 
-        Related to the [WATERLEVELS] block in the .shi file.
+        Related to the [WATER LEVELS] block in the .shi file.
 
         Args:
             water_level: WaterLevel.

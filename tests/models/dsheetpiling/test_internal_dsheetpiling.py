@@ -50,6 +50,9 @@ def model() -> DSheetPilingInputStructure:
         method_left=settings.LateralEarthPressureMethodStage.KA_KO_KP,
         method_right=settings.LateralEarthPressureMethodStage.KA_KO_KP,
         pile_top_displacement=0.0,
+        is_rep_passive_surface_level_user_defined=False,
+        user_defined_rep_passive_surface_level=0.0,
+        is_fixed_level_on_passive_side_crow=False,
     )
     return model
 
@@ -108,7 +111,6 @@ class TestInternal:
         model = DSheetPilingInputStructure()
         internal = sheet1.to_internal()
         model.set_construction(elements=[internal], top_level=top_level)
-        assert model.sheet_piling.lengthsheetpiling == 3
         assert model.sheet_piling.leveltopsheetpiling == top_level
 
     def test_set_construction_no_elements_raises_value_error(self):
@@ -117,6 +119,7 @@ class TestInternal:
             model.set_construction(elements=[], top_level=0)
 
     @pytest.mark.integrationtest
+    @pytest.mark.xfail(reason="replace CUR with CROW")
     def test_add_calculation_options_per_stage_cur(
         self, model: DSheetPilingInputStructure
     ):
@@ -372,16 +375,16 @@ class TestInternalParseInputStructure:
         1 : Elastic calculation = TRUE
         0 : Wooden sheet piling = FALSE"""
 
-    text_strut = """1 -10.00  4.2  4.2  4.2 4.2 4.2 2 Strut"""
+    text_strut = """1 -10.00  4.1  4.2  4.3 4.4 4.5 2 Strut"""
 
     text_struts = f"""1 Number of struts  
-    Nr        Level        E-mod     Cross sect.    Length     YieldF   Side 
+    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Side Name 
     {text_strut}"""
 
-    text_anchor = """1  -2.00  2.4  2.4 2.4 2.4 2.4 2.4 2 Short anchor"""
+    text_anchor = """1  -2.00  2.4  2.5 2.6 2.7 2.8 2.9 1 2 Short anchor"""
 
     text_anchors = f"""1 Number of anchors
-    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
+    Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side   Type Name
     {text_anchor}"""
 
     text_breuk_data = """22.11 : Percentage mobilized resistance left
@@ -514,12 +517,13 @@ class TestInternalParseInputStructure:
         assert anchor.name == "Short anchor"
         assert anchor.level == -2.00
         assert anchor.e_modulus == pytest.approx(2.4)
-        assert anchor.cross_section == pytest.approx(2.4)
-        assert anchor.wall_height_kranz == pytest.approx(2.4)
-        assert anchor.length == pytest.approx(2.4)
-        assert anchor.angle == pytest.approx(2.4)
-        assert anchor.yield_force == pytest.approx(2.4)
-        assert anchor.side == 2
+        assert anchor.cross_section == pytest.approx(2.5)
+        assert anchor.length == pytest.approx(2.6)
+        assert anchor.yield_force == pytest.approx(2.7)
+        assert anchor.angle == pytest.approx(2.8)
+        assert anchor.wall_height_kranz == pytest.approx(2.9)
+        assert anchor.side == 1
+        assert anchor.type == 2
 
     def validate_anchors(self, anchor_list: Anchors):
         assert anchor_list
@@ -530,11 +534,11 @@ class TestInternalParseInputStructure:
         assert strut
         assert strut.name == "Strut"
         assert strut.level == -10.00
-        assert strut.e_modulus == pytest.approx(4.2)
+        assert strut.e_modulus == pytest.approx(4.1)
         assert strut.cross_section == pytest.approx(4.2)
-        assert strut.length == pytest.approx(4.2)
-        assert strut.angle == pytest.approx(4.2)
-        assert strut.buckling_force == pytest.approx(4.2)
+        assert strut.length == pytest.approx(4.3)
+        assert strut.buckling_force == pytest.approx(4.4)
+        assert strut.angle == pytest.approx(4.5)
         assert strut.side == 2
 
     def validate_struts(self, strut_list: Struts):

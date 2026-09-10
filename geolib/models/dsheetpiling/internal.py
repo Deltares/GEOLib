@@ -34,9 +34,6 @@ from .dsheetpiling_structures import (
 )
 from .dsheetpiling_validator import DSheetPilingValidator
 from .internal_partial_factors import (
-    PartialFactorsCurI,
-    PartialFactorsCurIi,
-    PartialFactorsCurIii,
     PartialFactorsEc7BE1Set1,
     PartialFactorsEc7BE1Set2,
     PartialFactorsEc7BE2Set1,
@@ -51,6 +48,18 @@ from .internal_partial_factors import (
     PartialFactorsEurocodeDa1Set2,
     PartialFactorsEurocodeDa2,
     PartialFactorsEurocodeDa3,
+    PartialFactorsCrowB1C0,
+    PartialFactorsCrowB1C1,
+    PartialFactorsCrowB1C2,
+    PartialFactorsCrowB1C3,
+    PartialFactorsCrowB2C0,
+    PartialFactorsCrowB2C1,
+    PartialFactorsCrowB2C2,
+    PartialFactorsCrowB2C3,
+    PartialFactorsCrowB3C0,
+    PartialFactorsCrowB3C1,
+    PartialFactorsCrowB3C2,
+    PartialFactorsCrowB3C3,
 )
 from .settings import (
     AssessmentTypeEC7NL,
@@ -71,7 +80,7 @@ from .settings import (
     ModulusReactionType,
     ModulusSubgradeReaction,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
+    PartialFactorSetCrow,
     PartialFactorSetEC,
     PartialFactorSetEC7NADBE,
     PartialFactorSetEC7NADNL,
@@ -82,6 +91,7 @@ from .settings import (
     Side,
     SoilTypeModulusSubgradeReaction,
     VerifyType,
+    CrowAnchorType,
 )
 
 logger = logging.getLogger(__name__)
@@ -95,7 +105,7 @@ _DEFAULT_UNIT_WEIGHT_WATER: float = 9.81
 _DEFAULT_PRE_STRESS: float = 0.0
 
 _DEFAULT_SOIL_VERSION: int = 1012
-_DEFAULT_SHEETPILING_VERSION: int = 1034
+_DEFAULT_SHEETPILING_VERSION: int = 1042
 
 REQ_RUN_LINES = 2
 
@@ -269,10 +279,11 @@ class CalculationOptions(DSeriesStructure):
     designec7bemethod: PartialFactorCalculationType = (
         PartialFactorCalculationType.METHODA
     )
-    designpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    designcurmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
+    designcrowclass: PartialFactorSetCrow = (
+        PartialFactorSetCrow.CC0
+    )
     # verify sheet piling calculation
-    verifytype: VerifyType = VerifyType.CUR
+    verifytype: VerifyType = VerifyType.EC7NL
     eurocodepartialfactorset: PartialFactorSetVerifyEC = PartialFactorSetVerifyEC.DA1
     eurocodeoverallstability: bool = False
     ec7nlmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
@@ -286,10 +297,9 @@ class CalculationOptions(DSeriesStructure):
     ec7bemethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
     ec7beoverallriskclass: RiskClassEC7BE = RiskClassEC7BE.RC2
     nbmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    curmethod: PartialFactorCalculationType = PartialFactorCalculationType.METHODA
-    curoverallpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
-    curoverallanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
-    curoverallstability: bool = False
+    crowoverallstability: bool = False
+    crowassessmenttype: AssessmentTypeEC7NL = AssessmentTypeEC7NL.NewConstruction
+    crowreferenceperiod: Annotated[int, Field(ge=1, le=100)] = 50
     # Characteristic Kranz Anchor Strength calculation
     curanchorforcestage: Annotated[int, Field(ge=0)] = 0
     # Overall stability calculation
@@ -303,7 +313,7 @@ class CalculationOptions(DSeriesStructure):
     overallstabilityec7bepartialfactorset: PartialFactorSetEC7NADBE = (
         PartialFactorSetEC7NADBE.RC1SET1
     )
-    stabilitycurpartialfactorset: PartialFactorSetCUR = PartialFactorSetCUR.CLASSI
+    stabilitycrowclass: PartialFactorSetCrow = ( PartialFactorSetCrow.CC0 )
 
     # These are all subgroups (key=value)
     partial_factors_eurocode_da1_set1: PartialFactorsEurocodeDa1Set1 = (
@@ -328,9 +338,18 @@ class CalculationOptions(DSeriesStructure):
     partial_factors_ec7_be_2_set2: PartialFactorsEc7BE2Set2 = PartialFactorsEc7BE2Set2()
     partial_factors_ec7_be_3_set1: PartialFactorsEc7BE3Set1 = PartialFactorsEc7BE3Set1()
     partial_factors_ec7_be_3_set2: PartialFactorsEc7BE3Set2 = PartialFactorsEc7BE3Set2()
-    partial_factors_cur_i: PartialFactorsCurI = PartialFactorsCurI()
-    partial_factors_cur_ii: PartialFactorsCurIi = PartialFactorsCurIi()
-    partial_factors_cur_iii: PartialFactorsCurIii = PartialFactorsCurIii()
+    partial_factors_crow_b1_c0: PartialFactorsCrowB1C0 = PartialFactorsCrowB1C0()
+    partial_factors_crow_b1_c1: PartialFactorsCrowB1C1 = PartialFactorsCrowB1C1()
+    partial_factors_crow_b1_c2: PartialFactorsCrowB1C2 = PartialFactorsCrowB1C2()
+    partial_factors_crow_b1_c3: PartialFactorsCrowB1C3 = PartialFactorsCrowB1C3()
+    partial_factors_crow_b2_c0: PartialFactorsCrowB2C0 = PartialFactorsCrowB2C0()
+    partial_factors_crow_b2_c1: PartialFactorsCrowB2C1 = PartialFactorsCrowB2C1()
+    partial_factors_crow_b2_c2: PartialFactorsCrowB2C2 = PartialFactorsCrowB2C2()
+    partial_factors_crow_b2_c3: PartialFactorsCrowB2C3 = PartialFactorsCrowB2C3()
+    partial_factors_crow_b3_c0: PartialFactorsCrowB3C0 = PartialFactorsCrowB3C0()
+    partial_factors_crow_b3_c1: PartialFactorsCrowB3C1 = PartialFactorsCrowB3C1()
+    partial_factors_crow_b3_c2: PartialFactorsCrowB3C2 = PartialFactorsCrowB3C2()
+    partial_factors_crow_b3_c3: PartialFactorsCrowB3C3 = PartialFactorsCrowB3C3()
 
 
 class SheetPileElement(DSeriesUnmappedNameProperties):
@@ -453,7 +472,6 @@ class SheetPiling(DSeriesStructureCollection):
         SheetPileElement()
     ]
     leveltopsheetpiling: Annotated[float, Field(ge=-10000, le=10000)] = 0.0
-    lengthsheetpiling: Annotated[float, Field(gt=0)] = 10
 
 
 class VerticalBalance(DSeriesInlineMappedProperties):
@@ -466,11 +484,12 @@ class Anchor(DSheetpilingTableEntry):
     level: float = 0
     e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
     cross_section: Annotated[float, Field(gt=0)] = 1e-3
-    wall_height_kranz: Annotated[float, Field(ge=0)] = 0.00
     length: Annotated[float, Field(gt=0)] = 1
-    angle: float | None = 0.00
     yield_force: Annotated[float, Field(ge=0)] = 0.00
+    angle: float | None = 0.00
+    wall_height_kranz: Annotated[float, Field(ge=0)] = 0.00
     side: Side = Side.RIGHT
+    type: CrowAnchorType = CrowAnchorType.TensionPileGroutAnchor
 
 
 class Anchors(DSheetpilingUnwrappedTable):
@@ -497,8 +516,8 @@ class Strut(DSheetpilingTableEntry):
     e_modulus: Annotated[float, Field(gt=0)] = 2.1e8
     cross_section: Annotated[float, Field(gt=0)] = 1e-4
     length: Annotated[float, Field(gt=0)] = 1
-    angle: float | None = 0.00
     buckling_force: Annotated[float, Field(ge=0)] = 0.00
+    angle: float | None = 0.00
     side: Side = Side.RIGHT
 
 
@@ -526,6 +545,9 @@ class ConstructionStage(DSeriesUnmappedNameProperties):
     water_level_right: str = _DEFAULT_WATER_LEVEL_NAME
     surface_left: str = _DEFAULT_SURFACE_NAME
     surface_right: str = _DEFAULT_SURFACE_NAME
+    is_rep_passive_surface_level_user_defined: bool = False
+    user_defined_rep_passive_surface_level: float = 0
+    is_fixed_level_on_passive_side_crow: bool = False
     soil_profile_left: str | None = _DEFAULT_SOIL_PROFILE_NAME
     soil_profile_right: str | None = _DEFAULT_SOIL_PROFILE_NAME
     anchors: list[AnchorOrStrutPresstressReference] = []
@@ -553,6 +575,14 @@ class WaterLevel(DSeriesNoParseSubStructure):
     level: float
     distribution_type: DistributionType = DistributionType.NONE
     standard_deviation: float = 0.0
+    rep_low_passive_CROW: float = 0.0
+    delta_h_deci_low_passive_CROW: float = 0.0
+    rep_high_passive_CROW: float = 0.0
+    delta_h_deci_high_passive_CROW: float = 0.0
+    average_low_passive_CROW: float = 0.0
+    rep_high_active_CROW: float = 0.0
+    delta_h_deci_high_active_CROW: float = 0.0
+    average_high_active_CROW: float = 0.0
 
 
 class WaterLevels(DSeriesNoParseSubStructure):
@@ -566,8 +596,8 @@ class WaterLevels(DSeriesNoParseSubStructure):
 class StageOptions(DSeriesInlineMappedProperties):
     """Representation of [STAGE] block."""
 
-    stagepartialfactorsetcur: PartialFactorSetCUR = PartialFactorSetCUR.UNKNOWN
-    stageverify: int = 0
+    stageclasscrow: PartialFactorSetCrow = PartialFactorSetCrow.CC0
+    stageverifycrow: int = 0
     stageanchorfactor: Annotated[float, Field(ge=0.001, le=1000)] = 1
     stagepartialfactorsetec7nadnl: PartialFactorSetEC7NADNL = (
         PartialFactorSetEC7NADNL.RC0
@@ -634,12 +664,28 @@ class SurchargeLoads(DSeriesStructureCollection):
         return {load.name for load in self.loads}
 
 
+class SurfacePoint(DSeriesInlineMappedProperties):
+    """Surface point.
+
+       Attributes:
+           x: X-coordinate of the point (distance from the sheet piling).
+           z: Z-coordinate of the point.
+           rep_erosion_height: (Only relevant for CROW calculation) Representative erosion height at the point.
+       """
+
+    x: float = 0
+    z: float = 0
+    rep_erosion_height: float = 0
+
+
 class Surface(DSeriesNoParseSubStructure):  # TODO determine structure
     name: Annotated[str, StringConstraints(min_length=1, max_length=50)]
-    points: Annotated[list[Point], Field(min_length=1)]
+    points: Annotated[list[SurfacePoint], Field(min_length=1)]
     points: Annotated[list[dict], Field(min_length=1)]
     distribution_type: DistributionType = DistributionType.NONE
     std: Annotated[float, Field(ge=0.0)] = 0.0
+    construction_level_tolerance: Annotated[float, Field(ge=0.0)] = 0.0
+    survey_uncertainty: Annotated[float, Field(ge=0.0)] = 0.0
 
 
 class Surfaces(DSeriesNoParseSubStructure):  # TODO GroupList should be suitable?
@@ -769,15 +815,24 @@ class DSheetPilingInputStructure(DSeriesStructure):
         1       0.00       0.00
         """)
     water: Water = Water()
-    waterlevels: WaterLevels | str = cleandoc(f"""
-          1 Number of Waterlevels 
-          3 Number of Data per Waterlevel 
+    water_levels: WaterLevels | str = cleandoc(f"""
+        1 = number of items           
+        [WATER LEVEL]
         {_DEFAULT_WATER_LEVEL_NAME}
-              0.00
-              0.00
-                 2
-
+        WaterLevelValue = 0.00
+        WaterLevelStandardDeviation = 0.00
+        WaterLevelDistribution = 2
+        WaterLevelRepLowPassiveCrow = 0.00
+        WaterLevelDeltaHDeciLowPassiveCrow = 0.00
+        WaterLevelRepHighPassiveCrow = 0.00
+        WaterLevelDeltaHDeciHighPassiveCrow = 0.00
+        WaterLevelAverageLowPassiveCrow = 0.00
+        WaterLevelRepHighActiveCrow = 0.00
+        WaterLevelDeltaHDeciHighActiveCrow = 0.00
+        WaterLevelAverageHighActiveCrow = 0.00
+        [END OF WATER LEVEL]
         """)
+
     construction_stages: str | ConstructionStages = ConstructionStages()
     calculation_options_per_stage: CalculationOptionsPerStage = (
         CalculationOptionsPerStage()
@@ -861,10 +916,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         stage_id: int,
     ) -> None:
         _map_external_to_internal_values = {
-            VerifyType.CUR: {
-                "stagepartialfactorsetcur": input_calc_options.partial_factor_set,
-                "stageverify": stage_id + 1,
-                "stageanchorfactor": input_calc_options.anchor_factor,
+            VerifyType.CROW: {
+                "stagepartialfactorsetcrow": input_calc_options.partial_factor_set,
+                "stageverifycrow": stage_id + 1,
             },
             VerifyType.EC7NL: {
                 "stagepartialfactorsetec7nadnl": input_calc_options.partial_factor_set,
@@ -898,6 +952,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
         method_left: LateralEarthPressureMethodStage,
         method_right: LateralEarthPressureMethodStage,
         pile_top_displacement: float | None,
+        is_rep_passive_surface_level_user_defined: bool,
+        user_defined_rep_passive_surface_level: float | None,
+        is_fixed_level_on_passive_side_crow: bool,
     ) -> None:
         if isinstance(self.construction_stages, str):
             self.construction_stages = ConstructionStages()
@@ -919,6 +976,9 @@ class DSheetPilingInputStructure(DSeriesStructure):
                 "passive_side": passive_side,
                 "method_left": method_left,
                 "method_right": method_right,
+                "is_rep_passive_surface_level_user_defined": is_rep_passive_surface_level_user_defined,
+                "user_defined_rep_passive_surface_level": user_defined_rep_passive_surface_level,
+                "is_fixed_level_on_passive_side_crow": is_fixed_level_on_passive_side_crow,
             }
         )
         self.construction_stages.stages.append(ConstructionStage(**kwargs))
@@ -977,10 +1037,10 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self, stage_id: int, water_level: WaterLevel, side: Side
     ) -> None:
         # Add water level to water levels
-        if isinstance(self.waterlevels, str):
-            self.waterlevels = WaterLevels()
-        if water_level.name not in self.waterlevels.water_level_names:
-            self.waterlevels.levels.append(water_level)
+        if isinstance(self.water_levels, str):
+            self.water_levels = WaterLevels()
+        if water_level.name not in self.water_levels.water_level_names:
+            self.water_levels.levels.append(water_level)
 
         # Add water level to stages.
         stage = self.construction_stages.stages[stage_id]
@@ -1049,7 +1109,6 @@ class DSheetPilingInputStructure(DSeriesStructure):
         self.sheet_piling = SheetPiling(
             sheetpiling=elements,
             leveltopsheetpiling=top_level,
-            lengthsheetpiling=top_level - bottom_level,
         )
 
     def add_element_in_sheet_piling(
@@ -1334,10 +1393,10 @@ class DSheetPilingOutputStructure(DSeriesRepeatedGroupedProperties):
     factors_for_overall_stability: str | None = None
     overall_stability_results: str | None = None
 
-    # Verify calculation according to CUR or EC7-NL with method B
+    # Verify calculation according to EC7-NL with method B
     factors_for_verification: str | None = None
 
-    # Verify calculation according to CUR or EC7-NL
+    # Verify calculation according to EC7-NL
     verify_step_6____5_serviceability_limit_state: (
         BaseVerificationStructureProperties | None
     ) = None

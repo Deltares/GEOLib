@@ -2,21 +2,21 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    :    
 
-DATE       : 11/07/2024
-TIME       : 08:57:01
-FILENAME   : C:\Deltares\D-Sheet Piling\ComplexProjects\ComplexProjects33.shd
-CREATED BY : D-Sheet Piling version 24.1.1.1735
+DATE       : 30-07-2026
+TIME       : 13:13:37
+FILENAME   : C:\DelphiProjects\DSerie\applications\DSheetPiling\trunk\data\ComplexProjects\ComplexProjects33.shd
+CREATED BY : D-Sheet Piling version 26.1.0.5106
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
-Soil=1012
-D-Sheet Piling=1034
+Soil=1013
+D-Sheet Piling=1042
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=21.3.1.35380
-DGSCPTipUI.dll=21.3.1.35380
+DGSCPTipCalc.dll=24.1.0.5079
+DGSCPTipUI.dll=24.1.0.5079
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -979,9 +979,7 @@ Count=0
 [END OF CPT LIST]
 
 [SHEET PILING]
-0
      -1.87 Level top sheet piling
-      8.13 Length
   3 Number of elements
 [SHEET PILING ELEMENT]
 palen en planken
@@ -1138,8 +1136,8 @@ SheetPilingNumberOfPilesDrilled=2
 
 [ANCHORS]
   1 Number of anchors
- Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side Name
-  1  -2.35  2.100E+0008  4.000E-0004     8.00    50.00   -45.00     1.00      1 anker
+ Nr  Level        E-mod  Cross sect.   Length   YieldF    Angle   Height   Side   Type Name
+  1  -2.35  2.100E+0008  4.000E-0004     8.00    50.00   -45.00     1.00      1      0 anker
 
 [END OF ANCHORS]
 
@@ -1283,65 +1281,93 @@ DKM205 (passief verkeer
   1     4 watergang
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.99
-  2       2.00      -2.99
-  3       5.70      -1.50
-  4      25.00      -1.50
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.99                   0.00
+  2       2.00      -2.99                   0.00
+  3       5.70      -1.50                   0.00
+  4      25.00      -1.50                   0.00
   2     4 bestaand
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.07
-  2       1.51      -0.96
-  3       2.26      -0.96
-  4      10.00      -0.93
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.07                   0.00
+  2       1.51      -0.96                   0.00
+  3       2.26      -0.96                   0.00
+  4      10.00      -0.93                   0.00
   3     5 talud
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -1.87
-  2       1.55      -0.97
-  3       2.30      -0.94
-  4       5.68      -0.93
-  5      30.00      -0.92
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -1.87                   0.00
+  2       1.55      -0.97                   0.00
+  3       2.30      -0.94                   0.00
+  4       5.68      -0.93                   0.00
+  5      30.00      -0.92                   0.00
   4     4 watergang vlak
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00      -2.99
-  2       2.00      -2.99
-  3       5.70      -2.99
-  4      25.00      -2.99
-
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00      -2.99                   0.00
+  2       2.00      -2.99                   0.00
+  3       5.70      -2.99                   0.00
+  4      25.00      -2.99                   0.00
 [END OF SURFACES]
 
-[WATERLEVELS]
-  2 Number of Waterlevels 
-  3 Number of Data per Waterlevel 
+[WATER LEVELS]
+    2 = number of items
+[WATER LEVEL]
 watergang
-     -2.39
-      0.00
-         2
+WaterLevelValue=-2.39
+WaterLevelStandardDeviation=0.00
+WaterLevelDistribution=2
+WaterLevelRepLowPassiveCrow=0.00
+WaterLevelDeltaHDeciLowPassiveCrow=0.00
+WaterLevelRepHighPassiveCrow=0.00
+WaterLevelDeltaHDeciHighPassiveCrow=0.00
+WaterLevelAverageLowPassiveCrow=0.00
+WaterLevelRepHighActiveCrow=0.00
+WaterLevelDeltaHDeciHighActiveCrow=0.00
+WaterLevelAverageHighActiveCrow=0.00
+[END OF WATER LEVEL]
+[WATER LEVEL]
 grondwater
-     -1.87
-      0.00
-         2
-
-[END OF WATERLEVELS]
+WaterLevelValue=-1.87
+WaterLevelStandardDeviation=0.00
+WaterLevelDistribution=2
+WaterLevelRepLowPassiveCrow=0.00
+WaterLevelDeltaHDeciLowPassiveCrow=0.00
+WaterLevelRepHighPassiveCrow=0.00
+WaterLevelDeltaHDeciHighPassiveCrow=0.00
+WaterLevelAverageLowPassiveCrow=0.00
+WaterLevelRepHighActiveCrow=0.00
+WaterLevelDeltaHDeciHighActiveCrow=0.00
+WaterLevelAverageHighActiveCrow=0.00
+[END OF WATER LEVEL]
+[END OF WATER LEVELS]
 
 [CONSTRUCTION STAGES]
   3 Number of Construction stages 
 bestaand
-         2          1 Method Left: C, phi, delta   Method Right: Ka, Ko, Kp  
+         2          1 Method Left: C, phi, delta  Method Right: Ka, Ko, Kp
 bestaand
 watergang vlak
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
+         0              Is fixed level on passive side (CROW)
 watergang
 watergang
 DKM205
 DKM205 (passief
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          0              Struts present in stage
          0              Spring supports present in stage
@@ -1354,15 +1380,18 @@ DKM205 (passief
          0              Passive side overrule
 
 nieuw
-         2          1 Method Left: C, phi, delta   Method Right: Ka, Ko, Kp  
+         2          1 Method Left: C, phi, delta  Method Right: Ka, Ko, Kp
 talud
 watergang vlak
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
+         0              Is fixed level on passive side (CROW)
 grondwater
 watergang
 DKM205 (actief)
 DKM205 (passief
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          0              Struts present in stage
          0              Spring supports present in stage
@@ -1375,15 +1404,18 @@ DKM205 (passief
          0              Passive side overrule
 
 nieuw met verkeer
-         2          1 Method Left: C, phi, delta   Method Right: Ka, Ko, Kp  
+         2          1 Method Left: C, phi, delta  Method Right: Ka, Ko, Kp
 talud
 watergang vlak
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
+         0              Is fixed level on passive side (CROW)
 grondwater
 watergang
 DKM205 (actief) verkeer
 DKM205 (passief verkeer
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          0              Struts present in stage
          0              Spring supports present in stage
@@ -1401,8 +1433,8 @@ DKM205 (passief verkeer
 [CALCULATION OPTIONS PER STAGE]
 3 = number of items
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1411,8 +1443,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1421,8 +1453,8 @@ StageAnchorFactorEC7NADNL=1.000
 StageVerifyEC7NADBE=0
 [END OF STAGE]
 [STAGE]
-StagePartialFactorSetCUR=0
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=0
 StageRiskClassEC7NADBE=1
@@ -1451,8 +1483,7 @@ DesignPartialFactorSetEC7NADNL=1
 DesignEC7NLMethod=0
 DesignEC7BEPartialFactorSet=2
 DesignEC7BEMethod=0
-DesignPartialFactorSet=0
-DesignCURMethod=0
+DesignCrowClass=0
 VerifyType=2
 EuroCodePartialFactorSet=1
 EuroCodeOverallStability=0
@@ -1464,10 +1495,9 @@ EC7NLAssessmentType=0
 EC7BEOverallStability=0
 EC7BEMethod=0
 EC7BEOverallRiskClass=1
-CURMethod=0
-CUROverallPartialFactorSet=0
-CUROverallAnchorFactor=1.000
-CUROverallStability=0
+CrowAssessmentType=0
+CrowReferencePeriod=50
+VerifyCrowOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=2
 OverallStabilityType=3
@@ -1475,7 +1505,7 @@ StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=0
 OverallStabilityEC7BEPartialFactorSet=2
-StabilityCURPartialFactorSet=0
+StabilityCrowClass=0
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
@@ -1483,25 +1513,18 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.111
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EUROCODE DA1 SET1]
 [PARTIAL FACTORS EUROCODE DA1 SET2]
@@ -1511,25 +1534,18 @@ LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.250
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EUROCODE DA1 SET2]
 [PARTIAL FACTORS EUROCODE DA2]
@@ -1539,25 +1555,18 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.111
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.400
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.100
 [END OF PARTIAL FACTORS EUROCODE DA2]
 [PARTIAL FACTORS EUROCODE DA3]
@@ -1567,25 +1576,18 @@ LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.350
-ConstructLoadFactorVarUnfavCalc=1.500
+ConstructLoadFactorPermUnfav=1.350
+ConstructLoadFactorVarUnfav=1.500
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.250
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EUROCODE DA3]
 [PARTIAL FACTORS EC7 NL 0]
@@ -1595,21 +1597,15 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.050
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.15
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=0.900
 OverallStabilityFactorCohesion=1.300
 OverallStabilityFactorTgPhi=1.200
 OverallStabilityFactorUnitWeight=1.000
@@ -1623,21 +1619,15 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.215
-ConstructLoadFactorVarUnfavCalc=1.350
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.215
+ConstructLoadFactorVarUnfav=1.350
 MaterialFactorCohesion=1.150
 MaterialFactorTgPhi=1.150
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.20
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.300
 OverallStabilityFactorTgPhi=1.200
 OverallStabilityFactorUnitWeight=1.000
@@ -1651,21 +1641,15 @@ LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.350
-ConstructLoadFactorVarUnfavCalc=1.500
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.350
+ConstructLoadFactorVarUnfav=1.500
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.175
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.450
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
@@ -1679,21 +1663,15 @@ LoadFactorVarUnfav=1.250
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.485
-ConstructLoadFactorVarUnfavCalc=1.650
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.485
+ConstructLoadFactorVarUnfav=1.650
 MaterialFactorCohesion=1.400
 MaterialFactorTgPhi=1.200
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.600
 OverallStabilityFactorTgPhi=1.300
 OverallStabilityFactorUnitWeight=1.000
@@ -1705,27 +1683,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.200
 EffectFactorVarUnfav=1.083
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EC7 BE 1 SET1]
 [PARTIAL FACTORS EC7 BE 1 SET2]
@@ -1733,27 +1701,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.100
 MaterialFactorTgPhi=1.100
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryIncRetainingHeightDry=0.30
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.100
 OverallStabilityFactorTgPhi=1.100
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 BE 1 SET2]
 [PARTIAL FACTORS EC7 BE 2 SET1]
@@ -1761,27 +1719,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.111
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EC7 BE 2 SET1]
 [PARTIAL FACTORS EC7 BE 2 SET2]
@@ -1789,27 +1737,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryIncRetainingHeightDry=0.30
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.250
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 BE 2 SET2]
 [PARTIAL FACTORS EC7 BE 3 SET1]
@@ -1817,27 +1755,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.500
 EffectFactorVarUnfav=1.200
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EC7 BE 3 SET1]
 [PARTIAL FACTORS EC7 BE 3 SET2]
@@ -1845,113 +1773,259 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.200
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.400
 MaterialFactorTgPhi=1.400
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryIncRetainingHeightDry=0.30
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.400
 OverallStabilityFactorTgPhi=1.400
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 BE 3 SET2]
-[PARTIAL FACTORS CUR I]
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
+[PARTIAL FACTORS CROW B1 C0]
+LoadFactorVarUnfav=1.150
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=1.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.330
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.300
+CombiLoadFactorConstructVarUnfav=0.700
+MaterialFactorCohesion=1.070
+MaterialFactorTgPhi=1.110
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.20
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C0]
+[PARTIAL FACTORS CROW B1 C1]
+LoadFactorVarUnfav=1.200
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.400
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.200
+CombiLoadFactorConstructVarUnfav=0.650
+MaterialFactorCohesion=1.140
+MaterialFactorTgPhi=1.160
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.30
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C1]
+[PARTIAL FACTORS CROW B1 C2]
+LoadFactorVarUnfav=1.220
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.500
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.100
+CombiLoadFactorConstructVarUnfav=0.650
+MaterialFactorCohesion=1.230
+MaterialFactorTgPhi=1.220
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.40
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C2]
+[PARTIAL FACTORS CROW B1 C3]
+LoadFactorVarUnfav=1.260
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=3.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.600
+CombiLoadFactorVarUnfav=0.750
+CombiLoadFactorVarUnfavWaterLevel=-0.050
+CombiLoadFactorConstructVarUnfav=0.600
+MaterialFactorCohesion=1.310
+MaterialFactorTgPhi=1.280
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.50
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C3]
+[PARTIAL FACTORS CROW B2 C0]
+LoadFactorVarUnfav=1.120
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=1.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.200
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.500
+CombiLoadFactorConstructVarUnfav=0.750
+MaterialFactorCohesion=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.20
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C0]
+[PARTIAL FACTORS CROW B2 C1]
+LoadFactorVarUnfav=1.170
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=1.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.300
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.300
+CombiLoadFactorConstructVarUnfav=0.700
+MaterialFactorCohesion=1.050
+MaterialFactorTgPhi=1.040
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.30
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C1]
+[PARTIAL FACTORS CROW B2 C2]
+LoadFactorVarUnfav=1.220
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.400
+CombiLoadFactorVarUnfav=0.750
+CombiLoadFactorVarUnfavWaterLevel=-0.200
+CombiLoadFactorConstructVarUnfav=0.700
+MaterialFactorCohesion=1.180
+MaterialFactorTgPhi=1.100
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.40
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C2]
+[PARTIAL FACTORS CROW B2 C3]
+LoadFactorVarUnfav=1.280
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.550
+CombiLoadFactorVarUnfav=0.750
+CombiLoadFactorVarUnfavWaterLevel=-0.100
+CombiLoadFactorConstructVarUnfav=0.630
+MaterialFactorCohesion=1.320
+MaterialFactorTgPhi=1.170
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.50
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C3]
+[PARTIAL FACTORS CROW B3 C0]
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
 MaterialFactorCohesion=1.000
-MaterialFactorTgPhi=1.050
-MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
 GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.20
-GeometryDeltaPassivePhreaticLine=0.15
-GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=0.900
-OverallStabilityFactorCohesion=1.500
-OverallStabilityFactorTgPhi=1.200
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.120
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS CUR I]
-[PARTIAL FACTORS CUR II]
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C0]
+[PARTIAL FACTORS CROW B3 C1]
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
 MaterialFactorCohesion=1.000
-MaterialFactorTgPhi=1.150
-MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
 GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.30
-GeometryDeltaPassivePhreaticLine=0.20
-GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.500
-OverallStabilityFactorTgPhi=1.200
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.210
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS CUR II]
-[PARTIAL FACTORS CUR III]
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.250
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C1]
+[PARTIAL FACTORS CROW B3 C2]
+LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.100
-MaterialFactorTgPhi=1.200
-MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
+MaterialFactorCohesion=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
 GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.35
-GeometryDeltaPassivePhreaticLine=0.25
-GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.100
-OverallStabilityFactorCohesion=1.500
-OverallStabilityFactorTgPhi=1.200
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.310
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS CUR III]
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C2]
+[PARTIAL FACTORS CROW B3 C3]
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
+MaterialFactorCohesion=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.430
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C3]
 [END OF CALCULATION OPTIONS]
 
 [PROBABILISTIC CALCULATION OPTIONS]
@@ -1998,9 +2072,9 @@ Stiffness EI at ULS for wooden sheet pile
 Explanation of reduction
 [END OF COLUMN INDICATION]
 [DATA]
-   50000.00000  10000.00000  10000.00000  10000.00000  10000.00000   0.000   0.000     -1.87     -3.44  1.00  1.00   0.067   0.051   1.029      0.68351      2.05053 '-'
-   10000.00000   2000.00000   2000.00000   2000.00000   2000.00000   0.000   0.000     -3.44     -9.00  1.00  1.00   0.042   0.032   1.084      0.31111      0.93333 '-'
-   10000.00000   2000.00000   2000.00000   2000.00000   2000.00000   0.000   0.000     -9.00    -10.00  1.00  1.00   2.623   2.018   0.684    311.11111    933.33333 '-'
+   50000.00000  10000.00000  10000.00000  10000.00000  10000.00000   0.000   0.000     -1.87     -3.44  1.00  1.00   0.033   0.026   1.029      0.68351      2.05053 '-'
+   10000.00000   2000.00000   2000.00000   2000.00000   2000.00000   0.000   0.000     -3.44     -9.00  1.00  1.00   0.004   0.003   1.084      0.31111      0.93333 '-'
+   10000.00000   2000.00000   2000.00000   2000.00000   2000.00000   0.000   0.000     -9.00    -10.00  1.00  1.00   0.262   0.202   0.684    311.11111    933.33333 '-'
 [END OF DATA]
 [END OF TABLE]
 [END OF SHEET PILE ELEMENTS]
@@ -2013,7 +2087,6 @@ PartialFactorSet
 CohesionFactor
 PhiFactor
 KFactor
-DeltaSoilPassive
 DeltaSoilPassivePerc
 DeltaSoilPassiveMax
 DeltaSoilPassiveDry
@@ -2033,11 +2106,21 @@ ConstructLoadTempFav
 ConstructLoadTempUnfav
 ConstructLoadPermFav
 ConstructLoadPermUnfav
+LoadFactorVarUnfavWaterLevel
+LoadFactorPerm
+CombiLoadFactorVarUnfav
+CombiLoadFactorVarUnfavWaterLevel
+CombiLoadFactorConstructVarUnfav
+MaterialFactorUnitWeight
+GeometryMinIncRetainingHeight
+GeometryFixedRetainingHeight
+FactorRepValuesMD
+ModelFactorAnchorForce
 [END OF COLUMN INDICATION]
 [DATA]
-    1    14   1.000  1.050  1.300  0.00  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  0.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000
-    2    14   1.000  1.050  1.300  0.00  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  0.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000
-    3    14   1.000  1.050  1.300  0.00  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  0.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000
+    1    14   1.000  1.050  1.300  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    2    14   1.000  1.050  1.300  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
+    3    14   1.000  1.050  1.300  10.00   0.50   0.00  0.05  0.15  0.15  0.000  1.000  1.000  1.000  1.000  1.000  1.000   1.200   1.200  0.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000   0.00   0.00   1.000  1.000
 [END OF DATA]
 [END OF TABLE]
 [END OF FACTORS FOR VERIFICATION]
@@ -2070,19 +2153,19 @@ CalculationStatus
      0.00000      0.00000      0.00000      0.00000      0.00000     1     5    14   0.000 1     5
      0.00000      0.00000      0.00000      0.00000      0.00000     1     0    14   1.000 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     1     1    14   1.000 1     2
-     0.00000      0.00000      0.00000      0.00000      0.00000     1     3    14   1.000 1     2
+     0.00000      0.00000      0.00000      0.00000      0.00000     1     3     0   1.000 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     1    14    14   1.200 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     2     4    14   0.000 1     5
      0.00000      0.00000      0.00000      0.00000      0.00000     2     5    14   0.000 1     5
      0.00000      0.00000      0.00000      0.00000      0.00000     2     0    14   1.000 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     2     1    14   1.000 1     2
-     0.00000      0.00000      0.00000      0.00000      0.00000     2     3    14   1.000 1     2
+     0.00000      0.00000      0.00000      0.00000      0.00000     2     3     0   1.000 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     2    14    14   1.200 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     3     4    14   0.000 1     5
      0.00000      0.00000      0.00000      0.00000      0.00000     3     5    14   0.000 1     5
      0.00000      0.00000      0.00000      0.00000      0.00000     3     0    14   1.000 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     3     1    14   1.000 1     2
-     0.00000      0.00000      0.00000      0.00000      0.00000     3     3    14   1.000 1     2
+     0.00000      0.00000      0.00000      0.00000      0.00000     3     3     0   1.000 1     2
      0.00000      0.00000      0.00000      0.00000      0.00000     3    14    14   1.200 1     2
 [END OF DATA]
 [END OF TABLE]
@@ -2120,13 +2203,12 @@ Partial factor set
 Calculation type
 Factor for cohesion stability
 Factor for Phi stability
-Factor on driving moment
 Factor on unit weight stability
 [END OF COLUMN INDICATION]
 [DATA]
- 1 14 'EC7-NL-RC0'  1.300  1.200  1.000  1.000
- 2 14 'EC7-NL-RC0'  1.300  1.200  1.000  1.000
- 3 14 'EC7-NL-RC0'  1.300  1.200  1.000  1.000
+ 1 14 'EC7-NL-RC0'  1.300  1.200  1.000
+ 2 14 'EC7-NL-RC0'  1.300  1.200  1.000
+ 3 14 'EC7-NL-RC0'  1.300  1.200  1.000
 [END OF DATA]
 [END OF TABLE]
 [END OF FACTORS FOR OVERALL STABILITY]
@@ -2189,12 +2271,12 @@ VerifySet
 [END OF COLUMN INDICATION]
 [DATA]
     4     1     3
-    4     2     3
-    4     3     3
     4     1     0
     4     1     1
+    4     2     3
     4     2     0
     4     2     1
+    4     3     3
     4     3     0
     4     3     1
 [END OF DATA]

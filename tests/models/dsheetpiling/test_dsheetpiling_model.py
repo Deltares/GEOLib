@@ -210,7 +210,7 @@ class TestDsheetPilingModel:
         output_datastructure = DSheetPilingModel().parse(output_test_file).input_data
         anchorline = output_datastructure.anchors.split("\n")[2].strip()  # dataline
         values = list(filter(lambda x: (len(x) != 0), anchorline.split(" ")))
-        assert len(values) == 10
+        assert len(values) == 11
 
     @pytest.mark.acceptance
     @only_teamcity
@@ -307,7 +307,6 @@ class TestDsheetPilingModel:
         model.set_construction(top_level=top_level, elements=sheets)
 
         # test final
-        assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
         assert (
             model.datastructure.input_data.sheet_piling.sheetpiling[0].name
@@ -351,7 +350,6 @@ class TestDsheetPilingModel:
         model.set_construction(top_level=top_level, elements=piles)
 
         # test final
-        assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
         assert (
             model.datastructure.input_data.sheet_piling.sheetpiling[0].name
@@ -398,7 +396,6 @@ class TestDsheetPilingModel:
         model.set_construction(top_level=top_level, elements=walls)
 
         # test final
-        assert model.datastructure.input_data.sheet_piling.lengthsheetpiling == 8
         assert model.datastructure.input_data.sheet_piling.leveltopsheetpiling == 1
         assert (
             model.datastructure.input_data.sheet_piling.sheetpiling[0].name

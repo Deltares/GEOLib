@@ -33,6 +33,7 @@ from geolib.models.dsheetpiling.dsheetpiling_model import (
     SinglePileModelType,
     WoodenSheetPileModelType,
 )
+from geolib.models.dsheetpiling.internal import SurfacePoint
 from geolib.models.dsheetpiling.loads import (
     HorizontalLineLoad,
     Moment,
@@ -49,7 +50,7 @@ from geolib.models.dsheetpiling.settings import (
     LateralEarthPressureMethodStage,
     ModulusReactionType,
     PartialFactorCalculationType,
-    PartialFactorSetCUR,
+    PartialFactorSetCrow,
     PartialFactorSetEC7NADNL,
     PassiveSide,
     SheetPilingElementMaterialType,
@@ -96,8 +97,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC1,
                     stability_export=True,
                 )
             ),
@@ -258,10 +259,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -551,10 +552,10 @@ class TestDsheetPilingAcceptance:
             )
             model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-            ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+            ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
             ground_level_minus_7_meter_surface = Surface(
                 name="GL-7" + "-stage-" + str(stage),
-                points=[Point(x=0, z=-7 + variation)],
+                points=[SurfacePoint(x=0, z=-7 + variation)],
             )
 
             model.add_surface(
@@ -817,7 +818,7 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
 
         model.add_surface(
             surface=ground_level_surface, side=Side.BOTH, stage_id=stage_id
@@ -922,8 +923,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC1,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -1088,10 +1089,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1242,8 +1243,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC2,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -1419,10 +1420,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(
@@ -1573,8 +1574,8 @@ class TestDsheetPilingAcceptance:
             (
                 OverallStabilityCalculationOptions(
                     cur_stability_stage=0,
-                    overall_stability_type=DesignType.CUR,
-                    stability_cur_partial_factor_set=PartialFactorSetCUR.CLASSII,
+                    overall_stability_type=DesignType.EC7NL,
+                    stability_ec7_nl_partial_factor_set=PartialFactorSetEC7NADNL.RC2,
                 )
             ),
             (KranzAnchorStrengthCalculationOptions(cur_anchor_force_stage=0)),
@@ -1735,10 +1736,10 @@ class TestDsheetPilingAcceptance:
         )
         model.add_profile(profile=profile, side=Side.BOTH, stage_id=stage_id)
 
-        ground_level_surface = Surface(name="GL", points=[Point(x=0, z=0)])
+        ground_level_surface = Surface(name="GL", points=[SurfacePoint(x=0, z=0)])
         ground_level_minus_7_meter_surface = Surface(
             name="GL-7",
-            points=[Point(x=0, z=-7)],
+            points=[SurfacePoint(x=0, z=-7)],
         )
 
         model.add_surface(

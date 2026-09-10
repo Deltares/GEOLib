@@ -2,21 +2,21 @@ DUMP FILE FOR D-SHEET PILING
 ==============================================================================
 COMPANY    :    
 
-DATE       : 11/07/2024
-TIME       : 08:24:52
-FILENAME   : C:\Deltares\D-Sheet Piling\Benchmarks\bm3-6.shd
-CREATED BY : D-Sheet Piling version 24.1.1.1735
+DATE       : 30-07-2026
+TIME       : 12:15:36
+FILENAME   : C:\DelphiProjects\DSerie\applications\DSheetPiling\trunk\data\Benchmarks\bm3-6.shd
+CREATED BY : D-Sheet Piling version 26.1.0.5106
 ==========================    BEGINNING OF DATA     ==========================
 [DUMPFILE]
 [INPUT DATA]
 [VERSION]
-Soil=1012
-D-Sheet Piling=1034
+Soil=1013
+D-Sheet Piling=1042
 [END OF VERSION]
 
 [VERSION EXTERNALS]
-DGSCPTipCalc.dll=21.3.1.35380
-DGSCPTipUI.dll=21.3.1.35380
+DGSCPTipCalc.dll=24.1.0.5079
+DGSCPTipUI.dll=24.1.0.5079
 [END OF VERSION EXTERNALS]
 
 [SOIL COLLECTION]
@@ -26,8 +26,8 @@ Material
 SoilColor=9764853
 SoilSoilType=2
 SoilGrainType=0
-SoilGamDry=0.00
-SoilGamWet=0.00
+SoilGamDry=0.01
+SoilGamWet=10.00
 SoilRelativeDensity=72.5
 SoilEModMenard=0.01
 SoilCohesion=0.00
@@ -97,9 +97,7 @@ Count=0
 [END OF CPT LIST]
 
 [SHEET PILING]
-0
       0.00 Level top sheet piling
-     10.00 Length
   1 Number of elements
 [SHEET PILING ELEMENT]
 1
@@ -218,38 +216,52 @@ UniformLoadDistRight=2
   1     1 Surface 1
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       0.00
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       0.00                   0.00
   2     1 Surface 2
 0.00  Standard deviation
   2  Distribution type
- Nr     X-coord     Value
-  1       0.00       0.00
-
+0.00  Construction level tolerance
+0.00  Survey uncertainty
+ Nr    X-coord      Value    Rep. erosion height
+  1       0.00       0.00                   0.00
 [END OF SURFACES]
 
-[WATERLEVELS]
-  1 Number of Waterlevels 
-  3 Number of Data per Waterlevel 
-Level -100.00
-   -100.00
-      0.00
-         2
-
-[END OF WATERLEVELS]
+[WATER LEVELS]
+    1 = number of items
+[WATER LEVEL]
+WL 0m
+WaterLevelValue=0.00
+WaterLevelStandardDeviation=0.00
+WaterLevelDistribution=2
+WaterLevelRepLowPassiveCrow=0.00
+WaterLevelDeltaHDeciLowPassiveCrow=0.00
+WaterLevelRepHighPassiveCrow=0.00
+WaterLevelDeltaHDeciHighPassiveCrow=0.00
+WaterLevelAverageLowPassiveCrow=0.00
+WaterLevelRepHighActiveCrow=0.00
+WaterLevelDeltaHDeciHighActiveCrow=0.00
+WaterLevelAverageHighActiveCrow=0.00
+[END OF WATER LEVEL]
+[END OF WATER LEVELS]
 
 [CONSTRUCTION STAGES]
   1 Number of Construction stages 
 Only stage
-         1          1 Method Left: Ka, Ko, Kp  Method Right: Ka, Ko, Kp  
+         1          1 Method Left: Ka, Ko, Kp  Method Right: Ka, Ko, Kp
 Surface 1
 Surface 2
-Level -100.00
-Level -100.00
+         0              Is rep. passive surface level overruled
+     0.000              Overruled rep. passive surface level
+         0              Is fixed level on passive side (CROW)
+WL 0m
+WL 0m
 1
 1
-     0.000             Displacement top sheet piling
-         0             Use top displacement
+     0.000              Displacement top sheet piling
+         0              Use top displacement
          0              Anchors present in stage
          0              Struts present in stage
          0              Spring supports present in stage
@@ -267,8 +279,8 @@ Level -100.00
 [CALCULATION OPTIONS PER STAGE]
 1 = number of items
 [STAGE]
-StagePartialFactorSetCUR=-1
-StageVerify=0
+StageClassCrow=0
+StageVerifyCrow=0
 StageAnchorFactor=1.000
 StagePartialFactorSetEC7NADNL=1
 StageRiskClassEC7NADBE=1
@@ -297,8 +309,7 @@ DesignPartialFactorSetEC7NADNL=1
 DesignEC7NLMethod=0
 DesignEC7BEPartialFactorSet=2
 DesignEC7BEMethod=0
-DesignPartialFactorSet=0
-DesignCURMethod=0
+DesignCrowClass=0
 VerifyType=0
 EuroCodePartialFactorSet=0
 EuroCodeOverallStability=0
@@ -310,10 +321,9 @@ EC7NLAssessmentType=0
 EC7BEOverallStability=0
 EC7BEMethod=0
 EC7BEOverallRiskClass=1
-CURMethod=0
-CUROverallPartialFactorSet=0
-CUROverallAnchorFactor=1.000
-CUROverallStability=0
+CrowAssessmentType=0
+CrowReferencePeriod=50
+VerifyCrowOverallStability=0
 CURAnchorForceStage=0
 CURStabilityStage=0
 OverallStabilityType=0
@@ -321,7 +331,7 @@ StabilityExport=0
 StabilityEuroCodePartialFactorSet=0
 StabilityEC7NLPartialFactorSet=1
 OverallStabilityEC7BEPartialFactorSet=2
-StabilityCURPartialFactorSet=0
+StabilityCrowClass=0
 [PARTIAL FACTORS EUROCODE DA1 SET1]
 LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
@@ -329,25 +339,18 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.111
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EUROCODE DA1 SET1]
 [PARTIAL FACTORS EUROCODE DA1 SET2]
@@ -357,25 +360,18 @@ LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.250
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EUROCODE DA1 SET2]
 [PARTIAL FACTORS EUROCODE DA2]
@@ -385,25 +381,18 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.111
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.400
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.100
 [END OF PARTIAL FACTORS EUROCODE DA2]
 [PARTIAL FACTORS EUROCODE DA3]
@@ -413,25 +402,18 @@ LoadFactorVarUnfav=1.300
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.350
-ConstructLoadFactorVarUnfavCalc=1.500
+ConstructLoadFactorPermUnfav=1.350
+ConstructLoadFactorVarUnfav=1.500
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.250
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EUROCODE DA3]
 [PARTIAL FACTORS EC7 NL 0]
@@ -441,21 +423,15 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=1.000
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.000
+ConstructLoadFactorVarUnfav=1.000
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.050
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.15
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=0.900
 OverallStabilityFactorCohesion=1.300
 OverallStabilityFactorTgPhi=1.200
 OverallStabilityFactorUnitWeight=1.000
@@ -469,21 +445,15 @@ LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.215
-ConstructLoadFactorVarUnfavCalc=1.350
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.215
+ConstructLoadFactorVarUnfav=1.350
 MaterialFactorCohesion=1.150
 MaterialFactorTgPhi=1.150
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.20
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.300
 OverallStabilityFactorTgPhi=1.200
 OverallStabilityFactorUnitWeight=1.000
@@ -497,21 +467,15 @@ LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.350
-ConstructLoadFactorVarUnfavCalc=1.500
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.350
+ConstructLoadFactorVarUnfav=1.500
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.175
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.450
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
@@ -525,21 +489,15 @@ LoadFactorVarUnfav=1.250
 LoadFactorVarFav=0.000
 ConstructLoadFactorPermFav=0.900
 ConstructLoadFactorVarFav=0.000
-ConstructLoadFactorPermUnfavCalc=1.485
-ConstructLoadFactorVarUnfavCalc=1.650
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+ConstructLoadFactorPermUnfav=1.485
+ConstructLoadFactorVarUnfav=1.650
 MaterialFactorCohesion=1.400
 MaterialFactorTgPhi=1.200
 MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
 GeometryDeltaPassivePhreaticLine=0.25
 GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.600
 OverallStabilityFactorTgPhi=1.300
 OverallStabilityFactorUnitWeight=1.000
@@ -551,27 +509,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.200
 EffectFactorVarUnfav=1.083
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EC7 BE 1 SET1]
 [PARTIAL FACTORS EC7 BE 1 SET2]
@@ -579,27 +527,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.100
 MaterialFactorTgPhi=1.100
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryIncRetainingHeightDry=0.30
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.100
 OverallStabilityFactorTgPhi=1.100
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 BE 1 SET2]
 [PARTIAL FACTORS EC7 BE 2 SET1]
@@ -607,27 +545,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.350
 EffectFactorVarUnfav=1.111
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EC7 BE 2 SET1]
 [PARTIAL FACTORS EC7 BE 2 SET2]
@@ -635,27 +563,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.100
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.250
 MaterialFactorTgPhi=1.250
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryIncRetainingHeightDry=0.30
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.250
 OverallStabilityFactorTgPhi=1.250
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 BE 2 SET2]
 [PARTIAL FACTORS EC7 BE 3 SET1]
@@ -663,27 +581,17 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.500
 EffectFactorVarUnfav=1.200
 MaterialFactorCohesion=1.000
 MaterialFactorTgPhi=1.000
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
 GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.000
 OverallStabilityFactorTgPhi=1.000
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.000
 [END OF PARTIAL FACTORS EC7 BE 3 SET1]
 [PARTIAL FACTORS EC7 BE 3 SET2]
@@ -691,113 +599,259 @@ LoadFactorPermUnfav=1.000
 LoadFactorPermFav=1.000
 LoadFactorVarUnfav=1.200
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
 EffectFactor=1.000
 EffectFactorVarUnfav=1.000
 MaterialFactorCohesion=1.400
 MaterialFactorTgPhi=1.400
-MaterialFactorSubgradeReaction=1.000
 ResistanceFactor=1.000
 GeometryIncRetainingHeight=10.00
 GeometryMaxIncRetainingHeight=0.50
 GeometryIncRetainingHeightDry=0.30
-GeometryDeltaPassiveSurfaceLevel=0.00
-GeometryDeltaPassivePhreaticLine=0.00
-GeometryDeltaActivePhreaticLine=0.00
-OverallStabilityFactorDrivingMoment=1.000
 OverallStabilityFactorCohesion=1.400
 OverallStabilityFactorTgPhi=1.400
 OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
 VerticalBalanceGammaMb=1.300
 [END OF PARTIAL FACTORS EC7 BE 3 SET2]
-[PARTIAL FACTORS CUR I]
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
+[PARTIAL FACTORS CROW B1 C0]
+LoadFactorVarUnfav=1.150
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=1.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.330
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.300
+CombiLoadFactorConstructVarUnfav=0.700
+MaterialFactorCohesion=1.070
+MaterialFactorTgPhi=1.110
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.20
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C0]
+[PARTIAL FACTORS CROW B1 C1]
+LoadFactorVarUnfav=1.200
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.400
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.200
+CombiLoadFactorConstructVarUnfav=0.650
+MaterialFactorCohesion=1.140
+MaterialFactorTgPhi=1.160
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.30
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C1]
+[PARTIAL FACTORS CROW B1 C2]
+LoadFactorVarUnfav=1.220
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.500
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.100
+CombiLoadFactorConstructVarUnfav=0.650
+MaterialFactorCohesion=1.230
+MaterialFactorTgPhi=1.220
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.40
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C2]
+[PARTIAL FACTORS CROW B1 C3]
+LoadFactorVarUnfav=1.260
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=3.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.600
+CombiLoadFactorVarUnfav=0.750
+CombiLoadFactorVarUnfavWaterLevel=-0.050
+CombiLoadFactorConstructVarUnfav=0.600
+MaterialFactorCohesion=1.310
+MaterialFactorTgPhi=1.280
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.50
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B1 C3]
+[PARTIAL FACTORS CROW B2 C0]
+LoadFactorVarUnfav=1.120
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=1.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.200
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.500
+CombiLoadFactorConstructVarUnfav=0.750
+MaterialFactorCohesion=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.20
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C0]
+[PARTIAL FACTORS CROW B2 C1]
+LoadFactorVarUnfav=1.170
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=1.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.300
+CombiLoadFactorVarUnfav=0.800
+CombiLoadFactorVarUnfavWaterLevel=-0.300
+CombiLoadFactorConstructVarUnfav=0.700
+MaterialFactorCohesion=1.050
+MaterialFactorTgPhi=1.040
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.30
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C1]
+[PARTIAL FACTORS CROW B2 C2]
+LoadFactorVarUnfav=1.220
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.400
+CombiLoadFactorVarUnfav=0.750
+CombiLoadFactorVarUnfavWaterLevel=-0.200
+CombiLoadFactorConstructVarUnfav=0.700
+MaterialFactorCohesion=1.180
+MaterialFactorTgPhi=1.100
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.40
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C2]
+[PARTIAL FACTORS CROW B2 C3]
+LoadFactorVarUnfav=1.280
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=2.500
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.550
+CombiLoadFactorVarUnfav=0.750
+CombiLoadFactorVarUnfavWaterLevel=-0.100
+CombiLoadFactorConstructVarUnfav=0.630
+MaterialFactorCohesion=1.320
+MaterialFactorTgPhi=1.170
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=10.00
+GeometryMinIncRetainingHeight=0.20
+GeometryMaxIncRetainingHeight=0.50
+GeometryFixedRetainingHeight=0.20
+FactorRepValuesMDPlasticRotation=1.000
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B2 C3]
+[PARTIAL FACTORS CROW B3 C0]
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
 MaterialFactorCohesion=1.000
-MaterialFactorTgPhi=1.050
-MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
 GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.20
-GeometryDeltaPassivePhreaticLine=0.15
-GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=0.900
-OverallStabilityFactorCohesion=1.500
-OverallStabilityFactorTgPhi=1.200
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.120
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS CUR I]
-[PARTIAL FACTORS CUR II]
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C0]
+[PARTIAL FACTORS CROW B3 C1]
 LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
 MaterialFactorCohesion=1.000
-MaterialFactorTgPhi=1.150
-MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
 GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.30
-GeometryDeltaPassivePhreaticLine=0.20
-GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.000
-OverallStabilityFactorCohesion=1.500
-OverallStabilityFactorTgPhi=1.200
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.210
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS CUR II]
-[PARTIAL FACTORS CUR III]
-LoadFactorPermUnfav=1.000
-LoadFactorPermFav=1.000
-LoadFactorVarUnfav=1.250
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C1]
+[PARTIAL FACTORS CROW B3 C2]
+LoadFactorVarUnfav=1.000
 LoadFactorVarFav=0.000
-ConstructLoadFactorPermFav=1.000
-ConstructLoadFactorVarFav=1.000
-ConstructLoadFactorPermUnfavCalc=1.000
-ConstructLoadFactorVarUnfavCalc=1.000
-EffectFactor=1.000
-EffectFactorVarUnfav=1.000
-MaterialFactorCohesion=1.100
-MaterialFactorTgPhi=1.200
-MaterialFactorSubgradeReaction=1.300
-ResistanceFactor=1.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
+MaterialFactorCohesion=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
 GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
 GeometryMaxIncRetainingHeight=0.00
-GeometryIncRetainingHeightDry=0.00
-GeometryDeltaPassiveSurfaceLevel=0.35
-GeometryDeltaPassivePhreaticLine=0.25
-GeometryDeltaActivePhreaticLine=0.05
-OverallStabilityFactorDrivingMoment=1.100
-OverallStabilityFactorCohesion=1.500
-OverallStabilityFactorTgPhi=1.200
-OverallStabilityFactorUnitWeight=1.000
-FactorRepValuesMDPmax=1.000
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.310
 VerticalBalanceGammaMb=1.200
-[END OF PARTIAL FACTORS CUR III]
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C2]
+[PARTIAL FACTORS CROW B3 C3]
+LoadFactorVarUnfav=1.000
+LoadFactorVarFav=0.000
+LoadFactorVarUnfavWaterLevel=0.000
+LoadFactorPerm=1.000
+ConstructLoadFactorVarUnfav=1.000
+CombiLoadFactorVarUnfav=0.850
+CombiLoadFactorVarUnfavWaterLevel=-0.700
+CombiLoadFactorConstructVarUnfav=0.850
+MaterialFactorCohesion=1.000
+MaterialFactorTgPhi=1.000
+MaterialFactorUnitWeight=1.000
+GeometryIncRetainingHeight=0.00
+GeometryMinIncRetainingHeight=0.00
+GeometryMaxIncRetainingHeight=0.00
+GeometryFixedRetainingHeight=0.00
+FactorRepValuesMDPlasticRotation=1.430
+VerticalBalanceGammaMb=1.200
+ModelFactorAnchorForce=1.150
+[END OF PARTIAL FACTORS CROW B3 C3]
 [END OF CALCULATION OPTIONS]
 
 [PROBABILISTIC CALCULATION OPTIONS]
@@ -1015,8 +1069,8 @@ Is favorable (0=false, 1=true)
   100.00 : Percentage mobilized resistance right
   200.00 : Effective left
   200.00 : Effective right
-    0.00 : Water pressure left
-    0.00 : Water pressure right
+  500.00 : Water pressure left
+  500.00 : Water pressure right
   200.00 : Max effective resistance left
   200.00 : Max effective resistance right
     0.00 : Max moment left
@@ -1176,7 +1230,7 @@ Rightside
 Method Ka,K0,Kp
 [END OF CALCULATION METHOD]
 [WATER LEVEL]
-     -100.00
+        0.00
 [END OF WATER LEVEL]
 [SURFACE]
 1 : Number of surface points
@@ -1202,7 +1256,7 @@ Coeff. of passive earth pressure
 Layer name
 [END OF COLUMN INDICATION]
 [DATA]
-    10.00    0.00    0.00    0.00    0.00          0.00    0.00    0.00    0.00    1.00    1.00    1.00 'Material'
+    10.00    0.00    0.00    0.01   10.00          0.00    0.00    0.00    0.00    1.00    1.00    1.00 'Material'
 [END OF DATA]
 [END OF TABLE]
 [MULTILINEAR BRANCHES]
@@ -1238,131 +1292,131 @@ Status character
 [END OF COLUMN INDICATION]
 [DATA]
     20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
+    20.00000      0.95238     20.00000     20.00000            1 100 A
+    20.00000      1.90476     20.00000     20.00000            1 100 A
+    20.00000      2.85714     20.00000     20.00000            1 100 A
+    20.00000      3.80952     20.00000     20.00000            1 100 A
+    20.00000      4.76190     20.00000     20.00000            1 100 A
+    20.00000      4.76190     20.00000     20.00000            1 100 A
+    20.00000      5.71429     20.00000     20.00000            1 100 A
+    20.00000      6.66667     20.00000     20.00000            1 100 A
+    20.00000      7.61905     20.00000     20.00000            1 100 A
+    20.00000      8.57143     20.00000     20.00000            1 100 A
+    20.00000      9.52381     20.00000     20.00000            1 100 A
+    20.00000      9.52381     20.00000     20.00000            1 100 A
+    20.00000     10.47619     20.00000     20.00000            1 100 A
+    20.00000     11.42857     20.00000     20.00000            1 100 A
+    20.00000     12.38095     20.00000     20.00000            1 100 A
+    20.00000     13.33333     20.00000     20.00000            1 100 A
+    20.00000     14.28571     20.00000     20.00000            1 100 A
+    20.00000     14.28571     20.00000     20.00000            1 100 A
+    20.00000     15.23810     20.00000     20.00000            1 100 A
+    20.00000     16.19048     20.00000     20.00000            1 100 A
+    20.00000     17.14286     20.00000     20.00000            1 100 A
+    20.00000     18.09524     20.00000     20.00000            1 100 A
+    20.00000     19.04762     20.00000     20.00000            1 100 A
+    20.00000     19.04762     20.00000     20.00000            1 100 A
+    20.00000     20.00000     20.00000     20.00000            1 100 A
+    20.00000     20.95238     20.00000     20.00000            1 100 A
+    20.00000     21.90476     20.00000     20.00000            1 100 A
+    20.00000     22.85714     20.00000     20.00000            1 100 A
+    20.00000     23.80952     20.00000     20.00000            1 100 A
+    20.00000     23.80952     20.00000     20.00000            1 100 A
+    20.00000     24.76190     20.00000     20.00000            1 100 A
+    20.00000     25.71429     20.00000     20.00000            1 100 A
+    20.00000     26.66667     20.00000     20.00000            1 100 A
+    20.00000     27.61905     20.00000     20.00000            1 100 A
+    20.00000     28.57143     20.00000     20.00000            1 100 A
+    20.00000     28.57143     20.00000     20.00000            1 100 A
+    20.00000     29.52381     20.00000     20.00000            1 100 A
+    20.00000     30.47619     20.00000     20.00000            1 100 A
+    20.00000     31.42857     20.00000     20.00000            1 100 A
+    20.00000     32.38095     20.00000     20.00000            1 100 A
+    20.00000     33.33333     20.00000     20.00000            1 100 A
+    20.00000     33.33333     20.00000     20.00000            1 100 A
+    20.00000     34.28571     20.00000     20.00000            1 100 A
+    20.00000     35.23810     20.00000     20.00000            1 100 A
+    20.00000     36.19048     20.00000     20.00000            1 100 A
+    20.00000     37.14286     20.00000     20.00000            1 100 A
+    20.00000     38.09524     20.00000     20.00000            1 100 A
+    20.00000     38.09524     20.00000     20.00000            1 100 A
+    20.00000     39.04762     20.00000     20.00000            1 100 A
+    20.00000     40.00000     20.00000     20.00000            1 100 A
+    20.00000     40.95238     20.00000     20.00000            1 100 A
+    20.00000     41.90476     20.00000     20.00000            1 100 A
+    20.00000     42.85714     20.00000     20.00000            1 100 A
+    20.00000     42.85714     20.00000     20.00000            1 100 A
+    20.00000     43.80952     20.00000     20.00000            1 100 A
+    20.00000     44.76190     20.00000     20.00000            1 100 A
+    20.00000     45.71429     20.00000     20.00000            1 100 A
+    20.00000     46.66667     20.00000     20.00000            1 100 A
+    20.00000     47.61905     20.00000     20.00000            1 100 A
+    20.00000     47.61905     20.00000     20.00000            1 100 A
+    20.00000     48.57143     20.00000     20.00000            1 100 A
+    20.00000     49.52381     20.00000     20.00000            1 100 A
+    20.00000     50.47619     20.00000     20.00000            1 100 A
+    20.00000     51.42857     20.00000     20.00000            1 100 A
+    20.00000     52.38095     20.00000     20.00000            1 100 A
+    20.00000     52.38095     20.00000     20.00000            1 100 A
+    20.00000     53.33333     20.00000     20.00000            1 100 A
+    20.00000     54.28571     20.00000     20.00000            1 100 A
+    20.00000     55.23810     20.00000     20.00000            1 100 A
+    20.00000     56.19048     20.00000     20.00000            1 100 A
+    20.00000     57.14286     20.00000     20.00000            1 100 A
+    20.00000     57.14286     20.00000     20.00000            1 100 A
+    20.00000     58.09524     20.00000     20.00000            1 100 A
+    20.00000     59.04762     20.00000     20.00000            1 100 A
+    20.00000     60.00000     20.00000     20.00000            1 100 A
+    20.00000     60.95238     20.00000     20.00000            1 100 A
+    20.00000     61.90476     20.00000     20.00000            1 100 A
+    20.00000     61.90476     20.00000     20.00000            1 100 A
+    20.00000     62.85714     20.00000     20.00000            1 100 A
+    20.00000     63.80952     20.00000     20.00000            1 100 A
+    20.00000     64.76190     20.00000     20.00000            1 100 A
+    20.00000     65.71429     20.00000     20.00000            1 100 A
+    20.00000     66.66667     20.00000     20.00000            1 100 A
+    20.00000     66.66667     20.00000     20.00000            1 100 A
+    20.00000     67.61905     20.00000     20.00000            1 100 A
+    20.00000     68.57143     20.00000     20.00000            1 100 A
+    20.00000     69.52381     20.00000     20.00000            1 100 A
+    20.00000     70.47619     20.00000     20.00000            1 100 A
+    20.00000     71.42857     20.00000     20.00000            1 100 A
+    20.00000     71.42857     20.00000     20.00000            1 100 A
+    20.00000     72.38095     20.00000     20.00000            1 100 A
+    20.00000     73.33333     20.00000     20.00000            1 100 A
+    20.00000     74.28571     20.00000     20.00000            1 100 A
+    20.00000     75.23810     20.00000     20.00000            1 100 A
+    20.00000     76.19048     20.00000     20.00000            1 100 A
+    20.00000     76.19048     20.00000     20.00000            1 100 A
+    20.00000     77.14286     20.00000     20.00000            1 100 A
+    20.00000     78.09524     20.00000     20.00000            1 100 A
+    20.00000     79.04762     20.00000     20.00000            1 100 A
+    20.00000     80.00000     20.00000     20.00000            1 100 A
+    20.00000     80.95238     20.00000     20.00000            1 100 A
+    20.00000     80.95238     20.00000     20.00000            1 100 A
+    20.00000     81.90476     20.00000     20.00000            1 100 A
+    20.00000     82.85714     20.00000     20.00000            1 100 A
+    20.00000     83.80952     20.00000     20.00000            1 100 A
+    20.00000     84.76190     20.00000     20.00000            1 100 A
+    20.00000     85.71429     20.00000     20.00000            1 100 A
+    20.00000     85.71429     20.00000     20.00000            1 100 A
+    20.00000     86.66667     20.00000     20.00000            1 100 A
+    20.00000     87.61905     20.00000     20.00000            1 100 A
+    20.00000     88.57143     20.00000     20.00000            1 100 A
+    20.00000     89.52381     20.00000     20.00000            1 100 A
+    20.00000     90.47619     20.00000     20.00000            1 100 A
+    20.00000     90.47619     20.00000     20.00000            1 100 A
+    20.00000     91.42857     20.00000     20.00000            1 100 A
+    20.00000     92.38095     20.00000     20.00000            1 100 A
+    20.00000     93.33333     20.00000     20.00000            1 100 A
+    20.00000     94.28571     20.00000     20.00000            1 100 A
+    20.00000     95.23810     20.00000     20.00000            1 100 A
+    20.00000     95.23810     20.00000     20.00000            1 100 A
+    20.00000     96.19048     20.00000     20.00000            1 100 A
+    20.00000     97.14286     20.00000     20.00000            1 100 A
+    20.00000     98.09524     20.00000     20.00000            1 100 A
+    20.00000     99.04762     20.00000     20.00000            1 100 A
+    20.00000    100.00000     20.00000     20.00000            1 100 A
 [END OF DATA]
 [END OF TABLE]
 [END OF PRESSURES]
@@ -1386,7 +1440,7 @@ Leftside
 Method Ka,K0,Kp
 [END OF CALCULATION METHOD]
 [WATER LEVEL]
-     -100.00
+        0.00
 [END OF WATER LEVEL]
 [SURFACE]
 1 : Number of surface points
@@ -1412,7 +1466,7 @@ Coeff. of passive earth pressure
 Layer name
 [END OF COLUMN INDICATION]
 [DATA]
-    10.00    0.00    0.00    0.00    0.00          0.00    0.00    0.00    0.00    1.00    1.00    1.00 'Material'
+    10.00    0.00    0.00    0.01   10.00          0.00    0.00    0.00    0.00    1.00    1.00    1.00 'Material'
 [END OF DATA]
 [END OF TABLE]
 [MULTILINEAR BRANCHES]
@@ -1448,131 +1502,131 @@ Status character
 [END OF COLUMN INDICATION]
 [DATA]
     20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
-    20.00000      0.00000     20.00000     20.00000            1 100 A
+    20.00000      0.95238     20.00000     20.00000            1 100 A
+    20.00000      1.90476     20.00000     20.00000            1 100 A
+    20.00000      2.85714     20.00000     20.00000            1 100 A
+    20.00000      3.80952     20.00000     20.00000            1 100 A
+    20.00000      4.76190     20.00000     20.00000            1 100 A
+    20.00000      4.76190     20.00000     20.00000            1 100 A
+    20.00000      5.71429     20.00000     20.00000            1 100 A
+    20.00000      6.66667     20.00000     20.00000            1 100 A
+    20.00000      7.61905     20.00000     20.00000            1 100 A
+    20.00000      8.57143     20.00000     20.00000            1 100 A
+    20.00000      9.52381     20.00000     20.00000            1 100 A
+    20.00000      9.52381     20.00000     20.00000            1 100 A
+    20.00000     10.47619     20.00000     20.00000            1 100 A
+    20.00000     11.42857     20.00000     20.00000            1 100 A
+    20.00000     12.38095     20.00000     20.00000            1 100 A
+    20.00000     13.33333     20.00000     20.00000            1 100 A
+    20.00000     14.28571     20.00000     20.00000            1 100 A
+    20.00000     14.28571     20.00000     20.00000            1 100 A
+    20.00000     15.23810     20.00000     20.00000            1 100 A
+    20.00000     16.19048     20.00000     20.00000            1 100 A
+    20.00000     17.14286     20.00000     20.00000            1 100 A
+    20.00000     18.09524     20.00000     20.00000            1 100 A
+    20.00000     19.04762     20.00000     20.00000            1 100 A
+    20.00000     19.04762     20.00000     20.00000            1 100 A
+    20.00000     20.00000     20.00000     20.00000            1 100 A
+    20.00000     20.95238     20.00000     20.00000            1 100 A
+    20.00000     21.90476     20.00000     20.00000            1 100 A
+    20.00000     22.85714     20.00000     20.00000            1 100 A
+    20.00000     23.80952     20.00000     20.00000            1 100 A
+    20.00000     23.80952     20.00000     20.00000            1 100 A
+    20.00000     24.76190     20.00000     20.00000            1 100 A
+    20.00000     25.71429     20.00000     20.00000            1 100 A
+    20.00000     26.66667     20.00000     20.00000            1 100 A
+    20.00000     27.61905     20.00000     20.00000            1 100 A
+    20.00000     28.57143     20.00000     20.00000            1 100 A
+    20.00000     28.57143     20.00000     20.00000            1 100 A
+    20.00000     29.52381     20.00000     20.00000            1 100 A
+    20.00000     30.47619     20.00000     20.00000            1 100 A
+    20.00000     31.42857     20.00000     20.00000            1 100 A
+    20.00000     32.38095     20.00000     20.00000            1 100 A
+    20.00000     33.33333     20.00000     20.00000            1 100 A
+    20.00000     33.33333     20.00000     20.00000            1 100 A
+    20.00000     34.28571     20.00000     20.00000            1 100 A
+    20.00000     35.23810     20.00000     20.00000            1 100 A
+    20.00000     36.19048     20.00000     20.00000            1 100 A
+    20.00000     37.14286     20.00000     20.00000            1 100 A
+    20.00000     38.09524     20.00000     20.00000            1 100 A
+    20.00000     38.09524     20.00000     20.00000            1 100 A
+    20.00000     39.04762     20.00000     20.00000            1 100 A
+    20.00000     40.00000     20.00000     20.00000            1 100 A
+    20.00000     40.95238     20.00000     20.00000            1 100 A
+    20.00000     41.90476     20.00000     20.00000            1 100 A
+    20.00000     42.85714     20.00000     20.00000            1 100 A
+    20.00000     42.85714     20.00000     20.00000            1 100 A
+    20.00000     43.80952     20.00000     20.00000            1 100 A
+    20.00000     44.76190     20.00000     20.00000            1 100 A
+    20.00000     45.71429     20.00000     20.00000            1 100 A
+    20.00000     46.66667     20.00000     20.00000            1 100 A
+    20.00000     47.61905     20.00000     20.00000            1 100 A
+    20.00000     47.61905     20.00000     20.00000            1 100 A
+    20.00000     48.57143     20.00000     20.00000            1 100 A
+    20.00000     49.52381     20.00000     20.00000            1 100 A
+    20.00000     50.47619     20.00000     20.00000            1 100 A
+    20.00000     51.42857     20.00000     20.00000            1 100 A
+    20.00000     52.38095     20.00000     20.00000            1 100 A
+    20.00000     52.38095     20.00000     20.00000            1 100 A
+    20.00000     53.33333     20.00000     20.00000            1 100 A
+    20.00000     54.28571     20.00000     20.00000            1 100 A
+    20.00000     55.23810     20.00000     20.00000            1 100 A
+    20.00000     56.19048     20.00000     20.00000            1 100 A
+    20.00000     57.14286     20.00000     20.00000            1 100 A
+    20.00000     57.14286     20.00000     20.00000            1 100 A
+    20.00000     58.09524     20.00000     20.00000            1 100 A
+    20.00000     59.04762     20.00000     20.00000            1 100 A
+    20.00000     60.00000     20.00000     20.00000            1 100 A
+    20.00000     60.95238     20.00000     20.00000            1 100 A
+    20.00000     61.90476     20.00000     20.00000            1 100 A
+    20.00000     61.90476     20.00000     20.00000            1 100 A
+    20.00000     62.85714     20.00000     20.00000            1 100 A
+    20.00000     63.80952     20.00000     20.00000            1 100 A
+    20.00000     64.76190     20.00000     20.00000            1 100 A
+    20.00000     65.71429     20.00000     20.00000            1 100 A
+    20.00000     66.66667     20.00000     20.00000            1 100 A
+    20.00000     66.66667     20.00000     20.00000            1 100 A
+    20.00000     67.61905     20.00000     20.00000            1 100 A
+    20.00000     68.57143     20.00000     20.00000            1 100 A
+    20.00000     69.52381     20.00000     20.00000            1 100 A
+    20.00000     70.47619     20.00000     20.00000            1 100 A
+    20.00000     71.42857     20.00000     20.00000            1 100 A
+    20.00000     71.42857     20.00000     20.00000            1 100 A
+    20.00000     72.38095     20.00000     20.00000            1 100 A
+    20.00000     73.33333     20.00000     20.00000            1 100 A
+    20.00000     74.28571     20.00000     20.00000            1 100 A
+    20.00000     75.23810     20.00000     20.00000            1 100 A
+    20.00000     76.19048     20.00000     20.00000            1 100 A
+    20.00000     76.19048     20.00000     20.00000            1 100 A
+    20.00000     77.14286     20.00000     20.00000            1 100 A
+    20.00000     78.09524     20.00000     20.00000            1 100 A
+    20.00000     79.04762     20.00000     20.00000            1 100 A
+    20.00000     80.00000     20.00000     20.00000            1 100 A
+    20.00000     80.95238     20.00000     20.00000            1 100 A
+    20.00000     80.95238     20.00000     20.00000            1 100 A
+    20.00000     81.90476     20.00000     20.00000            1 100 A
+    20.00000     82.85714     20.00000     20.00000            1 100 A
+    20.00000     83.80952     20.00000     20.00000            1 100 A
+    20.00000     84.76190     20.00000     20.00000            1 100 A
+    20.00000     85.71429     20.00000     20.00000            1 100 A
+    20.00000     85.71429     20.00000     20.00000            1 100 A
+    20.00000     86.66667     20.00000     20.00000            1 100 A
+    20.00000     87.61905     20.00000     20.00000            1 100 A
+    20.00000     88.57143     20.00000     20.00000            1 100 A
+    20.00000     89.52381     20.00000     20.00000            1 100 A
+    20.00000     90.47619     20.00000     20.00000            1 100 A
+    20.00000     90.47619     20.00000     20.00000            1 100 A
+    20.00000     91.42857     20.00000     20.00000            1 100 A
+    20.00000     92.38095     20.00000     20.00000            1 100 A
+    20.00000     93.33333     20.00000     20.00000            1 100 A
+    20.00000     94.28571     20.00000     20.00000            1 100 A
+    20.00000     95.23810     20.00000     20.00000            1 100 A
+    20.00000     95.23810     20.00000     20.00000            1 100 A
+    20.00000     96.19048     20.00000     20.00000            1 100 A
+    20.00000     97.14286     20.00000     20.00000            1 100 A
+    20.00000     98.09524     20.00000     20.00000            1 100 A
+    20.00000     99.04762     20.00000     20.00000            1 100 A
+    20.00000    100.00000     20.00000     20.00000            1 100 A
 [END OF DATA]
 [END OF TABLE]
 [END OF PRESSURES]
