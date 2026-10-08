@@ -5,6 +5,8 @@ from geolib.soils import (
     MohrCoulombParameters,
     ShearStrengthModelTypePhreaticLevel,
     Soil,
+    StochasticParameter,
+    SoilWeightParameters,
 )
 
 
@@ -108,11 +110,70 @@ class TestDStabilitySoil:
         assert soil.Code == soil_1.code
         assert (
             soil.MohrCoulombAdvancedShearStrengthModel.Cohesion
+            == soil_1.mohr_coulomb_parameters.cohesion.deterministic
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.Cohesion
             == soil_1.mohr_coulomb_parameters.cohesion.mean
         )
         assert (
             soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle
+            == soil_1.mohr_coulomb_parameters.friction_angle.deterministic
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle
             == soil_1.mohr_coulomb_parameters.friction_angle.mean
+        )
+
+    def test_dstability_get_soil_with_stochastic_parameters(self):
+        dstability_model = DStabilityModel(filename=None)
+        
+        stochastic_friction_angle = StochasticParameter(
+            mean=25, 
+            standard_deviation=2,
+            deterministic=22,
+            is_probabilistic=True
+        )
+        mohr_coulomb_parameters = MohrCoulombParameters(
+            cohesion=1.0, 
+            friction_angle=stochastic_friction_angle
+        )
+        soil_1 = Soil(
+            name="TestName",
+            code="Test",
+            mohr_coulomb_parameters=mohr_coulomb_parameters,
+        )
+
+        dstability_model.add_soil(soil_1)
+
+        soil = dstability_model.soils.get_soil("Test")
+
+        assert soil.Id == soil_1.id
+        assert soil.Name == soil_1.name
+        assert soil.Code == soil_1.code
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.Cohesion
+            == soil_1.mohr_coulomb_parameters.cohesion.deterministic
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.Cohesion
+            == soil_1.mohr_coulomb_parameters.cohesion.mean
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle
+            == soil_1.mohr_coulomb_parameters.friction_angle.deterministic
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngleStochasticParameter.Mean
+            == stochastic_friction_angle.mean
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngleStochasticParameter.StandardDeviation
+            == stochastic_friction_angle.standard_deviation
+        )
+        assert (
+            soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngleStochasticParameter.IsProbabilistic
+            == stochastic_friction_angle.is_probabilistic
         )
 
     def test_dstability_get_soil_and_edit(self):
@@ -133,11 +194,11 @@ class TestDStabilitySoil:
         assert soil.Code == soil_1.code
         assert (
             soil.MohrCoulombAdvancedShearStrengthModel.Cohesion
-            == soil_1.mohr_coulomb_parameters.cohesion.mean
+            == soil_1.mohr_coulomb_parameters.cohesion.deterministic
         )
         assert (
             soil.MohrCoulombAdvancedShearStrengthModel.FrictionAngle
-            == soil_1.mohr_coulomb_parameters.friction_angle.mean
+            == soil_1.mohr_coulomb_parameters.friction_angle.deterministic
         )
 
         soil.MohrCoulombAdvancedShearStrengthModel.Cohesion = 99.0
@@ -151,11 +212,15 @@ class TestDStabilitySoil:
 
     def test_dstability_get_global_soil(self):
         dstability_model = DStabilityModel(filename=None)
-        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=1.0, friction_angle=20)
+        mohr_coulomb_parameters = MohrCoulombParameters(cohesion=2.0, friction_angle=20)
         soil_1 = Soil(
             name="TestName",
             code="Test",
             mohr_coulomb_parameters=mohr_coulomb_parameters,
+            soil_weight_parameters=SoilWeightParameters(
+                saturated_weight=17,
+                unsaturated_weight=15
+            )
         )
         dstability_model.add_soil(soil_1)
 
@@ -171,6 +236,14 @@ class TestDStabilitySoil:
         assert (
             global_soil.mohr_coulomb_parameters.friction_angle
             == soil_1.mohr_coulomb_parameters.friction_angle
+        )
+        assert (
+            global_soil.soil_weight_parameters.saturated_weight
+            == soil_1.soil_weight_parameters.saturated_weight
+        )
+        assert (
+            global_soil.soil_weight_parameters.unsaturated_weight
+            == soil_1.soil_weight_parameters.unsaturated_weight
         )
 
     def test_has_10_default_soils(self):

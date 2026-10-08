@@ -36,10 +36,7 @@ class StochasticParameter(SoilBaseModel):
     standard_deviation: float | None = 0
     distribution_type: DistributionType | None = DistributionType.Normal
     correlation_coefficient: float | None = None
-    low_characteristic_value: float | None = None
-    high_characteristic_value: float | None = None
-    low_design_value: float | None = None
-    high_design_value: float | None = None
+    deterministic: float | None = None
 
 
 class ShearStrengthModelTypePhreaticLevel(Enum):
@@ -445,15 +442,23 @@ class Soil(SoilBaseModel):
         return str(value)
 
     @staticmethod
-    def set_stochastic_parameters(input_class: object):
+    def set_stochastic_parameters(input_class: object, parameter_type: str):
         """
-        Converts float to stochastic parameter, where the mean is set as the input float value
+        Converts float to stochastic parameter. The parameter_type determines
+        whether input float values are set to the mean or deterministic attribute 
+        of the stochastic parameter. In case of "deterministic", the input float value 
+        is set to both the mean and deterministic attribute.
+        
         Args:
             input_class:
+            parameter_type: "mean" or "deterministic"
 
         Returns:
 
         """
+
+        if parameter_type not in ["mean", "deterministic"]:
+            raise ValueError(f"parameter_type must be 'mean' or 'deterministic', got {parameter_type}")
 
         try:
             class_dict = input_class.model_dump()
@@ -465,22 +470,36 @@ class Soil(SoilBaseModel):
             parameter = fields[field]
             if isinstance(parameter.default, StochasticParameter):
                 if isinstance(class_dict[field], float):
-                    setattr(
-                        input_class, field, StochasticParameter(mean=class_dict[field])
-                    )
+                    if parameter_type == "mean":
+                        setattr(
+                            input_class, field, StochasticParameter(mean=class_dict[field])
+                        )
+                    else:
+                        setattr(
+                            input_class, field, StochasticParameter(
+                                mean=class_dict[field], 
+                                deterministic=class_dict[field]
+                            )
+                        )
 
         return input_class
 
-    def set_all_stochastic_parameters(self):
+    def set_all_stochastic_parameters(self, parameter_type: str = "mean"):
         """
-        Loop over all fields in soil class, and converts floats to stochastic parameters if necessary
+        Loop over all fields in soil class, and converts floats to stochastic parameters if necessary.  
+
+        The parameter_type determines whether input float values are set to the mean or deterministic attribute 
+        of the stochastic parameter.
+        
+        Args:
+            parameter_type: "mean" or "deterministic"
 
         Returns:
 
         """
         fields = self.__class__.model_fields
         for field in fields:
-            self.set_stochastic_parameters(self.__getattribute__(field))
+            self.set_stochastic_parameters(self.__getattribute__(field), parameter_type=parameter_type)
 
     def __transfer_soil_dict_to_model(self, soil_dict, model_soil):
         """
@@ -546,7 +565,7 @@ class Soil(SoilBaseModel):
     def _to_dstability(self):
         from geolib.models.dstability.internal import PersistableSoil as DStabilitySoil
 
-        self.set_all_stochastic_parameters()
+        self.set_all_stochastic_parameters(parameter_type="deterministic")
 
         if self.shear_strength_model_above_phreatic_level is not None:
             shear_strength_model_above_phreatic_level = (
@@ -565,38 +584,55 @@ class Soil(SoilBaseModel):
                 self.shear_strength_model_below_phreatic_level
             )
 
+        # Assign aliases for readability
+        c_det = self.mohr_coulomb_parameters.cohesion.deterministic
+        c_mean = self.mohr_coulomb_parameters.cohesion.mean
+        phi_det = self.mohr_coulomb_parameters.friction_angle.deterministic
+        phi_mean = self.mohr_coulomb_parameters.friction_angle.mean
+        psi_det = self.mohr_coulomb_parameters.dilatancy_angle.deterministic
+        psi_mean = self.mohr_coulomb_parameters.dilatancy_angle.mean
+        s_det = self.undrained_parameters.shear_strength_ratio.deterministic
+        s_mean = self.undrained_parameters.shear_strength_ratio.mean
+        m_det = self.undrained_parameters.strength_increase_exponent.deterministic
+        m_mean = self.undrained_parameters.strength_increase_exponent.mean
+        y_above_det = self.soil_weight_parameters.unsaturated_weight.deterministic
+        y_above_mean = self.soil_weight_parameters.unsaturated_weight.mean
+        y_below_det = self.soil_weight_parameters.saturated_weight.deterministic
+        y_below_mean = self.soil_weight_parameters.saturated_weight.mean
+
+        # Deterministic value falls back to mean if deterministic is not set
         kwargs = {
             "Id": self.id,
             "Name": self.name,
             "Code": self.code,
             "MohrCoulombAdvancedShearStrengthModel": {
-                "Cohesion": self.mohr_coulomb_parameters.cohesion.mean,
+                "Cohesion": c_det if c_det is not None else c_mean,
                 "CohesionStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.cohesion
                 ),
-                "FrictionAngle": self.mohr_coulomb_parameters.friction_angle.mean,
+                "FrictionAngle": phi_det if phi_det is not None else phi_mean,
                 "FrictionAngleStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.friction_angle
                 ),
                 "CohesionAndFrictionAngleCorrelated": self.mohr_coulomb_parameters.cohesion_and_friction_angle_correlated,
-                "Dilatancy": self.mohr_coulomb_parameters.dilatancy_angle.mean,
+                "Dilatancy": psi_det if psi_det is not None else psi_mean,
                 "DilatancyStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.dilatancy_angle
                 ),
             },
             "SuShearStrengthModel": {
-                "ShearStrengthRatio": self.undrained_parameters.shear_strength_ratio.mean,
+                "ShearStrengthRatio": s_det if s_det is not None else s_mean,
                 "ShearStrengthRatioStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.undrained_parameters.shear_strength_ratio
                 ),
-                "StrengthIncreaseExponent": self.undrained_parameters.strength_increase_exponent.mean,
+                "StrengthIncreaseExponent": m_det if m_det is not None else m_mean,
                 "StrengthIncreaseExponentStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.undrained_parameters.strength_increase_exponent
                 ),
                 "ShearStrengthRatioAndShearStrengthExponentCorrelated": self.undrained_parameters.shear_strength_ratio_and_shear_strength_exponent_correlated,
             },
-            "VolumetricWeightAbovePhreaticLevel": self.soil_weight_parameters.unsaturated_weight.mean,
-            "VolumetricWeightBelowPhreaticLevel": self.soil_weight_parameters.saturated_weight.mean,
+            "VolumetricWeightAbovePhreaticLevel": y_above_det if y_above_det is not None else y_above_mean,
+            "VolumetricWeightBelowPhreaticLevel": y_below_det if y_below_det is not None else y_below_mean,
             "IsProbabilistic": self.is_probabilistic,
             "ShearStrengthModelTypeAbovePhreaticLevel": shear_strength_model_above_phreatic_level,
             "ShearStrengthModelTypeBelowPhreaticLevel": shear_strength_model_below_phreatic_level,
