@@ -36,7 +36,7 @@ class StochasticParameter(SoilBaseModel):
     standard_deviation: float | None = 0
     distribution_type: DistributionType | None = DistributionType.Normal
     correlation_coefficient: float | None = None
-    deterministic: float | None = 0
+    deterministic: float | None = None
 
 
 class ShearStrengthModelTypePhreaticLevel(Enum):
@@ -584,38 +584,55 @@ class Soil(SoilBaseModel):
                 self.shear_strength_model_below_phreatic_level
             )
 
+        # Assign aliases for readability
+        c_det = self.mohr_coulomb_parameters.cohesion.deterministic
+        c_mean = self.mohr_coulomb_parameters.cohesion.mean
+        phi_det = self.mohr_coulomb_parameters.friction_angle.deterministic
+        phi_mean = self.mohr_coulomb_parameters.friction_angle.mean
+        psi_det = self.mohr_coulomb_parameters.dilatancy_angle.deterministic
+        psi_mean = self.mohr_coulomb_parameters.dilatancy_angle.mean
+        s_det = self.undrained_parameters.shear_strength_ratio.deterministic
+        s_mean = self.undrained_parameters.shear_strength_ratio.mean
+        m_det = self.undrained_parameters.strength_increase_exponent.deterministic
+        m_mean = self.undrained_parameters.strength_increase_exponent.mean
+        y_above_det = self.soil_weight_parameters.unsaturated_weight.deterministic
+        y_above_mean = self.soil_weight_parameters.unsaturated_weight.mean
+        y_below_det = self.soil_weight_parameters.saturated_weight.deterministic
+        y_below_mean = self.soil_weight_parameters.saturated_weight.mean
+
+        # Deterministic value falls back to mean if deterministic is not set
         kwargs = {
             "Id": self.id,
             "Name": self.name,
             "Code": self.code,
             "MohrCoulombAdvancedShearStrengthModel": {
-                "Cohesion": self.mohr_coulomb_parameters.cohesion.deterministic,
+                "Cohesion": c_det if c_det is not None else c_mean,
                 "CohesionStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.cohesion
                 ),
-                "FrictionAngle": self.mohr_coulomb_parameters.friction_angle.deterministic,
+                "FrictionAngle": phi_det if phi_det is not None else phi_mean,
                 "FrictionAngleStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.friction_angle
                 ),
                 "CohesionAndFrictionAngleCorrelated": self.mohr_coulomb_parameters.cohesion_and_friction_angle_correlated,
-                "Dilatancy": self.mohr_coulomb_parameters.dilatancy_angle.deterministic,
+                "Dilatancy": psi_det if psi_det is not None else psi_mean,
                 "DilatancyStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.mohr_coulomb_parameters.dilatancy_angle
                 ),
             },
             "SuShearStrengthModel": {
-                "ShearStrengthRatio": self.undrained_parameters.shear_strength_ratio.deterministic,
+                "ShearStrengthRatio": s_det if s_det is not None else s_mean,
                 "ShearStrengthRatioStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.undrained_parameters.shear_strength_ratio
                 ),
-                "StrengthIncreaseExponent": self.undrained_parameters.strength_increase_exponent.deterministic,
+                "StrengthIncreaseExponent": m_det if m_det is not None else m_mean,
                 "StrengthIncreaseExponentStochasticParameter": self.__to_dstability_stochastic_parameter(
                     self.undrained_parameters.strength_increase_exponent
                 ),
                 "ShearStrengthRatioAndShearStrengthExponentCorrelated": self.undrained_parameters.shear_strength_ratio_and_shear_strength_exponent_correlated,
             },
-            "VolumetricWeightAbovePhreaticLevel": self.soil_weight_parameters.unsaturated_weight.deterministic,
-            "VolumetricWeightBelowPhreaticLevel": self.soil_weight_parameters.saturated_weight.deterministic,
+            "VolumetricWeightAbovePhreaticLevel": y_above_det if y_above_det is not None else y_above_mean,
+            "VolumetricWeightBelowPhreaticLevel": y_below_det if y_below_det is not None else y_below_mean,
             "IsProbabilistic": self.is_probabilistic,
             "ShearStrengthModelTypeAbovePhreaticLevel": shear_strength_model_above_phreatic_level,
             "ShearStrengthModelTypeBelowPhreaticLevel": shear_strength_model_below_phreatic_level,
